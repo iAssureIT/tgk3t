@@ -7,6 +7,8 @@ const mongoose = require ('mongoose');
 const usersRoutes				= require("./api/routes/users");
 const rolesRoutes				= require("./api/routes/roles");
 const masternotificationRoutes 	= require("./api/routes/masternotification");
+const notificationRoutes 		= require("./api/routes/notification");
+
 
 mongoose.connect('mongodb://localhost/tgk3t_admin',{
 	useNewUrlParser: true
@@ -32,6 +34,8 @@ app.use((req, res, next) =>{
 app.use("/users",usersRoutes);
 app.use("/roles",rolesRoutes);
 app.use("/masternotification",masternotificationRoutes);
+app.use("/notification",notificationRoutes);
+
 
 // handle all other request which not found 
 app.use((req, res, next) => {
