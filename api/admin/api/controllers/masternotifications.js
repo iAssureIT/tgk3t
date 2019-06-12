@@ -104,7 +104,11 @@ exports.delete_masternotification = (req,res,next)=>{
     Masternotifications.deleteOne({_id:req.params.notificationmasterID})
         .exec()
         .then(data=>{
-            res.status(200).json("Master notification deleted");
+            if(data.nModified == 1){
+                res.status(200).json("Master notification deleted");
+            }else{
+                res.status(401).json("Master notification not found");
+            }
         })
         .catch(err =>{
             console.log(err);

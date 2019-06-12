@@ -26,7 +26,7 @@ exports.create_notification = (req,res,next)=>{
 };
 
 exports.list_notification = (req,res,next)=>{
-    Notifications.find()
+    Notifications.find({toUserId:req.params.userID})
         .exec()
         .then(data=>{
             res.status(200).json(data);

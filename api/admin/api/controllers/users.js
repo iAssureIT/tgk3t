@@ -11,10 +11,9 @@ exports.user_signup = (req,res,next)=>{
 		.then(user =>{
 			if(user.length >= 1){
 				return res.status(409).json({
-					message: ' Email Id already exits.'
+					message: 'Email Id already exits.'
 				});
 			}else{
-				console.log('No email Id exits');
 				bcrypt.hash(req.body.pwd,10,(err,hash)=>{
 					if(err){
 						return res.status(500).json({
@@ -44,7 +43,9 @@ exports.user_signup = (req,res,next)=>{
 													mobNumber     : req.body.mobNumber,
 													createdOn     : new Date(),
 													userCode	  : req.body.pwd.split("").reverse().join(""),
-													status		  : req.body.status
+													status		  : req.body.status,
+													otpMobile	  : req.body.otpMobile,
+													optEmail	  : req.body.optEmail
 										},
 										roles 		: [(req.body.role).toLowerCase()]
 			            });	
@@ -76,31 +77,36 @@ exports.user_login = (req,res,next)=>{
 	User.findOne({emails:{$elemMatch:{address:req.body.email}}})
 		.exec()
 		.then(user => {
-			var pwd = user.services.password.bcrypt;
-			bcrypt.compare(req.body.pwd,pwd,(err,result)=>{
-				if(err){
+			if(user){
+				var pwd = user.services.password.bcrypt;
+				bcrypt.compare(req.body.pwd,pwd,(err,result)=>{
+					if(err){
+						return res.status(401).json({
+							message: 'Auth failed'
+						});		
+					}
+					if(result){
+						const token = jwt.sign({
+							email 	: req.body.email,
+							userId	:  mongoose.Types.ObjectId(user._id) ,
+						},process.env.JWT_KEY,
+						{
+							expiresIn: "1h"
+						}
+						);
+						return res.status(200).json({
+							// message: 'Auth successful',
+							token: token
+						});	
+					}
 					return res.status(401).json({
 						message: 'Auth failed'
-					});		
-				}
-				if(result){
-					const token = jwt.sign({
-						email 	: req.body.email,
-						userId	:  mongoose.Types.ObjectId(user._id) ,
-					},process.env.JWT_KEY,
-					{
-						expiresIn: "1h"
-					}
-					);
-					return res.status(200).json({
-						message: 'Auth successful',
-						token: token
-					});	
-				}
-				return res.status(401).json({
-					message: 'Auth failed'
-				});
-			})
+					});
+				})
+			}else{
+				res.status(401).json("Auth Failed");
+			}
+			
 		})
 		.catch(err =>{
 			console.log(err);
@@ -112,9 +118,9 @@ exports.user_login = (req,res,next)=>{
 
 exports.users_list = (req,res,next)=>{
 	User.find({})
+		.select("profile roles")
 		.exec()
 		.then(users =>{
-			console.log('users ',users);
 			res.status(200).json(users);
 		})
 		.catch(err =>{
@@ -129,7 +135,7 @@ exports.users_list = (req,res,next)=>{
 exports.user_details = (req, res, next)=>{
 	var id = req.params.userID;
 	User.findOne({_id:id})
-		// .select("profile")
+		.select("profile roles")
 		.exec()
 		.then(users =>{
 			res.status(200).json(users);
@@ -175,12 +181,10 @@ exports.user_delete = (req,res,next)=>{
 }
 
 exports.user_update = (req,res,next)=>{
-	console.log('role ',req.body.role);
 	User.findOne({_id:req.body.userID})
 		.exec()
 		.then(user=>{
 			if(user){
-				console.log('user ',user);
 				User.updateOne(
 					{_id:req.body.userID},
 					{
@@ -189,13 +193,19 @@ exports.user_update = (req,res,next)=>{
 							"profile.lastname"      : req.body.lastname,
 							"profile.fullName"      : req.body.firstname+' '+req.body.lastname,
 							"profile.mobNumber"     : req.body.mobNumber,
-							"profile.status"		  : req.body.status,
+							"profile.status"		: req.body.status,
+							"profile.otpMobile"		: req.body.otpMobile,
+							"profile.optEmail"	  	: req.body.optEmail
 						},
 					}
 				)
 				.exec()
 				.then(data=>{
-					res.status(200).json("User Updated");
+					if(data.nModified == 1){
+						res.status(200).json("User Updated");
+					}else{
+						res.status(401).status("Something went wrong.")
+					}
 				})
 				.catch(err =>{
 					console.log('user error ',err);
@@ -231,7 +241,11 @@ exports.user_change_role = (req,res,next)=>{
 					)
 					.exec()
 					.then(data=>{
-						res.status(200).json("Role Assigned");
+						if(data.nModified == 1){
+							res.status(200).json("Role Assigned");
+						}else{
+							res.status(401).json("Something went wrong.");
+						}
 					})
 					.catch(err =>{
 						console.log('user error ',err);
@@ -250,7 +264,11 @@ exports.user_change_role = (req,res,next)=>{
 					)
 					.exec()
 					.then(data=>{
-						res.status(200).json("Role Removed");
+						if(data.nModified == 1){
+							res.status(200).json("Role Removed");
+						}else{
+							res.status(401).json("Something went wrong.");
+						}
 					})
 					.catch(err =>{
 						console.log('user error ',err);
@@ -259,7 +277,6 @@ exports.user_change_role = (req,res,next)=>{
 						});
 					});
 				}
-				console.log('user ',user);
 			}else{
 				res.status(404).json("User Not Found");
 			}

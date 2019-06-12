@@ -32,6 +32,8 @@ const userSchema = mongoose.Schema({
 		profilepic		: String,
 		pwd 			: String,
 		status			: String,
+		otpMobile		: Number,
+		optEmail		: Number
 	},
 	roles : [String],
 	heartbeat : Date
