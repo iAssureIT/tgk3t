@@ -2,8 +2,22 @@ import React, { Component } from 'react';
 import { render }           from 'react-dom';
 import $ from "jquery";
 import axios from 'axios';
-// import swal from 'sweetalert';
+import SimpleReactValidator from 'simple-react-validator';
+import swal from 'sweetalert';
 
+
+const formValid = formerrors=>{
+  console.log("formerrors",formerrors);
+  let valid = true;
+  Object.values(formerrors).forEach(val=>{
+  val.length>0 && (valid = false);
+  })
+  return valid;
+  }
+
+const companymobileRegex  = RegExp(/^[0-9][0-9]{9}$|^$/);
+const companynameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
+const emailRegex = RegExp (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$|^$/);
 class CompanyInformation extends Component{
    constructor(props) {
     super(props);
@@ -25,11 +39,18 @@ class CompanyInformation extends Component{
       companywebsite          : "",
       data                    : [],
       submitVal               : true,
+      formerrors :{
+        firstcompanyname : "",
+        companyMobile : " ",
+        companyEmailID  : " ",
+
+      },
       subscription : {
         
       }
 
     };
+    this.validator = new SimpleReactValidator();
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -37,10 +58,14 @@ class CompanyInformation extends Component{
 
     
   }
+  
   componentDidMount() {
   
     
   
+  }
+  componentWillMount() {
+    this.validator = new SimpleReactValidator();
   }
   removeCompanyImage(event){
     event.preventDefault();
@@ -91,6 +116,8 @@ class CompanyInformation extends Component{
     //   }
     // }           
   }
+
+
   submitCompanyInformation=(event)=>{
     event.preventDefault();
    
@@ -110,33 +137,73 @@ class CompanyInformation extends Component{
       logoFilename            : this.state.logoFilename,
       companyLogo             : this.state.companyLogo,
     }//close array
+  
+  if(formValid(this.state.formerrors)){
+    console.log('companyName    : this.state.companyName');
 
-    // if($('#companyInformationForm').valid()){
-      
-    // }
     axios.post('/api/companysettings',{companyInfoFormValue})
     .then(function (response) {
       // handle success
       console.log(response);
+      swal("Good job!", "Company Information Submited!", "success")
     })
     .catch(function (error) {
       // handle error
       console.log(error);
+      swal("", "Company Information submition failed!", "Danger")
+
     })
     .finally(function () {
       // always executed
     });
+
+  }else{
+    swal("Please enter mandatory fields", "", "warning");
+    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+  }
+    // if($('#companyInformationForm').valid()){
+      
+    // }
+  
   }
   handleChange(event){
-    const target = event.target;
-    const name   = target.name;
-    this.setState({
-      [name]: event.target.value,
-    });
+    // const target = event.target;
+    // const {name , value}   = event.target;
+    const datatype = event.target.getAttribute('data-text');
+    const {name,value} = event.target;
+    let formerrors = this.state.formerrors;
+    
+    console.log("datatype",datatype);
+    switch (datatype){
+     
+      case 'firstcompanyname' : 
+       formerrors.firstcompanyname = companynameRegex.test(value) ? '' : "Please Enter Valid Name";
+       break;
+
+       case 'companyMobile' : 
+       formerrors.companyMobile = companymobileRegex.test(value) ? '' : "Please Enter Numbers only";
+       break;
+
+       case 'companyEmailID' : 
+        formerrors.companyEmailID = emailRegex.test(value) ? '' : "Invalid EmailID";
+       break;
+       
+       default :
+       break;
+
+      //  case 'companyName' : 
+      //  formerrors.companyName = value.length < 1 && value.lenght > 0 ? 'Minimum 1 Character required' : "";
+      //  break;
+
+    }
+    // this.setState({formerrors,})
+    this.setState({ formerrors,
+      [name]:value
+    } );
   }
 
   render(){
-    
+    const {formerrors} = this.state;
     return(
       <div className="row">
         <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 companyDisplayForm">
@@ -185,8 +252,22 @@ class CompanyInformation extends Component{
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp">
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div className="form-group">
-                        <label className="control-label statelabel locationlabel" >Company Name</label><span className="astrick">*</span>
-                        <input id="companyName" value={this.state.companyName} onChange={this.handleChange.bind(this)} type="text" name="companyName" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                        <label className="control-label statelabel locationlabel" >
+                          Company Name
+                        </label>
+                        <span className="astrick">*</span>
+                        
+                        <input
+                          onChange={this.handleChange} 
+                          type="text" name="companyName" 
+                          data-text="firstcompanyname"
+                          className="form-control areaStaes"
+                          title="Please enter alphanumeric only" />
+                        
+                        {this.state.formerrors.firstcompanyname &&(
+                          <span className="text-danger">{formerrors.firstcompanyname}</span> 
+                        )}
+ 
                     </div>  
                   </div>
 
@@ -202,7 +283,10 @@ class CompanyInformation extends Component{
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div className="form-group">
                         <label className="control-label statelabel locationlabel" >Contact Number</label><span className="astrick">*</span>
-                        <input className="form-control areaStaes" title="Please enter valid mobile number only" id="companyContactNumber" type="text" name="companyContactNumber" ref="companyContactNumber" value={this.state.companyContactNumber} aria-required="true" onChange={this.handleChange.bind(this)} required />
+                        <input className="form-control areaStaes" data-text="companyMobile" title="Please enter valid mobile number only" id="companyContactNumber" type="text" name="companyContactNumber" ref="companyContactNumber" value={this.state.companyContactNumber} aria-required="true" onChange={this.handleChange.bind(this)} required />
+                        {this.state.formerrors.companyMobile &&(
+                          <span className="text-danger">{formerrors.companyMobile}</span> 
+                        )}
                     </div> 
                   </div>
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -214,8 +298,18 @@ class CompanyInformation extends Component{
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div className="form-group">
                         <label className="control-label statelabel locationlabel" >Company EmailID</label><span className="astrick">*</span>
-                        <input className="form-control areaStaes" title="Please enter valid email address" id="companyEmail" type="text" name="companyEmail" ref="companyEmail" value={this.state.companyEmail} aria-required="true" onChange={this.handleChange.bind(this)} required/>
-                    </div> 
+                        <input className="form-control areaStaes" 
+                          title="Please enter valid email address" 
+                          id="companyEmail" type="text"
+                          data-text="companyEmailID" 
+                          name="companyEmail" ref="companyEmail" 
+                          value={this.state.companyEmail} aria-required="true"
+                          onChange={this.handleChange.bind(this)} required/>
+
+                        {this.state.formerrors.companyEmailID &&  (
+                          <span className="text-danger">{formerrors.companyEmailID}</span> 
+                        )}
+                   </div> 
                   </div>
 
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">

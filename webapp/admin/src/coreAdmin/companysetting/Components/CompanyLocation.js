@@ -1,9 +1,22 @@
 import React, { Component }     from 'react';
 import { render }               from 'react-dom';
 import $ from "jquery";
+import swal from 'sweetalert';
 
 import axios from 'axios';
 
+const formValid = formerrors=>{
+  console.log("formerrors",formerrors);
+  let valid = true;
+  Object.values(formerrors).forEach(val=>{
+  val.length>0 && (valid = false);
+  })
+  return valid;
+  }
+
+const companycontact  = RegExp(/^[0-9][0-9]{9}$|^$/);
+const companylocation = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
+const companybuilding = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 class CompanyLocation extends Component{
   constructor(props) {
     super(props);
@@ -22,11 +35,61 @@ class CompanyLocation extends Component{
       companyCity           : "",
       companyPincode        : "",
       submitVal            : true,
+      formerrors :{
+        companylocation : "",
+        companyMobile : " ",
+        companyArea  : " ",
+
+      },
 
     };
+    this.handleChange = this.handleChange.bind(this);
     
   }
+  // handleChange(event){
+  //   const target = event.target;
+  //   const name   = target.name;
+  //   this.setState({
+  //     [name]: event.target.value,
+  //   });
+  // }
+  
+  handleChange(event){
+    // const target = event.target;
+    // const {name , value}   = event.target;
+    const datatype = event.target.getAttribute('data-text');
+    const {name,value} = event.target;
+    let formerrors = this.state.formerrors;
+    
+    console.log("datatype",datatype);
+    switch (datatype){
+     
+      case 'companylocation' : 
+       formerrors.companylocation = companylocation.test(value) ? '' : "Please Enter valid reuirement";
+       break;
 
+       case 'companyMobile' : 
+       formerrors.companyMobile = companycontact.test(value) ? '' : "Please Enter Numbers only";
+       break;
+
+       case 'companyArea' : 
+        formerrors.companyArea = companybuilding.test(value) ? '' : "Please Enter valid reuirement";
+       break;
+       
+       default :
+       break;
+
+      //  case 'companyName' : 
+      //  formerrors.companyName = value.length < 1 && value.lenght > 0 ? 'Minimum 1 Character required' : "";
+      //  break;
+
+    }
+    // this.setState({formerrors,})
+    this.setState({ formerrors,
+      [name]:value
+    } );
+  }
+   
   componentDidMount(){
    
   }
@@ -50,7 +113,8 @@ class CompanyLocation extends Component{
       companyPincode            : this.state.companyPincode,
   
     }//close array
-    axios.patch('/api/companysettings/location/edit',{companyLocationFormValue})
+    if(formValid(this.state.formerrors)){
+    axios.patch(' http://apitgk3t.iassureit.com',{companyLocationFormValue})
     .then(function (response) {
       // handle success
       console.log(response);
@@ -62,10 +126,14 @@ class CompanyLocation extends Component{
     .finally(function () {
       // always executed
     });
+  }else{
+    swal("Please enter mandatory fields", "", "warning");
+    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
   }
+}
 
   render(){
-   
+    const {formerrors} = this.state;
     return(
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 companyDisplayForm">
@@ -84,7 +152,10 @@ class CompanyLocation extends Component{
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="form-group">
                             <label className="control-label statelabel locationlabel" >Company Location</label><span className="astrick">*</span>
-                            <input value={this.state.companyLocation} onChange={this.handleChange} type="text" title="Please enter valid location" id="companyLocation" name="companyLocation" className="form-control CLcompanyLocation inputValid" required/>
+                            <input value={this.state.companyLocation} onChange={this.handleChange} data-text="companylocation" type="text" title="Please enter valid location" id="companyLocation" name="companyLocation" className="form-control CLcompanyLocation inputValid" required/>
+                            {this.state.formerrors.companylocation &&(
+                              <span className="text-danger">{formerrors.companylocation}</span> 
+                            )}
                         </div>
                     </div> 
                   </div>
@@ -93,7 +164,10 @@ class CompanyLocation extends Component{
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="form-group">
                             <label className="control-label statelabel locationlabel" >Contact Number</label><span className="astrick">*</span>
-                            <input id="companycontact" value={this.state.companycontact} onChange={this.handleChange}  type="text" name="companycontact" title="Please enter valid number" className="form-control companyNo inputValid " required/>
+                            <input id="companycontact" value={this.state.companycontact} onChange={this.handleChange} data-text="companyMobile"  type="text" name="companycontact" title="Please enter valid number" className="form-control companyNo inputValid " required/>
+                            {this.state.formerrors.companyMobile &&(
+                              <span className="text-danger">{formerrors.companyMobile}</span> 
+                            )}
                         </div>
                     </div> 
                   </div>
@@ -108,7 +182,10 @@ class CompanyLocation extends Component{
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="form-group">
                             <label className="control-label statelabel locationlabel" >Block Name/Building</label><span className="astrick">*</span>
-                            <input value={this.state.companybuildingblock} onChange={this.handleChange} type="text" id="companybuildingblock" title="Please enter valid address" name="companybuildingblock" className="form-control CLcompanyAddress inputValid " required/>
+                            <input value={this.state.companybuildingblock} onChange={this.handleChange} data-text="companyArea" type="text" id="companybuildingblock" title="Please enter valid address" name="companybuildingblock" className="form-control CLcompanyAddress inputValid " required/>
+                            {this.state.formerrors.companyArea &&(
+                              <span className="text-danger">{formerrors.companyArea}</span> 
+                            )}
                         </div>
                     </div> 
                   </div>

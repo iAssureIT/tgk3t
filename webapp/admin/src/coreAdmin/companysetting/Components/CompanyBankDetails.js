@@ -22,6 +22,7 @@ class CompanyBankDetails extends Component{
            
           }
         };
+    this.handleChange = this.handleChange.bind(this);
        
       }
  componentDidMount(){
@@ -53,7 +54,7 @@ class CompanyBankDetails extends Component{
 
       // }//close array
 
-      axios.post('/api/companysettings/bank/edit/5cffa5ad284fa46c203f1694',{companyBankDetailsFormValue})
+      axios.patch('/api/companysettings/bank/edit/',{companyBankDetailsFormValue})
     .then(function (response) {
       // handle success
       console.log(response);
