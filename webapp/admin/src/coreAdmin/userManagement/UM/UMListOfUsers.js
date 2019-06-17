@@ -24,34 +24,14 @@ class UMListOfUsers extends Component {
 
 	componentDidMount(){
 
-		this.setState({
-			allPosts : [
-				{
-					_id		  : '1',
-					firstname : 'Amit',
-					lastname  : 'Shinde',
-					Email     : 'Amitrshinde156@gmail.com',
-					mobNumber : '8888069628',
-					Status 	  : 'Active',
-					roles     : 'Admin'
-
-				},
-				{	
-					_id		  : '2',
-					firstname : 'Amit',
-					lastname  : 'Shinde',
-					Email     : 'Amitrshinde156@gmail.com',
-					mobNumber : '8888069628',
-					Status    : 'Blocked',
-					roles     : 'user'
-				}]
-		});
+		
 		axios
 			.get('/users/list')
 			.then(
 				(res)=>{
-					console.log(res);
+					console.log('res', res);
 					const postsdata = res.data;
+					console.log('postsdata',postsdata);
 					this.setState({
 						allPosts : postsdata,
 					});
@@ -67,7 +47,7 @@ class UMListOfUsers extends Component {
 
 render(){
      return(
-   		<div className=" ">
+   		<div className="">
    		<div className="">
       	</div>
 			<section className="">
@@ -76,7 +56,7 @@ render(){
 		          	<div className="">
 			            <div className="">
 				            
-							<div className="modal-bodyuser ">
+							<div className="modal-bodyuser">
 
 						        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border nopaddingum2">
 
@@ -196,28 +176,20 @@ render(){
 												? 												
 												<tbody className="noLRPad ">
 														{ this.state.allPosts.map( (usersData, index)=>{
-
-																return(/*<tr className="" id={"bgclrum"+index} key={index} onMouseOver={this.hoveronbox.bind(this)} onMouseLeave={this.rmhover.bind(this)}>*/		
+																return(
 																<tr className="" key={index}>		
 																	<td className="">
 																		<input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={usersData._id} /> 
 																	
 																	</td>
 																	
-																	<td className="">
-																		<div className="um-username"> 
-																			
-																			<div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 userEmailIds noLRPad">
-																				{usersData.firstname} {usersData.lastname}
-																			
-																			</div>	
-																		</div>
+																	<td className="">{usersData.profile.fullName}
 																	</td>	
 																	<td className=""> 
 																		{usersData.username}
 																	</td>	
 																	
-																	<td className="">{usersData.mobNumber}</td>	
+																	<td className="">{usersData.profile.mobNumber}</td>	
 																	<td className="">{usersData.roles}</td>
 																	
 															
@@ -228,7 +200,7 @@ render(){
 
 
 																		{
-																			usersData.Status == "Active" ?
+																			usersData.profile.status == "Active" ?
 																				<div className="activeStat" title="Active user"></div>
 
 																			:
@@ -242,65 +214,7 @@ render(){
 																		<i className="fa fa-trash redFont" aria-hidden="true" title="Delete User " data-toggle="modal" data-target={"#showDeleteModal-"+usersData._id}></i>
 																	</td>
 																	{/*</td>	*/}
-																	<div className="modal fade modalHide" id={"RestpwdModal-"+usersData._id}  role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-																		  <div className="modal-dialog" role="document">
-																		    <div className="modal-content modalContent ummodallftmg">
-																		      <div className="modal-header userHeader form-group">
-																		        
-																		        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-																		        
-																		          &times;
-																		        </button>
-																		        <h4 className="modal-title" id="exampleModalLabel1">Reset Password</h4>
-																		      </div>
-																		     <div className="modal-body row">
 
-																		             	{/*<ResetPassword id={usersData._id}/>*/}
-																		             	 <div className="" id={usersData._id}>
-																				                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-
-																				                <div className="FormWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
-																				                    <form id={usersData._id}>
-																				                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 resetInptFld">
-																				                            <span className="blocking-span" id="resetPwd">
-																				                               <input type="password" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" value={this.state.resetPassword} ref="resetPassword" name="resetPassword" id="resetPassword"  autoComplete="off"/>
-																				                               <span className="floating-label">
-																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
-																				                                    New Password 
-																				                               </span>   
-																				                               <label className="error"></label>                           
-																				                            </span>
-																				                            <div className="showHideResetDiv showiconUM">
-																				                              <i className="fa fa-eye showPwdreset" aria-hidden="true" ></i>
-																				                              <i className="fa fa-eye-slash hidePwdreset" aria-hidden="true" ></i>
-																				                            </div> 
-																				                        </div>
-																				                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 form-group marginTop17">
-																				                            <span className="blocking-span" id="resetConPwd">
-																				                               <input type="password" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" value={this.state.resetPasswordConfirm}  ref="resetPasswordConfirm" name="resetPasswordConfirm" id="resetPasswordConfirm"  autoComplete="off"/>
-																				                               <span className="floating-label">
-																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
-																				                                    Confirm Password 
-																				                               </span>  
-																				                               <label className="error"></label>                                
-																				                            </span>
-																				                            <div className="showHideResetDiv showiconUM">
-																				                              <i className="fa fa-eye showPwdreset" aria-hidden="true"></i>
-																				                              <i className="fa fa-eye-slash hidePwdreset" aria-hidden="true"></i>
-																				                            </div>
-																				                        </div>
-																				                        <div className="submitButtonWrapper pull-right col-lg-4 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12">
-																				                            <button type="submit" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btnSubmit outlinebox" id={usersData._id} >Reset Password</button>
-																				                        </div>																				                           
-																				                    </form>
-																				                </div>
-																				              </div>
-																				        </div>
-																		      </div>
-																	
-																		   </div>
-																		  </div>
-																	</div>	
 						
 									                                <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal-"+usersData._id} role="dialog">
 	                                                                <div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">

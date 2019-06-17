@@ -8,7 +8,7 @@ exports.create_companysettings = (req,res,next)=>{
 		            .then(data =>{
                         var companyId = data.length + 1;
                         const companysettings = new Companysettings({
-                                _id             : new mongoose.Types.ObjectId(),
+                                _id                    : new mongoose.Types.ObjectId(),
                                 companyId              : companyId,
                                 companyName            : req.body.companyName,
                                 companyContactNumber   : req.body.companyContactNumber,

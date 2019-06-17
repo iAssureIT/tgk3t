@@ -3961,3 +3961,7 @@ right: 15px;
   border-bottom: 1px solid #f4f4f4;
   margin-top: 50px;
 }
+
+.cursorpointer{
+  cursor: pointer;
+}

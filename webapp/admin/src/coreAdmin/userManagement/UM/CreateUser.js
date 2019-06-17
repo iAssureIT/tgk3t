@@ -1,12 +1,6 @@
 
 import React, { Component }      from 'react';
-// import { render }                from 'react-dom';
-// import TrackerReact              from 'meteor/ultimatejs:tracker-react';
-// import { FlowRouter }            from 'meteor/ostrio:flow-router-extra';
-// import {Session}                 from 'meteor/session';
 import InputMask                 from 'react-input-mask';
-// import {withTracker}             from 'meteor/react-meteor-data';
-// import swal           from 'sweetalert';
 import $ from "jquery";
 import axios from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
@@ -25,22 +19,7 @@ class CreateUser extends Component {
   }
 
 
-    componentDidMount() {}
-
-    componentWillUnmount(){/*
-        $("script[src='/js/adminLte.js']").remove();
-        $("link[href='/css/dashboard.css']").remove();
-    */}
-
-    handleChange(event){/*
-        const target = event.target;
-        const name   = target.name;
-        this.setState({
-          [name]: event.target.value,
-        });
-    */}
-
-    
+    componentDidMount() {}  
 
     createUser(event){
     event.preventDefault();
@@ -73,7 +52,7 @@ class CreateUser extends Component {
 
     }
 
-    fun(formValues){  
+    /*fun(formValues){  
     console.log('formValues',formValues);
     var allPosts = this.state.allPosts;
     allPosts.push(formValues);
@@ -81,7 +60,7 @@ class CreateUser extends Component {
       allPosts : allPosts
     });
   }
-
+*/
     render() {
 
        return (

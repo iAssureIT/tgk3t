@@ -29,7 +29,7 @@ componentDidMount(){
         <div className="sidebar-header">
             <h4>CoreAdmin Sidebar</h4>
         </div>
-          
+{/*           
           <li>
               <a href="#rightsidebar" data-toggle="collapse" aria-expanded="false">
                   
@@ -42,8 +42,37 @@ componentDidMount(){
 
           </li>
           {/* <a href="ViewTemplates">NotificationManagement</a> */}
-          <Link to="/companysetting">Company Settings</Link>
-          <Link to="/ViewTemplates">Notification Management</Link>
+          {/* <Link to="/companysetting">Company Settings</Link> */}
+          {/* <Link to="/ViewTemplates">Notification Management</Link>  */}
+          <ul className="list-unstyled components">
+                    <li className="active">
+                    <a href="#">
+                           
+                            Dashboard
+                     </a>
+                    </li>
+                    <li>
+                        <a href="#companysetting" data-toggle="collapse" aria-expanded="false">
+                         
+                            Company Settings
+                        </a>
+                        <ul className="collapse list-unstyled" id="companysetting">
+                            <li><a href="/companysetting"> Company Settings</a></li>
+                          
+                        </ul>
+
+                        <a href="#userman" data-toggle="collapse" aria-expanded="false">
+                           
+                           User Management
+                        </a>
+                        <ul className="collapse list-unstyled" id="userman">
+                            <li><a href="/umlistofusers">List of Users</a></li>
+                           
+                        </ul>
+                    </li>
+                   
+                    
+                </ul>
       </div>
       </Router>
     );
