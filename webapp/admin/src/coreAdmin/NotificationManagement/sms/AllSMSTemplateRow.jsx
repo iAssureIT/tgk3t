@@ -18,7 +18,7 @@ export default class AllSMSTemplateRow extends Component{
 		event.preventDefault();
 		var id = event.target.id;
 		console.log('id',id);
-		axios.get('/masternotification/'+id)
+		axios.get('/api/masternotifications/'+id)
 		.then((response)=> {
 	    	console.log('delete response',response);
 	    	this.setState({
@@ -36,7 +36,7 @@ export default class AllSMSTemplateRow extends Component{
 		event.preventDefault();
 		var id = event.target.id;
 		console.log('id',id);
-		axios.delete('/masternotification/'+id)
+		axios.delete('/api/masternotifications/'+id)
 		.then((response)=> {
 	    	console.log('delete response',response);
 		}).catch((error)=> {
@@ -75,7 +75,7 @@ export default class AllSMSTemplateRow extends Component{
 						</div>
 
 					</div>
-					<EditNotificationModal emailNot={this.props.smstemplateValues._id} />
+					<EditNotificationModal emailNot={this.props.smstemplateValues._id} data={this.props.smstemplateValues}/>
 					<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.smstemplateValues._id}-rm`}  role="dialog">
 	                    <div className=" modal-dialog adminModal adminModal-dialog">
 	                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">

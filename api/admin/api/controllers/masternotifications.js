@@ -21,7 +21,10 @@ exports.create_masternotification = (req,res,next)=>{
                 });
                 masternotifications.save()
                     .then(data=>{
-                        res.status(200).json("Notification Details Added");
+                        res.status(200).json({
+                            dataBody: data,
+                            message: "Notification Details Added"
+                        });
                     })
                     .catch(err =>{
                         console.log(err);

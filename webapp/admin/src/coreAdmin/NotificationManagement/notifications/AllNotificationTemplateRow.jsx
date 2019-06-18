@@ -17,7 +17,7 @@ class AllNotificationTemplateRow extends Component{
 		event.preventDefault();
 		var id = event.target.id;
 		console.log('id',id);
-		axios.get('/masternotification/'+id)
+		axios.get('/api/masternotifications/'+id)
 		.then((response)=> {
 	    	console.log('delete response',response);
 	    	this.setState({
@@ -35,7 +35,7 @@ class AllNotificationTemplateRow extends Component{
 		event.preventDefault();
 		var id = event.target.id;
 		console.log('id',id);
-		axios.delete('/masternotification/'+id)
+		axios.delete('/api/masternotifications/'+id)
 		.then((response)=> {
 	    	console.log('delete response',response);
 		}).catch((error)=> {
@@ -71,7 +71,7 @@ class AllNotificationTemplateRow extends Component{
 						</div>
 					</div>
 				</div>
-				<EditNotificationModal emailNot={this.props.notificationtemplateValues._id} />
+				<EditNotificationModal emailNot={this.props.notificationtemplateValues._id} data={this.props.notificationtemplateValues} />
 				<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.notificationtemplateValues._id}-rm`}  role="dialog">
 	                    <div className=" modal-dialog adminModal adminModal-dialog">
 	                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">

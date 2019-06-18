@@ -10,11 +10,9 @@ import AllSMSTemplateRow          	from './sms/AllSMSTemplateRow.jsx';
 import SMSTemplateRow             	from './sms/SMSTemplateRow.jsx';
 import CKEditor 				  	from "react-ckeditor-component";
 import validator 					from 'validator';
+import 'jquery-validation';
 import './notification.css';
-import Form from 'react-validation/build/form';
-import Input from 'react-validation/build/input';
-import Select from 'react-validation/build/input';
-axios.defaults.baseURL = 'http://localhost:3006';
+axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 class ViewTemplates extends Component{
@@ -29,8 +27,52 @@ class ViewTemplates extends Component{
 
 
 	componentDidMount() {	
-		
-	}
+	    $("html,body").scrollTop(0);	
+	   
+	    $.validator.addMethod("regxsubject", function(value, element, arg){          
+	    	return arg !== value;        
+	    }, "Please select one subject name");
+
+	    $.validator.addMethod("regxtemplateType", function(value, element, arg){          
+	    	return arg !== value;        
+	    }, "Please select template type");
+
+	    $.validator.addMethod("regxtemplateName", function(value, element, arg){          
+	    	return arg !== value;        
+	    }, "Please select template name");
+   
+	    $.validator.setDefaults({
+	        debug: true,
+	        success: "valid"
+	    });
+	    $("#newTemplateForm").validate({
+	        rules: {
+	          subject:{              
+	          	required:true,              
+	          	// regxsubject: "Not Selected"            
+	          },
+	          templateType:{              
+	          	required:true,              
+	          	regxtemplateType: "Not Selected"            
+	          },
+	          templateName:{              
+	          	required:true,              
+	          	regxtemplateName: "Not Selected"            
+	          },	          
+	        }, 
+	        errorPlacement: function(error, element) {
+			  if (element.attr("name") == "templateType"){
+			    error.insertAfter("#templateType");
+			  }
+			  if (element.attr("name") == "templateName"){
+			    error.insertAfter("#templateName");
+			  } 
+			  if (element.attr("name") == "subject"){
+			    error.insertAfter("#subject");
+			  }  
+			}
+	    });
+	} 
 	constructor(props){
 
 		super(props);
@@ -54,7 +96,7 @@ class ViewTemplates extends Component{
 	componentWillMount(){
 		axios({
 			method: 'get',
-			url: '/masternotification/list',
+			url: '/api/masternotifications/list',
 		}).then((response)=> {
 			var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
 			var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
@@ -105,7 +147,7 @@ class ViewTemplates extends Component{
     getId(id){
     	axios({
 			method: 'get',
-			url: 'masternotification/'+id,
+			url: '/api/masternotifications/'+id,
 		}).then((response)=> {
 		    this.setState({
 				emailTemplates : response.data
@@ -115,7 +157,7 @@ class ViewTemplates extends Component{
     getNotificationId(id){
     	axios({
 			method: 'get',
-			url: 'masternotification/'+id,
+			url: '/api/masternotifications/'+id,
 		}).then((response)=> {
 			this.setState({
 				notificationTemplates : response.data
@@ -125,7 +167,7 @@ class ViewTemplates extends Component{
     getSmsId(id){
     	axios({
 			method: 'get',
-			url: 'masternotification/'+id,
+			url: '/api/masternotifications/'+id,
 		}).then((response)=> {
 	    	this.setState({
 				smsTemplates : response.data
@@ -133,10 +175,11 @@ class ViewTemplates extends Component{
 		});
     }
 	submitTemplate(event){
-		event.preventDefault();
+		console.log('submitTemplate');
 
-		// if($("#newTemplateForm").valid() && this.state.content){
-		if(this.state.content){
+
+		event.preventDefault();
+		if($("#newTemplateForm").valid() && this.state.content){
 			var templateType     = this.state.templateType;
 			var templateName     = this.state.templateName;
 			var subject          = this.state.subject;
@@ -159,10 +202,11 @@ class ViewTemplates extends Component{
 				}
 				
 				
-				axios.post('/masternotification', formValues)
+				axios.post('/api/masternotifications', formValues)
 				.then((response)=> {					
 					if(templateType =='Email'){
 						var emailTemplatesList = this.state.emailTemplatesList;
+						console.log('data',response.data.dataBody);
 						emailTemplatesList.push(response.data.dataBody);
 						this.setState({
 							emailTemplatesList : emailTemplatesList
@@ -306,7 +350,7 @@ class ViewTemplates extends Component{
 							        </div>
 					      		</div>
 					     		<div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							        <Form className="newTemplateForm col-lg-12 col-md-12 col-sm-12 col-xs-12" id="newTemplateForm">
+							        <form className="newTemplateForm col-lg-12 col-md-12 col-sm-12 col-xs-12" id="newTemplateForm">
 							        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 forgtTextInp NOpadding-left">
 										<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left">
 
@@ -342,7 +386,7 @@ class ViewTemplates extends Component{
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												<div className="form-group">
 												 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Subject <span className="astrick">*</span></label>     						
-											        <Input type="text" name="subject" validations={[required]} id="subject" value={this.state.subject} onChange={this.handleChange} className="subject col-lg-12 col-md-12 col-sm-12 col-xs-12 inputValid" required/>
+											        <input type="text" name="subject" validations={[required]} id="subject" value={this.state.subject} onChange={this.handleChange} className="subject col-lg-12 col-md-12 col-sm-12 col-xs-12 inputValid" required/>
 												</div>	
 											</div>
 										</div>
@@ -357,7 +401,7 @@ class ViewTemplates extends Component{
 												</div>	
 											</div>
 										</div>
-									</Form>
+									</form>
 					      		</div>
 							    <div className="modal-footer adminModal-footer paddingtop-down col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							        <button  type="submit" onClick={this.submitTemplate.bind(this)} className="col-lg-2 col-md-3 col-sm-6 col-xs-12 btn pull-right btnSubmit outlinebox">Save Template</button>
@@ -459,21 +503,3 @@ class ViewTemplates extends Component{
 
 }
 export default ViewTemplates;
-// SaveTemplate = withTracker(({params})=>{
-
-//     const postHandle = Meteor.subscribe('notificationTemplate');
-//     var Id           = FlowRouter.getParam("id");
-//     // var Id           = params.id;
-//    //  if (Id) {
-//    //    $('.sendtxtmsgbtn').css({'display':'none'});
-// 			// $('.updatebtn').css({'display':'block'});
-//    //  }
-//     const post       = NotificationTemplate.findOne({'_id':Id})||{};
-//     const loading    = !postHandle.ready();
-
-//     return {
-//         loading,
-//         post,
-//     }; 
-// })(ViewTemplates);
-

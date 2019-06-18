@@ -53,7 +53,7 @@
     margin: 2% 0% !important;
 }
 .notificationTitle{
-	text-align: center;
+    text-align: center;
     color: #DA2128;
     font-weight: bold;
     margin-bottom: 20px;
@@ -878,7 +878,7 @@
       color: #fff;
       background: #2189d1;
       margin-bottom: 15px;
-      box-shadow: 2px 2px 9px -2px #2189d1;	
+      box-shadow: 2px 2px 9px -2px #2189d1; 
   }
   .adminCloseCircleDiv {
       display: inline-grid;
@@ -911,6 +911,14 @@
   .textAlignRight {
       text-align: right!important;
   }
-  .error{
-      color: red;
-  }
+  .addexamform {
+    background: #2189d2;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 3px;
+    margin-top: 5px;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    text-align: center;
+    color: #fff;
+}

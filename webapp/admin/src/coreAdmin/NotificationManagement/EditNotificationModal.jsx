@@ -280,14 +280,19 @@ class EditNotificationModal extends Component{
 												</div>
 											</div>
 										</div>
-										<div className="row rowPadding subjectRow col-lg-12 col-md-12 col-xs-12 col-sm-12">
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												<div className="form-group">
-												 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Subject <span className="astrick">*</span></label>     						
-											        <input type="text" name="subject" value={this.state.subject} onChange={this.handleChange} className="subject col-lg-12 col-md-12 col-sm-12 col-xs-12 inputValid" required/>
-												</div>	
+										{this.state.templateType!='Notification' && this.state.templateType!='SMS' ?
+											<div className="row rowPadding subjectRow col-lg-12 col-md-12 col-xs-12 col-sm-12">
+												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+													<div className="form-group">
+													 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Subject <span className="astrick">*</span></label>     						
+												        <input type="text" name="subject" value={this.state.subject} onChange={this.handleChange} className="subject col-lg-12 col-md-12 col-sm-12 col-xs-12 inputValid" required/>
+													</div>	
+												</div>
 											</div>
-										</div>
+											:
+											null
+										}
+										
 										<div className="row rowPadding col-lg-12 col-md-12 col-xs-12 col-sm-12">
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												<div className="form-group">
