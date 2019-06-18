@@ -61,6 +61,15 @@ componentDidMount(){
                           
                         </ul>
 
+                        <a href="#notifactions" data-toggle="collapse" aria-expanded="false">
+                           
+                           Notification Management
+                        </a>
+                        <ul className="collapse list-unstyled" id="notifactions">
+                            <li><a href="/ViewTemplates">Notification</a></li>
+                           
+                        </ul>
+
                         <a href="#userman" data-toggle="collapse" aria-expanded="false">
                            
                            User Management

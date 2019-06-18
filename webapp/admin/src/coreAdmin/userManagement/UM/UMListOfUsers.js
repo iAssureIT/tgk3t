@@ -40,7 +40,7 @@ class UMListOfUsers extends Component {
 			.catch((error)=>{
 
 				console.log("error = ",error);
-				alert("Something went wrong! Please check Get URL.");
+				// alert("Something went wrong! Please check Get URL.");
 				 });				
 
 	}

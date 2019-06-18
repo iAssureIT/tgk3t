@@ -37,7 +37,7 @@ class CreateUser extends Component {
       .then( (res)=>{
         console.log(res);
         if(res.status == 201){
-          alert("Data inserted Successfully!")
+          // alert("Data inserted Successfully!")
           this.refs.firstname.value = '';
           this.refs.lastname.value  = '';
           this.refs.Email.value  = '';
@@ -46,7 +46,7 @@ class CreateUser extends Component {
       })
       .catch((error)=>{
         console.log("error = ",error);
-        alert("Something went wrong! Please check Get URL.");
+        // alert("Something went wrong! Please check Get URL.");
       });
   
 

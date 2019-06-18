@@ -38,7 +38,7 @@ export default class UMRolesList extends Component {
 			.catch((error)=>{
 
 				console.log("error = ",error);
-				alert("Something went wrong! Please check Get URL.");
+				// alert("Something went wrong! Please check Get URL.");
 				 });				
 
 	}
@@ -57,10 +57,10 @@ export default class UMRolesList extends Component {
        return(
 			<div className="">
 				<div className=""></div>
-				<section className="content">
-			        <div className="row">
-			          	<div className="addrol col-lg-12 col-md-12 col-xs-12 col-sm-12">
-	                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 boxtop">
+				<section className="">
+			        <div className="">
+			          	<div className="">
+	                        <div className="">
 	                            <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
 	                            	<div className=" col-lg-1 col-md-1 col-xs-1 col-sm-1 box-header with-border text-center">
                                          <h4 className="weighttitle"><a href="/UMListOfUsers"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>

@@ -19,14 +19,14 @@ export default class UMaddRoles extends Component {
         console.log(res);
         if(res.status == 200){
           this.props.getdata(res.data.dataBody);
-          alert("Data inserted Successfully!");
+          // alert("Data inserted Successfully!");
 
           this.refs.role.value = '';
         }
       })
       .catch((error)=>{
         console.log("error = ",error);
-        alert("Something went wrong! Please check Get URL.");
+        // alert("Something went wrong! Please check Get URL.");
       });
   
 

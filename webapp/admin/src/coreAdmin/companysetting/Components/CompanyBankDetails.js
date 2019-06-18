@@ -1,8 +1,24 @@
 import React, { Component }     from 'react';
 import { render }               from 'react-dom';
 import $ from "jquery";
-
+import swal from 'sweetalert';
+import InputMask      		from 'react-input-mask';
 import axios from 'axios';
+
+
+const formValid = formerrors=>{
+  console.log("formerrors",formerrors);
+  let valid = true;
+  Object.values(formerrors).forEach(val=>{
+  val.length>0 && (valid = false);
+  })
+  return valid;
+  }
+
+const accountnumberRegex  = RegExp(/^[0-9]{9,18}$|^$/);
+const companyAddressRegex = RegExp(/^[a-zA-Z0-9\s,'/.-]*$/);
+const ifsccodeRegex = RegExp(/^([ a-zA-Z0-9&/\(\)\.'-]+)$/);
+const companynameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 
 
 class CompanyBankDetails extends Component{
@@ -17,7 +33,17 @@ class CompanyBankDetails extends Component{
           accNumber      : this.props.accNumber,
           ifscCode       : this.props.ifscCode,
           submitVal      : true,
+          formerrors :{
+            accountholdername : "",
+            bankname : " ",
+            accountnumber  : " ",
+            branchname : " ",
+            ifsccode : " ",
     
+    
+    
+    
+          },
           subscription : {
            
           }
@@ -54,27 +80,95 @@ class CompanyBankDetails extends Component{
 
       // }//close array
 
-      axios.patch('/api/companysettings/bank/edit/',{companyBankDetailsFormValue})
-    .then(function (response) {
-      // handle success
-      console.log(response);
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-    })
-    .finally(function () {
-      // always executed
-    });
+    //   axios.patch('/api/companysettings/bank/edit/',{companyBankDetailsFormValue})
+    // .then(function (response) {
+    //   // handle success
+    //   console.log(response);
+    // })
+    // .catch(function (error) {
+    //   // handle error
+    //   console.log(error);
+    // })
+    // .finally(function () {
+    //   // always executed
+    // });
+    if(formValid(this.state.formerrors)){
+      
+  
+      axios.post('/api/companysettings',{companyBankDetailsFormValue})
+      .then(function (response) {
+        // handle success
+        console.log("this is response===>>>",response);
+        swal("Good job!", "Bank Details Added Successfully!", "success")
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+        swal("", "Bank Details Added Successfully!!", "Danger")
+  
+      })
+      .finally(function () {
+        // always executed
+      });
+  
+    }else{
+      swal("Please enter mandatory fields", "", "warning");
+      console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+    }
+}
+// handleChange(event){
+//   const target = event.target;
+//   const name   = target.name;
+//   this.setState({
+//     [name]: event.target.value,
+//   });
+// }
 
-}
 handleChange(event){
-  const target = event.target;
-  const name   = target.name;
-  this.setState({
-    [name]: event.target.value,
-  });
+  // const target = event.target;
+  // const {name , value}   = event.target;
+  const datatype = event.target.getAttribute('data-text');
+  const {name,value} = event.target;
+  let formerrors = this.state.formerrors;
+  
+  console.log("datatype",datatype);
+  switch (datatype){
+   
+    case 'accountholdername' : 
+     formerrors.accountholdername = companynameRegex.test(value)  && value.length>0 ? '' : "Please Enter Valid Name";
+    break;
+
+    case 'bankname' : 
+     formerrors.bankname = companynameRegex.test(value)   && value.length>0? '' : "Please Enter Valid Name";
+    break;
+
+    case 'accountnumber' : 
+     formerrors.accountnumber = accountnumberRegex.test(value)  && value.length>0 ? '' : "Please Enter Valid Name";
+    break;
+
+    case 'branchname' : 
+     formerrors.branchname = companynameRegex.test(value)  && value.length>0 ? '' : "Please Enter Valid Name";
+    break;
+
+    case 'ifsccode' : 
+     formerrors.ifsccode = ifsccodeRegex.test(value)   && value.length>0? '' : "Please Enter Valid Name";
+    break;
+
+    
+     default :
+     break;
+
+    //  case 'companyName' : 
+    //  formerrors.companyName = value.length < 1 && value.lenght > 0 ? 'Minimum 1 Character required' : "";
+    //  break;
+
+  }
+  // this.setState({formerrors,})
+  this.setState({ formerrors,
+    [name]:value
+  } );
 }
+
 
  
 
@@ -97,18 +191,22 @@ handleChange(event){
                            <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                               <div className="form-group">
                                   <label className="control-label statelabel locationlabel" >Enter Account Holder Name</label><span className="astrick">*</span>
-                                  <input id="accHolderName" value={this.state.accHolderName} onChange={this.handleChange.bind(this)} type="text" name="accHolderName" ref="accHolderName" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                  <input id="accHolderName" value={this.state.accHolderName}  data-text="accountholdername" onChange={this.handleChange.bind(this)} type="text" name="accHolderName" ref="accHolderName" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                  {this.state.formerrors.accountholdername &&(
+                                    <span className="text-danger">{this.state.formerrors.accountholdername}</span> 
+                                  )}
+          
                               </div>  
                           </div>
                           <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div className="form-group">
-                                <label className="control-label statelabel locationlabel" >Enter Account Nick Name</label><span className="astrick">*</span>
+                                <label className="control-label statelabel locationlabel" >Enter Account Nick Name</label><span className="astrick"></span>
                                 <input id="accNickName" value={this.state.accNickName} onChange={this.handleChange.bind(this)} type="text" name="accNickName" ref="accNickName" className="form-control areaStaes" title="Please enter alphanumeric only" />
                             </div>  
                           </div>
                           <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div className="form-group">
-                                <label className="control-label statelabel locationlabel" >Enter Account Type</label><span className="astrick">*</span>
+                                <label className="control-label statelabel locationlabel" >Enter Account Type</label><span className="astrick"></span>
                                 <input id="accType" value={this.state.accType} onChange={this.handleChange.bind(this)} type="text" name="accType" ref="accType" className="form-control areaStaes" title="Please enter alphanumeric only" />
                                  {/* <select value={this.state.accType} onChange={this.handleChange} className="form-control accType inputValid required" name="accType">
                                   <option value="0" selected="true" disabled="disabled">Enter Account Type</option>
@@ -120,28 +218,40 @@ handleChange(event){
                           <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div className="form-group">
                                 <label className="control-label statelabel locationlabel" >Enter Bank Name</label><span className="astrick">*</span>
-                                <input id="bankName" value={this.state.bankName} onChange={this.handleChange.bind(this)} type="text" name="bankName" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                <input id="bankName" value={this.state.bankName}  data-text="bankname" onChange={this.handleChange.bind(this)} type="text" name="bankName" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                {this.state.formerrors.bankname &&(
+                                    <span className="text-danger">{this.state.formerrors.bankname}</span> 
+                                  )}
                             </div>  
                           </div>
 
                           <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div className="form-group">
                                 <label className="control-label statelabel locationlabel" >Enter Account Number</label><span className="astrick">*</span>
-                                <input id="accNumber" value={this.state.accNumber} onChange={this.handleChange.bind(this)} type="text" name="accNumber" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                <input id="accNumber" value={this.state.accNumber} data-text="accountnumber" onChange={this.handleChange.bind(this)} type="text" name="accNumber" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                {this.state.formerrors.accountnumber &&(
+                                    <span className="text-danger">{this.state.formerrors.accountnumber}</span> 
+                                )}
                             </div>  
                           </div>
 
                           <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div className="form-group">
                                 <label className="control-label statelabel locationlabel" >Enter Branch Name</label><span className="astrick">*</span>
-                                <input id="branchName" value={this.state.branchName} onChange={this.handleChange.bind(this)} type="text" name="branchName" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                <input id="branchName" value={this.state.branchName} data-text="branchname" onChange={this.handleChange.bind(this)} type="text" name="branchName" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                {this.state.formerrors.branchname &&(
+                                    <span className="text-danger">{this.state.formerrors.branchname}</span> 
+                                )}
                             </div>  
                           </div>
 
                           <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             <div className="form-group">
                                 <label className="control-label statelabel locationlabel" >Enter IFSC Code</label><span className="astrick">*</span>
-                                <input id="ifscCode" value={this.state.ifscCode} onChange={this.handleChange.bind(this)} type="text" name="ifscCode" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                <input id="ifscCode" value={this.state.ifscCode} data-text="ifsccode" onChange={this.handleChange.bind(this)} type="text" name="ifscCode" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                                {this.state.formerrors.ifsccode &&(
+                                    <span className="text-danger">{this.state.formerrors.ifsccode}</span> 
+                                )}
                             </div>  
                           </div>
                           
@@ -159,21 +269,7 @@ handleChange(event){
                           </button>
                         </div>
                       </form>
-                      <table className="table-responsive table table-striped table-hover myTable dataTable no-footer">
-                        <thead className="table-head umtblhdr ">
-                          <tr className="hrTableHeader">
-                            <th className="umHeader txtalgncentr"> AccountHolder Name </th>
-                            <th className="umHeader txtalgncentr"> Bank Name </th>
-                            <th className="umHeader txtalgncentr"> Branch Name </th>
-                            <th className="umHeader txtalgncentr"> Account Number </th>
-                            <th className="umHeader txtalgncentr"> Account Type </th>
-                            <th className="umHeader txtalgncentr"> Action </th>
-                          </tr>
-                        </thead>
-                        <tbody className="addRoleTbody">
-                                  
-                        </tbody>
-                      </table>
+                     
                     </div>
                   </div>
                 </div>
