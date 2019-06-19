@@ -8,8 +8,12 @@ import './SignUp.css';
 
 class VerifyAccount extends Component {
 
-  
+  constructor(){
+      super();
+        this.state = {
 
+        }
+  }
 
   render(){
     var winHeight = window.innerHeight;
@@ -18,36 +22,7 @@ class VerifyAccount extends Component {
 
     return(
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 signUpWrapper">
-        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 signUpLeftWrap" style={{"height": winHeight}}>
-          <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-            <img src="/images/maatslogo.png" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 logoImg" alt="Loading..."/>
-            <div className="OESSubTitle2">Abacus Online Exam System</div>
-          </div>
-          {/*<img src="/images/signUpBanner.gif" className="signUpBanner col-lg-9 col-md-9"/>*/}
-        </div>
-        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 signUpRighttWrap"  style={{"height": winHeight}}>
-          <div className="div1 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div2 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div3 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div4 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div5 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div6 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div7 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div8 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div1 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-          <div className="div2 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-          </div>
-        </div>
-        <div className="col-lg-6 col-lg-offset-2 col-md-6 col-md-offset-2 col-sm-12 col-sm-offset-2 formbg1 signupPadding signUpFormWrap loginOesWrap loginforms1" style={{"height": winHeight}}>
+        <div className="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-12 signupPadding signUpFormWrap bg-success" style={{"height": winHeight}}>
           <div className="divVerifyEmailWrap">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 forgotpwd verifypd">
               <form id="OTPMobMail" /*onSubmit={this.VerifyMobileAOS.bind(this)}*/>

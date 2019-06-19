@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import {browserHistory} from 'react-router';
-import InputMask from 'react-input-mask';
 import swal from 'sweetalert';
 import $ from "jquery";
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/js/modal.js';
+import 'bootstrap/js/tab.js';
 import 'font-awesome/css/font-awesome.min.css';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
@@ -14,7 +15,20 @@ axios.defaults.baseURL = 'http://localhost:3006';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
- class SignUp extends Component {
+const formValid = formerrors=>{
+  console.log("formerrors",formerrors);
+  let valid = true;
+  Object.values(formerrors).forEach(val=>{
+  val.length>0 && (valid = false);
+  })
+  return valid;
+}
+const firstnameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
+const lastnameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
+const mobileRegex  = RegExp(/^[0-9][0-9]{9}$|^$/);
+const emailRegex = RegExp (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$|^$/);
+
+class SignUp extends Component {
 
  	constructor(){
       super();
@@ -27,10 +41,21 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
                 email           : '',
                 password        : '',
                 signupPassword  : '',
-            }
+               
+            },
+             formerrors :{
+				        	firstNameV 		: "",
+				        	lastNameV		: "",
+				        	mobileV 		: "",
+				        	emailIDV		: "",
+					     },
         }
+        console.log("In constructor");
+         this.handleChange = this.handleChange.bind(this);
     }
+    componentWillMount() {
 
+    }
  	usersignup(event){
  		event.preventDefault();
  			console.log("-------this.state.auth------>>",this.state.auth);
@@ -42,6 +67,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 	                password        : this.refs.signupPassword.value,
 	                signupPassword  : this.refs.signupConfirmPassword.value,
 	            }
+	            
  			console.log("-------auth------>>",auth);
 
         document.getElementById("signUpBtn").value = 'We are processing. Please Wait...';            
@@ -52,16 +78,15 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
         var passwordVar              = this.refs.signupPassword.value;
         var signupConfirmPasswordVar = this.refs.signupConfirmPassword.value;
  		
+            if(formValid(this.state.formerrors)){
+    			console.log('companyName==',this.state.formerrors);
             if (passwordVar === signupConfirmPasswordVar) {
-
                 return (passwordVar.length >= 6) ? 
                 	(true, 
                 	 console.log("formValues= ",auth),
 		             document.getElementById("signUpBtn").value = 'Sign Up',
       				// browserHistory.push("/"),
-
-
-                	 axios
+                	axios
                 	 	.post('/user/signup',auth,)
 			            .then((response)=> {
 			                console.log("-------userData------>>",response);
@@ -75,9 +100,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 			            })
 			            .catch(function (error) {
 			                console.log(error);
-        					swal("Something went wrong","Information not submitted, please try again","error");
+        					swal("Email already exist","Entered email is already exist, please enter another email id","warning");
 			            })
-                	 ) 
+                	)
                 :
 	                (
 		                document.getElementById("signUpBtn").value = 'Sign Up',
@@ -88,15 +113,59 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
                 document.getElementById("signUpBtn").value = 'Sign Up';
 		        return swal("Passwords does not match","Please Try Again","warning")
             }
+            }else{
+                document.getElementById("signUpBtn").value = 'Sign Up';
+				swal("Please enter mandatory fields", "", "warning");
+				console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+			}
         
  	}
+ 	handleChange(event){
+	    // const target = event.target;
+	    // const {name , value}   = event.target;
+	    const datatype = event.target.getAttribute('data-text');
+	    const {name,value} = event.target;
+	    let formerrors = this.state.formerrors;
+	    
+	    console.log("datatype",datatype);
+	    switch (datatype){
+	     
+	       case 'firstNameV' : 
+	       formerrors.firstNameV = firstnameRegex.test(value) ? '' : "Please Enter Valid Name";
+	       break;
+	       
+	       case 'lastNameV' : 
+	       formerrors.lastNameV = lastnameRegex.test(value) ? '' : "Please Enter Valid Name";
+	       break;
+
+	       case 'mobileV' : 
+	       formerrors.mobileV = mobileRegex.test(value) ? '' : "Please Enter Numbers only";
+	       break;
+
+	       case 'emailIDV' : 
+	       formerrors.emailIDV = emailRegex.test(value) ? '' : "Invalid EmailID";
+	       break;
+	       
+	       default :
+	       break;
+
+	      //  case 'companyName' : 
+	      //  formerrors.companyName = value.length < 1 && value.lenght > 0 ? 'Minimum 1 Character ' : "";
+	      //  break;
+
+	    }
+	    // this.setState({formerrors,})
+	    this.setState({ formerrors,
+	      [name]:value
+	    } );
+	}
  	acceptcondition(event){
 	    var conditionaccept = event.target.value;
 	    console.log("condition",conditionaccept);
 	    if(conditionaccept=="acceptedconditions"){
 	        $(".acceptinput").removeAttr('disabled');
 	        // if(this.state.roletype=="Student"){
-	        //     document.getElementById("lastname").removeAttribute("required");
+	        //     document.getElementById("lastname").removeAttribute("");
 	        // }else{
 	        //     null;
 	        // }
@@ -111,7 +180,10 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
         // }else{
         //      swal("Please select student or franchise","","warning");
         // }
-         $(".modalbg").css("display","block");
+        $(".modalbg").css("display","block");
+    }
+    hideModal(){
+        $(".modalbg").css("display","none");
     }
     componentDidMount(){
 
@@ -128,84 +200,65 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
         return $('.inputTextPass').attr('type', 'password');
     }
 
-
-
 	render(){
 		var winHeight = window.innerHeight;
         var divHeight = winHeight/4.5+'px';
-
+		const {formerrors} = this.state;
+		console.log("formerrors====?>>>",formerrors);
 		return(
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 signUpWrapper">
-				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 signUpLeftWrap" style={{"height": winHeight}}>
-					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
-						<img src="/images/maatslogo.png" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 logoImg"/>
-					<div className="OESSubTitle2">Abacus Online Exam System</div>
-
-					</div>
-					{/*<img src="/images/signUpBanner.gif" className="signUpBanner col-lg-9 col-md-9"/>*/}
-				</div>
-				<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 signUpRighttWrap"  style={{"height": winHeight}}>
-					<div className="div1 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-					<div className="div2 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-					<div className="div3 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-					<div className="div4 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-					<div className="div5 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-					<div className="div6 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-					<div className="div7 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-					<div className="div8 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-					</div>
-                    <div className="div1 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-                    </div>
-                    <div className="div2 col-lg-12 col-md-12 col-sm-12 col-xs-12" style={{"height": divHeight}}>
-                    </div>
-				</div>
-        		<div className="col-lg-6 col-lg-offset-2 col-md-6 col-md-offset-2 col-sm-12 col-sm-offset-2 formbg1 signupPadding signUpFormWrap loginOesWrap loginforms1" style={{"height": winHeight}}>
+        		<div className="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-12 formbg1 bg-success signupPadding signUpFormWrap loginOesWrap loginforms1" style={{"height": winHeight}}>
 					<div className="divLoginInWrap">
 						<form id="signUpUser" onSubmit={this.usersignup.bind(this)}>
 	                    	<h3 className="signUpNameTitle2"><span className="bordbt">SIGN UP</span></h3>
 							<div className="col-lg-12 col-md-12 signUpInnerWrapperOES signupfrm">
-								<div className="form-group form-group1 col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent textpd">
-							   		<span className="blocking-span">
-									   <input type="text" title="Only alphabets are allowed!" /*onKeyUp={this.validateText.bind(this)}*/ className="form-control spotylTextbox oesSignUpForm" id="firstname" ref="firstname" name="firstname" pattern="[a-zA-Z]+"  required/>
+								<div className="form-group form-group1 col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent textpd boxMarg">
+							   		<span className="blocking-span noIb">
+									   <input type="text" className="form-control abacusTextbox oesSignUpForm" id="firstname" ref="firstname" name="firstname"  onChange={this.handleChange} data-text="firstNameV" required/>
+									   {this.state.formerrors.firstNameV  && (
+				                        <span className="text-danger">{this.state.formerrors.firstNameV}</span> 
+				                      )}
 							    		<span className="floating-label">
 								    		<i className="fa fa-user-circle-o signupIconFont" aria-hidden="true"/> 
 								    		First Name
 							    		</span>					   			
 									</span>
 								</div>
-							    <div className="form-group form-group1 col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent textpd1">
-									<span className="blocking-span">   
-										<input type="text" title="Please enter alphabets only!" /*onKeyUp={this.validateText1.bind(this)}*/ className="form-control spotylTextbox oesSignUpForm" id="lastname" ref="lastname" name="lastname" pattern="[a-zA-Z]+"  required/>
+							    <div className="form-group form-group1 col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent textpd1 boxMarg">
+									<span className="blocking-span noIb">   
+										<input type="text" className="form-control abacusTextbox oesSignUpForm" id="lastname" ref="lastname" name="lastname"  onChange={this.handleChange} data-text="lastNameV" required/>
+										{this.state.formerrors.lastNameV  && (
+				                        <span className="text-danger">{this.state.formerrors.lastNameV}</span> 
+				                      )}
 								    	<span className="floating-label1 lbfloatpass">
 								    		<i className="fa fa-user-circle-o signupIconFont" aria-hidden="true"/> 
 								    		Last Name
 								    	</span>					   			
 									</span>
 							    </div>
-							    <div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent">
-									<span className="blocking-span">   
-									   <InputMask mask="9999-999-999" maskChar=" " pattern="^(0|[0-9-+]*)$" title="Please enter numbers!" className="form-control  spotylTextbox oesSignUpForm" ref="mobNumber" name="mobNumber" id="mobNumber" required/>
+							    <div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent boxMarg">
+									<span className="blocking-span noIb">   
+									   <input className="form-control  abacusTextbox oesSignUpForm" ref="mobNumber" name="mobNumber" id="mobNumber" onChange={this.handleChange} data-text="mobileV" required/>
+									   {this.state.formerrors.mobileV  && (
+				                        <span className="text-danger">{this.state.formerrors.mobileV}</span> 
+				                      )}
 									   <span className="floating-label">
 									   <i className="fa fa-mobile signupIconFont" aria-hidden="true"></i>Mobile Number</span>					   			
 								    </span>
 							    </div>
-						   		<div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent">
-									<span className="blocking-span">   
-									  <input type="email" title="Please match email format!" className="form-control signupsetting  spotylTextbox oesSignUpForm" ref="signupEmail" name="signupEmail" pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,63}$" required/>
+						   		<div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent boxMarg">
+									<span className="blocking-span noIb">   
+									  <input type="email" className="form-control signupsetting  abacusTextbox oesSignUpForm" ref="signupEmail" name="signupEmail" onChange={this.handleChange} data-text="emailIDV" required/>
+									  {this.state.formerrors.emailIDV  && (
+				                        <span className="text-danger">{this.state.formerrors.emailIDV}</span> 
+				                      )}
 							    		<span className="floating-label"><i className="fa fa-envelope-o signupIconFont" aria-hidden="true"></i>Email ID</span>					   			
 									</span>
 							    </div>
 						   		<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent marBtm">
 								    <div className="form-group form-group1 fltlft input-group col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-							   			<span className="blocking-span">
-											<input type="password" className="form-control pass oesSignUpForm confirmbtm inputTextPass" ref="signupConfirmPassword" name="signupConfirmPassword" required/>
+							   			<span className="blocking-span noIb">
+											<input type="password" className="form-control pass oesSignUpForm confirmbtm inputTextPass" ref="signupPassword" name="signupPassword" required/>
 											<span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>					   			
 										</span>
 										<span className="input-group-addon customCls customCls1 glyphi-custommm">
@@ -217,11 +270,11 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 					                    </span>
 									</div>
 							   		<div className="input-group textpdEye fltlft col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-							   			<span className="blocking-span">
+							   			<span className="blocking-span noIb">
 											<input type="password" className="form-control pass oesSignUpForm confirmbtm inputTextPass" ref="signupConfirmPassword" name="signupConfirmPassword" required/>
-											<span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span>					   			
+											<span className="floating-label1"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span>					   			
 										</span>
-										<span className="input-group-addon customCls glyphi-custommm">
+										<span className="input-group-addon customCls customCls1 glyphi-custommm">
 											<i className="fa fa-eye Pass showPwd" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
 											<i className="fa fa-eye-slash Pass hidePwd" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
 										</span>
@@ -231,16 +284,25 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 									</div>
 								</div>
 							    <div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent termspad">
-					                <input  id="idacceptcondition" type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><Link to='#openModal' className="form-checkbox UMGrey1 modalbutton fontbold terms1" onClick={this.showModal.bind(this)}>&nbsp;I agree to the<span className="under"> terms & conditions</span><label className="requiredsign">*</label></Link>
+					                <input  id="idacceptcondition" type="checkbox"  value="acceptedconditions" onClick={this.acceptcondition.bind(this)}/><Link data-toggle="modal" data-target="#myModal" className="form-checkbox UMGrey1 modalbutton fontbold terms1" onClick={this.showModal.bind(this)}>&nbsp;I agree to the <span className="under"> terms & conditions</span><label className="sign">*</label></Link>
 					                <span className="checkmark1"></span>
 					            </div>
-		                        <div id="openModal" className="modalbg">
-		                            <div className="dialog">
-		                                <Link to='#close' title="Close" /*onClick={this.hideModal.bind(this)}*/ className="modalclose">X</Link>
-		                                <h2 className="modaltext">Terms & Conditions</h2>
-		                                <p className="modaltext modalpara modalparascroll">{/*this.state.termsCondition?this.state.termsCondition.instruction:null*/}</p>
-		                            </div>
-		                        </div>
+							    <div class="modal fade" id="myModal" role="dialog">
+							      <div class="modal-dialog">
+							        <div class="modal-content">
+							          <div class="modal-header">
+							            <button type="button" class="close" data-dismiss="modal">&times;</button>
+							            <h2 className="modaltext">Terms & Conditions</h2>
+							          </div>
+							          <div class="modal-body">
+							            <p className="modaltext modalpara modalparascroll">{this.state.termsCondition?this.state.termsCondition.instruction:null}</p>
+							          </div>
+							          <div class="modal-footer">
+							            <button type="button" class="btn btn-default" data-dismiss="modal">Proceed</button>
+							          </div>
+							        </div>
+							      </div>
+							    </div>
 
 								<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 form-group1 rrnRegisterBtn">
 							    	<input id="signUpBtn" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 acceptinput UMloginbutton UMloginbutton1 hvr-sweep-to-right" type="submit" value="Sign Up" disabled/>

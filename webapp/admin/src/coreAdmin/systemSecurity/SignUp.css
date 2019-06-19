@@ -7,14 +7,88 @@
   font-family: 'Roboto-Regular';
   src: url("/fonts/Roboto-Regular.ttf");
 }
+.signUpWrapper{
+  background: #fff;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0px !important;
+  margin-right: -15px !important;
+}
+.signupPadding{
+  padding-top:4%;
+}
+.signUpFormWrap, .forgetpassFormWrap, .confirmModalFormWrap{
+  border-radius: 10px;
+  height: 650px;
+  position: absolute;
+  box-shadow: 0px 0px 0px;
+
+}
+.divLoginInWrap{
+  z-index: 111;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 0px;
+}
+.signInNameTitle{
+  font-size: 20px;
+  margin-top: 13%;
+  margin-bottom: 10%;
+  color: #333333;
+}
+.signT{
+  margin-top: 30%;
+}
+.OESSubTitle2, .signUpNameTitle,.signInNameTitle,.resetpwdNameTitle{
+  text-align: center;
+  font-family:'Roboto-BoldCondensed';
+}
+.bordbt{
+  border-bottom: 2px solid #1d109d;
+}
+.marBtm30{
+  margin-bottom: 30px;
+}
+.noIb {
+    display: initial;
+}
+.boxMarg{
+  margin-bottom: 20px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .firstverification{
   margin-top: 32%;
 }
-.formbg1{
-  background-image: url("/images/formbg.png");
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-}
+
 .logoImg{
   margin-top: 12%;
   margin-bottom: 4%;
@@ -36,12 +110,7 @@
     background-size: 100% 100%;
     height: 100vh;
 }
-.divLoginInWrap{
-  z-index: 111;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-bottom: 0px;
-}
+
 .divConfirmOtpModalWrap, .divForgotPasswordWrap, 
 .divResetPasswordWrap, .divVerifyEmailWrap{
   z-index: 111;
@@ -52,12 +121,9 @@
 .loginPadding{
   padding-top:80px;
 }
-.signupPadding{
-  padding-top:4%;
-}
+
 .forgotpwd{
   margin-top:75px;
-
 }
 .box-view2{
   box-shadow: 0px 0px 86px;
@@ -86,12 +152,11 @@
   margin-bottom: 35px;
 }
 
-.spotylTextbox{
+.abacusTextbox{
     border: 0 !important;
     box-shadow: none;
     border-bottom: 1px solid #efefef !important;
     border-radius: 4px;
-    margin-bottom: 20px !important;
     height: 35px !important;
     font-size: 16px;
     background: #d8d8d8;
@@ -120,13 +185,13 @@
 .padBoth{
   padding: 6px 9px;
 }
-.spotylTextbox:focus{
+.abacusTextbox:focus{
     box-shadow: none;
 }
 .floating-label {
   position: absolute;
   pointer-events: none;
-  left: 18px;
+  left: 25px;
   top: 8px;
   color: #555;
   font-weight: 600;
@@ -330,14 +395,68 @@
   background: #fff;
   padding-bottom: 5%;
 }
-.signUpWrapper{
-  background: #fff;
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0px !important;
-  margin-right: -15px !important;
-  /*box-shadow: 1px 0px 20px #333;*/
+.customFl{
+  float: left;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .UMGrey,.UMGrey1,.UMGreyy, .UMIHaveRead{
   color: #999;
   /*font-family: Poppins-Regular;*/
@@ -355,11 +474,7 @@
   color: #337ab7;
   text-decoration: underline;
 }*/
-.customFl{
-  float: left;
-  padding-left: 0px;
-  padding-right: 0px;
-}
+
 .UMGreyy{
   color: #333333;
   float: left;
@@ -537,51 +652,17 @@
 .mrleft{
   margin-left: 7px;
 }
-.bordbt{
-  border-bottom: 2px solid #1d109d;
-}
+
 .signUpBanner{
   margin-top: 12%;
 }
-.signUpFormWrap, .forgetpassFormWrap, .confirmModalFormWrap{
-  /*background-image: url("/images/formbg.png");*/
-    /*border: 1px solid #fff;*/
-    border-radius: 10px;
-    height: 650px;
-    /*margin-top: 1.2%;*/
-    position: absolute;
-    /*margin-top: 2.2%;*/
-    /*background: #fff;*/
-    box-shadow: 0px 0px 0px;
-    /*padding-bottom: 30px;
-    padding-top: 30px;*/
-    /*min-height: 555px;*/
-}
-/*.loginOesWrap{
-  margin-top: 2.2%;
-}*/
-.confirmModalFormWrap{
-  /*margin-top: 1.2%;*/
-}
-.forgetpassFormWrap{
-  /*margin-top: 11.5%;*/
-}
-/*.emailVerifyPage{
-  margin-top: 2.2%;
-}*/
-.resetPassWrap{
-  /*margin-top: 12.5%;*/
-}
-.OESSubTitle2, .signUpNameTitle,.signInNameTitle,.resetpwdNameTitle{
-  text-align: center;
-  /*font-family:'Roboto-BoldCondensed';*/
-  font-family:'Roboto-BoldCondensed';
-}
+
+
 .signUpNameTitle{
-    font-size: 20px;
-    margin-top: 15%;
-    margin-bottom: 5%;
-    color: #333333;
+  font-size: 20px;
+  margin-top: 15%;
+  margin-bottom: 5%;
+  color: #333333;
 }
 .resetpwdNameTitle{
   /*margin-bottom: 30px;*/
@@ -590,15 +671,7 @@
   margin-bottom: 10%;
   color: #333333;
 }
-.signInNameTitle{
-  font-size: 20px;
-  margin-top: 13%;
-  margin-bottom: 20%;
-  color: #333333;
-}
-.signT{
-  margin-top: 30%;
-}
+
 .OESSubTitle{
   font-weight: normal;
   color: #555;
@@ -689,7 +762,7 @@
 .floating-label1 {
     position: absolute;
     pointer-events: none;
-    left: 12px;
+    left: 17.5px;
     top: 8px;
     color: #555;
     font-weight: 600;
@@ -709,7 +782,7 @@
 }
 .form-group1{
   float:left;
-  margin-bottom:0px!important;
+  margin-bottom:0px;
 
 }
 .form-group2{
@@ -802,7 +875,7 @@
 }
 a { color: #333; text-decoration: none; }
 .modaltext{
-  color:#fff;
+  color:#666;
 }
 .termsconditionslink{
   margin-bottom:10px;
@@ -855,12 +928,7 @@ a { color: #333; text-decoration: none; }
   padding-right: 5%;
 
 }
-.loginforms1{
-  padding-top: 4.5%;
-  padding-left: 20%;
-  padding-right: 5%;
 
-}
 
 .termspad{
     padding-bottom: 15px;
@@ -892,6 +960,9 @@ a { color: #333; text-decoration: none; }
 }
 .veribtm{
   margin-bottom: 30px;
+}
+.veribtm1{
+  margin-bottom: 15px;
 }
 .veriemail{
   padding-left: 7px;
@@ -1118,9 +1189,7 @@ input[type="radio"]:checked:before {
 .marBtm{
   margin-bottom: 20px;
 }
-.marBtm30{
-  margin-bottom: 30px;
-}
+
 /*.showPwd,.hidePwd1C,.hidePwd1,.showPwdC{
   display: block;
 }

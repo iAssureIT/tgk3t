@@ -67,7 +67,7 @@ class CompanyInformation extends Component{
       }
 
     };
-    this.validator = new SimpleReactValidator();
+   
     this.handleChange = this.handleChange.bind(this);
   }
 
