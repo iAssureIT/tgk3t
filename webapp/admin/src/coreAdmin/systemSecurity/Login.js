@@ -22,7 +22,7 @@ class Login extends Component {
           loggedIn : false,
           auth: {
                 email           : '',
-                password        : '',
+                pwd        : '',
             }
         }
   }
@@ -34,11 +34,11 @@ class Login extends Component {
     console.log("in login mode",this.state.auth);
         var auth= {
           email       : this.refs.loginusername.value,
-          password    : this.refs.loginpassword.value,
+          pwd         : this.refs.loginpassword.value,
         }
 
     axios
-      .post('/user/login',auth,)
+      .post('/api/users/details',auth,)
       .then((response)=> {
         console.log("-------userData------>>",response);
         // this.setState({

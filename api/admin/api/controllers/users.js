@@ -5,6 +5,8 @@ const jwt		= require("jsonwebtoken");
 const User = require('../models/users');
 
 exports.user_signup = (req,res,next)=>{
+	console.log('in signup');
+	var roleData = req.body.role;
 	User.find({emails:{$elemMatch:{address:req.body.email}}})
 	// User.find({username:req.body.email})
 		.exec()
@@ -47,7 +49,7 @@ exports.user_signup = (req,res,next)=>{
 													otpMobile	  : req.body.otpMobile,
 													optEmail	  : req.body.optEmail
 										},
-										roles 		: [(req.body.role).toLowerCase()]
+										roles 		: [roleData]
 			            });	
 						user.save()
 							.then(result =>{

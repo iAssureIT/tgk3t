@@ -149,7 +149,7 @@ class CompanyLocation extends Component{
   
     }//close array
     if(formValid(this.state.formerrors)){
-    axios.patch(' http://apitgk3t.iassureit.com',{companyLocationFormValue})
+    axios.patch('http://apitgk3t.iassureit.com',{companyLocationFormValue})
     .then(function (response) {
       // handle success
       console.log(response);

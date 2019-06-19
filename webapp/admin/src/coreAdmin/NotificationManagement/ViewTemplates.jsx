@@ -12,7 +12,9 @@ import CKEditor 				  	from "react-ckeditor-component";
 import validator 					from 'validator';
 import 'jquery-validation';
 import './notification.css';
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+
+axios.defaults.baseURL = 'http://localhost:3006';
+// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 class ViewTemplates extends Component{

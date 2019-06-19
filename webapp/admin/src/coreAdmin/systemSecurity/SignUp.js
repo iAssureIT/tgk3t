@@ -39,8 +39,9 @@ class SignUp extends Component {
                 lastname        : '',
                 mobNumber       : '',
                 email           : '',
-                password        : '',
+                pwd       		: '',
                 signupPassword  : '',
+                role 			: ''
                
             },
              formerrors :{
@@ -64,8 +65,9 @@ class SignUp extends Component {
 	                lastname        : this.refs.lastname.value,
 	                mobNumber       : this.refs.mobNumber.value,
 	                email           : this.refs.signupEmail.value,
-	                password        : this.refs.signupPassword.value,
+	                pwd        		: this.refs.signupPassword.value,
 	                signupPassword  : this.refs.signupConfirmPassword.value,
+	                role 			: 'users'
 	            }
 	            
  			console.log("-------auth------>>",auth);
@@ -87,7 +89,7 @@ class SignUp extends Component {
 		             document.getElementById("signUpBtn").value = 'Sign Up',
       				// browserHistory.push("/"),
                 	axios
-                	 	.post('/user/signup',auth,)
+                	 	.post('/api/users',auth)
 			            .then((response)=> {
 			                console.log("-------userData------>>",response);
 		            		swal("Great","Information submitted successfully and OTP is sent to your registered Email ID and Mobile no","success");
@@ -100,7 +102,7 @@ class SignUp extends Component {
 			            })
 			            .catch(function (error) {
 			                console.log(error);
-        					swal("Email already exist","Entered email is already exist, please enter another email id","warning");
+        					swal("Unable to submit data ",error);
 			            })
                 	)
                 :
