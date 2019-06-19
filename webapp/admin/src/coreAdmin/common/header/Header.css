@@ -6,6 +6,7 @@
     font-weight: bold;
     padding-top: 20px;
     color: #fff;
+    cursor: pointer;
 }
 .hover:hover{
     background-color: #367fa9;
