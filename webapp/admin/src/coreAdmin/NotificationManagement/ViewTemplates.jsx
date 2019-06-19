@@ -10,7 +10,7 @@ import AllSMSTemplateRow          	from './sms/AllSMSTemplateRow.jsx';
 import SMSTemplateRow             	from './sms/SMSTemplateRow.jsx';
 import CKEditor 				  	from "react-ckeditor-component";
 import validator 					from 'validator';
-import 'jquery-validation';
+// import 'jquery-validation';
 import './notification.css';
 
 axios.defaults.baseURL = 'http://localhost:3006';
