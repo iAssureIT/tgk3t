@@ -4,11 +4,88 @@ const jwt		= require("jsonwebtoken");
 
 const User = require('../models/users');
 
+exports.user_signup_login_tgk = (req,res,next)=>{
+	console.log('user signup and login');
+	User.find({emails:{$elemMatch:{address:req.body.email}}})
+		.exec()
+		.then(user =>{
+			if(user.length >= 1){
+				return res.status(409).json({
+					message: 'Email Id already exits.'
+				});
+			}else{
+				bcrypt.hash(req.body.pwd,10,(err,hash)=>{
+					if(err){
+						return res.status(500).json({
+							error:err
+						});
+					}else{
+						const user = new User({
+										_id: new mongoose.Types.ObjectId(),
+										createdAt	: new Date,
+										services	: {
+											password:{
+														bcrypt:hash
+														},
+										},
+										username	: req.body.email,
+										emails		: [
+												{
+													address  : req.body.email,
+													verified : true 
+												}
+										],
+										profile		:{
+													name	      : req.body.name,
+													emailId       : req.body.email,
+													mobNumber     : req.body.mobNumber,
+													createdOn     : new Date(),
+													userCode	  : req.body.pwd.split("").reverse().join(""),
+													status		  : req.body.status,
+													// otpMobile	  : req.body.otpMobile,
+													// optEmail	  : req.body.optEmail
+										},
+										roles 		: [(req.body.role).toLowerCase()]
+			            });	
+						user.save()
+							.then(result =>{
+								// console.log('signup result ',result);
+								const token = jwt.sign({
+															email 	: req.body.email,
+															userId	:  mongoose.Types.ObjectId(user._id) ,
+														},process.env.JWT_KEY,
+														{
+															expiresIn: "365 days"
+														}
+													);
+								res.status(201).json({
+									userCode	: result._id,
+									name		:result.profile.name,
+									token		: token
+								})
+							})
+							.catch(err =>{
+								console.log(err);
+								res.status(500).json({
+									error: err
+								});
+							});
+					}			
+				});
+			}
+		})
+		.catch(err =>{
+			console.log(err);
+			res.status(500).json({
+				error: err
+			});
+		});
+}
+
 exports.user_signup = (req,res,next)=>{
 	console.log('in signup');
 	var roleData = req.body.role;
 	User.find({emails:{$elemMatch:{address:req.body.email}}})
-	// User.find({username:req.body.email})
 		.exec()
 		.then(user =>{
 			if(user.length >= 1){

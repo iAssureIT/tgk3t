@@ -9,6 +9,8 @@ router.get('/list', UserController.users_list); //Working
 
 router.post('/', UserController.user_signup); //Working
 
+router.post('/login', UserController.user_signup_login_tgk); //
+
 router.post('/details',UserController.user_login); //Working
 
 router.delete('/delete/:userID',UserController.user_delete);

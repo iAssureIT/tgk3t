@@ -24,16 +24,16 @@ const userSchema = mongoose.Schema({
 			}
 	],
 	profile :{
-		firstname 		: String,
-		lastname  		: String,
-		fullName  		: String,
+		// firstname 		: String,
+		// lastname  		: String,
+		name	  		: String,
 		emailId   		: String,
 		mobNumber 		: String,
 		profilepic		: String,
 		pwd 			: String,
 		status			: String,
-		otpMobile		: Number,
-		optEmail		: Number
+		// otpMobile		: Number,
+		// optEmail		: Number
 	},
 	roles : [String],
 	heartbeat : Date
