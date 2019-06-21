@@ -4,7 +4,7 @@ const jwt		= require("jsonwebtoken");
 
 const User = require('../models/users');
 
-exports.user_signup_login_tgk = (req,res,next)=>{
+exports.user_signup_login_customer = (req,res,next)=>{
 	console.log('user signup and login');
 	User.find({emails:{$elemMatch:{address:req.body.email}}})
 		.exec()
@@ -36,7 +36,7 @@ exports.user_signup_login_tgk = (req,res,next)=>{
 												}
 										],
 										profile		:{
-													name	      : req.body.name,
+													fullname	  : req.body.name,
 													emailId       : req.body.email,
 													mobNumber     : req.body.mobNumber,
 													createdOn     : new Date(),
@@ -83,8 +83,7 @@ exports.user_signup_login_tgk = (req,res,next)=>{
 }
 
 exports.user_signup = (req,res,next)=>{
-	console.log('in signup');
-	var roleData = req.body.role;
+	var roleData = (req.body.role).toLowerCase();
 	User.find({emails:{$elemMatch:{address:req.body.email}}})
 		.exec()
 		.then(user =>{
@@ -123,8 +122,8 @@ exports.user_signup = (req,res,next)=>{
 													createdOn     : new Date(),
 													userCode	  : req.body.pwd.split("").reverse().join(""),
 													status		  : req.body.status,
-													otpMobile	  : req.body.otpMobile,
-													optEmail	  : req.body.optEmail
+													// otpMobile	  : req.body.otpMobile,
+													// optEmail	  : req.body.optEmail
 										},
 										roles 		: [roleData]
 			            });	

@@ -24,9 +24,9 @@ const userSchema = mongoose.Schema({
 			}
 	],
 	profile :{
-		// firstname 		: String,
-		// lastname  		: String,
-		name	  		: String,
+		firstname 		: String,
+		lastname  		: String,
+		fullname		: String,
 		emailId   		: String,
 		mobNumber 		: String,
 		profilepic		: String,

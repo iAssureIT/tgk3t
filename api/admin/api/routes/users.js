@@ -9,7 +9,7 @@ router.get('/list', UserController.users_list); //Working
 
 router.post('/', UserController.user_signup); //Working
 
-router.post('/login', UserController.user_signup_login_tgk); //
+router.post('/login', UserController.user_signup_login_customer); //
 
 router.post('/details',UserController.user_login); //Working
 
@@ -20,6 +20,5 @@ router.get('/:userID',UserController.user_details); //Working
 router.put('/',UserController.user_update);  //Working
 
 router.patch('/:rolestatus',UserController.user_change_role);  //Working
-
 
 module.exports = router;

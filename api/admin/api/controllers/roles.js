@@ -4,7 +4,8 @@ const Role = require('../models/roles');
 
 exports.create_role = (req,res,next)=>{
     var roleData = req.body.role;
-	Role.findOne({role:roleData.toLowerCase()})
+    var smallcaseData = roleData.toLowerCase();
+	Role.findOne({role:smallcaseData})
 		.exec()
 		.then(data =>{
 			if(data){
@@ -14,7 +15,7 @@ exports.create_role = (req,res,next)=>{
 			}else{
 				const role = new Role({
                     _id         : new mongoose.Types.ObjectId(),
-                    role        : roleData.toLowerCase(),
+                    role        : smallcaseData,
                     createdAt   : new Date()
                 });
                 role.save()
@@ -54,7 +55,8 @@ exports.list_role = (req,res,next)=>{
 
 exports.detail_role = (req,res,next)=>{
     var roleData = req.params.role;
-    Role.findOne({role:roleData.toLowerCase()})
+    var smallcaseData = roleData.toLowerCase();
+    Role.findOne({role:smallcaseData})
         .select("role")
         .exec()
         .then(data=>{
@@ -74,11 +76,13 @@ exports.detail_role = (req,res,next)=>{
 
 exports.update_role = (req,res,next)=>{
     var roleData = req.body.role;
+    var smallcaseData = roleData.toLowerCase();
+
     Role.updateOne(
             { _id:req.body.id},  
             {
                 $set:{
-                    "role" : roleData.toLowerCase()
+                    "role" : smallcaseData
                 }
             }
         )
