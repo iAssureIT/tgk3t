@@ -6,7 +6,8 @@ import './userManagement.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
-axios.defaults.baseURL = 'http://localhost:3006';
+import IAssureTable from '../../IAssureTable/IAssureTable.jsx';
+axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
@@ -18,34 +19,638 @@ class UMListOfUsers extends Component {
 		super(props);
 		this.state = {
 		 	allPosts : [],
+		 	"twoLevelHeader"    : {
+                apply           : false,
+            },
+            // "tableHeading"      : {
+            //     userName    : 'User Name',
+            //     Email    	: 'Email',
+            //     mobNumber   : 'Mobile Number', 
+            //     role        : 'Roles',
+            //     status      : 'Status',
+            //     actions     : 'Action',
+            // },
+             "tableHeading"      : {
+                templateType    : 'Template Type',
+                templateName    : 'Template Name',
+                subject         : 'Subject', 
+                contents        : 'Content',
+            },
+            "startRange"        : 0,
+            "limitRange"        : 10,
+            "completeDataCount" : 45,
 		}
 
 	}
 
 	componentDidMount(){
+		var data ={
+			limitRange : this.state.limitRange,
+			startRange : this.state.startRange,
+		}
 
-		
-		axios
-			.get('/users/list')
-			.then(
-				(res)=>{
-					console.log('res', res);
-					const postsdata = res.data;
-					console.log('postsdata',postsdata);
-					this.setState({
-						allPosts : postsdata,
-					});
-				}
-			)
-			.catch((error)=>{
+		// axios.post('/api/users/list', data)
+		// .then( (res)=>{
+		// 	console.log('res', res);
+		// 	const postsdata = res.data;
+		// 	console.log('postsdata',postsdata);
+		// 	this.setState({
+		// 		tableData : postsdata,
+		// 	});
+		// })
+		// .catch((error)=>{
+		// 	console.log("error = ",error);
+		// 	alert("Something went wrong! Please check Get URL.");
+		// });	
 
-				console.log("error = ",error);
-				// alert("Something went wrong! Please check Get URL.");
-				 });				
-
+		var tableDatas = [
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Registration',
+                subject         : 'User Registered Successfully.', 
+                contents        : 'Content 1',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Registration',
+                subject         : 'User Registered Successfully.', 
+                contents        : 'Content 2',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Registration',
+                subject         : 'User Registered Successfully.', 
+                contents        : 'Content 3',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 4',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 5',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 6',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 7',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 8',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 9',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 10',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 11',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 12',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 13',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 14',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 15',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 16',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 17',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 18',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 19',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 20',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 21',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 22',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 23',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 24',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 25',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 26',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 27',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 28',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 29',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 30',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 31',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 32',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 33',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 34',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 35',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 36',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 37',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 38',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 39',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 40',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 41',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 42',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 43',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 44',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 45',
+            },
+        ]
+        
+        this.setState({
+        	completeDataCount : tableDatas.length,
+        	tableData : tableDatas.slice(this.state.startRange, this.state.limitRange),
+        	
+        },()=>{
+        	console.log('completeDataCount', this.state.completeDataCount);
+        })	
 	}
+	getData(startRange, limitRange){        
+        var data ={
+			limitRange : limitRange,
+			startRange : startRange,
+		}
+
+		// axios.post('/api/users/list', data)
+		// .then( (res)=>{
+		// 	console.log('res', res);
+		// 	const postsdata = res.data;
+		// 	console.log('postsdata',postsdata);
+		// 	this.setState({
+		// 		tableData : postsdata,
+		// 	});
+		// })
+		// .catch((error)=>{
+		// 	console.log("error = ",error);
+		// 	alert("Something went wrong! Please check Get URL.");
+		// });
+
+		var tableDatas = [
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Registration',
+                subject         : 'User Registered Successfully.', 
+                contents        : 'Content 1',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Registration',
+                subject         : 'User Registered Successfully.', 
+                contents        : 'Content 2',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Registration',
+                subject         : 'User Registered Successfully.', 
+                contents        : 'Content 3',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 4',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 5',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 6',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 7',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 8',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 9',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 10',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 11',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 12',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 13',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 14',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 15',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 16',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 17',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 18',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 19',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 20',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 21',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 22',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 23',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 24',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 25',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 26',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 27',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 28',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 29',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 30',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 31',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 32',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 33',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 34',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 35',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 36',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 37',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 38',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 39',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 40',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 41',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 42',
+            },
+            {
+                templateType    : 'Notification',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 43',
+            },
+            {
+                templateType    : 'Email',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 44',
+            },
+            {
+                templateType    : 'SMS',
+                templateName    : 'User Login',
+                subject         : 'User loggedin Successfully.', 
+                contents        : 'Content 45',
+            },
+        ]
+        
+        this.setState({
+        	tableData : tableDatas.slice(startRange, limitRange),
+        	completeDataCount : tableDatas.length
+        })
+    }
+    getSearchText(searchText, startRange, limitRange){
+        console.log(searchText, startRange, limitRange);
+        this.setState({
+            tableData : []
+        });
+    }
 
 render(){
+	console.log('this.state.completeDataCount', this.state.completeDataCount);
      return(
    		<div className="">
    		<div className="">
@@ -126,157 +731,18 @@ render(){
 											</select>
 										</div>
 
-										<div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6">
-											<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12">Users/Page</label>
-			                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			                                	<select  id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
-			                                		<option value="Not Selected">Select Limit</option>
-			                                		<option value={10}>10</option>
-			                                		<option value={25}>25</option>
-			                                		<option value={50}>50</option>
-			                                		<option value={100}>100</option>
-			                                		<option value={500}>500</option>
-			                                	</select>
-			                                </div>
-										</div>
+										
 									</div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  usrmgnhead">
-										<div className="table-responsive">
-											<table id="listOfUsersDwnld" className="table iAssureITtable-bordered table-striped table-hover" >
-												<thead className="tempTableHeader">
-													<tr className="">
-														<th className="umDynamicHeader srpadd">
-															<input type="checkbox" className="allSelector col-lg-1 col-md-1 col-sm-3 col-xs-1 umchksett" name="allSelector"/> 
-								
-														</th>
-														
-														<th className="umDynamicHeader srpadd ">
-															<span className="" >User Name&nbsp;&nbsp;
-																<span className="fa fa-caret-up custom  namesortup"  id="sortup" />
-																<span className="fa fa-caret-down custom namesortdown" id="sortdown"/>   
-															</span>
-														</th>
-														<th className="umDynamicHeader srpadd "> Email&nbsp;&nbsp;
-															<span className="fa fa-caret-up custom  mailsortup " id="mailsortup"/>
-															<span className="fa fa-caret-down custom mailsortdown" id="mailsortdown"/> 	
-														</th>
-				
-														<th className="umDynamicHeader srpadd">Mobile Number
-
-														</th>
-														<th className="umDynamicHeader srpadd ">Roles </th>
-														<th className="umDynamicHeader srpadd ">Status</th>
-														
-														<th className="umDynamicHeader srpadd ">  Action </th>				
-													</tr>
-												</thead>
-											{ this.state.allPosts 
-											?
-												this.state.allPosts.length>0 
-												? 												
-												<tbody className="noLRPad ">
-														{ this.state.allPosts.map( (usersData, index)=>{
-																return(
-																<tr className="" key={index}>		
-																	<td className="">
-																		<input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={usersData._id} /> 
-																	
-																	</td>
-																	
-																	<td className="">{usersData.profile.fullName}
-																	</td>	
-																	<td className=""> 
-																		{usersData.username}
-																	</td>	
-																	
-																	<td className="">{usersData.profile.mobNumber}</td>	
-																	<td className="">{usersData.roles}</td>
-																	
-															
-																		
-																	{/*<td className=" col-lg-2 col-md-2 col-sm-2 col-xs-2"> {this.lastLogin()} </td>	*/}
-																	<td className=""> 
-																		{/*<div className="activeStat">{this.onlineStatus()}</div>	*/}
-
-
-																		{
-																			usersData.profile.status == "Active" ?
-																				<div className="activeStat" title="Active user"></div>
-
-																			:
-																				<div className="inactiveStat" title="Blocked user"></div>
-																		}
-																	</td>	
-																	{/*<td className=""> */}
-																	<td className="">
-																		<i className="fa fa-key" aria-hidden="true" title="Change Password " data-toggle="modal" data-target={"#RestpwdModal-"+usersData._id}></i> &nbsp; &nbsp;
-																		<i className="fa fa-pencil" aria-hidden="true" title="Edit Profile" id={usersData._id}></i> &nbsp; &nbsp;
-																		<i className="fa fa-trash redFont" aria-hidden="true" title="Delete User " data-toggle="modal" data-target={"#showDeleteModal-"+usersData._id}></i>
-																	</td>
-																	{/*</td>	*/}
-
-						
-									                                <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal-"+usersData._id} role="dialog">
-	                                                                <div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                                  <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
-	                                                                    <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                                    <div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-11 col-md-1 col-md-offset-11 col-sm-1 col-sm-offset-11 col-xs-12 NOpadding-left NOpadding-right">
-	                                                                      <button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"showDeleteModal-"+usersData._id}>&times;</button>
-	                                                                    </div>
-	                                                                   
-	                                                                
-	                                                                    </div>
-	                                                                    <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                                      <h4 className="blackLightFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12">Are you sure you want to delete this User?</h4>
-	                                                                    </div>
-	                                                                    
-	                                                                    <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	                                                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
-	                                                                      </div>
-	                                                                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	                                                                        <button id={usersData._id} type="button" className="btn adminFinish-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
-	                                                                      </div>
-	                                                                    </div>
-	                                                                  </div>
-	                                                                </div>
-	                                                            </div>
-													</tr>)
-
-
-													
-														}) 
-													
-													}
-														
-												</tbody>
-												:
-												<tbody>
-							                      <tr className="trAdmin">
-							                        <td colSpan="9" className="noTempData">No Record Found!</td>
-							                      </tr>
-							                    </tbody> 
-													
-											:
-											<tbody>
-												<td colSpan="9" >
-													{/*<td colSpan="9" className="ntdiaplay">Nothing to display.</td>*/}
-													<div className="loaderimgcent col-lg-12 col-md-12  "><img src="/images/loadersglms.gif" className="loaderimgcent" alt=""/></div>
-
-												</td>
-											</tbody>
-											
-											}
-										</table>
-										</div>
-										{this.state.showMore == true ?
-											<button onClick={this.showMore.bind(this)} className="col-lg-2 col-lg-offset-5 col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-3 col-xs-4 col-xs-offset-3 btn showMore marginTop17">Show More</button>
-											:
-											null
-					                    }
+										<IAssureTable
+										completeDataCount={this.state.completeDataCount}
+			                            twoLevelHeader={this.state.twoLevelHeader} 
+			                            getData={this.getData.bind(this)} 
+			                            tableHeading={this.state.tableHeading} 
+			                            tableData={this.state.tableData} 
+			                            getSearchText={this.getSearchText.bind(this)} 
+										/>				
 									</div>
-								
-					
 								</form>
 						    </div>
 

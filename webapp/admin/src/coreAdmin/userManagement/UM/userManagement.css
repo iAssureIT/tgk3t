@@ -2,7 +2,15 @@
   font-family:'Raleway-Regular';
   src: url("/fonts/MYRIADPROREGULAR.ttf");
 }
+
+.zzero{
+  z-index: 0;
+}
+
 /*====Anuja====*/
+.topMargin{
+  margin-top: 15px;
+}
 .formcntrl{
   background: #eee;
   border-radius: 0px;
@@ -15,6 +23,7 @@
 .rdbtnlf{
   margin-left: 15px
 }
+
 .toppadding{
   padding-top:30px!important;
 }

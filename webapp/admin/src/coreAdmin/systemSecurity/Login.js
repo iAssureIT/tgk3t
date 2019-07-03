@@ -10,7 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3006';
+axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -22,7 +22,7 @@ class Login extends Component {
           loggedIn : false,
           auth: {
                 email           : '',
-                pwd        : '',
+                pwd             : '',
             }
         }
   }

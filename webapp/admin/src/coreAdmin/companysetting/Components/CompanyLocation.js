@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 
 import axios from 'axios';
 
+// import "../../../API";
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
   let valid = true;
@@ -18,6 +19,7 @@ const companycontact  = RegExp(/^[0-9][0-9]{9}$|^$/);
 const companylocation = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const companybuilding = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const companynameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
+const companypincodeRegex = RegExp(/^[1-9][0-9]{5}$/);
 class CompanyLocation extends Component{
   constructor(props) {
     super(props);
@@ -107,7 +109,7 @@ class CompanyLocation extends Component{
       break;
 
       case 'pincode' : 
-        formerrors.pincode = companynameRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+        formerrors.pincode = companypincodeRegex.test(value)  && value.length>0 ? '' : "Invalid Pincode";
       break;
 
 
@@ -149,7 +151,7 @@ class CompanyLocation extends Component{
   
     }//close array
     if(formValid(this.state.formerrors)){
-    axios.patch('http://apitgk3t.iassureit.com',{companyLocationFormValue})
+    axios.patch('apitgk3t.iassureit.com/api/add/locationlabel',{companyLocationFormValue})
     .then(function (response) {
       // handle success
       console.log(response);

@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { render }           from 'react-dom';
 import $ from "jquery";
 import axios from 'axios';
-import SimpleReactValidator from 'simple-react-validator';
+// import SimpleReactValidator from 'simple-react-validator';
 import swal from 'sweetalert';
-import InputMask      		from 'react-input-mask';
+import InputMask  from 'react-input-mask';
 
+import "../../../API";
+// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+axios.defaults.headers.post['Content-Type']='application/json';
 
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);

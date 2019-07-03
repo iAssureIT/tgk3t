@@ -24,7 +24,7 @@ export default class UMRolesList extends Component {
 	componentDidMount(){
 
 		axios
-			.get('/roles/list')
+			.get('/api/roles/list')
 			.then(
 				(res)=>{
 					console.log('res', res);
@@ -80,6 +80,7 @@ export default class UMRolesList extends Component {
 												</thead>
 												<tbody>
 												{this.state.allPosts.map( (roleData, index)=>{
+													console.log('roleData',roleData);
 												   return( 
 													<tr>
 														<td className="textAlignLeft">{roleData.role}</td>		

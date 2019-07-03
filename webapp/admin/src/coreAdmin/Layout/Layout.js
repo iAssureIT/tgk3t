@@ -53,6 +53,8 @@ componentDidMount(){
            $('#dashbordid').toggleClass('dashboardeffect');
        });
     });
+
+
     const token = localStorage.getItem("token");
     console.log("Dashboard Token = ",token);
     if(token!==null){
@@ -60,6 +62,8 @@ componentDidMount(){
       this.setState({
         loggedIn : true
       })
+    }else{
+      console.log("token is not available");
     }
               
   }
@@ -75,12 +79,29 @@ componentDidMount(){
       // this.props.history.push("/login");
     }
   }
+/*
+                      <Router>
+                          <Switch>
+                          <Route path="/umlistofusers" component={UMListOfUsers} exact />
+                          <Route path="/umroleslist" component={UMRolesList} exact />
+                          <Route path="/edituserprofile" component={EditUserProfile} exact />
+
+                          <Route path="/ViewTemplates" component={ViewTemplates} exact />
+                          <Route path="/dashboard" component={Dashboard} exact />
+
+                          <Route path="/companysetting" component={CompanySetting} exact />
+                          </Switch>        
+                      </Router>
+*/
+
 
   render(){
+    console.log("props = ",this.props);
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===true){
+    if(this.state.loggedIn===false){
       return(
             <div className="App container-fluid">
+           
                 <div className="row">
                   <div id="headerid" className="headerbackgroundcolor ">
                     <div className="">
@@ -90,7 +111,7 @@ componentDidMount(){
                   <div className="">                  
                     <div id="dashbordid" className="">
                       <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
-                      <Router>
+                       <Router>
                           <Switch>
                           <Route path="/umlistofusers" component={UMListOfUsers} exact />
                           <Route path="/umroleslist" component={UMRolesList} exact />

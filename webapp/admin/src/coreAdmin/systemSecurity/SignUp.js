@@ -11,7 +11,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import './SignUp.css';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3006';
+axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -93,12 +93,8 @@ class SignUp extends Component {
 			            .then((response)=> {
 			                console.log("-------userData------>>",response);
 		            		swal("Great","Information submitted successfully and OTP is sent to your registered Email ID and Mobile no","success");
-			                this.props.history.push("/confirm-otp");
-			                // this.setState({
-			                //   practiceExamReport : reconfirm-otpsponse.data
-			                // });
-			                // localStorage.setItem("token",response.data.token);
-			                // direct.setState({loggedIn:response.data.token})
+			                // this.props.history.push("/confirm-otp");
+			                this.props.history.push("/login");
 			            })
 			            .catch(function (error) {
 			                console.log(error);
