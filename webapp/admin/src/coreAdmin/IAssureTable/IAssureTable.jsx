@@ -31,18 +31,22 @@ class IAssureTable extends Component {
 	}
 	componentDidMount() {
       $("html,body").scrollTop(0); 
-      this.paginationFunction();
+      // this.paginationFunction();
       // this.palindrome('Moam');
       console.log('completeDataCount in table', this.state.completeDataCount);
       this.setState({
       	tableHeading	: this.props.tableHeading,
-      	tableData 		: this.props.tableData
+      	tableData 		: this.props.tableData,
+      	completeDataCount : this.props.completeDataCount
       })
 	}
 	componentWillReceiveProps(nextProps) {
         this.setState({
             tableData	    : nextProps.tableData,
-            editId 			: nextProps.editId,
+            completeDataCount : nextProps.completeDataCount
+        },()=>{
+        	this.paginationFunction();
+        	console.log('completeDataCount=====', this.state.completeDataCount);	
         })
     }
 	componentWillUnmount(){

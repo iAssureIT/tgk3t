@@ -45,12 +45,12 @@ componentDidMount(){
           {/* <Link to="/companysetting">Company Settings</Link> */}
           {/* <Link to="/ViewTemplates">Notification Management</Link>  */}
           <ul className="list-unstyled components">
-                    <li className="active">
+                    {/*<li className="active">
                     <a href="#">
                            
                             Dashboard
                      </a>
-                    </li>
+                    </li>*/}
                     <li>
                         <a href="#companysetting" data-toggle="collapse" aria-expanded="false">
                          

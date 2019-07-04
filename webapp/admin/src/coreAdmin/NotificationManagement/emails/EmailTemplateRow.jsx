@@ -25,13 +25,36 @@ class EmailTemplateRow extends Component{
 		event.preventDefault();
 		var id = event.target.id;
 		console.log("id",id);
-		axios.delete('/api/masternotifications/'+id)
+		const token = '';
+		const url = '/api/masternotificationsDel/'+id ;
+		const headers = {
+			    "Authorization" : token,
+			    "Content-Type" 	: "application/json",
+			};
+
+		// axios.delete( url, headers )
+		// .then((response)=> {
+	 //    	console.log('delete response',response);
+		// }).catch((error)=> {
+		//     // handle error
+		//     console.log(error);
+		// });
+
+		axios({
+			method: "DELETE",
+			url : url,
+			headers: headers,
+			timeout: 3000,
+			data: null,
+		})
 		.then((response)=> {
 	    	console.log('delete response',response);
 		}).catch((error)=> {
 		    // handle error
 		    console.log(error);
 		});
+
+
 	}
 	editEmailNotify(event){
 		// var id = this.props.emailtemplateValues._id;

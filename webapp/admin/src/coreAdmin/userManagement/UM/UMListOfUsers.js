@@ -1,7 +1,7 @@
-import React, { Component } 		from 'react';
-import CreateUser 					from './CreateUser.js';
+import React, { Component } 		  from 'react';
+import CreateUser 					       from './CreateUser.js';
 import axios                        from 'axios';
-
+import _                        from 'underscore';
 import './userManagement.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -38,7 +38,7 @@ class UMListOfUsers extends Component {
             },
             "startRange"        : 0,
             "limitRange"        : 10,
-            "completeDataCount" : 45,
+            // "completeDataCount" : 45,
 		}
 
 	}
@@ -49,296 +49,298 @@ class UMListOfUsers extends Component {
 			startRange : this.state.startRange,
 		}
 
-		// axios.post('/api/users/list', data)
-		// .then( (res)=>{
-		// 	console.log('res', res);
-		// 	const postsdata = res.data;
-		// 	console.log('postsdata',postsdata);
-		// 	this.setState({
-		// 		tableData : postsdata,
-		// 	});
-		// })
-		// .catch((error)=>{
-		// 	console.log("error = ",error);
-		// 	alert("Something went wrong! Please check Get URL.");
-		// });	
+		axios.get('/api/users/list')
+		.then( (res)=>{
+			console.log('res', res);
+			const postsdata = _.flatten(res.data);
 
-		var tableDatas = [
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Registration',
-                subject         : 'User Registered Successfully.', 
-                contents        : 'Content 1',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Registration',
-                subject         : 'User Registered Successfully.', 
-                contents        : 'Content 2',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Registration',
-                subject         : 'User Registered Successfully.', 
-                contents        : 'Content 3',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 4',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 5',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 6',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 7',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 8',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 9',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 10',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 11',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 12',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 13',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 14',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 15',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 16',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 17',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 18',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 19',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 20',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 21',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 22',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 23',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 24',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 25',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 26',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 27',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 28',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 29',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 30',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 31',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 32',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 33',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 34',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 35',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 36',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 37',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 38',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 39',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 40',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 41',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 42',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 43',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 44',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 45',
-            },
-        ]
+			console.log('postsdata====================',postsdata);
+			this.setState({
+				tableData : postsdata,
+			});
+		})
+		.catch((error)=>{
+			console.log("error = ",error);
+			alert("Something went wrong! Please check Get URL.");
+		});	
+
+		  // var tableDatas = [
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Registration',
+    //             subject         : 'User Registered Successfully.', 
+    //             contents        : 'Content 1',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Registration',
+    //             subject         : 'User Registered Successfully.', 
+    //             contents        : 'Content 2',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Registration',
+    //             subject         : 'User Registered Successfully.', 
+    //             contents        : 'Content 3',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 4',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 5',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 6',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 7',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 8',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 9',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 10',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 11',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 12',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 13',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 14',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 15',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 16',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 17',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 18',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 19',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 20',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 21',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 22',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 23',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 24',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 25',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 26',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 27',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 28',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 29',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 30',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 31',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 32',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 33',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 34',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 35',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 36',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 37',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 38',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 39',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 40',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 41',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 42',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 43',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 44',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 45',
+    //         },
+    //     ]
         
         this.setState({
-        	completeDataCount : tableDatas.length,
-        	tableData : tableDatas.slice(this.state.startRange, this.state.limitRange),
+        	completeDataCount : 0,
+        	// tableData : tableDatas.slice(this.state.startRange, this.state.limitRange),
+          tableData : [],
         	
         },()=>{
         	console.log('completeDataCount', this.state.completeDataCount);
@@ -350,7 +352,7 @@ class UMListOfUsers extends Component {
 			startRange : startRange,
 		}
 
-		// axios.post('/api/users/list', data)
+		// axios.post('/api/users/users', data)
 		// .then( (res)=>{
 		// 	console.log('res', res);
 		// 	const postsdata = res.data;
@@ -364,282 +366,281 @@ class UMListOfUsers extends Component {
 		// 	alert("Something went wrong! Please check Get URL.");
 		// });
 
-		var tableDatas = [
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Registration',
-                subject         : 'User Registered Successfully.', 
-                contents        : 'Content 1',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Registration',
-                subject         : 'User Registered Successfully.', 
-                contents        : 'Content 2',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Registration',
-                subject         : 'User Registered Successfully.', 
-                contents        : 'Content 3',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 4',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 5',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 6',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 7',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 8',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 9',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 10',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 11',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 12',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 13',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 14',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 15',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 16',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 17',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 18',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 19',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 20',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 21',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 22',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 23',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 24',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 25',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 26',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 27',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 28',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 29',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 30',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 31',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 32',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 33',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 34',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 35',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 36',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 37',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 38',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 39',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 40',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 41',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 42',
-            },
-            {
-                templateType    : 'Notification',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 43',
-            },
-            {
-                templateType    : 'Email',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 44',
-            },
-            {
-                templateType    : 'SMS',
-                templateName    : 'User Login',
-                subject         : 'User loggedin Successfully.', 
-                contents        : 'Content 45',
-            },
-        ]
+		  // var tableDatas = [
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Registration',
+    //             subject         : 'User Registered Successfully.', 
+    //             contents        : 'Content 1',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Registration',
+    //             subject         : 'User Registered Successfully.', 
+    //             contents        : 'Content 2',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Registration',
+    //             subject         : 'User Registered Successfully.', 
+    //             contents        : 'Content 3',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 4',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 5',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 6',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 7',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 8',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 9',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 10',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 11',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 12',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 13',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 14',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 15',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 16',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 17',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 18',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 19',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 20',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 21',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 22',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 23',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 24',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 25',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 26',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 27',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 28',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 29',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 30',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 31',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 32',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 33',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 34',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 35',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 36',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 37',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 38',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 39',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 40',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 41',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 42',
+    //         },
+    //         {
+    //             templateType    : 'Notification',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 43',
+    //         },
+    //         {
+    //             templateType    : 'Email',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 44',
+    //         },
+    //         {
+    //             templateType    : 'SMS',
+    //             templateName    : 'User Login',
+    //             subject         : 'User loggedin Successfully.', 
+    //             contents        : 'Content 45',
+    //         },
+    //     ]
         
         this.setState({
-        	tableData : tableDatas.slice(startRange, limitRange),
-        	completeDataCount : tableDatas.length
+        	// tableData : tableDatas.slice(startRange, limitRange),
         })
     }
     getSearchText(searchText, startRange, limitRange){
@@ -650,7 +651,7 @@ class UMListOfUsers extends Component {
     }
 
 render(){
-	console.log('this.state.completeDataCount', this.state.completeDataCount);
+	// console.log('this.state.completeDataCount', this.state.completeDataCount);
      return(
    		<div className="">
    		<div className="">
@@ -734,14 +735,14 @@ render(){
 										
 									</div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  usrmgnhead">
-										<IAssureTable
-										completeDataCount={this.state.completeDataCount}
-			                            twoLevelHeader={this.state.twoLevelHeader} 
-			                            getData={this.getData.bind(this)} 
-			                            tableHeading={this.state.tableHeading} 
-			                            tableData={this.state.tableData} 
-			                            getSearchText={this.getSearchText.bind(this)} 
-										/>				
+										{/*<IAssureTable
+  										completeDataCount={this.state.completeDataCount}
+                      twoLevelHeader={this.state.twoLevelHeader} 
+                      getData={this.getData.bind(this)} 
+                      tableHeading={this.state.tableHeading} 
+                      tableData={this.state.tableData} 
+                      getSearchText={this.getSearchText.bind(this)} 
+										/>			*/}	
 									</div>
 								</form>
 						    </div>
