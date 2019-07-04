@@ -16,7 +16,7 @@ const formValid = formerrors=>{
 
 const taxtypeRegex  = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const taxrateRegex = RegExp(/^[a-zA-Z0-9\s,'/.-]*$/);
-const effectiveRegex = RegExp(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/);
+// const effectiveRegex = RegExp(/^([0-2][0-9]|(3)[0-1])(\/)(((0)[0-9])|((1)[0-2]))(\/)\d{4}$/);
 
 
 class CompanyTaxDetails extends Component{
@@ -28,9 +28,9 @@ class CompanyTaxDetails extends Component{
       Effective   : '',
       submitVal      : true,
       formerrors :{
-        companytaxtype   : " " ,
+        companytaxtype   : "" ,
         companytaxrate   : "",
-        effective : " ",
+        // effective : " ",
       },
       subscription : {
         
@@ -49,24 +49,38 @@ class CompanyTaxDetails extends Component{
     
   
   }
-  submitCompanyInformation=(event)=>{
+  submitCompanyInformation(event){
     event.preventDefault();
    
     var companytaxinfo = {
-      taxrating             : this.state.taxrating,
-      taxtype               : this.state.taxtype,
+      taxrating             : this.refs.taxrating.value,
+      taxtype               : this.refs.taxtype.value,
       Effective             : this.state.Effective,
      
     }//close array
 
+    console.log("companytaxinfo",companytaxinfo);
     if(formValid(this.state.formerrors)){
       
   
       axios.post('/api/companysettings',{companytaxinfo})
       .then(function (response) {
         // handle success
+
+        // this.setState({
+        //         taxrating :"",
+        //         taxtype   :"",
+        //         Effective :"",
+        //       });
+        if(response.status == 200)
+        {
         console.log("this is response===>>>",response);
         swal("Good job!", "Tax Information Added Successfully!", "success")
+
+        // this.refs.taxrating.value = "";
+        // this.refs.taxtype.value   = "";
+        
+         }   
       })
       .catch(function (error) {
         // handle error
@@ -122,9 +136,9 @@ handleChange(event){
      formerrors.companytaxrate = taxrateRegex.test(value)  && value.length>0 ? '' : "Please Enter Valid Name";
     break;
 
-    case 'effective' : 
-     formerrors.effective = effectiveRegex.test(value)   && value.length>0? '' : "Please Enter Date";
-    break;
+    // case 'effective' : 
+    //  formerrors.effective = effectiveRegex.test(value)   && value.length>0? '' : "Please Enter Date";
+    // break;
 
   
     
@@ -160,7 +174,7 @@ handleChange(event){
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div className="form-group">
                         <label className="control-label statelabel locationlabel" >Tax Type</label><span className="astrick">*</span>
-                        <input id="taxtype" value={this.state.taxtype} data-text="companytaxtype" onChange={this.handleChange.bind(this)} type="text" name="taxtype" className="form-control areaStaes" title="Please enter alphanumeric only" />
+                        <input id="taxtype" value={this.state.taxtype} data-text="companytaxtype" onChange={this.handleChange.bind(this)} type="text" name="taxtype" ref="taxtype" className="form-control areaStaes" title="Please enter alphanumeric only" />
                         {this.state.formerrors.companytaxtype &&(
                           <span className="text-danger">{this.state.formerrors.companytaxtype}</span> 
                         )}
@@ -183,9 +197,9 @@ handleChange(event){
                     <div className="form-group">
                         <label className="control-label statelabel locationlabel" >Effective From</label><span className="astrick">*</span>
                         <input className="form-control areaStaes" data-text="effective" title="Please enter valid mobile number only" id="Effective" type="date" name="Effective" ref="Effective"required />
-                        {this.state.formerrors.effective &&(
+                      {/*  {this.state.formerrors.effective &&(
                           <span className="text-danger">{this.state.formerrors.effective}</span> 
-                        )}
+                        )}*/}
                     </div> 
                   </div>
                   

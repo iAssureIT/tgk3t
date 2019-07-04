@@ -95,7 +95,7 @@ class CompanyBankDetails extends Component{
     if(formValid(this.state.formerrors)){
       
   
-      axios.post('/api/companysettings',{companyBankDetailsFormValue})
+      axios.post('/api/companysettings/',{companyBankDetailsFormValue})
       .then(function (response) {
         // handle success
         console.log("this is response===>>>",response);
@@ -143,7 +143,7 @@ handleChange(event){
     break;
 
     case 'accountnumber' : 
-     formerrors.accountnumber = accountnumberRegex.test(value)  && value.length>0 ? '' : "Please Enter Valid Name";
+     formerrors.accountnumber = accountnumberRegex.test(value)  && value.length>0 ? '' : "Please Enter Valid Account Number";
     break;
 
     case 'branchname' : 

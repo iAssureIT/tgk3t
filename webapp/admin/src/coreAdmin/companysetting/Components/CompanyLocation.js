@@ -77,7 +77,7 @@ class CompanyLocation extends Component{
     switch (datatype){
      
       case 'companylocation' : 
-       formerrors.companylocation = companylocation.test(value)  && value.length>0 ? '' : "Please Enter valid reuirement";
+       formerrors.companylocation = companylocation.test(value)  && value.length>0 ? '' : "Please Enter valid Input";
        break;
 
        case 'companyMobile' : 
@@ -85,7 +85,7 @@ class CompanyLocation extends Component{
        break;
 
        case 'companyArea' : 
-        formerrors.companyArea = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid reuirement";
+        formerrors.companyArea = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid Input";
        break;
        
       case 'country' : 
@@ -187,7 +187,7 @@ class CompanyLocation extends Component{
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  compForm">
                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Company Location</label><span className="astrick">*</span>
                             <input value={this.state.companyLocation} onChange={this.handleChange} data-text="companylocation" type="text" title="Please enter valid location" id="companyLocation" name="companyLocation" className="form-control CLcompanyLocation inputValid" required/>
                             {this.state.formerrors.companylocation &&(
@@ -199,7 +199,7 @@ class CompanyLocation extends Component{
                  
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Contact Number</label><span className="astrick">*</span>
                             <input id="companycontact" value={this.state.companycontact} onChange={this.handleChange} data-text="companyMobile"  type="text" name="companycontact" title="Please enter valid number" className="form-control companyNo inputValid " required/>
                             {this.state.formerrors.companyMobile &&(
@@ -217,7 +217,7 @@ class CompanyLocation extends Component{
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Block Name/Building</label><span className="astrick">*</span>
                             <input value={this.state.companybuildingblock} onChange={this.handleChange} data-text="companyArea" type="text" id="companybuildingblock" title="Please enter valid address" name="companybuildingblock" className="form-control CLcompanyAddress inputValid " required/>
                             {this.state.formerrors.companyArea &&(
@@ -229,7 +229,7 @@ class CompanyLocation extends Component{
 
                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Near by Landmark</label>
                              <input value={this.state.companylandmark} onChange={this.handleChange} type="text" id="companylandmark"  name="companylandmark" className="form-control CLcompanylandmark inputValid" />
                         </div>

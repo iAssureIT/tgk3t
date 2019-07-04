@@ -5,6 +5,9 @@
     outline: -webkit-focus-ring-color auto 0px!important;
     
 }
+.margin15{
+  margin: 0px 15px;
+}
   .btnSubmit,.btnUpdate{
     color: #FFF;
     background-color: #275d8e;
@@ -14,6 +17,7 @@
     font-family:'Montserrat', sans-serif;
     letter-spacing: 1px;
     box-shadow: 2px 2px 2px #fff;
+
 }
   .tablefthr:hover{
     background: #275d8e!important;

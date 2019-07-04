@@ -50,10 +50,12 @@ closeNav() {
                     <div className="row">
                       <div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
                       <img src="image/person.png" className="img "/>
-                    </div>
-                    <div className="col-lg-10 col-md-10 col-xs-6 col-sm-6 ">
-                    <div className="headicon">Alexander Pierce</div>
-                    </div>
+                      </div>
+                      <div className="col-lg-10 col-md-10 col-xs-6 col-sm-6 ">
+                      <div className="headicon">Alexander Pierce</div>
+                      </div>
+
+                      
                   </div>
                   </div>
                 
