@@ -13,9 +13,10 @@ export default class Header extends Component{
   constructor(props) {
    super(props);
     this.state = {
-
+              loggedIn : false,
     }
   }
+
    
   componentDidMount(){}
     
@@ -28,6 +29,19 @@ closeNav() {
   document.getElementById("mySidenav").style.width = "0";
 
 }
+
+logout(){
+    var token = localStorage.removeItem("token");
+      if(token!==null){
+      console.log("Header Token = ",token);
+      this.setState({
+        loggedIn : false
+      })
+      // browserHistory.push("/login");
+      // this.props.history.push("/login");
+    }
+  }
+
 
   render(){
     return(
@@ -55,7 +69,53 @@ closeNav() {
                       <div className="headicon">Alexander Pierce</div>
                       </div>
 
-                      
+                     
+                     <div className="dropdown topmargin ">
+                        <button className="dropbtn arrowbtn">
+                         <span className="hidden-xs angleright"><i className="fa fa-angle-down" aria-hidden="true"></i></span>
+                        </button>
+                        <div className="dropdown-content" >
+                            <ul className="paddleft nomargin">
+                              <li className="user-header">
+                                <ul className="menu paddleft">
+                                  <li>
+                                    <a className="noneAtag">
+                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadd" > 
+                                        <img src="images/person.png" height="40px" width="50%" className=" nopadd col-lg-3"/>
+                                         <h5 className="col-lg-9 nomargin nopadd">
+                                            Alexander Pierce
+                                          </h5>
+                                      </div>
+                                    </a>
+                                   <hr className="borderline"/>
+                                    <div className="profilefoot"> 
+                                    <div>                                     
+                                      <span className="pull-left">
+                                        <a  className=" profileTitle btnpadd " >
+                                         <button type="button" className="profilebtn btn">Profile</button></a>
+                                      </span>
+                                      <span className="pull-right">
+                                        <a  className="profileTitle btnpadd" >
+                                        {/* <button type="button" className="profilebtn">Logout</button>*/}
+                                      <button type="button" className="btn  profilebtn" onClick={this.logout.bind(this)}>Logout</button>
+                                        </a>
+
+                                     </span>  
+                                    </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </li>                                        
+                            </ul>
+                        </div>
+                    </div>
+
+
+
+
+
+                      {/*end here*/}
+
                   </div>
                   </div>
                 

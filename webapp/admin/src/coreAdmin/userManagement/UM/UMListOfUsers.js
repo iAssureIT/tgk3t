@@ -18,19 +18,36 @@ class UMListOfUsers extends Component {
 		 	"twoLevelHeader"    : {
                 apply           : false,
             },
-             "tableHeading"      : {
-                fullName    : 'User Name',
-                emailId    : 'Email',
-                mobNumber         : 'Mobile Number', 
-                status        : 'Status',
-                roles        : 'Role',
-                actions        : 'Action',
+             "tableHeading"     : {
+                fullName        : 'User Name',
+                emailId    		: 'Email',
+                mobNumber       : 'Mobile Number', 
+                status        	: 'Status',
+                roles        	: 'Role',
+                actions        	: 'Action',
             },
             "startRange"        : 0,
-            "limitRange"        : 10,
-		}
+            "limitRange"        : 10, 
 
+            blockActive			: "all",
+		}
+    	this.handleChange  = this.handleChange.bind(this);
+			
 	}
+
+
+	  handleChange(event){
+	  	event.preventDefault();
+        const target = event.target;
+        const name   = target.name;
+       
+
+     //    this.setState({
+	    //    [name]: event.target.value,
+	    // },()=>{this.usersListData()});
+
+    }
+
 	componentDidMount(){
 		axios.get('/api/users/list')
 		.then( (res)=>{      
@@ -91,6 +108,15 @@ class UMListOfUsers extends Component {
             tableData : []
         });
     }
+
+    adminRolesListData(){
+		// return  Meteor.roles.find({"name":{ $nin: ["superAdmin"] }}).fetch();
+	}
+
+	rolesListData(){
+		// var roleSetArray = [];
+		// return  Meteor.roles.find({"name":{ $nin: ["superAdmin"]}}).fetch();
+	}
 
 render(){
 	// console.log('this.state.completeDataCount', this.state.completeDataCount);
@@ -166,24 +192,22 @@ render(){
 				
 										<div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6">
 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
-											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="blockActive" name="blockActive" >
+											<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive" value={this.state.blockActive} name="blockActive" onChange={this.handleChange}>
 												<option>-- Select --</option>	
 												<option value="all"	>Show All</option>	
 												<option value="Blocked">Blocked</option>	
 												<option value="Active">Active </option>	
 											</select>
 										</div>
-
-										
 									</div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  usrmgnhead">
 										<IAssureTableUM
-  										completeDataCount={this.state.completeDataCount}
-                      twoLevelHeader={this.state.twoLevelHeader} 
-                      getData={this.getData.bind(this)} 
-                      tableHeading={this.state.tableHeading} 
-                      tableData={this.state.tableData} 
-                      getSearchText={this.getSearchText.bind(this)} 
+  										  completeDataCount={this.state.completeDataCount}
+					                      twoLevelHeader={this.state.twoLevelHeader} 
+					                      getData={this.getData.bind(this)} 
+					                      tableHeading={this.state.tableHeading} 
+					                      tableData={this.state.tableData} 
+					                      getSearchText={this.getSearchText.bind(this)} 
 										/>			
 									</div>
 								</form>

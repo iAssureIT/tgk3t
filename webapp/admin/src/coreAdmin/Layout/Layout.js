@@ -110,8 +110,8 @@ componentDidMount(){
                   </div>
                   <div className="">                  
                     <div id="dashbordid" className="">
-                      <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
-                       <Router>
+                     {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
+                      */} <Router>
                           <Switch>
                           <Route path="/umlistofusers" component={UMListOfUsers} exact />
                           <Route path="/umroleslist" component={UMRolesList} exact />
