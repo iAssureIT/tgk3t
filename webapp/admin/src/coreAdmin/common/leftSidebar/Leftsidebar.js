@@ -68,7 +68,7 @@ componentDidMount(){
                             <li><a href="#">Report 3</a></li>
                         </ul>
                     </li>
-                    <li>
+                    {/*<li>
                         <a href="#">
                             <i className="glyphicon glyphicon-link"></i>
                             Budget Planning
@@ -79,7 +79,7 @@ componentDidMount(){
                             <i className="glyphicon glyphicon-paperclip"></i>
                             Framework Management
                         </a>
-                    </li>
+                    </li>*/}
                     
                 </ul>
 

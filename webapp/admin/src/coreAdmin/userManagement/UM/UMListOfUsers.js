@@ -7,8 +7,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
 import IAssureTableUM from '../../IAssureTableUM/IAssureTable.jsx';
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class UMListOfUsers extends Component {
 	constructor(props){
@@ -23,7 +21,7 @@ class UMListOfUsers extends Component {
                 emailId    		: 'Email',
                 mobNumber       : 'Mobile Number', 
                 status        	: 'Status',
-                roles        	: 'Role',
+                // roles        	: 'Role',
                 actions        	: 'Action',
             },
             "startRange"        : 0,
@@ -36,7 +34,7 @@ class UMListOfUsers extends Component {
 	}
 
 
-	  handleChange(event){
+	handleChange(event){
 	  	event.preventDefault();
         const target = event.target;
         const name   = target.name;
@@ -49,58 +47,41 @@ class UMListOfUsers extends Component {
     }
 
 	componentDidMount(){
-		axios.get('/api/users/list')
+		var data = {
+			"startRange"        : this.state.startRange,
+            "limitRange"        : this.state.limitRange, 
+		}
+		axios.post('/api/users/userslist', data)
 		.then( (res)=>{      
-			const postsdata = res.data.map((a, index)=>{
-        var x = {};
-        x = {
-          fullName : a.profile ? a.profile.fullName : '',
-          emailId  : a.profile ? a.profile.emailId : '',
-          mobNumber  : a.profile ? a.profile.mobNumber : '',
-          status  : a.profile ? a.profile.status : '',
-          roles  : a.roles ? a.roles.toString() : '',
-        } 
-        return x; 
-       });
-
-			console.log('postsdata====================',postsdata);
 			this.setState({
-          completeDataCount : postsdata.length,
-          tableData : postsdata.slice(this.state.startRange, this.state.limitRange),          
-        },()=>{
-        })  
+	          completeDataCount : res.data.length,
+	          tableData 		: res.data,          
+	        },()=>{
+	        	console.log('tableData', this.state.tableData);
+	        })
 		})
 		.catch((error)=>{
 			console.log("error = ",error);
-			alert("Something went wrong! Please check Get URL.");
-		});	
-        
-        
+			// alert("Something went wrong! Please check Get URL.");
+		});
 	}
-	getData(startRange, limitRange){        
-        axios.get('/api/users/list')
-        .then( (res)=>{      
-          const postsdata = res.data.map((a, index)=>{
-            var x = {};
-            x = {
-              fullName : a.profile ? a.profile.fullName : '',
-              emailId  : a.profile ? a.profile.emailId : '',
-              mobNumber  : a.profile ? a.profile.mobNumber : '',
-              status  : a.profile ? a.profile.status : '',
-              roles  : a.roles ? a.roles.toString() : '',
-            } 
-            return x; 
-           });
-          this.setState({
-              completeDataCount : postsdata.length,
-              tableData : postsdata.slice(startRange, limitRange),          
+	getData(startRange, limitRange){    
+		var data = {
+			"startRange"        : startRange,
+            "limitRange"        : limitRange, 
+		}    
+       axios.post('/api/users/userslist', data)
+        .then( (res)=>{  
+          	this.setState({
+              completeDataCount : res.data.length,
+              tableData 		: res.data,          
             },()=>{
-            })  
+            })
         })
-    .catch((error)=>{
-      console.log("error = ",error);
-      alert("Something went wrong! Please check Get URL.");
-    }); 
+	    .catch((error)=>{
+	      console.log("error = ",error);
+	      alert("Something went wrong! Please check Get URL.");
+	    }); 
     }
     getSearchText(searchText, startRange, limitRange){
         console.log(searchText, startRange, limitRange);

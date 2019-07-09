@@ -58,7 +58,7 @@ class CompanyBankDetails extends Component{
     event.preventDefault();
   
       var companyBankDetailsFormValue ={
-
+        companyId      : 2,
         accHolderName  : this.state.accHolderName,
         accNickName    : this.state.accNickName,
         accType        : this.state.accType,
@@ -68,6 +68,7 @@ class CompanyBankDetails extends Component{
         ifscCode       : this.state.ifscCode
 
       }//close array
+      console.log(this.state.accHolderName);
       // var companyBankDetailsFormValue ={
 
       //   accHolderName  : $(".accHolderName").val(),
@@ -95,7 +96,7 @@ class CompanyBankDetails extends Component{
     if(formValid(this.state.formerrors)){
       
   
-      axios.post('/api/companysettings/',{companyBankDetailsFormValue})
+      axios.patch('/api/companysettings/bank/add',companyBankDetailsFormValue)
       .then(function (response) {
         // handle success
         console.log("this is response===>>>",response);

@@ -13,9 +13,7 @@ import validator 					from 'validator';
 // import 'jquery-validation';
 import './notification.css';
 
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+axios.defaults.baseURL = 'http://qatprmcorporate.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
@@ -262,6 +260,7 @@ class ViewTemplates extends Component{
 							method: 'get',
 							url: '/api/masternotifications/list',
 						}).then((response)=> {
+							swal("Template added successfully","", "success");
 							var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
 							var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
 							var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
@@ -284,15 +283,15 @@ class ViewTemplates extends Component{
 						}).catch(function (error) {
 						    
 						});
-						swal({
-							title:'swal',
-							text: response.data ,
-							type: 'success',
-							showCancelButton: false,
-							confirmButtonColor: '#666',
-							confirmButtonText: 'Ok'
-						});
-						// swal("Template Added Successfully", "", "success");
+						// swal({
+						// 	title:'swal',
+						// 	text: response.data ,
+						// 	type: 'success',
+						// 	showCancelButton: false,
+						// 	confirmButtonColor: '#666',
+						// 	confirmButtonText: 'Ok'
+						// });
+						// swal("{response.data}","", "success");
 						$('#createNotifyModal').hide();
 						$('.modal-backdrop').remove();
 

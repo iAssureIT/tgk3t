@@ -18,7 +18,11 @@ export default class Header extends Component{
   }
 
    
-  componentDidMount(){}
+  componentDidMount(){
+     const token = localStorage.getItem("token");
+     console.log("Dashboard Token = ",token);
+   
+  }
     
   
 openNav() {
@@ -62,12 +66,12 @@ logout(){
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 pull-right hover">
                     <div className="row">
-                      <div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
+                     { <div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
                       <img src="image/person.png" className="img "/>
-                      </div>
-                      <div className="col-lg-10 col-md-10 col-xs-6 col-sm-6 ">
-                      <div className="headicon">Alexander Pierce</div>
-                      </div>
+                      </div>}
+                      <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6 ">
+                      <span className="headicon">Alexander Pierce</span>
+                      
 
                      
                      <div className="dropdown topmargin ">
@@ -111,7 +115,7 @@ logout(){
                     </div>
 
 
-
+                    </div>
 
 
                       {/*end here*/}

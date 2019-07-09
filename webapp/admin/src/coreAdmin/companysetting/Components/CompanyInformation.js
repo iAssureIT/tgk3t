@@ -7,8 +7,6 @@ import swal from 'sweetalert';
 import InputMask  from 'react-input-mask';
 
 import "../../../API";
-// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type']='application/json';
 
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
@@ -147,12 +145,12 @@ class CompanyInformation extends Component{
                 companyAltContactNumber : this.state.companyAltContactNumber,
                 companyEmail            : this.state.companyEmail,
                 companywebsite          : this.state.companywebsite,
-                companyAddressLine1     : this.state.companyAddressLine1,
-                companyCountry          : this.state.companyCountry,
-                companyState            : this.state.companyState,
-                companyDist             : this.state.companyDist,
-                companyCity             : this.state.companyCity,
-                companyPincode          : this.state.companyPincode,
+                companyaddress          : this.state.companyAddressLine1,
+                country                 : this.state.companyCountry,
+                state                   : this.state.companyState,
+                district                : this.state.companyDist,
+                city                    : this.state.companyCity,
+                pincode                 : this.state.companyPincode,
                 taluka                  : this.state.taluka,
                 logoFilename            : this.state.logoFilename,
                 companyLogo             : this.state.companyLogo,
@@ -169,28 +167,57 @@ class CompanyInformation extends Component{
     var companyInfoFormValue = {
       companyName             : this.state.companyName,
       companyContactNumber    : this.state.companyContactNumber,
-      companyAltContactNumber : this.state.companyAltContactNumber,
+      companyMobileNumber     : this.state.companyAltContactNumber,
       companyEmail            : this.state.companyEmail,
+      companyAltEmail         : "",
+
       companywebsite          : this.state.companywebsite,
-      companyAddressLine1     : this.state.companyAddressLine1,
-      companyCountry          : this.state.companyCountry,
-      companyState            : this.state.companyState,
-      companyDist             : this.state.companyDist,
-      companyCity             : this.state.companyCity,
-      companyPincode          : this.state.companyPincode,
-      taluka                  : this.state.taluka,
+      companyaddress          : this.state.companyAddressLine1,
       logoFilename            : this.state.logoFilename,
       companyLogo             : this.state.companyLogo,
+     
+      
+
+      country                 : this.state.companyCountry,
+      state                   : this.state.companyState,
+      district                : this.state.companyDist,
+      city                    : this.state.companyCity,
+      pincode                 : this.state.companyPincode,
+      taluka                  : this.state.taluka,
+
+ 
+
     }//close array
   
+    console.log("companyInfoFormValue",companyInfoFormValue);
   if(formValid(this.state.formerrors)){
     console.log('companyName    : this.state.companyName');
 
-    axios.post('/api/companysettings',{companyInfoFormValue})
-    .then(function (response) {
+    axios.post('/api/companysettings',companyInfoFormValue)
+    .then( (response)=> {
       // handle success
       console.log("this is response===>>>",response);
-      swal("Good job!", "Company Information Submited!", "success")
+      swal("Good job!", "Company Information Submited!", "success");
+      this.setState({
+    
+      companyName             : "",
+      companyContactNumber    : "",
+      companyAltContactNumber : "",
+      companyEmail            : "",
+      companyAddressLine1     : "",
+      companyDist             : "",
+      companyPincode          : "",
+      companyCity             : "",
+      companyState            : "",
+      companyCountry          : "",
+      companyLogo             : "",
+      logoFilename            : "",
+      taluka                  : "",
+      companywebsite          : "",
+      });
+
+      
+
     })
     .catch(function (error) {
       // handle error

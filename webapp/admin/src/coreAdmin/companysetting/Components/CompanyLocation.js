@@ -130,31 +130,47 @@ class CompanyLocation extends Component{
   componentDidMount(){
    
   }
-  submitCompanyLocation(event){
+  submitCompanyLocation=(event)=>{
     event.preventDefault();
     // var sessionVar = Session.get('location');
-  
+   // var companyId : 5;
+
     var companyLocationFormValue ={
-      companyLocation           : this.state.companyLocation,
-      companyEmailid            : this.state.Emailid,
-      companycontact            : this.state.companycontact,
-      companyaltcontact         : this.state.companyaltcontact,
-      companybuildingblock      : this.state.companybuildingblock,
-      companylandmark           : this.state.companylandmark,
+      Location                  : this.state.companyLocation,
+      companyId                 : 2,
+      // companyEmailid            : this.state.Emailid,
+      contactnumber             : this.state.companycontact,
+      // companyaltcontact         : this.state.companyaltcontact,
+      blockname                 : this.state.companybuildingblock,
+      landmark                  : this.state.companylandmark,
       companyCountry            : this.state.companyCountry,
       companyState              : this.state.companyState,
-      
-      companyDist               : this.state.companyDist,
-      taluka                    : this.state.taluka,
+      companyDistrict           : this.state.companyDist,
+      companytaluka             : this.state.taluka,
       companyCity               : this.state.companyCity,
       companyPincode            : this.state.companyPincode,
   
     }//close array
     if(formValid(this.state.formerrors)){
-    axios.patch('apitgk3t.iassureit.com/api/add/locationlabel',{companyLocationFormValue})
-    .then(function (response) {
+    axios.patch('/api/companysettings/location/add',companyLocationFormValue)
+    .then( (response)=> {
       // handle success
       console.log(response);
+      swal("Location Added Successfully", "", "success");
+
+      this.setState({
+        companyLocation         :"",
+        companycontact          :"",
+        companybuildingblock    :"",
+        companylandmark         :"",
+        companyCountry          :"",
+        companyState            :"",
+        companyDist             :"",
+        taluka                  :"",
+        companyCity             :"",
+        companyPincode          :"",
+
+      });
     })
     .catch(function (error) {
       // handle error

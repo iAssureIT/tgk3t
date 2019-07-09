@@ -1,73 +1,208 @@
-
-import React, { Component }      from 'react';
-import InputMask                 from 'react-input-mask';
-import $ from "jquery";
-import axios from 'axios';
+import React, { Component }       from 'react';
+import {browserHistory} 		  from 'react-router';
 import swal                       from 'sweetalert';
-
-import 'font-awesome/css/font-awesome.min.css';
+import $ 						  from 'jquery';
+import axios 					  from 'axios';
+// import CKEditor 				  from "react-ckeditor-component";
+import InputMask                 from 'react-input-mask';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 
-class CreateUser extends Component {
+
+class UsereditModal extends Component{
+
+	constructor(props){
+		super(props);
+		this.state = {
+	    'firstname' 		: props.data ? props.data.firstname : '',
+		'lastname'			: props.data ? props.data.lastname : '',
+		'email'				: props.data ? props.data.email : '',
+		'mobNumber'			: props.data ? props.data.mobNumber : '',
+	   	'optionA'			: '',
+	   	'messageError' 		: '',
+	  };
+
+	    this.handleChange = this.handleChange.bind(this);
+	    this.onChange 		= this.onChange.bind(this);
+	}
+	componentWillReceiveProps(nextProps){
+		this.setState({
+			'firstname' 		: nextProps.data.firstname,
+			'lastname'			: nextProps.data.lastname,
+			'email'				: nextProps.data.email,
+			'mobNumber'			: nextProps.data.mobNumber,
+		});
+
+		// console.log("nextProps",nextProps);
+	}
+
+	handleChange(event){
+	  const target = event.target;
+	  const name   = target.name;
+	  this.setState({
+	  	[name]: event.target.value,
+	  });
+	}
+
+	// componentDidMount(){
+
+		// if ( !$("#adminSide").length>0 && !$('body').hasClass('adminSide')) {
+	 //      var adminSide = document.createElement("script");
+	 //      adminSide.type="text/javascript";
+	 //      adminSide.src = "/js/adminSide.js";
+	 //      $("body").append(adminSide);
+	 //    }
+	 //    $("html,body").scrollTop(0);	
+
+	 //    $.validator.addMethod("regxsubject", function(value, element, arg){          
+	 //    	return arg !== value;        
+	 //    }, "Please select one subject name");
 
 
-  constructor(props) {
-    super(props);
-    this.state = {
+	 //    $.validator.addMethod("regxtemplateName", function(value, element, arg){          
+	 //    	return arg !== value;        
+	 //    }, "Please select template name");
 
-    };
-  }
+	 //    $.validator.addMethod("regxtemplateType", function(value, element, arg){          
+	 //    	return arg !== value;        
+	 //    }, "Please select template type");
 
 
-    componentDidMount() {}  
+    
+	 //    jQuery.validator.setDefaults({
+	 //        debug: true,
+	 //        success: "valid"
+	 //    });
+	 //    $("#editModal").validate({
+	 //    	event : 'blur',
+	 //        rules: {
+	 //          subject:{              
+	 //          	required:true,              
+	 //          	regxsubject: "Not Selected"            
+	 //          },
+	 //          templateType:{              
+	 //          	required:true,              
+	 //          	regxtemplateType: "-- Select --"            
+	 //          },
+	 //          templateName:{              
+	 //          	required:true,              
+	 //          	regxtemplateName: "--Select Template Name--"            
+	 //          },	          
+	 //        }, 
+	 //    });
 
-    createUser(event){
-    event.preventDefault();
-    const formValues = {
-        "firstname"    : this.refs.firstname.value,
-        "lastname"     : this.refs.lastname.value,
-        "email"        : this.refs.signupEmail.value,
-        "mobNumber"    : this.refs.mobNumber.value,
-        "pwd"          : "user123",
-        "role"         : "User",
-        "status"       : "Active"
-      }
+	// }
 
-    axios.post('/api/users', formValues)
-      .then( (res)=>{
-        console.log(res.data);
-        if(res.status == 201){
-          swal("User added successfully", "", "success");
+	deleteEmailTemplate(event){
+		// event.preventDefault();
+		// var tempId = $(event.target).attr('id');
+		// // // console.log('tempId: ',tempId);
+		// Meteor.call('removeTemplate',tempId,function(error,result){
+		// 	if(error){
+		// 		// console.log(error);
+		// 	}else{
+		// 	   swal({
+	 //                title: 'Deleted successfully!',
+	 //                text: "",
+	 //                type: 'success',
+	 //                showCancelButton: false,
+	 //                confirmButtonColor: '#666',
+	 //                confirmButtonText: 'Ok'});
+		// 	}
+		// })
+	}
 
-          // alert("Data inserted Successfully!")
-          this.refs.firstname.value = '';
-          this.refs.lastname.value  = '';
-          this.refs.signupEmail.value  = '';
-          this.refs.mobNumber.value = '';
-        }
-      })
-      .catch((error)=>{
-        console.log("error = ",error);
-        alert("Something went wrong! Please check Get URL.");
+	updateNotificationEmail(event){
+		event.preventDefault();
+
+	    if(this.state.content){
+	    	var editId 		 	= this.props.userNot;
+			var firstname     	= this.state.firstname;
+			var lastname     	= this.state.lastname;
+			var email          	= this.state.email;
+			var mobNumber       = this.state.mobNumber;
+			if(firstname === '' || lastname === ''){
+				swal({
+					title: 'Please fill in all the required fields',
+					text:"Please fill in all the required fields",
+					type: 'success',
+					showCancelButton: false,
+					confirmButtonColor: '#666',
+					confirmButtonText: 'Ok'
+				});
+			}else{	
+				var formValues = {
+					"usermasterID": "5cfbfc2eb1514e2ec11f20fd",
+					"firstname": "abc",
+					"lastname": "pqr",
+					"email": "abc@gmail.com",
+					"mobNumber":"9898989898"
+				}
+				
+				axios.patch('/api/masternotifications/'+editId, formValues)
+				.then((response)=> {					
+					
+					console.log('response --==',response);
+				})
+				.catch(function (error) {
+				console.log('error============',error);
+				})
+				.finally(function () {
+				// always executed
+				});
+			}
+		}else{
+			this.setState({
+				contentError: 'This field is required.',
+			});
+		}
+    	// }
+	}
+	selectType(event){
+		event.preventDefault();
+		const target = event.target;
+	  const name   = target.name;
+	  this.setState({
+	  	[name]: event.target.value,
+	  });
+		// if(this.refs.templateType.value  == 'Notification' || this.refs.templateType.value  == 'SMS' ){
+		// 	$('.subjectRow').css({'display':'none'});
+		// }else if(this.refs.templateType.value  == 'Email'){
+		// 	$('.subjectRow').css({'display':'block'});
+		// }
+	}
+	
+	updateContent(newContent) {
+        this.setState({
+            firstname: newContent
+        })
+    }
+    onChange(evt){
+      var newContent = evt.editor.getData();
+      console.log(newContent);
+      this.setState({
+        firstname: newContent
+      },()=>{
+      	if(this.state.content){
+      		this.setState({
+      			messageError : ''
+      		});
+      	}else{
+      		this.setState({
+      			messageError : 'This field is required'
+      		});
+      	}
       });
-  
-
     }
 
-    /*fun(formValues){  
-    console.log('formValues',formValues);
-    var allPosts = this.state.allPosts;
-    allPosts.push(formValues);
-    this.setState({
-      allPosts : allPosts
-    });
-  }
-*/
-    render() {
 
-       return (
-            <div>
-                        <div className="modal fade" id="CreateUserModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	render() {
+		if(this.props.userNot){
+	        return (
+	        		<div>
+	        		{console.log("edit modal")}
+					<div className="modal fade modalHide" id={"editNotifyModal-"+this.props.userNot} role="dialog">
+					  	<div className="modal fade" id="CreateUserModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div className="modal-dialog modal-lg " role="document">
                             <div className="modal-content modalContent ummodallftmg ummodalmfdrt col-lg-12 ">
                               <div className="modal-header userHeader">
@@ -78,7 +213,6 @@ class CreateUser extends Component {
                               </div>
                              <div className="modal-body">
                               <div className="hideModal">
-                               {/* <section className="viewContent">*/}
                                     <div className="">
                                       <div className="">
                                           <div className="">                                        
@@ -86,7 +220,7 @@ class CreateUser extends Component {
                                                     <div className="box-body">
                                                         <div className="">
 
-                                                          <form id="signUpUser" onSubmit={this.createUser.bind(this)}>
+                                                          <form id="signUpUser">
                                                     <div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12 createusr ">
 
                                                      <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
@@ -149,46 +283,6 @@ class CreateUser extends Component {
                                                      </div>    
                                                 </form>
 
-
-
-
-                                                          {/*<form id="signUpUser" onSubmit={this.createUser.bind(this)}>
-                                                              <div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12">
-
-                                                               <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-                                                                    <label className="">First Name <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span">
-                                                                        <input type="text" style={{textTransform:'capitalize'}} className="form-control UMname inputText tmsUserAccForm has-content" id="firstname" ref="firstname" name="firstname"/>
-                                                                    </span>
-                                                                </div>
-
-                                                               <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-                                                                    <label className="">Last Name <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span row">
-                                                                       <input type="text"className="form-control UMname inputText tmsUserAccForm has-content" id="lastname" ref="lastname" name="lastname" />
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent">
-                                                                    <label className="">Email ID <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                      <input type="text" className="formFloatingLabels form-control" ref="signupEmail" name="signupEmail" id="signupEmail"/>
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-6 inputContent">
-                                                                    <label className="">Mobile Number <label className="requiredsign">*</label></label>
-                                                                    <span className="blocking-span">
-                                                                       <InputMask mask="99999-99999" pattern="^(0|[1-9][0-9-]*)$"   className= "form-control UMname inputText tmsUserAccForm has-content" ref="mobNumber" name="mobNumber" id="mobNumber"/>
-                                                                    </span>
-                                                                </div>
-
-                                                                <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                                                                    <input className="col-lg-2 col-md-2 col-xs-12 col-sm-12 col-xs-12 pull-right btn btnSubmit outlinebox" type="submit" value="REGISTER" />
-                                                               </div>   
-
-                                                              </div> 
-                                                          </form>*/}
                                                         </div>  
                                                     </div>
                                                 
@@ -196,27 +290,19 @@ class CreateUser extends Component {
                                         </div>
                                       </div>
                                     </div>
-                                  
-                               {/* </section>*/}
                               </div>
-
-
                   </div>
                   </div>
                       
                 </div>
               </div>
-            </div>
-        );
-
-    } 
+					</div>
+					</div>
+		    );
+		}else{
+			return (<div></div>);
+		}
+	} 
 
 }
-
-
-export default CreateUser;/*withTracker(props =>{
-
-    return{
-        usrcrt : props.usrcrt,  
-    } 
-})*//*(CreateUser);*/
+export default UsereditModal;

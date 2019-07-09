@@ -7,7 +7,9 @@
 .iAssureITtable-bordered{
   background: #7f7f7f !important;
 }
-
+.pointer i{
+  cursor: pointer;
+}
 .paginationAdminWrap{
   text-align: center !important;
   /*margin-top: -15px;*/

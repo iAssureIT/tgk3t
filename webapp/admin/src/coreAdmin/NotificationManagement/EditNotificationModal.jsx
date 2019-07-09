@@ -7,9 +7,6 @@ import CKEditor 				  from "react-ckeditor-component";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/js/modal.js';
 
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 class EditNotificationModal extends Component{
 
@@ -114,9 +111,7 @@ class EditNotificationModal extends Component{
 
 	updateNotificationEmail(event){
 		event.preventDefault();
-		// var emailContent     = $('#messageContent').summernote('code');
-    	// if($("#editModal").valid()){   
-    	// console.log('this.state.content',this.state.content); 	
+
 	    if(this.state.content){
 	    	var editId 		 = this.props.emailNot;
 			var templateType     = this.state.templateType;
@@ -134,16 +129,16 @@ class EditNotificationModal extends Component{
 				});
 			}else{	
 				var formValues = {
-					"notificationmasterID": "5cfbfc2eb1514e2ec11f20fd",
-					"templateType": "Email",
-					"templateName": "Admin New Registration",
-					"content": "<p>hkhkjhkhkjhkjkn,n,kgjvhhbj</p>",
-					"subject":"vvvnv"
+					"notificationmasterID":this.props.emailNot,
+					"templateType": this.state.templateType,
+					"templateName": this.state.templateName,
+					"content": this.state.content,
+					"subject":this.state.subject
 				}
 				
-				
-				axios.put('/masternotification', formValues)
-				.then((response)=> {					
+				axios.put('/api/masternotifications/'+editId, formValues)
+				.then((response)=> {		
+					swal("Template updated successfully","", "success");			
 					/*if(templateType =='Email'){
 						var emailTemplatesList = this.state.emailTemplatesList;
 						emailTemplatesList.push(response.data.dataBody);

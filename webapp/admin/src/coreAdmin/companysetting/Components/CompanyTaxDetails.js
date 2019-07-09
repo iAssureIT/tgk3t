@@ -53,9 +53,10 @@ class CompanyTaxDetails extends Component{
     event.preventDefault();
    
     var companytaxinfo = {
-      taxrating             : this.refs.taxrating.value,
-      taxtype               : this.refs.taxtype.value,
-      Effective             : this.state.Effective,
+      companyId             : 2,
+      taxRating             : this.refs.taxrating.value,
+      taxType               : this.refs.taxtype.value,
+      effectiveFrom         : this.state.Effective,
      
     }//close array
 
@@ -63,7 +64,7 @@ class CompanyTaxDetails extends Component{
     if(formValid(this.state.formerrors)){
       
   
-      axios.post('/api/companysettings',{companytaxinfo})
+      axios.patch('/api/companysettings/tax/add',companytaxinfo)
       .then(function (response) {
         // handle success
 

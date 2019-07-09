@@ -62,11 +62,11 @@ import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.j
                                 <ul className="nav nav-tabs tabs-left sideways">
                                     <li className="active  col-lg-12 col-md-12 col-xs-12 col-sm-12" onClick={this.clickLi.bind(this)}><a className="tabLeft tablefthr lettersp" href="#companyInformation" data-toggle="tab">Company Information</a></li>
                                     <li className="col-lg-12 col-md-12 col-xs-12 col-sm-12"         onClick={this.clickLi.bind(this)}><a className="tabLeft lettersp tablefthr" href="#CompanyLocation" data-toggle="tab">Location Details</a></li>
-                                    <li className="col-lg-12 col-md-12 col-xs-12 col-sm-12"        onClick={this.clickLi.bind(this)}><a className="tabLeft lettersp tablefthr" href="#CompanyBankDetails" data-toggle="tab">Bank Details</a></li>
+                                    {/*<li className="col-lg-12 col-md-12 col-xs-12 col-sm-12"        onClick={this.clickLi.bind(this)}><a className="tabLeft lettersp tablefthr" href="#CompanyBankDetails" data-toggle="tab">Bank Details</a></li>
                                   
                                     <li className="col-lg-12 col-md-12 col-xs-12 col-sm-12"        onClick={this.clickLi.bind(this)}><a className="tabLeft lettersp tablefthr" href="#CompanyTaxDetails" data-toggle="tab">Tax Information</a></li>
                                     <li className="col-lg-12 col-md-12 col-xs-12 col-sm-12"        onClick={this.clickLi.bind(this)}><a className="tabLeft lettersp tablefthr" href="#CompanyPaymentGateway" data-toggle="tab">Payment Gateway</a></li>
-                                 
+                                 */}
                                 </ul>
                               </div>
 

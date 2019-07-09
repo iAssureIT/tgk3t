@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import swal                       from 'sweetalert';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 // import TrackerReact from 'meteor/ultimatejs:tracker-react';
 // import { UserManagementMaster }  from '/imports/admin/userManagement/UM/UserManagementMaster.js';
@@ -19,7 +17,8 @@ export default class UMaddRoles extends Component {
 
     axios.post('/api/roles', formValues)
       .then( (res)=>{
-        
+          console.log("submit ");
+          swal("Role added successfully", "", "success");
           this.refs.role.value = '';        
       })
       .catch((error)=>{

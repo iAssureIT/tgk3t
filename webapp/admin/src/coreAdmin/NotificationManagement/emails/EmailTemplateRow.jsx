@@ -1,11 +1,11 @@
 import React, { Component }    from 'react';
 import EditNotificationModal   from '../EditNotificationModal.jsx';
 import axios 				   from 'axios';
-
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+import swal                     	from 'sweetalert';
+ 
+axios.defaults.baseURL = 'http://qatprmcorporate.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 class EmailTemplateRow extends Component{
 
 	constructor(props) {
@@ -26,7 +26,7 @@ class EmailTemplateRow extends Component{
 		var id = event.target.id;
 		console.log("id",id);
 		const token = '';
-		const url = '/api/masternotificationsDel/'+id ;
+		const url = '/api/masternotifications/'+id ;
 		const headers = {
 			    "Authorization" : token,
 			    "Content-Type" 	: "application/json",
@@ -49,6 +49,8 @@ class EmailTemplateRow extends Component{
 		})
 		.then((response)=> {
 	    	console.log('delete response',response);
+	    	swal("Template deleted successfully","", "success");
+
 		}).catch((error)=> {
 		    // handle error
 		    console.log(error);

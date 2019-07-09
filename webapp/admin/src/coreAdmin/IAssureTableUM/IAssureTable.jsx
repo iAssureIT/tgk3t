@@ -5,6 +5,10 @@ import $ 							from 'jquery';
 import jQuery 						from 'jquery';
 import 'jquery-validation';
 import './IAssureTable.css';
+
+import UsereditModal   from '../userManagement/UM/UsereditModal.jsx';
+
+
 var sum = 0;
 class IAssureTable extends Component {
 	constructor(props){
@@ -580,64 +584,81 @@ class IAssureTable extends Component {
 										(value, i)=> {													
 											return(
 												<tr key={i} className="">
+													{/*console.log("values",value)*/}
 													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={value._id} /></td>
+													
+													{/*<td>{value._id}</td>*/}
 													<td className="textAlignCenter">{this.state.startRange+1+i}</td>
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
-																var regex = new RegExp(/(<([^>]+)>)/ig);
-																var value2 = value1 ? value1.replace(regex,'') : '';
-																var aN = value2.replace(this.state.reA, "");
-																if(aN && $.type( aN ) == 'string'){
-																	var textAlign = 'textAlignLeft';
-																}else{
-																	var bN = value1 ? parseInt(value1.replace(this.state.reN, ""), 10) : '';
-																	if(bN){
-																		var textAlign = 'textAlignRight';
-																	}else{
+																if($.type(value1) == 'string'){
+																	var regex = new RegExp(/(<([^>]+)>)/ig);
+																	var value2 = value1 ? value1.replace(regex,'') : '';
+																	var aN = value2.replace(this.state.reA, "");
+																	if(aN && $.type( aN ) == 'string'){
 																		var textAlign = 'textAlignLeft';
+																	}else{
+																		var bN = value1 ? parseInt(value1.replace(this.state.reN, ""), 10) : '';
+																		if(bN){
+																			var textAlign = 'textAlignRight';
+																		}else{
+																			var textAlign = 'textAlignLeft';
+																		}
 																	}
+																	var found = Object.keys(this.state.tableHeading).filter((k)=> {
+																	  return k == key;
+																	});
+																	if(found.length > 0){
+																		if(key != 'id'){
+																			return(<td className={textAlign} key={i}><div className={textAlign} dangerouslySetInnerHTML={{ __html:value1}}></div></td>); 						
+																		}
 																}
-																var found = Object.keys(this.state.tableHeading).filter((k)=> {
-																  return k == key;
-																});
-																if(found.length > 0){
-																	if(key != 'id'){
-																		return(<td className={textAlign} key={i}><div className={textAlign} dangerouslySetInnerHTML={{ __html:value1}}></div></td>); 						
-																	}
 																}																
 															}
 														)
 													}
 													<td className="textAlignCenter">
-														<span>
-															<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
-															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={"#showDeleteModal"+value._id}></i>}
+														<span className="pointer">
+															{/*<div  className="deleteNotif"  data-toggle="modal" data-target={"#editNotifyModal-"+this.props.emailtemplateValues._id} id={this.props.emailtemplateValues._id}>
+							    	*/}
+															<i className="fa fa-pencil" title="Edit" id={value._id} data-toggle="modal" data-target={"#editNotifyModal-"+value._id}></i>&nbsp; &nbsp; 
+															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={`#${value._id}-rm`} ></i>}&nbsp; &nbsp; 
+															<i className="fa fa-key" title="Reset Password" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
+														
 														</span>
-														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal"+value._id} role="dialog">
-	                                                        <div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                          <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
-	                                                            <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                            <div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-11 col-md-1 col-md-offset-11 col-sm-1 col-sm-offset-11 col-xs-12 NOpadding-left NOpadding-right">
-	                                                              <button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"#showDeleteModal"+value._id}>&times;</button>
-	                                                            </div>
-	                                                           
-	                                                            </div>
-	                                                            <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                              <h4 className="blackLightFont textAlignCenter examDeleteFont col-lg-12 col-md-12 col-sm-12 col-xs-12">Are you sure you want to delete?</h4>
-	                                                            </div>
-	                                                            
-	                                                            <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
-	                                                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	                                                                <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
-	                                                              </div>
-	                                                              <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-	                                                                <button onClick={this.deleteExam.bind(this)} id={value._id} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
-	                                                              </div>
-	                                                            </div>
-	                                                          </div>
-	                                                        </div>
-	                                                    </div>
+
+														<UsereditModal userNot={value._id} data={value}/>
+
+							
+	                                                    <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${value._id}-rm`}  role="dialog">
+										                    <div className=" modal-dialog adminModal adminModal-dialog">
+										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+																		          <span aria-hidden="true">&times;</span>
+																		        </button>
+																	        </div>
+															      		</div>
+										                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+										                                 <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont">Are you sure you want to delete this User?</h4>
+										                              </div>
+										                              
+										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
+										                                   </div>
+										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										                                        <button id={value._id} onClick={this.deleteExam.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
+										                                   </div>
+										                              </div>
+										                         </div>
+										                    </div>
+										               </div>
+
 													</td>
 												</tr>
 											);										
