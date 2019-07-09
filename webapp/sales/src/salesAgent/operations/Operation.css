@@ -1,0 +1,24 @@
+.textC{
+	text-align: center;
+	
+}
+.textB{
+	border:1px solid #aaa;
+}
+.badgeP{
+	position: relative;
+    top: -54px;
+    left: 64px;
+    color: #fff;
+}
+.noPad{
+	padding:0px !important;
+	margin: 0px !important;
+}
+.check2{
+	margin-left: -16px;
+
+}
+.mt19{
+	margin-top: 19px;
+}

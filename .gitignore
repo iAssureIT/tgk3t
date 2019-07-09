@@ -1,2 +1,4 @@
 /api/admin/node_modules
 /webapp/admin/node_modules
+/webapp/homePage/node_modules
+/webapp/sales/node_modules

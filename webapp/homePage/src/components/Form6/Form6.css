@@ -1,0 +1,53 @@
+/*add this class next to form-control*/
+.inputBox{
+  font-family:'Montserrat',sans-serif;
+  height: 30px !important;
+  border: none !important;
+  border-left: 1px solid #979797 !important;
+  font-size: 12px !important;
+}
+.valid_box{
+  height: 60px;
+}
+.inputBox:hover{
+  border-left:1px solid #039BE5 !important;
+  box-shadow: none !important;
+}
+
+/**********************/
+/*input icon*/
+/*input icon*/
+/*.inputIcon{
+  height: 30px !important;
+  font-size: 18px !important;
+  color: #979797 !important;
+  background-color: #ffffff !important;
+  border: none !important;
+}*/
+.inputIcon{
+	background: #fff;
+}
+
+/*************************************/
+/*Add this class next to input-group*/
+/*.inputBox-main{
+  border: 1px solid #979797 !important;
+  border-radius: 3px !important;
+  height: 30px !important;
+  font-size: 12px !important;
+}*/
+.chkbx{
+  height: 18px;
+    /* position: absolute; */
+    width: 25px;
+    position: relative;
+    margin:0px !important;
+}
+
+.marg_left{
+  margin-left: 15px;
+}
+
+.ModalPd{
+  padding: 0px !important;
+}

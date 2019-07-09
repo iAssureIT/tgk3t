@@ -1,0 +1,84 @@
+/*add this class next to form-control*/
+.inputBox{
+  font-family:'Montserrat',sans-serif;
+  height: 30px !important;
+  border: none !important;
+  border-left: 1px solid #979797 !important;
+  font-size: 12px !important;
+}
+.valid_box{
+  height: 60px;
+}
+.inputBox:hover{
+  border-left:1px solid #039BE5 !important;
+  box-shadow: none !important;
+}
+.title_pd{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.hr_border{
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 50px;
+  box-shadow: 0px 3px 2px -1px #ccc;
+}
+
+.margBtm{
+  margin-bottom: 10px;
+}
+.margBtm_30{
+  margin-bottom: 30px;
+}
+.margBtm_5{
+  margin-bottom: 5px;
+}
+
+.iconClr{
+  color: #ccc;  
+}
+/**********************/
+/*input icon*/
+/*input icon*/
+/*.inputIcon{
+  height: 30px !important;
+  font-size: 18px !important;
+  color: #979797 !important;
+  background-color: #ffffff !important;
+  border: none !important;
+}*/
+.inputIcon{
+	background: #fff;
+}
+
+/*************************************/
+/*Add this class next to input-group*/
+/*.inputBox-main{
+  border: 1px solid #979797 !important;
+  border-radius: 3px !important;
+  height: 30px !important;
+  font-size: 12px !important;
+}*/
+
+.radio_style{
+  margin-left: 15px !important;
+  height: 15px;
+  width: 15px;
+}
+
+.mrgBtm{
+  margin-bottom: 10px;
+  padding-top: 5px;
+}
+
+.back_btn:hover{
+  color: #666;
+}
+/************************************************/
+.ModalPd{
+  padding: 0px !important;
+}
+.dataLabels{
+  margin-left: 8px;
+  font-size: 13px;
+}
