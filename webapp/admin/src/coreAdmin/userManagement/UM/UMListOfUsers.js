@@ -32,7 +32,8 @@ class UMListOfUsers extends Component {
     	this.handleChange  = this.handleChange.bind(this);
 			
 	}
-
+    
+    
 
 	handleChange(event){
 	  	event.preventDefault();
