@@ -6,7 +6,12 @@
 .zzero{
   z-index: 0;
 }
-
+.btmmargin{
+  margin-bottom: 10px;
+}
+.topmr40{
+  margin-top: 35px;
+}
 /*====Anuja====*/
 .topMargin{
   margin-top: 15px;

@@ -76,20 +76,50 @@ class Login extends Component {
       return $('.inputTextPass').attr('type', 'password');
   }
   render(){
-    var winHeight = window.innerHeight;
-    var divHeight = winHeight/4.5+'px';
-      console.log("-------------------------------",this.state.loggedIn)
+    // var winHeight = window.innerHeight;
+    // var divHeight = winHeight/4.5+'px';
+    //   console.log("-------------------------------",this.state.loggedIn)
     
     if(this.state.loggedIn===true){
       return <div></div>
     }
 
+    var windowWidth = $(window).width();
+    // console.log('ww',windowWidth);
+      if(windowWidth>=320&&windowWidth<=992){
+        var backImage = "visible-xs col-xs-12 visible-sm col-sm-12 noBackImage"
+        }else{
+        var backImage = "signUpBackground hidden-xs hidden-sm"
+      }
+
+
+    var winHeight = window.innerHeight;
+    var divHeight = 450 +'px';
+      console.log("-------------------------------",this.state.loggedIn)
+    
+   
+
+
+
     return(
+      <div className={backImage} style={{"height": winHeight}}> 
+{/*     <button className="btn btn-primary" onClick={this.openModal.bind(this)}>Open Modal</button>
+*/}     
+
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 signUpWrapper">
-        <div className="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-12 signupPadding signUpFormWrap bg-success" style={{"height": winHeight}}>
+        <div className="col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-12 signupPadding signUpFormWrap " style={{"height": divHeight}}>
           <div className="divLoginInWrap">
+
+            <div className="col-lg-4 col-lg-offset-4 marbtm10 ">
+              <img src="images/Logo.png" height="70px"/>
+              </div>
+
             <form id="login" onSubmit={this.userlogin.bind(this)}>
-              <h3 className="signInNameTitle signT"><span className="bordbt">SIGN IN</span></h3>
+              <br/>
+              <div className="col-lg-4 col-lg-offset-4 ">
+             {/* <h3> hhhh</h3>*/}
+              {<h4 className="signInNameTitle "><span className="bordbt">SIGN IN</span></h4>
+              }</div>
               <div className="col-lg-12 col-md-12 col-sm-12 ">
                 <div className="inputContent">
                   <span className="blocking-span noIb">
@@ -101,13 +131,14 @@ class Login extends Component {
               <div className="col-lg-12 col-md-12 col-sm-12 marBtm30">
                 <div className="form-group form-group1 fltlft input-group col-lg-12 col-md-12 col-sm-12 inputContent ">     
                   <span className="blocking-span noIb">
-                    <input type="password" className="form-control pass oesSignUpForm confirmbtm inputTextPass" ref="loginpassword" name="loginpassword" required/>
+                    <input type="password" className="form-control border3 pass oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="loginpassword" name="loginpassword" required/>
                     <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>                 
                   </span>
-                <span className="input-group-addon customCls customCls1 glyphi-custommm">
-                  <i className="fa fa-eye Pass showPwd" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-                  <i className="fa fa-eye-slash Pass hidePwd" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-                </span>
+               
+                <div className="showHideSignDiv">
+                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+                </div> 
                   <span className="focus-border">
                     <i></i>
                   </span>
@@ -118,25 +149,26 @@ class Login extends Component {
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
                 <div className="col-lg-6 col-md-6 col-sm-6 ">
-                  <Link to='/signup' className="UMGreyy UMcreateacc col-lg-12 col-md-12 col-xs-12 col-sm-12"> Sign Up</Link>
+                  <Link to='/signup' className="UMGreyy UMGreyy_l UMcreateacc col-lg-12 col-md-12 col-xs-12 col-sm-12"> Sign Up</Link>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-6 offset-lg-1 customFl">
-                  <Link to='/forgot-pwd' className="UMGreyy UMcreateacc col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                  <Link to='/forgot-pwd' className="UMGreyy UMGreyy_l UMcreateacc col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     Forgot Password?
                   </Link>
                 </div>
               </div>
-              <div className="col-lg-12 col-md-12 col-sm-12 pdcls">
+              {/*<div className="col-lg-12 col-md-12 col-sm-12 pdcls">
                 <div className="col-lg-12 col-md-12 col-sm-12 ">
-                  <Link to='/verify-account' className="UMGreyy forgotpass emailverify col-lg-12 col-md-12 col-xs-12 col-sm-12">
+                  <Link to='/verify-account' className="UMGreyy UMGreyy_l forgotpass emailverify col-lg-12 col-md-12 col-xs-12 col-sm-12">
                     OTP Verification
                   </Link>
                 </div>
-              </div>
+              </div>*/}
             </form>
           </div>
         </div>
       </div>
+    </div>
     );
   }
 }

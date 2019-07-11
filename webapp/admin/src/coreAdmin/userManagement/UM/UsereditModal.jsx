@@ -200,16 +200,16 @@ class UsereditModal extends Component{
 		if(this.props.userNot){
 	        return (
 	        		<div>
-	        		{console.log("edit modal")}
-					<div className="modal fade modalHide" id={"editNotifyModal-"+this.props.userNot} role="dialog">
-					  	<div className="modal fade" id="CreateUserModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	        		{console.log("edit modal",this.props.userNot)}
+					{/*<div className="modal fade modalHide" id={"editNotifyModal-"+this.props.userNot} role="dialog">*/}
+					  	<div className="modal fade modalHide"  id={"editNotifyModal-"+this.props.userNot}  role="dialog" >
                           <div className="modal-dialog modal-lg " role="document">
                             <div className="modal-content modalContent ummodallftmg ummodalmfdrt col-lg-12 ">
                               <div className="modal-header userHeader">
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
-                                <h4 className="modal-title" id="exampleModalLabel">Add New User</h4>
+                                <h4 className="modal-title " id="exampleModalLabel">Add New User</h4>
                               </div>
                              <div className="modal-body">
                               <div className="hideModal">
@@ -217,14 +217,14 @@ class UsereditModal extends Component{
                                       <div className="">
                                           <div className="">                                        
                                             <section className="">                                          
-                                                    <div className="box-body">
+                                                    <div className="box-body textAlignLeft">
                                                         <div className="">
 
-                                                          <form id="signUpUser">
+                                                    <form id="signUpUser">
                                                     <div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12 createusr ">
 
                                                      <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-                                                          <label className="formLable">First Name <label className="requiredsign">*</label></label>
+                                                          <label className="formLable ">First Name <label className="requiredsign">*</label></label>
                                                           <span className="blocking-span">
                                                            <div className="input-group inputBox-main  new_inputbx " >
                                                              <div className="input-group-addon remove_brdr inputIcon">
@@ -296,7 +296,7 @@ class UsereditModal extends Component{
                       
                 </div>
               </div>
-					</div>
+					
 					</div>
 		    );
 		}else{

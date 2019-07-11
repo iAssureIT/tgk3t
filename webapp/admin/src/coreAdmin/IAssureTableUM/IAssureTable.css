@@ -17,6 +17,13 @@
 /*  overflow-x: auto; 
   white-space: nowrap;*/
 }
+.centerText{
+  text-align: center;
+}
+.textAlignLeft{
+
+  text-align: left !important;
+}
 .paginationAdminOES > li > a{
   margin-right: 5px !important;
   margin-bottom: 5px !important;

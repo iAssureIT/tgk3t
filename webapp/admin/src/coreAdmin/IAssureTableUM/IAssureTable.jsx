@@ -5,6 +5,8 @@ import $ 							from 'jquery';
 import jQuery 						from 'jquery';
 import 'jquery-validation';
 import './IAssureTable.css';
+/*import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';*/
+import { Route , withRouter} from 'react-router-dom';
 
 import UsereditModal   from '../userManagement/UM/UsereditModal.jsx';
 
@@ -509,6 +511,85 @@ class IAssureTable extends Component {
 			}			
 		});
     }
+
+    deleteUser(event){
+
+    	event.preventDefault();
+		var id = event.target.id;
+		console.log("id",id);
+		const token = '';
+		const url = '/api/users/'+id ;
+		const headers = {
+			    "Authorization" : token,
+			    "Content-Type" 	: "application/json",
+			};
+		axios({
+			method: "DELETE",
+			url : url,
+			headers: headers,
+			timeout: 3000,
+			data: null,
+		})
+		.then((response)=> {
+	    	console.log('delete response',response);
+	    	swal("User deleted successfully","", "success");
+
+		}).catch((error)=> {
+		    console.log(error);
+		});
+    }
+
+    changepassword (event){
+	event.preventDefault();
+	var password        = this.state.resetPassword;
+	var passwordConfirm = this.state.resetPasswordConfirm;
+	// var newID 			= FlowRouter.getParam("mailId");
+	var newID 		=  $(event.target).attr('id');
+	
+	if(newID){
+		var resetPassword = newID;
+	}
+
+		if(password==passwordConfirm){
+			if(password.length >= 6){
+				console.log("reset api");
+			}else{
+				swal({
+					title:'abc',
+					text:"Password should be at least 6 characters long"});
+
+			}
+
+		}else{
+			swal({
+				title:'abc',
+				text:"Password doesn't match with confirm password"});
+		}
+	
+}
+
+  showSignPass(){
+
+      $('.showPwdreset').toggleClass('showPwdreset1');
+      $('.hidePwdreset').toggleClass('hidePwdreset1');
+      $('.inputTextPass').attr('type', 'text');
+  }
+  hideSignPass(){
+      $('.showPwdreset').toggleClass('showPwdreset1');
+      $('.hidePwdreset').toggleClass('hidePwdreset1');
+      $('.inputTextPass').attr('type', 'password');
+
+  }
+
+  showprofile(e){
+	e.preventDefault();
+	// FlowRouter.go('/Profile/'+e.currentTarget.id);
+	this.props.history.push('/edituserprofile/'+e.currentTarget.id );
+	console.log("here showprofile view",e.currentTarget.id);
+
+}
+	 
+
 	render() {
 		console.log(this.state.limitRange +'>='+  this.state.dataLength);
 		// var x = Object.keys(this.state.tableHeading).length ;
@@ -622,15 +703,75 @@ class IAssureTable extends Component {
 														<span className="pointer">
 															{/*<div  className="deleteNotif"  data-toggle="modal" data-target={"#editNotifyModal-"+this.props.emailtemplateValues._id} id={this.props.emailtemplateValues._id}>
 							    	*/}
-															<i className="fa fa-pencil" title="Edit" id={value._id} data-toggle="modal" data-target={"#editNotifyModal-"+value._id}></i>&nbsp; &nbsp; 
+															<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.showprofile.bind(this)} ></i>&nbsp; &nbsp; 
 															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={`#${value._id}-rm`} ></i>}&nbsp; &nbsp; 
-															<i className="fa fa-key" title="Reset Password" id={value._id} onClick={this.edit.bind(this)}></i>&nbsp; &nbsp; 
+															<i className="fa fa-key" title="Reset Password" id={value._id} data-toggle="modal" data-target={"#RestpwdModal-"+value._id}></i>&nbsp; &nbsp; 
 														
 														</span>
 
 														<UsereditModal userNot={value._id} data={value}/>
 
-							
+														
+														<div className="modal fade modalHide" id={"RestpwdModal-"+value._id}  role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+																		  <div className="modal-dialog" role="document">
+																		    <div className="modal-content  ummodallftmg">
+																		      <div className="modal-header userHeader">
+																		        
+																		        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+																		        
+																		          &times;
+																		        </button>
+																		        <h4 className="modal-title" id="exampleModalLabel1">Reset Password</h4>
+																		      </div>
+																		     <div className="modal-body row">
+
+																		             	{/*<ResetPassword id={usersData._id}/>*/}
+																		             	 <div className="" id={value._id}>
+																				                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+
+																				                <div className="FormWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
+																				                    <form id={value._id} onSubmit={this.changepassword .bind(this)}>
+																				                        <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12 resetInptFld">
+																				                            <span className="blocking-span" id="resetPwd">
+																				                               <input type="password" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" value={this.state.resetPassword} onChange={this.handleChange} ref="resetPassword" name="resetPassword" id="resetPassword"  autoComplete="off" required/>
+																				                               <span className="floating-label">
+																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
+																				                                    New Password 
+																				                               </span>                              
+																				                            </span>
+																				                            <div className="showHideResetDiv showiconUM">
+																				                              <i className="fa fa-eye showPwdreset" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+																				                              <i className="fa fa-eye-slash hidePwdreset" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+																				                            </div> 
+																				                        </div>
+																				                        <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12">
+																				                            <span className="blocking-span" id="resetConPwd">
+																				                               <input type="password" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" value={this.state.resetPasswordConfirm} onChange={this.handleChange} ref="resetPasswordConfirm" name="resetPasswordConfirm" id="resetPasswordConfirm"  autoComplete="off" required/>
+																				                               <span className="floating-label">
+																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
+																				                                    Confirm Password 
+																				                               </span>                              
+																				                            </span>
+																				                            <div className="showHideResetDiv showiconUM">
+																				                              <i className="fa fa-eye showPwdreset" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+																				                              <i className="fa fa-eye-slash hidePwdreset" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+																				                            </div>
+																				                        </div>
+
+																				                        <div className="submitButtonWrapper pull-right col-lg-4 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12">
+																				                            <button type="submit" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btnSubmit outlinebox" id={value._id} >Reset Password</button>
+																				                        </div>
+																				                           
+																				                    </form>
+																				                </div>
+																				              </div>
+																				        </div>
+																		      </div>
+																	
+																		   </div>
+																		  </div>
+																	</div>	
+
 	                                                    <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${value._id}-rm`}  role="dialog">
 										                    <div className=" modal-dialog adminModal adminModal-dialog">
 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -652,7 +793,7 @@ class IAssureTable extends Component {
 										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
 										                                   </div>
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-										                                        <button id={value._id} onClick={this.deleteExam.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
+										                                        <button id={value._id} onClick={this.deleteUser.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
 										                                   </div>
 										                              </div>
 										                         </div>
@@ -722,4 +863,4 @@ class IAssureTable extends Component {
 
 }
 
-export default IAssureTable;
+export default withRouter(IAssureTable); 

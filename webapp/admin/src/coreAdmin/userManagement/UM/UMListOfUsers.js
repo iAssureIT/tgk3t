@@ -137,7 +137,7 @@ render(){
 						        <form className="newTemplateForm">
 									
 									<div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 usrmgnhead">
-										<div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6">
+										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Action</label>
 											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" id="userListDropdownId" ref="userListDropdown" name="userListDropdown" >
 												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" name="userListDDOption">-- Select --</option>	
@@ -157,7 +157,7 @@ render(){
 										</div> 
 										
 
-										<div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6">
+										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 											
 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
 											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="roleListDropdown" name="roleListDropdown" >
@@ -172,7 +172,7 @@ render(){
 										</div>
 
 				
-										<div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6">
+										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
 											<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive" value={this.state.blockActive} name="blockActive" onChange={this.handleChange}>
 												<option>-- Select --</option>	
