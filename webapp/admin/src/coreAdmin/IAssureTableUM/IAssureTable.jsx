@@ -8,7 +8,7 @@ import './IAssureTable.css';
 /*import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';*/
 import { Route , withRouter} from 'react-router-dom';
 
-import UsereditModal   from '../userManagement/UM/UsereditModal.jsx';
+/*import UsereditModal   from '../userManagement/UM/UsereditModal.jsx';*/
 
 
 var sum = 0;
@@ -30,19 +30,21 @@ class IAssureTable extends Component {
 		    "activeClass" 				: 'activeQueDataCircle', 
 		    "completeDataCount" 		: props && props.completeDataCount ? props.completeDataCount : 0,
 		    "normalData" 				: true,
+		    "resetPassword"				: "",
+		    "resetPasswordConfirm" 		: "",
+		    // "usernames"					: "",
 		}
 		this.deleteExam = this.deleteExam.bind(this);
-
-		
+		this.handleChange = this.handleChange.bind(this);
 	}
 	componentDidMount() {
       $("html,body").scrollTop(0); 
       // this.paginationFunction();
       // this.palindrome('Moam');
-      console.log('completeDataCount in table', this.state.completeDataCount);
+      // console.log('completeDataCount in table', this.state.completeDataCount);
       this.setState({
-      	tableHeading	: this.props.tableHeading,
-      	tableData 		: this.props.tableData,
+      	tableHeading	  : this.props.tableHeading,
+      	tableData 		  : this.props.tableData,
       	completeDataCount : this.props.completeDataCount
       })
 	}
@@ -52,7 +54,7 @@ class IAssureTable extends Component {
             completeDataCount : nextProps.completeDataCount
         },()=>{
         	this.paginationFunction();
-        	console.log('completeDataCount=====', this.state.completeDataCount);	
+        	// console.log('completeDataCount=====', this.state.completeDataCount);	
         })
     }
 	componentWillUnmount(){
@@ -292,7 +294,7 @@ class IAssureTable extends Component {
 		this.setState({
 			dataLength : dataLen,
 		},()=>{
-			console.log('completeDataCount=====:::', this.state.completeDataCount);
+			// console.log('completeDataCount=====:::', this.state.completeDataCount);
 			// $('li').removeClass('activeQueDataCircle');
 			// $(".queDataCircle:first").addClass('activeQueDataCircle');
 			const maxRowsPerPage = this.state.limitRange;
@@ -516,7 +518,7 @@ class IAssureTable extends Component {
 
     	event.preventDefault();
 		var id = event.target.id;
-		console.log("id",id);
+		// console.log("id",id);
 		const token = '';
 		const url = '/api/users/'+id ;
 		const headers = {
@@ -531,7 +533,7 @@ class IAssureTable extends Component {
 			data: null,
 		})
 		.then((response)=> {
-	    	console.log('delete response',response);
+	    	// console.log('delete response',response);
 	    	swal("User deleted successfully","", "success");
 
 		}).catch((error)=> {
@@ -539,34 +541,65 @@ class IAssureTable extends Component {
 		});
     }
 
-    changepassword (event){
+    changepassword(event){
 	event.preventDefault();
-	var password        = this.state.resetPassword;
-	var passwordConfirm = this.state.resetPasswordConfirm;
+	var id = event.target.id;
+	// console.log('id',id);
+	var password 		= this.state["resetPassword"+id];
+	var conPassword 	= this.state["resetPasswordConfirm"+id];
+
+	
 	// var newID 			= FlowRouter.getParam("mailId");
+	var formValues ={
+		"password" 	 : conPassword,
+	}
+
 	var newID 		=  $(event.target).attr('id');
 	
+/*
+	console.log("password", password);
+	console.log("conPassword", conPassword);
+	console.log("newID",newID);
+*/
 	if(newID){
 		var resetPassword = newID;
 	}
 
-		if(password==passwordConfirm){
+		if(password==conPassword){
 			if(password.length >= 6){
-				console.log("reset api");
+				axios.put('/api/users/resetpwd/'+ newID, formValues)
+			      .then( (res)=>{
+			      	console.log("response",res);
+			        // if(res.status == 200){
+			          swal("Password has been changed successfully!!","", "success");
+			          // this.state["usernames"+id] 				= '';
+			          this.refs.resetPassword.value			= '';
+			          this.refs.resetPasswordConfirm.value  	= '';
+			        // }
+			      })
+			      .catch((error)=>{
+			        console.log("error = ",error);
+			        alert("We are sorry but something went Wrong.","","error");
+			      });
 			}else{
-				swal({
-					title:'abc',
-					text:"Password should be at least 6 characters long"});
-
+				swal("Password should be at least 6 characters long","","error");				
 			}
-
 		}else{
-			swal({
-				title:'abc',
-				text:"Password doesn't match with confirm password"});
+			swal("Password doesn't match with confirm password","","error");
 		}
-	
 }
+
+
+	handleChange(event){
+        const target = event.target.value;
+        const name   = event.target.name;
+        console.log('target',name, target);
+          this.setState({ 
+	      [name]:target
+	    },()=>{
+	    	// console.log('this state', this.state);
+	    })
+	}
 
   showSignPass(){
 
@@ -585,13 +618,13 @@ class IAssureTable extends Component {
 	e.preventDefault();
 	// FlowRouter.go('/Profile/'+e.currentTarget.id);
 	this.props.history.push('/edituserprofile/'+e.currentTarget.id );
-	console.log("here showprofile view",e.currentTarget.id);
+	// console.log("here showprofile view",e.currentTarget.id);
 
 }
 	 
 
 	render() {
-		console.log(this.state.limitRange +'>='+  this.state.dataLength);
+		// console.log(this.state.limitRange +'>='+  this.state.dataLength);
 		// var x = Object.keys(this.state.tableHeading).length ;
 		// var y = 4;
 		// var z = 2;
@@ -673,29 +706,37 @@ class IAssureTable extends Component {
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
-																if($.type(value1) == 'string'){
-																	var regex = new RegExp(/(<([^>]+)>)/ig);
-																	var value2 = value1 ? value1.replace(regex,'') : '';
-																	var aN = value2.replace(this.state.reA, "");
-																	if(aN && $.type( aN ) == 'string'){
-																		var textAlign = 'textAlignLeft';
-																	}else{
-																		var bN = value1 ? parseInt(value1.replace(this.state.reN, ""), 10) : '';
-																		if(bN){
-																			var textAlign = 'textAlignRight';
-																		}else{
+																if(value1){
+																	
+																	if($.type(value1) == 'string'){
+																		var regex = new RegExp(/(<([^>]+)>)/ig);
+																		var value2 = value1 ? value1.replace(regex,'') : '';
+																		var aN = value2.replace(this.state.reA, "");
+																		if(aN && $.type( aN ) == 'string'){
 																			var textAlign = 'textAlignLeft';
+																		}else{
+																			var bN = value1 ? parseInt(value1.replace(this.state.reN, ""), 10) : '';
+																			if(bN){
+																				var textAlign = 'textAlignRight';
+																			}else{
+																				var textAlign = 'textAlignLeft';
+																			}
 																		}
-																	}
-																	var found = Object.keys(this.state.tableHeading).filter((k)=> {
-																	  return k == key;
-																	});
-																	if(found.length > 0){
-																		if(key != 'id'){
-																			return(<td className={textAlign} key={i}><div className={textAlign} dangerouslySetInnerHTML={{ __html:value1}}></div></td>); 						
+																		var found = Object.keys(this.state.tableHeading).filter((k)=> {
+																		  return k == key;
+																		});
+																		if(found.length > 0){
+																			if(key != 'id'){
+																				return(<td className={textAlign} key={i}><div className={textAlign} dangerouslySetInnerHTML={{ __html:value1}}></div></td>); 						
+																			}else{
+																				
+																			}
 																		}
+																	}															
+																}else{
+																	console.log('value1', value1);
+																	return(<td key={i}></td>);
 																}
-																}																
 															}
 														)
 													}
@@ -709,7 +750,7 @@ class IAssureTable extends Component {
 														
 														</span>
 
-														<UsereditModal userNot={value._id} data={value}/>
+													{/*	<UsereditModal userNot={value._id} data={value}/>*/}
 
 														
 														<div className="modal fade modalHide" id={"RestpwdModal-"+value._id}  role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
@@ -730,10 +771,10 @@ class IAssureTable extends Component {
 																				                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 
 																				                <div className="FormWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
-																				                    <form id={value._id} onSubmit={this.changepassword .bind(this)}>
+																				                    <form id={value._id} >
 																				                        <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12 resetInptFld">
 																				                            <span className="blocking-span" id="resetPwd">
-																				                               <input type="password" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" value={this.state.resetPassword} onChange={this.handleChange} ref="resetPassword" name="resetPassword" id="resetPassword"  autoComplete="off" required/>
+																				                               <input type="text" value={this.state["resetPassword"+value._id]} onChange={this.handleChange}className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" ref="resetPassword"    name={"resetPassword"+value._id} id={"resetPassword"+value._id}  autoComplete="off" />
 																				                               <span className="floating-label">
 																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
 																				                                    New Password 
@@ -746,7 +787,7 @@ class IAssureTable extends Component {
 																				                        </div>
 																				                        <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12">
 																				                            <span className="blocking-span" id="resetConPwd">
-																				                               <input type="password" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" value={this.state.resetPasswordConfirm} onChange={this.handleChange} ref="resetPasswordConfirm" name="resetPasswordConfirm" id="resetPasswordConfirm"  autoComplete="off" required/>
+																				                               <input type="text" value={this.state["resetPasswordConfirm"+value._id]} onChange={this.handleChange}className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox"  ref="resetPasswordConfirm" name={"resetPasswordConfirm"+value._id} id={"resetPasswordConfirm"+value._id}  autoComplete="off"/>
 																				                               <span className="floating-label">
 																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
 																				                                    Confirm Password 
@@ -758,8 +799,11 @@ class IAssureTable extends Component {
 																				                            </div>
 																				                        </div>
 
+																				                      
+
+
 																				                        <div className="submitButtonWrapper pull-right col-lg-4 col-lg-offset-3 col-md-6 col-sm-12 col-xs-12">
-																				                            <button type="submit" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btnSubmit outlinebox" id={value._id} >Reset Password</button>
+																				                            <button className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btnSubmit outlinebox" onClick={this.changepassword.bind(this)} id={value._id}>Reset Password</button>
 																				                        </div>
 																				                           
 																				                    </form>

@@ -27,8 +27,6 @@ import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
 import UMRolesList from '../userManagement/Roles/UMRolesList.js';
 import CompanySetting from '../companysetting/Components/CompanySetting.js';
 import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
-import form2          from '../userManagement/Form2/Form2.js';
-import form3          from '../userManagement/Form3/Form3.js';
 
  class Layout extends Component{
   
@@ -100,7 +98,7 @@ componentDidMount(){
   render(){
     console.log("props = ",this.props);
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===false){
+    if(this.state.loggedIn===true){
       return(
             <div className="App container-fluid">
            
@@ -125,8 +123,8 @@ componentDidMount(){
 
                           <Route path="/companysetting" component={CompanySetting} exact />
 
-                          <Route path="/form2" component={form2} exact />
-                          <Route path="/form3" component={form3} exact />
+                         {/* <Route path="/form2" component={form2} exact />
+                          <Route path="/form3" component={form3} exact />*/}
 
                           </Switch>        
                       </Router>

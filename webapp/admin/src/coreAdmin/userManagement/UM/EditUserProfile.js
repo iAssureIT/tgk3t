@@ -14,6 +14,8 @@ class EditUserProfile extends Component{
 	  		username  : "",
 	  		mobNumber : "",
 	  		userProfile : "",
+	  		firstName : "",
+	  		lastName  : "",
 			}	  	
 			 this.handleChange = this.handleChange.bind(this);
 	  }
@@ -22,14 +24,17 @@ class EditUserProfile extends Component{
 		var userid = this.state.UserId;
 		console.log("userid-----------------------------------------",userid);
 		var formvalues = {
-			"fullName" 		: this.refs.fullname.value,
-			"emailId"  		: this.refs.username.value,
-			"mobileNumber"  : this.refs.mobNumber.value,
+		/*	"fullName" 		: this.refs.fullname.value,*/
+			"firstname"		: this.refs.firstName.value,
+			"lastname" 		: this.refs.lastName.value,
+			"email"  		: this.refs.username.value,
+			"mobNumber"  : this.refs.mobNumber.value,
 		}
 		console.log("formvalues",formvalues);
 				axios.put('/api/users/'+userid, formvalues)
 				.then((response)=> {		
-					swal("User updated successfully","", "success");			
+					swal("User updated successfully","", "success");		
+					 this.props.history.push('/umlistofusers');	
 					console.log('response --==',response);
 				})
 				.catch(function (error) {
@@ -50,12 +55,22 @@ class EditUserProfile extends Component{
 		 axios.get('/api/users/'+ userid)
 	      .then( (res)=>{
 	        console.log(res.data);
-	        var FName = res.data.profile.fullName;
+	        var FName = res.data.profile.fullName.split(' ');
+	        var FirstName = FName[0];
+	        var LastName = FName[1];
 	        var Email = res.data.profile.emailId;
 	        var Mnob  = res.data.mobileNumber;
-	      this.refs.fullname.value = FName 
+
+	        console.log("f name", FirstName);
+	        console.log("L name", LastName);
+
+	      this.refs.firstName.value = FirstName 
+	      this.refs.lastName.value = LastName  
+	     /* this.refs.fullname.value = FName */
 		  this.refs.username.value = Email
 		  this.refs.mobNumber.value = Mnob
+
+		 
 	      })
 	      .catch((error)=>{
 	        console.log("error = ",error);
@@ -82,7 +97,7 @@ class EditUserProfile extends Component{
 											<div className="box-body">												
 												<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12  EditUserProfileWrap">
 													<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12">
-														<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12 group btmmargin inputContent">
+														{/*<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12 group btmmargin inputContent">
 															<label className="formLable">Full Name <label className="requiredsign">*</label></label>
                                                           <span className="blocking-span">
                                                            <div className="input-group inputBox-main  new_inputbx " >
@@ -94,7 +109,35 @@ class EditUserProfile extends Component{
                                                                 id="fullname" ref="fullname" name="fullname"  onChange={this.handleChange} placeholder="Full Name"/>
                                                            </div>   
                                                           </span>
-														</div>														
+														</div>*/}	
+
+														   <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
+                                                          <label className="formLable">First Name <label className="requiredsign">*</label></label>
+                                                          <span className="blocking-span">
+                                                           <div className="input-group inputBox-main  new_inputbx " >
+                                                             <div className="input-group-addon remove_brdr inputIcon">
+                                                             <i className="fa fa-user-circle fa "></i>
+                                                            </div>  
+                                                              <input type="text" style={{textTransform:'capitalize'}}
+                                                               className="form-control UMname inputText form-control  has-content"
+                                                                id="firstName" ref="firstName" name="firstName" onChange={this.handleChange}  placeholder="First Name"/>
+                                                           </div>   
+                                                          </span>
+                                                      </div>
+                                                      <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
+                                                          <label className="formLable">Last Name <label className="requiredsign">*</label></label>
+                                                          <span className="blocking-span row">
+                                                          <div className="input-group inputBox-main  new_inputbx " >
+                                                             <div className="input-group-addon remove_brdr inputIcon">
+                                                              <i className="fa fa-user-circle fa "></i>
+                                                            </div>  
+                                                             <input type="text"className="form-control UMname inputText form-control  has-content" 
+                                                             id="lastName" ref="lastName" name="lastName" onChange={this.handleChange}  placeholder="Last Name" />
+                                                          </div>   
+                                                          </span>
+                                                      </div>
+
+
 														<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12 group btmmargin inputContent">
 															<label className="formLable">Username/Email <label className="requiredsign">*</label></label>
                                                           	<input type="text" disabled  onChange={this.handleChange} className="disableInput inputMaterial form-control inputText" ref="username" name="username" required/>

@@ -124,9 +124,9 @@ render(){
 										<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
 											<CreateUser />
 									</div>
-									<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">
+									{/*<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">
 										<a href="/umroleslist"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Role</button></a>
-									</div>
+									</div>*/}
 							
 				                   {/* <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 searchTableBoxAlignSETUM">
 				                   		<span className="blocking-span">

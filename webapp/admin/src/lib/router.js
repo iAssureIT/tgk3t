@@ -15,18 +15,22 @@ import ViewTemplates from '../coreAdmin/NotificationManagement/ViewTemplates.jsx
 
 import layoutPostLogin from '../coreAdmin/Layout/layoutPostLogin.js';
 
-const UMListOfUsersPage = layoutPostLogin(UMListOfUsers);
+const UMListOfUsersPage = layoutPostLogin(UMListOfUsers,UMRolesList,CompanySetting,EditUserProfile);
 
 
 export const routes  = (
         <div className="col-lg-10 col-lg-offset-2">
             <Router>
-               {/* <Route path="/umlistofusers"    component={UMListOfUsersPage}   exact/>*/}
-                <Route path="/umlistofusers"    component={UMListOfUsers}       exact/>
-                <Route path="/umroleslist"      component={UMRolesList}         exact />
-                <Route path="/edituserprofile"  component={EditUserProfile}     exact />
-                <Route path="/edituserprofile"  component={EditUserProfile}     exact />
-                <Route path="/companysetting"   component={CompanySetting}      exact />
+                  <Route path="/umlistofusers"    component={UMListOfUsersPage}   exact/>
+                  <Route path="/umroleslist"      component={UMListOfUsersPage}   exact />
+                  <Route path="/companysetting"   component={UMListOfUsersPage}   exact />
+                  <Route path="/edituserprofile"  component={UMListOfUsersPage}   exact />
+                 
+
+              {/*  <Route path="/umlistofusers"    component={UMListOfUsers}       exact/>
+                   <Route path="/umroleslist"      component={UMRolesList}         exact />
+                  <Route path="/edituserprofile"  component={EditUserProfile}     exact />
+                <Route path="/companysetting"   component={CompanySetting}      exact />*/}
             </Router>
         </div>
 );

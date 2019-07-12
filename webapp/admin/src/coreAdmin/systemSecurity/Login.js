@@ -10,9 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 
 class Login extends Component {
 
@@ -34,11 +32,13 @@ class Login extends Component {
     console.log("in login mode",this.state.auth);
         var auth= {
           email       : this.refs.loginusername.value,
-          pwd         : this.refs.loginpassword.value,
+          password    : this.refs.loginpassword.value,
         }
 
+        console.log("auth value",auth);
+
     axios
-      .post('/api/users/details',auth,)
+      .post('/api/users/login',auth)
       .then((response)=> {
         console.log("-------userData------>>",response);
         // this.setState({
