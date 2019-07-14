@@ -1,0 +1,55 @@
+.owl-theme .owl-dots {
+	display: none;
+}
+#owl-demo .item{
+  margin: 10px;
+}
+#owl-demo .item img{
+  display: block;
+  width: 100%;
+  height: 210px;
+}
+
+#info11{
+	z-index: 1;
+    position: absolute;
+    top: 26px;
+    left: 22px;
+    height: 29px;
+    width: 128px;
+    background-color: #3944BC;
+    border-radius:4px;
+    text-align: center;
+    font-size: 11px;
+    color: #fff;
+    padding-top: 8px;
+
+}
+#info21{
+	z-index: 1;
+    position: absolute;
+    top: 26px;
+    left: 161px;
+    height: 29px;
+    width: 64px;
+    background-color: #ffc107;
+    border-radius:4px;
+    text-align: center;
+    color: #fff;
+    font-size: 11px;
+    padding-top: 8px;
+}
+
+#priceDisplay1{
+	z-index: 2;
+    position: absolute;
+    top: 149px;
+    left: 22px;
+    height: 36px;
+    width: 101px;
+    background-color: #fff;
+    border-radius:4px;
+    text-align: center;
+    color:  #3944BC;
+    padding-top: 9px;
+}

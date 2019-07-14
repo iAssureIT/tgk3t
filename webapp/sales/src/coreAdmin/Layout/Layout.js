@@ -29,6 +29,8 @@ import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 import Operation from '../../salesAgent/operations/Operation.js';
 
+
+
  class Layout extends Component{
   
   constructor(props) {
@@ -130,6 +132,8 @@ componentDidMount(){
               <Route path="/forgot-pwd"     exact strict component={ ForgotPassword } />
               <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
               <Route path="/verify-account" exact strict component={ VerifyAccount } />
+           
+
             </Switch>        
           </Router>
         </div>

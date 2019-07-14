@@ -1,0 +1,47 @@
+/*Popular Places Image Container*/
+.headText{
+	font-size: 25px;
+	color: #333;
+	text-align: center;
+	margin:20px;
+}
+.imgContainer{
+	height:250px;
+	background-image: url("/images/build1.jpg");
+	background-size : 100% 100%;
+}
+.Bg{
+	background-color: #ff0;
+}
+.mT30{
+	margin-top: 30px;
+}
+.minusLeftM{
+	margin-left: -15px;
+}
+.transDiv{
+	height: 250px;
+	background-color: rgba(0,0,0,0.7);
+	text-align: center;
+	color:#fff;
+	padding-top: 95px;
+
+}
+.transDiv h6,h4{
+	margin : 0 !important;
+}
+.hrLine{
+	background-color: #333;
+	height: 2px;
+	margin-bottom: 20px;
+}
+.hrLineD{
+	background-color: #999;
+	height: 1px;
+	margin-top: 60px;
+	margin-bottom: 60px;
+}
+
+.marginRight{
+	margin-right: -15px !important;
+}

@@ -1,0 +1,20 @@
+.divContainer{
+	margin-bottom: 50px;
+}
+.personServices{
+    margin-top: -42px;
+    background-color: #fff;
+  	box-shadow: 3px 3px 10px #aaa;
+    height: 225px;
+    padding-top:38px;
+    font-size: 12px;
+    text-align: center;
+}
+.personServices i{
+	color: #678afa;
+	font-size: 40px;
+}
+.personServices label{
+	font-size: 19px;
+	margin-bottom: 18px;
+}

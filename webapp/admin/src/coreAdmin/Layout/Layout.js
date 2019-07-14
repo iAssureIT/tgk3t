@@ -17,6 +17,7 @@ import SignUp           from '../systemSecurity/SignUp.js';
 import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
 // import CommonPage        from './components/layouts/CommonLayout.js';
 
+
 import Header from '../common/header/Header.js'
 import Footer from '../common/footer/Footer.js'
 import Dashboard from '../dashboard/Dashboard.js'
@@ -114,7 +115,7 @@ componentDidMount(){
                       */} <Router>
                           <Switch>
                           <Route path="/umlistofusers" component={UMListOfUsers} exact />
-                          
+
                           <Route path="/umroleslist" component={UMRolesList} exact />
                           <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
 
@@ -154,6 +155,7 @@ componentDidMount(){
               <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
               <Route path="/verify-account" exact strict component={ VerifyAccount } />
               <Route path="/confirm-otp"    exact strict component={ ConfirmOtp } />
+              
             </Switch>        
           </Router>
         </div>

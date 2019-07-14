@@ -1,0 +1,237 @@
+.taRight{
+	text-align: right;
+}
+.formWrapper{
+	height: 750px;
+}
+.descDiv{
+	height: 800px;
+	/*background-color: #333;*/
+}
+.mr4{
+    margin-right: 4px;
+}
+.headingOfDiv{
+/*    background-color: #ff0;
+*/  height: 100px;
+    margin-top: 20px;
+}
+.logoImg img{
+    height: 100%;
+    margin-left: 25px;
+	background-repeat: no-repeat;
+}
+.capText{
+	text-align: left;
+	padding-top: 40px;
+	padding-left: 0px;
+	color: #33bacc;
+}
+.descText {
+	font-size: 12px;
+	font-weight: normal !important;
+}
+.socialIcon{
+	height: 35px;
+	border-radius: 2px;
+ 	padding: 0 !important;
+    padding-top: 7px !important;	
+    border: 1px solid #999;
+    text-align: center;
+	font-size: 14px;
+}
+.mt124{
+	margin-top: 124px;
+}
+.mt14{
+    margin-top: 14px;
+}
+.mt9{
+	margin-top: 9px;
+}
+.fs13 label{
+	font-size: 13px !important;
+}
+.descText hr{
+	border-top: 1px solid #999 !important;
+}
+.followUsSocial{
+	height: 32px;
+    padding: 0 !important;
+    text-align :center;
+    padding-top: 5px !important;
+    border-radius: 3px;
+}
+.followUsSocial:hover{
+	cursor: pointer;
+}
+.mr7{
+	margin-right: 7px;
+}
+.followUsSocial i{
+	color:#fff;
+}
+.globel{
+	background-color: #FF1493;
+}
+.facebook{
+	background-color: #3B5998;
+}
+.flickr{
+	background-color: #FF1493;
+}
+.yahoo{	
+	background-color: #6333e8;
+}
+.github{
+	background-color: #333333;
+}
+.instagram{
+
+	background-color: #4A708B;
+}
+.linkedin{
+
+	background-color: #5CACEE;
+}
+.pinterest{
+
+	background-color: #CD3333;
+}
+.skype{
+
+	background-color: #00BFFF;
+}
+.twitter{
+
+	background-color: #00BFFF;
+}
+.youtube{
+	background-color: #CD3333;
+}
+.mail{
+
+	background-color: #6B6B6B;
+}
+.featuredListing{
+	height: 200px;
+	background-color: #ff0;
+	border-top-right-radius: 3px;
+	border-top-left-radius:  3px;
+	background-image: url("/images/feature.jpeg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.transpDiv{
+	height: 200px;
+	background-color: rgba(0,0,0,0.1);
+}
+.featured{
+       background-color: #222;
+    border-radius: 3px;
+    color: #fff;
+    padding: 4px;
+    text-align: center;
+    margin-top: 12px;
+    padding-left: 9px;
+    /* padding-right: 13px; */
+    font-size: 11px;
+}
+.forRent{
+	background-color: #00BFFF;
+    border-radius: 3px;
+    color: #fff;
+    text-align: center;
+    padding: 4px;
+    margin-top: 12px;
+    padding-left: 9px;
+    /* padding-right: 13px; */
+    font-size: 11px;
+}
+.home{
+	 height: 30px;
+    background-color: rgba(0,0,0,0.8);
+    color: #fff;
+    padding: 0px;
+    padding-left: 7px;
+    padding-top: 3px;
+    font-size: 18px;
+    border-radius: 3px;
+}
+.ml45{
+	margin-left: 54px;
+}
+.nameDiv{
+	border:1px solid #eee;
+	height:70px;
+	text-align: center;
+}
+.nameDiv label{
+	font-weight:normal !important;
+	font-size: 12px;
+}
+.nameOne{
+	margin-top: 10px;
+	font-size: 13px !important;
+}
+.priceDiv{
+	height: 40px;
+	text-align: center;
+	color: #fff;
+	background-color: #424ef5;
+}
+.priceDiv label{
+	margin-top: 10px;
+	font-weight: normal !important;
+}
+.detailsDiv{
+	height: 300px;
+	border:1px solid #eee;
+}
+.detailedData{
+	margin-top: 14px;
+    height: 50px;
+    padding: 0px;
+    padding-top: 27px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+}
+.detailsDiv label{
+	color: #888;
+}
+.detailedData label{
+	color:#888;
+}
+.detailedDataS{
+	margin-top: 14px;
+    height: 21px;
+    padding: 0px;
+    padding-top: 0px;
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+
+}
+.noBorder{
+	border:none !important;
+}
+.timedetailedData{
+	margin-top: 17px;
+    height: 50px;
+    padding: 0px;
+    padding-top: 20px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    font-size:12px;
+
+}
+.bookedBy{
+	height: 62px;
+	background-color: #eee;
+	text-align: center;
+	padding-top: 10px;
+}
+.marginLeft{
+	margin-left:0px !important;
+}
+

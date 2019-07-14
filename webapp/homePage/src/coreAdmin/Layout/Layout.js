@@ -43,6 +43,9 @@ import WebSignupFlow from '../../components/WebSignup/WebSignupFlow.js';
 import WebSignupForm from '../../components/WebSignup/WebSignupForm.js';
 import CongratsPage from '../../components/CongratsPage/CongratsPage.js';
 
+import PropertyProfileView from '../../components/Profile/PropertyProfileView.js';
+import RequestForm from '../../components/RequestForm/RequestForm.js';
+
  class Layout extends Component{
   
   constructor(props) {
@@ -93,7 +96,7 @@ componentDidMount(){
 
   render(){
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===false){
+    if(this.state.loggedIn===true){
       return(
             <div className="App container-fluid">
                 <div className="row">
@@ -114,8 +117,8 @@ componentDidMount(){
                           <Route path="/ViewTemplates" component={ViewTemplates} exact />
                           <Route path="/dashboard" component={Dashboard} exact />
                           <Route path="/companysetting" component={CompanySetting} exact />
-
                          { /*<Route path="/HomePage" component={HomePage} exact />
+
                           <Route path="/Form1" component={Form1} exact />
                           <Route path="/Form2" component={Form2} exact />
                           <Route path="/Form3" component={Form3} exact />
@@ -147,7 +150,7 @@ componentDidMount(){
         <div>
           <Router>
             <Switch>
-              <Route path="/"                exact strict component={ Login } />
+              <Route path="/"                exact strict component={ HomePage } />
               <Route path="/login"           exact strict component={ Login } />
               <Route path="/signup"          exact strict component={ SignUp } />
               <Route path="/forgot-pwd"      exact strict component={ ForgotPassword } />
@@ -171,6 +174,10 @@ componentDidMount(){
               <Route path="/Form5"       exact strict component={Form5}  />
               <Route path="/Form6"       exact strict component={Form6}  />
               <Route path="/CongratsPage"       exact strict component={CongratsPage}  />
+              
+              <Route path="/PropertyProfileView"       exact strict component={PropertyProfileView}  />
+              <Route path="/RequestForm"       exact strict component={RequestForm}  />
+
 
             </Switch>        
           </Router>

@@ -1,0 +1,115 @@
+.BoxSize{
+    height: 685px;
+    background-image: url("/images/TGK_Post.png");
+}
+
+.nav>li>a:hover {
+    text-decoration: none;
+    /* color: #fff; */
+    background-color: #795050;
+}
+.navbar-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color:#fff;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #8f90ce;
+    border-color: #337ab7;
+}
+.dropdown-menu > li > a {
+    color: #312f2f;
+}
+ul li a {
+    font-size: 0.9em !important;
+    color: #fff !important;
+}
+.hImg{
+    height: 100px;
+    text-align: center;
+    margin-top: 24px;
+}
+.navText{
+    background-color: transparent !important;
+    margin-top: 21px;
+    margin-left: 29px;
+    margin-top: 24px;
+}
+.hText{
+    text-align: center;
+    color: #fff;
+    margin-top: 45px;
+    margin-left: 30px;
+}
+.hText1{
+    margin-top: 35px;
+}
+.btn-bg{
+    background-color: #fff;
+    color: #000;
+}
+.ml-10{
+    margin-left: 10px;
+}
+.mt-10{
+    margin-top: 10px;
+}
+.hSearch{
+    margin-top: 21px;
+    margin-left: 92px;
+    width: 400px;
+    height: 43px;
+}
+.S-img{
+    left: 92px;
+    width: 71px;
+    height: 43px;
+    position: relative;
+    top: 21px;
+    background-image: url("/images/TGK-key.png");
+    background-size: 100%,100%;
+    background-repeat: no-repeat;
+    background-color: #000;
+}
+.btnPost{
+    width: 161px;
+    height: 88px;
+    font-size: 22px;
+    border-bottom: 5px solid #044b88;
+}
+.postDetails{
+    font-size: 19px;
+    color: #fff;
+    text-align: center;
+    margin-left: 9px;
+    margin-bottom: 11px;
+}
+.postDetails1{
+    margin-left: 12px;
+    color: #fff;
+    margin-top: 10px;
+    letter-spacing: 2px;
+}
+.postDetails2{
+   color: #fff;
+   margin-left: 40px;
+}
+.postDetails3{
+    color: #fff;
+    letter-spacing: 1px;
+}
+.mt-64{
+    margin-top: 64px;
+}
+.br2{
+    border-right: 2px solid #fff;
+    padding-left: 39px;
+    color: #fff;
+    text-align: center;
+}
+ul li .active{
+    color: #efa73e !important;
+}
+
+/*
+<i class="fas fa-hotel"></i>*/
