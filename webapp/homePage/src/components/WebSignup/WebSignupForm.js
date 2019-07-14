@@ -5,14 +5,11 @@ import $ 						from "jquery";
 import { Route , withRouter}    from 'react-router-dom';
 import swal                     from 'sweetalert';
 
-
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
  class WebSignupForm extends Component {
 	constructor(props){
 			super(props);
 			this.state = {
+				"mobile" : this.props.match.params.mobile,
 			};
 		}
 
@@ -20,33 +17,41 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 			event.preventDefault();
 			// console.log("abc");
 			const formValues = {
-				"name" 		: this.refs.name.value,
-				"email" 	: this.refs.email.value,
-				"city"      : this.refs.city.value,
-				"pwd"       : "",
-		        "role"      : "",
-		        "status"    : ""
+				"name" 		 : this.refs.name.value,
+				"email" 	 : this.refs.email.value,
+				"city"       : this.refs.city.value,
+				"mobile"     : this.refs.mobile.value,
+				"countryCode":this.refs.countryCode.value,
+				"status"     : 'Active',
+				"role"       : 'customer',
+
+				
 			};
+			console.log("WebSignupForm==",formValues);
+
 			//this.props.fun(formValues);
 			axios
 				.post('/api/users',formValues )
 				.then( (res) =>{
-					console.log(res);
-					if(res.status == 201){
-						// alert("Data inserted successfully!")
-						swal("Good job!", "Data inserted successfully!", "success");
-						
-						this.refs.name.value = '';
-						this.refs.email.value = '';
-						this.refs.city.value = '';
+					if(res.data.message == "NEW-USER-CREATED"){
+						swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
 
-						this.props.history.push("/WebSignupFlow");/*flow page*/
+						localStorage.removeItem("user_id");
+		        		localStorage.removeItem("mobile");
+		        		localStorage.removeItem("otp");	
+		        		localStorage.removeItem("message");	
+
+						localStorage.setItem("user_id",res.data.user_id);
+						localStorage.setItem("mobile",res.data.mobile);
+						localStorage.setItem("otp",res.data.otp);
+						localStorage.setItem("message",res.data.message);
+
+						this.props.history.push("/LoginOtp/");/*flow page*/
 					}
-						
 				})
 				.catch((error) =>{
 					console.log("error = ", error);
-					swal("Sorry!!", "Email is already exits.", "error");
+					swal("Sorry!!", "Mobile Number is already exits.", "error");
 
 				});
 		}
@@ -67,6 +72,22 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 							    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								  <div className="form-group">
 								  	<label>Let us know you to sell or rent your property faster</label>
+
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12	">
+										<div className="form-group">
+										    <label htmlFor="">Mobile</label>
+										    <div className="input-group inputBox-main " id="">
+										      	<div className="input-group-addon inputIcon">
+										      		<select ref="countryCode">
+										      			<option value="+91">+91</option>
+								    					<option value="+93">+93</option>
+										      		</select>
+							                    </div>
+										    	<input type="number" className="form-control" ref="mobile" id="" placeholder="mobile" value={this.state.mobile} disable />
+										  	</div>
+										</div>
+									</div>
+
 								    <label htmlFor="">Name</label><span className="asterisk">*</span>
 								    <div className="input-group inputBox-main " id="">
 								      	<div className="input-group-addon inputIcon">
@@ -94,7 +115,7 @@ axios.defaults.headers.post['Content-Type'] = 'application/json';
 									      	<div className="input-group-addon inputIcon">
 						                     	<i className="fa fa-map-marker iconClr"></i>
 						                    </div>
-									    	<input type="City" className="form-control" ref="city" id="" placeholder="City" />
+									    	<input type="text" className="form-control" ref="city" id="" placeholder="City" />
 									  	</div>
 									</div>
 								</div>

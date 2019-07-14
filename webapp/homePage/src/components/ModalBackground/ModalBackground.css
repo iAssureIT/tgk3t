@@ -1226,7 +1226,7 @@ input[type="radio"]:checked:before {
 }
 
 .backImageModal{
-  background-image: url("/images/TGK_Post.png");
+  background-image: url("/images/TGK-Home-Page.png");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }

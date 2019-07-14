@@ -371,9 +371,9 @@ export default class Form5 extends Component{
 		  
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4">
+		  	{/*<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4">
 		       <button type="" className="btn back_btn col-lg-12 col-md-12 col-sm-12 col-xs-12"  onClick={this.handleBack}>Back</button>
-		  	</div>
+		  	</div>*/}
 		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
 		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12"  onClick={this.updateUser.bind(this)}>Save & Next >></button>
 		  	</div>

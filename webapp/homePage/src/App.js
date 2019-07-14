@@ -7,7 +7,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './lib/router.js';
 
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 

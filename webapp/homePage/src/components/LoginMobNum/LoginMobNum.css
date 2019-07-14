@@ -20,3 +20,14 @@
 .mt-50{
 	margin-top: 50px;
 }
+.closeIcon{
+    font-size: 45px;
+    color: #ff9966;
+    padding: 5px;
+    margin-right: -65px;
+    margin-top: -40px;
+}
+.closeIcon:hover{
+    color: #ff0000;
+}
+

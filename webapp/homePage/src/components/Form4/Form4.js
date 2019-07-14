@@ -17,7 +17,9 @@ export default class Form4 extends Component{
 		constructor(props){
 			super(props);
 			this.state = {
-				formshow :"form-4"
+				formshow :"form-4",
+				amenities     :[],
+
 			};
 			this.handleBack = this.handleBack.bind(this);
 			this.handleNext = this.handleNext.bind(this);
@@ -45,7 +47,10 @@ export default class Form4 extends Component{
 			event.preventDefault();
 			console.log("abc");
 			const formValues = {
-				"gasPipeline" 				: this.refs.gasPipeline.value,
+
+				"amenities"			:this.state.amenities
+
+				/*"gasPipeline" 				: this.refs.gasPipeline.value,
 				"clubHouse" 				: this.refs.clubHouse.value,
 				"internetService" 			: this.refs.internetService.value,
 				"shoppingCenter" 			: this.refs.shoppingCenter.value,
@@ -57,9 +62,10 @@ export default class Form4 extends Component{
 				"childrenPlay" 				: this.refs.childrenPlay.value,
 				"powerBackup" 				: this.refs.powerBackup.value,
 				"internetGym" 				: this.refs.internetGym.value,
-				
+				*/
 				
 			};
+			console.log("form4==",formValues);
 			//this.props.fun(formValues);
 			axios
 				.post('/api/users',formValues)
@@ -69,7 +75,7 @@ export default class Form4 extends Component{
 						// alert("Data inserted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 
-						this.refs.gasPipeline.value = '';
+						/*this.refs.gasPipeline.value = '';
 						this.refs.clubHouse.value = '';
 						this.refs.internetService.value = '';
 						this.refs.shoppingCenter.value = '';
@@ -80,8 +86,13 @@ export default class Form4 extends Component{
 						this.refs.swimmingPool.value = '';
 						this.refs.childrenPlay.value = '';
 						this.refs.powerBackup.value = '';
-						this.refs.internetGym.value = '';
-						this.props.history.push("/Form5");
+						this.refs.internetGym.value = '';*/
+						this.setState(
+			              {
+				            "amenities "    : ''
+
+			              });
+						this.props.history.push("/Form3");
 						$("#klm").hide();
     					$("#klm").removeClass('in');
 						$("#nop").show();
@@ -97,6 +108,25 @@ export default class Form4 extends Component{
 
 		closeModal(){
 			$("#klm").removeClass('klm');
+		}
+		totalInclude(e){
+
+		  var otherProp;
+
+		  if(e.target.checked)
+		  {
+		  otherProp = e.target.getAttribute('value');
+
+		  this.state.amenities.push(e.target.getAttribute('value'));
+
+		  console.log("amenities",this.state.amenities);
+		  }
+		  else{
+		  this.state.amenities.pop(e.target.getAttribute('value'));
+		  console.log("amenities1",this.state.amenities);
+
+		  }
+
 		}
 
 	render() {
@@ -120,228 +150,177 @@ export default class Form4 extends Component{
 			  <div className="hr_border1 hr_border row"></div>
 		  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
 		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	 		Select the ameneties avaispan	
+		  	 		Select the amenities available	
 		  	 	</div>
 		  	 </div>
-		  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	 <table className=" table table-bordered table-hover table-responsive valign ">
-		  	 	<thead>
-		  	 	<tr>
-		  	 		<th className="text-center">Internal</th>
-		  	 		<th className="text-center">External</th>
-		  	 	</tr>
-		  	 	</thead>
-		  	 	<tr>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-8 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="gasPipeline" id="gasPipeline" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Gas Pipeline</span>
-					  </div>
-					</td>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-7 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="clubHouse" id="clubHouse" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Club House</span>
-					  </div>
-					</td>
-		  	 		
-		  	 	</tr>
+		  	 <div className="col-lg-10 col-lg-offset-1 col-md-10 col-sm-12 col-xs-12  ">
+		  	 	<div className="col-lg-12 ">
+		  	 		<div className="col-lg-6 FF4I"><b>Internal</b></div>
+		  	 		<div className="col-lg-6 FF4I"><b>External</b></div>
+		  	 	</div>
+		  	 		<div className="col-lg-12  mb20">
+		  	 			<div className="col-lg-6 FF4I1">
+		  	 				<label className="checkbox-inline col-lg-12 pt8">
+						      <input type="checkbox"
+						      		 value="gasPipeline" 
+						      		 id="1"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)}
 
-		  	 	<tr>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-9 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="internetService" id="internetService" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Internet Service</span>
-					  </div>
-					</td>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-8 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="shoppingCenter" id="shoppingCenter" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Shopping Center</span>
-					  </div>
-					</td>
-		  	 		
-		  	 	</tr>
+						      		 />Gas Pipeline
+						    </label>
+						    <label className="checkbox-inline col-lg-12 pt8 pl21">
+						      <input type="checkbox" 
+						      		 value="internetService" 
+						      		 id="3"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)}
 
-		  	 	<tr>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-6 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="lift" id="lift" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Lift</span>
-					  </div>
-					</td>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-10 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="sewageTreatmentPlan" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Sewage Treatment Plant</span>
-					  </div>
-					</td>
-		  	 		
-		  	 	</tr>
+						      		 />Internet Service 
+						    </label>
 
-		  	 	<tr>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-9 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="airConditioner" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Air Conditioner</span>
-					  </div>
-					</td>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-8 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="swimmingPool" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Swimming Pool</span>
-					  </div>
-					</td>
-		  	 		
-		  	 	</tr>
+						    <label className="checkbox-inline col-lg-9 pt8 pl24">
+						      <input type="checkbox"
+						      		 value="lift" 
+						      		 id="5"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)}
 
-		  	 	<tr>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-8 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="intercom" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Intercom</span>
-					  </div>
-					</td>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-9 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="childrenPlay" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Children Play Area</span>
-					  </div>
-					</td>
-		  	 		
-		  	 	</tr>
+						      		 />Lift 
+						    </label>
 
-		  	 	<tr>
-		  	 	<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-9 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="powerBackup" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Power Backup</span>
-					  </div>
-					</td>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-8 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="internetGym" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Internal Gym</span>
-					  </div>
-					</td>
-		  	 		
-		  	 	</tr>
+						     <label className="checkbox-inline col-lg-12 pt8 pl15">
+							      <input type="checkbox" 
+							      		 value="airConditioner" 
+							      		 id="7"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)}
+
+							      		 />Air Conditioner
+							    </label>
+
+							    <label className="checkbox-inline col-lg-11 pt8 pl2">
+							      <input type="checkbox"
+							      		 value="intercom" 
+							      		 id="9"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)}
+
+							      		 />Intercom
+							    </label>
+
+							    <label className="checkbox-inline col-lg-12 pt8 pl11">
+							      <input type="checkbox" 
+							      		 value="powerBackup"
+							      		 id="11"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)} 
+
+							      		 />Power Backup
+							    </label>
+
+							    <label className="checkbox-inline col-lg-12 pt8 pl3">
+								      <input type="checkbox" 
+								      		 value="waterSupply"
+								      		 id="13"
+								      		 name="userCheckbox"
+								      		 onChange={this.totalInclude.bind(this)} 
+
+								      		 />Water Supply
+								</label>
+		  	 			</div>
+		  	 				{/*External*/}
+
+		  	 			<div className="col-lg-6 FF4I1"> 
+		  	 				<label className="checkbox-inline col-lg-12 pt8">
+							      <input type="checkbox" 
+							      		 value="clubHouse" 
+							      		 id="2"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)}
+
+							      		 />Club House
+							    </label>
+
+							    <label className="checkbox-inline col-lg-12 pt8 pl35">
+							      <input type="checkbox" 
+							      		 value="shoppingCenter"
+							      		 id="4"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)} 
+
+							      		 />Shopping Center 
+							    </label>
 
 
-		  	 	<tr>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-7 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="lift" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Lift</span>
-					  </div>
-					</td>
-		  	 		<td className="text-center">
-		  	 		  
-					  <div className="form-group mgbt col-lg-6 col-lg-offset-2 Amenities_mrg">
-					  <div className="form-group mgbt col-lg-1">
-					  	<input type="checkbox" className="chkbx" ref="lift" id="" placeholder="Type to search your locality"/>
-					  </div>
-					  <div className="form-group mgbt col-lg-1">
-					    <i className="fa fa-users icon_Clr pull-left"></i>
-					  </div>
-					   	<span htmlFor="" >Lift</span>
-					  </div>
-					</td>
-		  	 		
-		  	 	</tr>
+				  	 		<label className="checkbox-inline col-lg-12 pt8 pl87">
+						      <input type="checkbox" 
+						      		 value="sewageTreatmentPlan" 
+						      		 id="6"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)}
 
-		  	 	
-		  	 </table>
+						      		 />Sewage Treatment Plan 
+						    </label>
 
+						    <label className="checkbox-inline col-lg-12 pt8 pl25">
+						      <input type="checkbox" 
+						      		 value="swimmingPool"
+						      		 id="8"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)} 
+
+						      		 />Swimming Pool 
+						    </label>
+
+						    
+						    
+						    
+
+				  	 		<label className="checkbox-inline col-lg-12 pt8 pl61">
+						      <input type="checkbox" 
+						      		 value="childrenPlay" 
+						      		 id="10"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)}
+
+						      		 />Children's Play Area
+						    </label>
+
+				   
+				    
+
+						     <label className="checkbox-inline col-lg-12 pt8 pl10">
+						      <input type="checkbox" 
+						      		 value="internetGym" 
+						      		 id="12"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)}
+
+						      		 />Internet Gym 
+						    </label>
+						    
+
+						    <label className="checkbox-inline col-lg-10 pt8 pl14">
+						      <input type="checkbox" 
+						      		 value="park"
+						      		 id="14"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)} 
+
+						      		 />Park
+						    </label>
+	
+		  	 			</div>
+		  	 		</div>
+			       
 		  	</div>
-		  	</div>
-		  
-
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	<div className="form-group mgbt col-lg-3 col-md-3 col-sm-4 col-xs-4">
+		  	{/*<div className="form-group mgbt col-lg-3 col-md-3 col-sm-4 col-xs-4">
 		       <button type="" className="btn back_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.handleBack}>Back</button>
-		  	</div>
-		  	<div className="form-group mgbt col-lg-3 col-md-3 col-sm-4 col-xs-4 pull-right">
-		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12"  onClick={this.updateUser.bind(this)}>Save & Next >></button>
+		  	</div>*/}
+		  	<div className="form-group mgbt col-lg-3 col-md-3 col-sm-4 col-xs-4 pull-right ">
+		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mb20 "  onClick={this.updateUser.bind(this)}>Save & Next >></button>
 		  	</div>
 		  </div>
 		  

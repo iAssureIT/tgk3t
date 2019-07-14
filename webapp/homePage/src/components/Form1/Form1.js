@@ -11,8 +11,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/js/modal.js';
 
 /*var formValues=[];*/
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 export default class Form1 extends Component{
 
@@ -20,9 +18,9 @@ export default class Form1 extends Component{
 			super(props);
 			this.state = {
 				formshow         :"form-1",
-				selectType1      : "Sell",
-				selectedOption   : ''
-
+				propertypurpose  : "Sell",
+				propertyHolder   : '',
+				user_id 		 : localStorage.getItem("user_id"),
 			};
 			this.handleBack = this.handleBack.bind(this);
 			this.changeForm = this.changeForm.bind(this);
@@ -31,8 +29,28 @@ export default class Form1 extends Component{
 			this.radioChange = this.radioChange.bind(this);
 		}
 
-		componentDidMount(){
-			
+		componentDidMount(){			
+
+        	var message	= localStorage.getItem("message");
+
+			if(message == "NEW-USER-CREATED"){
+				swal("Welcome!","You are now logged in!","success");
+			}			
+
+			$('#radio-example1 ').click(function(){				    	
+		        $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
+		    });
+		    $('#radio-example2').click(function(){
+		        $('.sellerType2').addClass('highlight').siblings().removeClass('highlight');       
+		    });
+		    $('#radio-example3').click(function(){
+		        $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
+		    });
+
+    		localStorage.removeItem("mobile");
+    		localStorage.removeItem("otp");	
+    		localStorage.removeItem("message");	
+
 		}
 
 		updateForm(data){
@@ -177,10 +195,12 @@ export default class Form1 extends Component{
 
 			const formValues = {
 
-				"propertyholder":this.state.selectedOption,
-				"propType"   :this.refs.propType.value,
-				"location"   :this.refs.location.value,
-        		"selectType1": this.state.selectType1,
+				"propertyHolder":this.state.propertyHolder,
+        		"propertypurpose": this.state.propertypurpose,
+				"propertytype"   :this.refs.propertytype.value,
+				"floor"         : this.refs.floor.value,
+				"totalfloor"    : this.refs.totalfloor.value,
+
 
 				// "multistoryApt" 		: this.refs.multistoryApt.value,
 				/*"bhkType" 				: this.refs.bhkType.value,
@@ -194,7 +214,7 @@ export default class Form1 extends Component{
 
 			   // let fields = {};
 			   //  fields["multistoryApt"] = "";
-			   //  fields["location"] = "";
+			   //  fields["propertyloc"] = "";
 			   // /* fields["bhkType"] = "";
 			   //  fields["floor"] = "";
 			   //  fields["propertyage"] = "";
@@ -202,7 +222,7 @@ export default class Form1 extends Component{
 			   //  fields["propertySize"] = "";*/
 			   //  this.setState({
 			   //              "multistoryApt"           : "",          
-			   //              "location"           : "",         
+			   //              "propertyloc"           : "",         
 			   //              /*"bhkType"                 : "",
 			   //              "floor"              	  : "",
 			   //              "propertyage"             : "",
@@ -218,15 +238,17 @@ export default class Form1 extends Component{
 						// alert("Data inserted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 
-						this.refs.propType.value = '';
-						this.refs.location.value = '';
+						this.refs.propertytype.value = '';
+						this.refs.floor.value 	= '';
+						this.refs.totalfloor.value 	= '';
+						
 						this.setState(
 			              {
-			                "selectType1"        : '',
-				            "selectedOption "    : ''
+			                "propertypurpose"        : '',
+				            "propertyHolder "    : ''
 
 			              });
-						this.props.history.push("/Form2");
+						this.props.history.push("/location");
 						/*this.refs.bhkType.value 	  = '';
 						this.refs.floor.value   	  = '';
 						this.refs.totalFloor.value 	  = '';
@@ -258,28 +280,31 @@ export default class Form1 extends Component{
 			$("#abc").removeClass('in');
 		}
 		selectType(event){
-          if(this.state.selectType1 === "Sell")
+          if(this.state.propertypurpose === "Sell")
             {
               this.setState(
               {
-                "selectType1" : "Rent",
+                "propertypurpose" : "Rent",
               });
-            }else if(this.state.selectType1 === "Rent")
+            }else if(this.state.propertypurpose === "Rent")
             {
                this.setState(
                {
-                "selectType1" : "Sell",
+                "propertypurpose" : "Sell",
               }); 
             
           }
       }
 	   radioChange(event) {
-	       	// event.preventDefault();
+	       	event.preventDefault();
 	    	this.setState({
-	      	"selectedOption": event.currentTarget.value,
+	      	"propertyHolder": event.currentTarget.value,
 			    });
 			
-				    $('#radio-example1').click(function(){
+
+
+				    $('#radio-example1 ').click(function(){
+
 				        $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
 				    });
 				    $('#radio-example2').click(function(){
@@ -310,66 +335,54 @@ export default class Form1 extends Component{
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				  	 	<label>I am</label>
 				  	 </div>
-				  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm"   >
-				    	<div className="col-lg-1 sellerType1" id="radio-example1" >
+				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm"   >
+				    	<div className="col-lg-1 sellerType1"  >
 					    <label className="radio-inline ">
 					      <input type="radio" 
-					      		 // name="optradio" 
 					      		 value="owner" 
 					      		 className="FrRadio" 
-					      		  
-					      		 checked={this.state.selectedOption === "owner"}
+					      		 id="radio-example1"
+					      		 checked={this.state.propertyHolder === "owner"}
                					 onChange={this.radioChange} />
 
 				  			<i className="fa fa-users fa-1x logo1"></i>
 					    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 sellerType2"  id="radio-example2" >
+					    <div className="col-lg-1 col-lg-offset-2 sellerType2"  >
 					    <label className="radio-inline ">
 					      <input type="radio" 
-					      		 // name="optradio" 
 					      		 value="careTaker" 
 					      		 className="FrRadio" 
-					      		
-					      		 checked={this.state.selectedOption === "careTaker"}
+					      		 id="radio-example2"
+					      		 checked={this.state.propertyHolder === "careTaker"}
                					 onChange={this.radioChange}/>
 
 				  			<i className="fa fa-users fa-1x logo1"></i>
 					    </label>
 					    </div>
 
-					   
-
-
-
-					    <div className="col-lg-1 col-lg-offset-2 sellerType3"  id="radio-example3" >
+					    <div className="col-lg-1 col-lg-offset-2 sellerType3"   >
 					    <label className="radio-inline ">
 					      <input type="radio"
-					      		 // name="optradio" 
 					      		 value="builder" 
 					      		 className="FrRadio" 
-					      		
-					      		 // ref="propH"
-					      		 checked={this.state.selectedOption === "builder"}
+					      		id="radio-example3"
+					      		 checked={this.state.propertyHolder === "builder"}
                					 onChange={this.radioChange} 
 					      		 />
 				  			<i className="fa fa-users fa-1x logo1"></i>
 					    </label>
 					    </div>
 						
-				  	   
-					  </div>
+					</div>
+
 					  	<div className="col-lg-12 mb-40">
 					  			<span className=""> Owner</span>
 					  			<span className="ml-55"> Care Taker</span>
 					  			<span className="ml-42"> Builder</span>
 					  	</div>
-					  	
          		
-         		
-                  <h3>this.state.selectedOption: {this.state.selectedOption}</h3>
-     
 					  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				   			<label>I would like to</label>
 				   		</div>
@@ -398,7 +411,7 @@ export default class Form1 extends Component{
 						  <div className="form-group" id="">
 	{/*					    <label for="exampleFormControlInput1">Bedroom</label><span className="asterisk">*</span>
 	*/}					    {/*<input type="text" className="form-control" ref="bedroom" id="exampleFormControlInput1" placeholder=""/>*/}
-						  	 <select className="custom-select form-control" ref="propType" >
+						  	 <select className="custom-select form-control" ref="propertytype" >
 						    	<option	value="" hidden>Select Property Type </option>
 						    	<option	disabled>ALL RESIDENTIAL </option>
 						    	<option value="MultiStoeryApt">MultiStoery Apartment</option>
@@ -418,19 +431,56 @@ export default class Form1 extends Component{
 						  </div>
 					  	</div>
 
-				  		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm_25">
-					  <div className="form-group" id="">
-{/*					    <label for="exampleFormControlInput1">Bedroom</label><span className="asterisk">*</span>
-*/}					    {/*<input type="text" className="form-control" ref="bedroom" id="exampleFormControlInput1" placeholder=""/>*/}
-					  	 <select className="custom-select form-control  "  ref="location"  >
-					    	<option value="" hidden>My Property is Located in</option>
-					    	<option value="pune">Pune</option>
-					    	<option value="nashik">Nashik</option>
-					    	<option value="mumbai">Mumbai</option>
+				  		
+
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
+			  		<b>My Apartment is on</b>
+			  	</div>
+		  </div>
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm row">
+		  	<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+			  <div className="form-group" id="floor">
+		  		<div className="input-group inputBox-main " id="">
+			      	<div className="input-group-addon inputIcon">
+                     	<i className="fa fa-building iconClr"></i>
+                    </div>
+			  		<select className="custom-select form-control "  ref="floor" placeholder="Floor" >
+				    	<option className="hidden">Floor</option>
+				    	<option>Upper Base</option>
+				    	<option>Lower Base</option>
+				    	<option>Ground</option>
+				    	<option>1</option>
+				    	<option>2</option>
+				    	<option>upto 200 </option>
+					</select>
+				</div>
+			  </div>
+			</div>
+
+			<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+				  <div className="form-group" id="totalfloor">
+				  	{/*<input type="text" className="form-control" ref="totalfloor" id="exampleFormControlInput1" placeholder="Total floor"/>*/}
+				  	<div className="input-group inputBox-main " id="">
+				      	<div className="input-group-addon inputIcon">
+	                     <i className="fa fa-building iconClr"></i>
+	                    </div>
+					  	<select className="custom-select form-control "  ref="totalfloor" placeholder="Floor" >
+					    	<option className="hidden">Total Floor</option>
+					    	<option>Upper Base</option>
+					    	<option>Lower Base</option>
+					    	<option>Ground</option>
+					    	<option>1</option>
+					    	<option>2</option>
+					    	<option>upto 200 </option>
 						</select>
-						{/*<div className="errorMsg">{this.state.errors.bedroom}</div>*/}
-					  </div>
-				  	</div>
+					</div>
+				  </div>
+			 </div>
+		  </div>
+
+
+
 			  	</div>
 				  
 				<div className="col-lg-5 col-md-8 col-sm-12 col-xs-12 boxLayout">
@@ -445,12 +495,7 @@ export default class Form1 extends Component{
 				  
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	<hr/>
-		  	{/*<div className="form-group col-lg-4 col-md-2 col-sm-4 col-xs-4">
-		       <button type="col-lg-4 col-md-2 col-sm-4 col-xs-4" className="btn">Back</button>
-		  	</div>*/}
-		  	<div className="form-group col-lg-3	col-md-2 col-sm-4 col-xs-4">
-		       <button type="" className="btn back_btn col-lg-12 col-md-2 col-sm-4 col-xs-4" onClick={this.handleBack}>Back</button>
-		  	</div>
+		  	
 		  	<div className="form-group col-lg-3	col-md-2 col-sm-4 col-xs-4 pull-right">
 		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-4 col-xs-4" onClick={this.updateUser.bind(this)} >Save & Next >></button>
 		  	</div>

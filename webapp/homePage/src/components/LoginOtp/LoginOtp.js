@@ -2,78 +2,62 @@ import React, { Component }     from 'react';
 import axios 					from 'axios';
 import NavTab 					from '../NavTab/NavTab.js';
 import $ 						from "jquery";
+import swal                     from 'sweetalert';
 
-import '../LoginMobNum/LoginMobNum.css';
-
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+import '../LoginOtp/LoginOtp.css';
 
 export default class LoginOtp extends Component {
 	constructor(props){
 			super(props);
 			this.state = {
-        		otp :'',
-        		id:'',
+        		user_id : "",
+        		mobile 	: "",
+        		otp 	: "",
+        		message : "",
 			};			
 		}
 
 	componentDidMount(){
-		const { match: { params } } = this.props;
-		console.log("props = ",this.props);
+		// console.log("Redirect Props user_id : ",this.props.location.state.user_id);
+		// const { match: { params } } = this.props;
+			console.log("otp = ",localStorage.getItem("otp"));
+			var user_id = localStorage.getItem("user_id");
+        	var mobile 	= localStorage.getItem("mobile");
+        	var otp 	= localStorage.getItem("otp");
+        	var message	= localStorage.getItem("message");
 
+			this.setState({
+        		user_id : user_id,
+        		mobile 	: mobile,
+        		otp 	: otp,
+        		message	: message,
+			});		
 	}
 	componentWillMount(){
-			var param = this.props.match.params;
-			var id = param.id;
-			var mobile = param.mobile;
+			// var param = this.props.match.params;
+			// var id = param.id;
+			// var mobile = param.mobile;
 			// var mobile = param.mobilenum;
-			this.setState({
-				id:id,
-			})
-			console.log("param--->",param.id);
+			// this.setState({
+			// 	id:id,
+			// })
+			// console.log("param--->",param.id);
 		}
 	handleNumber(event){
-			event.preventDefault();
-
-			if(this.state.id !='')
-			{
-				// id is here
-
-				var formValues ={
-				id: this.state.id,
-				otp:this.refs.otp.value
-				}
-
-				axios
-				.post('http://apitgk3t.iassureit.com/api/users/otp',formValues)
-				.then((response)=>{
-					
-						this.props.history.push('/homepage');
-				})
-				.catch(function(error){
-					console.log(error);
-				})
-
-
+		event.preventDefault();
+		var userOTP = this.refs.otp.value;
+		if(userOTP == this.state.otp){
+			if(this.state.message == "NEW-USER-CREATED"){
+				this.props.history.push("/form1");
 			}else{
-				// blank 
-
-				var OTP = this.refs.otp.value;
-				axios
-				.post('http://apitgk3t.iassureit.com/api/users/otp',OTP)
-				.then((response)=>{
-					
-					
-						this.props.history.push('/WebSignupForm');
-				})
-				.catch(function(error){
-					console.log(error);
-				})
+				this.props.history.push("/Homepage");
 			}
 			
-
+		}else{
+			swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
 		}
+
+	}
 
 	render() {
 		return (
@@ -88,9 +72,13 @@ export default class LoginOtp extends Component {
 						</div>
 						  {/*<hr />*/}
 						<div className="hr_border row"></div>
+						
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-150">	
-							  <div className="form-group">
+						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">	
+						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50 headline">
+								Verification code sent on your Registered Mobile Number
+							</div>
+							  <div className="form-group mt-150">
 							    <label htmlFor="">Kindly Enter Your Verification Code </label>
 							    <div className="input-group inputBox-main " id="">
 							      	<div className="input-group-addon inputIcon">

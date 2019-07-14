@@ -19,8 +19,6 @@ import 'bootstrap/js/modal.js';
 import '../LoginMobNum/LoginMobNum.css';
 
 /*var formValues=[];*/
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
 
  export default class WebSignupFlow extends Component{
 		constructor(props){

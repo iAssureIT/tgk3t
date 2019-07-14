@@ -60,3 +60,65 @@
 .hr_border1{
   margin-bottom: 30px !important;
 }
+.FF4I{
+  
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+  text-align: center;
+  font-size: 18px;
+}
+.FF4I1{
+  border: 1px solid #000;
+  text-align: center;
+  font-size: 16px;
+  height: 222px;
+}
+.left{
+  padding-left: 5px;
+}
+.mb20{
+  margin-bottom: 20px;
+}
+.pt8{
+  padding-top: 8px
+}
+.pl21{
+  padding-left: 21px;
+}
+.pl24{
+  padding-left: 24px;
+}
+.pl15{
+  padding-left: 15px;
+}
+.pl10{
+  padding-left: 10px;
+}
+.pl11{
+  padding-left: 11px;
+}
+.pl3{
+  padding-left: 3px;
+}
+.pl8{
+  padding-left: 8px;
+}
+.pl2{
+  padding-left: 2px;
+}
+.pl35{
+  padding-left: 35px;
+}
+.pl87{
+  padding-left: 87px;
+}
+.pl25{
+  padding-left: 25px;
+}
+.pl61{
+  padding-left: 61px;
+}
+.pl14{
+  padding-left: 14px;
+}

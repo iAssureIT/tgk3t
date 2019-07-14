@@ -21,11 +21,15 @@ export default class Form2 extends Component{
 			this.state = {
 				/*fields: {},
         		errors: {}*/
-        		formshow :"form-2"
+        		formshow :"form-2",
+				furnishedstatus   : ''
+
 			};
 			this.handleBack = this.handleBack.bind(this);
 			this.handleNext = this.handleNext.bind(this);
 			this.updateForm = this.updateForm.bind(this);
+			this.radioChange = this.radioChange.bind(this);
+
 		}
 
 		/*validateFormReq() {
@@ -116,21 +120,18 @@ export default class Form2 extends Component{
 			/*if (this.validateForm() && this.validateFormReq()) {*/
 			// console.log("abc");
 			const formValues = {
-				"city" 				: this.refs.city.value,
-				"society" 			: this.refs.society.value,
-				"address" 			: this.refs.address.value,
-				"floor" 			: this.refs.floor.value,
-				"totalfloor" 		: this.refs.totalfloor.value,
-				"bedroom" 			: this.refs.bedroom.value,
+				"bedrooms" 			: this.refs.bedrooms.value,
 				"balconies" 		: this.refs.balconies.value,
+				"furnishedstatus"   :this.state.furnishedstatus,
 				"bathroom" 			: this.refs.bathroom.value,
-				"fullFurnished" 	: this.refs.fullFurnished.value,
-				"semiFurnished" 	: this.refs.semiFurnished.value,
-				"unFurnished" 		: this.refs.unFurnished.value,
-				"yearOld" 			: this.refs.yearOld.value,
+				"ageofproperty" 	: this.refs.ageofproperty.value,
 				"facing" 			: this.refs.facing.value,
+				"superArea" 		: this.refs.superArea.value,
+				"builtupArea" 		: this.refs.builtupArea.value,
+
+
 			};
-				console.log("as",formValues);
+				console.log("form2",formValues);
 
 			//this.props.fun(formValues);
 			/*let fields = {};
@@ -139,13 +140,13 @@ export default class Form2 extends Component{
 			    fields["address"] = "";
 			    fields["floor"] = "";
 			    fields["totalfloor"] = "";
-			    fields["bedroom"] = "";
+			    fields["bedrooms"] = "";
 			    fields["balconies"] = "";
 			    fields["bathroom"] = "";
-			    fields["fullFurnished"] = "";
-			    fields["semiFurnished"] = "";
-			    fields["unFurnished"] = "";
-			    fields["yearOld"] = "";
+			    fields["fullfurnishedstatus"] = "";
+			    fields["semifurnishedstatus"] = "";
+			    fields["unfurnishedstatus"] = "";
+			    fields["ageofproperty"] = "";
 			    fields["facing"] = "";
 			    this.setState({
 			               "city"           : "",          
@@ -153,13 +154,13 @@ export default class Form2 extends Component{
 			                "address"     : "",
 			                "floor"     : "",
 			                "totalfloor"     : "",
-			                "bedroom"     : "",
+			                "bedrooms"     : "",
 			                "balconies"     : "",
 			                "bathroom"     : "",
-			                "fullFurnished"     : "",
-			                "semiFurnished"     : "",
-			                "unFurnished"     : "",
-			                "yearOld"     : "",
+			                "fullfurnishedstatus"     : "",
+			                "semifurnishedstatus"     : "",
+			                "unfurnishedstatus"     : "",
+			                "ageofproperty"     : "",
 			                "facing"     : "",
 			                 fields:fields
 			    });*/
@@ -173,21 +174,21 @@ export default class Form2 extends Component{
 						// alert("Data inserted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 
-						this.refs.city.value = '';
-						this.refs.society.value = '';
-						this.refs.address.value = '';
-						this.refs.floor.value 	= '';
-						this.refs.totalfloor.value 	= '';
-						this.refs.bedroom.value 	= '';
+						this.refs.bedrooms.value 	= '';
 						this.refs.balconies.value 	= '';
 						this.refs.bathroom.value 	= '';
-						this.refs.fullFurnished.value = '';
-						this.refs.semiFurnished.value = '';
-						this.refs.unFurnished.value = '';
 						this.refs.facing.value 	  = '';
-						this.refs.yearOld.value 	  = '';
+						this.refs.ageofproperty.value 	  = '';
+						this.refs.superArea.value 			= '';
+						this.refs.builtupArea.value 			= '';
 
-						this.props.history.push("/Form3");
+						this.setState(
+			              {
+				            "furnishedstatus "    : ''
+
+			              });
+
+						this.props.history.push("/Form4");
 						$("#efg").hide();
     					$("#efg").removeClass('in');
 						$("#hij").show();
@@ -205,6 +206,12 @@ export default class Form2 extends Component{
 		closeModal(){
 			$("#efg").removeClass('in');
 		}
+		radioChange(event) {
+	       	event.preventDefault();
+	    	this.setState({
+	      	"furnishedstatus": event.currentTarget.value,
+			    });
+		 }
 
 	render() {
     return (
@@ -220,89 +227,7 @@ export default class Form2 extends Component{
 			  </div>
 			  {/*<hr />*/}
 			  <div className="hr_border row"></div>
-		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-				  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-					  <div className="form-group" id="">
-					    {/*<label for="">Apartment Type</label><span className="asterisk">*</span>*/}
-				    	 <div className="input-group inputBox-main " id="">
-					      	<div className="input-group-addon inputIcon">
-		                     <i className="fa fa-building iconClr"></i>
-		                    </div>
-			    		    <input type="text" className="form-control" ref="city" id="city" placeholder="Magarptta City"/>	
-				  		</div>
-				  	</div>
-				  </div>
-				  <div className="col-lg-3 col-md-2 col-sm-6">
-				  	<div className="form-group" id="society">
-					    {/*<label for="">Apartment Type</label><span className="asterisk">*</span>*/}
-				    	 <div className="input-group inputBox-main " id="">
-					      	<div className="input-group-addon inputIcon">
-		                     <i className="fa fa-building iconClr"></i>
-		                    </div>
-				    		<input type="text" className="form-control" ref="society" id="society" placeholder="Add society"/>	
-				  		</div>
-				  	</div>
-				  </div>
-			  <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12">
-				  <div className="form-group"  id="address" >
-				    {/*<label for="">Apartment Name</label><span className="asterisk">*</span>*/}
-				    <div className="input-group inputBox-main " id="">
-				      	<div className="input-group-addon inputIcon">
-	                     <i className="fa fa-building iconClr"></i>
-	                    </div>
-				    	<input type="text" className="form-control" ref="address" name="address" placeholder="Address"/>
-				    	{/*<div className="errorMsg">{this.state.errors.address}</div>*/}
-				  	</div>
-				  </div>
-			  </div>
-		  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
-		  		<b>My Apartment is on</b>
-		  	</div>
-		  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
-		  	<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-			  <div className="form-group" id="floor">
-			    {/*<div className="errorMsg">{this.state.errors.floor}</div>*/}
-			    {/*<input type="text" className="form-control" ref="floor"  id="" placeholder="Floor"/>*/}
-		  		<div className="input-group inputBox-main " id="">
-			      	<div className="input-group-addon inputIcon">
-                     	<i className="fa fa-building iconClr"></i>
-                    </div>
-			  		<select className="custom-select form-control " name="floor" ref="floor" placeholder="Floor" >
-				    	<option className="hidden">Floor</option>
-				    	<option>Upper Base</option>
-				    	<option>Lower Base</option>
-				    	<option>Ground</option>
-				    	<option>1</option>
-				    	<option>2</option>
-				    	<option>upto 200 </option>
-					</select>
-				</div>
-			  </div>
-			</div>
-
-			<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				  <div className="form-group" id="totalfloor">
-				  	{/*<input type="text" className="form-control" ref="totalfloor" id="exampleFormControlInput1" placeholder="Total floor"/>*/}
-				  	<div className="input-group inputBox-main " id="">
-				      	<div className="input-group-addon inputIcon">
-	                     <i className="fa fa-building iconClr"></i>
-	                    </div>
-					  	<select className="custom-select form-control " name="totalfloor" ref="totalfloor" placeholder="Floor" >
-					    	<option className="hidden">Total Floor</option>
-					    	<option>Upper Base</option>
-					    	<option>Lower Base</option>
-					    	<option>Ground</option>
-					    	<option>1</option>
-					    	<option>2</option>
-					    	<option>upto 200 </option>
-						</select>
-					</div>
-				  </div>
-			 </div>
-		  </div>
+		 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
 		  		<b>My Apartment has</b>
@@ -310,14 +235,14 @@ export default class Form2 extends Component{
 		  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
 			  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-				  <div className="form-group" id="bedroom">
-				    <span htmlFor="">Bedroom</span>{/*<span className="asterisk">*</span>*/}
-				    {/*<input type="text" className="form-control" ref="bedroom" id="exampleFormControlInput1" placeholder=""/>*/}
+				  <div className="form-group" id="bedrooms">
+				    <span htmlFor="">bedrooms</span>{/*<span className="asterisk">*</span>*/}
+				    {/*<input type="text" className="form-control" ref="bedrooms" id="exampleFormControlInput1" placeholder=""/>*/}
 				  	 <div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
-	                     <i className="fas fa-rupee-sign iconSize12"></i>
+	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
-					  	<select className="custom-select form-control " name="bedroom" ref="bedroom" placeholder="select" >
+					  	<select className="custom-select form-control "  ref="bedrooms" placeholder="select" >
 					    	<option className="hidden">select</option>
 					    	<option>1</option>
 					    	<option>2</option>
@@ -326,7 +251,7 @@ export default class Form2 extends Component{
 					    	<option>4</option>
 					    	<option>5</option>
 						</select>
-					{/*<div className="errorMsg">{this.state.errors.bedroom}</div>*/}
+					{/*<div className="errorMsg">{this.state.errors.bedrooms}</div>*/}
 					</div>
 				  </div>
 			  </div>
@@ -338,7 +263,7 @@ export default class Form2 extends Component{
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
-					    <select className="custom-select form-control " name="balconies" ref="balconies" placeholder="select" >
+					    <select className="custom-select form-control " ref="balconies" placeholder="select" >
 					    	<option className="hidden">select</option>
 					    	<option>1</option>
 					    	<option>2</option>
@@ -357,7 +282,7 @@ export default class Form2 extends Component{
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
 				    {/*<input type="email" className="form-control" ref="balconies" id="exampleFormControlInput1" placeholder=""/>*/}
-					    <select className="custom-select form-control " name="bathroom" ref="bathroom" placeholder="select" >
+					    <select className="custom-select form-control " ref="bathroom" placeholder="select" >
 					    	<option className="hidden">select</option>
 					    	<option>1</option>
 					    	<option>2</option>
@@ -374,41 +299,44 @@ export default class Form2 extends Component{
 		  	</div>
 		  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-				 {/*<div className="col-lg-4  col-md-4 col-sm-4 col-xs-4  row">
-		    		<input type="radio" className="radio_style" ref="fullFurnished"  placeholder=""/>	
-		    		<span className="labelMarg">Full furnished</span> 
-		    	</div> 
-		    	<div className="col-lg-4  col-md-4 col-sm-4 col-xs-4 ">	    		
-		    		<input type="radio" className="radio_style" ref="semiFurnished"  placeholder=""/>	
-		  	 		<span className="labelMarg">Semifurnished</span>  
-		  	 	</div>
-		  	 	<div className="col-lg-4  col-md-4 col-sm-4 col-xs-4 ">	    		
-		    		<input type="radio" className="radio_style" ref="unFurnished"  placeholder=""/>	
-		  	 		<span className="labelMarg">Unfurnished</span>  
-		  	 	</div>*/}
+				 
 			 <label className="radio-inline col-lg-4  col-md-4 col-sm-4 col-xs-4 row">
-		      <input type="radio" name="optradio"  ref="fullFurnished"  /> 
-		      <span className="labelMarg">Full furnished</span> 
+		      <input type="radio"
+		             name="optradio"  
+		             value="fullfurnishedstatus" 
+		      		 id="radio-example1"
+		      		 checked={this.state.furnishedstatus === "fullfurnishedstatus"}
+   					 onChange={this.radioChange} />   
+		      <span className="">Full furnishedstatus</span> 
 
 		    </label>
 		    <label className="radio-inline col-lg-4  col-md-4 col-sm-4 col-xs-4">
-		      <input type="radio" name="optradio" ref="semiFurnished" />
-		  	 	<span className="labelMarg">Semifurnished</span>  
+		      <input type="radio" 
+		      		 name="optradio" 
+		      		 value="semifurnishedstatus" 
+		      		 id="radio-example2"
+		      		 checked={this.state.furnishedstatus === "semifurnishedstatus"}
+   					 onChange={this.radioChange} />  
+		  	 	<span className="">Semifurnishedstatus</span>  
 
 		    </label>
 		    <label className="radio-inline col-lg-4  col-md-4 col-sm-4 col-xs-4">
-		      <input type="radio" name="optradio" ref="unFurnished"/>
-		  	 	<span className="labelMarg">Unfurnished</span>  
+		      <input type="radio"
+		      		 name="optradio" 
+		      		 value="unfurnishedstatus" 
+		      		 id="radio-example3"
+		      		 checked={this.state.furnishedstatus === "unfurnishedstatus"}
+   					 onChange={this.radioChange} /> 
+		  	 	<span className="">Unfurnishedstatus</span>  
 
 		    </label>
 		  </div>
-
+		  
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
 		  		<b>It is</b>
 		  	</div>
 		  </div>
-
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrg_bt_35">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="society">
@@ -417,7 +345,7 @@ export default class Form2 extends Component{
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-							<select className="custom-select form-control " name="yearOld" ref="yearOld" placeholder="select" >
+							<select className="custom-select form-control "  ref="ageofproperty" placeholder="select" >
 						    	<option className="hidden">--select year old--</option>
 						    	<option>1</option>
 						    	<option>2</option>
@@ -434,7 +362,7 @@ export default class Form2 extends Component{
 					      	<div className="input-group-addon inputIcon">
 		                     <i className="fa fa-building iconClr"></i>
 		                    </div>
-							<select className="custom-select form-control " name="facing" ref="facing" placeholder="select" >
+							<select className="custom-select form-control "  ref="facing" placeholder="select" >
 						    	<option className="hidden">--select property facing--</option>
 						    	<option>1</option>
 						    	<option>2</option>
@@ -445,12 +373,44 @@ export default class Form2 extends Component{
 					</div>
 				  </div>
 		  </div>
+		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">	
+				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					  <div className="form-group" id="">
+					    <div className="input-group inputBox-main " id="">
+					      	<div className="input-group-addon inputIcon">
+		                     	<i className="fa fa-building iconClr"></i>
+		                    </div>
+					    {/*<label htmlFor="exampleFormControlInput1">Apartment Type</label><span className="asterisk">*</span>*/}
+				    	<input type="number" className="form-control" ref="superArea" id="" placeholder="Super Area"/>	
+				  			<div className="input-group-addon inputIcon">
+		                     Sq ft
+		                    </div>
+				  		</div>
+
+				  </div>
+				  </div>
+				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					  <div className="form-group"  id="" >
+					    {/*<label htmlFor="exampleFormControlInput1">Apartment Name</label><span className="asterisk">*</span>*/}
+					    <div className="input-group inputBox-main " id="">
+					      	<div className="input-group-addon inputIcon">
+		                     	<i className="fa fa-building iconClr"></i>
+		                    </div>
+					    	<input type="number" className="form-control" ref="builtupArea" name="" placeholder="Built Area"/>
+					    {/*<div className="errorMsg">{this.state.errors.builtupArea}</div>*/}
+					  		<div className="input-group-addon inputIcon">
+		                     Sq ft
+		                    </div>
+					  </div>
+					</div>
+				  </div>
+		 	 </div>
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	
-	  		<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4">
+	  		{/*<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4">
 		       <button type="" className="btn back_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.handleBack}>Back</button>
-		  	</div>
+		  	</div>*/}
 		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
 		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save & Next >></button>
 		  	</div>
