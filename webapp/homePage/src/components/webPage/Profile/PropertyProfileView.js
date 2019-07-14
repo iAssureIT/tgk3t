@@ -1,14 +1,12 @@
 import React, { Component }   from 'react';
-import axios          from 'axios';
-import HomePageFooter from './HomePageFooter.js';
-import RequestForm  from '../RequestForm/RequestForm.js';
-
+import axios                  from 'axios';
+import HomePageFooter         from './HomePageFooter.js';
+import RequestForm            from '../RequestForm/RequestForm.js';
 
 import "./PropertyProfileView.css";
 
 axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-
 
 class PropertyProfileView extends Component{
   
@@ -16,9 +14,20 @@ class PropertyProfileView extends Component{
     super(props);
    
     this.state = {
-      "nameOfProperty" : "Park Avenue Apartment",
-      "addressOfProperty" :"Magerpatta City, Hadapsar, Pune.",
-      "checkValue" : "Country : India",
+      "nameOfProperty"    : "Park Avenue Apartment",
+      "addressOfProperty" : "Magerpatta City, Hadapsar, Pune.",
+      "checkValue"        : "Country : India",
+      "reviewCount"       : "3375 ",
+      "propertyID"        : "Pro100992",
+      "bedSpecification"  : "",
+      "bathSpecification" : "",
+      "areaInSq"          : "7711",
+      "priceOfProperty"   : "$11200",
+      "typeOfProperty"    : "", 
+      "nearBy"            : ["University","School"],
+      "propertyList"      : ["ESCADA APARTMENTS","1105th Avenue","6210 Camino La Costa"],
+      "monthlyPlan"       : "",
+      // "countryCode" : "+91 ", // Intilize Here By default
     
     }
   }
@@ -26,7 +35,18 @@ class PropertyProfileView extends Component{
    
   }
   componentDidMount() {
-   
+    axios
+    .get('http://apitgk3t.iassureit.com/posts')
+    .then(
+      (res)=>{
+        console.log(res);
+        const postsdata = res.data;
+        this.setState({
+          PropertyDetails : postsdata,
+        });
+      }
+    )
+    .catch();   
   }
 
   render() {
@@ -97,32 +117,32 @@ class PropertyProfileView extends Component{
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 headingPropertyFeatures fwNormal">
-                            <label> Bed </label>
+                            <label> Bed </label><div className="pull-right">{this.state.bedSpecification}</div>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 subHeadingPropertyFeatures fwNormal">
-                            <label> Bath </label>
+                            <label> Bath </label><div className="pull-right">{this.state.bathSpecification}</div>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 subHeadingPropertyFeatures fwNormal">
-                            <label> Sq Ft </label>
+                            <label> Sq Ft </label><div className="pull-right">{this.state.areaInSq}Sq.Ft.</div>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 subHeadingPropertyFeatures fwNormal">
-                            <label> Price  </label>
+                            <label> Price  </label><div className="pull-right">{this.state.priceOfProperty}</div>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 subHeadingPropertyFeatures fwNormal">
-                            <label> Type </label>
+                            <label> Type </label><div className="pull-right">{this.state.typeOfProperty}</div>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 subHeadingPropertyFeatures noBorder fwNormal">
-                            <label> Property ID </label>
+                            <label> Property ID </label><div className="pull-right">{this.state.propertyID}</div>
                           </div>
                         </div>
                         <div className="row">
@@ -343,11 +363,12 @@ class PropertyProfileView extends Component{
                               <label> What's Nearby? </label>
                             </div>
                           </div>
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 starDivContainer education mt20">
+                          {this.state.nearBy.map((data,index) =>
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 starDivContainer education mt20" key={index}>
                             <div className="row">
-                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 iconColor">
+                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 iconColor" >
                                   <div className="row">
-                                    <i className="fa fa-graduation-cap"></i> <label>Education</label>
+                                    <i className="fa fa-graduation-cap"></i> <label >{data}</label>
                                   </div>
                                 </div>
                                <div className="row">
@@ -377,7 +398,7 @@ class PropertyProfileView extends Component{
                                                 </div>
                                                 <div className="col-lg-6 col-md-1 col-sm-1 col-xs-1 pull-right ">
                                                   <div className="row">
-                                                   3375 review
+                                                  {this.state.reviewCount} review
                                                   </div>
                                                 </div>
                                               </div>
@@ -392,7 +413,7 @@ class PropertyProfileView extends Component{
                                   </div>
                                 </div>
                               </div> 
-                              <div className="row">
+                             <div className="row">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
                                   <div className="row">
                                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">Saswad Road Utkarsh Nager, Hadapsar,</div>
@@ -478,6 +499,7 @@ class PropertyProfileView extends Component{
                               </div>
                             </div>
                           </div>
+                          )}
                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 starDivContainer Hospital mt20">
                             <div className="row">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 iconColor">
@@ -657,7 +679,38 @@ class PropertyProfileView extends Component{
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-3 col-md-2 col-sm-2 col-xs-2 " >
+                   <div className="col-lg-3 col-md-2 col-sm-2 col-xs-2 " >
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mortageCalcular">
+                      <div className="row">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 headLineMortage">
+                         <label> Mortage Calculator </label>
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
+                          <input type="text" className="imputBoxMortage col-lg-12 col-md-12 col-sm-12 col-xs-12 "/>
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 ">
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  interestD">
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">  <div className="row">Interest Rate(%)</div></div>
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  "> <div className="row">Down payment (no seperation)($)</div></div>
+                            </div>  
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 bottomBorder">
+                              <div className="row">
+                                <button className="col-lg-12  col-md-12 col-sm-12 col-xs-12 calculateButton ">CALCULATE</button>
+                              </div>
+                            </div>  
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 ">
+                              <div className="row">
+                                Monthly Plan : $ {this.state.monthlyPlan}
+                              </div>
+                            </div>  
+
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </div>
+                  {this.state.propertyList.map((data,index) =>
+                  <div className="col-lg-3 col-md-2 col-sm-2 col-xs-2 mt20 " key={index}>
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 featuredListing">
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transpDiv">
@@ -719,126 +772,7 @@ class PropertyProfileView extends Component{
                       </div>
                     </div>
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameDiv">
-                      <label className="nameOne">ESCADA APARTMENTS</label>
-                      <label>San Deigo, CA 92101</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceDiv">
-                      <label>From Rs.18,875/month</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 detailsDiv">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedData ">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bed</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-3</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bath</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-2</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Sq Ft</label></div>
-                        </div>
-                         <div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12 taRight ">
-                          <div className="row"><label>720</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS noBorder">
-                        <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Type</label></div>
-                        </div>
-                         <div className="col-lg-3 col-lg-offset-6 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label>Apartments</label></div>
-                        </div>
-                      </div>
-
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  timedetailedData ">
-                          <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                            <i className="fa fa-calendar" aria-hidden="true"></i>
-                          </div>
-                        <div className="row">
-                         <div className="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12  ">
-                          <label className="pull-right">2 YEARS AGO</label></div>
-                        </div>
-                        </div>
-                      </div>
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  bookedBy ">
-                            Booked By<br/>
-                            <label>The Agency</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 featuredListing mt20">
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transpDiv">
-                        
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <div className="row">
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 featured">FEATURED</div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 "></div>
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 forRent">FOR RENT</div>
-                            </div>
-                          </div>
-                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt124">
-                            <div className="row">
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                <div className="row">
-                                  <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 home  ">
-                                    <i className="fa fa-home"></i> 
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4  "></div>
-                              <div className="row">
-                              <div className="col-lg-8 col-md-4 col-sm-4 col-xs-4 row ">
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-image"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-heart"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-plus-square"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                   <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                      <i className="fa fa-home"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameDiv">
-                      <label className="nameOne">ESCADA APARTMENTS</label>
+                      <label className="nameOne">{data}</label>
                       <label>San Deigo, CA 92101</label>
                     </div>
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceDiv">
@@ -897,250 +831,11 @@ class PropertyProfileView extends Component{
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-3 col-md-2 col-sm-2 col-xs-2 " >
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 featuredListing">
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transpDiv">
-                        
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <div className="row">
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 featured">FEATURED</div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 "></div>
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 forRent">FOR RENT</div>
-                            </div>
-                          </div>
-                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt124">
-                            <div className="row">
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                <div className="row">
-                                  <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 home  ">
-                                    <i className="fa fa-home"></i> 
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4  "></div>
-                              <div className="row">
-                              <div className="col-lg-8 col-md-4 col-sm-4 col-xs-4 row ">
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-image"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-heart"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-plus-square"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                   <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                      <i className="fa fa-home"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameDiv">
-                      <label className="nameOne">ESCADA APARTMENTS</label>
-                      <label>San Deigo, CA 92101</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceDiv">
-                      <label>From Rs.18,875/month</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 detailsDiv">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedData ">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bed</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-3</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bath</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-2</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Sq Ft</label></div>
-                        </div>
-                         <div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12 taRight ">
-                          <div className="row"><label>720</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS noBorder">
-                        <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Type</label></div>
-                        </div>
-                         <div className="col-lg-3 col-lg-offset-6 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label>Apartments</label></div>
-                        </div>
-                      </div>
-
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  timedetailedData ">
-                          <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                            <i className="fa fa-calendar" aria-hidden="true"></i>
-                          </div>
-                        <div className="row">
-                         <div className="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12  ">
-                          <label className="pull-right">2 YEARS AGO</label></div>
-                        </div>
-                        </div>
-                      </div>
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  bookedBy ">
-                            Booked By<br/>
-                            <label>The Agency</label>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 featuredListing mt20">
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transpDiv">
-                        
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <div className="row">
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 featured">FEATURED</div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 "></div>
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 forRent">FOR RENT</div>
-                            </div>
-                          </div>
-                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt124">
-                            <div className="row">
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                <div className="row">
-                                  <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 home  ">
-                                    <i className="fa fa-home"></i> 
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4  "></div>
-                              <div className="row">
-                              <div className="col-lg-8 col-md-4 col-sm-4 col-xs-4 row ">
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-image"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-heart"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-plus-square"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                   <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                      <i className="fa fa-home"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameDiv">
-                      <label className="nameOne">ESCADA APARTMENTS</label>
-                      <label>San Deigo, CA 92101</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceDiv">
-                      <label>From Rs.18,875/month</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 detailsDiv">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedData ">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bed</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-3</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bath</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-2</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Sq Ft</label></div>
-                        </div>
-                         <div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12 taRight ">
-                          <div className="row"><label>720</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS noBorder">
-                        <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Type</label></div>
-                        </div>
-                         <div className="col-lg-3 col-lg-offset-6 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label>Apartments</label></div>
-                        </div>
-                      </div>
-
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  timedetailedData ">
-                          <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                            <i className="fa fa-calendar" aria-hidden="true"></i>
-                          </div>
-                        <div className="row">
-                         <div className="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12  ">
-                          <label className="pull-right">2 YEARS AGO</label></div>
-                        </div>
-                        </div>
-                      </div>
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  bookedBy ">
-                            Booked By<br/>
-                            <label>The Agency</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
               </div>
            </div>
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
               <HomePageFooter />            
           </div>
           </div>              

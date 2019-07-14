@@ -43,8 +43,9 @@ import WebSignupFlow from '../../components/WebSignup/WebSignupFlow.js';
 import WebSignupForm from '../../components/WebSignup/WebSignupForm.js';
 import CongratsPage from '../../components/CongratsPage/CongratsPage.js';
 
-import PropertyProfileView from '../../components/Profile/PropertyProfileView.js';
-import RequestForm from '../../components/RequestForm/RequestForm.js';
+import PropertyProfileView from '../../components/webPage/Profile/PropertyProfileView.js';
+import RequestForm from '../../components/webPage/RequestForm/RequestForm.js';
+import WebPage from '../../components/webPage/HomePage/HomePage.js';
 
  class Layout extends Component{
   
@@ -150,7 +151,7 @@ componentDidMount(){
         <div>
           <Router>
             <Switch>
-              <Route path="/"                exact strict component={ HomePage } />
+              <Route path="/"                exact strict component={ Login } />
               <Route path="/login"           exact strict component={ Login } />
               <Route path="/signup"          exact strict component={ SignUp } />
               <Route path="/forgot-pwd"      exact strict component={ ForgotPassword } />
@@ -159,6 +160,7 @@ componentDidMount(){
               <Route path="/confirm-otp"     exact strict component={ ConfirmOtp } />
               <Route path="/modalBackground" exact strict component={ModalBackground}  />
               <Route path="/HomePage"        exact strict component={HomePage}  />
+              <Route path="/Webpage"        exact strict component={WebPage}  />
 
               <Route path="/LoginMobNum"     exact strict component={LoginMobNum}  />
               <Route path="/LoginMobNum/:id"     exact strict component={LoginMobNum}  />

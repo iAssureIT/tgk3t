@@ -1,6 +1,5 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import NavTab 					from '../NavTab/NavTab.js';
 import $ 						from "jquery";
 
 import 'bootstrap/js/tab.js';

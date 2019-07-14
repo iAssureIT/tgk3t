@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Properties           from '../Properties/Properties.js';
+import Properties           from '../../Properties/Properties.js';
 import PropertiesCarousel   from '../PropertiesCarousel/PropertiesCarousel.js';
 
 export default class PropertyCondition extends Component {

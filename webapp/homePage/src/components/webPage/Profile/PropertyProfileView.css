@@ -51,7 +51,8 @@
 	cursor: pointer;
 }
 .height2000{
-    height: 2829px;
+    height: 2956px;
+
 }
 .imagesOfProperty{
 	background-color: #ff0;
@@ -287,4 +288,44 @@
   }
   .iconColor i{
     color:#efa73e;
+  }
+  .countryCode{
+    border:1px solid #333;
+  }
+  .mortageCalcular{
+    height: 280px;
+    border:1px solid #aaa;
+    border-radius: 3px;
+  }
+  .headLineMortage{
+    padding-top:10px;
+    background-color: #f1eded;
+    height: 40px;
+/*    text-align: center;
+*/    color:#666;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px; 
+    border-bottom: 1px solid #aaa;
+  }
+  .imputBoxMortage{
+    border-radius: 3px !important;
+    height: 30px;
+  }
+  .interestD{
+    border: 1px solid #aaa;
+    height: 60px;
+    padding-top: 12px;
+    font-size: 11px;
+    border-radius: 3px;
+  }
+  .calculateButton{
+    background-color: #efa73e;
+    border-radius: 3px;
+    text-align: center;
+    color: #fff;
+    padding-top: 5px;
+  }
+  .bottomBorder{
+    border-bottom: 1px solid #999;
+    height: 23px;
   }
