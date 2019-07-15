@@ -53,12 +53,22 @@ componentDidMount(){
                             Master Data
                         </a>
                         <ul className="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="/umlistofusers">Data 1</a></li>
-                            <li><a href="#">Data 2</a></li>
-                            <li><a href="#">Data 3</a></li>
+                            <li><a href="/masterdata">Data 1</a></li>
+                            {/*<li><a href="#">Data 2</a></li>
+                            <li><a href="#">Data 3</a></li>*/}
                         </ul>
 
-                        <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
+                        <a href="#sell-o-meter" data-toggle="collapse" aria-expanded="false">
+                            <i className="glyphicon glyphicon-home"></i>
+                            Sell-O-Meter
+                        </a>
+                        <ul className="collapse list-unstyled" id="sell-o-meter">
+                            <li><a href="/sellometer">Part 1</a></li>
+                            <li><a href="/classrating">Part 2</a></li>
+                            {/*<li><a href="#">Data 3</a></li>*/}
+                        </ul>
+
+                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i className="glyphicon glyphicon-duplicate"></i>
                             Reporting System
                         </a>
@@ -67,14 +77,15 @@ componentDidMount(){
                             <li><a href="#">Report 2</a></li>
                             <li><a href="#">Report 3</a></li>
                         </ul>
+                        
                     </li>
-                    {/*<li>
-                        <a href="#">
+                   {/* <li>
+                        <a href="/masterdata">
                             <i className="glyphicon glyphicon-link"></i>
-                            Budget Planning
+                           Master Data
                         </a>
-                    </li>
-                    <li>
+                    </li>*/}
+                   {/* <li>
                         <a href="#">
                             <i className="glyphicon glyphicon-paperclip"></i>
                             Framework Management

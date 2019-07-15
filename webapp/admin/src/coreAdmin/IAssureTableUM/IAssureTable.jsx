@@ -5,6 +5,7 @@ import $ 							from 'jquery';
 import jQuery 						from 'jquery';
 import 'jquery-validation';
 import './IAssureTable.css';
+import '../systemSecurity/SignUp.css';
 /*import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';*/
 import { Route , withRouter} from 'react-router-dom';
 
@@ -32,6 +33,7 @@ class IAssureTable extends Component {
 		    "normalData" 				: true,
 		    "resetPassword"				: "",
 		    "resetPasswordConfirm" 		: "",
+		    show 						: true,
 		    // "usernames"					: "",
 		}
 		this.deleteExam = this.deleteExam.bind(this);
@@ -576,10 +578,19 @@ class IAssureTable extends Component {
 			          this.refs.resetPassword.value			= '';
 			          this.refs.resetPasswordConfirm.value  	= '';
 			        // }
+
+			        this.setState({
+			        	show :false,
+			        });
 			      })
 			      .catch((error)=>{
 			        console.log("error = ",error);
 			        alert("We are sorry but something went Wrong.","","error");
+
+			        this.setState({
+			        	show :false,
+			        });
+
 			      });
 			}else{
 				swal("Password should be at least 6 characters long","","error");				
@@ -601,18 +612,16 @@ class IAssureTable extends Component {
 	    })
 	}
 
-  showSignPass(){
-
-      $('.showPwdreset').toggleClass('showPwdreset1');
-      $('.hidePwdreset').toggleClass('hidePwdreset1');
-      $('.inputTextPass').attr('type', 'text');
-  }
-  hideSignPass(){
-      $('.showPwdreset').toggleClass('showPwdreset1');
-      $('.hidePwdreset').toggleClass('hidePwdreset1');
-      $('.inputTextPass').attr('type', 'password');
-
-  }
+    showSignPass(){
+        $('.showPwd').toggleClass('showPwd1');
+        $('.hidePwd').toggleClass('hidePwd1');
+        return $('.inputTextPass').attr('type', 'text');
+    }
+    hideSignPass(){
+        $('.showPwd').toggleClass('showPwd1');
+        $('.hidePwd').toggleClass('hidePwd1');
+        return $('.inputTextPass').attr('type', 'password');
+    }
 
   showprofile(e){
 	e.preventDefault();
@@ -752,7 +761,7 @@ class IAssureTable extends Component {
 
 													{/*	<UsereditModal userNot={value._id} data={value}/>*/}
 
-														
+														{this.state.show == true ? 
 														<div className="modal fade modalHide" id={"RestpwdModal-"+value._id}  role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
 																		  <div className="modal-dialog" role="document">
 																		    <div className="modal-content  ummodallftmg">
@@ -772,22 +781,19 @@ class IAssureTable extends Component {
 
 																				                <div className="FormWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
 																				                    <form id={value._id} >
-																				                        <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12 resetInptFld">
+																				                       {/* <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12 resetInptFld">
 																				                            <span className="blocking-span" id="resetPwd">
-																				                               <input type="text" value={this.state["resetPassword"+value._id]} onChange={this.handleChange}className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" ref="resetPassword"    name={"resetPassword"+value._id} id={"resetPassword"+value._id}  autoComplete="off" />
+																				                               <input type="password" value={this.state["resetPassword"+value._id]} onChange={this.handleChange}className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" ref="resetPassword"    name={"resetPassword"+value._id} id={"resetPassword"+value._id}  autoComplete="off" />
 																				                               <span className="floating-label">
 																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
 																				                                    New Password 
 																				                               </span>                              
 																				                            </span>
-																				                            <div className="showHideResetDiv showiconUM">
-																				                              <i className="fa fa-eye showPwdreset" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-																				                              <i className="fa fa-eye-slash hidePwdreset" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-																				                            </div> 
-																				                        </div>
-																				                        <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12">
+																				                            
+																				                        </div>*/}
+																				                       { /*<div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12">
 																				                            <span className="blocking-span" id="resetConPwd">
-																				                               <input type="text" value={this.state["resetPasswordConfirm"+value._id]} onChange={this.handleChange}className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox"  ref="resetPasswordConfirm" name={"resetPasswordConfirm"+value._id} id={"resetPasswordConfirm"+value._id}  autoComplete="off"/>
+																				                               <input type="password" value={this.state["resetPasswordConfirm"+value._id]} onChange={this.handleChange} assName="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox"  ref="resetPasswordConfirm" name={"resetPasswordConfirm"+value._id} id={"resetPasswordConfirm"+value._id}  autoComplete="off"/>
 																				                               <span className="floating-label">
 																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
 																				                                    Confirm Password 
@@ -798,6 +804,40 @@ class IAssureTable extends Component {
 																				                              <i className="fa fa-eye-slash hidePwdreset" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
 																				                            </div>
 																				                        </div>
+*/}
+
+
+																				                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent marBtm">
+																											    <div className="form-group form-group1 fltlft input-group col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent">
+																										   		
+
+																								                    <span className="blocking-span noIb">
+																									                    <input type="password" value={this.state["resetPassword"+value._id]} onChange={this.handleChange} className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="resetPassword"  name={"resetPassword"+value._id} id={"resetPassword"+value._id}  autoComplete="off" required/>
+																									                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> New Password</span>                 
+																									                  </span>
+																									                <div className="showHideSignDiv">
+																									                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+																									                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+																									                </div> 
+																									                  <span className="focus-border">
+																									                    <i></i>
+																									                  </span>
+																												</div>
+																										   		<div className="form-group form-group1 fltlft input-group  col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent">
+																										   			
+																								                     <span className="blocking-span noIb">
+																									                    <input type="password" value={this.state["resetPasswordConfirm"+value._id]} onChange={this.handleChange} className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="resetPasswordConfirm" name={"resetPasswordConfirm"+value._id} id={"resetPasswordConfirm"+value._id}  autoComplete="off" required/>
+																									                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span>                 
+																									                  </span>
+																									                <div className="showHideSignDiv">
+																									                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+																									                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+																									                </div> 
+																									                  <span className="focus-border">
+																									                    <i></i>
+																									                  </span>
+																												</div>
+																											</div>
 
 																				                      
 
@@ -815,6 +855,10 @@ class IAssureTable extends Component {
 																		   </div>
 																		  </div>
 																	</div>	
+
+																	:
+																	null
+																}
 
 	                                                    <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${value._id}-rm`}  role="dialog">
 										                    <div className=" modal-dialog adminModal adminModal-dialog">

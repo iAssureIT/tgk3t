@@ -19,6 +19,7 @@ class EditNotificationModal extends Component{
 		'content'			: props.data ? props.data.content : '',
 	   	'optionA'			: '',
 	   	'messageError' 		: '',
+	   	shown 				: true,
 	  };
 
 	    this.handleChange = this.handleChange.bind(this);
@@ -139,45 +140,17 @@ class EditNotificationModal extends Component{
 				axios.put('/api/masternotifications/'+editId, formValues)
 				.then((response)=> {		
 					swal("Template updated successfully","", "success");			
-					/*if(templateType =='Email'){
-						var emailTemplatesList = this.state.emailTemplatesList;
-						emailTemplatesList.push(response.data.dataBody);
-						this.setState({
-							emailTemplatesList : emailTemplatesList
-						});
-					}else if(templateType =='SMS'){
-						var smsTemplatesList = this.state.smsTemplatesList;
-						smsTemplatesList.push(response.data.dataBody);
-						this.setState({
-							smsTemplatesList : smsTemplatesList
-						});
-					}else if(templateType =='Notification'){
-						var notificationTemplatesList = this.state.notificationTemplatesList;
-						notificationTemplatesList.push(response.data.dataBody);
-						this.setState({
-							notificationTemplatesList : notificationTemplatesList
-						});
-					}
-					swal({
-						title:'swal',
-						text: response.data.message ,
-						type: 'success',
-						showCancelButton: false,
-						confirmButtonColor: '#666',
-						confirmButtonText: 'Ok'
+					this.setState({
+						shown : false,
 					});
-					$('#createNotifyModal').hide();
-					$('.modal-backdrop').remove();*/
 					console.log('response --==',response);
 				})
 				.catch(function (error) {
-					/*swal({
-						text: "esponse.data",
-						type: 'success',
-						showCancelButton: false,
-						confirmButtonColor: '#666',
-						confirmButtonText: 'Ok'
-					});*/
+					
+					swal(" Sorry! Template can't update successfully","", "error");
+					this.setState({
+						shown : false,
+					});
 				console.log('error============',error);
 				})
 				.finally(function () {
@@ -232,6 +205,8 @@ class EditNotificationModal extends Component{
 	render() {
 		if(this.props.emailNot){
 	        return (
+	        	<div>
+	        		{this.state.shown == true ? 
 					<div className="modal fade modalHide" id={"editNotifyModal-"+this.props.emailNot} role="dialog">
 					  	<div className="modal-dialog modal-lg" role="document">
 					    	<div className="modal-content modalContent col-lg-12 NOpadding">
@@ -310,6 +285,10 @@ class EditNotificationModal extends Component{
 					   		</div>
 					  	</div>
 					</div>
+					:
+					null
+				}
+				</div>
 		    );
 		}else{
 			return (<div></div>);

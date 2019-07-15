@@ -29,6 +29,13 @@ import UMRolesList from '../userManagement/Roles/UMRolesList.js';
 import CompanySetting from '../companysetting/Components/CompanySetting.js';
 import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
+
+// section- admin operation
+
+import MasterData from '../../adminTGK/masterData/masterData.js';
+import SellOMeter from '../../adminTGK/sell-o-meter/sellOMeter.js';
+import ClassRating from '../../adminTGK/sell-o-meter/classRating.js';
+
  class Layout extends Component{
   
   constructor(props) {
@@ -99,7 +106,7 @@ componentDidMount(){
   render(){
     console.log("props = ",this.props);
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===true){
+    if(this.state.loggedIn===false){
       return(
             <div className="App container-fluid">
            
@@ -124,8 +131,11 @@ componentDidMount(){
 
                           <Route path="/companysetting" component={CompanySetting} exact />
 
-                         {/* <Route path="/form2" component={form2} exact />
-                          <Route path="/form3" component={form3} exact />*/}
+                         {/*----------------------------------------------*/}
+
+                          <Route path="/masterdata" component={MasterData} exact />
+                          <Route path="/sellometer" component={SellOMeter} exact />
+                          <Route path="/classrating" component={ClassRating} exact />
 
                           </Switch>        
                       </Router>

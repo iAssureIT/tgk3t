@@ -4,6 +4,12 @@
 .paddleft{
   padding-left: 0px !important;
 }
+.padd0{
+  padding: 0px;
+}
+.marTop{
+  margin-top: 6px;
+}
 .noneAtag{
     
     padding-left: 0px !important;

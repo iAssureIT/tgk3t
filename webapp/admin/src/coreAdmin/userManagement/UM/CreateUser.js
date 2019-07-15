@@ -7,14 +7,14 @@ import swal                       from 'sweetalert';
 
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
-
+import './userManagement.css';
 class CreateUser extends Component {
 
 
   constructor(props) {
     super(props);
     this.state = {
-
+      show  : true,
     };
   }
 
@@ -45,12 +45,29 @@ class CreateUser extends Component {
           this.refs.signupEmail.value  = '';
           this.refs.mobNumber.value = '';
         }
+
+        // if(event.target.id === "signUpUser") {
+        this.setState({show: false})
+        console.log("close modal");
+         // }
+       
       })
       .catch((error)=>{
         console.log("error = ",error);
         alert("Something went wrong! Please check Get URL.");
+
+        // if(event.target.id === "signUpUser") {
+        this.setState({show: false})
+        console.log("close modal");
+      // }
+
       });
-  
+    
+      /*console.log("event.target.id",event.target.id);
+       if(event.target.id === "signUpUser") {
+        this.setState({show: false})
+        console.log("close modal");
+      }*/
 
     }
 
@@ -67,6 +84,8 @@ class CreateUser extends Component {
 
        return (
             <div>
+
+                      {this.state.show == true ? 
                         <div className="modal fade" id="CreateUserModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                           <div className="modal-dialog modal-lg " role="document">
                             <div className="modal-content modalContent ummodallftmg ummodalmfdrt col-lg-12 ">
@@ -145,7 +164,7 @@ class CreateUser extends Component {
                                                       </div>
                                                     </div>
                                                     <div className=" col-lg-12 col-md-12 col-xs-12 col-sm-12 ">
-                                                      <input className="col-lg-2 col-md-2 col-xs-12 col-sm-12 col-xs-12 pull-right btn btnSubmit topMargin outlinebox" type="submit" value="Register" />
+                                                      <input className="col-lg-2 col-md-2 col-xs-12 col-sm-12 col-xs-12 pull-right btn btnSubmit topMargin outlinebox" type="submit" id="CreateUserModal" value="Register" />
                                                      </div>    
                                                 </form>
 
@@ -199,6 +218,7 @@ class CreateUser extends Component {
                                   
                                {/* </section>*/}
                               </div>
+                      }
 
 
                   </div>
@@ -206,6 +226,9 @@ class CreateUser extends Component {
                       
                 </div>
               </div>
+              :
+              null
+            }
             </div>
         );
 

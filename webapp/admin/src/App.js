@@ -7,7 +7,7 @@ import './lib/router.js';
 import axios from 'axios';
 
 
-axios.defaults.baseURL = 'http://qatprmcorporate.iassureit.com/';
+axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 function App() {

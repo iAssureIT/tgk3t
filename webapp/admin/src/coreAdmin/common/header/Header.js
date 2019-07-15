@@ -42,7 +42,7 @@ logout(){
         loggedIn : false
       })
       // browserHistory.push("/login");
-      // this.props.history.push("/login");
+      this.props.history.push("/login");
     }
   }
 
@@ -51,26 +51,26 @@ logout(){
     return(
     <div>
             <header className="pageHeader">
-              <div className="">
-                <div className="col-lg-6 col-md-4 col-sm-4 col-xs-4 row">
+              <div className="col-lg-12 padd0">
+                <div className="col-lg-6 col-md-4 col-sm-4 col-xs-4 padd0">
                   <div className="">
                     <div id="sidebarCollapse" className="col-lg-1 col-md-1 col-sm-1 col-xs-1 hover ">
                     <i className="fa fa-bars headicon"></i>
                   </div>
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 ">
-                  <div className="row">
+                <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 padd0">
+                  <div className="">
                     <div onClick={this.openNav.bind(this)}className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right hover">
                     <i className="fa fa-cogs headicon "></i>
                   </div>
                   <div className="col-lg-4 col-md-4 col-sm-6 col-xs-6 pull-right hover">
                     <div className="row">
-                     { <div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
+                     { /*<div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
                       <img src="image/person.png" className="img "/>
-                      </div>}
+                      </div>*/}
                       <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6 ">
-                      <span className="headicon">Alexander Pierce</span>
+                      <span className="headicon">Alexander Pierce &nbsp;</span>
                       
 
                      
@@ -78,17 +78,22 @@ logout(){
                         <button className="dropbtn arrowbtn">
                          <span className="hidden-xs angleright"><i className="fa fa-angle-down" aria-hidden="true"></i></span>
                         </button>
-                        <div className="dropdown-content" >
+                        <div className="dropdown-content marTop" >
                             <ul className="paddleft nomargin">
                               <li className="user-header">
                                 <ul className="menu paddleft">
                                   <li>
                                     <a className="noneAtag">
-                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadd" > 
-                                        <img src="images/person.png" height="40px" width="50%" className=" nopadd col-lg-3"/>
-                                         <h5 className="col-lg-9 nomargin nopadd">
-                                            Alexander Pierce
-                                          </h5>
+                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " > 
+                                          <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12 pull-left ">
+                                            <img src="images/person.png" height="50px" className="  "/>
+                                          </div>
+                                          <div className="col-lg-7 col-md-6 col-sm-12 col-xs-12 pull-right ">
+                                           <h5 className=" nomargin ">
+                                              Alexander Pierce
+                                           </h5>
+                                            <p> alexander@gmail.com </p>
+                                          </div>
                                       </div>
                                     </a>
                                    <hr className="borderline"/>

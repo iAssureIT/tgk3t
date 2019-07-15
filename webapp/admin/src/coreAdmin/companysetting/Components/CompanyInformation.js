@@ -58,39 +58,45 @@ class CompanyInformation extends Component{
 
         city : " ",
         pincode : " ",
-     
-
-
-
       },
       subscription : {
-        
       }
-
     };
-   
     this.handleChange = this.handleChange.bind(this);
   }
-
-  componentWillReceiveProps(nextProps) {
-
-    
-  }
-  
   componentDidMount() {
-  
-    
+  var companyId = 2;
+    /*axios.get('/api/companysettings/'+ companyId)
+    .then( (res)=>{      
+      console.log("here company data",res.data);
+      this.setState({
+        companyName : res.data.companyName,
+        companyId   : 2,
+        companyContactNumber : res.data.companyContactNumber,
+        companyAltContactNumber : res.data.companyMobileNumber,
+        companyEmail            : res.data.companyEmail, 
+        companywebsite          : res.data.companywebsite, 
+        companyAddressLine1     : res.data.companyaddress,
+        companyDist             : res.data.district,
+        companyPincode          : res.data.pincode,
+        companyCity             : res.data.city,
+        companyState            : res.data.state,
+        companyCountry          : res.data.country,
+        taluka                  : res.data.taluka,
+        submitVal               : false,
+      });
+      console.log("this.this.state.companyName",this.state.companyName)
+    })
+    .catch((error)=>{
+      console.log("error = ",error);
+      // alert("Something went wrong! Please check Get URL.");
+    });*/
   
   }
-  componentWillMount() {
-    // this.validator = new SimpleReactValidator();
-  }
+ 
   removeCompanyImage(event){
     event.preventDefault();
     // var link = $(event.target).attr('data-link');
-   
-    
-
   }
 
   CompanyImage(){
@@ -368,7 +374,8 @@ class CompanyInformation extends Component{
                           type="text" name="companyName" 
                           data-text="firstcompanyname"
                           className="form-control areaStaes"
-                          title="Please enter alphanumeric only" />
+                          title="Please enter alphanumeric only"
+                          value={this.state.companyName} />
                         
                         {this.state.formerrors.firstcompanyname &&(
                           <span className="text-danger">{formerrors.firstcompanyname}</span> 
@@ -455,7 +462,8 @@ class CompanyInformation extends Component{
                             type="text" name="companyAddressLine1" 
                             data-text="companyAddress"
                             className="form-control areaStaes"
-                            title="Please enter alphanumeric only" />
+                            title="Please enter alphanumeric only"
+                            value={this.state.companyAddressLine1} />
                           
                           {this.state.formerrors.companyAddress &&(
                             <span className="text-danger">{formerrors.companyAddress}</span> 

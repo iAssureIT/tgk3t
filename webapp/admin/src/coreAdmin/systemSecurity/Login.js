@@ -94,7 +94,7 @@ class Login extends Component {
 
 
     var winHeight = window.innerHeight;
-    var divHeight = 450 +'px';
+    var divHeight = 490 +'px';
       console.log("-------------------------------",this.state.loggedIn)
     
    
