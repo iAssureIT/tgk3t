@@ -9,6 +9,7 @@ import Form4 					from '../Form4/Form4.js';
 import Form5 					from '../Form5/Form5.js';
 import Form6 					from '../Form6/Form6.js';
 import CongratsPage             from '../CongratsPage/CongratsPage.js';
+import Location             from '../Location/Location.js';
 
 		
 import './WebSignup.css';
@@ -80,7 +81,7 @@ import '../LoginMobNum/LoginMobNum.css';
 									<Form1 updateForm={this.updateForm} />
 								:
 				      				this.state.formshow == "form-2" ?
-				        			<Form2 updateForm={this.updateForm} />
+				        			<Location updateForm={this.updateForm} />
 				      			:
 				      				this.state.formshow == "form-3"?
 				              		<Form3 updateForm={this.updateForm} />
