@@ -364,10 +364,10 @@ export default class Form2 extends Component{
 		                    </div>
 							<select className="custom-select form-control "  ref="facing" placeholder="select" >
 						    	<option className="hidden">--select property facing--</option>
-						    	<option>1</option>
-						    	<option>2</option>
-						    	<option>3</option>
-						    	<option>4</option>
+						    	<option>East</option>
+						    	<option>West</option>
+						    	<option>North</option>
+						    	<option>South</option>
 							</select>
 						</div>				  
 					</div>

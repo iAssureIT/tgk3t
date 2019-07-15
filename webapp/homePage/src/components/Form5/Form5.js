@@ -80,7 +80,7 @@ export default class Form5 extends Component{
 			              {
 			                "contactPerson" : '',
 			              });
-						this.props.history.push("/Form6");
+						this.props.history.push("/CongratsPage");
 
 						$("#nop").hide();
     						$("#nop").removeClass('in');

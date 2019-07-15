@@ -30,7 +30,7 @@ class LoginMobNum extends Component {
 			console.log("LoginMobNum==",formValues);
 			
 			axios
-				.post('/api/users/verify_mobile',formValues)
+				.post('/api/usersotp/verify_mobile',formValues)
 				.then((response)=>{
 					console.log("response = ",response.data);
 					console.log("message = ",response.data.message);

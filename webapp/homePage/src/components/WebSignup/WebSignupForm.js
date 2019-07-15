@@ -31,7 +31,7 @@ import swal                     from 'sweetalert';
 
 			//this.props.fun(formValues);
 			axios
-				.post('/api/users',formValues )
+				.post('/api/usersotp',formValues )
 				.then( (res) =>{
 					if(res.data.message == "NEW-USER-CREATED"){
 						swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
@@ -76,7 +76,10 @@ import swal                     from 'sweetalert';
 										<div className="form-group">
 										    <div className="input-group inputBox-main " id="">
 										      	<div className="input-group-addon inputIcon">
-					                     		<i className="fa fa-mobile  iconClr" aria-hidden="true"></i>
+										      		<select ref="countryCode">
+										      			<option value="+91">+91</option>
+								    					<option value="+93">+93</option>
+										      		</select>
 							                    </div>
 										    	<input type="number" className="form-control" ref="mobile" id="" placeholder="Mobile" value={this.state.mobile} disabled />
 										  	</div>
