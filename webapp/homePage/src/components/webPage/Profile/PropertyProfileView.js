@@ -27,6 +27,8 @@ class PropertyProfileView extends Component{
       "nearBy"            : ["University","School"],
       "propertyList"      : ["ESCADA APARTMENTS","1105th Avenue","6210 Camino La Costa"],
       "monthlyPlan"       : "",
+      "ownerNumber"       : "+91 99221 34567",
+      "propertyAddress"   : "Magerpatta City,Hadapsar Pune, Maharastra 411028.",
       // "countryCode" : "+91 ", // Intilize Here By default
     
     }
@@ -36,17 +38,18 @@ class PropertyProfileView extends Component{
   }
   componentDidMount() {
     axios
-    .get('http://apitgk3t.iassureit.com/posts')
+    .get('http://qatgk3tapi.iassureit.com/api/sellResident/list')
     .then(
       (res)=>{
         console.log(res);
         const postsdata = res.data;
-        this.setState({
+        /*this.setState({
           PropertyDetails : postsdata,
-        });
+        });*/
+    console.log("PropertyDetails",postsdata);   
       }
     )
-    .catch();   
+    .catch();
   }
 
   render() {
@@ -56,6 +59,46 @@ class PropertyProfileView extends Component{
         <div className="row">
           <div className="formWrapper ">   
            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
+            <div className="row">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 header">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 logoImgContainer">
+                        <img src="/images/Logo.png" />
+                    </div>
+                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 pull-right ">
+                      <nav className="navbar  navText mt10 ">
+                          <ul className="nav navbar-nav ">
+                              <li className="active showActive"><a href="#">HOME</a></li>
+                              <li className="dropdown">
+                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">ABOUT US&nbsp;<i class="fa fa-angle-down"></i></a>
+                                <ul className="dropdown-menu">
+                                  <li><a href="#">Page 1-1</a></li>
+                                  <li><a href="#">Page 1-2</a></li>
+                                  <li><a href="#">Page 1-3</a></li>
+                                </ul>
+                              </li>
+                              <li className="dropdown">
+                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">CONTACT US&nbsp;<i class="fa fa-angle-down"></i></a>
+                                <ul className="dropdown-menu">
+                                  <li><a href="#">Page 1-1</a></li>
+                                  <li><a href="#">Page 1-2</a></li>
+                                  <li><a href="#">Page 1-3</a></li>
+                                </ul>
+                              </li>
+                              <li className="dropdown">
+                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">MY PROFILE&nbsp;<i class="fa fa-angle-down"></i></a>
+                                <ul className="dropdown-menu">
+                                  <li><a href="#">Page 1-1</a></li>
+                                  <li><a href="#">Page 1-2</a></li>
+                                  <li><a href="#">Page 1-3</a></li>
+                                </ul>
+                              </li>
+                          </ul>
+                      </nav>
+              </div>
+                </div>
+                </div>
+              </div>
              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName">
                 <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 " >
                 </div>
@@ -85,8 +128,7 @@ class PropertyProfileView extends Component{
                   <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
                       <div className="row">
-                        <img src="/images/profileImg1.jpg" />
-                      </div>                    
+                        <iframe width="428" height="300" src="https://www.youtube.com/embed/9IC4dyn5Wpk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                      </div>                    
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
                       <div className="row">
@@ -107,7 +149,7 @@ class PropertyProfileView extends Component{
               </div>
               <div className="col-lg-10 col-md-8 col-sm-8 col-xs-8 propertyFeaturesContainer" >
                 <div className="row">
-                  <div className="col-lg-9 col-md-10 col-sm-10 col-xs-10 propertyFeatures height2000 " >
+                  <div className="col-lg-10 col-lg-offset-1 col-md-10 col-sm-10 col-xs-10 propertyFeatures height2983 " >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -344,299 +386,8 @@ class PropertyProfileView extends Component{
                             </div>
                           </div>
                         </div>
+                     
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  vedioDiv ">
-                            <div className="row">
-                              <label> Video </label>
-
-                            </div>
-                          </div>
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  videoContainer mt20">
-                            <div className="row">
-                                <iframe width="560" height="315" src="https://www.youtube.com/embed/DLX62G4lc44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                            </div>
-                          </div>
-                        </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  vedioDiv ">
-                            <div className="row">
-                              <label> What's Nearby? </label>
-                            </div>
-                          </div>
-                          {this.state.nearBy.map((data,index) =>
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 starDivContainer education mt20" key={index}>
-                            <div className="row">
-                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 iconColor" >
-                                  <div className="row">
-                                    <i className="fa fa-graduation-cap"></i> <label >{data}</label>
-                                  </div>
-                                </div>
-                               <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                  <div className="row">
-                                    <label className="col-lg-6 col-md-6 col-sm-6 col-xs-6">Wonder World English Medium School</label>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 stars">
-                                      <div className="row">
-                                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 ">
-                                          <div className="row">
-                                            <div className="col-lg-8 col-md-5 col-sm-5 col-xs-5 pull-right">
-                                              <div className="row">
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-6 col-md-1 col-sm-1 col-xs-1 pull-right ">
-                                                  <div className="row">
-                                                  {this.state.reviewCount} review
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                             
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div> 
-                             <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
-                                  <div className="row">
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">Saswad Road Utkarsh Nager, Hadapsar,</div>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 stars">
-                                      <div className="row">
-                                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 ">
-                                          <div className="row">
-                                            <div className="col-lg-8 col-md-5 col-sm-5 col-xs-5 pull-right">
-                                              <div className="row">
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-6 col-md-1 col-sm-1 col-xs-1 pull-right ">
-                                                  <div className="row">
-                                                   3375 review
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                             
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
-                                  <div className="row">
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">Pune Maharastra 411058</div>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 stars">
-                                      <div className="row">
-                                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 ">
-                                          <div className="row">
-                                            <div className="col-lg-8 col-md-5 col-sm-5 col-xs-5 pull-right">
-                                              <div className="row">
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-6 col-md-1 col-sm-1 col-xs-1 pull-right ">
-                                                  <div className="row">
-                                                   3375 review
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                             
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          )}
-                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 starDivContainer Hospital mt20">
-                            <div className="row">
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 iconColor">
-                                  <div className="row">
-                                    <i className="fa fa-medkit" aria-hidden="true"></i> <label>Hospital</label>
-                                  </div>  
-                              </div>
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                  <div className="row">
-                                    <label className="col-lg-6 col-md-6 col-sm-6 col-xs-6">NOBAL HOSPITAL HADAPSAR</label>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 stars">
-                                      <div className="row">
-                                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 ">
-                                          <div className="row">
-                                            <div className="col-lg-8 col-md-5 col-sm-5 col-xs-5 pull-right">
-                                              <div className="row">
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-6 col-md-1 col-sm-1 col-xs-1 pull-right ">
-                                                  <div className="row">
-                                                   3375 review
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                             
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div> 
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
-                                  <div className="row">
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">Saswad Road Utkarsh Nager, Hadapsar,</div>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 stars">
-                                      <div className="row">
-                                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 ">
-                                          <div className="row">
-                                            <div className="col-lg-8 col-md-5 col-sm-5 col-xs-5 pull-right">
-                                              <div className="row">
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-6 col-md-1 col-sm-1 col-xs-1 pull-right ">
-                                                  <div className="row">
-                                                   3375 review
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                             
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="row">
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
-                                  <div className="row">
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">Pune Maharastra 411058</div>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 stars">
-                                      <div className="row">
-                                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 ">
-                                          <div className="row">
-                                            <div className="col-lg-8 col-md-5 col-sm-5 col-xs-5 pull-right">
-                                              <div className="row">
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 star">
-                                                  <i class="fa fa-star" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="col-lg-6 col-md-1 col-sm-1 col-xs-1 pull-right ">
-                                                  <div className="row">
-                                                   3375 review
-                                                  </div>
-                                                </div>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5">
-                                             
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  vedioDiv ">
                             <div className="row">
                               <label> Location </label>
@@ -645,15 +396,15 @@ class PropertyProfileView extends Component{
                           </div>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  videoContainer mt20">
                             <div className="row">
-                              <div className="mapouter"><div className="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div></div>                           
-                              </div>
+{/*                              <div className="mapouter"><div className="gmap_canvas"><iframe width="600" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div></div>                           
+*/}                              </div>
                           </div>
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  inputBoxContainer ">
                             <div className="row">
                               <div className="col-lg-9 col-sm-12 col-xs-12" >
-                                <input type="text" className="form-control inputBox noHover" placeholder="Enter your starting address" value="" ref="direction" />
+                               <input type="text" className="form-control" ref="direction"  placeholder="Enter your starting address"/>
                               </div>
                               <div className="col-lg-3 col-sm-12 col-xs-12  " >
                                 <button className="col-lg-10  col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 getDirection">Get Directions</button>
@@ -679,165 +430,15 @@ class PropertyProfileView extends Component{
                       </div>
                     </div>
                   </div>
-                   <div className="col-lg-3 col-md-2 col-sm-2 col-xs-2 " >
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mortageCalcular">
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 headLineMortage">
-                         <label> Mortage Calculator </label>
-                        </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
-                          <input type="text" className="imputBoxMortage col-lg-12 col-md-12 col-sm-12 col-xs-12 "/>
-                        </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 ">
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  interestD">
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">  <div className="row">Interest Rate(%)</div></div>
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  "> <div className="row">Down payment (no seperation)($)</div></div>
-                            </div>  
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 bottomBorder">
-                              <div className="row">
-                                <button className="col-lg-12  col-md-12 col-sm-12 col-xs-12 calculateButton ">CALCULATE</button>
-                              </div>
-                            </div>  
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 ">
-                              <div className="row">
-                                Monthly Plan : $ {this.state.monthlyPlan}
-                              </div>
-                            </div>  
-
-                        </div>
-                      </div>
-                    </div>
-                  
-                  </div>
-                  {this.state.propertyList.map((data,index) =>
-                  <div className="col-lg-3 col-md-2 col-sm-2 col-xs-2 mt20 " key={index}>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 featuredListing">
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transpDiv">
-                        
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <div className="row">
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 featured">FEATURED</div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 "></div>
-                              <div className="col-lg-5 col-md-4 col-sm-4 col-xs-4 forRent">FOR RENT</div>
-                            </div>
-                          </div>
-                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt124">
-                            <div className="row">
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                <div className="row">
-                                  <div className="col-lg-10 col-md-10 col-sm-12 col-xs-12 home  ">
-                                    <i className="fa fa-home"></i> 
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4  "></div>
-                              <div className="row">
-                              <div className="col-lg-8 col-md-4 col-sm-4 col-xs-4 row ">
-                                <div className="row">
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-image"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-heart"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                  <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 mr7">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                        <i className="fa fa-plus-square"></i> 
-                                      </div>
-                                    </div>
-                                  </div>
-                                   <div className="col-lg-2 col-md-4 col-sm-4 col-xs-4 ">
-                                    <div className="row">
-                                      <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 home  ">
-                                      <i className="fa fa-home"></i>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameDiv">
-                      <label className="nameOne">{data}</label>
-                      <label>San Deigo, CA 92101</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 priceDiv">
-                      <label>From Rs.18,875/month</label>
-                    </div>
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 detailsDiv">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedData ">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bed</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-3</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-1 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Bath</label></div>
-                        </div>
-                         <div className="col-lg-1 col-lg-offset-9 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label className="">1-2</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS">
-                        <div className="col-lg-4 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Sq Ft</label></div>
-                        </div>
-                         <div className="col-lg-4 col-lg-offset-4 col-md-12 col-sm-12 col-xs-12 taRight ">
-                          <div className="row"><label>720</label></div>
-                        </div>
-                      </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  detailedDataS noBorder">
-                        <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                          <div className="row"><label>Type</label></div>
-                        </div>
-                         <div className="col-lg-3 col-lg-offset-6 col-md-12 col-sm-12 col-xs-12 row ">
-                          <div className="row"><label>Apartments</label></div>
-                        </div>
-                      </div>
-
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  timedetailedData ">
-                          <div className="col-lg-2 col-md-12 col-sm-12 col-xs-12 ">
-                            <i className="fa fa-calendar" aria-hidden="true"></i>
-                          </div>
-                        <div className="row">
-                         <div className="col-lg-6 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12  ">
-                          <label className="pull-right">2 YEARS AGO</label></div>
-                        </div>
-                        </div>
-                      </div>
-                      <div className="row ">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  bookedBy ">
-                            Booked By<br/>
-                            <label>The Agency</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  )}
                 </div>
               </div>
            </div>
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
-              <HomePageFooter />            
+           <div className="row">
+             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
+                <HomePageFooter />
+             </div>
           </div>
+       
           </div>              
         </div>
       </div>

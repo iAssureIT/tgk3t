@@ -33,8 +33,11 @@ export default class Properties extends Component {
 		// console.log("mod ",mod);
 		return (
 			<div>
-				<h1 className="textC"> Properties for {this.props.inputData.type} </h1>	
-				<div className="col-lg-12 col-md-12">
+				<h3 className="textC"> Properties for {this.props.inputData.type} </h3>	
+          <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 ">
+            <div className=" hrLine col-lg-offset-9 col-lg-1 col-md-1 col-sm-1 col-xs-1 "></div>
+          </div>
+          <div className="col-lg-12 col-md-12">
 					{
 						this.state.propertiesData.map((property,index)=>{
                       if(mod === 2){
@@ -50,9 +53,12 @@ export default class Properties extends Component {
                                       RESIDENTIAL TOWER
                                     </div>
                                     <div id="info2" >
-                                      FOR SALE
+                                      FOR SALE11
                                     </div>
                                     <div id="priceDisplay">
+                                      <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.price}
+                                    </div>
+                                     <div id="priceDisplay">
                                       <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.price}
                                     </div>
                                   </div>

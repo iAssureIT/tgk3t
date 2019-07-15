@@ -33,7 +33,11 @@ export default class Properties extends Component {
 		// console.log("mod ",mod);
 		return (
 			<div>
-				<h1 className="textC"> Properties for {this.props.inputData.type} </h1>	
+				<h3 className="textC"> Properties for {this.props.inputData.type} </h3>	
+        <div className="col-lg-6 col-md-6 col-sm-8 col-xs-8 ">
+            
+            <div className=" hrLine col-lg-offset-12 col-lg-1 col-md-1 col-sm-1 col-xs-1 "></div>
+          </div>
 				<div className="col-lg-12 col-md-12">
 					{
 						this.state.propertiesData.map((property,index)=>{
@@ -53,6 +57,9 @@ export default class Properties extends Component {
                                       FOR SALE
                                     </div>
                                     <div id="priceDisplay">
+                                      <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.price}
+                                    </div>
+                                     <div id="priceDisplay">
                                       <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.price}
                                     </div>
                                   </div>
@@ -149,7 +156,7 @@ export default class Properties extends Component {
                                       RESIDENTIAL TOWER
                                     </div>
                                     <div id="info2" >
-                                      FOR SALE
+                                      FOR SALE11
                                     </div>
                                     <div id="priceDisplay">
                                       <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.price}
@@ -248,6 +255,18 @@ export default class Properties extends Component {
                                     </div>
                                     <div id="priceDisplay">
                                       <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.price}
+                                    </div>
+                                    <div className="iconContainer">
+                                      <div className="likeIcon col-lg-4">
+                                       <div className="row">
+                                        <i class="fa fa-heart"></i>
+                                        </div>
+                                      </div>
+                                      <div className="likeIcon col-lg-4">
+                                       <div className="row">
+                                          <i class="fa fa-exchange" aria-hidden="true"></i>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
                                   <div className="col-lg-5 mt10 row ">

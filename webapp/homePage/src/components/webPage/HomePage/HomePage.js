@@ -3,8 +3,9 @@ import HomePageBanner           from '../HomePageBanner/HomePageBanner.js';
 import PropertyCondition  		from '../PropertyCondition/PropertyCondition.js';
 import PopularPlace  			from '../Profile/PopularPlace.js';
 import HomePageFooter  			from '../Profile/HomePageFooter.js';
-import Footer  					from '../Footer/Footer.js';
+import MainFooter  				from '../MainFooter/MainFooter.js';
 import Description  			from '../HomePageDescription/Description.js';
+import Footer  					from '../Footer/Footer.js';
 
 import 'bootstrap/js/tab.js';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,7 +22,7 @@ export default class HomePage extends Component {
 		      <PropertyCondition carouselvalue={true} inputData={{category:"Residential", type:"Sale", showprops:8}}/>
 		      <PropertyCondition carouselvalue={false} inputData={{category:"Residential", type:"Buy", showprops:8}}/>
 		      <PopularPlace />
-		      <HomePageFooter />
+		      <MainFooter />
 		      <Footer />
 		   </div>
 		);

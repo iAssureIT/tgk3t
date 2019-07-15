@@ -15,7 +15,7 @@ export default class Footer extends Component {
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mainHeader">
         <div className="col-lg-5 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 listContainer ">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                <ul className="menuList">
+                <ul className="menuBar">
                   <li>Features</li>
                   <li>Video</li>
                   <li>Nearby</li>

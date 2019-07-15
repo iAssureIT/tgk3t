@@ -164,19 +164,19 @@ class RequestForm extends Component{
                    Request More Information
                     <div className="row">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
-                        <input type="text" className="form-control inputBoxRequest noHoverRequest" placeholder="Tell me more about this property" value="" ref="direction" />
+                        <input type="text" className="form-control" ref="direction" placeholder="Tell me more about this property" />
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                        <input type="text" className="form-control inputBoxRequest noHoverRequest" placeholder="Your Name" value="" ref="direction" />
+                        <input type="text" className="form-control" ref="direction"  placeholder="Your Name"/>
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                        <input type="text" className="form-control inputBoxRequest noHoverRequest" placeholder="Email" value="" ref="direction" />
+                        <input type="text" className="form-control" ref="direction"  placeholder="Email"/>
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                        <input type="text" className="form-control inputBoxRequest noHoverRequest" placeholder="Phone" value="" ref="direction" />
+                        <input type="text" className="form-control" ref="direction"  placeholder="Phone"/>
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 boarderR " >
-                          <textarea rows="10" cols="59"  placeholder="Message"></textarea>
+                          <textarea rows="10" cols="59"  className="form-control" placeholder="Message"></textarea>
                       </div>
                     </div>
                   </div>

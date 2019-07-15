@@ -46,7 +46,7 @@ export default class PropertiesCarousel extends Component {
 			
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-						<h1 className="textC"> {this.props.propertiesData ? "Properties for" + this.props.inputData.type : null} </h1>	
+						<h3 className="textC"> {this.props.propertiesData ? "Properties for" + this.props.inputData.type : null} </h3>	
 
 						<div id="owl-demo" className="owl-carousel owl-theme" >
 						
@@ -67,6 +67,7 @@ export default class PropertiesCarousel extends Component {
 			                                <div id="priceDisplay1">
 			                                  <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.price}
 			                                </div>
+			                                
 		                                </div>
 			                            <div className="col-lg-5 mt10 ">
 			                                <i className="fa fa-map-marker"></i> {property.location}
