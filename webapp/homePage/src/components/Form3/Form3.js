@@ -6,13 +6,10 @@ import $ 						from "jquery";
 import Form4 					from '../Form4/Form4.js';
 import Form2 					from '../Form2/Form2.js';
 
-
 import './Form3.css';
 import 'bootstrap/js/tab.js';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/js/modal.js';
-
-
 
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
@@ -22,15 +19,13 @@ const formValid = formerrors=>{
   })
   return valid;
   }
-
-
 export default class Form3 extends Component{
 
 		constructor(props){
 			super(props);
 			this.state = {
 				formshow :"form-3",
-				includes     :[],
+				includecharges     :[],
 			};
 			this.handleBack = this.handleBack.bind(this);
 			this.handleNext = this.handleNext.bind(this);
@@ -56,30 +51,33 @@ export default class Form3 extends Component{
 		updateUser(event){
 			event.preventDefault();
 			const formValues = {
-				"expectedrate" 		: this.refs.expectedrate.value,
-				"totalprice" 			: this.refs.totalprice.value,
-				"date" 				: this.refs.date.value,
+				"expectedRate" 		: this.refs.expectedrate.value,
+				"totalPrice" 			: this.refs.totalprice.value,
+				"availableFrom" 				: this.refs.availableFrom.value,
 				"description" 		: this.refs.description.value,
-				"includes"			:this.state.includes
+				"includeCharges"			:this.state.includecharges,
+				"maintenanceCharges"			:this.state.maintenanceCharges,
+				"maintenancePer"			:this.state.maintenancePer
 				
 			};
 			console.log("form3====",formValues);
 			axios
-				.post('/api/users',formValues)
+				.post('/api/sellResident',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 201){
+					if(res.status == 200){
 						swal("Good job!", "Data inserted successfully!", "success");
 
 						this.refs.expectedrate.value 	  	= '';
 						this.refs.totalprice.value 	  		= '';
-						this.refs.date.value 	  			= '';
+						this.refs.availableFrom.value 	  			= '';
 						this.refs.description.value 	  	= '';
-						this.refs.monthly.value 	  		= '';
+						this.refs.maintenancePer.value 	  	= '';
+						this.refs.maintenanceCharges.value 	  	= '';
 
 						this.setState(
 			              {
-				            "includes "    : ''
+				            "includecharges "    : ''
 
 			              });
 
@@ -108,13 +106,13 @@ export default class Form3 extends Component{
 		  {
 		  otherProp = e.target.getAttribute('value');
 
-		  this.state.includes.push(e.target.getAttribute('value'));
+		  this.state.includecharges.push(e.target.getAttribute('value'));
 
-		  console.log("includes",this.state.includes);
+		  console.log("includecharges",this.state.includecharges);
 		  }
 		  else{
-		  this.state.includes.pop(e.target.getAttribute('value'));
-		  console.log("includes1",this.state.includes);
+		  this.state.includecharges.pop(e.target.getAttribute('value'));
+		  console.log("includecharges1",this.state.includecharges);
 
 		  }
 
@@ -176,7 +174,7 @@ export default class Form3 extends Component{
 			  </div>
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<label>My Total Ask includes</label>
+			  	 	<label>My Total Ask includecharges</label>
 			  	 </div>
 			  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
@@ -273,7 +271,7 @@ export default class Form3 extends Component{
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 					    {/*<span className="asterisk">*</span>*/}
-				    	<input type="number" className="form-control" ref="maintenanceCharge" id="" placeholder="Maintenance Charge"/>	
+				    	<input type="number" className="form-control" ref="maintenanceCharges" id="" placeholder="Maintenance Charge"/>	
 				  		</div>
 				  </div>
 				  </div>
@@ -283,8 +281,14 @@ export default class Form3 extends Component{
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-					    {/*<span htmlFor="">Per</span><span className="asterisk">*</span>*/}
+		                    <select className="custom-select form-control " ref="maintenancePer" placeholder="select" >
+						    	<option className="hidden">select</option>
+						    	<option value="month">Month</option>
+						    	<option value="year">Year</option>
+							</select>
+					    {/*<span htmlFor="">Per</span><span className="asterisk">*</span>
 					    <input type="number" className="form-control" ref="monthly" name="" placeholder="Monthly"/>
+					    */}
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 					  	</div>
 					  </div>
@@ -300,7 +304,7 @@ export default class Form3 extends Component{
 			  <div className="form-group margBtm_5" id="date">
 			    <span htmlFor="exampleFormControlInput1">Date</span>{/*<span className="asterisk">*</span>*/}
 			    <div className="input-group inputBox-main " id="">
-			    <input type="date" className="form-control" ref="date"  id="" />
+			    <input type="date" className="form-control" ref="availableFrom"  id="" />
 				  	<div className="input-group-addon inputIcon">
 		                <i className="fa fa-building iconClr"></i>
 		            </div>

@@ -4,13 +4,10 @@ import NavTab 				  from '../NavTab/NavTab.js';
 import $ 					  from "jquery";
 import swal                   from 'sweetalert';
 
-
 import './Form1.css';
 import 'bootstrap/js/tab.js';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/js/modal.js';
-
-/*var formValues=[];*/
 
 export default class Form1 extends Component{
 
@@ -18,7 +15,7 @@ export default class Form1 extends Component{
 			super(props);
 			this.state = {
 				formshow         :"form-1",
-				propertypurpose  : "Sell",
+				propertypurpose  : "",
 				propertyHolder   : '',
 				user_id 		 : localStorage.getItem("user_id"),
 			};
@@ -182,11 +179,6 @@ export default class Form1 extends Component{
 	         	"formshow" : data,
 	         })
         }
-  	// 	componentDidMount(){
-		 //    $("#efg").show();
-   //        	$("#efg").addClass('in');
-		 // }
-
 
 		updateUser(event){
 			event.preventDefault();
@@ -196,19 +188,12 @@ export default class Form1 extends Component{
 			const formValues = {
 
 				"propertyHolder":this.state.propertyHolder,
-        		"propertypurpose": this.state.propertypurpose,
-				"propertytype"   :this.refs.propertytype.value,
+        		"propertyPurpose": this.state.propertypurpose,
+				"propertyType"   :this.refs.propertytype.value,
 				"floor"         : this.refs.floor.value,
-				"totalfloor"    : this.refs.totalfloor.value,
+				"totalFloor"    : this.refs.totalfloor.value,
 
 
-				// "multistoryApt" 		: this.refs.multistoryApt.value,
-				/*"bhkType" 				: this.refs.bhkType.value,
-				"floor"  				: this.refs.floor.value,
-				"totalFloor"  			: this.refs.totalFloor.value,
-				"propertyage"  			: this.refs.propertyage.value,
-				"facing"  				: this.refs.facing.value,
-				"propertySize"  		: this.refs.propertySize.value,*/
 			};
 			console.log("form1===",formValues);
 
@@ -231,10 +216,10 @@ export default class Form1 extends Component{
 			   //  });
 
 			    axios
-				.post('/api/users',formValues)
+				.post('/api/sellResident',formValues)
 				.then( (res) =>{
 					console.log(res.data);
-					if(res.status == 201){
+					if(res.status == 200){
 						// alert("Data inserted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 
@@ -244,7 +229,7 @@ export default class Form1 extends Component{
 						
 						this.setState(
 			              {
-			                "propertypurpose"        : '',
+			                "propertyPurpose"        : '',
 				            "propertyHolder "    : ''
 
 			              });
@@ -301,8 +286,6 @@ export default class Form1 extends Component{
 	      	"propertyHolder": event.currentTarget.value,
 			    });
 			
-
-
 				    $('#radio-example1 ').click(function(){
 
 				        $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
@@ -316,11 +299,10 @@ export default class Form1 extends Component{
 
 		 }
 
-
 	render() {
     return (
 
-          <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
+          <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 page_content margTop">
 			<form id="form">
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
@@ -379,8 +361,8 @@ export default class Form1 extends Component{
 
 					  	<div className="col-lg-12 mb-40">
 					  			<span className=""> Owner</span>
-					  			<span className="ml-55"> Care Taker</span>
-					  			<span className="ml-42"> Builder</span>
+					  			<span className="ml-64"> Care Taker</span>
+					  			<span className="ml-56"> Builder</span>
 					  	</div>
          		
 					  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -403,7 +385,7 @@ export default class Form1 extends Component{
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
 				   			<label>Property Details</label>
 				   		</div>
-				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
 				   			 Property Type
 				   		</div>
 
@@ -414,7 +396,7 @@ export default class Form1 extends Component{
 						  	 <select className="custom-select form-control" ref="propertytype" >
 						    	<option	value="" hidden>Select Property Type </option>
 						    	<option	disabled>ALL RESIDENTIAL </option>
-						    	<option value="MultiStoeryApt">MultiStoery Apartment</option>
+						    	<option value="MultiStoreyApt">MultiStorey Apartment</option>
 						    	<option value="ResidentialHouse">Residential House</option>
 						    	<option value="Villa">Villa</option>
 						    	<option value="Penthouse">Penthouse</option>
@@ -430,8 +412,6 @@ export default class Form1 extends Component{
 							{/*<div className="errorMsg">{this.state.errors.bedroom}</div>*/}
 						  </div>
 					  	</div>
-
-				  		
 
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
@@ -479,22 +459,17 @@ export default class Form1 extends Component{
 			 </div>
 		  </div>
 
-
-
 			  	</div>
 				  
 				<div className="col-lg-5 col-md-8 col-sm-12 col-xs-12 boxLayout">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<img src="images/2.png" className="build_img"/>
+						<img src="images/2.png" className=""/>
 					</div>
 			  	</div>
 
 			  </div>
-
-
 				  
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	<hr/>
 		  	
 		  	<div className="form-group col-lg-3	col-md-2 col-sm-4 col-xs-4 pull-right">
 		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-4 col-xs-4" onClick={this.updateUser.bind(this)} >Save & Next >></button>

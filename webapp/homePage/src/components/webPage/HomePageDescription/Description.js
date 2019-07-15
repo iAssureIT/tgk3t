@@ -12,7 +12,7 @@ export default class Description extends Component {
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-								<i class="fa fa-home"></i>
+								<i className="fa fa-home"></i>
 								<br/>
 								<label>Personalised Service</label>
 								<br/>
@@ -24,7 +24,7 @@ export default class Description extends Component {
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-								<i class="fa fa-home"></i>
+								<i className="fa fa-home"></i>
 								<br/>
 								<label>Earning for Owners</label>
 								<br/>
@@ -36,7 +36,7 @@ export default class Description extends Component {
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-								<i class="fa fa-home"></i>
+								<i className="fa fa-home"></i>
 								<br/>
 								<label>Unbelivable Discount</label>
 								<br/>
@@ -47,7 +47,7 @@ export default class Description extends Component {
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-								<i class="fa fa-home"></i>
+								<i className="fa fa-home"></i>
 								<br/>
 								<label>Best Properties in India</label>
 								<br/>

@@ -1,6 +1,6 @@
 .BoxSize{
-  height: 672px;
-  background-image: url("/images/TGK_Post.png");
+	height: 672px;
+	background-image: url("/images/TGK_Post.png");
 }
 
 .nav>li>a:hover {
@@ -26,43 +26,43 @@ ul ul a {
     background: #fff;
 }
 .hImg{
-  height: 100px;
-  text-align: center;
-  margin-top: 24px;
+	height: 100px;
+	text-align: center;
+	margin-top: 24px;
 }
 .navText{
-  background-color: transparent !important;
+	background-color: transparent !important;
     margin-top: 21px;
     margin-left: 29px;
     margin-top: 24px;
 }
 .hText{
-  text-align: center;
-  color: #fff;
-  margin-top: 45px;
+	text-align: center;
+	color: #fff;
+	margin-top: 45px;
     margin-left: 30px;
 }
 .hText1{
-  margin-top: 35px;
+	margin-top: 35px;
 }
 .btn-bg{
-  background-color: #fff;
-  color: #000;
+	background-color: #fff;
+	color: #000;
 }
 .ml-10{
-  margin-left: 10px;
+	margin-left: 10px;
 }
 .mt-10{
-  margin-top: 10px;
+	margin-top: 10px;
 }
 .hSearch{
-  margin-top: 21px;
+	margin-top: 21px;
     margin-left: 92px;
     width: 400px;
     height: 43px;
 }
 .S-img{
-  left: 92px;
+	left: 92px;
     width: 71px;
     height: 43px;
     position: relative;
@@ -79,14 +79,14 @@ ul ul a {
     border-bottom: 5px solid #044b88;
 }
 .postDetails{
-  font-size: 19px;
+	font-size: 19px;
     color: #fff;
     text-align: center;
     margin-left: 9px;
     margin-bottom: 11px;
 }
 .postDetails1{
-  margin-left: 12px;
+	margin-left: 12px;
     color: #fff;
     margin-top: 10px;
     letter-spacing: 2px;
@@ -100,10 +100,10 @@ ul ul a {
     letter-spacing: 1px;
 }
 .mt-64{
-  margin-top: 64px;
+	margin-top: 64px;
 }
 .br2{
-  border-right: 2px solid #fff;
+	border-right: 2px solid #fff;
     padding-left: 39px;
     color: #fff;
     text-align: center;

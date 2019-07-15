@@ -70,6 +70,7 @@ export default class HomePage extends Component {
 						<input type="text" placeholder="  Enter Society, Location or Address" className="hSearch"  />
 					</div>
 					<div className="col-lg-1 S-img">
+
 					</div>
 				</div>
 				<div className="col-lg-6 col-lg-offset-4 mt-64">

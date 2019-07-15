@@ -10,8 +10,8 @@ export default class LoginOtp extends Component {
 	constructor(props){
 			super(props);
 			this.state = {
-        		user_id : "",
-        		mobile 	: "",
+        		// user_id : "",
+        		// mobile 	: "",
         		otp 	: "",
         		message : "",
 			};			
@@ -21,14 +21,14 @@ export default class LoginOtp extends Component {
 		// console.log("Redirect Props user_id : ",this.props.location.state.user_id);
 		// const { match: { params } } = this.props;
 			console.log("otp = ",localStorage.getItem("otp"));
-			var user_id = localStorage.getItem("user_id");
-        	var mobile 	= localStorage.getItem("mobile");
+			// var user_id = localStorage.getItem("user_id");
+   //      	var mobile 	= localStorage.getItem("mobile");
         	var otp 	= localStorage.getItem("otp");
         	var message	= localStorage.getItem("message");
 
 			this.setState({
-        		user_id : user_id,
-        		mobile 	: mobile,
+        		// user_id : user_id,
+        		// mobile 	: mobile,
         		otp 	: otp,
         		message	: message,
 			});		
@@ -50,7 +50,7 @@ export default class LoginOtp extends Component {
 			if(this.state.message == "NEW-USER-CREATED"){
 				this.props.history.push("/form1");
 			}else{
-				this.props.history.push("/Homepage");
+				this.props.history.push("/WebPage");
 			}
 			
 		}else{
@@ -88,12 +88,12 @@ export default class LoginOtp extends Component {
 							  	</div>
 							  </div>
 						    </div>
-						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout">
+						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<img src="images/1.png" className="build_img2"/>
+									<img src="/images/1.png" className="build_img2"/>
 								</div>
 								<span className="col-lg-12 formImgB">
-									We charge tenants/buyers brokerage & <br/>share upto 50% with the property owners.
+									We charge tenants/buyers brokerage & share upto 50% with the property owners.
 								</span>
 						 </div>
 						</div>

@@ -21,7 +21,7 @@ import swal                     from 'sweetalert';
 				"email" 	 : this.refs.email.value,
 				"city"       : this.refs.city.value,
 				"mobile"     : this.refs.mobile.value,
-				"countryCode":this.refs.countryCode.value,
+				"countryCode": this.refs.countryCode.value,
 				"status"     : 'Active',
 				"role"       : 'customer',
 
@@ -68,27 +68,22 @@ import swal                     from 'sweetalert';
 						  {/*<hr />*/}
 					<div className="hr_border row"></div>
 					    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-					  		<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-75">	
-							    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								  <div className="form-group">
-								  	<label>Let us know you to sell or rent your property faster</label>
 
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12	">
+					  		<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-75">
+								  	<label className="mb5">Let us know you to sell or rent your property faster</label>
+
+					  			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12	">
 										<div className="form-group">
-										    <label htmlFor="">Mobile</label>
 										    <div className="input-group inputBox-main " id="">
 										      	<div className="input-group-addon inputIcon">
-										      		<select ref="countryCode">
-										      			<option value="+91">+91</option>
-								    					<option value="+93">+93</option>
-										      		</select>
+					                     		<i className="fa fa-mobile  iconClr" aria-hidden="true"></i>
 							                    </div>
-										    	<input type="number" className="form-control" ref="mobile" id="" placeholder="mobile" value={this.state.mobile} disable />
+										    	<input type="number" className="form-control" ref="mobile" id="" placeholder="Mobile" value={this.state.mobile} disabled />
 										  	</div>
 										</div>
-									</div>
-
-								    <label htmlFor="">Name</label><span className="asterisk">*</span>
+								</div>	
+							    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								  <div className="form-group">
 								    <div className="input-group inputBox-main " id="">
 								      	<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-user iconClr" aria-hidden="true"></i>
@@ -99,7 +94,6 @@ import swal                     from 'sweetalert';
 							    </div>
 							    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								  <div className="form-group">
-								    <label htmlFor="">Email address</label><span className="asterisk">*</span>
 								    <div className="input-group inputBox-main " id="">
 								      	<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-envelope iconClr"></i>
@@ -110,7 +104,6 @@ import swal                     from 'sweetalert';
 							    </div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12	">
 									<div className="form-group">
-									    <label htmlFor="">City</label>
 									    <div className="input-group inputBox-main " id="">
 									      	<div className="input-group-addon inputIcon">
 						                     	<i className="fa fa-map-marker iconClr"></i>
@@ -120,12 +113,12 @@ import swal                     from 'sweetalert';
 									</div>
 								</div>
 					    	</div>
-						<div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout">
+						<div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								<img src="images/1.png" className="build_img2"/>
 							</div>
 							<span className="col-lg-12 formImgB">
-								We charge tenants/buyers brokerage & <br/>share upto 50% with the property owners.
+								We charge tenants/buyers brokerage & share upto 50% with the property owners.
 							</span>
 						</div>
 				 		</div>

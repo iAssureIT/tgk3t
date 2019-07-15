@@ -18,19 +18,16 @@ export default class Location extends Component {
 				"subArea" 			: this.refs.subArea.value,
 				"society" 		    : this.refs.society.value,
 				"landmark" 			: this.refs.landmark.value,
-				"housebuilding" 			: this.refs.housebuilding.value,
+				"houseBuilding" 	: this.refs.housebuilding.value,
 				"pincode" 			: this.refs.pincode.value,
 
 			};
 				console.log("Location",formValues);
-
-			
-
 			axios
-				.post('/api/users',formValues)
+				.post('/api/sellResident',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 201){
+					if(res.status == 200){
 						swal("Good job!", "Data inserted successfully!", "success");
 
 						this.refs.city.value          = '';

@@ -18,7 +18,7 @@ export default class Form4 extends Component{
 			super(props);
 			this.state = {
 				formshow :"form-4",
-				amenities     :[],
+				Amenities     :[],
 
 			};
 			this.handleBack = this.handleBack.bind(this);
@@ -48,7 +48,7 @@ export default class Form4 extends Component{
 			console.log("abc");
 			const formValues = {
 
-				"amenities"			:this.state.amenities
+				"Amenities"			:this.state.Amenities
 
 				/*"gasPipeline" 				: this.refs.gasPipeline.value,
 				"clubHouse" 				: this.refs.clubHouse.value,
@@ -68,11 +68,11 @@ export default class Form4 extends Component{
 			console.log("form4==",formValues);
 			//this.props.fun(formValues);
 			axios
-				.post('/api/users',formValues)
+				.post('/api/sellResident',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 201){
-						// alert("Data inserted successfully!")
+					if(res.status == 200){
+						// alert("Data iserted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 
 						/*this.refs.gasPipeline.value = '';
@@ -89,7 +89,7 @@ export default class Form4 extends Component{
 						this.refs.internetGym.value = '';*/
 						this.setState(
 			              {
-				            "amenities "    : ''
+				            "Amenities "    : ''
 
 			              });
 						this.props.history.push("/Form3");
@@ -117,13 +117,13 @@ export default class Form4 extends Component{
 		  {
 		  otherProp = e.target.getAttribute('value');
 
-		  this.state.amenities.push(e.target.getAttribute('value'));
+		  this.state.Amenities.push(e.target.getAttribute('value'));
 
-		  console.log("amenities",this.state.amenities);
+		  console.log("Amenities",this.state.Amenities);
 		  }
 		  else{
-		  this.state.amenities.pop(e.target.getAttribute('value'));
-		  console.log("amenities1",this.state.amenities);
+		  this.state.Amenities.pop(e.target.getAttribute('value'));
+		  console.log("Amenities1",this.state.Amenities);
 
 		  }
 
@@ -150,7 +150,7 @@ export default class Form4 extends Component{
 			  <div className="hr_border1 hr_border row"></div>
 		  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
 		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	 		Select the amenities available	
+		  	 		Select the Amenities available	
 		  	 	</div>
 		  	 </div>
 		  	 <div className="col-lg-10 col-lg-offset-1 col-md-10 col-sm-12 col-xs-12  ">

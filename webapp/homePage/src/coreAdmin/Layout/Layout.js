@@ -30,7 +30,6 @@ import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 import ModalBackground from '../../components/ModalBackground/ModalBackground.js';
 import HomePage from '../../components/HomePage/HomePage.js';
-
 import LoginMobNum from '../../components/LoginMobNum/LoginMobNum.js';
 import LoginOtp from '../../components/LoginOtp/LoginOtp.js';
 import Form1 from '../../components/Form1/Form1.js';
@@ -42,9 +41,9 @@ import Form6 from '../../components/Form6/Form6.js';
 import WebSignupFlow from '../../components/WebSignup/WebSignupFlow.js';
 import WebSignupForm from '../../components/WebSignup/WebSignupForm.js';
 import CongratsPage from '../../components/CongratsPage/CongratsPage.js';
-
+import TransactionPage from '../../components/TransactionPage/TransactionPage.js';
+import Location from '../../components/Location/Location.js';
 import PropertyProfileView from '../../components/webPage/Profile/PropertyProfileView.js';
-import RequestForm from '../../components/webPage/RequestForm/RequestForm.js';
 import WebPage from '../../components/webPage/HomePage/HomePage.js';
 
  class Layout extends Component{
@@ -97,7 +96,7 @@ componentDidMount(){
 
   render(){
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===true){
+    if(this.state.loggedIn===false){
       return(
             <div className="App container-fluid">
                 <div className="row">
@@ -118,8 +117,8 @@ componentDidMount(){
                           <Route path="/ViewTemplates" component={ViewTemplates} exact />
                           <Route path="/dashboard" component={Dashboard} exact />
                           <Route path="/companysetting" component={CompanySetting} exact />
-                         { /*<Route path="/HomePage" component={HomePage} exact />
 
+                         { /*<Route path="/HomePage" component={HomePage} exact />
                           <Route path="/Form1" component={Form1} exact />
                           <Route path="/Form2" component={Form2} exact />
                           <Route path="/Form3" component={Form3} exact />
@@ -160,12 +159,11 @@ componentDidMount(){
               <Route path="/confirm-otp"     exact strict component={ ConfirmOtp } />
               <Route path="/modalBackground" exact strict component={ModalBackground}  />
               <Route path="/HomePage"        exact strict component={HomePage}  />
-              <Route path="/Webpage"        exact strict component={WebPage}  />
 
               <Route path="/LoginMobNum"     exact strict component={LoginMobNum}  />
               <Route path="/LoginMobNum/:id"     exact strict component={LoginMobNum}  />
               <Route path="/LoginOtp/:id" exact strict component={LoginOtp}  />
-              <Route path="/LoginOtp" exact strict component={LoginOtp}  />
+              <Route path="/LoginOtp/" exact strict component={LoginOtp}  />
               <Route path="/WebSignupFlow"    exact strict component={WebSignupFlow}  />
               <Route path="/WebSignupForm/:mobile" exact strict component={WebSignupForm}  />
               <Route path="/WebSignupForm"   exact strict component={WebSignupForm}  />
@@ -176,10 +174,10 @@ componentDidMount(){
               <Route path="/Form5"       exact strict component={Form5}  />
               <Route path="/Form6"       exact strict component={Form6}  />
               <Route path="/CongratsPage"       exact strict component={CongratsPage}  />
-              
+              <Route path="/TransactionPage"       exact strict component={TransactionPage}  />
+              <Route path="/Location"       exact strict component={Location}  />
               <Route path="/PropertyProfileView"       exact strict component={PropertyProfileView}  />
-              <Route path="/RequestForm"       exact strict component={RequestForm}  />
-
+              <Route path="/WebPage"       exact strict component={WebPage}  />
 
             </Switch>        
           </Router>

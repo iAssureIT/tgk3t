@@ -22,7 +22,7 @@ export default class Form2 extends Component{
 				/*fields: {},
         		errors: {}*/
         		formshow :"form-2",
-				furnishedstatus   : ''
+				furnishedStatus   : ''
 
 			};
 			this.handleBack = this.handleBack.bind(this);
@@ -122,9 +122,9 @@ export default class Form2 extends Component{
 			const formValues = {
 				"bedrooms" 			: this.refs.bedrooms.value,
 				"balconies" 		: this.refs.balconies.value,
-				"furnishedstatus"   :this.state.furnishedstatus,
+				"furnishedStatus"   :this.state.furnishedstatus,
 				"bathroom" 			: this.refs.bathroom.value,
-				"ageofproperty" 	: this.refs.ageofproperty.value,
+				"ageofProperty" 	: this.refs.ageofproperty.value,
 				"facing" 			: this.refs.facing.value,
 				"superArea" 		: this.refs.superArea.value,
 				"builtupArea" 		: this.refs.builtupArea.value,
@@ -167,10 +167,10 @@ export default class Form2 extends Component{
 
 
 			axios
-				.post('/api/users',formValues)
+				.post('/api/sellResident',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 201){
+					if(res.status == 200){
 						// alert("Data inserted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 
@@ -184,7 +184,7 @@ export default class Form2 extends Component{
 
 						this.setState(
 			              {
-				            "furnishedstatus "    : ''
+				            "furnishedStatus "    : ''
 
 			              });
 
@@ -217,7 +217,7 @@ export default class Form2 extends Component{
     return (
     <div>
     
-      <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content ">
+      <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
 			<form  id="form">
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
@@ -236,7 +236,7 @@ export default class Form2 extends Component{
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
 			  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="bedrooms">
-				    <span htmlFor="">bedrooms</span>{/*<span className="asterisk">*</span>*/}
+				    <span htmlFor="" className="mb5">Bedrooms</span>{/*<span className="asterisk">*</span>*/}
 				    {/*<input type="text" className="form-control" ref="bedrooms" id="exampleFormControlInput1" placeholder=""/>*/}
 				  	 <div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
@@ -257,7 +257,7 @@ export default class Form2 extends Component{
 			  </div>
 			  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="balconies">
-				    <span htmlFor="">Balconies</span>{/*<span className="asterisk">*</span>*/}
+				    <span htmlFor="" className="mb5">Balconies</span>{/*<span className="asterisk">*</span>*/}
 				    {/*<input type="email" className="form-control" ref="balconies" id="exampleFormControlInput1" placeholder=""/>*/}
 				    <div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
@@ -276,7 +276,7 @@ export default class Form2 extends Component{
 			  </div>
 			   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="bathroom">
-				    <span htmlFor="">Bathroom</span>{/*<span className="asterisk">*</span>*/}
+				    <span htmlFor="" className="mb5">Bathroom</span>{/*<span className="asterisk">*</span>*/}
 				    <div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="fa fa-building iconClr"></i>
@@ -298,36 +298,36 @@ export default class Form2 extends Component{
 		  		<b>It is</b>
 		  	</div>
 		  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
+		  <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 pl25">	
 				 
-			 <label className="radio-inline col-lg-4  col-md-4 col-sm-4 col-xs-4 row">
+			 <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 		      <input type="radio"
 		             name="optradio"  
-		             value="fullfurnishedstatus" 
+		             value="fullfurnished" 
 		      		 id="radio-example1"
-		      		 checked={this.state.furnishedstatus === "fullfurnishedstatus"}
+		      		 checked={this.state.furnishedstatus === "fullfurnished"}
    					 onChange={this.radioChange} />   
-		      <span className="">Full furnishedstatus</span> 
+		      <span className="">Full furnished</span> 
 
 		    </label>
-		    <label className="radio-inline col-lg-4  col-md-4 col-sm-4 col-xs-4">
+		    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
 		      <input type="radio" 
 		      		 name="optradio" 
-		      		 value="semifurnishedstatus" 
+		      		 value="semifurnished" 
 		      		 id="radio-example2"
-		      		 checked={this.state.furnishedstatus === "semifurnishedstatus"}
+		      		 checked={this.state.furnishedstatus === "semifurnished"}
    					 onChange={this.radioChange} />  
-		  	 	<span className="">Semifurnishedstatus</span>  
+		  	 	<span className="">Semi furnished</span>  
 
 		    </label>
-		    <label className="radio-inline col-lg-4  col-md-4 col-sm-4 col-xs-4">
+		    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
 		      <input type="radio"
 		      		 name="optradio" 
-		      		 value="unfurnishedstatus" 
+		      		 value="unfurnished" 
 		      		 id="radio-example3"
-		      		 checked={this.state.furnishedstatus === "unfurnishedstatus"}
+		      		 checked={this.state.furnishedstatus === "unfurnished"}
    					 onChange={this.radioChange} /> 
-		  	 	<span className="">Unfurnishedstatus</span>  
+		  	 	<span className="">Unfurnished</span>  
 
 		    </label>
 		  </div>
@@ -340,7 +340,7 @@ export default class Form2 extends Component{
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrg_bt_35">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="society">
-					    <span htmlFor="">Year Old</span>{/*<span className="asterisk">*</span>*/}
+					    <span htmlFor="" className="mb5">Year Old</span>{/*<span className="asterisk">*</span>*/}
 						<div className="input-group inputBox-main " id="yearOld">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
@@ -357,7 +357,7 @@ export default class Form2 extends Component{
 				  </div>
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="facing">
-					    <span htmlFor="">Facing</span>{/*<span className="asterisk">*</span>*/}
+					    <span htmlFor="" className="mb5">Facing</span>{/*<span className="asterisk">*</span>*/}
 						<div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     <i className="fa fa-building iconClr"></i>

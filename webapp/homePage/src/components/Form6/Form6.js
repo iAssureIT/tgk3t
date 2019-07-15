@@ -34,10 +34,10 @@ export default class Form6 extends Component{
 			};
 			//this.props.fun(formValues);
 			axios
-				.post('/api/users',formValues)
+				.post('/api/sellResident',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 201){
+					if(res.status == 200){
 						//alert("Data inserted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 						

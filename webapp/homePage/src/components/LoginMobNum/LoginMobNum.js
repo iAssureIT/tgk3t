@@ -30,7 +30,7 @@ class LoginMobNum extends Component {
 			console.log("LoginMobNum==",formValues);
 			
 			axios
-				.post('/api/users/verify_mobile/', formValues)
+				.post('/api/users/verify_mobile',formValues)
 				.then((response)=>{
 					console.log("response = ",response.data);
 					console.log("message = ",response.data.message);
@@ -99,12 +99,12 @@ class LoginMobNum extends Component {
 							  	</div>
 							  </div>
 						    </div>
-						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout">
+						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<img src="images/1.png" className="build_img2"/>
 								</div>
 								<span className="col-lg-12 formImgB">
-									We charge tenants/buyers brokerage & <br/>share upto 50% with the property owners.
+									We charge tenants/buyers brokerage & share upto 50% with the property owners.
 								</span>
 						 </div>
 						</div>

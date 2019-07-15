@@ -20,7 +20,7 @@ export default class Form5 extends Component{
 			super(props);
 			this.state = {
 				formshow 			:"form-5",
-				selectType1         : "someone",
+				contactPerson         : "",
 			};
 			this.handleBack = this.handleBack.bind(this);
 			this.handleNext = this.handleNext.bind(this);
@@ -50,12 +50,11 @@ export default class Form5 extends Component{
 			event.preventDefault();
 			console.log("abc");
 			const formValues = {
-				"phone" 			: this.refs.phone.value,
-				"date" 				: this.refs.date.value,
-				"fromDate" 			: this.refs.fromDate.value,
-				"startTime" 		: this.refs.startTime.value,
-				"addSlot" 			: this.refs.addSlot.value,
-        		"selectType1"       : this.state.selectType1,
+				"contactPersonMobile" : this.refs.contactPersonMobile.value,
+				"availability" 				: this.refs.availability.value,
+				"startTime" 			: this.refs.startTime.value,
+				"endTime" 		: this.refs.endTime.value,
+        		"contactPerson"       : this.state.contactPerson,
 
 			
 				
@@ -65,22 +64,21 @@ export default class Form5 extends Component{
 
 			//this.props.fun(formValues);
 			axios
-				.post('/api/users',formValues)
+				.post('/api/sellResident',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 201){
-						// alert("Data inserted successfully!")
+					if(res.status == 200){
+						// alert("Data inerted successfully!")
 						swal("Good job!", "Data inserted successfully!", "success");
 
-						this.refs.phone.value 		= '';
-						this.refs.date.value 		= '';
-						this.refs.fromDate.value 	= '';
+						this.refs.contactPersonMobile.value 		= '';
+						this.refs.availability.value 		= '';
 						this.refs.startTime.value 	= '';
-						this.refs.addSlot.value 	= '';
+						this.refs.endTime.value 	= '';
 
 					    this.setState(
 			              {
-			                "selectType1" : '',
+			                "contactPerson" : '',
 			              });
 						this.props.history.push("/Form6");
 
@@ -102,17 +100,17 @@ export default class Form5 extends Component{
 		}
 
 		selectType(event){
-          if(this.state.selectType1 === "someone")
+          if(this.state.contactPerson === "someone")
             {
               this.setState(
               {
-                "selectType1" : "I",
+                "contactPerson" : "I",
               });
-            }else if(this.state.selectType1 === "I")
+            }else if(this.state.contactPerson === "I")
             {
                this.setState(
                {
-                "selectType1" : "someone",
+                "contactPerson" : "someone",
               }); 
             
           }
@@ -188,7 +186,7 @@ export default class Form5 extends Component{
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 					    {/*<label for="exampleFormControlInput1">Apartment Name</label><span className="asterisk">*</span>*/}
-					    		<input type="phone" className="form-control" ref="phone"  placeholder="Phone Number"/>
+					    		<input type="phone" className="form-control" ref="contactPersonMobile"  placeholder="Phone Number"/>
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 					  		</div>
 					  </div>
@@ -216,7 +214,7 @@ export default class Form5 extends Component{
 		                     <i className="fas fa-rupee-sign iconSize12"></i>
 		                    </div>*/}
 					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-					    <input type="date" className="form-control" ref="date"  placeholder="From 10:00am"/>
+					    <input type="date" className="form-control" ref="availability"  placeholder="From 10:00am"/>
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 					  	{/*</div>*/}
 					  </div>
@@ -229,7 +227,7 @@ export default class Form5 extends Component{
 		                     <i className="fas fa-rupee-sign iconSize12"></i>
 		                    </div>
 					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-					    <input type="text" className="form-control" ref="fromDate"  placeholder="From 10:00am"/>
+					    <input type="text" className="form-control" ref="startTime"  placeholder="From 10:00am"/>
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 					  	</div>
 					  </div>
@@ -242,7 +240,7 @@ export default class Form5 extends Component{
 		                     <i className="fas fa-rupee-sign iconSize12"></i>
 		                    </div>
 					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-					    <input type="text" className="form-control" ref="startTime"  placeholder="Start time 12:00am"/>
+					    <input type="text" className="form-control" ref="endTime"  placeholder="Start time 12:00am"/>
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 					  	</div>
 					  </div>
