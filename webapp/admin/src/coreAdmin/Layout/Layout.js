@@ -127,7 +127,7 @@ componentDidMount(){
                           <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
 
                           <Route path="/ViewTemplates" component={ViewTemplates} exact />
-                          <Route path="/dashboard" component={Dashboard} exact />
+                          <Route path="/" component={Dashboard} exact />
 
                           <Route path="/companysetting" component={CompanySetting} exact />
 

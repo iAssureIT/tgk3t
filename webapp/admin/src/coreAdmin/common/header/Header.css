@@ -10,6 +10,16 @@
 .marTop{
   margin-top: 6px;
 }
+.wid260{
+  width: 260px !important;
+}
+.marLeft{
+  margin-left: 25px;
+  padding-bottom: 5px;
+}
+.paddLeft5{
+  padding-left:7px;
+}
 .noneAtag{
     
     padding-left: 0px !important;
@@ -93,12 +103,12 @@ padding: 5px 5px !important;
   width: 0;
   position: fixed;
   z-index: 1;
-  top: 50px;
+  /*top: 50px;*/
   right: 0;
   background-color: #111;
   overflow-x: hidden;
   transition: 0.5s;
-  padding-top: 60px;
+ /* padding-top: 60px;*/
 }
 
 .sidenav a {

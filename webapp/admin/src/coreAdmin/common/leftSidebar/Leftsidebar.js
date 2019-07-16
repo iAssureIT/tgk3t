@@ -59,7 +59,7 @@ componentDidMount(){
                         </ul>
 
                         <a href="#sell-o-meter" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon glyphicon-home"></i>
+                            <i className="glyphicon fa fa-star-half-o"></i>
                             Sell-O-Meter
                         </a>
                         <ul className="collapse list-unstyled" id="sell-o-meter">

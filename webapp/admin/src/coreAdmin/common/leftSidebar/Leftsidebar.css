@@ -61,6 +61,10 @@ i, span {
     transition: all 0.80s;
 }
 
+.RightSide{
+  min-width: 250px !important;
+    max-width: 270px !important;
+}
 #sidebar.active {
     min-width: 80px;
     max-width: 80px;

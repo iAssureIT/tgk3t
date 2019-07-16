@@ -19,7 +19,7 @@ class UMListOfUsers extends Component {
              "tableHeading"     : {
                 fullName        : 'User Name',
                 emailId    		: 'Email',
-                mobNumber       : 'Mobile Number', 
+                username        : 'Mobile Number', 
                 status        	: 'Status',
                 // roles        	: 'Role',
                 actions        	: 'Action',
@@ -54,6 +54,7 @@ class UMListOfUsers extends Component {
 		}
 		axios.post('/api/users/userslist', data)
 		.then( (res)=>{      
+			console.log("herer",res);
 			this.setState({
 	          completeDataCount : res.data.length,
 	          tableData 		: res.data,          
