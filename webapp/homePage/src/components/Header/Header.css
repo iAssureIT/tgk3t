@@ -1,0 +1,38 @@
+/*.nav>li>a:hover {
+    text-decoration: none;
+    background-color: #795050;
+}
+.navbar-nav>li>a {
+    padding-top: 15px;
+    padding-bottom: 15px;
+    color:#fff;
+}
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
+    background-color: #8f90ce;
+    border-color: #337ab7;
+}
+.dropdown-menu > li > a {
+    color: #312f2f;
+}
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #fff;
+}
+.navText{
+	background-color: transparent !important;
+    margin-top: 21px;
+    margin-left: 29px;
+    margin-top: 24px;
+}*/
+.hImg{
+	height: 100px;
+	text-align: center;
+}
+
+.headerMenu{
+	padding-top: 20px;
+    padding-left: 54px;
+    font-size: 16px;
+
+}

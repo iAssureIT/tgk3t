@@ -5,6 +5,8 @@ import $ 						from "jquery";
 import Form5 					from '../Form5/Form5.js';
 import Form3 					from '../Form3/Form3.js';
 import swal                     from 'sweetalert';
+import { Link }					from 'react-router-dom';
+
 
 
 import './Form4.css';
@@ -130,20 +132,25 @@ export default class Form4 extends Component{
 		}
 
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
     return (
 
-    <div>
+    <div className={backImage} style={{"height": winHeight}}>
     	{/*<Form5 />	
 	   <div className="modal fade" id="klm" role="dialog">
 	  	 <div className="modal-dialog modal-lg">
 	      <div class="modal-content">
 		    <div class="modal-body ModalPd">*/}
-		       <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
+		       <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 page_content mt-76">
 			<form id="form">
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
 					<label className="title_sz">My Apartment has following Amenities</label>
-					<button type="button" className="close" data-dismiss="modal" onClick={this.closeModal.bind(this)}>&times;</button>
+					<Link to="/HomePage" className=" ">
+						<button type="button" className="close">&times;</button>
+					</Link>
 				</div>
 			  </div>
 			  {/*<hr />*/}
@@ -153,14 +160,14 @@ export default class Form4 extends Component{
 		  	 		Select the Amenities available	
 		  	 	</div>
 		  	 </div>
-		  	 <div className="col-lg-10 col-lg-offset-1 col-md-10 col-sm-12 col-xs-12  ">
+		  	 <div className="col-lg-12  col-md-10 col-sm-12 col-xs-12  ">
 		  	 	<div className="col-lg-12 ">
 		  	 		<div className="col-lg-6 FF4I"><b>Internal</b></div>
 		  	 		<div className="col-lg-6 FF4I"><b>External</b></div>
 		  	 	</div>
 		  	 		<div className="col-lg-12  mb20">
 		  	 			<div className="col-lg-6 FF4I1">
-		  	 				<label className="checkbox-inline col-lg-12 pt8">
+		  	 				<label className="checkbox-inline col-lg-12 pt20 ">
 						      <input type="checkbox"
 						      		 value="gasPipeline" 
 						      		 id="1"
@@ -169,7 +176,7 @@ export default class Form4 extends Component{
 
 						      		 />Gas Pipeline
 						    </label>
-						    <label className="checkbox-inline col-lg-12 pt8 pl21">
+						    <label className="checkbox-inline col-lg-12 pt20 pl21">
 						      <input type="checkbox" 
 						      		 value="internetService" 
 						      		 id="3"
@@ -179,7 +186,7 @@ export default class Form4 extends Component{
 						      		 />Internet Service 
 						    </label>
 
-						    <label className="checkbox-inline col-lg-9 pt8 pl24">
+						    <label className="checkbox-inline col-lg-9 pt20 pl21">
 						      <input type="checkbox"
 						      		 value="lift" 
 						      		 id="5"
@@ -189,7 +196,7 @@ export default class Form4 extends Component{
 						      		 />Lift 
 						    </label>
 
-						     <label className="checkbox-inline col-lg-12 pt8 pl15">
+						     <label className="checkbox-inline col-lg-12 pt20 pl18">
 							      <input type="checkbox" 
 							      		 value="airConditioner" 
 							      		 id="7"
@@ -199,7 +206,7 @@ export default class Form4 extends Component{
 							      		 />Air Conditioner
 							    </label>
 
-							    <label className="checkbox-inline col-lg-11 pt8 pl2">
+							    <label className="checkbox-inline col-lg-11 pt20 pl0 ">
 							      <input type="checkbox"
 							      		 value="intercom" 
 							      		 id="9"
@@ -209,7 +216,7 @@ export default class Form4 extends Component{
 							      		 />Intercom
 							    </label>
 
-							    <label className="checkbox-inline col-lg-12 pt8 pl11">
+							    <label className="checkbox-inline col-lg-12 pt20 pl11">
 							      <input type="checkbox" 
 							      		 value="powerBackup"
 							      		 id="11"
@@ -219,7 +226,7 @@ export default class Form4 extends Component{
 							      		 />Power Backup
 							    </label>
 
-							    <label className="checkbox-inline col-lg-12 pt8 pl3">
+							    <label className="checkbox-inline col-lg-12 pt20 pl3">
 								      <input type="checkbox" 
 								      		 value="waterSupply"
 								      		 id="13"
@@ -232,7 +239,7 @@ export default class Form4 extends Component{
 		  	 				{/*External*/}
 
 		  	 			<div className="col-lg-6 FF4I1"> 
-		  	 				<label className="checkbox-inline col-lg-12 pt8">
+		  	 				<label className="checkbox-inline col-lg-12 pt20">
 							      <input type="checkbox" 
 							      		 value="clubHouse" 
 							      		 id="2"
@@ -242,7 +249,7 @@ export default class Form4 extends Component{
 							      		 />Club House
 							    </label>
 
-							    <label className="checkbox-inline col-lg-12 pt8 pl35">
+							    <label className="checkbox-inline col-lg-12 pt20 pl35">
 							      <input type="checkbox" 
 							      		 value="shoppingCenter"
 							      		 id="4"
@@ -253,7 +260,7 @@ export default class Form4 extends Component{
 							    </label>
 
 
-				  	 		<label className="checkbox-inline col-lg-12 pt8 pl87">
+				  	 		<label className="checkbox-inline col-lg-12 pt20 pl87">
 						      <input type="checkbox" 
 						      		 value="sewageTreatmentPlan" 
 						      		 id="6"
@@ -263,7 +270,7 @@ export default class Form4 extends Component{
 						      		 />Sewage Treatment Plan 
 						    </label>
 
-						    <label className="checkbox-inline col-lg-12 pt8 pl25">
+						    <label className="checkbox-inline col-lg-12 pt20 pl25">
 						      <input type="checkbox" 
 						      		 value="swimmingPool"
 						      		 id="8"
@@ -277,7 +284,7 @@ export default class Form4 extends Component{
 						    
 						    
 
-				  	 		<label className="checkbox-inline col-lg-12 pt8 pl61">
+				  	 		<label className="checkbox-inline col-lg-12 pt20 pl61">
 						      <input type="checkbox" 
 						      		 value="childrenPlay" 
 						      		 id="10"
@@ -290,7 +297,7 @@ export default class Form4 extends Component{
 				   
 				    
 
-						     <label className="checkbox-inline col-lg-12 pt8 pl10">
+						     <label className="checkbox-inline col-lg-12 pt20 pl10">
 						      <input type="checkbox" 
 						      		 value="internetGym" 
 						      		 id="12"
@@ -301,7 +308,7 @@ export default class Form4 extends Component{
 						    </label>
 						    
 
-						    <label className="checkbox-inline col-lg-10 pt8 pl14">
+						    <label className="checkbox-inline col-lg-10 pt20 pl10">
 						      <input type="checkbox" 
 						      		 value="park"
 						      		 id="14"
@@ -320,7 +327,7 @@ export default class Form4 extends Component{
 		       <button type="" className="btn back_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.handleBack}>Back</button>
 		  	</div>*/}
 		  	<div className="form-group mgbt col-lg-3 col-md-3 col-sm-4 col-xs-4 pull-right ">
-		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mb20 "  onClick={this.updateUser.bind(this)}>Save & Next >></button>
+		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mb20 mt23"  onClick={this.updateUser.bind(this)}>Save & Next >></button>
 		  	</div>
 		  </div>
 		  

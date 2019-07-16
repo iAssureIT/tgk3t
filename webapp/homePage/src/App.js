@@ -1,6 +1,5 @@
 import React 				from 'react';
-import LayoutSystemSecurity from './coreAdmin/LayoutSystemSecurity/LayoutSystemSecurity.js';
-import Layout 				from './coreAdmin/Layout/Layout.js';
+import Layout 				from './Layout/Layout.js';
 import axios 				from 'axios';
 
 import './App.css';

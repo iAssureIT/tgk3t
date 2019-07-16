@@ -4,6 +4,7 @@ import NavTab 					from '../NavTab/NavTab.js';
 import ReactTable 				from 'react-table'; //import react table
 import $ 						from "jquery";
 import swal                     from 'sweetalert';
+import { Link }					from 'react-router-dom';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-table/react-table.css' //import css
@@ -117,6 +118,9 @@ export default class Form5 extends Component{
       }
 
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
 		const data = [{
    			Availability: 'Tanner Linsley',
 		    Time: 26,
@@ -144,18 +148,20 @@ export default class Form5 extends Component{
             )     
 			}]
     return (
-     <div>
+     <div className={backImage} style={{"height": winHeight}}>
     	{/*<Form6 />
 	   <div className="modal fade" id="nop" role="dialog">
 	  	 <div className="modal-dialog modal-lg">
 	      <div class="modal-content">
 		    <div class="modal-body ModalPd">*/}
-           <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
+           <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 page_content mt-76">
 			<form id="form">
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-					<label className="title_sz">Please tell us your availability toplan visit</label>
-					<button type="button" className="close" data-dismiss="modal" onClick={this.closeModal.bind(this)}>&times;</button>
+					<label className="title_sz">Please tell us your availability to plan visit</label>
+					<Link to="/HomePage" className=" ">
+						<button type="button" className="close">&times;</button>
+					</Link>
 				</div>
 			  </div>
 			  {/*<hr />*/}
@@ -165,7 +171,7 @@ export default class Form5 extends Component{
 			  	 	<label>Who will show?</label>
 			  	 </div>
 			  </div>
-		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">	
+		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  	<div className="form-group" id="superArea">
 {/*					    <label for="exampleFormControlInput1">Who will show</label>{/*<span className="asterisk">*</span>*/}
@@ -194,7 +200,7 @@ export default class Form5 extends Component{
 		 	 </div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<label>Visit Schedule(add as you may like)</label>
+			  	 	<label>Visit Schedule (Add as you may like)</label>
 			  	 </div>
 			  </div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
@@ -204,7 +210,7 @@ export default class Form5 extends Component{
 			  </div>
 			 
 
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30">	
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 	  		
 				 
 		    	<div className="col-lg-3 col-md-4 col-sm-4 col-xs-4">
@@ -246,15 +252,10 @@ export default class Form5 extends Component{
 					  </div>
 				  </div>
 
-				  <div className="col-lg-3 col-md-4 col-sm-4 col-xs-4">
+				  <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 					  <div className="form-group"  id="" >
 					    <div className="input-group inputBox-main " id="">
-					      	<div className="input-group-addon inputIcon">
-		                     <i className="fas fa-rupee-sign iconSize12"></i>
-		                    </div>
-					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-					    <input type="text" className="form-control" ref="addSlot"  placeholder="Add"/>
-					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+					      	<button className="btn">&nbsp; &nbsp; &nbsp;Add Slot + &nbsp; &nbsp; &nbsp;</button>
 					  	</div>
 					  </div>
 				  </div>
@@ -285,7 +286,7 @@ export default class Form5 extends Component{
 		  	<button className="weekBtn">
 		  		Saturday
 		  	</button>	
-		  	<button className="weekBtn weekBtn_lst">
+		  	<button className="weekBtn weekBtn_lst Active">
 		  		Sunday
 		  	</button>
 		  	
@@ -293,7 +294,7 @@ export default class Form5 extends Component{
 		  </div>
 		 
 
-		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30 margTop">	
+		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	 	<ReactTable
 				    data={data}
@@ -373,7 +374,7 @@ export default class Form5 extends Component{
 		       <button type="" className="btn back_btn col-lg-12 col-md-12 col-sm-12 col-xs-12"  onClick={this.handleBack}>Back</button>
 		  	</div>*/}
 		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
-		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12"  onClick={this.updateUser.bind(this)}>Save & Next >></button>
+		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23"  onClick={this.updateUser.bind(this)}>Save & Next >></button>
 		  	</div>
 		  </div>
 		  

@@ -39,15 +39,15 @@ export default class ModalBackground extends Component {
   render(){
     var windowWidth = $(window).width();
     // console.log('ww',windowWidth);
-      if(windowWidth>=320&&windowWidth<=992){
-        var backImage = "visible-xs col-xs-12 visible-sm col-sm-12 noBackImage"
-        }else{
+      // if(windowWidth>=320&&windowWidth<=992){
+      //   var backImage = "visible-xs col-xs-12 visible-sm col-sm-12 noBackImage"
+      //   }else{
         var backImage = "backImageModal hidden-xs hidden-sm"
-      }
+      // }
 
 
     var winHeight = window.innerHeight;
-    var divHeight = 760 +'px';
+    // var divHeight = 760 +'px';
     
     return(
 

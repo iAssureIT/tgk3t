@@ -7,6 +7,7 @@ import Form3 					from '../Form3/Form3.js';
 import swal                     from 'sweetalert';
 
 
+
 import './Form2.css';
 import 'bootstrap/js/tab.js';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -214,29 +215,34 @@ export default class Form2 extends Component{
 		 }
 
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
     return (
-    <div>
+    <div className={backImage} style={{"height": winHeight}}>
     
-      <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
+      <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 page_content mt-76">
 			<form  id="form">
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
-					<label className="title_sz">Provide property details of your property to SELL.</label>
-					<button type="button" className="close" onClick={this.closeModal.bind(this)} data-dismiss="modal">&times;</button>
+					<label className="title_sz"> Please provide property details of your property to SELL</label>
+					<Link to="/HomePage" className=" ">
+						<button type="button" className="close">&times;</button>
+					</Link>
 				</div>
 			  </div>
 			  {/*<hr />*/}
 			  <div className="hr_border row"></div>
 		 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
+		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb10">
 		  		<b>My Apartment has</b>
 		  	</div>
 		  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 			  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="bedrooms">
-				    <span htmlFor="" className="mb5">Bedrooms</span>{/*<span className="asterisk">*</span>*/}
+				    <span htmlFor="" className="mb7">Bedrooms</span>{/*<span className="asterisk">*</span>*/}
 				    {/*<input type="text" className="form-control" ref="bedrooms" id="exampleFormControlInput1" placeholder=""/>*/}
 				  	 <div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
@@ -257,7 +263,7 @@ export default class Form2 extends Component{
 			  </div>
 			  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="balconies">
-				    <span htmlFor="" className="mb5">Balconies</span>{/*<span className="asterisk">*</span>*/}
+				    <span htmlFor="" className="mb7">Balconies</span>{/*<span className="asterisk">*</span>*/}
 				    {/*<input type="email" className="form-control" ref="balconies" id="exampleFormControlInput1" placeholder=""/>*/}
 				    <div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
@@ -276,7 +282,7 @@ export default class Form2 extends Component{
 			  </div>
 			   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="bathroom">
-				    <span htmlFor="" className="mb5">Bathroom</span>{/*<span className="asterisk">*</span>*/}
+				    <span htmlFor="" className="mb7">Bathroom</span>{/*<span className="asterisk">*</span>*/}
 				    <div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="fa fa-building iconClr"></i>
@@ -294,11 +300,11 @@ export default class Form2 extends Component{
 			  </div>
 		  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
+		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 itIs">
 		  		<b>It is</b>
 		  	</div>
 		  </div>
-		  <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 pl25">	
+		  <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 pl29">	
 				 
 			 <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 		      <input type="radio"
@@ -307,7 +313,7 @@ export default class Form2 extends Component{
 		      		 id="radio-example1"
 		      		 checked={this.state.furnishedstatus === "fullfurnished"}
    					 onChange={this.radioChange} />   
-		      <span className="">Full furnished</span> 
+		      <span className="mb5">Full furnished</span> 
 
 		    </label>
 		    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
@@ -317,7 +323,7 @@ export default class Form2 extends Component{
 		      		 id="radio-example2"
 		      		 checked={this.state.furnishedstatus === "semifurnished"}
    					 onChange={this.radioChange} />  
-		  	 	<span className="">Semi furnished</span>  
+		  	 	<span className="mb5">Semi furnished</span>  
 
 		    </label>
 		    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
@@ -327,17 +333,17 @@ export default class Form2 extends Component{
 		      		 id="radio-example3"
 		      		 checked={this.state.furnishedstatus === "unfurnished"}
    					 onChange={this.radioChange} /> 
-		  	 	<span className="">Unfurnished</span>  
+		  	 	<span className="mb5">Unfurnished</span>  
 
 		    </label>
 		  </div>
 		  
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
+		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 itIs ">
 		  		<b>It is</b>
 		  	</div>
 		  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrg_bt_35">	
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="society">
 					    <span htmlFor="" className="mb5">Year Old</span>{/*<span className="asterisk">*</span>*/}
@@ -373,9 +379,10 @@ export default class Form2 extends Component{
 					</div>
 				  </div>
 		  </div>
-		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">	
+		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="">
+					  <span htmlFor="" className="mb7">Super Area</span>
 					    <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
@@ -391,6 +398,7 @@ export default class Form2 extends Component{
 				  </div>
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >
+					  <span htmlFor="" className="mb7">Built Area</span>
 					    {/*<label htmlFor="exampleFormControlInput1">Apartment Name</label><span className="asterisk">*</span>*/}
 					    <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
@@ -411,7 +419,7 @@ export default class Form2 extends Component{
 	  		{/*<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4">
 		       <button type="" className="btn back_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.handleBack}>Back</button>
 		  	</div>*/}
-		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
+		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right mt23">
 		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save & Next >></button>
 		  	</div>
 		  </div>

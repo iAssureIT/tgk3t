@@ -5,6 +5,8 @@ import swal 					from 'sweetalert';
 import $ 						from "jquery";
 import Form4 					from '../Form4/Form4.js';
 import Form2 					from '../Form2/Form2.js';
+import { Link }					from 'react-router-dom';
+
 
 import './Form3.css';
 import 'bootstrap/js/tab.js';
@@ -120,9 +122,12 @@ export default class Form3 extends Component{
 		
 
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
     return (
     	
-	 <div>
+	 <div className={backImage} style={{"height": winHeight}}>
 		{/*<Form4 />*/}
 		{/*<div className="modal fade" id="hij" role="dialog">
 	  	 <div className="modal-dialog modal-lg">
@@ -130,12 +135,14 @@ export default class Form3 extends Component{
 	   {/* <div class="modal-header">
 		  </div>*/}
 		    {/*<div class="modal-body ModalPd">*/}
-		 	  <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
+		 	  <div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 page_content margTop">
 			<form id="form">
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 d">	
-					<label className="title_sz">My Apartment Size and Financial Details</label>
-					<button type="button" className="close" data-dismiss="modal" onClick={this.closeModal.bind(this)}>&times;</button>
+					<label className="title_sz"> Financial Details For My Apartment </label>
+					<Link to="/HomePage" className=" ">
+						<button type="button" className="close">&times;</button>
+					</Link>
 				</div>
 			  </div>
 			  {/*<hr />*/}
@@ -161,12 +168,16 @@ export default class Form3 extends Component{
 				  </div>
 				</div>
 				<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+
 					  <div className="form-group" id="totalprice">
+
   					    {/*<label htmlFor="exampleFormControlInput1">Apartment Name</label><span className="asterisk">*</span>*/}
 					    <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
+			  	 	
+
 					    <input type="number" className="form-control" ref="totalprice" id="" placeholder="Total Ask"/>
 					  </div>
 					  </div>
@@ -174,10 +185,10 @@ export default class Form3 extends Component{
 			  </div>
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<label>My Total Ask includecharges</label>
+			  	 	<label>My Total Ask includes</label>
 			  	 </div>
 			  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl30">	
 		  
 		    		{/*<input type="radio" className="radio-inline" ref="carkPark" id="" placeholder=""/>	
 		    		<span className="dataLabels">Car Park</span> 
@@ -222,7 +233,7 @@ export default class Form3 extends Component{
 
 				      		 />Car Park 
 				    </label>
-				    <label className="checkbox-inline">
+				    <label className="checkbox-inline pl44">
 				      <input type="checkbox" 
 				      		 value="oneTimeMaintenace" 
 				      		 id="2"
@@ -231,8 +242,8 @@ export default class Form3 extends Component{
 
 				      		 />One Time Maintenance 
 				    </label>
-				    <label className="checkbox-inline">
-				      <input type="checkbox" 
+				    <label className="checkbox-inline pl35">
+				      <input type="checkbox"  
 				      		 value="stampDuty" 
 				      		 id="3"
 				      		 name="userCheckbox"
@@ -240,7 +251,7 @@ export default class Form3 extends Component{
 
 				      		 />Stamp Duty 
 				    </label>
-				    <label className="checkbox-inline">
+				    <label className="checkbox-inline pl35">
 				      <input type="checkbox" 
 				      		 value="clubHouse"
 				      		 id="4"
@@ -260,7 +271,7 @@ export default class Form3 extends Component{
 		  			
 		  		</div>
 		  		<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-		  			<span>per</span>
+		  			<span>Per</span>
 		  		</div>
 		  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">	
@@ -282,7 +293,7 @@ export default class Form3 extends Component{
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 		                    <select className="custom-select form-control " ref="maintenancePer" placeholder="select" >
-						    	<option className="hidden">select</option>
+						    	<option className="hidden">Select</option>
 						    	<option value="month">Month</option>
 						    	<option value="year">Year</option>
 							</select>

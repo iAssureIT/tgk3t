@@ -12,7 +12,6 @@ class LoginMobNum extends Component {
 	constructor(props,{match}){
 			super(props);
 			this.state = {
-        		// mobile :''
 			};			
 		}
 
@@ -56,33 +55,28 @@ class LoginMobNum extends Component {
 				.catch(function(error){
 					console.log(error);
 				})
-				// var responseData = response.data;
-
-					// response.message = "MOBILE-NUMBER-EXISTS";  //temp - delete this later.
-					// if(responseData){
-					// 	if(!responseData==null){							
-					// 		this.props.history.push('/LoginOtp/'+"101");
-					// 	}else{
-					// 		this.props.history.push('/LoginOtp');
-					// 	}
-
-					// }
+				
 
 		}
 
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
 		return (
-				<div className="col-lg-8 col-lg-offset-2 page_content mt-50" id="xyz">
+				<div className={backImage} style={{"height": winHeight}}>
+				<div className="col-lg-8 col-lg-offset-2 page_content mt-76" id="xyz">
 					<form id="" className=" ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
 								<label className="title_sz col-lg-10 col-md-10 col-sm-10 col-xs-10">Owners earn upto 505 brokerage by selling/renting with us so let's get started</label>
-								<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2"> 
-									<Link to="/HomePage" className="pull-right closeIcon"> &times; </Link>
+								<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+									<Link to="/HomePage" className=" ">
+										<button type="button" className="close">&times;</button>
+									 </Link> 
 								</div>
 							</div>
 						</div>
-						  {/*<hr />*/}
 						<div className="hr_border row"></div>
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-150">	
@@ -113,6 +107,7 @@ class LoginMobNum extends Component {
 						  	</div>
 					</form>
 				</div>
+			</div>
 		);
 	}
 }

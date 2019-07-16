@@ -2,6 +2,7 @@ import React , { Component }	from 'react';
 import axios 					from 'axios';
 import NavTab 					from '../NavTab/NavTab.js';
 import swal                     from 'sweetalert';
+import $ 						from "jquery";
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -60,7 +61,11 @@ export default class Form6 extends Component{
 		}
 
 	render() {
-    return (
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
+    return (	
+    	<div className={backImage} style={{"height": winHeight}}>
 			      <div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
 					<form onSubmit={this.updateUser.bind(this)} id="form">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title">
@@ -131,7 +136,7 @@ export default class Form6 extends Component{
 						  </div>
 					</form>
 				</div>
-
+			</div>
 		);
 	}
 	

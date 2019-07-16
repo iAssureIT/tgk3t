@@ -68,15 +68,15 @@
 
 .logo1{
     color: #ccc;
-    margin-left: -22px;
+    margin-left: -20px;
     position: absolute;
     z-index: 1;
-    margin-top: 3px;
+    margin-top: 4px;
     
 }
-/*.logo1:hover{
+.logo1:hover{
   color: #ff0;
-}*/
+}
 .box{
 	border: 1px solid #ccc;
 	height: 250px;
@@ -152,11 +152,11 @@
   color:#fff;
 }
 
-.ml-64{
-  margin-left: 64px;
+.ml-59{
+  margin-left: 59px;
 }
-.ml-56{
-  margin-left: 56px;
+.ml-53{
+  margin-left: 53px;
 }
 .mb-40{
   margin-bottom: 40px;

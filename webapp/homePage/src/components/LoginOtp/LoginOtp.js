@@ -3,6 +3,8 @@ import axios 					from 'axios';
 import NavTab 					from '../NavTab/NavTab.js';
 import $ 						from "jquery";
 import swal                     from 'sweetalert';
+import { Link }					from 'react-router-dom';
+
 
 import '../LoginOtp/LoginOtp.css';
 
@@ -60,14 +62,20 @@ export default class LoginOtp extends Component {
 	}
 
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
 		return (
-			<div>
-				<div className="col-lg-8 col-lg-offset-2 page_content mt-50">
+			<div className={backImage} style={{"height": winHeight}}>
+				<div className="col-lg-8 col-lg-offset-2 page_content mt-76">
 					<form id="" className=" ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
+						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">	
 								<label className="title_sz">Owners earn upto 505 brokerage by selling/renting with us so let's get started</label>
-								<button type="button" className="close">&times;</button>
+								<Link to="/HomePage" className=" ">
+									<button type="button" className="close">&times;</button>
+								 </Link>
+
 							</div>
 						</div>
 						  {/*<hr />*/}

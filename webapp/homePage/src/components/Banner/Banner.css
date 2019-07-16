@@ -3,39 +3,6 @@
 	background-image: url("/images/TGK_Post.png");
 }
 
-/*.nav>li>a:hover {
-    text-decoration: none;
-     color: #fff; 
-    background-color: #795050;
-}
-.navbar-nav>li>a {
-    padding-top: 15px;
-    padding-bottom: 15px;
-    color:#fff;
-}
-.nav .open>a, .nav .open>a:focus, .nav .open>a:hover {
-    background-color: #8f90ce;
-    border-color: #337ab7;
-}
-.dropdown-menu > li > a {
-    color: #312f2f;
-}
-ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #fff;
-}*/
-.hImg{
-	height: 100px;
-	text-align: center;
-	margin-top: 24px;
-}
-/*.navText{
-	background-color: transparent !important;
-    margin-top: 21px;
-    margin-left: 29px;
-    margin-top: 24px;
-}*/
 .hText{
 	text-align: center;
 	color: #fff;
@@ -107,7 +74,4 @@ ul ul a {
     padding-left: 39px;
     color: #fff;
     text-align: center;
-}
-.noPad{
-    padding: 0px;
 }

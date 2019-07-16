@@ -3,6 +3,8 @@ import axios 				  from 'axios';
 import NavTab 				  from '../NavTab/NavTab.js';
 import $ 					  from "jquery";
 import swal                   from 'sweetalert';
+import { Link }					from 'react-router-dom';
+
 
 import './Form1.css';
 import 'bootstrap/js/tab.js';
@@ -300,14 +302,19 @@ export default class Form1 extends Component{
 		 }
 
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
     return (
-
-          <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 page_content margTop">
+    	<div className={backImage} style={{"height": winHeight}}>
+          <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 page_content mt-76">
 			<form id="form">
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
 					<label className="title_sz">Let's Provide Details of Your Property for sell</label>
-					<button type="button" className="close" data-dismiss="modal" onClick={this.closeModal.bind(this)}>&times;</button>
+					<Link to="/HomePage" className=" ">
+						<button type="button" className="close">&times;</button>
+					 </Link>
 				</div>
 			  </div>
 			  {/*<hr />*/}
@@ -361,8 +368,8 @@ export default class Form1 extends Component{
 
 					  	<div className="col-lg-12 mb-40">
 					  			<span className=""> Owner</span>
-					  			<span className="ml-64"> Care Taker</span>
-					  			<span className="ml-56"> Builder</span>
+					  			<span className="ml-59"> Care Taker</span>
+					  			<span className="ml-53"> Builder</span>
 					  	</div>
          		
 					  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -382,14 +389,14 @@ export default class Form1 extends Component{
 			            </div>
 						</div>
 
-						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				   			<label>Property Details</label>
 				   		</div>
-				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
+				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
 				   			 Property Type
 				   		</div>
 
-					   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm_25">
+					   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 						  <div className="form-group" id="">
 	{/*					    <label for="exampleFormControlInput1">Bedroom</label><span className="asterisk">*</span>
 	*/}					    {/*<input type="text" className="form-control" ref="bedroom" id="exampleFormControlInput1" placeholder=""/>*/}
@@ -414,11 +421,11 @@ export default class Form1 extends Component{
 					  	</div>
 
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">
+			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
 			  		<b>My Apartment is on</b>
 			  	</div>
 		  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm row">
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  row">
 		  	<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
 			  <div className="form-group" id="floor">
 		  		<div className="input-group inputBox-main " id="">
@@ -478,7 +485,7 @@ export default class Form1 extends Component{
 		  
 		</form>
 		</div>
-     
+    </div> 
 		);
 	}
 	

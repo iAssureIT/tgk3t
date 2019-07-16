@@ -58,17 +58,23 @@ export default class Location extends Component {
 						   
 				}
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
 		return (
-			<div  className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 page_content margTop">
+			<div className={backImage} style={{"height": winHeight}}>
+			<div  className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 page_content mt-76">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
 						<label className="title_sz">Let's Provide Details of Your Property Location</label>
-						<button type="button" className="close" data-dismiss="modal" ></button>
+						<Link to="/HomePage" className=" ">
+							<button type="button" className="close">&times;</button>
+						 </Link>
 					</div>
 			    </div>
 			    <div className="hr_border row"></div>
 			    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-			    	<span className="locSpan col-lg-2 col-lg-offset-2  ">Pincode :</span>
+			    	<span className="locSpan col-lg-2 col-lg-offset-2  ">Pincode </span>
 			    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 form-group">
 						    <div className="input-group inputBox-main " id="">
 						      	<div className="input-group-addon inputIcon">
@@ -78,8 +84,10 @@ export default class Location extends Component {
 						    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 						  	</div>
 					</div>
-			        <button className="locH2 btn btn-primary" onClick={this.toggleForm.bind(this)}>OR</button>
 			    </div>
+			    <div className="orBtn">
+			        <button className="locH2 btn btn-primary" onClick={this.toggleForm.bind(this)}>OR</button>
+			    </div>    
 			<div id="location">    
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
 				    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -180,6 +188,7 @@ export default class Location extends Component {
 			       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save & Next >></button>
 			  	</div>
 			</div>
+		</div>
 		</div>
 		);
 	}

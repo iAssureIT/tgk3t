@@ -4,6 +4,8 @@ import NavTab 					from '../NavTab/NavTab.js';
 import $ 						from "jquery";
 import { Route , withRouter}    from 'react-router-dom';
 import swal                     from 'sweetalert';
+import { Link }					from 'react-router-dom';
+
 
  class WebSignupForm extends Component {
 	constructor(props){
@@ -56,13 +58,19 @@ import swal                     from 'sweetalert';
 				});
 		}
 	render() {
+				var windowWidth = $(window).width();
+		        var backImage = "backImageModal hidden-xs hidden-sm"
+		        var winHeight = window.innerHeight;
 		return (
-			<div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 page_content margTop1">
+			<div className={backImage} style={{"height": winHeight}}>
+			<div className="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 page_content mt-76">
 				<form id="xyz" className=" ">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
 					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-							<label className="title_sz">Owners earn upto 505 brokerage by selling/renting with us so let's get started</label>
-							<button type="button" className="close">&times;</button>
+							<label className="title_sz">Owners earn upto 50% brokerage by Selling/Renting with us. So let's get started.</label>
+							<Link to="/HomePage" className=" ">
+								<button type="button" className="close">&times;</button>
+							</Link>
 						</div>
 					</div>
 						  {/*<hr />*/}
@@ -132,6 +140,7 @@ import swal                     from 'sweetalert';
 						</div>
 				</form>
 			</div>
+		</div>	
 		);
 	}
 }
