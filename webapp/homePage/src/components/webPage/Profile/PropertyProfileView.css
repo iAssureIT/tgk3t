@@ -7,11 +7,18 @@
 .mt10{
 	margin-top:10px;
 }
+.mt40{
+  margin-top: 40px;
+}
 .propertyName{
 	height: 100px;
 }
 .nameOfProperty{
 	height: 100px;
+}
+.mainDescriptionDiv{
+  border-bottom-style: dotted;
+  height: 200px;
 }
 .backButton{
 	height: 42px;

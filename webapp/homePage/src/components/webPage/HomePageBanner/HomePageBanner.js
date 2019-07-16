@@ -58,7 +58,7 @@ export default class HomePageBanner extends Component {
 						<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
 					</div>
 					<div className="col-lg-6 col-lg-offset-4 mt-10">
-						<button className="col-lg-3 btn btn-bg">Buy</button>
+						<button className="col-lg-3 btn btn-bg ">Buy</button>
 						<button className="col-lg-3 btn btn-bg ml-10">Rent</button>
 						<button className="col-lg-3 btn btn-bg ml-10">Commercial</button>
 					</div>

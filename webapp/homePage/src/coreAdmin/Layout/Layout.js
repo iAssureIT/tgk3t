@@ -96,7 +96,7 @@ componentDidMount(){
 
   render(){
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===false){
+    if(this.state.loggedIn===true){
       return(
             <div className="App container-fluid">
                 <div className="row">
