@@ -58,7 +58,7 @@ height: 45px;
     font-weight: 600;
     margin-top: 2px;
     padding: 5px;
-    padding-left: 13px;
+    padding-left: 9px;
     border-radius: 3px;
     font-size: 9px;
     color: #fff;
@@ -367,12 +367,7 @@ height: 45px;
 }
 
 /*footer css*/
-.footerDiv{
-    height: 230px;
-    background-color: #2a3b93;
-    border-top: 20px solid #3969fa;
 
-}
 .footerContent{
   padding-top: 65px;
 }

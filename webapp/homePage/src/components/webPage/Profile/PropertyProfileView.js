@@ -114,7 +114,7 @@ class PropertyProfileView extends Component{
                         <img src="/images/back.png"/>
                       </div>
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 row" >
+                    <div className="col-lg-5 col-md-6 col-sm-6 col-xs-6 row" >
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addressOfProperty" >
                         <label className="pull-left"> {this.state.nameOfProperty ? this.state.nameOfProperty : "Name of Property"}</label> 
                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2  forSaleButton">
