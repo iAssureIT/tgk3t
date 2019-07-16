@@ -26,24 +26,19 @@ componentDidMount(){
     return(
       <Router>
     <div>
-
+{/*
         <aside className="leftsidebar">
             <div className="wrapper">
             <nav id="sidebar1">
-
-       
+*/}
+       <div className="sidebar-header">
+            <h4>CoreAdmin Sidebar</h4>
+        </div>
           {<ul className="list-unstyled components">
-
-                    <li className="active">
-                    <a href="#">
-                            <i className="glyphicon fa fa-server"></i> &nbsp;
-                           CoreAdmin Sidebar
-                     </a>
-                    </li>
                    
                     <li>
                         <a href="#companysetting" data-toggle="collapse" aria-expanded="false">
-                          <i className="glyphicon fa fa-building"></i> &nbsp;
+                         
                             Company Settings
                         </a>
                         <ul className="collapse list-unstyled" id="companysetting">
@@ -52,7 +47,7 @@ componentDidMount(){
                         </ul>
 
                         <a href="#notifactions" data-toggle="collapse" aria-expanded="false">
-                           <i className="glyphicon fa fa-envelope"></i> &nbsp;
+                           
                            Notification Management
                         </a>
                         <ul className="collapse list-unstyled" id="notifactions">
@@ -61,7 +56,7 @@ componentDidMount(){
                         </ul>
 
                         <a href="#userman" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon fa fa-user-circle"></i> &nbsp;
+                           
                            User Management
                         </a>
                         <ul className="collapse list-unstyled" id="userman">
@@ -116,11 +111,11 @@ componentDidMount(){
 
                  </ul>
 */}
-                  </nav>
+                  {/*</nav>
 
         </div>
  
-            </aside>
+            </aside>*/}
       </div>
       </Router>
     );
