@@ -15,18 +15,21 @@ class Banner extends Component {
 		event.preventDefault();
 		this.props.history.push('/LoginMobNum');
 	}
+	handleColor(){
+		 $("#Buy").toggleClass("intro");
+	}
 
 	render() {
 		return (
 			<div>
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb90">
 				
 				<div className=" col-lg-12  ">
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
 				</div>
 				<div className="col-lg-6 col-lg-offset-4 mt-10">
-					<button id="Buy" 		className="col-lg-3 btn btn-bg">Buy</button>
+					<button id="Buy" 		className="col-lg-3 btn btn-bg" onClick={this.handleColor.bind(this)}>Buy</button>
 					<button id="Rent" 		className="col-lg-3 btn btn-bg ml-10">Rent</button>
 					<button id="Commercial" className="col-lg-3 btn btn-bg ml-10">Commercial</button>
 				</div>
@@ -35,7 +38,9 @@ class Banner extends Component {
 						<input type="text" placeholder="  Enter Society, Location or Address" className="hSearch"  />
 					</div>
 					<div className="col-lg-1 S-img">
-
+						<div className=" col-lg-12 S-img1 ">
+							<img src="/images/TGK-key.png" />
+						</div>
 					</div>
 				</div>
 				<div className="col-lg-6 col-lg-offset-4 mt-64">

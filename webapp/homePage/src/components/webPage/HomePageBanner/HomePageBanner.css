@@ -1,11 +1,10 @@
-.BoxSize{
+/*.BoxSize{
     height: 685px;
     background-image: url("/images/TGK_Post.png");
 }
 
 .nav>li>a:hover {
     text-decoration: none;
-    /* color: #fff; */
     background-color: #795050;
 }
 .navbar-nav>li>a {
@@ -111,5 +110,5 @@ ul li .active{
     color: #efa73e !important;
 }
 
-/*
-<i class="fas fa-hotel"></i>*/
+
+*/

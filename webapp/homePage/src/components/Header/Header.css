@@ -1,4 +1,4 @@
-/*.nav>li>a:hover {
+.nav>li>a:hover {
     text-decoration: none;
     background-color: #795050;
 }
@@ -24,7 +24,7 @@ ul ul a {
     margin-top: 21px;
     margin-left: 29px;
     margin-top: 24px;
-}*/
+}
 .hImg{
 	height: 100px;
 	text-align: center;
@@ -32,7 +32,8 @@ ul ul a {
 
 .headerMenu{
 	padding-top: 20px;
-    padding-left: 54px;
-    font-size: 16px;
+    padding-left: 65px;
+    font-size: 15px;
+    font-family: Roboto;
 
 }

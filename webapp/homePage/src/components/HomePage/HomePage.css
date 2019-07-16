@@ -1,7 +1,7 @@
-.BoxSize{
+/*.BoxSize{
 	height: 672px;
 	background-image: url("/images/TGK_Post.png");
-}
+}*/
 
 /*.nav>li>a:hover {
     text-decoration: none;
@@ -25,18 +25,18 @@ ul ul a {
     padding-left: 30px !important;
     background: #fff;
 }*/
-.hImg{
+/*.hImg{
 	height: 100px;
 	text-align: center;
 	margin-top: 24px;
-}
+}*/
 /*.navText{
 	background-color: transparent !important;
     margin-top: 21px;
     margin-left: 29px;
     margin-top: 24px;
 }*/
-.hText{
+/*.hText{
 	text-align: center;
 	color: #fff;
 }
@@ -110,4 +110,4 @@ ul ul a {
 }
 .noPad{
     padding: 0px;
-}
+}*/

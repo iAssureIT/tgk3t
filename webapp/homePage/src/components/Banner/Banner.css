@@ -6,6 +6,15 @@
 .hText{
 	text-align: center;
 	color: #fff;
+    text-align: center;
+    color: #fff;
+    margin-top: 45px;
+    margin-left: 30px;
+    font-family: Roboto;
+    /* font-weight: 700; */
+    letter-spacing: 1px;
+    font-weight: bold;
+
 }
 .hText1{
 	margin-top: 35px;
@@ -34,10 +43,15 @@
     height: 43px;
     position: relative;
     top: 21px;
-    background-image: url("/images/TGK-key.png");
+    /*background-image: url("/images/TGK-key.png");*/
     background-size: 100%,100%;
     background-repeat: no-repeat;
     background-color: #000;
+}
+.S-img1{
+    /*background-image: url("/images/TGK-key.png");*/
+    left: -20px;
+    top:7px;
 }
 .btnPost{
     width: 161px;
@@ -74,4 +88,11 @@
     padding-left: 39px;
     color: #fff;
     text-align: center;
+}
+.mb90{
+    margin-bottom: 90px;
+}
+.intro{
+    background-color: #f5ad3e !important;
+    /*border: none;*/
 }

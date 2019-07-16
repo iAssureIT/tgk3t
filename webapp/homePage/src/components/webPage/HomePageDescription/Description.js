@@ -7,7 +7,7 @@ export default class Description extends Component {
 
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 divContainer">
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">

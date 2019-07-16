@@ -44,7 +44,7 @@ class MainFooter extends Component{
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 boarderR " >
                           <div className="">
-                            <textarea rows="5" cols="80"  placeholder="Message"></textarea>
+                            <textarea rows="5" cols="71"  placeholder="Message"></textarea>
                           </div>
                         </div>
                       </div>
