@@ -17,15 +17,18 @@
 	height: 100px;
 }
 .mainDescriptionDiv{
+    font-family: 'Roboto', sans-serif;
   border-bottom-style: dotted;
+   border-color: #aaa;
+    border-width: 2px;
   height: 200px;
 }
 .backButton{
-	height: 42px;
+height: 45px;
     margin-top: 28px;
     padding: 0px;
     padding-left: 12px;
-    padding-top: 9px;
+    padding-top: 12px;
     background-color: #eaeaea;
 }
 .backButton img{
@@ -36,20 +39,26 @@
 	cursor: pointer;
 }
 .addressOfProperty{
+    font-family: 'Roboto', sans-serif;
 	margin-top: 28px;
 	height: 42px;
     padding: 0px;
+}
+.addressOfProperty label{
+  margin-bottom: 7px;
 }
 .addressOfProperty i{
 	color: #efa73e;
 }
 .forSaleButton{
-	background-color: #00f;
-    height: 20px;
+   font-family: 'Roboto', sans-serif;
+    background-color: #00f;
+    height: 22px;
+    margin-left: 12px;
     font-weight: 600;
-    margin-top: 4px;
-    padding: 4px;
-    padding-left: 10px;
+    margin-top: 2px;
+    padding: 5px;
+    padding-left: 13px;
     border-radius: 3px;
     font-size: 9px;
     color: #fff;
@@ -148,8 +157,13 @@
 	margin-top: 40px;
     border-bottom: 2px solid #aaa;
 }
+.fontR{
+    font-family: 'Roboto', sans-serif;
+
+}
 /* Create a custom checkbox */
 .centreDetailContainer{
+    font-family: 'Roboto', sans-serif;
   position: relative;
 /*  padding-left: 3px;
  margin-bottom: 12px;
@@ -163,6 +177,7 @@
 }
 /* Hide the browser's default checkbox */
 .centreDetailContainer input {
+
      position: relative;
     opacity: 0;
     z-index: 1;
@@ -193,7 +208,7 @@
 }
 /* When the checkbox is checked, add a blue background */
 .centreDetailContainer input:checked ~ .centreDetailCheck {
-  background-color: #efa73e;
+  background-color: #00f;
   border:2px solid #efa73e;
 }
 /* Create the checkmark/indicator (hidden when not checked) */
@@ -224,8 +239,8 @@
   font-size: 12px !important;
 }
 .checkText{
-	margin-left: 22px;
-    margin-top: -18px;
+    margin-left: 22px;
+    margin-top: -22px;
 
 }
 .videoContainer{
@@ -403,11 +418,45 @@
 }
 .dottedBorder{
   border-top-style:dotted;
+    border-color: #aaa;
+    border-width: 2px;
+
 }
 .LocationDiv{
   padding-top: 20px;
 }
 .dottedBorder label{
   padding-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 5px;
+}
+.mapouter{
+  margin-top: 20px;
+}
+.ht700{
+  height: 700px;
+}
+.labalDiv{
+    font-family: 'Roboto', sans-serif;
+    background-color: #efefef;
+    padding: 0px;
+    padding-top: 20px;
+    font-size: 21px;
+    padding-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+.bolder{
+    list-style-type: square;
+
+}
+.headingProp label{
+  padding-bottom: 5px;
+  font-size: 17px;
+
+}
+.color33{
+  color: #666;
+}
+.bolder li{
+  font-weight: bold;
 }
