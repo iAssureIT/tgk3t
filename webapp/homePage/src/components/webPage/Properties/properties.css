@@ -94,3 +94,8 @@
     color:  #3944BC;
     padding-top: 9px;
 }
+.dotDiv{
+    background-color: #000;
+    border-radius: 50%;
+    height: 5px;
+}

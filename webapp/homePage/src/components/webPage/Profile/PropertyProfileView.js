@@ -158,13 +158,7 @@ class PropertyProfileView extends Component{
                         </div>
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
                           <div className="row"> 
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                            It has survived not only five centuries, but also the leap into electronic typesetting, 
-                            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets 
-                            containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
-                            including versions of Lorem Ipsum.
+                           
                           </div>
                         </div>
                       </div>
@@ -388,6 +382,21 @@ class PropertyProfileView extends Component{
                     </div>
                   </div>
               </div>
+            </div>
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12   " >
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12   " >
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 dottedBorder LocationDiv " >
+                <label>Location</label>
+                <div className="mapouter"><div className="gmap_canvas"><iframe width="1000" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe></div></div>                           
+                </div>
+              </div>
+            </div>
+            <div className="row">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12   " >
+              <div className="row">
+              <HomePageFooter />
+              </div>
+            </div>
             </div>
            </div>
           </div>              

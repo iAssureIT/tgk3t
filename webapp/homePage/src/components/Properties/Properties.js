@@ -33,11 +33,12 @@ export default class Properties extends Component {
 		// console.log("mod ",mod);
 		return (
 			<div>
-				<h3 className="textC"> Properties for {this.props.inputData.type} </h3>	
-        <div className="col-lg-6 col-md-6 col-sm-8 col-xs-8 ">
-            
-            <div className=" hrLineProp col-lg-offset-12 col-lg-1 col-md-1 col-sm-1 col-xs-1 "></div>
+				<h3 className="textC"> Properties For {this.props.inputData.type} </h3>	
+        <div className="col-lg-12 col-md-8 col-sm-8 col-xs-8 ">
+         <div className="col-lg-6 col-lg-offset-5 col-md-8 col-sm-8 col-xs-8 mlDot">
+            <span className="dotDiv"> </span><span className="mainDiv"></span><span className="dotDivRight"> </span>
           </div>
+        </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -294,10 +295,10 @@ export default class Properties extends Component {
                                             <div className="col-lg-12 bBottom mt10"></div>
                                              <div className="row">
                                               <div className=" col-lg-12 row bottomDiv pull-right">
-                                                <div className="col-lg-7 noPad mt20 row">
+                                                <div className="col-lg-7 noPad mt12 row">
                                                  <i className="fa fa-map-marker mapIcon"></i>&nbsp;&nbsp;<i className="fa fa-inr pr8" aria-hidden="true"></i>{property.rate}
                                                 </div>
-                                                <div className="col-lg-5 pull-right  mt20">
+                                                <div className="col-lg-5 pull-right  mt12">
                                                   <i class="fa fa-calendar pr8" aria-hidden="true"></i>
                                                        <Moment fromNow>{property.timestamp}</Moment>
                                                   </div>

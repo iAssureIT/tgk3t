@@ -34,8 +34,8 @@ export default class Properties extends Component {
 		return (
 			<div>
 				<h3 className="textC"> Properties for {this.props.inputData.type} </h3>	
-          <div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 ">
-            <div className=" hrLine col-lg-offset-9 col-lg-1 col-md-1 col-sm-1 col-xs-1 "></div>
+          <div className="col-lg-12 col-md-8 col-sm-8 col-xs-8 ">
+            <span className"col-lg-1 dotDiv"> </span><div className="col-lg-10 mainDiv"></div><span className"col-lg-1 dotDiv"> </span>
           </div>
           <div className="col-lg-12 col-md-12">
 					{

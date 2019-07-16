@@ -23,7 +23,6 @@ export default class HomePage extends Component {
 		      <PropertyCondition carouselvalue={false} inputData={{category:"Residential", type:"Buy", showprops:8}}/>
 		      <PopularPlace />
 		      <MainFooter />
-		      <Footer />
 		   </div>
 		);
 	}

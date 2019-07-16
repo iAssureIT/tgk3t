@@ -401,3 +401,13 @@
 .showActive a{
   color: #d39849 !important;
 }
+.dottedBorder{
+  border-top-style:dotted;
+}
+.LocationDiv{
+  padding-top: 20px;
+}
+.dottedBorder label{
+  padding-top: 20px;
+  padding-bottom: 20px;
+}

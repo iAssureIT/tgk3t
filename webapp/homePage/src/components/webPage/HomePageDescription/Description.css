@@ -17,6 +17,7 @@
 	font-size: 40px;
 }
 .personServices label{
-	font-size: 16px;
-	margin-bottom: 18px;
+	    font-size: 16px;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
 }
