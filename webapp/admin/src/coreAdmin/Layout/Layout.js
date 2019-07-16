@@ -36,6 +36,9 @@ import MasterData from '../../adminTGK/masterData/masterData.js';
 import SellOMeter from '../../adminTGK/sell-o-meter/sellOMeter.js';
 import ClassRating from '../../adminTGK/sell-o-meter/classRating.js';
 
+
+
+
  class Layout extends Component{
   
   constructor(props) {
@@ -137,6 +140,8 @@ componentDidMount(){
                           <Route path="/sellometer" component={SellOMeter} exact />
                           <Route path="/classrating" component={ClassRating} exact />
 
+                          
+
                           </Switch>        
                       </Router>
                     </div>
@@ -166,6 +171,7 @@ componentDidMount(){
               <Route path="/verify-account" exact strict component={ VerifyAccount } />
               <Route path="/confirm-otp"    exact strict component={ ConfirmOtp } />
               
+             
             </Switch>        
           </Router>
         </div>

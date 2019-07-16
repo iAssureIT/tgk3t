@@ -5,10 +5,27 @@ import LayoutSystemSecurity from './coreAdmin/LayoutSystemSecurity/LayoutSystemS
 import Layout from './coreAdmin/Layout/Layout.js';
 import './lib/router.js';
 import axios from 'axios';
-
+import $ from 'jquery';
 
 axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+ $(document).ready(function () {
+       $('#sidebarCollapse').on('click', function () {
+           $('#sidebar').toggleClass('active');
+       });
+    });
+    $(document).ready(function () {
+       $('#sidebarCollapse').on('click', function () {
+           $('#headerid').toggleClass('headereffect');
+       });
+    });
+    $(document).ready(function () {
+       $('#sidebarCollapse').on('click', function () {
+           $('#dashbordid').toggleClass('dashboardeffect');
+       });
+    });
+
 
 function App() {
   return (

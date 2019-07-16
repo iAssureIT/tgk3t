@@ -15,6 +15,10 @@
 .topmr40{
   margin-top: 35px;
 }
+
+.userbtn:hover{
+  color: #ffffff !important;
+}
 /*====Anuja====*/
 .topMargin{
   margin-top: 15px;

@@ -24,10 +24,11 @@ class CreateUser extends Component {
     createUser(event){
     event.preventDefault();
     const formValues = {
-        "firstname"    : this.refs.firstname.value,
-        "lastname"     : this.refs.lastname.value,
-        "email"        : this.refs.signupEmail.value,
-        "mobNumber"    : this.refs.mobNumber.value,
+        "firstName"    : this.refs.firstname.value,
+        "lastName"     : this.refs.lastname.value,
+        "emailId"        : this.refs.signupEmail.value,
+        "countryCode"   : "+91",
+        "mobile"    : this.refs.mobNumber.value,
         "pwd"          : "user123",
         "role"         : "User",
         "status"       : "Active"

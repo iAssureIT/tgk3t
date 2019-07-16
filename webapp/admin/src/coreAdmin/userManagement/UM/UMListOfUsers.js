@@ -19,7 +19,7 @@ class UMListOfUsers extends Component {
              "tableHeading"     : {
                 fullName        : 'User Name',
                 emailId    		: 'Email',
-                username        : 'Mobile Number', 
+                mobNumber       : 'Mobile Number', 
                 status        	: 'Status',
                 // roles        	: 'Role',
                 actions        	: 'Action',
@@ -55,9 +55,17 @@ class UMListOfUsers extends Component {
 		axios.post('/api/users/userslist', data)
 		.then( (res)=>{      
 			console.log("herer",res);
+			var tableData = res.data.map((a, i)=>{
+				return {
+					fullName        : a.fullName,
+	                emailId    		: a.emailId,
+	                mobNumber       : a.mobNumber, 
+	                status        	: a.status,	
+				}
+			})
 			this.setState({
 	          completeDataCount : res.data.length,
-	          tableData 		: res.data,          
+	          tableData 		: tableData,          
 	        },()=>{
 	        	console.log('tableData', this.state.tableData);
 	        })
@@ -122,7 +130,7 @@ render(){
 										<h4 className="usrmgnttitle weighttitle">User Management</h4>
 									</div>
 									<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">
-										<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
+										<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
 											<CreateUser />
 									</div>
 									{/*<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">

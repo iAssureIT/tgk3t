@@ -544,61 +544,61 @@ class IAssureTable extends Component {
     }
 
     changepassword(event){
-	event.preventDefault();
-	var id = event.target.id;
-	// console.log('id',id);
-	var password 		= this.state["resetPassword"+id];
-	var conPassword 	= this.state["resetPasswordConfirm"+id];
+		event.preventDefault();
+		var id = event.target.id;
+		// console.log('id',id);
+		var password 		= this.state["resetPassword"+id];
+		var conPassword 	= this.state["resetPasswordConfirm"+id];
 
-	
-	// var newID 			= FlowRouter.getParam("mailId");
-	var formValues ={
-		"password" 	 : conPassword,
-	}
-
-	var newID 		=  $(event.target).attr('id');
-	
-/*
-	console.log("password", password);
-	console.log("conPassword", conPassword);
-	console.log("newID",newID);
-*/
-	if(newID){
-		var resetPassword = newID;
-	}
-
-		if(password==conPassword){
-			if(password.length >= 6){
-				axios.put('/api/users/resetpwd/'+ newID, formValues)
-			      .then( (res)=>{
-			      	console.log("response",res);
-			        // if(res.status == 200){
-			          swal("Password has been changed successfully!!","", "success");
-			          // this.state["usernames"+id] 				= '';
-			          this.refs.resetPassword.value			= '';
-			          this.refs.resetPasswordConfirm.value  	= '';
-			        // }
-
-			        this.setState({
-			        	show :false,
-			        });
-			      })
-			      .catch((error)=>{
-			        console.log("error = ",error);
-			        alert("We are sorry but something went Wrong.","","error");
-
-			        this.setState({
-			        	show :false,
-			        });
-
-			      });
-			}else{
-				swal("Password should be at least 6 characters long","","error");				
-			}
-		}else{
-			swal("Password doesn't match with confirm password","","error");
+		
+		// var newID 			= FlowRouter.getParam("mailId");
+		var formValues ={
+			"password" 	 : conPassword,
 		}
-}
+
+		var newID 		=  $(event.target).attr('id');
+		
+	/*
+		console.log("password", password);
+		console.log("conPassword", conPassword);
+		console.log("newID",newID);
+	*/
+		if(newID){
+			var resetPassword = newID;
+		}
+
+			if(password==conPassword){
+				if(password.length >= 6){
+					axios.put('/api/users/resetpwd/'+ newID, formValues)
+				      .then( (res)=>{
+				      	console.log("response",res);
+				        // if(res.status == 200){
+				          swal("Password has been changed successfully!!","", "success");
+				          // this.state["usernames"+id] 				= '';
+				          this.refs.resetPassword.value			= '';
+				          this.refs.resetPasswordConfirm.value  	= '';
+				        // }
+
+				        this.setState({
+				        	show :false,
+				        });
+				      })
+				      .catch((error)=>{
+				        console.log("error = ",error);
+				        alert("We are sorry but something went Wrong.","","error");
+
+				        this.setState({
+				        	show :false,
+				        });
+
+				      });
+				}else{
+					swal("Password should be at least 6 characters long","","error");				
+				}
+			}else{
+				swal("Password doesn't match with confirm password","","error");
+			}
+	}
 
 
 	handleChange(event){
