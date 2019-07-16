@@ -20,7 +20,7 @@ export default class Header extends Component{
    
   componentDidMount(){
      const token = localStorage.getItem("token");
-     console.log("Dashboard Token = ",token);
+     // console.log("Dashboard Token = ",token);
    
   }
     
@@ -88,12 +88,12 @@ logout(){
                      { /*<div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
                       <img src="image/person.png" className="img "/>
                       </div>*/}
-                      <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6  ">
+                      <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6 dropdown ">
                       <span className="headicon">Alexander Pierce &nbsp;</span>
                       
 
                      
-                     <div className="dropdown topmargin ">
+                     <span className=" topmargin ">
                         <button className="dropbtn arrowbtn">
                          <span className="hidden-xs angleright"><i className="fa fa-angle-down" aria-hidden="true"></i></span>
                         </button>
@@ -136,7 +136,7 @@ logout(){
                               </li>                                        
                             </ul>
                         </div>
-                    </div>
+                    </span>
 
 
                     </div>

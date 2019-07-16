@@ -46,7 +46,7 @@ import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.j
        <div>
           <div className="">
              <section className="">
-                <div className="row">
+                <div className="">
                    <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
                       <div className="">
                          <div className="boxMinHeight boxMinHeighttab">
