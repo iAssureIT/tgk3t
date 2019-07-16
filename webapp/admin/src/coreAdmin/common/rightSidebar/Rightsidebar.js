@@ -26,11 +26,11 @@ componentDidMount(){
     return(
       <Router>
     <div>
-{/*
+
         <aside className="leftsidebar">
             <div className="wrapper">
             <nav id="sidebar1">
-*/}
+
        <div className="sidebar-header">
             <h4>CoreAdmin Sidebar</h4>
         </div>
@@ -111,11 +111,11 @@ componentDidMount(){
 
                  </ul>
 */}
-                  {/*</nav>
+                  </nav>
 
         </div>
  
-            </aside>*/}
+            </aside>
       </div>
       </Router>
     );
