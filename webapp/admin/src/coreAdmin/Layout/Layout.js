@@ -23,10 +23,13 @@ import Footer from '../common/footer/Footer.js'
 import Dashboard from '../dashboard/Dashboard.js'
 import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
 import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
-import UMListOfUsers from '../userManagement/UM/UMListOfUsers.js';
-import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
+// import UMListOfUsers from '../userManagement/UM/UMListOfUsers.js';
+import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
+// import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
+import EditUserProfile from '../../TGKSpecific/TGKuserManagement/UM/EditUserProfile.js';
 import UMRolesList from '../userManagement/Roles/UMRolesList.js';
-import CompanySetting from '../companysetting/Components/CompanySetting.js';
+// import CompanySetting from '../companysetting/Components/CompanySetting.js';
+import CompanySetting from '../../TGKSpecific/TGKcompanysetting/Components/CompanySetting.js';
 import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 

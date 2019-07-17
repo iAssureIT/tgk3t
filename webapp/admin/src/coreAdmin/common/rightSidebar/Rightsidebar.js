@@ -35,8 +35,8 @@ componentDidMount(){
           <ul className="list-unstyled components">
 
                      <li className="active">
-                    <a href="#">
-                            <i className="glyphicon fa fa-server"></i> &nbsp;
+                    <a href="#" className="text-center">
+                         {/*   <i className="glyphicon fa fa-server"></i> &nbsp;*/}
                            CoreAdmin Sidebar
                      </a>
                     </li>

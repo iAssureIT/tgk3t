@@ -6,7 +6,7 @@ import './userManagement.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
-import IAssureTableUM from '../../IAssureTableUM/IAssureTable.jsx';
+import IAssureTableUM from '../../TGKIAssureTableUM/IAssureTable.jsx';
 
 class UMListOfUsers extends Component {
 	constructor(props){
@@ -21,7 +21,7 @@ class UMListOfUsers extends Component {
                 emailId    		: 'Email',
                 mobNumber       : 'Mobile Number', 
                 status        	: 'Status',
-                // roles        	: 'Role',
+                roles        	: 'Role',
                 actions        	: 'Action',
             },
             "startRange"        : 0,
@@ -61,6 +61,7 @@ class UMListOfUsers extends Component {
 	                emailId    		: a.emailId,
 	                mobNumber       : a.mobNumber, 
 	                status        	: a.status,	
+	                roles 			: a.roles,
 				}
 			})
 			this.setState({
@@ -127,7 +128,7 @@ render(){
 
 									<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12  paddingright">
 
-										<h4 className="usrmgnttitle weighttitle">User Management</h4>
+										<h4 className="usrmgnttitle weighttitle">User Management of TGK Specific</h4>
 									</div>
 									<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">
 										<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>

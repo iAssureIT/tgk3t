@@ -5,7 +5,7 @@ import $ 							from 'jquery';
 import jQuery 						from 'jquery';
 import 'jquery-validation';
 import './IAssureTable.css';
-import '../systemSecurity/SignUp.css';
+// import '../systemSecurity/SignUp.css';
 /*import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';*/
 import { Route , withRouter} from 'react-router-dom';
 
