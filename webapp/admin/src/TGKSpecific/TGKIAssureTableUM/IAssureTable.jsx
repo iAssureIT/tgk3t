@@ -5,6 +5,7 @@ import $ 							from 'jquery';
 import jQuery 						from 'jquery';
 import 'jquery-validation';
 import './IAssureTable.css';
+
 // import '../systemSecurity/SignUp.css';
 /*import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';*/
 import { Route , withRouter} from 'react-router-dom';
@@ -13,7 +14,7 @@ import { Route , withRouter} from 'react-router-dom';
 
 
 var sum = 0;
-class IAssureTable extends Component {
+class IAssureTableUM extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
@@ -34,6 +35,7 @@ class IAssureTable extends Component {
 		    "resetPassword"				: "",
 		    "resetPasswordConfirm" 		: "",
 		    show 						: true,
+		    selectedUser 				:[],
 		    // "usernames"					: "",
 		}
 		this.deleteExam = this.deleteExam.bind(this);
@@ -359,16 +361,50 @@ class IAssureTable extends Component {
 	}
 	tableSearch(){
     	var searchText = this.refs.tableSearch.value;
-		if(searchText && searchText.length != 0) {
-			this.setState({
-				"normalData"  : false,
-				"searchData"  : true,
-			},()=>{
-				this.props.getSearchText(searchText, this.state.startRange, this.state.limitRange);
-			});	    	
-	    }else{
-			this.props.getData(this.state.startRange, this.state.limitRange);
-	    }
+
+    	var formValues =
+    	{
+			searchText : searchText,
+		}
+		 if(searchText && searchText.length != 0) {
+					axios
+				      .post('/api/users/searchValue',formValues)
+				      .then(
+				        (res)=>{
+				          console.log('res', res);
+				          swal("Search successfull by "+searchText+ "","success");
+				          var data = res.data.data;
+				          var tableData = data.map((a, i)=>{
+								return {
+									_id 			: a._id,
+									fullName        : a.profile.fullName,
+					                emailId    		: a.emails[0].address,
+					                mobNumber       : a.profile.mobileNumber, 
+					                status        	: a.profile.status,	
+					                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
+								}
+							})
+				          	this.setState({
+				              tableData 		: tableData,          
+				            },()=>{
+				            })
+				        }).catch((error)=>{ 
+				        	// swal("Sorry there is no data of "+searchText+ "","error");
+				      });
+			}else{
+
+				console.log("there is no value");
+			}
+		// if(searchText && searchText.length != 0) {
+		// 	this.setState({
+		// 		"normalData"  : false,
+		// 		"searchData"  : true,
+		// 	},()=>{
+		// 		this.props.getSearchText(searchText, this.state.startRange, this.state.limitRange);
+		// 	});	    	
+	 //    }else{
+		// 	this.props.getData(this.state.startRange, this.state.limitRange);
+	 //    }
     	 
     }
     showNextPaginationButtons(){
@@ -630,7 +666,39 @@ class IAssureTable extends Component {
 	// console.log("here showprofile view",e.currentTarget.id);
 
 }
+
+
+ checkAll(event) {
+      if(event.target.checked){
+        $('.userCheckbox').prop('checked',true);
+      }else{
+        $('.userCheckbox').prop('checked',false);
+      }
+    }
 	 
+
+	selectedId(event){
+		
+		var data = event.currentTarget.id;
+		console.log("data", data);
+
+		var otherProp;
+		var selectedUser = this.state.selectedUser;
+		if(event.target.checked){
+			otherProp = event.target.value;
+			selectedUser.push(event.target.value);
+
+		}else{
+			selectedUser.pop(event.target.value);
+		}
+		this.setState({
+			selectedUser : selectedUser
+		},()=>{
+			console.log('selectedUser', this.state.selectedUser);
+			this.props.selectedUser(this.state.selectedUser);
+		})
+	}
+
 
 	render() {
 		// console.log(this.state.limitRange +'>='+  this.state.dataLength);
@@ -676,7 +744,13 @@ class IAssureTable extends Component {
 	                            </tr>
 	                            <tr className="">
 	                            <th className="umDynamicHeader srpadd textAlignLeft">
-	                            <input type="checkbox" className="allSelector col-lg-1 col-md-1 col-sm-3 col-xs-1 umchksett" name="allSelector" />
+	                      {/*      <input type="checkbox" className="allSelector col-lg-1 col-md-1 col-sm-3 col-xs-1 umchksett" name="allSelector" />
+	                           
+// -------------------------------------------------*/}
+
+								<input type="checkbox" className="allSelector col-lg-1 col-md-1 col-sm-3 col-xs-1 umchksett" name="allSelector" onChange={this.checkAll.bind(this)}/> 
+
+
 	                            </th>
 	                            <th className="umDynamicHeader srpadd textAlignLeft">Sr.No.</th>
 
@@ -708,7 +782,7 @@ class IAssureTable extends Component {
 											return(
 												<tr key={i} className="">
 													{/*console.log("values",value)*/}
-													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={value._id} /></td>
+													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={value._id} id={value._id} onChange={this.selectedId.bind(this)}/></td>
 													
 													{/*<td>{value._id}</td>*/}
 													<td className="textAlignCenter">{this.state.startRange+1+i}</td>
@@ -743,17 +817,17 @@ class IAssureTable extends Component {
 																		}
 																	}															
 																}else{
-																	console.log('value1', value1);
+																	// console.log('value1', value1);
 																	return(<td key={i}></td>);
 																}
 															}
 														)
 													}
 													<td className="textAlignCenter">
-														<span className="pointer">
+														<span className="pointer pointerCls">
 															{/*<div  className="deleteNotif"  data-toggle="modal" data-target={"#editNotifyModal-"+this.props.emailtemplateValues._id} id={this.props.emailtemplateValues._id}>
 							    	*/}
-															<i className="fa fa-pencil" title="Edit" id={value._id} onClick={this.showprofile.bind(this)} ></i>&nbsp; &nbsp; 
+															<i className="fa fa-pencil " title="Edit" id={value._id} onClick={this.showprofile.bind(this)} ></i>&nbsp; &nbsp; 
 															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={`#${value._id}-rm`} ></i>}&nbsp; &nbsp; 
 															<i className="fa fa-key" title="Reset Password" id={value._id} data-toggle="modal" data-target={"#RestpwdModal-"+value._id}></i>&nbsp; &nbsp; 
 														
@@ -951,4 +1025,4 @@ class IAssureTable extends Component {
 
 }
 
-export default withRouter(IAssureTable); 
+export default withRouter(IAssureTableUM); 

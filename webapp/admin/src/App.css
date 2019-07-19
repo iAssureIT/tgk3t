@@ -1,6 +1,12 @@
 .App {
 /*  text-align: center;
 */}
+.pointerCls{
+  cursor: pointer;
+}
+.zeropadd{
+  padding: 0px !important;
+}
 .tablebox{
   margin-top: 30px;
 }

@@ -1,6 +1,7 @@
 .iAssureITtable-bordered > thead > tr > th, .iAssureITtable-bordered > tbody > tr > th, .iAssureITtable-bordered > tfoot > tr > th, .iAssureITtable-bordered > thead > tr > td, .iAssureITtable-bordered > tbody > tr > td, .iAssureITtable-bordered > tfoot > tr > td {
     border: 1px solid #676767;
 }
+
 .table-striped>tbody>tr:nth-of-type(even) {
     background-color: #fff;
 }

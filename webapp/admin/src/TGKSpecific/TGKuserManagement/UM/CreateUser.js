@@ -237,7 +237,7 @@ class CreateUser extends Component {
 
                                                                            { this.state.office != null ?
                                                                           this.state.office[0].map( (locData, index)=>{
-                                                                          console.log('locData',locData);
+                                                                          // console.log('locData',locData);
                                                                            return( 
 
                                                                                  <option value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>

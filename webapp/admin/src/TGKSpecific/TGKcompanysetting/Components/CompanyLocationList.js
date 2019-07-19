@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
+import swal from 'sweetalert';
 
 
 export default class CompanyLocationList extends Component {
@@ -13,6 +14,7 @@ export default class CompanyLocationList extends Component {
 				// allPosts : [],
 				allPosts : null,
 				allLoc 	 : null,
+				editlocId : null,
 		}
 	}
 
@@ -65,60 +67,60 @@ export default class CompanyLocationList extends Component {
 
   		}
 
-  		deleteRole(event){
+  		deleteLoc(event){
   			event.preventDefault();
 			var id = event.target.id;
-			console.log("id",id);
+			console.log("id of deleteLoc",id);
+			var formValues={
+				companyId  : 1,
+				locationID : id,
+			}
 			const token = '';
-			// const url = '/api/role/'+id ;
-			// const headers = {
-			// 	    "Authorization" : token,
-			// 	    "Content-Type" 	: "application/json",
-			// 	};
 
-			// 	axios({
-			// 		method: "DELETE",
-			// 		url : url,
-			// 		headers: headers,
-			// 		timeout: 3000,
-			// 		data: null,
-			// 	})
-			// 	.then((response)=> {
-			//     	console.log('delete response',response);
-			//     	// swal("Role deleted successfully","", "success");
+			axios.patch('/api/tgkSpecificcompanysettings/location/remove',formValues)
+		    .then( (response)=> {
+		      // handle success
+		      console.log("this is response===>>>",response);
+		      swal("Location deleted successfully","", "success");
+		      
+		    }).catch(function (error) {
+		      // handle error
+		      console.log(error);
+		     
+		    })
+		    .finally(function () {
+		      // always executed
+		    });
 
-			// 	}).catch((error)=> {
-			// 	    // handle error
-			// 	    console.log(error);
-			// 	});
+			
+
   		}
 
-  		editRole(event){
+  		editLoc(event){
 
+  			event.preventDefault();
+			var id = event.target.id;
+			console.log("id of edit location",id);
+			
+			this.setState({
+				editlocId:id,
+			});		
+
+			 swal("No functionality","", "error");
   		}
 	render(){
 
 	
        return(
-			<div className="">
-				<div className=""></div>
-				<section className="">
-			        <div className="">
-			          	<div className="">
-	                        <div className="">
-	                            <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
-	                            	{/*<div className=" col-lg-1 col-md-1 col-xs-1 col-sm-1 box-header with-border text-center">
-                                         <h4 className="weighttitle"><a href="/UMListOfUsers"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>
-                                    </div>*/}
-                                    {/*<div className=" col-lg-11 col-md-11 col-xs-11 col-sm-11 box-header with-border">
-                                         <h4 className="weighttitle">List of Roles</h4>
-                                    </div>*/}
-
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addRolesInWrap">
-											<CompanyLocation getdata={this.getdata.bind(this)} />
+			<div >
+				<section > 
+	                            <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12 zeropadd">
+	                            	
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addRolesInWrap zeropadd">
+											<CompanyLocation getdata={this.getdata.bind(this)} locId={this.state.editlocId}/>
 
 											<div className="tablebox">	
-										<div className="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										<div className="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadd">
 											<table className="table iAssureITtable-bordered table-striped table-hover">
 												<thead className="tempTableHeader">
 													<tr className="">
@@ -135,7 +137,7 @@ export default class CompanyLocationList extends Component {
 												<tbody>
 												{ this.state.allLoc != null ?
 													this.state.allLoc[0].map( (locData, index)=>{
-													console.log('locData of 0 here',locData);
+													/*console.log('locData of 0 here',locData);*/
 												   return( 
 														<tr>
 														
@@ -146,8 +148,9 @@ export default class CompanyLocationList extends Component {
 																<td className="textAlignLeft">{locData.companyCity}</td>
 																<td className="textAlignLeft">{locData.officeLocationid}</td>
 
-																<td className="roleTextCenter"> 						
-																	<i className="fa fa-pencil editTcon editIcon"  data-toggle="modal" title="Delete" data-target={`#${locData._id}-edit`} title="Edit Department Name" ></i>
+																<td className="roleTextCenter"> 				
+																{/*data-toggle="modal" title="Delete" data-target={`#${locData._id}-edit`}	*/}	
+																	<i className="fa fa-pencil editTcon editIcon pointerCls"   title="Edit" id={locData._id} onClick={this.editLoc.bind(this)} ></i>
 																	&nbsp;&nbsp;
 																	<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${locData._id}-rm`} ></i>
 																</td>
@@ -173,7 +176,7 @@ export default class CompanyLocationList extends Component {
 												                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
 												                                   </div>
 												                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-												                                        <button id={locData._id} onClick={this.deleteRole.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
+												                                        <button id={locData._id} onClick={this.deleteLoc.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
 												                                   </div>
 												                              </div>
 												                         </div>
@@ -204,7 +207,7 @@ export default class CompanyLocationList extends Component {
 												                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
 												                                   </div>
 												                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-												                                        <button id={locData._id} onClick={this.editRole.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">SUBMIT</button>
+												                                        <button id={locData._id} onClick={this.editLoc.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">SUBMIT</button>
 												                                   </div>
 												                              </div>
 												                         </div>
@@ -248,17 +251,12 @@ export default class CompanyLocationList extends Component {
 												:
 												null
 											}
-
-
 												</tbody>
 											</table>
 										</div>
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
 				</section>
 			</div>
 	

@@ -20,8 +20,9 @@ const companylocation = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const companybuilding = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const companynameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const companypincodeRegex = RegExp(/^[1-9][0-9]{5}$/);
-const numberRegex = RegExp(/^[0-9]*$/);
+const numberRegex = RegExp(/[0-9]+(?:-[0-9]+)?(,[0-9]+(?:-[0-9]+)?)*/);
 class CompanyLocation extends Component{
+
   constructor(props) {
     super(props);
     this.state = {
@@ -233,6 +234,9 @@ selectType(event){
   }
 
   render(){
+    var dataId = this.props.locId;
+    console.log("here choose id in location form ", dataId);
+    
     const {formerrors} = this.state;
     return(
         <div className="row">
