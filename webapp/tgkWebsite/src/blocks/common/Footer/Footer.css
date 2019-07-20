@@ -1,0 +1,36 @@
+/*.listContainer{
+	padding-top: 20px;
+}
+.mainHeader{
+	background-color: #eae5e5;
+	height: 80px;
+}
+.menuBar  {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: sticky;
+  top: 10px;
+}
+ .menuBar li {
+  float: left;
+  color: #333;
+}
+.menuBar li  {
+  display: block;
+  text-align: center;
+  padding: 14px 16px;
+  color: #333 !important;
+  text-decoration: none;
+}
+.menuBar li:hover {
+  cursor: pointer;
+}
+.copyRight{
+	margin-top: 33px;
+    color: #999;
+    font-size: 13px;
+}
+
+*/
