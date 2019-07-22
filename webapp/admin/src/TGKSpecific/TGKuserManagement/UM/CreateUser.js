@@ -36,20 +36,51 @@ class CreateUser extends Component {
           });
 
           console.log("allPosts___________________",this.state.allPosts);
-    let locationArray =[];
-    if(this.state.allPosts!=null){
+          let locationArray =[];
+          if(this.state.allPosts!=null){
 
+          
+           locationArray = this.state.allPosts.map(function(item) { return item.companyLocationsInfo });
+          }else{
+             locationArray = "no data";
+          }
     
-     locationArray = this.state.allPosts.map(function(item) { return item.companyLocationsInfo });
-    }else{
-       locationArray = "no data";
-    }
-    
-      this.setState({
-        office : locationArray,
-      });
-      console.log("locationArray", locationArray);
-    console.log("this.state.office+++++++++++++++++",this.state.office);
+          this.setState({
+            office : locationArray,
+          });
+          console.log("locationArray", locationArray);
+        console.log("this.state.office+++++++++++++++++",this.state.office);
+
+
+        // here for list
+              var data = {
+            "startRange"        : this.state.startRange,
+                                    "limitRange"        : this.state.limitRange, 
+                            }
+                      axios.post('/api/users/userslist', data)
+                      .then( (res)=>{      
+                        // console.log("herer",res);
+                        var tableData = res.data.map((a, i)=>{
+                          return {
+                            _id       : a._id,
+                            fullName        : a.fullName,
+                                    emailId       : a.emailId,
+                                    mobNumber       : a.mobNumber, 
+                                    status          : a.status, 
+                                    roles       : a.roles,
+                          }
+                        })
+                        this.setState({
+                              completeDataCount : res.data.length,
+                              tableData     : tableData,          
+                            },()=>{
+                              console.log('tableData', this.state.tableData);
+                            })
+                      })
+                      .catch((error)=>{
+                        console.log("error = ",error);
+                        // alert("Something went wrong! Please check Get URL.");
+                      });
 
 
         }
@@ -81,7 +112,7 @@ class CreateUser extends Component {
     axios.post('/api/users', formValues)
       .then( (res)=>{
         console.log(res.data);
-        if(res.status == 201){
+        // if(res.status == 201){
           swal("User added successfully", "", "success");
 
           // alert("Data inserted Successfully!")
@@ -89,17 +120,49 @@ class CreateUser extends Component {
           this.refs.lastname.value  = '';
           this.refs.signupEmail.value  = '';
           this.refs.mobNumber.value = '';
-        }
+        // }
 
         // if(event.target.id === "signUpUser") {
         this.setState({show: false})
         console.log("close modal");
          // }
+
+
+                       var data = {
+                    "startRange"        : this.state.startRange,
+                          "limitRange"        : this.state.limitRange, 
+                  }
+                  axios.post('/api/users/userslist', data)
+                  .then( (res)=>{      
+                    // console.log("herer",res);
+                    var tableData = res.data.map((a, i)=>{
+                      return {
+                        _id       : a._id,
+                        fullName        : a.fullName,
+                                emailId       : a.emailId,
+                                mobNumber       : a.mobNumber, 
+                                status          : a.status, 
+                                roles       : a.roles,
+                      }
+                    })
+                    this.setState({
+                          completeDataCount : res.data.length,
+                          tableData     : tableData,          
+                        },()=>{
+                          console.log('tableData', this.state.tableData);
+                        })
+                  })
+                  .catch((error)=>{
+                    console.log("error = ",error);
+
+                    // alert("Something went wrong! Please check Get URL.");
+                  });
        
       })
       .catch((error)=>{
         console.log("error = ",error);
-        alert("Something went wrong! Please check Get URL.");
+         swal("User added successfully", "", "success");
+        // alert("Something went wrong! Please check Get URL.");
 
         // if(event.target.id === "signUpUser") {
         this.setState({show: false})

@@ -13,7 +13,7 @@ export default class add_sellometer extends Component {
     constructor(props) {
     super(props);
     this.state = {
-        "index" : ""
+       
 
       }     
        this.handleChange = this.handleChange.bind(this);
@@ -40,23 +40,47 @@ export default class add_sellometer extends Component {
     const formValues = {
       "city"     : this.refs.city.value,
       "area"     : this.refs.area.value,
-      "sub arera": this.refs.subarea.value,
-      "society"  : this.refs.society.value,
-      "propclass": this.refs.propertyClass.value,
-
+      "subArea": this.refs.subarea.value,
+      "socity"  : this.refs.society.value,
+      "propertyClass": this.refs.propertyClass.value,
+      "index"      : this.state.index, 
       }
-      console.log("this.state.city", this.state.city);
+      
       console.log("formValues ", formValues);
-    /*axios.post('/api/roles', formValues)
+    axios.post('/api/sellometers/', formValues)
       .then( (res)=>{
           console.log("submit ");
-          swal("Role added successfully", "", "success");
-          this.refs.role.value = '';        
+          swal("Data added successfully", "", "success");
+          this.refs.city.value = '';
+          this.refs.area.value = '';        
+          this.refs.subarea.value = '';        
+          this.refs.society.value = '';        
+          this.refs.propertyClass.value = '';
+          this.state.index ='';      
+
+          axios
+          .get('/api/sellometers/list')
+          .then(
+            (res)=>{
+              console.log('res', res);
+              const postsdata = res.data;
+              console.log('postsdata of list ++++++++++++++++++++++++++++++++++',postsdata);
+              this.setState({
+                allPosts : postsdata,
+              });
+            }
+          )
+          .catch((error)=>{
+
+            console.log("error = ",error);
+            // alert("Something went wrong! Please check Get URL.");
+             });    
+
       })
       .catch((error)=>{
         console.log("error = ",error);
         // alert("Something went wrong! Please check Get URL.");
-      });*/
+      });
   
 
     }
@@ -66,17 +90,17 @@ export default class add_sellometer extends Component {
 	
 
 	render(){
-    var cityName = this.state.city;
-    var areaName = this.state.area;
-    var subareaName = this.state.subarea;
-    var societyName = this.state.society;
-    var propclassName = this.state.propertyClass;   
-    console.log("cityName",cityName); 
-    if(cityName!=null && areaName != null && subareaName != null && societyName != null && propclassName != null)
-    {
-      this.state.index = "PUHDMANA";
-    console.log("all data filled");
-    }
+    // var cityName = this.state.city;
+    // var areaName = this.state.area;
+    // var subareaName = this.state.subarea;
+    // var societyName = this.state.society;
+    // var propclassName = this.state.propertyClass;   
+    // console.log("cityName",cityName); 
+    // if(cityName!=null && areaName != null && subareaName != null && societyName != null && propclassName != null)
+    // {
+    //   this.state.index = "PUHDMANA";
+    // console.log("all data filled");
+    // }
        return(
        			<div>
 					<form id="addroles" className="paddingLeftz noLRPad " >

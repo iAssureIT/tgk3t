@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios 						   from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
-
+import swal                     	from 'sweetalert';
 import Add_data 					   from './add_data.js';
 /*import Add_dataTable 				   from './add_dataTable.js';*/
 
@@ -14,14 +14,16 @@ class masterData extends Component {
         super(props);
         	this.state = {
 				allPosts : [],
-
+				amenityname : "",
 		}
+
+		  this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount(){
 
-		/*axios
-			.get('/api/roles/list')
+		axios
+			.get('/api/masteramenities/list')
 			.then(
 				(res)=>{
 					console.log('res', res);
@@ -36,7 +38,7 @@ class masterData extends Component {
 
 				console.log("error = ",error);
 				// alert("Something went wrong! Please check Get URL.");
-				 });				*/
+				 });				
 
 	}
 
@@ -50,18 +52,18 @@ class masterData extends Component {
 
   		}
 
-  		deleteRole(event){
+  		deleteAmenity(event){
   			event.preventDefault();
 			var id = event.target.id;
 			console.log("id",id);
 			const token = '';
-			const url = '/api/role/'+id ;
+			const url = '/api/masteramenities/'+id ;
 			const headers = {
 				    "Authorization" : token,
 				    "Content-Type" 	: "application/json",
 				};
 
-				/*axios({
+				axios({
 					method: "DELETE",
 					url : url,
 					headers: headers,
@@ -70,17 +72,86 @@ class masterData extends Component {
 				})
 				.then((response)=> {
 			    	console.log('delete response',response);
-			    	// swal("Role deleted successfully","", "success");
+			    	swal("Amenity deleted successfully","", "success");
 
-				}).catch((error)=> {
-				    // handle error
+			    	axios
+					.get('/api/masteramenities/list')
+					.then(
+						(res)=>{
+							console.log('res', res);
+							const postsdata = res.data;
+							console.log('postsdata',postsdata);
+							this.setState({
+								allPosts : postsdata,
+							});
+						}
+					)
+					.catch((error)=>{
+
+						console.log("error = ",error);
+						// alert("Something went wrong! Please check Get URL.");
+						 });			
+
+
+				}).catch((error)=> {			    // handle error
 				    console.log(error);
-				});*/
+				});
   		}
 
   		editRole(event){
 
+  			event.preventDefault();
+			var id = event.target.id;
+			console.log("edit id",id);
+
+			 console.log("this.state.amenityname",this.state.amenityname);
+
+			const formValues = {
+		      "amenity"     : this.state.amenityname,
+		      }
+
+		      console.log("formValues",formValues);
+		      
+		    axios.put('/api/masteramenities/'+id, formValues)
+		      .then( (res)=>{
+		          console.log("submit ",res);
+		          swal("Amenities Updated successfully", "", "success");
+		          this.state.amenityname = '';    
+
+
+		          axios
+				.get('/api/masteramenities/list')
+				.then(
+					(res)=>{
+						console.log('res', res);
+						const postsdata = res.data;
+						console.log('postsdata',postsdata);
+						this.setState({
+							allPosts : postsdata,
+						});
+					}
+				)
+				.catch((error)=>{
+
+					console.log("error = ",error);
+					// alert("Something went wrong! Please check Get URL.");
+					 });			
+				     
+		      })
+		      .catch((error)=>{
+		        console.log("error = ",error);
+		        // alert("Something went wrong! Please check Get URL.");
+		      });  
+
   		}
+
+  		handleChange(event){
+	  const target = event.target;
+	  const name   = target.name;
+	  this.setState({
+	  	[name]: event.target.value,
+	  });
+	}
 
     render() {
         return (
@@ -95,7 +166,7 @@ class masterData extends Component {
                                          <h4 className="weighttitle"><a href="/UMListOfUsers"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>
                                     </div>
                                     <div className=" col-lg-11 col-md-11 col-xs-11 col-sm-11 box-header with-border">
-                                         <h4 className="weighttitle">List of Master Data</h4>
+                                         <h4 className="weighttitle">List of Amenities</h4>
                                     </div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addRolesInWrap">
 											<Add_data getdata={this.getdata.bind(this)} />
@@ -103,20 +174,20 @@ class masterData extends Component {
 											<table className="table iAssureITtable-bordered table-striped table-hover">
 												<thead className="tempTableHeader">
 													<tr className="">
-														<th className="umDynamicHeader srpadd textAlignCenter"> Master Data </th>
+														<th className="umDynamicHeader srpadd textAlignCenter"> Amenities </th>
 														<th className="umDynamicHeader srpadd textAlignCenter"> Action </th>
 													</tr>
 												</thead>
 												<tbody>
 												{this.state.allPosts.map( (roleData, index)=>{
-													console.log('roleData',roleData);
+													// console.log('roleData',roleData);
 												   return( 
 													<tr>
-														<td className="textAlignLeft">{roleData.role}</td>		
-														<td className="roleTextCenter"> 						
-															<i className="fa fa-pencil editTcon editIcon"  data-toggle="modal" title="Delete" data-target={`#${roleData._id}-edit`} title="Edit Department Name" ></i>
+														<td className="textAlignLeft">{roleData.amenity}</td>		
+														<td className="roleTextCenter pointerCls"> 						
+															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title=" Edit" data-target={`#${roleData._id}-edit`} title="Edit Department Name" ></i>
 															&nbsp;&nbsp;
-															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${roleData._id}-rm`} ></i>
+															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Delete" data-toggle="modal" title="Delete" data-target={`#${roleData._id}-rm`} ></i>
 														</td>
 
 														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-rm`}  role="dialog">
@@ -132,7 +203,7 @@ class masterData extends Component {
 															      		</div>
 										                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-										                                 <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont">Are you sure you want to delete this Master Data?</h4>
+										                                 <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont">Are you sure you want to delete this Amenities?</h4>
 										                              </div>
 										                              
 										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -140,7 +211,7 @@ class masterData extends Component {
 										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
 										                                   </div>
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-										                                        <button id={roleData._id} onClick={this.deleteRole.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
+										                                        <button id={roleData._id} onClick={this.deleteAmenity.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
 										                                   </div>
 										                              </div>
 										                         </div>
@@ -161,9 +232,10 @@ class masterData extends Component {
 															      		</div>
 										                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										                              
-										                              <label className="textAlignLeft">Collection Name</label>
-																			<input type="text" ref="roleName" className="form-control rolesField" required/>
+										                              <label className="textAlignLeft">Amenities Name</label>
+																			<input type="text" ref="amenityname" name="amenityname" id="amenityname" value={this.state.amenityname} onChange={this.handleChange} className="form-control rolesField" required/>
 																		
+
 										                              </div>
 										                              
 										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">

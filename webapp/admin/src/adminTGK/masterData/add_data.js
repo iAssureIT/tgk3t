@@ -12,20 +12,39 @@ class add_data extends Component {
      createData(event){
     event.preventDefault();
     const formValues = {
-      "role"     : this.refs.role.value,
+      "amenity"     : this.refs.Amenities.value,
       }
       console.log("formValues",formValues);
-      this.refs.role.value = '';   
-  /*  axios.post('/api/roles', formValues)
+      
+    axios.post('/api/masteramenities', formValues)
       .then( (res)=>{
           console.log("submit ");
-          swal("Role added successfully", "", "success");
-          this.refs.role.value = '';        
+          swal("Amenities added successfully", "", "success");
+          this.refs.Amenities.value = '';       
+
+          axios
+          .get('/api/masteramenities/list')
+          .then(
+            (res)=>{
+              console.log('res', res);
+              const postsdata = res.data;
+              console.log('postsdata',postsdata);
+              this.setState({
+                allPosts : postsdata,
+              });
+            }
+          )
+          .catch((error)=>{
+
+            console.log("error = ",error);
+            // alert("Something went wrong! Please check Get URL.");
+             });      
+          
       })
       .catch((error)=>{
         console.log("error = ",error);
         // alert("Something went wrong! Please check Get URL.");
-      });*/  
+      });  
     }
 
 
@@ -35,9 +54,9 @@ class add_data extends Component {
         	<div>
         		<form id="addroles" className="paddingLeftz noLRPad " onSubmit={this.createData.bind(this)} >
 						<div className="form-group col-lg-6 col-lg-offset-3 col-md-6 col-lg-offset-3 col-xs-12 col-sm-8">
-							<label className="">Enter Collection Name </label><span className="astrick">*</span>
+							<label className="">Enter Amenities </label><span className="astrick">*</span>
 							<span className="blocking-span leftmar">
-								<input type="text" id= "" className="rolesField form-control UMname inputText tmsUserAccForm" ref="role"  name="roleName" id="roleName"/>
+								<input type="text" id= "" className="rolesField form-control UMname inputText tmsUserAccForm" ref="Amenities"  name="Amenities" id="Amenities"/>
 							</span>
 						</div>
 					

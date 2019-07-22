@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios               from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
+import swal                       from 'sweetalert';
 
 import Add_classRating              from './add_classRating.js';
 /*import Add_dataTable           from './add_dataTable.js';*/
@@ -14,14 +15,18 @@ class classRating extends Component {
         super(props);
           this.state = {
         allPosts : [],
-
+        propclass : "",
+        earning   : "",
     }
+
+    this.handleChange = this.handleChange.bind(this);
+    
     }
 
     componentDidMount(){
 
-    /*axios
-      .get('/api/roles/list')
+    axios
+      .get('/api/mastersellometers/list')
       .then(
         (res)=>{
           console.log('res', res);
@@ -36,7 +41,7 @@ class classRating extends Component {
 
         console.log("error = ",error);
         // alert("Something went wrong! Please check Get URL.");
-         });        */
+         });        
 
   }
 
@@ -50,18 +55,18 @@ class classRating extends Component {
 
       }
 
-      deleteRole(event){
+      deleteData(event){
         event.preventDefault();
       var id = event.target.id;
       console.log("id",id);
       const token = '';
-      const url = '/api/role/'+id ;
+      const url = '/api/mastersellometers/'+id ;
       const headers = {
             "Authorization" : token,
             "Content-Type"  : "application/json",
         };
 
-        /*axios({
+        axios({
           method: "DELETE",
           url : url,
           headers: headers,
@@ -70,17 +75,90 @@ class classRating extends Component {
         })
         .then((response)=> {
             console.log('delete response',response);
-            // swal("Role deleted successfully","", "success");
+            swal("Property class deleted successfully","", "success");
+
+
+             axios
+            .get('/api/mastersellometers/list')
+            .then(
+              (res)=>{
+                console.log('res', res);
+                const postsdata = res.data;
+                console.log('postsdata',postsdata);
+                this.setState({
+                  allPosts : postsdata,
+                });
+              }
+            )
+            .catch((error)=>{
+
+              console.log("error = ",error);
+              // alert("Something went wrong! Please check Get URL.");
+               });       
+
 
         }).catch((error)=> {
             // handle error
             console.log(error);
-        });*/
+        });
       }
 
-      editRole(event){
+      editData(event){
 
+        event.preventDefault();
+      var id = event.target.id;
+      console.log("edit id",id);
+
+      const formValues = {
+          "class"     : this.state.propclass,
+          "earnings"   : this.state.earning,
+          }
+          console.log("formValues",formValues);
+          
+        axios.put('/api/mastersellometers/'+id, formValues)
+          .then( (res)=>{
+              console.log("submit ");
+              swal("Property class Updated successfully", "", "success");
+              
+              this.setState({
+                propclass : "",
+                earning   : "",
+
+              });
+
+
+               axios
+                .get('/api/mastersellometers/list')
+                .then(
+                  (res)=>{
+                    console.log('res', res);
+                    const postsdata = res.data;
+                    console.log('postsdata',postsdata);
+                    this.setState({
+                      allPosts : postsdata,
+                    });
+                  }
+                )
+                .catch((error)=>{
+
+                  console.log("error = ",error);
+                  // alert("Something went wrong! Please check Get URL.");
+                   });             
+                              
+                    })
+                    .catch((error)=>{
+                      console.log("error = ",error);
+                      // alert("Something went wrong! Please check Get URL.");
+                    });  
       }
+
+      handleChange=(event)=>{
+    const target = event.target;
+    const name   = target.name;
+    this.setState({
+      [name]: event.target.value,
+    });
+  }
 
     render() {
         return (
@@ -110,15 +188,15 @@ class classRating extends Component {
                         </thead>
                         <tbody>
                         {this.state.allPosts.map( (Data, index)=>{
-                          console.log('Data',Data);
+                          // console.log('Data',Data);
                            return( 
                           <tr>
-                            <td className="textAlignLeft">{Data.rating}</td>
-                            <td className="textAlignLeft">{Data.earning}</td> 
-                            <td className="roleTextCenter">             
-                              <i className="fa fa-pencil editTcon editIcon"  data-toggle="modal" title="Delete" data-target={`#${Data._id}-edit`} title="Edit Department Name" ></i>
+                            <td className="textAlignLeft">{Data.class}</td>
+                            <td className="textAlignLeft">{Data.earnings}</td> 
+                            <td className="roleTextCenter pointerCls">             
+                              <i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Edit" data-target={`#${Data._id}-edit`} title="Edit Department Name" ></i>
                               &nbsp;&nbsp;
-                              <i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${Data._id}-rm`} ></i>
+                              <i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Delete" data-toggle="modal" title="Delete" data-target={`#${Data._id}-rm`} ></i>
                             </td>
 
                             <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${Data._id}-rm`}  role="dialog">
@@ -134,7 +212,7 @@ class classRating extends Component {
                                         </div>
                                                   <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
 
-                                                     <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont">Are you sure you want to delete this Property Rating Data?</h4>
+                                                     <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont">Are you sure you want to delete this Property Class Data?</h4>
                                                   </div>
                                                   
                                                   <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -161,11 +239,26 @@ class classRating extends Component {
                                             </button>
                                           </div>
                                         </div>
-                                                  <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                                  
-                                                  <label className="textAlignLeft"> Property Rating</label>
-                                      <input type="text" ref="roleName" className="form-control rolesField" required/>
-                                    
+                                                  <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                                     <div className="modal-body adminModal-body col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <label className="textAlignLeft"> Property class</label>
+                                                       {/* <input type="text" ref="propclass" className="form-control rolesField" required/>*/}
+                                                         <select className="stateselection col-lg-6 col-md-6 col-xs-12 col-sm-8 form-control" title="Please select class" id="propclass" ref="propclass" name="propclass" value={this.state.propclass} onChange={this.handleChange} required>
+                                                             <option value="">-Select-</option>
+                                                             <option value="A"> A </option>
+                                                             <option value="B"> B </option>
+                                                             <option value="C"> C </option>
+                                                             <option value="D"> D </option>
+                                                             <option value="E"> E </option>
+                                                             <option value="F"> F </option>
+                                                         </select>
+
+                                                    </div>
+                                                    <div className="modal-body adminModal-body col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                                                        <label className="textAlignLeft">  Earning</label>
+                                                        <input type="text" ref="earning" name="earning" id="earning" value={this.state.earning} onChange={this.handleChange} className="form-control rolesField" required/>
+                                                    </div>
+
                                                   </div>
                                                   
                                                   <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">

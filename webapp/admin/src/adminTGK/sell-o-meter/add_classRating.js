@@ -38,21 +38,43 @@ export default class add_sellometer extends Component {
     createData(event){
     event.preventDefault();
     const formValues = {
-      "propclass"     : this.refs.propertyClass.value,
-      "earning"       : this.refs.earning.value,
+      "class"         : this.refs.propertyClass.value,
+      "earnings"       : this.refs.earning.value,
       }
-      console.log("this.state.city", this.state.city);
+      
       console.log("formValues ", formValues);
-    /*axios.post('/api/roles', formValues)
+
+    axios.post('/api/mastersellometers/', formValues)
       .then( (res)=>{
           console.log("submit ");
-          swal("Role added successfully", "", "success");
-          this.refs.role.value = '';        
+          swal("Property Class added successfully", "", "success");
+          this.refs.propertyClass.value = '';  
+          this.refs.earning.value = '';  
+
+           axios
+            .get('/api/mastersellometers/list')
+            .then(
+              (res)=>{
+                console.log('res', res);
+                const postsdata = res.data;
+                console.log('postsdata',postsdata);
+                this.setState({
+                  allPosts : postsdata,
+                });
+              }
+            )
+            .catch((error)=>{
+
+              console.log("error = ",error);
+              // alert("Something went wrong! Please check Get URL.");
+               });       
+      
+                
       })
       .catch((error)=>{
         console.log("error = ",error);
         // alert("Something went wrong! Please check Get URL.");
-      });*/
+      });
   
 
     }

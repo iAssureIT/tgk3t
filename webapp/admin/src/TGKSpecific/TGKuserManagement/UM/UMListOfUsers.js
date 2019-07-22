@@ -137,30 +137,7 @@ class UMListOfUsers extends Component {
 		// return  Meteor.roles.find({"name":{ $nin: ["superAdmin"] }}).fetch();
 	}
 
-	rolesListData(){
-		// var roleSetArray = [];
-		// return  Meteor.roles.find({"name":{ $nin: ["superAdmin"]}}).fetch();
-	}
-	/*selectedId(event){
-
-		var data = event.currentTarget.id;
-		console.log("data", data);
-
-		var otherProp;
-
-		if(event.target.checked){
-			otherProp = event.target.getAttribute('value');
-
-			this.state.selectedUser.push(event.target.getAttribute('value'));
-
-			console.log("selectedId",this.state.selectedUser);
-		}else{
-			this.state.selectedUser.pop(event.target.getAttribute('value'));
-			console.log("selectedId",this.state.selectedUser);
-
-		}
-
-	}*/
+	
 	adminUserActions(event){
 			event.preventDefault();
 			var checkedUsersList     = this.state.checkedUser;
@@ -186,7 +163,7 @@ class UMListOfUsers extends Component {
 				  	var selectedId = checkedUsersList[i];
 				  	var formValues ={
 				  	 	userID : selectedId,
-				  	 	status : 'Block',
+				  	 	status : 'Blocked',
 				  	}
 				  	console.log("selected i",selectedId);
 				  	 axios
@@ -203,75 +180,6 @@ class UMListOfUsers extends Component {
 				      });
 
 				   }  
-
-				  
-				 
-
-				  
-				   //  Meteor.call('blockSelectedUser', checkedUsersList,(error,result)=>{
-				   //  	if(error){
-				   //  		swal(error.reason);
-				   //  	}else{
-				   //  		swal({
-				   //  			title:'abc',
-				   //  			text:"Account blocked successfully"
-				   //  		});
-				   //  		$('input[name=userCheckbox]').prop('checked','');
-							// this.refs.userListDropdown.value = '-';
-				   //  		var allusers = Meteor.users.find({"_id":{ $in: checkedUsersList } }).fetch();
-				   //  		for(var k=0;k<allusers.length;k++){
-				   //  			if(allusers[k].profile){
-					  //   			var userId = allusers[k]._id;
-					  //   			var userNames = allusers[k].profile.firstname +' '+ allusers[k].profile.lastname;
-					  //   			var createdOn = allusers[k].profile.createdOn;
-					  //               var date      = moment(createdOn).format('DD/MM/YYYY');
-					  //               var mobile    = allusers[k].profile.mobNumber;
-					  //               var adminData = Meteor.users.findOne({"roles":"admin"});
-					  //               if(adminData){
-					  //                 var adminId = adminData._id;
-					  //                 // Format for sending mail to user //
-					  //                 var msgvariable = {
-					  //                           '[username]'  : userNames,
-					  //                           '[date]'      : date
-					  //                           };
-
-
-					  //                 var inputObj = {
-					  //                   from         : adminId,
-					  //                   to           : userId,
-					  //                   templateName : 'User Blocked',
-					  //                   variables    : msgvariable,
-					  //                 }
-
-					  //                 sendMailNotification(inputObj); 
-
-					  //                 // Format for sending notification to user//
-					                  
-					  //                 var inputObj = {
-					  //                     to           : userId,
-					  //                     templateName : 'User Blocked',
-					  //                     variables    : msgvariable,
-					  //                 }
-					  //                 console.log("msgvariable",msgvariable)
-					  //                 console.log("inputObj",inputObj)
-					  //                 sendInAppNotification(inputObj); 
-
-					  //                 // Format for sending SMS to user//
-					                  
-					  //                 var inputObj = {
-					  //                     to           : userId,
-					  //                     templateName : 'User Blocked',
-					  //                     number       : mobile,
-					  //                     variables    : msgvariable,
-					  //                 }
-
-					  //                 sendSMS(inputObj); 
-
-					  //               }//adminData 
-					  //           }//allusers[k].profile                 
-				   //  		}
-				   //  	}
-				   //  });
 				    break;
 
 				  case 'active_selected':
@@ -290,7 +198,7 @@ class UMListOfUsers extends Component {
 				      .then(
 				        (res)=>{
 				          console.log('res', res);
-				          swal("Account Active successfully","","success");
+				          swal("Account activated successfully","","success");
 				          checkedUsersList = null;
 				        }).catch((error)=>{ 
 
@@ -298,70 +206,6 @@ class UMListOfUsers extends Component {
 				      });
 
 				   }  
-
-				   //  Meteor.call('activeSelectedUser', checkedUsersList,(error,result)=>{
-				   //  	if(error){
-				   //  		swal(error.reason);
-				   //  	}else{
-				   //  		swal({
-				   //  			title:'abc',
-				   //  			text:"Account activated successfully"
-				   //  		});
-				   //  		$('input[name=userCheckbox]').prop('checked','');
-							// this.refs.userListDropdown.value = '-';
-				   //  		var allusers = Meteor.users.find({"_id":{ $in: checkedUsersList } }).fetch();
-				   //  		for(var k=0;k<allusers.length;k++){
-				   //  			if(allusers[k].profile){
-					  //   			var userId = allusers[k]._id;
-					  //   			var userNames = allusers[k].profile.firstname +' '+ allusers[k].profile.lastname;
-					  //   			var createdOn = allusers[k].profile.createdOn;
-					  //               var date      = moment(createdOn).format('DD/MM/YYYY');
-					  //               var mobile    = allusers[k].profile.mobNumber;
-					  //               var adminData = Meteor.users.findOne({"roles":"admin"});
-					  //               if(adminData){
-					  //                 var adminId = adminData._id;
-					  //                 // Format for sending mail to user //
-					  //                 var msgvariable = {
-					  //                           '[username]'  : userNames,
-					  //                           '[date]'      : date
-					  //                           };
-
-
-					  //                 var inputObj = {
-					  //                   from         : adminId,
-					  //                   to           : userId,
-					  //                   templateName : 'User Activated',
-					  //                   variables    : msgvariable,
-					  //                 }
-
-					  //                 sendMailNotification(inputObj); 
-
-					  //                 // Format for sending notification to user//
-					                  
-					  //                 var inputObj = {
-					  //                     to           : userId,
-					  //                     templateName : 'User Activated',
-					  //                     variables    : msgvariable,
-					  //                 }
-
-					  //                 sendInAppNotification(inputObj); 
-
-					  //                 // Format for sending SMS to user//
-					                  
-					  //                 var inputObj = {
-					  //                     to           : userId,
-					  //                     templateName : 'User Activated',
-					  //                     number       : mobile,
-					  //                     variables    : msgvariable,
-					  //                 }
-
-					  //                 sendSMS(inputObj); 
-
-					  //               }//adminData 
-					  //           }//allusers[k].profile                 
-				   //  		}
-				   //  	}
-				   //  });
 				    break;
 
 				  case 'cancel_selected':
@@ -394,85 +238,7 @@ class UMListOfUsers extends Component {
 
 
 				   }  
-
-		    		
-		   //  		var users = Meteor.users.find({"_id":{ $in: checkedUsersList } }).fetch();
-		   //  		// var usersID = Meteor.users.find({"_id":{ $in: checkedUsersList } },{fields:{"_id":1}}).fetch();
-		   //  		var existUserIdArray = [];
-		   //  		var notExistUserIdArray = [];
-		   //  		var nonExistUserIdArray = [];
-		   //  		var roleSetVar        = this.state.roleListDropdown;
-				 //    var activeBlockSetVar = this.state.blockActive;
-				 //    var departmentname    = this.state.department;
-
-					// 	if(users){
-					// 	var userNames = '';
-					// 	for(var k=0;k<users.length;k++){
-					// 		userNames += users[k].profile.firstname +' '+ users[k].profile.lastname + '\n';
-					// 	}				    	
-					// 		swal({	title             : 'abc',
-					// 	            text              : 'Are you sure,do you want to delete? You will not be able to recover below users again!',
-					// 	            html              : userNames,
-					// 	            closeOnConfirm    : false
-					// 	        }).then((obj)=> {		        	
-					// 	        		if(obj==true){
-					// 							console.log("data exists",checkedUsersList);
-
-					// 	        			Meteor.call("UsersRecordsExist",checkedUsersList,(error,result)=>{
-					// 						if(error){
-					// 							// console.log("error",error);
-					// 						}else{	
-					// 						if(result && result.length>0 ){
-																										
-					// 									swal("Some of users cannot be deleted as their record exists");											   
-					// 									// console.log("result----------------->",result);
-					// 							    	Meteor.call('deleteSelectedUser', result, (error,result)=>{
-					// 			        					if(error){
-					// 			        						swal(error.reason);
-					// 			        					}else if(result){
-					// 			        						// swal('Below users status is blocked now as they are having record in either orders/feedback/space.'+'\n'+ result);
-					// 			        					}else{
-					// 			        						// swal.closeModal();
-
-					// 			        						Meteor.call("getUsersData",roleSetVar,activeBlockSetVar,departmentname,this.state.startRange,this.state.limitRange,this.state.firstname,(err,res)=>{
-					// 												if(err){}else{
-					// 													this.setState({
-					// 														usersListData : res,
-					// 													});
-					// 												}
-					// 											});
-					// 											$('.userCheckbox').prop('checked',false);
-					// 											// this.refs.userListDropdown.value='-';
-					// 											// $('#userListDropdownId').val('-');
-					// 											$('input[name=userCheckbox]').prop('checked','');
-					// 											this.refs.userListDropdown.value = '-';
-					// 			        					}
-					// 			        				});		
-
-					// 						}
-					// 						else{
-					// 							swal("Record exists for these users, so cannot be deleted");
-					// 						}
-
-
-
-
-
-					// 					}
-					// 				});
-
-
-				 //        		}else{
-					// 	        			$('.userCheckbox').prop('checked',false);
-					// 	        		}				        				
-					    				
-					//     			  }
-					// 	    );
-
-					// }
-
-
-				    break;
+					break;
 
 				  case 'add':
 
@@ -498,10 +264,6 @@ class UMListOfUsers extends Component {
 				      });
 
 				   }  
-
-				 //    Meteor.call('addRoleToUser', role, checkedUsersList);
-				 //    $('input[name=userCheckbox]').prop('checked','');
-					// this.refs.userListDropdown.value = '-';
 				    break;
 
 				  case 'remove':
@@ -509,7 +271,6 @@ class UMListOfUsers extends Component {
 				 //    $('input[name=userCheckbox]').prop('checked','');
 					// this.refs.userListDropdown.value = '-';
 				    break;
-
 				}
 			}else{
 				// this.refs.userListDropdown.value = '-';
@@ -519,9 +280,6 @@ class UMListOfUsers extends Component {
 		  //   		});
 			}
 			// {this.usersListData()}
-
-
-
 	}
 
 	selectedRole(event){
@@ -529,35 +287,73 @@ class UMListOfUsers extends Component {
 				var selectedValue        = this.refs.roleListDropdown.value;
 				var keywordSelectedValue = selectedValue.split('$')[0];
 				console.log("selectedValue",selectedValue);			
-				console.log("keywordSelectedValue",keywordSelectedValue);
+				console.log("keywordSelectedValue ------------------",keywordSelectedValue);
 					var formValues ={
 						searchText : selectedValue,
 					}
 
-				     axios
-				      .post('/api/users/searchValue',formValues)
-				      .then(
-				        (res)=>{
-				          // console.log('res', res);
-				          swal("Search successfull by "+selectedValue+ "","success");
-				          var data = res.data.data;
-				          var tableData = data.map((a, i)=>{
-								return {
-									_id 			: a._id,
-									fullName        : a.profile.fullName,
-					                emailId    		: a.emails[0].address,
-					                mobNumber       : a.profile.mobileNumber, 
-					                status        	: a.profile.status,	
-					                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
-								}
+					if(selectedValue == "all"){
+
+						var data = {
+								"startRange"        : this.state.startRange,
+					            "limitRange"        : this.state.limitRange, 
+							}
+							axios.post('/api/users/userslist', data)
+							.then( (res)=>{      
+								// console.log("herer",res);
+								swal("Success! Showing "+selectedValue,"","success");
+								var tableData = res.data.map((a, i)=>{
+									return {
+										_id 			: a._id,
+										fullName        : a.fullName,
+						                emailId    		: a.emailId,
+						                mobNumber       : a.mobNumber, 
+						                status        	: a.status,	
+						                roles 			: a.roles,
+									}
+								})
+								this.setState({
+						          completeDataCount : res.data.length,
+						          tableData 		: tableData,          
+						        },()=>{
+						        	console.log('tableData', this.state.tableData);
+						        })
 							})
-				          	this.setState({
-				              tableData 		: tableData,          
-				            },()=>{
-				            }) 
-				        }).catch((error)=>{ 
-				            swal("Sorry there is no data of "+selectedValue+ "","error");
-				      });
+							.catch((error)=>{
+								console.log("error = ",error);
+								// alert("Something went wrong! Please check Get URL.");
+							});
+
+					}else{
+
+						 axios
+					      .post('/api/users/searchValue',formValues)
+					      .then(
+					        (res)=>{
+					          // console.log('res', res);
+					          swal("Success! Showing only "+selectedValue,"","success");
+					          var data = res.data.data;
+					          var tableData = data.map((a, i)=>{
+									return {
+										_id 			: a._id,
+										fullName        : a.profile.fullName,
+						                emailId    		: a.emails[0].address,
+						                mobNumber       : a.profile.mobileNumber, 
+						                status        	: a.profile.status,	
+						                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
+									}
+								})
+					          	this.setState({
+					              tableData 		: tableData,          
+					            },()=>{
+					            }) 
+					        }).catch((error)=>{ 
+					            swal("Sorry there is no data of "+selectedValue,"","error");
+					      });
+
+					}
+
+				    
 	}
 
 	selectedStatus(event){
@@ -571,12 +367,48 @@ class UMListOfUsers extends Component {
 						searchText : selectedValue,
 					}
 
-				     axios
+					if(selectedValue == "all"){
+						console.log("here all data");
+
+							var data = {
+								"startRange"        : this.state.startRange,
+					            "limitRange"        : this.state.limitRange, 
+							}
+							axios.post('/api/users/userslist', data)
+							.then( (res)=>{      
+								// console.log("herer",res);
+								swal("Success! Showing "+selectedValue,"","success");
+								var tableData = res.data.map((a, i)=>{
+									return {
+										_id 			: a._id,
+										fullName        : a.fullName,
+						                emailId    		: a.emailId,
+						                mobNumber       : a.mobNumber, 
+						                status        	: a.status,	
+						                roles 			: a.roles,
+									}
+								})
+								this.setState({
+						          completeDataCount : res.data.length,
+						          tableData 		: tableData,          
+						        },()=>{
+						        	console.log('tableData', this.state.tableData);
+						        })
+							})
+							.catch((error)=>{
+								console.log("error = ",error);
+								// alert("Something went wrong! Please check Get URL.");
+							});
+
+
+					}else{
+
+						 axios
 				      .post('/api/users/searchValue',formValues)
 				      .then(
 				        (res)=>{
 				          console.log('res', res);
-				          swal("Search successfull by "+selectedValue+ "","success");
+				          swal("Success! only "+selectedValue+" users are shown in the list", "","success");
 				          var data = res.data.data;
 				          var tableData = data.map((a, i)=>{
 								return {
@@ -593,8 +425,11 @@ class UMListOfUsers extends Component {
 				            },()=>{
 				            })
 				        }).catch((error)=>{ 
-				        	swal("Sorry there is no data of "+selectedValue+ "","error");
+				        	swal("Sorry there is no data of "+selectedValue, "","error");
 				      });
+					}
+
+				    
 
 	}
 
@@ -683,10 +518,10 @@ render(){
 				
 										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
-											<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive" value={this.state.blockActive} name="blockActive" onChange={this.selectedStatus.bind(this)}>
+											<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive"  name="blockActive" onChange={this.selectedStatus.bind(this)}>
 												<option>-- Select --</option>	
 												<option value="all"	>Show All</option>	
-												<option value="Block">Blocked</option>	
+												<option value="Blocked">Blocked</option>	
 												<option value="Active">Active </option>	
 											</select>
 										</div>

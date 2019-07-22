@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios 						   from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
+import swal                       from 'sweetalert';
 
 import Add_sellOMeter 					   from './add_sellometer.js';
 /*import Add_dataTable 				   from './add_dataTable.js';*/
@@ -14,14 +15,24 @@ class sellOMeter extends Component {
         super(props);
         	this.state = {
 				allPosts : [],
+				city : "",
+				area : "",
+				subarea : "",
+				society : "",
+				index : "",
+				propertyClass : "",
+
+
 
 		}
+
+		this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount(){
 
-		/*axios
-			.get('/api/roles/list')
+		axios
+			.get('/api/sellometers/list')
 			.then(
 				(res)=>{
 					console.log('res', res);
@@ -36,7 +47,7 @@ class sellOMeter extends Component {
 
 				console.log("error = ",error);
 				// alert("Something went wrong! Please check Get URL.");
-				 });				*/
+				 });				
 
 	}
 
@@ -50,18 +61,18 @@ class sellOMeter extends Component {
 
   		}
 
-  		deleteRole(event){
+  		deleteData(event){
   			event.preventDefault();
 			var id = event.target.id;
 			console.log("id",id);
 			const token = '';
-			const url = '/api/role/'+id ;
+			const url = '/api/sellometers/'+id ;
 			const headers = {
 				    "Authorization" : token,
 				    "Content-Type" 	: "application/json",
 				};
 
-				/*axios({
+				axios({
 					method: "DELETE",
 					url : url,
 					headers: headers,
@@ -70,17 +81,102 @@ class sellOMeter extends Component {
 				})
 				.then((response)=> {
 			    	console.log('delete response',response);
-			    	// swal("Role deleted successfully","", "success");
+			    	swal("Data deleted successfully","", "success");
+
+
+			    	axios
+					.get('/api/sellometers/list')
+					.then(
+						(res)=>{
+							console.log('res', res);
+							const postsdata = res.data;
+							console.log('postsdata',postsdata);
+							this.setState({
+								allPosts : postsdata,
+							});
+						}
+					)
+					.catch((error)=>{
+
+						console.log("error = ",error);
+						// alert("Something went wrong! Please check Get URL.");
+						 });		
+
 
 				}).catch((error)=> {
 				    // handle error
 				    console.log(error);
-				});*/
+				});
   		}
 
-  		editRole(event){
+  		editData(event){
 
+  			event.preventDefault();
+			var id = event.target.id;
+			console.log("edit id",id);
+
+			const formValues = {
+		        "city"	    : this.state.city,
+				"area"	    : this.state.area,
+				"subArea"	: this.state.subarea,
+				"socity"	: this.state.society,
+				"propertyClass" : this.state.propertyClass,
+				"index" : this.state.index,
+		      }
+
+		      console.log("formValues",formValues);
+		      
+		    axios.put('/api/sellometers/'+id, formValues)
+		      .then( (res)=>{
+		          console.log("submit ",res);
+		          swal("Sell-O-Meter Data Updated successfully", "", "success");
+		         
+		         this.setState({
+		         city             : "",
+			     area 			  : "",
+				 subarea 		  : "",
+				 society 		  : "",
+				 propertyClass 	  : "",
+				 index 			  : "",     
+		         });
+		         
+
+		          axios
+					.get('/api/sellometers/list')
+					.then(
+						(res)=>{
+							console.log('res', res);
+							const postsdata = res.data;
+							console.log('postsdata',postsdata);
+							this.setState({
+								allPosts : postsdata,
+							});
+						}
+					)
+					.catch((error)=>{
+
+						console.log("error = ",error);
+						// alert("Something went wrong! Please check Get URL.");
+						 });		
+
+
+		      })
+		      .catch((error)=>{
+		        console.log("error = ",error);
+		        // alert("Something went wrong! Please check Get URL.");
+		      });  
   		}
+
+
+
+  		handleChange=(event)=>{
+		    const target = event.target;
+		    const name   = target.name;
+		    this.setState({
+		      [name]: event.target.value,
+		    });
+		  }
+
 
     render() {
         return (
@@ -103,7 +199,7 @@ class sellOMeter extends Component {
 											<table className="table iAssureITtable-bordered table-striped table-hover">
 												<thead className="tempTableHeader">
 													<tr className="">
-														<th className="umDynamicHeader srpadd textAlignCenter">  State </th>
+														
 														<th className="umDynamicHeader srpadd textAlignCenter">  City </th>
 														<th className="umDynamicHeader srpadd textAlignCenter">  Area </th>
 														<th className="umDynamicHeader srpadd textAlignCenter">  Sub-area </th>
@@ -118,15 +214,15 @@ class sellOMeter extends Component {
 													console.log('Data',Data);
 												   return( 
 													<tr>
-														<td className="textAlignLeft">{Data.state}</td>	
+														
 														<td className="textAlignLeft">{Data.city}</td>
 														<td className="textAlignLeft">{Data.area}</td>
-														<td className="textAlignLeft">{Data.subarea}</td>
-														<td className="textAlignLeft">{Data.society}</td>
-														<td className="textAlignLeft">{Data.indexcode}</td>
-														<td className="textAlignLeft">{Data.class}</td>	
-														<td className="roleTextCenter"> 						
-															<i className="fa fa-pencil editTcon editIcon"  data-toggle="modal" title="Delete" data-target={`#${Data._id}-edit`} title="Edit Department Name" ></i>
+														<td className="textAlignLeft">{Data.subArea}</td>
+														<td className="textAlignLeft">{Data.socity}</td>
+														<td className="textAlignLeft">{Data.index}</td>
+														<td className="textAlignLeft">{Data.propertyClass}</td>	
+														<td className="roleTextCenter pointerCls"> 						
+															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Delete" data-target={`#${Data._id}-edit`} title="Edit Department Name" ></i>
 															&nbsp;&nbsp;
 															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${Data._id}-rm`} ></i>
 														</td>
@@ -171,12 +267,51 @@ class sellOMeter extends Component {
 																		        </button>
 																	        </div>
 															      		</div>
-										                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
-										                              
-										                              <label className="textAlignLeft"> Index name</label>
-																			<input type="text" ref="roleName" className="form-control rolesField" required/>
-																		
-										                              </div>
+															      		<div className="modal-body  col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												                              <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												                              		<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+													                              		<label className="textAlignLeft"> City name</label>
+																						<input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange} className="form-control rolesField" required/>
+																					</div>
+																					<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+													                              		<label className="textAlignLeft"> Area name</label>
+																						<input type="text" ref="area" name="area" id="area" value={this.state.area} onChange={this.handleChange} className="form-control rolesField" required/>
+																					</div>
+												                              </div>
+
+												                               <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												                              		<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+													                              		<label className="textAlignLeft"> Sub Area name</label>
+																						<input type="text" ref="subarea" name="subarea" id="subarea" value={this.state.subarea} onChange={this.handleChange} className="form-control rolesField" required/>
+																					</div>
+																					<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+													                              		<label className="textAlignLeft"> Society name</label>
+																						<input type="text" ref="society" name="society" id="society" value={this.state.society} onChange={this.handleChange} className="form-control rolesField" required/>
+																					</div>
+												                              </div>
+
+
+												                              <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												                              		  <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
+																	      					<label>Property Class </label>
+
+																	                    	<select className="stateselection col-lg-6 col-md-6 col-xs-12 col-sm-8 form-control" title="Please select class" id="propertyClass" ref="propertyClass" name="propertyClass" value={this.state.propertyClass} onChange={this.handleChange} required>
+																	                                   <option value="">-Select-</option>
+																	                                   <option value="A"> A </option>
+																	                                   <option value="B"> B </option>
+																	                                   <option value="C"> C </option>
+																	                                   <option value="D"> D </option>
+																	                                   <option value="E"> E </option>
+																	                                   <option value="F"> F </option>
+																	                                   </select>
+																	                 
+																	      				</div>
+																	      				<div className=" form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
+													                              			<label className="textAlignLeft"> Index code</label>
+																							<input type="text" ref="index" name="index" id="index" value={this.state.index} onChange={this.handleChange} className="form-control rolesField" required/>
+																						</div>
+												                              </div>
+												                         </div>
 										                              
 										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">

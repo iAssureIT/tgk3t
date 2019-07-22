@@ -65,13 +65,13 @@ class CompanyInformation extends Component{
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-  var companyId = 2;
-    /*axios.get('/api/companysettings/'+ companyId)
+  var companyId = 1;
+    axios.get('/api/tgkSpecificcompanysettings/'+ companyId)
     .then( (res)=>{      
       console.log("here company data",res.data);
       this.setState({
         companyName : res.data.companyName,
-        companyId   : 2,
+        companyId   : 1,
         companyContactNumber : res.data.companyContactNumber,
         companyAltContactNumber : res.data.companyMobileNumber,
         companyEmail            : res.data.companyEmail, 
@@ -90,7 +90,7 @@ class CompanyInformation extends Component{
     .catch((error)=>{
       console.log("error = ",error);
       // alert("Something went wrong! Please check Get URL.");
-    });*/
+    });
   
   }
  
@@ -171,77 +171,139 @@ class CompanyInformation extends Component{
     event.preventDefault();
    
     var companyInfoFormValue = {
+
       companyName             : this.state.companyName,
       companyContactNumber    : this.state.companyContactNumber,
       companyMobileNumber     : this.state.companyAltContactNumber,
       companyEmail            : this.state.companyEmail,
       companyAltEmail         : "",
-
       companywebsite          : this.state.companywebsite,
       companyaddress          : this.state.companyAddressLine1,
       logoFilename            : this.state.logoFilename,
       companyLogo             : this.state.companyLogo,
-     
-      
-
       country                 : this.state.companyCountry,
       state                   : this.state.companyState,
       district                : this.state.companyDist,
       city                    : this.state.companyCity,
       pincode                 : this.state.companyPincode,
       taluka                  : this.state.taluka,
-
- 
-
     }//close array
+
+     var companyInfoFormValueUpdate = {
+
+      companyId               :1,
+      companyName             : this.state.companyName,
+      companyContactNumber    : this.state.companyContactNumber,
+      companyMobileNumber     : this.state.companyAltContactNumber,
+      companyEmail            : this.state.companyEmail,
+      companyAltEmail         : "",
+      companywebsite          : this.state.companywebsite,
+      companyaddress          : this.state.companyAddressLine1,
+      logoFilename            : this.state.logoFilename,
+      companyLogo             : this.state.companyLogo,
+      country                 : this.state.companyCountry,
+      state                   : this.state.companyState,
+      district                : this.state.companyDist,
+      city                    : this.state.companyCity,
+      pincode                 : this.state.companyPincode,
+      taluka                  : this.state.taluka,
+    }
   
     console.log("companyInfoFormValue",companyInfoFormValue);
-  if(formValid(this.state.formerrors)){
-    console.log('companyName    : this.state.companyName');
-
-    axios.post('/api/tgkSpecificcompanysettings',companyInfoFormValue)
-    .then( (response)=> {
-      // handle success
-      console.log("this is response===>>>",response);
-      swal("Good job!", "Company Information Submited!", "success");
-      this.setState({
+  // if(formValid(this.state.formerrors)){
     
-      companyName             : "",
-      companyContactNumber    : "",
-      companyAltContactNumber : "",
-      companyEmail            : "",
-      companyAddressLine1     : "",
-      companyDist             : "",
-      companyPincode          : "",
-      companyCity             : "",
-      companyState            : "",
-      companyCountry          : "",
-      companyLogo             : "",
-      logoFilename            : "",
-      taluka                  : "",
-      companywebsite          : "",
-      });
+    if(this.state.submitVal == true){
+        axios.post('/api/tgkSpecificcompanysettings',companyInfoFormValue)
+        .then( (response)=> {
+          // handle success
+          console.log("this is response===>>>",response);
+          swal("Good job!", "Company Information Submited!", "success");
+          this.setState({
+        
+          companyName             : "",
+          companyContactNumber    : "",
+          companyAltContactNumber : "",
+          companyEmail            : "",
+          companyAddressLine1     : "",
+          companyDist             : "",
+          companyPincode          : "",
+          companyCity             : "",
+          companyState            : "",
+          companyCountry          : "",
+          companyLogo             : "",
+          logoFilename            : "",
+          taluka                  : "",
+          companywebsite          : "",
+          });
+
+          
+
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+          swal("", "Company Information submition failed!", "Danger")
+
+        })
+        .finally(function () {
+          // always executed
+        });
+    }else{
+      // upate function
+
+      console.log("update axios");
+      axios.patch('/api/tgkSpecificcompanysettings/information',companyInfoFormValueUpdate)
+        .then( (response)=> {
+          // handle success
+          console.log("this is response===>>>",response);
+          swal("Good job!", "Company Information Updated Successfully!", "success");
+
+           // after update show updated data
+                        var companyId = 1;
+                        axios.get('/api/tgkSpecificcompanysettings/'+ companyId)
+                        .then( (res)=>{      
+                          // console.log("here company data",res.data);
+                          this.setState({
+                            companyName : res.data.companyName,
+                            companyId   : 1,
+                            companyContactNumber : res.data.companyContactNumber,
+                            companyAltContactNumber : res.data.companyMobileNumber,
+                            companyEmail            : res.data.companyEmail, 
+                            companywebsite          : res.data.companywebsite, 
+                            companyAddressLine1     : res.data.companyaddress,
+                            companyDist             : res.data.district,
+                            companyPincode          : res.data.pincode,
+                            companyCity             : res.data.city,
+                            companyState            : res.data.state,
+                            companyCountry          : res.data.country,
+                            taluka                  : res.data.taluka,
+                            submitVal               : false,
+                          });
+                          
+                        })
+                        .catch((error)=>{
+                          console.log("error = ",error);
+                          // alert("Something went wrong! Please check Get URL.");
+                        });
+
+          
+        })
+        .catch(function (error) {
+          // handle error
+          console.log(error);
+          swal("", "Company Information submition failed!", "Danger")
+
+        });
+    }
+  // }else{
+  //   swal("Please enter mandatory fields", "", "warning");
+  //   console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+  // }
+ 
+     
 
       
 
-    })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-      swal("", "Company Information submition failed!", "Danger")
-
-    })
-    .finally(function () {
-      // always executed
-    });
-
-  }else{
-    swal("Please enter mandatory fields", "", "warning");
-    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-  }
-    // if($('#companyInformationForm').valid()){
-      
-    // }
   
   }
   handleChange(event){

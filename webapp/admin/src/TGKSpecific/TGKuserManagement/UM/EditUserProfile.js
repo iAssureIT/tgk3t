@@ -25,17 +25,48 @@ class EditUserProfile extends Component{
 		console.log("userid-----------------------------------------",userid);
 		var formvalues = {
 		/*	"fullName" 		: this.refs.fullname.value,*/
-			"firstname"		: this.refs.firstName.value,
-			"lastname" 		: this.refs.lastName.value,
-			"email"  		: this.refs.username.value,
-			"mobNumber"  : this.refs.mobNumber.value,
+			"firstName"		: this.refs.firstName.value,
+			"lastName" 		: this.refs.lastName.value,
+			"emailId"  		: this.refs.username.value,
+			"mobileNumber"  : this.refs.mobNumber.value,
 		}
 		console.log("formvalues",formvalues);
-				axios.put('/api/users/'+userid, formvalues)
+				axios.patch('/api/users/'+userid, formvalues)
 				.then((response)=> {		
 					swal("User updated successfully","", "success");		
 					 this.props.history.push('/umlistofusers');	
 					console.log('response --==',response);
+
+
+						var data = {
+							"startRange"        : this.state.startRange,
+				            "limitRange"        : this.state.limitRange, 
+						}
+						axios.post('/api/users/userslist', data)
+						.then( (res)=>{      
+							// console.log("herer",res);
+							var tableData = res.data.map((a, i)=>{
+								return {
+									_id 			: a._id,
+									fullName        : a.fullName,
+					                emailId    		: a.emailId,
+					                mobNumber       : a.mobNumber, 
+					                status        	: a.status,	
+					                roles 			: a.roles,
+								}
+							})
+							this.setState({
+					          completeDataCount : res.data.length,
+					          tableData 		: tableData,          
+					        },()=>{
+					        	console.log('tableData', this.state.tableData);
+					        })
+						})
+						.catch((error)=>{
+							console.log("error = ",error);
+							// alert("Something went wrong! Please check Get URL.");
+						});
+
 				})
 				.catch(function (error) {
 					console.log('error============',error);
