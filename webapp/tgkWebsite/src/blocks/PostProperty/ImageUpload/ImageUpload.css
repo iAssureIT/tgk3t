@@ -1,0 +1,21 @@
+.contentHolder{
+    background-color: #fff;
+    height:40%;
+    border-style: dotted;
+    border-color: #aaa;
+    border-width: 2px;
+    height: 250px;
+}
+.backGround{
+    margin-top: 80px
+}
+.uploadImg{
+    margin-bottom: 68px;
+    margin-top: 45px;
+}
+.uploadVideo{
+    margin-bottom: 20px;
+}
+.mt78{
+    margin-top: 78px;
+}

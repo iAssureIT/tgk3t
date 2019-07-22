@@ -12,6 +12,7 @@ import Amenities              from '../../blocks/PostProperty/Amenities/Amenitie
 import Financials             from '../../blocks/PostProperty/Financials/Financials.js';
 import Availability           from '../../blocks/PostProperty/Availability/Availability.js';
 import CongratsPage           from '../../blocks/PostProperty/CongratsPage/CongratsPage.js';
+import ImageUpload            from '../../blocks/PostProperty/ImageUpload/ImageUpload.js';
 
 import "./PropertyProfile.css";
 
@@ -52,9 +53,6 @@ class PropertyProfile extends Component{
     $(".modal-backdrop").remove();    
   }
 
-
-
-
   componentWillReceiveProps(nextProps){
    
   }
@@ -75,7 +73,6 @@ class PropertyProfile extends Component{
   }
 
   render() {
-     
     return (
       <div className="container-fluid">
         <div className="row">
@@ -410,10 +407,6 @@ class PropertyProfile extends Component{
                                               {this.state.checkValue}
                                             </div>
                                           </div>
-
-                                     
-
-
                                         </div>
                                       </div>
                                     </div>
@@ -512,13 +505,14 @@ class PropertyProfile extends Component{
 
               <div className="modal-body postPropertyModalBody col-lg-12">
 
-            { this.props.BasicInfo        ? <BasicInfo />        : null }
-            { this.props.PropertyDetails        ? <PropertyDetails />        : null }
-            { this.props.Financials        ? <Financials />        : null }
-            { this.props.Amenities        ? <Amenities />        : null }
-            { this.props.Availability        ? <Availability />        : null }
-            { this.props.Location     ? <Location />     : null }
-            { this.props.CongratsPage ? <CongratsPage /> : null }
+            { this.props.BasicInfo       ? <BasicInfo />        : null }
+            { this.props.PropertyDetails ? <PropertyDetails />  : null }
+            { this.props.Financials      ? <Financials />       : null }
+            { this.props.Amenities       ? <Amenities />        : null }
+            { this.props.Availability    ? <Availability />     : null }
+            { this.props.Location        ? <Location />         : null }
+            { this.props.CongratsPage    ? <CongratsPage />     : null }
+            { this.props.ImageUpload     ? <ImageUpload />      : null }
 
               </div>
 
@@ -548,12 +542,13 @@ class PropertyProfile extends Component{
 const mapStateToProps = (state)=>{
   return {
     BasicInfo        : state.BasicInfo,
-    PropertyDetails        : state.PropertyDetails,
-    Financials        : state.Financials,
+    PropertyDetails  : state.PropertyDetails,
+    Financials       : state.Financials,
     Amenities        : state.Amenities,
-    Availability        : state.Availability,
-    Location     : state.Location,
-    CongratsPage : state.CongratsPage,
+    Availability     : state.Availability,
+    Location         : state.Location,
+    ImageUpload      : state.ImageUpload,
+    CongratsPage     : state.CongratsPage,
   }
 };
 const mapDispatchToProps = (dispatch)=>{

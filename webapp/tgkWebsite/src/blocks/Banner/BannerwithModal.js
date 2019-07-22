@@ -91,15 +91,15 @@ class BannerwithModal extends Component {
 
 				      <div className="modal-body col-lg-12">
 
-						{ this.props.LoginMobNum 	? <LoginMobNum /> 	: null }
-						{ this.props.LoginOtp 		? <LoginOtp /> 		: null }
-						{ this.props.WebSignupForm 	? <WebSignupForm /> : null }
-						{ this.props.BasicInfo 			? <BasicInfo /> 		: null }
-						{ this.props.PropertyDetails 			? <PropertyDetails /> 		: null }
-						{ this.props.Financials 			? <Financials /> 		: null }
-						{ this.props.Amenities 			? <Amenities /> 		: null }
-						{ this.props.Availability 			? <Availability /> 		: null }
-						{ this.props.Location		? <Location /> 		: null }
+						{ this.props.LoginMobNum 	? <LoginMobNum /> 	  : null }
+						{ this.props.LoginOtp 		? <LoginOtp /> 		  : null }
+						{ this.props.WebSignupForm 	? <WebSignupForm />   : null }
+						{ this.props.BasicInfo 		? <BasicInfo /> 	  : null }
+						{ this.props.PropertyDetails? <PropertyDetails /> : null }
+						{ this.props.Financials 	? <Financials /> 	  : null }
+						{ this.props.Amenities 		? <Amenities /> 	  : null }
+						{ this.props.Availability 	? <Availability /> 	  : null }
+						{ this.props.Location		? <Location /> 		  : null }
 
 				      </div>
 
@@ -121,11 +121,11 @@ const mapStateToProps = (state)=>{
 		LoginMobNum 	: state.LoginMobNum,
 		LoginOtp 		: state.LoginOtp,
 		WebSignupForm 	: state.WebSignupForm,
-		BasicInfo		 	: state.BasicInfo,
-		PropertyDetails		 	: state.PropertyDetails,
-		Financials		 	: state.Financials,
-		Amenities		 	: state.Amenities,
-		Availability		 	: state.Availability,
+		BasicInfo		: state.BasicInfo,
+		PropertyDetails	: state.PropertyDetails,
+		Financials		: state.Financials,
+		Amenities		: state.Amenities,
+		Availability	: state.Availability,
 		Location	 	: state.Location,
 	}
 };

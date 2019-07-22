@@ -1,9 +1,8 @@
 import React , { Component }from 'react';
+import axios                from 'axios';
 
 import './RentReceipt.css';
-import axios from 'axios';
 import 'bootstrap/js/tab.js';
-import NavTab from '../NavTab/NavTab.js';
 import "bootstrap/dist/css/bootstrap.min.css";
 
 

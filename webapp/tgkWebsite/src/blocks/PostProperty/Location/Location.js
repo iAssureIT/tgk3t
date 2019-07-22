@@ -18,7 +18,12 @@ import './Location.css';
 				
 			};
 		}
-
+	componentDidMount(){
+					document.getElementById("selectState").selectedIndex=0;
+					document.getElementById("selectCity").selectedIndex=0;
+					document.getElementById("selectArea").selectedIndex=0;
+					document.getElementById("selectSubArea").selectedIndex=0;	
+	}
 	insertLocation(event){
 			event.preventDefault();	
 			const formValues = {
@@ -54,10 +59,18 @@ import './Location.css';
 		}
 
 		handlePincode(){
-			document.getElementById("selectState").selectedIndex=1;
-			document.getElementById("selectCity").selectedIndex=1;
-			document.getElementById("selectArea").selectedIndex=1;
-			document.getElementById("selectSubArea").selectedIndex=1;
+				if(this.refs.pincode.value==''){
+					document.getElementById("selectState").selectedIndex=0;
+					document.getElementById("selectCity").selectedIndex=0;
+					document.getElementById("selectArea").selectedIndex=0;
+					document.getElementById("selectSubArea").selectedIndex=0;
+				}else{
+					document.getElementById("selectState").selectedIndex=1;
+					document.getElementById("selectCity").selectedIndex=1;
+					document.getElementById("selectArea").selectedIndex=1;
+					document.getElementById("selectSubArea").selectedIndex=1;
+				}
+			
 		}
 
 	render() {
@@ -100,7 +113,7 @@ import './Location.css';
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconSize12 iconClr"></i>
 			                    </div>*/}
-							  	<select className="custom-select form-control"  ref="state" placeholder="select" id="selectState">
+							  	<select className="custom-select form-control"   ref="state" placeholder="select" id="selectState">
 							    	<option disabled>-- State --</option>
 							    	<option>Maharashtra</option>
 							    	<option>Gujrat</option>
@@ -116,7 +129,7 @@ import './Location.css';
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconSize12 iconClr"></i>
 			                    </div>*/}
-							  	<select className="custom-select form-control "  ref="city" placeholder="select"  id="selectCity" >
+							  	<select className="custom-select form-control "   ref="city" placeholder="select"  id="selectCity" >
 							    	<option disabled>-- City --</option>
 							    	<option>Pune</option>
 							    	<option>Nashik</option>
@@ -148,7 +161,7 @@ import './Location.css';
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconClr"></i>
 			                    </div>*/}
-							    <select className="custom-select form-control" ref="subArea" placeholder="select" id="selectSubArea">
+							    <select className="custom-select form-control"   ref="subArea" placeholder="select" id="selectSubArea">
 							    	<option disabled>-- Select Subarea --</option>
 							    	<option>Magarpatta City</option>
 							    	<option>Satavwadi</option>
@@ -219,11 +232,11 @@ import './Location.css';
 const mapStateToProps = (state)=>{
 	return {
 		property_id     : state.property_id,
-		BasicInfo		 	: state.BasicInfo,
-		PropertyDetails		 	: state.PropertyDetails,
-		Financials		 	: state.Financials,
-		Amenities		 	: state.Amenities,
-		Availability		 	: state.Availability,
+		BasicInfo		: state.BasicInfo,
+		PropertyDetails	: state.PropertyDetails,
+		Financials		: state.Financials,
+		Amenities		: state.Amenities,
+		Availability	: state.Availability,
 		Location	 	: state.Location,		
 	}
 };
@@ -232,7 +245,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		redirectToPropertyDetails   : ()=> dispatch({type: "REDIRECT_TO_PROPERTY"}),
-		backToBasicInfo  				: ()=> dispatch({type: "BACK_TO_BasicInfo"}),
+		backToBasicInfo  			: ()=> dispatch({type: "BACK_TO_BASIC_INFO"}),
 	}
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Location));

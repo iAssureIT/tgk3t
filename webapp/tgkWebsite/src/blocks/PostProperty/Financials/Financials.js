@@ -18,7 +18,6 @@ import 'bootstrap/js/modal.js';
 		constructor(props){
 			super(props);
 			this.state = {
-				formshow :"form-3",
 				includecharges     :[],
 			};
 			
@@ -254,7 +253,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		redirectToAvailability  : ()=> dispatch({type: "REDIRECT_TO_AVAILABILITY"}),
-		backToAmenities  	        : ()=> dispatch({type: "BACK_TO_Amenities"}),
+		backToAmenities  	    : ()=> dispatch({type: "BACK_TO_AMENITIES"}),
 
 	}
 };

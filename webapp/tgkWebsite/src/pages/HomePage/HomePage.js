@@ -10,7 +10,6 @@ import PropertyCondition  		from '../../blocks/PropertyCondition/PropertyConditi
 import PopularPlace  			from '../../blocks/Profile/PopularPlace.js';
 import Description  			from '../../blocks/HomePageDescription/Description.js';
 
-
 import 'bootstrap/js/tab.js';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/js/modal.js';

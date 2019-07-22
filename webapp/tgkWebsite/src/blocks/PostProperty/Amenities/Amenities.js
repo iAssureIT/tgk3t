@@ -1,9 +1,8 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import $ 						from "jquery";
-import Availability 					from '../Availability/Availability.js';
-import Financials 					from '../Financials/Financials.js';
-import swal                     from 'sweetalert';
+import Availability 			from '../Availability/Availability.js';
+import Financials 				from '../Financials/Financials.js';
 import { Link }					from 'react-router-dom';
 import { Route , withRouter}    from 'react-router-dom';
 import { connect } 				from 'react-redux';
@@ -19,13 +18,11 @@ import 'bootstrap/js/modal.js';
 			super(props);
 			this.state = {
 				Amenities     :[],
-
 			};
 			
 		}
 		updateUser(event){
 			event.preventDefault();
-			console.log("abc");
 			const formValues = {
 
 				"Amenities"			:this.state.Amenities,
@@ -46,9 +43,6 @@ import 'bootstrap/js/modal.js';
 				});
 		}
 
-		closeModal(){
-			$("#klm").removeClass('klm');
-		}
 		totalInclude(e){
 
 		  var otherProp;
@@ -108,17 +102,17 @@ import 'bootstrap/js/modal.js';
 
 						      		 /> <i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Gas Pipeline
 						    </label>
-						    <label className="checkbox-inline col-lg-12 pt20 pl21">
+						    <label className="checkbox-inline col-lg-12 pt20 pl31">
 						      <input type="checkbox" 
-						      		 value="internetService" 
+						      		 value="internetServices" 
 						      		 id="3"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)}
 
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Internet Service 
+						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Internet Services 
 						    </label>
 
-						    <label className="checkbox-inline col-lg-10 pt20 pl25">
+						    <label className="checkbox-inline col-lg-9 pt20 ">
 						      <input type="checkbox"
 						      		 value="lift" 
 						      		 id="5"
@@ -138,7 +132,7 @@ import 'bootstrap/js/modal.js';
 							      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Air Conditioner
 							    </label>
 
-							    <label className="checkbox-inline col-lg-11 pt20 pl18 ">
+							    <label className="checkbox-inline col-lg-10 pt20 pl31 ">
 							      <input type="checkbox"
 							      		 value="intercom" 
 							      		 id="9"
@@ -231,16 +225,16 @@ import 'bootstrap/js/modal.js';
 
 						     <label className="checkbox-inline col-lg-12 pt20 pl10">
 						      <input type="checkbox" 
-						      		 value="internetGym" 
+						      		 value="internalGym" 
 						      		 id="12"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)}
 
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Internet Gym 
+						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Internal Gym 
 						    </label>
 						    
 
-						    <label className="checkbox-inline col-lg-11 pt20 pl0">
+						    <label className="checkbox-inline col-lg-10 pt20 pl11">
 						      <input type="checkbox" 
 						      		 value="park"
 						      		 id="14"
@@ -276,7 +270,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		redirectToFinancialDetails  : ()=> dispatch({type: "REDIRECT_TO_FINANCIAL"}),
-		backToPropertyDetails  	            : ()=> dispatch({type: "BACK_TO_PropertyDetails"}),
+		backToPropertyDetails  	    : ()=> dispatch({type: "BACK_TO_PROPERTY_DETAILS"}),
 	}
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Amenities));

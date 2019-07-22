@@ -18,31 +18,33 @@ import 'bootstrap/js/modal.js';
 		constructor(props){
 			super(props);
 			this.state = {
-				contactPerson       : "someone",
+				contactPerson       : "Someone",
 				available           :[
 					{"day" : "Everyday", "time" : "10:00AM - 7:00PM" },
 					{"day" : "Weekday", "time" : "10:00AM - 7:00PM" }
 				],
 			};
 		}
-		updateUser(event){
+		insertAvailability(event){
+			event.preventDefault();
 			const formValues = {
 				"contactPersonMobile" : this.refs.contactPersonMobile.value,
 				"availability" 		  : this.refs.availability.value,
 				"timeFrom" 		  	  : this.refs.timeFrom.value,
 				"timeTo" 		      : this.refs.timeTo.value,
         		"contactPerson"       : this.state.contactPerson,
-				"property_id" 		  : this.props.property_id
+				"property_id" 		  : this.props.property_id,
+				
+
 			};
 			console.log("Availability req = ",formValues);
 			axios
-				.patch('/api/properties/avalibilityPlans',formValues)
+				.patch('/api/properties/patch/availabilityPlan',formValues)
 				.then( (res) =>{
-					console.log(res);
+					console.log("availabilityPlan",res);
 					if(res.status == 200){
-						swal("wow","great job done!","success");
-					// this.props.history.push("/PropertyProfileView/"+this.props.property_id);
-						this.props.redirectToCongratsPage();
+						/*swal("wow","great job done!","success");*/
+						this.props.redirectToImageUpload();
 
 					}
 				})
@@ -191,7 +193,7 @@ import 'bootstrap/js/modal.js';
 		                     <i className="fas fa-rupee-sign iconSize12"></i>
 		                    </div>
 					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-					    <input type="" className="form-control" ref="timeFrom"  placeholder="From 10:00 AM"/>
+					    <input type="time" className="form-control" ref="timeFrom" placeholder="From 10:00 AM" />
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 					  	</div>
 					  </div>
@@ -204,7 +206,9 @@ import 'bootstrap/js/modal.js';
 		                     <i className="fas fa-rupee-sign iconSize12"></i>
 		                    </div>
 					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-					    <input type="text" className="form-control" ref="timeTo"  placeholder="To 09:00 PM"/>
+					    {/*<input type="text" className="form-control" ref="timeTo"  placeholder="To 09:00 PM"/>*/}
+					    <input type="time" className="form-control" ref="timeTo" placeholder="To 09:00 PM" />
+
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 					  	</div>
 					  </div>
@@ -263,9 +267,6 @@ import 'bootstrap/js/modal.js';
 			  	 	
 				</div>
 			</div>
-		
-		  
-		 
 		  
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -273,7 +274,7 @@ import 'bootstrap/js/modal.js';
 		       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23" onClick={this.backToFinancials.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 		  	</div>
 		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
-		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23"  onClick={this.updateUser.bind(this)}>Save & Next >></button>
+		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23"  onClick={this.insertAvailability.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 		  	</div>
 		  </div>
 		  
@@ -292,8 +293,8 @@ const mapStateToProps = (state)=>{
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		backToFinancials  	        : ()=> dispatch({type: "BACK_TO_Financials"}),
-		redirectToCongratsPage  : ()=> dispatch({type: "REDIRECT_TO_CONGRATS_PAGE"}),
+		backToFinancials  	        : ()=> dispatch({type: "BACK_TO_FINANCIALS"}),
+		redirectToImageUpload       : ()=> dispatch({type: "REDIRECT_TO_IMG_UPLOAD"}),
 
 
 	}

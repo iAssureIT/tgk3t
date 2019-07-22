@@ -2,9 +2,9 @@ import React , { Component }  from 'react';
 import axios 				  from 'axios';
 import $ 					  from "jquery";
 import swal                   from 'sweetalert';
-import { Link }					from 'react-router-dom';
-import { connect } 				from 'react-redux';
-import { Route , withRouter}    from 'react-router-dom';
+import { Link }				  from 'react-router-dom';
+import { connect } 			  from 'react-redux';
+import { Route , withRouter}  from 'react-router-dom';
 
 import './BasicInfo.css';
 import 'bootstrap/js/tab.js';
@@ -16,8 +16,7 @@ import 'bootstrap/js/modal.js';
 		constructor(props){
 			super(props);
 			this.state = {
-				// formshow         :"form-1",
-				transactionType  : "sell",
+				transactionType  : "Sell",
 				propertyHolder   : "",
 				propertType 	 : "",
 				// user_id 		 : localStorage.getItem("user_id"),
@@ -78,12 +77,6 @@ import 'bootstrap/js/modal.js';
 					console.log("error = ", error);
 					// alert("Something Went wrong")
 				});
-
-			
-		}
-
-		closeModal(){
-			$("#abc").removeClass('in');
 		}
 		selectType(event){
 			var selectedData = event.target.getAttribute('data-checked');
@@ -152,55 +145,53 @@ import 'bootstrap/js/modal.js';
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">	
 				<div className="col-lg-7 col-md-8 col-sm-12 col-xs-12">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<h3> uid = {this.props.uid} </h3>
+						{/*<h3> uid = {this.props.uid} </h3>*/}
 				  	 	<label>I am</label> 
 				  	 </div>
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm"   >
 				    	<div className="col-lg-1 sellerType1"  >
-					    <label className="radio-inline ">
-					      <input type="radio" 
-					      		 value="owner" 
-					      		 className="FrRadio" 
-					      		 id="radio-example1"
-					      		 checked={this.state.propertyHolder === "owner"}
-               					 onChange={this.radioChange} />
+						    <label className="radio-inline ">
+						      <input type="radio" 
+						      		 value="owner" 
+						      		 className="FrRadio" 
+						      		 id="radio-example1"
+						      		 checked={this.state.propertyHolder === "owner"}
+	               					 onChange={this.radioChange} />
 
-				  			<i className="fa fa-users fa-1x logo1"></i>
-					    </label>
+					  			<i className="fa fa-users fa-1x logo1"></i>
+						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 sellerType2"  >
-					    <label className="radio-inline ">
-					      <input type="radio" 
-					      		 value="careTaker" 
-					      		 className="FrRadio" 
-					      		 id="radio-example2"
-					      		 checked={this.state.propertyHolder === "careTaker"}
-               					 onChange={this.radioChange}/>
+					    <div className="col-lg-1 col-lg-offset-3 sellerType2"  >
+						    <label className="radio-inline ">
+						      <input type="radio" 
+						      		 value="careTaker" 
+						      		 className="FrRadio" 
+						      		 id="radio-example2"
+						      		 checked={this.state.propertyHolder === "careTaker"}
+	               					 onChange={this.radioChange}/>
 
-				  			<i className="fa fa-users fa-1x logo1"></i>
-					    </label>
+					  			<i className="fa fa-users fa-1x logo1"></i>
+						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 sellerType3"   >
-					    <label className="radio-inline ">
-					      <input type="radio"
-					      		 value="builder" 
-					      		 className="FrRadio" 
-					      		id="radio-example3"
-					      		 checked={this.state.propertyHolder === "builder"}
-               					 onChange={this.radioChange} 
-					      		 />
-				  			<i className="fa fa-users fa-1x logo1"></i>
-					    </label>
+					    <div className="col-lg-1 col-lg-offset-3 sellerType3"   >
+						    <label className="radio-inline ">
+						      <input type="radio"
+						      		 value="builder" 
+						      		 className="FrRadio" 
+						      		id="radio-example3"
+						      		 checked={this.state.propertyHolder === "builder"}
+	               					 onChange={this.radioChange} 
+						      		 />
+					  			<i className="fa fa-users fa-1x logo1"></i>
+						    </label>
 					    </div>
-						
 					</div>
-
 					  	<div className="col-lg-12 mb-40">
 					  			<span className=""> Owner</span>
-					  			<span className="ml-59"> Care Taker</span>
-					  			<span className="ml-53"> Builder</span>
+					  			<span className="ml-78"> Care Taker</span>
+					  			<span className="ml-76"> Builder</span>
 					  	</div>
          		
 					  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
