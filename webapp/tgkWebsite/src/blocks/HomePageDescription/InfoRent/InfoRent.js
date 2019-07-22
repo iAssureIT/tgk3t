@@ -1,18 +1,17 @@
 import React , { Component }	from 'react';
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import './Description.css';
+import './InfoRent.css';
 /*var formValues=[];*/
-export default class Description extends Component {
+export default class InfoRent extends Component {
 
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 divContainer">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt40">
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad divContainer">
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-
+							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-success">
 								<img src="images/15.png" />
 								<br/>
 								<label className="mt10">Personalised Service</label>
@@ -24,7 +23,7 @@ export default class Description extends Component {
 					</div>
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-success">
 								<img src="images/16.png" />
 
 								<br/>
@@ -37,7 +36,7 @@ export default class Description extends Component {
 					</div>
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-success">
 								<img src="images/17.png" />
 								<br/>
 								<label className="mt10">Unbelivable Discount</label>
@@ -48,7 +47,7 @@ export default class Description extends Component {
 					</div>
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-success">
 								<img src="images/18.png" />
 								<br/>
 								<label className="mt10">Best Properties in India</label>

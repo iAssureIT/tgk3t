@@ -15,6 +15,7 @@ import Amenities                from '../PostProperty/Amenities/Amenities.js';
 import Availability             from '../PostProperty/Availability/Availability.js';
 import Location                 from '../PostProperty/Location/Location.js';
 
+
 import 'bootstrap/js/tab.js';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/js/modal.js';
@@ -27,7 +28,9 @@ class BannerwithModal extends Component {
 	constructor(){
 		super();
 		this.state = {
-			
+			inputData:[],
+			proprtyType:"",
+			transactionType:"",
 		}
 	}
 
@@ -35,18 +38,72 @@ class BannerwithModal extends Component {
  		$(".modal-backdrop").remove();		
 	}
 
+	componentDidMount() {
+		this.setState({
+			propertyType : "Residential",
+			transactionType : "Sell",
+		},()=>{
+			 axios
+	        .get('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType)
+	        .then( (res) =>{
+	          this.setState({
+	          	inputData : res.data,
+	          },()=>{
+	          	this.props.inputData(this.state.inputData);
+	          	console.log("inputData",this.state.inputData);
+	          })
+
+	        })
+	        .catch((error) =>{
+	          console.log("error = ", error);
+	        });	
+		})
+	}
+
+	getPropertyDetails(event,){
+		event.preventDefault();
+		this.setState({
+			propertyType : $(event.target).attr('proprtyType'),
+			transactionType : $(event.target).attr('transactionType'),
+		},()=>{
+			 axios
+	        .get('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType)
+	        .then( (res) =>{
+	          this.setState({
+	          	inputData : res.data,
+	          },()=>{
+	          	this.props.inputData(this.state.inputData);
+	          	console.log("inputData",this.state.inputData);
+	          })
+
+	        })
+	        .catch((error) =>{
+	          console.log("error = ", error);
+	        });
+		})
+	}
 
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb90">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb90 ">
 				<div className=" col-lg-12  ">
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
 				</div>
-				<div className="col-lg-6 col-lg-offset-4 mt-10">
-					<button id="Buy" 		className="col-lg-3 btn btn-bg" >Buy</button>
-					<button id="Rent" 		className="col-lg-3 btn btn-bg ml-10">Rent</button>
-					<button id="Commercial" className="col-lg-3 btn btn-bg ml-10">Commercial</button>
+				<div className="col-lg-6 col-lg-offset-4 mt-10 noPad">
+					<div className=" col-lg-12 noPad">
+					  <ul className="nav nav-pills textC noPad" role="tablist">
+					    <li className="nav-item col-lg-3 active">
+					      <a className="nav-link active textB  btn btn-bg" proprtyType="Residential" transactionType="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
+					    </li>
+					    <li className="nav-item col-lg-3   ">
+					      <a className="nav-link active textB btn btn-bg" proprtyType="Residential" transactionType="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
+					    </li>
+					    <li className="nav-item col-lg-3   ">
+					      <a className="nav-link active textB btn btn-bg" proprtyType="Commercial" transactionType="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
+					    </li>	    
+					  </ul>
+				 	</div>
 				</div>
 				<div className="col-lg-5 col-lg-offset-3">
 					<div className="col-lg-10">
@@ -77,19 +134,20 @@ class BannerwithModal extends Component {
 				</div>
 
 
-			{/*=== Modal starts here ===*/}
-				<div id="postPropertyModal" className="modal fade" role="dialog">
-				  <div className="modal-dialog modal-lg">
+				{/*=== Modal starts here ===*/}
+				<div>
+					<div id="postPropertyModal" className="modal fade" role="dialog">
+					  <div className="modal-dialog modal-lg">
 
-				    <div className="modal-content">
-				      <div className="modal-header">
-				        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
-				        <h4 className="modal-title">
-				        	<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>
-				        </h4>
-				      </div>
+					    <div className="modal-content">
+					      <div className="modal-header">
+					        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
+					        <h4 className="modal-title">
+					        	<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>
+					        </h4>
+					      </div>
 
-				      <div className="modal-body col-lg-12">
+					      <div className="modal-body col-lg-12">
 
 						{ this.props.LoginMobNum 	? <LoginMobNum /> 	  : null }
 						{ this.props.LoginOtp 		? <LoginOtp /> 		  : null }
@@ -101,16 +159,19 @@ class BannerwithModal extends Component {
 						{ this.props.Availability 	? <Availability /> 	  : null }
 						{ this.props.Location		? <Location /> 		  : null }
 
-				      </div>
 
-				      <div className="modal-footer">
-				        {/*<button type="button" class="btn btn-primary" data-dismiss="modal">Next</button>*/}
-				      </div>
+					      </div>
 
-				    </div>
+					      <div className="modal-footer">
+					        {/*<button type="button" class="btn btn-primary" data-dismiss="modal">Next</button>*/}
+					      </div>
 
-				  </div>
+					    </div>
+
+					  </div>
+					</div>
 				</div>
+			
 			</div>
 		);
 	}

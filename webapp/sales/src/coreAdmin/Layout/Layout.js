@@ -28,6 +28,7 @@ import CompanySetting from '../companysetting/Components/CompanySetting.js';
 import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 import Operation from '../../salesAgent/operations/Operation.js';
+import Profile from '../../salesAgent/operations/Profile/PropertyProfileView.js';
 
 
 
@@ -81,7 +82,7 @@ componentDidMount(){
 
   render(){
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===true){
+    if(this.state.loggedIn===false){
       return(
             <div className="App container-fluid">
                 <div className="row">
@@ -105,6 +106,7 @@ componentDidMount(){
                           <Route path="/companysetting" component={CompanySetting} exact />
 
                           <Route path="/operation" component={Operation} exact />
+                          <Route path="/profile/:id" component={Profile} exact />
                           </Switch>        
                       </Router>
                     </div>

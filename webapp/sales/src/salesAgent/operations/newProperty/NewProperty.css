@@ -111,3 +111,7 @@ input[type=checkbox]:checked + .check-box::before,
   height: 20px;
   animation: dothatopcheck 0.4s ease 0s forwards;
 }
+
+.propertyBox{
+  cursor: pointer;
+}

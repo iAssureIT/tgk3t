@@ -1,5 +1,5 @@
 .BoxSize{
-	height: 672px;
+	height: 100vh;
 	background-image: url("/images/TGK_Post.png");
 }
 
@@ -34,7 +34,7 @@
 .hSearch{
 	margin-top: 21px;
     margin-left: 93px;
-    width: 400px;
+    width: 444px;
     height: 43px;
 }
 .S-img{
@@ -108,4 +108,9 @@
     top: 100px;
     font-size: 22px;
     cursor:pointer;
+}
+
+.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+    color: #000 !important;
+    background-color: #f5ad3e !important;
 }

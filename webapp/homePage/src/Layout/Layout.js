@@ -26,6 +26,7 @@ import TransactionPage from '../components/TransactionPage/TransactionPage.js';
 import Location from '../components/Location/Location.js';
 import PropertyProfileView from '../components/webPage/Profile/PropertyProfileView.js';
 import WebPage from '../components/webPage/HomePage/HomePage.js';
+import MyPostedProperties from '../components/MyProperties/MyPostedProperties/myPostedProperties.js';
 
  class Layout extends Component{
 
@@ -54,7 +55,7 @@ import WebPage from '../components/webPage/HomePage/HomePage.js';
               <Route path="/Location"       exact strict component={Location}  />
               <Route path="/PropertyProfileView"       exact strict component={PropertyProfileView}  />
               <Route path="/WebPage"       exact strict component={WebPage}  />
-
+              <Route path="/MyPostedProperties"       exact strict component={MyPostedProperties}  />
             </Switch>        
           </Router>
         </div>

@@ -5,7 +5,7 @@ import './Query.css';
 export default class Query extends Component {
 	render() {
 		return (
-			<div className="col-lg-12 qBoxSize ">
+			<div className="col-lg-12 qBoxSize pageBox">
 				<div className="col-lg-2" >
 				<img src="images/profile.png" className="rounded-circle qImgSize" alt=""  /> 
 				</div>
