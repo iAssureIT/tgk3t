@@ -217,7 +217,7 @@ class CompanyInformation extends Component{
         .then( (response)=> {
           // handle success
           console.log("this is response===>>>",response);
-          swal("Good job!", "Company Information Submited!", "success");
+          swal("Good job!", "Company Information submitted Successfully", "success");
           this.setState({
         
           companyName             : "",
@@ -256,7 +256,7 @@ class CompanyInformation extends Component{
         .then( (response)=> {
           // handle success
           console.log("this is response===>>>",response);
-          swal("Good job!", "Company Information Updated Successfully!", "success");
+          swal("Good job!", "Company Information Updated Successfully", "success");
 
            // after update show updated data
                         var companyId = 1;
@@ -291,7 +291,7 @@ class CompanyInformation extends Component{
         .catch(function (error) {
           // handle error
           console.log(error);
-          swal("", "Company Information submition failed!", "Danger")
+          swal("", "Company Information updation failed!", "Danger")
 
         });
     }
@@ -321,17 +321,17 @@ class CompanyInformation extends Component{
        break;
 
        case 'companyMobile' : 
-       formerrors.companyMobile = companymobileRegex.test(value) && value.length>0 ? '' : "Please Enter Numbers only";
+       formerrors.companyMobile = companymobileRegex.test(value) && value.length>0 ? '' : "Please enter a valid Contact Number";
        break;
 
        case 'companyEmailID' : 
-        formerrors.companyEmailID = emailRegex.test(value)  && value.length>0? "":"Invalid EmailID";
+        formerrors.companyEmailID = emailRegex.test(value)  && value.length>0? "":"Please enter a valid Email ID";
        break;
       //  case "email" : 
       //  formErrors.email = emailRegex.test(value)? "":"Please enter valid mail address";
       //  break;
       case 'companywebsitename' : 
-         formerrors.companywebsitename = companywebsiteRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+         formerrors.companywebsitename = companywebsiteRegex.test(value)  && value.length>0 ? '' : "Please enter a valid Company Website";
       break;
 
        case 'companyAddress' : 

@@ -4,6 +4,7 @@ import $ from "jquery";
 import swal from 'sweetalert';
 
 import axios from 'axios';
+import InputMask  from 'react-input-mask';
 
 // import "../../../API";
 const formValid = formerrors=>{
@@ -48,6 +49,8 @@ class CompanyLocation extends Component{
       allPosts : null,
         allLoc   : null,
         editlocId : null,
+
+        required : "",
 
       formerrors :{
         companylocation     : "",
@@ -94,8 +97,9 @@ class CompanyLocation extends Component{
        formerrors.companylocation = companylocation.test(value)  && value.length>0 ? '' : "Please Enter valid Input";
        break;
 
-       case 'companyMobile' : 
-       formerrors.companyMobile = companycontact.test(value)  && value.length>0 ? '' : "Please Enter Numbers only";
+       case 'companyMobile' :
+
+       formerrors.companyMobile = companycontact.test(value)? '' : "Please enter a valid Contact Number ";
        break;
 
        case 'companyArea' : 
@@ -103,8 +107,10 @@ class CompanyLocation extends Component{
        break;
 
        case 'companyArea1' : 
-        formerrors.companyArea1 = numberRegex.test(value)   && value.length>0? '' : "Please Enter valid Input";
-       break;
+       
+          formerrors.companyArea1 = numberRegex.test(value)   && value.length>0? '' : "Please Enter valid Input";
+          
+         break;
 
        case 'blockName' : 
         formerrors.blockName = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid Input";
@@ -426,11 +432,17 @@ selectType(event){
     },()=>{
       if(this.state.companyLocation  === 'Head Office' || this.state.companyLocation  === 'Sales Agent Office' ){
         $('.subjectRow').css({'display':'none'});
+         this.setState({
+          required : "",
+        })
        /* this.state.formerrors.companyArea1 = "999";
 
         console.log("this.state.companyArea1", this.state.formerrors.companyArea1);*/
       }else if(this.state.companyLocation  === 'Field Agent Office'){
         $('.subjectRow').css({'display':'block'});
+        this.setState({
+          required : "required",
+        })
       }
     });
     
@@ -609,7 +621,7 @@ selectType(event){
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Contact Number</label><span className="astrick">*</span>
-                            <input id="companycontact" value={this.state.companycontact} onChange={this.handleChange} data-text="companyMobile"  type="text" name="companycontact" title="Please enter valid number" className="form-control companyNo inputValid " required/>
+                              <InputMask  mask="9999999999"  id="companycontact" value={this.state.companycontact} onChange={this.handleChange} data-text="companyMobile"  type="text" name="companycontact" title="Please enter valid number" className="form-control companyNo inputValid " required/>
                             {this.state.formerrors.companyMobile &&(
                               <span className="text-danger">{formerrors.companyMobile}</span> 
                             )}
@@ -666,7 +678,7 @@ selectType(event){
                         <div className="form-group margin15">
                          <label className="control-label statelabel locationlabel" >Pincodes Covered</label><span className="astrick">*</span>
                            
-                       <textarea rows="2" cols="37" className="form-control" data-text="companyArea1" id="pincodeArea" name="pincodeArea" ref="pincodeArea" value={this.state.pincodeArea} onChange={this.handleChange} required>
+                       <textarea rows="2" cols="37" className="form-control" data-text="companyArea1" id="pincodeArea" name="pincodeArea" ref="pincodeArea" value={this.state.pincodeArea} onChange={this.handleChange}  >
                         </textarea>
                        {/* <input value={this.state.companyArea1} onChange={this.handleChange} type="text" data-text="companyArea1" id="companyArea" ref="companyArea" name="companyArea" className="form-control CLcompanylandmark inputValid" />
                         */}       

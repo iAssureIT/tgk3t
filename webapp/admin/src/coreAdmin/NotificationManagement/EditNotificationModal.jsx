@@ -20,6 +20,9 @@ class EditNotificationModal extends Component{
 	   	'optionA'			: '',
 	   	'messageError' 		: '',
 	   	shown 				: true,
+	   	emailTemplatesList 			: "",
+		notificationTemplatesList 	: "",
+		smsTemplatesList 			: "",
 	  };
 
 	    this.handleChange = this.handleChange.bind(this);
@@ -32,6 +35,7 @@ class EditNotificationModal extends Component{
 			'subject'			: nextProps.data.subject,
 			'content'			: nextProps.data.content,
 		});
+		// this.props.sendData();
 	}
 
 	handleChange(event){
@@ -144,8 +148,26 @@ class EditNotificationModal extends Component{
 						shown : false,
 					});
 					console.log('response --==',response);
+					if (templateType  == "Email") {
+						this.props.emailGetData(editId)
+
+					}
+					if (templateType  == "Notification") {
+						this.props.notiGetData(editId)
+
+					}
+
+					if (templateType  == "SMS") {
+						this.props.smsGetData(editId)
+
+					}
+
+
+					$('#editNotifyModal-'+this.props.emailNot).hide();
+				    $('.modal-backdrop').remove();
+                   
 				})
-				.catch(function (error) {
+				.catch((error)=> {
 					
 					swal(" Sorry! Template can't update successfully","", "error");
 					this.setState({
@@ -153,9 +175,6 @@ class EditNotificationModal extends Component{
 					});
 				console.log('error============',error);
 				})
-				.finally(function () {
-				// always executed
-				});
 			}
 		}else{
 			this.setState({

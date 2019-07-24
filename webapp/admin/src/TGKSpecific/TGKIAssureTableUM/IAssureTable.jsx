@@ -36,6 +36,7 @@ class IAssureTableUM extends Component {
 		    "resetPasswordConfirm" 		: "",
 		    show 						: true,
 		    selectedUser 				:[],
+		    allid						:null,
 		    // "usernames"					: "",
 		}
 		this.deleteExam = this.deleteExam.bind(this);
@@ -361,7 +362,7 @@ class IAssureTableUM extends Component {
 	}
 	tableSearch(){
     	var searchText = this.refs.tableSearch.value;
-
+    	console.log("here search data",searchText);
     	var formValues =
     	{
 			searchText : searchText,
@@ -637,17 +638,19 @@ class IAssureTableUM extends Component {
 				if(password.length >= 6){
 					axios.put('/api/users/resetpwd/'+ newID, formValues)
 				      .then( (res)=>{
-				      	console.log("response",res);
+				      	console.log("response-------------",res);
 				        // if(res.status == 200){
 				          swal("Password has been changed successfully!!","", "success");
 				          // this.state["usernames"+id] 				= '';
-				          this.refs.resetPassword.value			= '';
+				          this.refs.resetPassword.value				= '';
 				          this.refs.resetPasswordConfirm.value  	= '';
 				        // }
 
 				        this.setState({
 				        	show :false,
 				        });
+
+				         $('.modal-backdrop').remove();
 				      })
 				      .catch((error)=>{
 				        console.log("error = ",error);
@@ -662,7 +665,7 @@ class IAssureTableUM extends Component {
 					swal("Password should be at least 6 characters long","","error");				
 				}
 			}else{
-				swal("Password doesn't match with confirm password","","error");
+				swal("Password don't match","","error");
 			}
 	}
 
@@ -701,6 +704,19 @@ class IAssureTableUM extends Component {
  checkAll(event) {
       if(event.target.checked){
         $('.userCheckbox').prop('checked',true);
+        // var id = $('.userCheckbox').prop('id');
+        let allid =[];
+        allid = this.state.tableData.map((a,i)=>{
+        	return a._id;
+        });
+
+        this.setState({
+        	allid : allid,
+        })
+
+        this.props.selectedUser(this.state.allid);
+
+        console.log("here id====================",this.state.allid);
       }else{
         $('.userCheckbox').prop('checked',false);
       }
@@ -712,9 +728,10 @@ class IAssureTableUM extends Component {
 		var data = event.currentTarget.id;
 		console.log("data", data);
 
+		// var all = this.state.allid;
 		var otherProp;
 		var selectedUser = this.state.selectedUser;
-		if(event.target.checked){
+		if(event.target.checked  ){
 			otherProp = event.target.value;
 			selectedUser.push(event.target.value);
 
@@ -885,40 +902,19 @@ class IAssureTableUM extends Component {
 
 																				                <div className="FormWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
 																				                    <form id={value._id} >
-																				                       {/* <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12 resetInptFld">
-																				                            <span className="blocking-span" id="resetPwd">
-																				                               <input type="password" value={this.state["resetPassword"+value._id]} onChange={this.handleChange}className="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox" ref="resetPassword"    name={"resetPassword"+value._id} id={"resetPassword"+value._id}  autoComplete="off" />
-																				                               <span className="floating-label">
-																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
-																				                                    New Password 
-																				                               </span>                              
-																				                            </span>
-																				                            
-																				                        </div>*/}
-																				                       { /*<div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-12">
-																				                            <span className="blocking-span" id="resetConPwd">
-																				                               <input type="password" value={this.state["resetPasswordConfirm"+value._id]} onChange={this.handleChange} assName="col-lg-12 col-md-12 col-sm-12 col-xs-12 formFloatingLabels signUpTextBox inputTextPass outlinebox"  ref="resetPasswordConfirm" name={"resetPasswordConfirm"+value._id} id={"resetPasswordConfirm"+value._id}  autoComplete="off"/>
-																				                               <span className="floating-label">
-																				                                    <i className="fa fa-lock signupIconFont" aria-hidden="true"></i> 
-																				                                    Confirm Password 
-																				                               </span>                              
-																				                            </span>
-																				                            <div className="showHideResetDiv showiconUM">
-																				                              <i className="fa fa-eye showPwdreset" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-																				                              <i className="fa fa-eye-slash hidePwdreset" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-																				                            </div>
-																				                        </div>
-*/}
+																				                       
 
 
 																				                        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent marBtm">
 																											    <div className="form-group form-group1 fltlft input-group col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent">
 																										   		
-
+																											    	<label className="formLable lefttxt">New Password 
+																											    		<label className="requiredsign">*</label>
+																											    	</label>
+                                                         
 																								                    <span className="blocking-span noIb">
-																									                    <input type="password" value={this.state["resetPassword"+value._id]} onChange={this.handleChange} className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="resetPassword"  name={"resetPassword"+value._id} id={"resetPassword"+value._id}  autoComplete="off" required/>
-																									                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> New Password</span>                 
-																									                  </span>
+																									                    <input type="password" value={this.state["resetPassword"+value._id]} onChange={this.handleChange} className="form-control pass border3 oesSignUpForm  inputTextPass " ref="resetPassword"  name={"resetPassword"+value._id} id={"resetPassword"+value._id}  autoComplete="off" required/>
+																									                </span>   
 																									                <div className="showHideSignDiv">
 																									                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
 																									                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
@@ -929,9 +925,13 @@ class IAssureTableUM extends Component {
 																												</div>
 																										   		<div className="form-group form-group1 fltlft input-group  col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent">
 																										   			
+																										   			<label className="formLable lefttxt"> Confirm Password 
+																											    		<label className="requiredsign">*</label>
+																											    	</label>
+
 																								                     <span className="blocking-span noIb">
-																									                    <input type="password" value={this.state["resetPasswordConfirm"+value._id]} onChange={this.handleChange} className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="resetPasswordConfirm" name={"resetPasswordConfirm"+value._id} id={"resetPasswordConfirm"+value._id}  autoComplete="off" required/>
-																									                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span>                 
+																									                    <input type="password" value={this.state["resetPasswordConfirm"+value._id]} onChange={this.handleChange} className="form-control pass border3 oesSignUpForm  inputTextPass " ref="resetPasswordConfirm" name={"resetPasswordConfirm"+value._id} id={"resetPasswordConfirm"+value._id}  autoComplete="off" required/>
+																							{/*		                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span> */ }               
 																									                  </span>
 																									                <div className="showHideSignDiv">
 																									                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>

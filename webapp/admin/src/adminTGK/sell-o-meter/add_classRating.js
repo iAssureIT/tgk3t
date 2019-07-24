@@ -61,6 +61,7 @@ export default class add_sellometer extends Component {
                 this.setState({
                   allPosts : postsdata,
                 });
+                 this.props.selectedData(this.state.allPosts);
               }
             )
             .catch((error)=>{

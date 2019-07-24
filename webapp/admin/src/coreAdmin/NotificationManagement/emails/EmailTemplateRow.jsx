@@ -20,6 +20,12 @@ class EmailTemplateRow extends Component{
 	  };
 
       this.editEmailNotify = this.editEmailNotify.bind(this);
+      this.emailGetData    = this.emailGetData.bind(this);
+    }
+    componentWillReceiveProps(nextProps){
+    	if(nextProps.sendProps){
+    		// this.call();
+    	}
     }
 	deleteEmailTemplate(event){
 		event.preventDefault();
@@ -49,7 +55,13 @@ class EmailTemplateRow extends Component{
 		})
 		.then((response)=> {
 	    	console.log('delete response',response);
-	    	swal("Template deleted successfully","", "success");
+	    	swal("Template deleted successfully","", "success"); 
+
+	    	console.log("here response message",response.data.message);
+	    	if(response.data.message=="Master notification deleted")
+	    	{
+	    	this.props.deleteData("Email",id);
+    		}
 
 		}).catch((error)=> {
 		    // handle error
@@ -70,8 +82,11 @@ class EmailTemplateRow extends Component{
 		// });
 
 	}
+	emailGetData =(id)=>{
+    this.props.getEmailData(id);
+	}
 	render(evt) {
-			// console.log('this.props.emailtemplateValues',this.props.emailtemplateValues, this.props.emailtemplateValues._id);
+			console.log('this.props.emailtemplateValues',this.props.emailtemplateValues, this.props.emailtemplateValues._id);
 			var text = this.props.emailtemplateValues.content ? this.props.emailtemplateValues.content : ''; 
 			// console.log("textes=",text);
 			var regex = new RegExp(/(<([^>]+)>)/ig);
@@ -98,7 +113,7 @@ class EmailTemplateRow extends Component{
 						</div>
 						
 					</div>
-					<EditNotificationModal emailNot={this.props.emailtemplateValues._id} data={this.props.emailtemplateValues}/>
+					<EditNotificationModal  emailNot={this.props.emailtemplateValues._id} emailGetData={this.emailGetData.bind(this)} data={this.props.emailtemplateValues}/>
 
 					<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.emailtemplateValues._id}-rm`}  role="dialog">
 	                    <div className=" modal-dialog adminModal adminModal-dialog">
@@ -128,22 +143,7 @@ class EmailTemplateRow extends Component{
 	                    </div>
 	               </div>
 
-					{/*<div className="inputrow">
-						<div className="col-lg-10 col-md-12 col-sm-12 col-xs-12">
-							<div className="form-group">
-							 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Subject<span className="astrick">*</span>:</label>     						
-						        <input type="text"  name="subject" className="subject noBorderBox col-lg-12 col-md-12 col-sm-12 col-xs-12" value={this.props.emailtemplateValues.subject} readOnly/>
-							</div>	
-						</div>
-					</div>
-					<div className="inputrow"> 
-						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							<div className="form-group">
-							 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Message<span className="astrick">*</span>:</label>     						
-							 <textarea className="form-control noBorderBox textAreaBox" rows="5" value={text} readOnly></textarea>
-							</div>	
-						</div>
-					</div>*/}
+					
 
 					<div className="inputrow">
 						<div className="col-lg-10 col-md-12 col-sm-12 col-xs-12">
@@ -157,7 +157,7 @@ class EmailTemplateRow extends Component{
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div className="form-group">
 							 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Message:</label>     						
-							 <p className="textAreaBox">{text}</p>
+							 <p  dangerouslySetInnerHTML={{ __html:text}} className="textAreaBox"></p>
 							</div>	
 						</div>
 					</div>

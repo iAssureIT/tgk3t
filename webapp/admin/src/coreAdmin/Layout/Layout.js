@@ -25,6 +25,8 @@ import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
 import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
 // import UMListOfUsers from '../userManagement/UM/UMListOfUsers.js';
 import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
+import UMListOfEmp from '../../TGKSpecific/TGKuserManagement/UM/OfficeEmpList.js';
+
 // import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
 import EditUserProfile from '../../TGKSpecific/TGKuserManagement/UM/EditUserProfile.js';
 import UMRolesList from '../userManagement/Roles/UMRolesList.js';
@@ -128,6 +130,7 @@ componentDidMount(){
                       */} <Router>
                           <Switch>
                           <Route path="/umlistofusers" component={UMListOfUsers} exact />
+                          <Route path="/umlistofemp" component={UMListOfEmp} exact />
 
                           <Route path="/umroleslist" component={UMRolesList} exact />
                           <Route path="/edituserprofile/:id" component={EditUserProfile} exact />

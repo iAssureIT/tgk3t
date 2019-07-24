@@ -51,15 +51,14 @@ class sellOMeter extends Component {
 
 	}
 
-	getdata(data){
-  			console.log("getdata",data);
-  			var allPosts = this.state.allPosts;
-  			allPosts.push(data);
-  			this.setState({
-  				allPosts:allPosts
-  			})
+	selectedData(data){
+		this.setState({
+			allPosts : data,
+		})
 
-  		}
+		console.log("here full data in props ______________________________",this.state.allPosts);
+	}
+	
 
   		deleteData(event){
   			event.preventDefault();
@@ -179,6 +178,24 @@ class sellOMeter extends Component {
 
 
     render() {
+
+    var cityName = this.state.city;
+    var areaName = this.state.area;
+    var subareaName = this.state.subarea;
+    var societyName = this.state.society;
+    var propclassName = this.state.propertyClass;   
+    console.log("cityName",cityName); 
+
+    if(cityName != null &&  areaName != null && subareaName != null && societyName != null)
+    {
+       var first  = cityName.toUpperCase().slice(0,2);
+       var second = areaName.toUpperCase().slice(0,2);
+       var third  = subareaName.toUpperCase().slice(0,2);
+       var forth  = societyName.toUpperCase().slice(0,2);
+
+       this.state.index = first+second+third+forth;
+    }
+
         return (
             <div> 
 
@@ -188,13 +205,13 @@ class sellOMeter extends Component {
 	                        <div className="">
 	                            <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
 	                            	<div className=" col-lg-1 col-md-1 col-xs-1 col-sm-1 box-header with-border text-center">
-                                         <h4 className="weighttitle"><a href="/UMListOfUsers"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>
+                                         <h4 className="weighttitle"><a href="/"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>
                                     </div>
                                     <div className=" col-lg-11 col-md-11 col-xs-11 col-sm-11 box-header with-border">
-                                         <h4 className="weighttitle">List of Data</h4>
+                                         <h4 className="weighttitle">Property Indexation</h4>
                                     </div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addRolesInWrap">
-											<Add_sellOMeter getdata={this.getdata.bind(this)} />
+											<Add_sellOMeter selectedData={this.selectedData.bind(this)}/>
 										<div className="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<table className="table iAssureITtable-bordered table-striped table-hover">
 												<thead className="tempTableHeader">

@@ -42,15 +42,14 @@ class masterData extends Component {
 
 	}
 
-	getdata(data){
-  			console.log("getdata",data);
-  			var allPosts = this.state.allPosts;
-  			allPosts.push(data);
-  			this.setState({
-  				allPosts:allPosts
-  			})
+	selectedData(data){
+		this.setState({
+			allPosts : data,
+		})
 
-  		}
+		console.log("here full data in props ______________________________",this.state.allPosts);
+	}
+	
 
   		deleteAmenity(event){
   			event.preventDefault();
@@ -163,13 +162,13 @@ class masterData extends Component {
 	                        <div className="">
 	                            <div className="box col-lg-12 col-md-12 col-xs-12 col-sm-12">
 	                            	<div className=" col-lg-1 col-md-1 col-xs-1 col-sm-1 box-header with-border text-center">
-                                         <h4 className="weighttitle"><a href="/UMListOfUsers"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>
+                                         <h4 className="weighttitle"><a href="/"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>
                                     </div>
                                     <div className=" col-lg-11 col-md-11 col-xs-11 col-sm-11 box-header with-border">
                                          <h4 className="weighttitle">List of Amenities</h4>
                                     </div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addRolesInWrap">
-											<Add_data getdata={this.getdata.bind(this)} />
+											<Add_data selectedData={this.selectedData.bind(this)}/>
 										<div className="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<table className="table iAssureITtable-bordered table-striped table-hover">
 												<thead className="tempTableHeader">

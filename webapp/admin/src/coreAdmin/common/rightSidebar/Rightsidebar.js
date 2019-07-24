@@ -67,6 +67,7 @@ componentDidMount(){
                         </a>
                         <ul className="collapse list-unstyled" id="userman">
                             <li><a href="/umlistofusers">List of Users</a></li>
+                           <li><a href="/umlistofemp">List of Employee</a></li>
                            
                         </ul>
                     </li>

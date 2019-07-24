@@ -13,7 +13,7 @@ export default class add_sellometer extends Component {
     constructor(props) {
     super(props);
     this.state = {
-       
+             allPosts : [],
 
       }     
        this.handleChange = this.handleChange.bind(this);
@@ -51,11 +51,17 @@ export default class add_sellometer extends Component {
       .then( (res)=>{
           console.log("submit ");
           swal("Data added successfully", "", "success");
-          this.refs.city.value = '';
+          this.state.city = '';
           this.refs.area.value = '';        
           this.refs.subarea.value = '';        
           this.refs.society.value = '';        
           this.refs.propertyClass.value = '';
+
+
+          this.state.area = "";
+          this.state.subarea = "";
+          this.state.society = "";
+          this.state.propertyClass = "";
           this.state.index ='';      
 
           axios
@@ -68,6 +74,7 @@ export default class add_sellometer extends Component {
               this.setState({
                 allPosts : postsdata,
               });
+               this.props.selectedData(this.state.allPosts);
             }
           )
           .catch((error)=>{
@@ -90,17 +97,24 @@ export default class add_sellometer extends Component {
 	
 
 	render(){
-    // var cityName = this.state.city;
-    // var areaName = this.state.area;
-    // var subareaName = this.state.subarea;
-    // var societyName = this.state.society;
-    // var propclassName = this.state.propertyClass;   
-    // console.log("cityName",cityName); 
-    // if(cityName!=null && areaName != null && subareaName != null && societyName != null && propclassName != null)
-    // {
-    //   this.state.index = "PUHDMANA";
-    // console.log("all data filled");
-    // }
+    var cityName = this.state.city;
+    var areaName = this.state.area;
+    var subareaName = this.state.subarea;
+    var societyName = this.state.society;
+    var propclassName = this.state.propertyClass;   
+    console.log("cityName",cityName); 
+
+    if(cityName != null &&  areaName != null && subareaName != null && societyName != null)
+    {
+       var first  = cityName.toUpperCase().slice(0,2);
+       var second = areaName.toUpperCase().slice(0,2);
+       var third  = subareaName.toUpperCase().slice(0,2);
+       var forth  = societyName.toUpperCase().slice(0,2);
+
+       this.state.index = first+second+third+forth;
+    }
+   
+   
        return(
        			<div>
 					<form id="addroles" className="paddingLeftz noLRPad " >

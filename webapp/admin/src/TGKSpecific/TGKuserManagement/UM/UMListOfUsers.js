@@ -43,7 +43,7 @@ class UMListOfUsers extends Component {
             	{ roleName : "Sales Agent"},
             	{ roleName : "Field Manager"},
             	{ roleName : "Field Agent"},
-            	{ roleName : "Sales Agent"}
+            	
             	  
             ],
 
@@ -58,13 +58,7 @@ class UMListOfUsers extends Component {
 	handleChange(event){
 	  	event.preventDefault();
         const target = event.target;
-        const name   = target.name;
-       
-
-     //    this.setState({
-	    //    [name]: event.target.value,
-	    // },()=>{this.usersListData()});
-
+        const name   = target.name;  
     }
 
 	componentDidMount(){
@@ -301,7 +295,7 @@ class UMListOfUsers extends Component {
 							axios.post('/api/users/userslist', data)
 							.then( (res)=>{      
 								// console.log("herer",res);
-								swal("Success! Showing "+selectedValue,"","success");
+								// swal("Success! Showing "+selectedValue,"","success");
 								var tableData = res.data.map((a, i)=>{
 									return {
 										_id 			: a._id,
@@ -331,7 +325,7 @@ class UMListOfUsers extends Component {
 					      .then(
 					        (res)=>{
 					          // console.log('res', res);
-					          swal("Success! Showing only "+selectedValue,"","success");
+					          // swal("Success! Showing only "+selectedValue,"","success");
 					          var data = res.data.data;
 					          var tableData = data.map((a, i)=>{
 									return {
@@ -377,7 +371,7 @@ class UMListOfUsers extends Component {
 							axios.post('/api/users/userslist', data)
 							.then( (res)=>{      
 								// console.log("herer",res);
-								swal("Success! Showing "+selectedValue,"","success");
+								// swal("Success! Showing "+selectedValue,"","success");
 								var tableData = res.data.map((a, i)=>{
 									return {
 										_id 			: a._id,
@@ -408,7 +402,7 @@ class UMListOfUsers extends Component {
 				      .then(
 				        (res)=>{
 				          console.log('res', res);
-				          swal("Success! only "+selectedValue+" users are shown in the list", "","success");
+				          // swal("Success! only "+selectedValue+" users are shown in the list", "","success");
 				          var data = res.data.data;
 				          var tableData = data.map((a, i)=>{
 								return {

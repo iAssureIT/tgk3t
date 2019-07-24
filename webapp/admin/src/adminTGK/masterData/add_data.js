@@ -5,9 +5,12 @@ import axios 						   from 'axios';
 
 class add_data extends Component {
     
-    // constructor(props) {
-    //     super(props);
-    // }
+    constructor(props) {
+        super(props);
+            this.state = {
+            allPosts : [],
+          }
+    }
 
      createData(event){
     event.preventDefault();
@@ -32,6 +35,8 @@ class add_data extends Component {
               this.setState({
                 allPosts : postsdata,
               });
+              this.props.selectedData(this.state.allPosts);
+
             }
           )
           .catch((error)=>{

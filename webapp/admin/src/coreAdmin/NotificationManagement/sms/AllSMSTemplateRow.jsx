@@ -13,6 +13,7 @@ export default class AllSMSTemplateRow extends Component{
 			content         : '',
 		};
       	this.editSMSModal = this.editSMSModal.bind(this);
+      	this.smsGetData    = this.smsGetData.bind(this);
     }
 
     editSMSModal(event){
@@ -42,11 +43,23 @@ export default class AllSMSTemplateRow extends Component{
 		.then((response)=> {
 			swal("Template deleted successfully","", "success");
 	    	console.log('delete response',response);
+	    	console.log("here response message",response.data.message);
+	    	if(response.data.message=="Master notification deleted")
+	    	{
+	    	this.props.deleteData("SMS",id);
+    		}
+    		
 		}).catch((error)=> {
 		    // handle error
 		    console.log(error);
 		});
 	}
+
+	smsGetData =(id)=>{
+    this.props.getSmsData(id);
+	}
+
+
 	render() {
 		var text= this.props.smstemplateValues.content ? this.props.smstemplateValues.content : 'abc';
 		var regex = new RegExp(/(<([^>]+)>)/ig);
@@ -78,7 +91,7 @@ export default class AllSMSTemplateRow extends Component{
 						</div>
 
 					</div>
-					<EditNotificationModal emailNot={this.props.smstemplateValues._id} data={this.props.smstemplateValues}/>
+					<EditNotificationModal emailNot={this.props.smstemplateValues._id} smsGetData={this.smsGetData.bind(this)} data={this.props.smstemplateValues}/>
 					<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.smstemplateValues._id}-rm`}  role="dialog">
 	                    <div className=" modal-dialog adminModal adminModal-dialog">
 	                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -110,7 +123,7 @@ export default class AllSMSTemplateRow extends Component{
 						<div className="col-lg-10 col-md-12 col-sm-12 col-xs-12">
 							<div className="form-group">
 								<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Message:</label>     						
-								<p className="textAreaBox">{text}</p>
+								 <p  dangerouslySetInnerHTML={{ __html:text}} className="textAreaBox"></p>
 							</div>	
 						</div>
 					</div>

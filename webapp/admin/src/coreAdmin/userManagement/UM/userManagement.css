@@ -2,10 +2,10 @@
   font-family:'Raleway-Regular';
   src: url("/fonts/MYRIADPROREGULAR.ttf");
 }
-.modal-backdrop.in {
-    /*filter: alpha(opacity=50);*/
+/*.modal-backdrop.in {
+    filter: alpha(opacity=50);
     opacity: 0 !important;
-}
+}*/
 .zzero{
   z-index: 0;
 }

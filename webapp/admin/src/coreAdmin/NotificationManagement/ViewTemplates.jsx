@@ -74,7 +74,7 @@ class ViewTemplates extends Component{
 
 	componentDidMount() {	
 	    $("html,body").scrollTop(0);	
-	   
+	   this.getData();
 	    /*$.validator.addMethod("regxsubject", function(value, element, arg){          
 	    	return arg !== value;        
 	    }, "Please select one subject name");
@@ -140,11 +140,38 @@ class ViewTemplates extends Component{
 			       
 			      },		   
 	  	};
-		this.updateContent = this.updateContent.bind(this);
-	    this.onChange 		= this.onChange.bind(this);
-	    this.handleChange = this.handleChange.bind(this);
+		this.updateContent 		= this.updateContent.bind(this);
+	    this.onChange 			= this.onChange.bind(this);
+	    this.handleChange 		= this.handleChange.bind(this);
+	    this.getEmailData  		= this.getEmailData.bind(this);
+	    this.deleteData     	= this.deleteData.bind(this);
+	    this.getNotiData  		= this.getNotiData.bind(this);
+	    this.getSmsData  		= this.getSmsData.bind(this);
+
 	}
-	componentWillMount(){
+	// componentWillMount(){
+	// 	this.getData();
+	// }
+	componentWillReceiveProps(nextProps){
+		this.getData();
+	}
+	AllNotificationTemplates(){
+		const id = this.state.currentNotificationId;
+		var notificationTemplates = this.state.notificationTemplates;
+		if(notificationTemplates && notificationTemplates.length>0){
+			for(var i=0; i<notificationTemplates.length; i++){
+				if(notificationTemplates[i]._id === id){
+					$('.defaultNotification').css({'display':'none'});
+					return [notificationTemplates[i]];
+				}
+			}
+		}else{
+			return [];
+		}
+		return [];
+	}
+	getData(){
+		console.log('getData');
 		axios({
 			method: 'get',
 			url: '/api/masternotifications/list',
@@ -162,22 +189,6 @@ class ViewTemplates extends Component{
 		    
 		});
 	}
-	AllNotificationTemplates(){
-		const id = this.state.currentNotificationId;
-		var notificationTemplates = this.state.notificationTemplates;
-		if(notificationTemplates && notificationTemplates.length>0){
-			for(var i=0; i<notificationTemplates.length; i++){
-				if(notificationTemplates[i]._id === id){
-					$('.defaultNotification').css({'display':'none'});
-					return [notificationTemplates[i]];
-				}
-			}
-		}else{
-			return [];
-		}
-		return [];
-	}
-
 	AllsmsTemplates(){
 		const id = this.state.currentSMSId;
 		// console.log("id",id);
@@ -205,6 +216,49 @@ class ViewTemplates extends Component{
 			})
 		});
     }
+    getEmailData(id){
+	  if (id) {
+	  axios({
+					method: 'get',
+					// url: 'http://localhost:3048/api/masternotifications/'+id,
+					url: '/api/masternotifications/'+id,
+				}).then((response)=> {
+	    this.setState({
+						emailTemplates : response.data
+					})
+				});
+	  }
+	}
+
+	getNotiData(id){
+		 if (id) {
+	  axios({
+					method: 'get',
+					// url: 'http://localhost:3048/api/masternotifications/'+id,
+					url: '/api/masternotifications/'+id,
+				}).then((response)=> {
+	    this.setState({
+						notificationTemplates : response.data
+					})
+				});
+	  }
+	}
+
+	getSmsData(id){
+		 if (id) {
+	  axios({
+					method: 'get',
+					// url: 'http://localhost:3048/api/masternotifications/'+id,
+					url: '/api/masternotifications/'+id,
+				}).then((response)=> {
+	    this.setState({
+						smsTemplates : response.data
+					})
+				});
+	  }
+	}
+
+
     getNotificationId(id){
     	axios({
 			method: 'get',
@@ -225,6 +279,34 @@ class ViewTemplates extends Component{
 			})
 		});
     }
+
+    deleteData(type,id){
+	  if (type && id) {
+		  if (type == "Email") {
+		  var emailarray = [...this.state.emailTemplatesList]; // make a separate copy of the array
+		  var index = emailarray.findIndex((obj)=>{return obj._id == id});
+			  if (index !== -1) {
+			    emailarray.splice(index, 1);
+			    this.setState({emailTemplatesList: emailarray,emailTemplates:{}});
+			  }
+			  }else if (type == "Notification") {
+			        var notificationarray = [...this.state.notificationTemplatesList]; // make a separate copy of the array
+			  var notificationindex = notificationarray.findIndex((obj)=>{return obj._id == id});
+					  if (notificationindex !== -1) {
+					    notificationarray.splice(notificationindex, 1);
+					    this.setState({notificationTemplatesList: notificationarray,notificationTemplates:{}});
+					  }
+			  }else if (type == "SMS") {
+					        var smsarray = [...this.state.smsTemplatesList]; // make a separate copy of the array
+					  var smsindex = smsarray.findIndex((obj)=>{return obj._id == id});
+					  if (smsindex !== -1) {
+					    smsarray.splice(smsindex, 1);
+					    this.setState({smsTemplatesList: smsarray,smsTemplates:{}});
+					  }
+			  }
+		  }
+	  }
+
 	submitTemplate(event){
 		console.log('submitTemplate');
 
@@ -292,6 +374,7 @@ class ViewTemplates extends Component{
 						// 	confirmButtonText: 'Ok'
 						// });
 						// swal("{response.data}","", "success");
+						
 						$('#createNotifyModal').hide();
 						$('.modal-backdrop').remove();
 
@@ -400,7 +483,7 @@ class ViewTemplates extends Component{
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border mrgntop">
 
 						<div className="col-lg-4 col-md-3 col-sm-6 col-xs-12 UMtitle NOpadding-left">
-							<h4 className="usrmgnttitle weighttitle">View All Templates</h4>
+							<h4 className="usrmgnttitle weighttitle">All Templates</h4>
 						</div>
 						<div className="col-lg-2 col-lg-offset-6 col-md-3 col-md-offset-8 col-sm-6 col-xs-12"  id="createmodalcl">
 							<button className="addexamform clickforhideshow col-lg-12 col-md-12 col-sm-12 col-xs-12 " data-toggle="modal" data-target="#createNotifyModal" data-whatever="@mdo"><i className="fa" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Add Template</button>
@@ -525,7 +608,7 @@ class ViewTemplates extends Component{
 										<h1>Please Select The Template</h1>
 										<i className="fa fa-hand-o-left" aria-hidden="true"></i>
 									</div>
-									{this.state.emailTemplates ? <EmailTemplateRow  emailtemplateValues={this.state.emailTemplates}/> : null}
+									{this.state.emailTemplates ? <EmailTemplateRow deleteData={this.deleteData.bind(this)} getData={this.getData.bind(this)} getEmailData={this.getEmailData.bind(this)} emailtemplateValues={this.state.emailTemplates}/> : null}
 								</div> 
 							  </div>
 							</div>
@@ -541,7 +624,7 @@ class ViewTemplates extends Component{
 										<h1>Please Select The Template</h1>
 										<i className="fa fa-hand-o-left" aria-hidden="true"></i>
 									</div>
-									{this.state.notificationTemplates ? <AllNotificationTemplateRow notificationtemplateValues={this.state.notificationTemplates}/> : null}									  
+									{this.state.notificationTemplates ? <AllNotificationTemplateRow deleteData={this.deleteData.bind(this)} getNotiData={this.getNotiData.bind(this)} notificationtemplateValues={this.state.notificationTemplates}/> : null}									  
 								</div>
 							  </div>
 							</div>
@@ -557,7 +640,7 @@ class ViewTemplates extends Component{
 										<h1>Please Select The Template</h1>
 										<i className="fa fa-hand-o-left" aria-hidden="true"></i>
 									</div>
-									{this.state.smsTemplates?<AllSMSTemplateRow smstemplateValues={this.state.smsTemplates}/>:null}									  
+									{this.state.smsTemplates?<AllSMSTemplateRow deleteData={this.deleteData.bind(this)} getSmsData={this.getSmsData.bind(this)} smstemplateValues={this.state.smsTemplates}/>:null}									  
 								</div>
 							  </div>
 							</div>

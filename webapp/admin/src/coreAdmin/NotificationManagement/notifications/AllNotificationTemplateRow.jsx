@@ -14,7 +14,10 @@ class AllNotificationTemplateRow extends Component{
 	  };
 
       this.editNotificationModal = this.editNotificationModal.bind(this);
+      this.notiGetData    = this.notiGetData.bind(this);
+    
     }
+    
 	editNotificationModal(event){
 		event.preventDefault();
 		var id = event.target.id;
@@ -42,12 +45,23 @@ class AllNotificationTemplateRow extends Component{
 		.then((response)=> {
 	    	console.log('delete response',response);
 	    	swal("Template deleted successfully","", "success");
+	    	console.log("here response message",response.data.message);
+	    	if(response.data.message=="Master notification deleted")
+	    	{
+	    	this.props.deleteData("Notification",id);
+    		}
+
 
 		}).catch((error)=> {
 		    // handle error
 		    console.log(error);
 		});
 	}
+
+	notiGetData =(id)=>{
+    this.props.getNotiData(id);
+	}
+
 	render() {
 		var text= this.props.notificationtemplateValues.content ? this.props.notificationtemplateValues.content : 'abc';
 		var regex = new RegExp(/(<([^>]+)>)/ig);
@@ -76,7 +90,7 @@ class AllNotificationTemplateRow extends Component{
 						</div>
 					</div>
 				</div>
-				<EditNotificationModal emailNot={this.props.notificationtemplateValues._id} data={this.props.notificationtemplateValues} />
+				<EditNotificationModal emailNot={this.props.notificationtemplateValues._id} notiGetData={this.notiGetData.bind(this)} data={this.props.notificationtemplateValues} />
 				<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.notificationtemplateValues._id}-rm`}  role="dialog">
 	                    <div className=" modal-dialog adminModal adminModal-dialog">
 	                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
@@ -108,7 +122,7 @@ class AllNotificationTemplateRow extends Component{
 					<div className="col-lg-10 col-md-12 col-sm-12 col-xs-12">
 						<div className="form-group">
 						 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Message:</label>     						
-						 <p className="textAreaBox">{text}</p>
+						 <p  dangerouslySetInnerHTML={{ __html:text}} className="textAreaBox"></p>
 						</div>	
 					</div>
 				</div>

@@ -8,6 +8,9 @@
 .iAssureITtable-bordered{
   background: #7f7f7f !important;
 }
+.lefttxt{
+  float: left !important;
+}
 .pointer i{
   cursor: pointer;
 }
