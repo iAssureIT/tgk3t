@@ -3,7 +3,10 @@ import axios 					from 'axios';
 import { Link }					from 'react-router-dom';
 import { connect } 				from 'react-redux';
 import { Route , withRouter}    from 'react-router-dom';
-
+import swal 					from 'sweetalert';
+// import S3FileUpload 			from 'react-s3';
+import S3FileUpload 			from 'react-s3';
+/**/
 import "bootstrap/dist/css/bootstrap.min.css";
 import './ImageUpload.css';
 var imgArray = [];
@@ -13,22 +16,38 @@ var imgTitleArray = [];
 	constructor(props){
 		super(props);
 		this.state = {
-			"nameOfFile":''
-
+			"nameOfFile"		: '',
+			"imageArray"  		: [],
+			"imageTitleArray" 	: []
 		}
 	}
+	uploadStudentImage(event){
+   event.preventDefault();
+   
+ }
+
 		uploadImage(){
 			const formValues = {
-				"uploadImage" : "",
-				"uploadVideo" : "",
 				"property_id" : this.props.property_id,
 				"uid" 		  : this.props.uid,
-				"imageArray"  : [],
-				"imageTitleArray" : [],
+				"imageArray"  : this.state.imageArray,
+				"imageTitleArray" : this.state.imageTitleArray,
 				"imagePreviewUrl" : "/images/1.png",
 
 			};
 			console.log("imageUpload req = ",formValues);
+			
+			// S3FileUpload
+			//    .uploadFile(file,this.state.config)
+			//    .then((Data)=>{
+			//    	console.log("Data = ",Data);
+			// 		this.setState({
+			// 		userProfile : Data.location
+			// 		})
+			//    })
+			//    .catch((error)=>{
+			//    	console.log(error);
+			//    })
 
 			axios
 				.patch('/api/properties/patch/photos',formValues)
@@ -47,9 +66,51 @@ var imgTitleArray = [];
 			this.props.backToAvailability();
 		}
 
-		handleChange(event)
-			{
+		handleChange(event){
+			let self = this;
+			   if (event.currentTarget.files && event.currentTarget.files[0]) {
+			   var file = event.currentTarget.files[0];
+			     	if (file) {
+			     	  var fileName  = file.name; 
+			     	console.log("fileName--------------->",fileName);
+			     	    var ext       = fileName.split('.').pop();  
+			                 	if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){    
+			                       if (file) {
+			                       	
+			                       	var objTitle=
+								    		{				   	
+										   	fileInfo :file
+										   }
+								   imgTitleArray.push(objTitle);
+								   this.setState({
+								   		imageTitleArray : imgTitleArray
+								   })
+								   var reader = new FileReader();
+								    reader.onloadend = () => {
+								    	var obj={
+										   	imgPath : reader.result,
+										   }
+										   imgArray.push(obj);
+										   this.setState({
+										   		imageArray : imgArray
+										   })
+								    }
 
+						    reader.readAsDataURL(file)
+
+
+
+
+
+			    					}else{          
+							            swal("File not uploaded","Something went wrong","error");  
+					               }     
+			                  }else{ 
+			                      swal("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+			                   }
+			   		}
+
+				}
 					// var file = event.target.files[0];
 					//   var reader = new FileReader();
 					//   var url = reader.readAsDataURL(file);
@@ -65,36 +126,9 @@ var imgTitleArray = [];
 		   // console.log("img==",imgPathName)
 
 
-		    var file = event.target.files[0];
+		    // var file = event.target.files[0];
 
-		    var objTitle=
-		    		{				   	
-				   	fileInfo :file
-				   }
-		   imgTitleArray.push(objTitle);
-		   this.setState({
-		   		imageTitleArray : imgTitleArray
-		   })
-
-		   var reader = new FileReader();
-		   
-
-		    reader.onloadend = () => {
-		    	var obj={
-				   	imgPath : reader.result,
-				   }
-				   imgArray.push(obj);
-				   this.setState({
-				   		imageArray : imgArray
-				   })
-		      // this.setState({
-		      //   file: file,
-		      //   imagePreviewUrl: reader.result
-		      // });
-		    }
-
-    reader.readAsDataURL(file)
-
+		    
 
 		   
 		   // var obj={
