@@ -18,6 +18,7 @@ import 'bootstrap/js/modal.js';
 			super(props);
 			this.state = {
 				Amenities     :[],
+
 			};
 			
 		}
@@ -26,7 +27,9 @@ import 'bootstrap/js/modal.js';
 			const formValues = {
 
 				"Amenities"			:this.state.Amenities,
-				"property_id" 		: this.props.property_id
+				"property_id" 		: this.props.property_id,
+				"uid" 				: this.props.uid,
+
 				
 			};
 			console.log("Amenities req = ",formValues);
@@ -35,7 +38,7 @@ import 'bootstrap/js/modal.js';
 				.then( (res) =>{
 					console.log("Amenities res = ",res);
 					if(res.status == 200){
-						this.props.redirectToFinancialDetails();
+						this.props.redirectToFinancialDetails(this.props.uid);
 					}
 				})
 				.catch((error) =>{
@@ -265,11 +268,15 @@ import 'bootstrap/js/modal.js';
 const mapStateToProps = (state)=>{
 	return {
 		property_id  : state.property_id,
+		uid			    : state.uid
+
 	}
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToFinancialDetails  : ()=> dispatch({type: "REDIRECT_TO_FINANCIAL"}),
+		redirectToFinancialDetails  : (uid)=> dispatch({type: "REDIRECT_TO_FINANCIAL",
+														uid:  uid
+	}),
 		backToPropertyDetails  	    : ()=> dispatch({type: "BACK_TO_PROPERTY_DETAILS"}),
 	}
 };

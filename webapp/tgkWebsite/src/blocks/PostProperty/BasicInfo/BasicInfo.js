@@ -27,6 +27,7 @@ import 'bootstrap/js/modal.js';
 		componentDidMount(){			
 
         	var message	= localStorage.getItem("message");
+        	
 
 			if(message == "NEW-USER-CREATED"){
 				swal("Welcome!","You are now logged in!","success");
@@ -57,7 +58,8 @@ import 'bootstrap/js/modal.js';
 				"propertySubType"	: this.state.propertySubType,
 				"floor"         	: this.refs.floor.value,
 				"totalFloor"    	: this.refs.totalfloor.value,
-				"listing"       	: false
+				"listing"       	: false,
+				"uid"				:this.props.uid
 			};
 			console.log("BasicInfo===",formValues);
 
@@ -68,7 +70,7 @@ import 'bootstrap/js/modal.js';
 					if(res.status == 200){
 						// swal("Good job!", "Property inserted successfully!", "success");
 						console.log("BasicInfo res = ",res);
-						this.props.redirectToLocation(res.data.propertyCode, res.data.property_id);						
+						this.props.redirectToLocation( res.data.propertyCode, res.data.property_id,this.props.uid);						
 					}else{
 						// alert(" Please Fill all fields")
 					}
@@ -318,22 +320,25 @@ import 'bootstrap/js/modal.js';
 }
 
 const mapStateToProps = (state)=>{
+	console.log("bState===",state);
   return {
     uid             : state.uid,
-	BasicInfo		 	: state.BasicInfo,
-	PropertyDetails		 	: state.PropertyDetails,
-	Financials		 	: state.Financials,
-	Amenities		 	: state.Amenities,
-	Availability		 	: state.Availability,
+	BasicInfo		: state.BasicInfo,
+	PropertyDetails	: state.PropertyDetails,
+	Financials		: state.Financials,
+	Amenities		: state.Amenities,
+	Availability	: state.Availability,
 	Location	 	: state.Location,
   }
 };
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToLocation  : (propertyCode, property_id)=> dispatch({type         : "REDIRECT_TO_LOCATION",
+		redirectToLocation  : (propertyCode, property_id,uid)=> dispatch({type    : "REDIRECT_TO_LOCATION",
+													  
 													   propertyCode	: propertyCode,
 													   property_id	: property_id,
+													   uid:uid
 												}),
 	}
 };

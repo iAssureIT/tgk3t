@@ -37,6 +37,7 @@ import './Location.css';
 				"address" 	        : this.refs.housebuilding.value,
 				"pincode" 			: this.refs.pincode.value,
 				"property_id" 		: this.props.property_id,
+				"uid" 				: this.props.uid,
 			};
 				console.log("Location",formValues);
 			axios
@@ -45,7 +46,7 @@ import './Location.css';
 					console.log(res);
 
 					if(res.status == 200){
-						this.props.redirectToPropertyDetails();
+						this.props.redirectToPropertyDetails(this.props.uid);
 					}
 				})
 				.catch((error) =>{
@@ -230,7 +231,10 @@ import './Location.css';
 }
 
 const mapStateToProps = (state)=>{
+	console.log("lState===",state);
+
 	return {
+		uid				:state.uid,
 		property_id     : state.property_id,
 		BasicInfo		: state.BasicInfo,
 		PropertyDetails	: state.PropertyDetails,
@@ -244,7 +248,9 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToPropertyDetails   : ()=> dispatch({type: "REDIRECT_TO_PROPERTY"}),
+		redirectToPropertyDetails   : (uid)=> dispatch({type: "REDIRECT_TO_PROPERTY",
+														uid:uid
+									}),
 		backToBasicInfo  			: ()=> dispatch({type: "BACK_TO_BASIC_INFO"}),
 	}
 };

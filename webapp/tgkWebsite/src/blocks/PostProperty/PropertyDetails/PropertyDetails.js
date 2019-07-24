@@ -28,12 +28,13 @@ import 'bootstrap/js/modal.js';
 				"bedrooms" 			: this.refs.bedrooms.value,
 				"balconies" 		: this.refs.balconies.value,
 				"furnishedStatus"   : this.state.furnishedstatus,
-				"bathroom" 			: this.refs.bathroom.value,
+				"bathrooms" 		: this.refs.bathroom.value,
 				"ageofProperty" 	: this.refs.ageofproperty.value,
 				"facing" 			: this.refs.facing.value,
 				"superArea" 		: this.refs.superArea.value,
 				"builtupArea" 		: this.refs.builtupArea.value,
 				"property_id" 		: this.props.property_id,
+				"uid" 				: this.props.uid,
 			};
 			console.log("PropertyDetails req = ",formValues);
 			
@@ -43,7 +44,7 @@ import 'bootstrap/js/modal.js';
 					console.log(res);
 					if(res.status == 200){
 						console.log("PropertyDetails Res = ",res);
-						this.props.redirectToAmenities();
+						this.props.redirectToAmenities(this.props.uid);
 					}
 				})
 				.catch((error) =>{
@@ -267,13 +268,18 @@ import 'bootstrap/js/modal.js';
 	}
 }
 const mapStateToProps = (state)=>{
+	console.log("pState===",state);
+
 	return {
 		property_id  	: state.property_id,
+		uid			    : state.uid
 	}
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToAmenities : ()=> dispatch({type: "REDIRECT_TO_AMENITIES"}),
+		redirectToAmenities : (uid)=> dispatch({type: "REDIRECT_TO_AMENITIES",
+											 uid:  uid	
+								}),
 		backToLocation  	: ()=> dispatch({type: "BACK_TO_LOCATION"}),
 	}
 };

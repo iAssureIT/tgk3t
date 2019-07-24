@@ -10,7 +10,7 @@
     margin-top: 80px
 }
 .uploadImg{
-    margin-bottom: 68px;
+    /*margin-bottom: 68px;*/
     margin-top: 45px;
 }
 .uploadVideo{
@@ -18,4 +18,8 @@
 }
 .mt78{
     margin-top: 78px;
+}
+
+.imgcss{
+    height:50px;
 }

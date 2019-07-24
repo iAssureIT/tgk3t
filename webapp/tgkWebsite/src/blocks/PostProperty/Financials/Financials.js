@@ -33,7 +33,9 @@ import 'bootstrap/js/modal.js';
 				"includeCharges"	: this.state.includecharges,
 				"maintenanceCharges": this.state.maintenanceCharges,
 				"maintenancePer"	: this.state.maintenancePer,
-				"property_id" 		: this.props.property_id
+				"property_id" 		: this.props.property_id,
+				"uid" 				: this.props.uid,
+
 			};
 			console.log("Financials req = ",formValues);
 			axios
@@ -41,7 +43,7 @@ import 'bootstrap/js/modal.js';
 				.then( (res) =>{
 					console.log("Financials res = ",res);
 					if(res.status == 200){
-						this.props.redirectToAvailability();
+						this.props.redirectToAvailability(this.props.uid);
 					}
 				})
 				.catch((error) =>{
@@ -248,11 +250,15 @@ import 'bootstrap/js/modal.js';
 const mapStateToProps = (state)=>{
 	return {
 		property_id : state.property_id,
+		uid			    : state.uid
+
 	}
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToAvailability  : ()=> dispatch({type: "REDIRECT_TO_AVAILABILITY"}),
+		redirectToAvailability  : (uid)=> dispatch({type: "REDIRECT_TO_AVAILABILITY",
+													uid:  uid
+	}),
 		backToAmenities  	    : ()=> dispatch({type: "BACK_TO_AMENITIES"}),
 
 	}

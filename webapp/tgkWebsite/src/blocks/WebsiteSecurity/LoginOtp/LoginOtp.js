@@ -17,6 +17,7 @@ class LoginOtp extends Component {
 		}
 
 	componentDidMount(){
+		console.log(this.props);
    //      	var otp 	= localStorage.getItem("otp");
    //      	var message	= localStorage.getItem("message");
 
@@ -29,9 +30,9 @@ class LoginOtp extends Component {
 		var userOTP = this.refs.otp.value;
 		if(userOTP == this.props.OTP){
 			if(this.props.message == "NEW-USER-CREATED"){
-				this.props.redirectToBasicInfo();
+				this.props.redirectToBasicInfo(this.props.uid);
 			}else{
-				this.props.history.push("/PropertyProfileView");
+				this.props.history.push("/PropertyProfile");
 			}
 			
 		}else{
@@ -41,7 +42,7 @@ class LoginOtp extends Component {
 	}
 
 	render() {
-				
+		
 		return (
 			<div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -93,15 +94,20 @@ class LoginOtp extends Component {
 }
 
 const mapStateToProps = (state)=>{
+	console.log('signUp',state);
 	return {
 		OTP 		: state.OTP,
 		message 	: state.mobFoundMsg,
+		uid  	 	: state.uid,
 	}
 };
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToBasicInfo  : ()=> dispatch({type: "REDIRECT_TO_BASIC_INFO"}),
+		redirectToBasicInfo  : (uid)=> dispatch({type: "REDIRECT_TO_BASIC_INFO",
+													 uid	: uid,
+
+		}),
 	}
 };
 

@@ -3,9 +3,7 @@ import axios 					from 'axios';
 import $ 						from "jquery";
 import { Redirect, withRouter } from 'react-router';
 import { Link }					from 'react-router-dom';
-
 import { connect } 				from 'react-redux';
-
 
 import './LoginMobNum.css';
 
@@ -38,7 +36,7 @@ class LoginMobNum extends Component {
 					console.log("mobile = ",formValues.mobile);
 					
 					if(response.data.message == "MOBILE-NUMBER-EXISTS"){
-						localStorage.removeItem("user_id");
+						/*localStorage.removeItem("user_id");
 		        		localStorage.removeItem("mobile");
 		        		localStorage.removeItem("otp");	
 		        		localStorage.removeItem("message");	
@@ -46,7 +44,7 @@ class LoginMobNum extends Component {
 						localStorage.setItem("user_id",response.data.user_id);
 						localStorage.setItem("mobile",response.data.mobile);
 						localStorage.setItem("otp",response.data.otp);
-						localStorage.setItem("message",response.data.message);
+						localStorage.setItem("message",response.data.message);*/
 						
 						console.log("response.data.message = ",response.data.message);
 
@@ -55,9 +53,7 @@ class LoginMobNum extends Component {
 												response.data.otp,
 												response.data.message
 											  );
-
 						// this.props.history.push('/LoginOtp/');
-
 					}
 					else{
 						this.props.mobileNotFound(formValues.mobile);

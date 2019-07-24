@@ -6,7 +6,6 @@ import swal                     from 'sweetalert';
 import { Link }					from 'react-router-dom';
 import { connect } 				from 'react-redux';
 import { Route , withRouter}    from 'react-router-dom';
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-table/react-table.css' //import css
 import './Availability.css';
@@ -34,6 +33,8 @@ import 'bootstrap/js/modal.js';
 				"timeTo" 		      : this.refs.timeTo.value,
         		"contactPerson"       : this.state.contactPerson,
 				"property_id" 		  : this.props.property_id,
+				"uid" 				: this.props.uid,
+
 				
 
 			};
@@ -44,7 +45,7 @@ import 'bootstrap/js/modal.js';
 					console.log("availabilityPlan",res);
 					if(res.status == 200){
 						/*swal("wow","great job done!","success");*/
-						this.props.redirectToImageUpload();
+						this.props.redirectToImageUpload(this.props.uid);
 
 					}
 				})
@@ -91,7 +92,6 @@ import 'bootstrap/js/modal.js';
 
 	}
 	render() {
-				
 		const data = [{
    			Availability: 'Tanner Linsley',
 		    Time: 26,
@@ -193,8 +193,9 @@ import 'bootstrap/js/modal.js';
 		                     <i className="fas fa-rupee-sign iconSize12"></i>
 		                    </div>
 					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-					    <input type="time" className="form-control" ref="timeFrom" placeholder="From 10:00 AM" />
-					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+{					    <input type="time" className="form-control" ref="timeFrom" placeholder="From 10:00 AM" />
+}					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+
 					  	</div>
 					  </div>
 				  </div>
@@ -207,9 +208,11 @@ import 'bootstrap/js/modal.js';
 		                    </div>
 					    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
 					    {/*<input type="text" className="form-control" ref="timeTo"  placeholder="To 09:00 PM"/>*/}
-					    <input type="time" className="form-control" ref="timeTo" placeholder="To 09:00 PM" />
-
+{					    <input type="time" className="form-control" ref="timeTo" placeholder="To 09:00 PM" />
+}
 					    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+
+
 					  	</div>
 					  </div>
 				  </div>
@@ -289,12 +292,18 @@ import 'bootstrap/js/modal.js';
 const mapStateToProps = (state)=>{
 	return {
 		property_id  : state.property_id,
+		uid			    : state.uid
+
 	}
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		backToFinancials  	        : ()=> dispatch({type: "BACK_TO_FINANCIALS"}),
-		redirectToImageUpload       : ()=> dispatch({type: "REDIRECT_TO_IMG_UPLOAD"}),
+		backToFinancials  	        : ()=> dispatch({type: "BACK_TO_FINANCIALS"
+														
+	}),
+		redirectToImageUpload       : (uid)=> dispatch({type: "REDIRECT_TO_IMG_UPLOAD",
+														uid:  uid
+	}),
 
 
 	}

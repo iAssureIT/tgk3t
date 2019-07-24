@@ -14,6 +14,8 @@ import Financials               from '../PostProperty/Financials/Financials.js';
 import Amenities                from '../PostProperty/Amenities/Amenities.js';
 import Availability             from '../PostProperty/Availability/Availability.js';
 import Location                 from '../PostProperty/Location/Location.js';
+import CongratsPage             from '../PostProperty/CongratsPage/CongratsPage.js';
+import ImageUpload              from '../PostProperty/ImageUpload/ImageUpload.js';
 
 
 import 'bootstrap/js/tab.js';
@@ -21,7 +23,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/js/modal.js';
 
 import './Banner.css';
-
 
 class BannerwithModal extends Component {
 
@@ -158,6 +159,8 @@ class BannerwithModal extends Component {
 						{ this.props.Amenities 		? <Amenities /> 	  : null }
 						{ this.props.Availability 	? <Availability /> 	  : null }
 						{ this.props.Location		? <Location /> 		  : null }
+						{ this.props.CongratsPage	? <CongratsPage /> 	  : null }
+						{ this.props.ImageUpload	? <ImageUpload /> 	  : null }
 
 
 					      </div>
@@ -188,12 +191,14 @@ const mapStateToProps = (state)=>{
 		Amenities		: state.Amenities,
 		Availability	: state.Availability,
 		Location	 	: state.Location,
+    	ImageUpload     : state.ImageUpload,
+   		CongratsPage    : state.CongratsPage,
+
 	}
 };
 // const mapDispatchToProps = (dispatch)=>{
 // 	return {
 // 	}
 // };
-
 
 export default connect(mapStateToProps)(withRouter(BannerwithModal));

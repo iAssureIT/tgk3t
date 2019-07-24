@@ -26,7 +26,8 @@ import { connect } 				from 'react-redux';
 				"mobile"     : this.refs.mobile.value,
 				"countryCode": this.refs.countryCode.value,
 				"status"     : 'Active',
-				"role"       : 'client',
+				"role"       : 'Client',
+
 
 				
 			};
@@ -37,6 +38,7 @@ import { connect } 				from 'react-redux';
 				.post('/api/usersotp',formValues )
 				.then( (res) =>{
 					if(res.data.message == "NEW-USER-CREATED"){
+						console.log("BasicInfo res = ",res);
 						swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
 						this.props.signUp(res.data.user_id, res.data.mobile,res.data.otp, res.data.message);
 					}
@@ -134,7 +136,7 @@ import { connect } 				from 'react-redux';
 
 const mapStateToProps = (state)=>{
 	return {
-		mobile 	: state.mobile,
+		mobile 	: state.mobile
 	}
 };
 

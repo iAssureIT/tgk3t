@@ -58,7 +58,7 @@ class PropertyProfile extends Component{
   }
   componentDidMount() {
     axios
-    .get('http://qatgk3tapi.iassureit.com/api/sellResident/list')
+    .get('http://qatgk3tapi.iassureit.com/api/properties/list')
     .then(
       (res)=>{
         console.log(res);
@@ -524,15 +524,6 @@ class PropertyProfile extends Component{
 
           </div>
         </div>
-
-
-
-
-
-
-
-
-
       </div>
     );
   }
