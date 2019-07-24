@@ -1,8 +1,9 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import $ 						from "jquery";
-import {withRouter} 		from 'react-router-dom';
+import {withRouter} 		    from 'react-router-dom';
 import { connect } 				from 'react-redux';
+import OwlCarousel             from 'react-owl-carousel';
 
 import LoginMobNum              from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
 import LoginOtp                 from '../WebsiteSecurity/LoginOtp/LoginOtp.js';
@@ -75,8 +76,8 @@ class BannerwithModal extends Component {
 			limitRange:6,
 		}
 		this.setState({
-			propertyType : $(event.target).attr('proprty-type'),
-			transactionType : $(event.target).attr('transaction-ype'),
+			propertyType : $(event.target).attr('property-type'),
+			transactionType : $(event.target).attr('transaction-type'),
 		},()=>{
 			 axios
 	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
@@ -106,13 +107,13 @@ class BannerwithModal extends Component {
 					<div className=" col-lg-12 noPad">
 					  <ul className="nav nav-pills textC noPad" role="tablist">
 					    <li className="nav-item col-lg-3 active">
-					      <a className="nav-link active textB  btn btn-bg" proprty-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
+					      <a className="nav-link active textB  btn btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
 					    </li>
 					    <li className="nav-item col-lg-3   ">
-					      <a className="nav-link active textB btn btn-bg" proprty-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
+					      <a className="nav-link active textB btn btn-bg" property-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
 					    </li>
 					    <li className="nav-item col-lg-3   ">
-					      <a className="nav-link active textB btn btn-bg" proprty-type="Commercial" transaction-type="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
+					      <a className="nav-link active textB btn btn-bg" property-type="Commercial" transaction-type="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
 					  </ul>
 				 	</div>
@@ -125,19 +126,19 @@ class BannerwithModal extends Component {
 						<img alt=""  src="/images/TGK-key.png" className="col-lg-10 tgkImg noPad" />
 					</div>
 				</div>
-				<div className="col-lg-6 col-lg-offset-4 mt-64">
-					<div className="col-lg-5 br2">
-						<span className="postDetails">Welcome Owners</span>
-						<button className="btn bg-primary btnPost" data-toggle="modal" data-target="#postPropertyModal"> Post & Earn</button>
+				<div className="col-lg-8 col-lg-offset-2 mt-64">
+					<div className="col-lg-6 br2">
+						<span className="col-lg-12 postDetails">Welcome Owners</span>
 						<br/>
-						<span><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
+						<button className="col-lg-8 col-lg-offset-2 btn bg-primary btnPost" data-toggle="modal" data-target="#postPropertyModal"> Post & Earn</button>
+						<br/>
+						<span className="col-lg-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
 						</span>
 					</div>
-					<div className="col-lg-5 prText">
-						<span className="postDetails ">Tenants/Buyers</span><br/>
-						<p className="postDetails1"><b>Upto 50% Discount</b>
-						<br/><b>On Brokerage</b>
-						<br/><b>for Renting/Buying with us!</b>
+					<div className="col-lg-6 prText">
+						<span className="postDetails ">For our Buyers / Tenants</span><br/>
+						<p className="postDetails1"><b>Best properties, amazing services</b>
+						<br/><b>And up-to 50% discount on brokerage</b>
 						</p>
 						
 					</div>

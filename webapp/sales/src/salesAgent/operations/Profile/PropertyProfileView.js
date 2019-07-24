@@ -92,12 +92,12 @@ class PropertyProfileView extends Component{
                         <img src="/images/back.png"/>
                       </div>
                     </div>
-                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 row" >
+                    <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 row" >
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addressOfProperty" >
                             <label className="pull-left"> 
                             {this.state.propertyLocation && this.state.propertyLocation.address ? this.state.propertyLocation.address:"-"}
                             </label> 
-                        <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center forSaleButton pull-right">
+                        <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center forSaleButton">
                           FOR SALE
                         </div> 
                        
@@ -153,7 +153,7 @@ class PropertyProfileView extends Component{
                           return(
                             <div className="row">
                               <div key={index} className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgDiv1" >
-                                <video width="470" height="275" controls>
+                                <video width="470" height="268" controls>
                                   <source src={propertyVideos} type="video/ogg"/>
                                 </video>
                               </div>                    
@@ -195,7 +195,7 @@ class PropertyProfileView extends Component{
                                 <div className="row"> 
                                   <table className="col-lg-12">
                                     <ul  className="bolder">
-                                      <tr><td><li>Furnished Status</li></td> : <td>{this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> :"-" }</td></tr>
+                                      <tr><td><li>Furnished Status</li></td> : <td>{this.state.propertyFeatures.furnishedStatus && this.state.propertyFeatures.furnishedStatus.length > 0 ? <b>{this.state.propertyFeatures.furnishedStatus} </b> :"-" }</td></tr>
                                       <tr><td><li>Bedrooms        </li></td> : <td>{this.state.propertyFeatures.bedrooms        ? <b>{this.state.propertyFeatures.bedrooms}        </b> : "-"}</td></tr>
                                       <tr><td><li>Balconies       </li></td> : <td>{this.state.propertyFeatures.balconies       ? <b>{this.state.propertyFeatures.balconies}       </b> : "-"}</td></tr>
                                       <tr><td><li>Bathrooms       </li></td> : <td>{this.state.propertyFeatures.bathrooms       ? <b>{this.state.propertyFeatures.bathrooms}       </b> : "-"}</td></tr>

@@ -1,5 +1,5 @@
 .BoxSize{
-	height: 100vh;
+	height: 674px;
 	background-image: url("/images/TGK_Post.png");
 }
 
@@ -53,7 +53,6 @@
     top:7px;
 }
 .btnPost{
-    width: 161px;
     height: 88px;
     font-size: 22px;
     border-bottom: 5px solid #044b88;
@@ -62,8 +61,9 @@
 	font-size: 19px;
     color: #fff;
     text-align: center;
-    margin-left: 9px;
     margin-bottom: 11px;
+    font-size: 24px;
+    font-weight: bold;
 }
 .postDetails1{
 	margin-left: 12px;
@@ -84,7 +84,6 @@
 }
 .br2{
 	border-right: 2px solid #fff;
-    padding-left: 39px;
     color: #fff;
     text-align: center;
 }

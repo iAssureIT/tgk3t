@@ -80,9 +80,10 @@
 .transactionLabel{
 	position: absolute;
 	color: #fff;
-	margin-top: 10px;
+	margin-top: 0px;
 	font-size: 20px;
-	margin-left: 40%;
+	margin-left: 42%;
 	font-weight: bold;
+	transform: rotate(45deg);
 }
 
