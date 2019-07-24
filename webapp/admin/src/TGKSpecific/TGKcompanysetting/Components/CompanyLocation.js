@@ -42,7 +42,7 @@ class CompanyLocation extends Component{
       companyCity           : "",
       companyPincode        : "",
       submitVal             : true,
-      pincodeArea           : [],
+      pincodeArea           : "",
      
      companyArea1           : "",
 
@@ -58,7 +58,7 @@ class CompanyLocation extends Component{
         companyArea         : " ",
         pincodeArea        : "",
 
-        companyArea1         : " ",
+       /* companyArea1         : " ",*/
 
         country             : " ",
         district            : " ",
@@ -106,11 +106,11 @@ class CompanyLocation extends Component{
         formerrors.companyArea = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid Input";
        break;
 
-       case 'companyArea1' : 
+      /* case 'companyArea1' : 
        
           formerrors.companyArea1 = numberRegex.test(value)   && value.length>0? '' : "Please Enter valid Input";
           
-         break;
+         break;*/
 
        case 'blockName' : 
         formerrors.blockName = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid Input";
@@ -176,7 +176,8 @@ class CompanyLocation extends Component{
    
   componentDidMount(){
     $('.subjectRow').css({'display':'none'});
-
+    
+    $('.subjectRowError').css({'display':'none'});
     axios
       .get('/api/tgkSpecificcompanysettings/list')
       .then(
@@ -218,6 +219,10 @@ class CompanyLocation extends Component{
     event.preventDefault();
     // var sessionVar = Session.get('location');
    // var companyId : 5;
+
+
+      
+
 
     var companyLocationFormValue ={
       Location                  : this.state.companyLocation,
@@ -265,81 +270,144 @@ class CompanyLocation extends Component{
     if(formValid(this.state.formerrors)){
       console.log("submitVal state",this.state.submitVal);
 
+
       if(this.state.submitVal == true)
       {
 
-
-        axios.patch('/api/tgkSpecificcompanysettings/location/add',companyLocationFormValue)
-        .then( (response)=> {
-          // handle success
-          console.log(response);
-          swal("Location Added Successfully", "", "success");
-
-          this.setState({
-            companyLocation         :"",
-            companycontact          :"",
-            companybuildingblock    :"",
-            companylandmark         :"",
-            companyCountry          :"",
-            companyState            :"",
-            companyDist             :"",
-            taluka                  :"",
-            companyCity             :"",
-            companyPincode          :"",
-            companyArea             :"",
-            pincodeArea             :"",
-            areaName                :"",
-          });
-
-
-                  // here for table
-
-                    axios
-                  .get('/api/tgkSpecificcompanysettings/list')
-                  .then(
-                    (res)=>{
-                      console.log('res', res);
-                      const postsdata = res.data;
-                      console.log('postsdata',postsdata);
-                      this.setState({
-                        allPosts : postsdata,
-                      });
+        if(this.state.companyLocation  === 'Head Office' || this.state.companyLocation  === 'Sales Agent Office' )
+        {
+           $('.subjectRowError').css({'display':'none'});
+         
+            axios.patch('/api/tgkSpecificcompanysettings/location/add',companyLocationFormValue)
+              .then( (response)=> {
+                // handle success
+                console.log(response);
+                swal("Location Added Successfully", "", "success");
+                this.setState({
+                  companyLocation         :"",
+                  companycontact          :"",
+                  companybuildingblock    :"",
+                  companylandmark         :"",
+                  companyCountry          :"",
+                  companyState            :"",
+                  companyDist             :"",
+                  taluka                  :"",
+                  companyCity             :"",
+                  companyPincode          :"",
+                  companyArea             :"",
+                  pincodeArea             :"",
+                  areaName                :"",
+                });
 
 
-                    let locationArray =[];
-                    if(this.state.allPosts!=null){
+                        // here for table
 
-                    
-                     locationArray = this.state.allPosts.map(function(item) { return item.companyLocationsInfo });
-                    }else{
-                       locationArray = "no data";
-                    }
-                    
-                      this.setState({
-                        allLoc : locationArray,
-                      });
-                    //   console.log("locationArray", locationArray);
-                    // console.log("this.state.allLoc+++++++++++++++++",this.state.allLoc);
+                          axios
+                        .get('/api/tgkSpecificcompanysettings/list')
+                        .then(
+                          (res)=>{
+                            console.log('res', res);
+                            const postsdata = res.data;
+                            console.log('postsdata',postsdata);
+                            this.setState({
+                              allPosts : postsdata,
+                            });
+                          let locationArray =[];
+                          if(this.state.allPosts!=null){
+                           locationArray = this.state.allPosts.map(function(item) { return item.companyLocationsInfo });
+                          }else{
+                             locationArray = "no data";
+                          }
+                            this.setState({
+                              allLoc : locationArray,
+                            });
+                          //   console.log("locationArray", locationArray);
+                          // console.log("this.state.allLoc+++++++++++++++++",this.state.allLoc);
+                          }
+                        )
+                        .catch((error)=>{
+                          console.log("error = ",error);
+                          // alert("Something went wrong! Please check Get URL.");
+                           });        
 
+                    })
+                    .catch(function (error) {
+                      // handle error
+                      console.log(error);
+                    })
+          
 
-                    }
-                  )
-                  .catch((error)=>{
+      // here close of if head & sale
+      }else if(this.state.companyLocation  === 'Field Agent Office'){
+            
 
-                    console.log("error = ",error);
-                    // alert("Something went wrong! Please check Get URL.");
-                     });        
+            if(this.state.pincodeArea == "")
+            {
+              $('.subjectRowError').css({'display':'block'});
+            }else{
+               $('.subjectRowError').css({'display':'none'});
 
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
-        .finally(function () {
-          // always executed
-        });
+                  axios.patch('/api/tgkSpecificcompanysettings/location/add',companyLocationFormValue)
+              .then( (response)=> {
+                // handle success
+                console.log(response);
+                swal("Location Added Successfully", "", "success");
 
+                this.setState({
+                  companyLocation         :"",
+                  companycontact          :"",
+                  companybuildingblock    :"",
+                  companylandmark         :"",
+                  companyCountry          :"",
+                  companyState            :"",
+                  companyDist             :"",
+                  taluka                  :"",
+                  companyCity             :"",
+                  companyPincode          :"",
+                  companyArea             :"",
+                  pincodeArea             :"",
+                  areaName                :"",
+                });
+                        // here for table
+                          axios
+                        .get('/api/tgkSpecificcompanysettings/list')
+                        .then(
+                          (res)=>{
+                            console.log('res', res);
+                            const postsdata = res.data;
+                            console.log('postsdata',postsdata);
+                            this.setState({
+                              allPosts : postsdata,
+                            });
+                          let locationArray =[];
+                          if(this.state.allPosts!=null){
+                           locationArray = this.state.allPosts.map(function(item) { return item.companyLocationsInfo });
+                          }else{
+                             locationArray = "no data";
+                          }
+                            this.setState({
+                              allLoc : locationArray,
+                            });
+                          //   console.log("locationArray", locationArray);
+                          // console.log("this.state.allLoc+++++++++++++++++",this.state.allLoc);
+                          }
+                        )
+                        .catch((error)=>{
+                          console.log("error = ",error);
+                          // alert("Something went wrong! Please check Get URL.");
+                           });        
+                    })
+                    .catch(function (error) {
+                      // handle error
+                      console.log(error);
+                    })
+            }
+        console.log("pincode covererd",this.state.pincodeArea);
+                
       }
+
+// here close submit value true
+    } 
       else{
 
         console.log("here value of edit ",companyLocationFormValueupdate);
@@ -661,7 +729,7 @@ selectType(event){
 
                 </div>
 
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm marbtm30">
 
                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -682,9 +750,9 @@ selectType(event){
                         </textarea>
                        {/* <input value={this.state.companyArea1} onChange={this.handleChange} type="text" data-text="companyArea1" id="companyArea" ref="companyArea" name="companyArea" className="form-control CLcompanylandmark inputValid" />
                         */}       
-                         {this.state.formerrors.companyArea1 &&(
-                                        <span className="text-danger">{formerrors.companyArea1}</span> 
-                                      )}
+                         {/*this.state.formerrors.companyArea1 &&(*/
+                                        <span className="text-danger subjectRowError">Please enter at least one pincode</span> 
+                                      /*)*/}
                         </div>  
                       </div>
                     </div>

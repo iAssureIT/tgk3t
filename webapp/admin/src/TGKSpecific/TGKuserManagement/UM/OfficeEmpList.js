@@ -5,7 +5,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
 import swal                     	from 'sweetalert';
 
-
+import './userManagement.css';
 class OfficeEmpList extends Component {
     
 
@@ -13,21 +13,13 @@ class OfficeEmpList extends Component {
         super(props);
         	this.state = {
 				// allPosts : [],
-				 allPosts   : [
-
-            	{ name : "Technical Admin"},
-            	{ name : "Executive Admin"},
-            	{ name : "Sales Manager"},
-            	{ name : "Sales Agent"},
-            	{ name : "Field Manager"},
-            	{ name : "Field Agent"},
-            	
-            	  
-            ],
-
+				
 				// officename : "",
 				 office : null,
 				 allPostsLoc : [],
+				 alldata : [],
+				 allresult: [],
+				 oneOffice : null,
 
 		}
 
@@ -41,28 +33,32 @@ class OfficeEmpList extends Component {
       .then(
         (res)=>{
           console.log('res', res);
-          const postsdata = res.data;
+          const postsdata = res.data[0];
           console.log('postsdata',postsdata);
           this.setState({
-            allPostsLoc : postsdata,
+            allresult : postsdata,
+          },()=>{
+
+
+
           });
 
-          console.log("allPostsLoc-------------------------------------",this.state.allPostsLoc);
-          let locationArray =[];
-          if(this.state.allPosts!=null){
+		          console.log("allresult-------------------------------------",this.state.allresult);
+		        //   let locationArray =[];
+		        //   if(this.state.allresult!=null){
 
-          
-           locationArray = this.state.allPostsLoc.map(function(item) { return item.companyLocationsInfo });
-          }else{
-             locationArray = "no data";
-          }
-    
-          this.setState({
-            office : locationArray,
-          });
-          console.log("locationArray", locationArray);
-        console.log("this.state.office+++++++++++++++++",this.state.office);
-               
+		          
+		        //    locationArray = this.state.allresult.map(function(item) { return item.companyLocationsInfo });
+		        //   }else{
+		        //      locationArray = null;
+		        //   }
+		    
+		        //   this.setState({
+		        //     office : locationArray,
+		        //   });
+		        //   console.log("locationArray", locationArray);
+		        // console.log("this.state.office+++++++++++++++++",this.state.office);
+		               
         }
       )
       .catch((error)=>{
@@ -81,98 +77,46 @@ class OfficeEmpList extends Component {
 	// }
 	
 
-  		deleteAmenity(event){
-  	// 		event.preventDefault();
-			// var id = event.target.id;
-			// console.log("id",id);
-			// const token = '';
-			// const url = '/api/masteramenities/'+id ;
-			// const headers = {
-			// 	    "Authorization" : token,
-			// 	    "Content-Type" 	: "application/json",
-			// 	};
+	selectOffice(event){
+		var selectOffice = event.currentTarget.value;
+		console.log("here selected office", selectOffice);
 
-			// 	axios({
-			// 		method: "DELETE",
-			// 		url : url,
-			// 		headers: headers,
-			// 		timeout: 3000,
-			// 		data: null,
-			// 	})
-			// 	.then((response)=> {
-			//     	console.log('delete response',response);
-			//     	swal("Amenity deleted successfully","", "success");
+		this.setState({
+			oneOffice : selectOffice,
+		})
+		var formValues =
+    	{
+			searchText : selectOffice,
+		}
+		 if(selectOffice && selectOffice.length != 0) {
+					axios
+				      .post('/api/users/officesearchValue',formValues)
+				      .then(
+				        (res)=>{
+				          console.log('res', res);
+				          const postsdata = res.data.data;
+				          console.log('postsdata',postsdata);
+				          this.setState({
+				            alldata : postsdata,
+				          });
 
-			//     	axios
-			// 		.get('/api/masteramenities/list')
-			// 		.then(
-			// 			(res)=>{
-			// 				console.log('res', res);
-			// 				const postsdata = res.data;
-			// 				console.log('postsdata',postsdata);
-			// 				this.setState({
-			// 					allPosts : postsdata,
-			// 				});
-			// 			}
-			// 		)
-			// 		.catch((error)=>{
+				          console.log("alldata-------------------------------------",this.state.alldata);
 
-			// 			console.log("error = ",error);
-			// 			// alert("Something went wrong! Please check Get URL.");
-			// // 			 });			
+				          // swal("Search successfull by "+searchText+ "","success");
+				          
+				        }).catch((error)=>{ 
+				        	console.log(error);
+				        	this.setState({
+				            alldata : null,
+				          });
 
+				          console.log("alldata-------------------------------------",this.state.alldata);
 
-			// 	}).catch((error)=> {			    // handle error
-			// 	    console.log(error);
-			// 	});
-  		}
+				        	// swal("Sorry there is no data of "+searchText+ "","error");
+				      });
+	}
 
-  		editRole(event){
-
-  	// 		event.preventDefault();
-			// var id = event.target.id;
-			// console.log("edit id",id);
-
-			//  console.log("this.state.amenityname",this.state.amenityname);
-
-			// const formValues = {
-		 //      "amenity"     : this.state.amenityname,
-		 //      }
-
-		 //      console.log("formValues",formValues);
-		      
-		 //    axios.put('/api/masteramenities/'+id, formValues)
-		 //      .then( (res)=>{
-		 //          console.log("submit ",res);
-		 //          swal("Amenities Updated successfully", "", "success");
-		 //          this.state.amenityname = '';    
-
-
-		 //          axios
-			// 	.get('/api/masteramenities/list')
-			// 	.then(
-			// 		(res)=>{
-			// 			console.log('res', res);
-			// 			const postsdata = res.data;
-			// 			console.log('postsdata',postsdata);
-			// 			this.setState({
-			// 				allPosts : postsdata,
-			// 			});
-			// 		}
-			// 	)
-			// 	.catch((error)=>{
-
-			// 		console.log("error = ",error);
-			// 		// alert("Something went wrong! Please check Get URL.");
-			// 		 });			
-				     
-		 //      })
-		 //      .catch((error)=>{
-		 //        console.log("error = ",error);
-		 //        // alert("Something went wrong! Please check Get URL.");
-		 //      });  
-
-  		}
+	}  		
 
   		handleChange(event){
 	  const target = event.target;
@@ -204,17 +148,18 @@ class OfficeEmpList extends Component {
 												<div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
                                                               <label className="formLable">Office Location <label className="requiredsign">*</label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                    <select className="form-control" value={this.state.officeid} ref ="office" id="office" name="office" data-text="office">
-                                                                        <option  disabled> --select-- </option>
+                                                                    <select className="form-control" value={this.state.officeid} onChange={this.selectOffice.bind(this)} ref ="office" id="office" name="office" data-text="office">
+                                                                        <option  hidden> --select-- </option>
 
-                                                                           { this.state.office != null ?
-                                                                          this.state.office[0].map( (locData, index)=>{
-                                                                          // console.log('locData',locData);
+                                                                           { this.state.allresult != null && this.state.allresult.companyLocationsInfo !=null ?
+                                                                          this.state.allresult.companyLocationsInfo.map( (locData, index)=>{
+                                                                          console.log('locData',locData);
                                                                            return( 
 
-                                                                                 <option value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+	                                                                                <option value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
 
 
+																						
                                                                                    )}
                                                                            )
                                                                           :
@@ -227,35 +172,54 @@ class OfficeEmpList extends Component {
                                                            </div>
 
 										</div>
-											
-										<div className="table-responsive topmr40 col-lg-12 col-md-12 col-sm-12 col-xs-12">
-											<table className="table iAssureITtable-bordered table-striped table-hover">
-												<thead className="tempTableHeader">
-													<tr className="">
-														<th className="umDynamicHeader srpadd textAlignCenter"> Name </th>
-														<th className="umDynamicHeader srpadd textAlignCenter"> Action </th>
-													</tr>
-												</thead>
-												<tbody>
-												{this.state.allPosts.map( (roleData, index)=>{
-													// console.log('roleData',roleData);
-												   return( 
-													<tr>
-														<td className="textAlignLeft">{roleData.name}</td>		
-														<td className="roleTextCenter pointerCls"> 						
-															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title=" Edit"  title="Edit Department Name" ></i>
-															&nbsp;&nbsp;
-															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Delete" data-toggle="modal" title="Delete" ></i>
-														</td>
-
-													</tr>
-													)
+											{
+												this.state.oneOffice != null ?
+												this.state.alldata != null ?
+												this.state.alldata.map( (roleData, index)=>{
 													
-													})
-												}
-												</tbody>
-											</table>
-										</div>
+												   return( 
+
+													<div className="table-responsive topmr40 col-lg-12 col-md-12 col-sm-12 col-xs-12">
+														<table className="table iAssureITtable-bordered table-striped table-hover">
+															<thead className="tempTableHeader">
+																<tr className="">
+																	<th className="umDynamicHeader srpadd textAlignCenter"> Full Name </th>
+																	<th className="umDynamicHeader srpadd textAlignCenter"> Mobile No </th>
+																	<th className="umDynamicHeader srpadd textAlignCenter"> Email ID </th>
+																	<th className="umDynamicHeader srpadd textAlignCenter"> Roles </th>
+																</tr>
+															</thead>
+															<tbody>
+															
+																<tr>
+																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.fullName : null }</td>	
+																	<td className="textAlignLeft">{ roleData.mobileNumber ? roleData.mobileNumber : null }</td>	
+																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.emailId : null }</td>	
+																	<td className="textAlignLeft">{ roleData.roles[0] ? roleData.roles[0] : null }</td>		
+																
+																
+
+																</tr>
+																
+															
+															</tbody>
+														</table>
+													</div>
+
+												);
+												
+												})
+
+												:
+
+												<div className="centernote col-lg-12"> No data available </div>
+
+
+												:
+												<div className="centernote col-lg-12"> Please select office  </div>
+
+										}
+
 									</div>
 								</div>
 							</div>

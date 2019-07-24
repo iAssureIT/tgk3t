@@ -373,7 +373,7 @@ class IAssureTableUM extends Component {
 				      .then(
 				        (res)=>{
 				          console.log('res', res);
-				          swal("Search successfull by "+searchText+ "","success");
+				          // swal("Search successfull by "+searchText+ "","success");
 				          var data = res.data.data;
 				          var tableData = data.map((a, i)=>{
 								return {
@@ -712,11 +712,14 @@ class IAssureTableUM extends Component {
 
         this.setState({
         	allid : allid,
+        },()=>{
+        	console.log("here id====================",this.state.allid);
+        	 this.props.selectedUser(this.state.allid);
         })
 
-        this.props.selectedUser(this.state.allid);
+       
 
-        console.log("here id====================",this.state.allid);
+        
       }else{
         $('.userCheckbox').prop('checked',false);
       }

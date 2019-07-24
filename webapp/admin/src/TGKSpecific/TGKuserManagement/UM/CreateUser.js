@@ -99,7 +99,7 @@ class CreateUser extends Component {
         "lastName"     : this.refs.lastname.value,
         "emailId"        : this.refs.signupEmail.value,
         "countryCode"   : "+91",
-        "mobile"    : this.refs.mobNumber.value,
+        "mobileNumber"    : this.refs.mobNumber.value,
         "pwd"          : "user123",
         
         "status"       : "Active",
@@ -115,17 +115,17 @@ class CreateUser extends Component {
         // if(res.status == 201){
           swal("User added successfully", "", "success");
 
-          // alert("Data inserted Successfully!")
-          this.refs.firstname.value = '';
-          this.refs.lastname.value  = '';
-          this.refs.signupEmail.value  = '';
-          this.refs.mobNumber.value = '';
-        // }
+                    // alert("Data inserted Successfully!")
+                    this.refs.firstname.value = '';
+                    this.refs.lastname.value  = '';
+                    this.refs.signupEmail.value  = '';
+                    this.refs.mobNumber.value = '';
+                  // }
 
-        // if(event.target.id === "signUpUser") {
-        this.setState({show: false})
-        console.log("close modal");
-         // }
+                  // if(event.target.id === "signUpUser") {
+                  this.setState({show: false})
+                  console.log("close modal");
+                   // }
 
 
                        var data = {
@@ -157,6 +157,10 @@ class CreateUser extends Component {
 
                     // alert("Something went wrong! Please check Get URL.");
                   });
+
+                  $('.modal-backdrop').remove();
+
+
        
       })
       .catch((error)=>{
@@ -279,7 +283,7 @@ class CreateUser extends Component {
                                                               <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
                                                              
                                                                <select className="form-control" value={this.state.role} ref ="role" id="role" name="role" data-text="role">
-                                                                    <option  disabled> --select-- </option>
+                                                                    <option  hidden> --select-- </option>
                                                                     <option value="Technical Admin" > Technical Admin </option>
                                                                     <option value="Executive Admin" > Executive Admin </option>
                                                                     <option value="Sales Manager" > Sales Manager </option>
@@ -295,14 +299,15 @@ class CreateUser extends Component {
                                                               <label className="formLable">Office Location <label className="requiredsign">*</label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
                                                                     <select className="form-control" value={this.state.officeid} ref ="office" id="office" name="office" data-text="office">
-                                                                        <option  disabled> --select-- </option>
-
+                                                                        <option hidden> --select-- </option>
+                                                                        <option value="Head Office">  Head Office </option>
+                                                                        <option value="Sales Agent Office"> Sales Agent Office </option>
                                                                            { this.state.office != null ?
                                                                           this.state.office[0].map( (locData, index)=>{
                                                                           // console.log('locData',locData);
                                                                            return( 
 
-                                                                                 <option value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+                                                                                 <option key={index} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
 
 
                                                                                    )}

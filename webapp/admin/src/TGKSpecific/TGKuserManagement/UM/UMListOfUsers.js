@@ -47,7 +47,9 @@ class UMListOfUsers extends Component {
             	  
             ],
 
-            checkedUser  : "",
+            checkedUser  : [],
+            activeswal : false,
+            blockswal : false,
 		}
     	this.handleChange  = this.handleChange.bind(this);
 			
@@ -83,11 +85,11 @@ class UMListOfUsers extends Component {
 	          completeDataCount : res.data.length,
 	          tableData 		: tableData,          
 	        },()=>{
-	        	console.log('tableData', this.state.tableData);
+	        	// console.log('tableData', this.state.tableData);
 	        })
 		})
 		.catch((error)=>{
-			console.log("error = ",error);
+			// console.log("error = ",error);
 			// alert("Something went wrong! Please check Get URL.");
 		});
 	}
@@ -108,7 +110,7 @@ class UMListOfUsers extends Component {
 	                roles 			: a.roles,
 				}
 			})
-        	console.log('res============', res.data);
+        	// console.log('res============', res.data);
           	this.setState({
               completeDataCount : res.data.length,
               tableData 		: tableData,          
@@ -116,12 +118,12 @@ class UMListOfUsers extends Component {
             })
         })
 	    .catch((error)=>{
-	      console.log("error = ",error);
+	      // console.log("error = ",error);
 	      alert("Something went wrong! Please check Get URL.");
 	    }); 
     }
     getSearchText(searchText, startRange, limitRange){
-        console.log(searchText, startRange, limitRange);
+        // console.log(searchText, startRange, limitRange);
         this.setState({
             tableData : []
         });
@@ -135,15 +137,15 @@ class UMListOfUsers extends Component {
 	adminUserActions(event){
 			event.preventDefault();
 			var checkedUsersList     = this.state.checkedUser;
-			console.log('id array here', checkedUsersList);
+			// console.log('id array here', checkedUsersList);
 			
 			if( checkedUsersList.length > 0 ){
 				var selectedValue        = this.refs.userListDropdown.value;
 				var keywordSelectedValue = selectedValue.split('$')[0];
 				var role                 = selectedValue.split('$')[1];
-				console.log("selectedValue",selectedValue);
-				console.log("role",role);
-				console.log("keywordSelectedValue",keywordSelectedValue);
+				// console.log("selectedValue",selectedValue);
+				// console.log("role",role);
+				// console.log("keywordSelectedValue",keywordSelectedValue);
 
 				switch(keywordSelectedValue){
 				  case '-':
@@ -159,21 +161,64 @@ class UMListOfUsers extends Component {
 				  	 	userID : selectedId,
 				  	 	status : 'Blocked',
 				  	}
-				  	console.log("selected i",selectedId);
+				  	// console.log("selected i",selectedId);
 				  	 axios
 				      .post('/api/users/statusaction',formValues)
 				      .then(
 				        (res)=>{
-				          console.log('res', res);
-				          swal("Account blocked successfully","","success");
+				          // console.log('res', res);
+				          this.setState({
+				          	blockswal : true,
+				          	checkedUser : null,
+				          })
+
+				         
 				          checkedUsersList = null;
 				          // this.props.history.push('/umlistofusers');
+
+				          	// update table here
+				          		var data = {
+											"startRange"        : this.state.startRange,
+								            "limitRange"        : this.state.limitRange, 
+										}
+										axios.post('/api/users/userslist', data)
+										.then( (res)=>{      
+											// console.log("herer",res);
+											var tableData = res.data.map((a, i)=>{
+												return {
+													_id 			: a._id,
+													fullName        : a.fullName,
+									                emailId    		: a.emailId,
+									                mobNumber       : a.mobNumber, 
+									                status        	: a.status,	
+									                roles 			: a.roles,
+												}
+											})
+											this.setState({
+									          completeDataCount : res.data.length,
+									          tableData 		: tableData,          
+									        },()=>{
+									        	// console.log('tableData', this.state.tableData);
+									        })
+										})
+										.catch((error)=>{
+											// console.log("error = ",error);
+											// alert("Something went wrong! Please check Get URL.");
+										});
+
+
+
 				        }).catch((error)=>{ 
 
-				        console.log("error = ",error);
+				        // console.log("error = ",error);
 				      });
 
 				   }  
+
+				   	if(this.state.blockswal == true)
+				   	{
+				   		 swal("Account blocked successfully","","success");
+				   	}
 				    break;
 
 				  case 'active_selected':
@@ -185,21 +230,62 @@ class UMListOfUsers extends Component {
 				  	 	userID : selectedId,
 				  	 	status : 'Active',
 				  	}
-				  	console.log("selected i",selectedId);
+				  	// console.log("selected i",selectedId);
 
 				  	 axios
 				      .post('/api/users/statusaction',formValues)
 				      .then(
 				        (res)=>{
-				          console.log('res', res);
-				          swal("Account activated successfully","","success");
+				          // console.log('res', res);
+				          this.setState({
+				          	activeswal : true,
+				          	checkedUser : null,
+				          });
+				         
 				          checkedUsersList = null;
+
+				          	// update table here
+				          		var data = {
+											"startRange"        : this.state.startRange,
+								            "limitRange"        : this.state.limitRange, 
+										}
+										axios.post('/api/users/userslist', data)
+										.then( (res)=>{      
+											// console.log("herer",res);
+											var tableData = res.data.map((a, i)=>{
+												return {
+													_id 			: a._id,
+													fullName        : a.fullName,
+									                emailId    		: a.emailId,
+									                mobNumber       : a.mobNumber, 
+									                status        	: a.status,	
+									                roles 			: a.roles,
+												}
+											})
+											this.setState({
+									          completeDataCount : res.data.length,
+									          tableData 		: tableData,          
+									        },()=>{
+									        	// console.log('tableData', this.state.tableData);
+									        })
+										})
+										.catch((error)=>{
+											// console.log("error = ",error);
+											// alert("Something went wrong! Please check Get URL.");
+										});
+
+
 				        }).catch((error)=>{ 
 
-				        console.log("error = ",error);
+				        // console.log("error = ",error);
 				      });
 
 				   }  
+
+					   if(this.state.activeswal == true)
+					   {
+					   	 swal("Account activated successfully","","success");
+					   }
 				    break;
 
 				  case 'cancel_selected':
@@ -208,7 +294,7 @@ class UMListOfUsers extends Component {
 				  {
 				  	var selectedId = checkedUsersList[i];
 				  	
-				  	console.log("selected i",selectedId);
+				  	// console.log("selected i",selectedId);
 				  	const token = '';
 				  	const url = '/api/users/'+selectedId ;
 					const headers = {
@@ -226,8 +312,39 @@ class UMListOfUsers extends Component {
 				    	// console.log('delete response',response);
 				    	swal("User deleted successfully","", "success");
 
+				    		// update table here
+				          		var data = {
+											"startRange"        : this.state.startRange,
+								            "limitRange"        : this.state.limitRange, 
+										}
+										axios.post('/api/users/userslist', data)
+										.then( (res)=>{      
+											// console.log("herer",res);
+											var tableData = res.data.map((a, i)=>{
+												return {
+													_id 			: a._id,
+													fullName        : a.fullName,
+									                emailId    		: a.emailId,
+									                mobNumber       : a.mobNumber, 
+									                status        	: a.status,	
+									                roles 			: a.roles,
+												}
+											})
+											this.setState({
+									          completeDataCount : res.data.length,
+									          tableData 		: tableData,          
+									        },()=>{
+									        	// console.log('tableData', this.state.tableData);
+									        })
+										})
+										.catch((error)=>{
+											// console.log("error = ",error);
+											// alert("Something went wrong! Please check Get URL.");
+										});
+
+
 					}).catch((error)=> {
-					    console.log(error);
+					    // console.log(error);
 					});
 
 
@@ -241,29 +358,112 @@ class UMListOfUsers extends Component {
 				  	var selectedId = checkedUsersList[i];
 				  	var formValues ={
 				  	 	userID : selectedId,
-				  	 	role   : role,
+				  	 	roles   : role,
 				  	}
-				  	console.log("selected i",selectedId);
+				  	// console.log("selected i",selectedId);
 
 				  	 axios
 				      .post('/api/users/roleadd/',formValues)
 				      .then(
 				        (res)=>{
-				          console.log('res', res);
+				          // console.log('res', res);
 				          swal("Role Added successfully","","success");
 				          checkedUsersList = null;
+
+				          		// update table here
+				          		var data = {
+											"startRange"        : this.state.startRange,
+								            "limitRange"        : this.state.limitRange, 
+										}
+										axios.post('/api/users/userslist', data)
+										.then( (res)=>{      
+											// console.log("herer",res);
+											var tableData = res.data.map((a, i)=>{
+												return {
+													_id 			: a._id,
+													fullName        : a.fullName,
+									                emailId    		: a.emailId,
+									                mobNumber       : a.mobNumber, 
+									                status        	: a.status,	
+									                roles 			: a.roles,
+												}
+											})
+											this.setState({
+									          completeDataCount : res.data.length,
+									          tableData 		: tableData,          
+									        },()=>{
+									        	// console.log('tableData', this.state.tableData);
+									        })
+										})
+										.catch((error)=>{
+											// console.log("error = ",error);
+											// alert("Something went wrong! Please check Get URL.");
+										});
+										
 				        }).catch((error)=>{ 
 
-				        console.log("error = ",error);
+				        // console.log("error = ",error);
 				      });
 
 				   }  
 				    break;
 
 				  case 'remove':
-				 //    Meteor.call('removeRoleFromUser', role, checkedUsersList);
-				 //    $('input[name=userCheckbox]').prop('checked','');
-					// this.refs.userListDropdown.value = '-';
+					
+
+					 for(var i=0;i< checkedUsersList.length;i++)
+				  {
+				  	var selectedId = checkedUsersList[i];
+				  	var formValues ={
+				  	 	userID : selectedId,
+				  	 	roles   : role,
+				  	}
+			
+				  	 axios
+				      .delete('/api/users/roledelete/',formValues)
+				      .then(
+				        (res)=>{
+				          // console.log('res', res);
+				          swal("Role deleted successfully","","success");
+				          checkedUsersList = null;
+
+				          		// update table here
+				          		var data = {
+											"startRange"        : this.state.startRange,
+								            "limitRange"        : this.state.limitRange, 
+										}
+										axios.post('/api/users/userslist', data)
+										.then( (res)=>{      
+											// console.log("herer",res);
+											var tableData = res.data.map((a, i)=>{
+												return {
+													_id 			: a._id,
+													fullName        : a.fullName,
+									                emailId    		: a.emailId,
+									                mobNumber       : a.mobNumber, 
+									                status        	: a.status,	
+									                roles 			: a.roles,
+												}
+											})
+											this.setState({
+									          completeDataCount : res.data.length,
+									          tableData 		: tableData,          
+									        },()=>{
+									        	// console.log('tableData', this.state.tableData);
+									        })
+										})
+										.catch((error)=>{
+											// console.log("error = ",error);
+											// alert("Something went wrong! Please check Get URL.");
+										});
+										
+				        }).catch((error)=>{ 
+
+				        // console.log("error = ",error);
+				      });
+
+				   }  
+
 				    break;
 				}
 			}else{
@@ -280,8 +480,8 @@ class UMListOfUsers extends Component {
 				event.preventDefault();
 				var selectedValue        = this.refs.roleListDropdown.value;
 				var keywordSelectedValue = selectedValue.split('$')[0];
-				console.log("selectedValue",selectedValue);			
-				console.log("keywordSelectedValue ------------------",keywordSelectedValue);
+				// console.log("selectedValue",selectedValue);			
+				// console.log("keywordSelectedValue ------------------",keywordSelectedValue);
 					var formValues ={
 						searchText : selectedValue,
 					}
@@ -310,11 +510,11 @@ class UMListOfUsers extends Component {
 						          completeDataCount : res.data.length,
 						          tableData 		: tableData,          
 						        },()=>{
-						        	console.log('tableData', this.state.tableData);
+						        	// console.log('tableData', this.state.tableData);
 						        })
 							})
 							.catch((error)=>{
-								console.log("error = ",error);
+								// console.log("error = ",error);
 								// alert("Something went wrong! Please check Get URL.");
 							});
 
@@ -355,14 +555,14 @@ class UMListOfUsers extends Component {
 
 			var selectedValue        = this.refs.blockActive.value;
 				var keywordSelectedValue = selectedValue.split('$')[0];
-				console.log("selectedValue status",selectedValue);			
-				console.log("keywordSelectedValue status",keywordSelectedValue);
+				// console.log("selectedValue status",selectedValue);			
+				// console.log("keywordSelectedValue status",keywordSelectedValue);
 					var formValues ={
 						searchText : selectedValue,
 					}
 
 					if(selectedValue == "all"){
-						console.log("here all data");
+						// console.log("here all data");
 
 							var data = {
 								"startRange"        : this.state.startRange,
@@ -386,11 +586,11 @@ class UMListOfUsers extends Component {
 						          completeDataCount : res.data.length,
 						          tableData 		: tableData,          
 						        },()=>{
-						        	console.log('tableData', this.state.tableData);
+						        	// console.log('tableData', this.state.tableData);
 						        })
 							})
 							.catch((error)=>{
-								console.log("error = ",error);
+								// console.log("error = ",error);
 								// alert("Something went wrong! Please check Get URL.");
 							});
 
@@ -401,7 +601,7 @@ class UMListOfUsers extends Component {
 				      .post('/api/users/searchValue',formValues)
 				      .then(
 				        (res)=>{
-				          console.log('res', res);
+				          // console.log('res', res);
 				          // swal("Success! only "+selectedValue+" users are shown in the list", "","success");
 				          var data = res.data.data;
 				          var tableData = data.map((a, i)=>{
