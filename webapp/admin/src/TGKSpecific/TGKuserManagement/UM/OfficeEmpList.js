@@ -175,9 +175,7 @@ class OfficeEmpList extends Component {
 											{
 												this.state.oneOffice != null ?
 												this.state.alldata != null ?
-												this.state.alldata.map( (roleData, index)=>{
-													
-												   return( 
+												
 
 													<div className="table-responsive topmr40 col-lg-12 col-md-12 col-sm-12 col-xs-12">
 														<table className="table iAssureITtable-bordered table-striped table-hover">
@@ -191,6 +189,9 @@ class OfficeEmpList extends Component {
 															</thead>
 															<tbody>
 															
+															{this.state.alldata.map( (roleData, index)=>{
+													
+												   		return( 
 																<tr>
 																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.fullName : null }</td>	
 																	<td className="textAlignLeft">{ roleData.mobileNumber ? roleData.mobileNumber : null }</td>	
@@ -201,14 +202,16 @@ class OfficeEmpList extends Component {
 
 																</tr>
 																
+
+															);
+															
+															})
+														}
 															
 															</tbody>
 														</table>
 													</div>
 
-												);
-												
-												})
 
 												:
 

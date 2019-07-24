@@ -802,7 +802,7 @@ class IAssureTableUM extends Component {
 
 
 	                            </th>
-	                            <th className="umDynamicHeader srpadd textAlignLeft">Sr.No.</th>
+	                            {/*<th className="umDynamicHeader srpadd textAlignLeft">Sr.No.</th>*/}
 
 
 		                            { this.state.tableHeading ?
@@ -835,7 +835,7 @@ class IAssureTableUM extends Component {
 													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={value._id} id={value._id} onChange={this.selectedId.bind(this)}/></td>
 													
 													{/*<td>{value._id}</td>*/}
-													<td className="textAlignCenter">{this.state.startRange+1+i}</td>
+													{/*<td className="textAlignCenter">{this.state.startRange+1+i}</td>*/}
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
