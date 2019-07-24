@@ -44,7 +44,7 @@
 
 .headereffect
 {
-    width: 95%!important;
+    width: 94%!important;
   }
   .dashboardeffect
 {
@@ -62,4 +62,33 @@
 
 .emptyclass{
   height: 100px;
+}
+
+.tableinnetWrap1 {
+    border-top: 2px solid #00c0ef !important;
+}
+
+.innerblock {
+    display: block;
+    min-height: 80px;
+    background: #fff;
+    border-radius: 2px;
+}
+
+.innerblock1 {
+    min-height: 3000px;
+    padding: 1% 1% 1% 1%!important;
+    margin-top: 15px;
+    margin-left: 10px;
+    margin-right: 5px;
+    margin-bottom: 15px;
+}
+
+.noLRPad {
+    padding-left: 0%!important;
+    padding-right: 0%!important;
+}
+
+.bodyDiv{
+  background-color: #dadada;
 }

@@ -8,41 +8,49 @@ export default class Operation extends Component {
 		return (
 			<div className="container-fluid bodyDiv ">
 				<div className="tableinnetWrap1 innerblock innerblock1">
-					<div className="tabHaed">
+					<div className="">
 					  <h2>Operations</h2>
 					  <br/>
 					 {/* <!-- Nav pills -->*/}
-					 <div className=" col-lg-12 ">
-						  <ul className="nav nav-pills textC" role="tablist">
-						    <li className="nav-item col-lg-2 col-md-2 active ">
-						      <a className="nav-link active textB " data-toggle="pill" href="#home">New
+					 <div className=" col-lg-12 col-md-12">
+						  <ul className="nav nav-pills textC col-lg-12 col-md-12 noPad" role="tablist">
+						    <li className="nav-item col-lg-2 col-md-2 active navPillsMargin ">
+						      <a className="nav-link active textB " data-toggle="pill" href="#WIP">WIP
 						      </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>
-						    <li className="nav-item col-lg-2 col-md-2">
-						      <a className="nav-link textB" data-toggle="pill" href="#menu1">Re-Listing </a>
+						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin ">
+						      <a className="nav-link active textB " data-toggle="pill" href="#New">New
+						      </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>
-						    <li className="nav-item col-lg-2 col-md-2">
-						      <a className="nav-link textB" data-toggle="pill" href="#menu2">Verified </a>
+						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
+						      <a className="nav-link textB" data-toggle="pill" href="#ReListing">Re-Listing </a>
+						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						    </li>
+						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
+						      <a className="nav-link textB" data-toggle="pill" href="#Verified">Verified </a>
 						       <span className="badge badge-secondary label-warning badgeP">3</span>
 						    </li>
-						    <li className="nav-item col-lg-2 col-md-2">
-						      <a className="nav-link textB" data-toggle="pill" href="#menu3">Listed </a>
+						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
+						      <a className="nav-link textB" data-toggle="pill" href="#Listed">Listed </a>
 						       <span className="badge badge-secondary label-warning badgeP">9</span>
 						    </li>
-						    <li className="nav-item col-lg-2 col-md-2">
-						      <a className="nav-link textB" data-toggle="pill" href="#menu4">Query </a>
+						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
+						      <a className="nav-link textB" data-toggle="pill" href="#Query">Query </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>		    
 						  </ul>
 					 </div>
 					  
 					  {/*<!-- Tab panes -->*/}
-					  <div className="tab-content col-lg-10 noPad ">
-						    <div id="home" className="container tab-pane active noPad"><br/>
-							    <div className="col-lg-12  ">
-								  	<div className="col-lg-1 check2 ">
+					  <div className="tab-content col-lg-10 col-lg-offset-1 noPad ">
+						     <div id="WIP" className="container active tab-pane ">
+						       <NewProperty /> 
+						    </div>
+						    <div id="New" className="container tab-pane fade "><br/>
+							    <div className="col-lg-12 noPad ">
+								  	<div className="col-lg-1">
 									    <input type="checkbox" id="cbtest"  className="check selectall"/>
 									    <label htmlFor="cbtest" className="check-box"></label> 
 									</div>
@@ -55,19 +63,17 @@ export default class Operation extends Component {
 							  	</div>
 							    <NewProperty /> 
 						    </div>
-						    <div id="menu1" className="container tab-pane fade">
-						      {/*<PropertyView />*/}
+						    <div id="ReListing" className="container tab-pane fade">
+						      <NewProperty /> 
 						    </div>
-						    <div id="menu2" className="container tab-pane fade">
-						      {/*<PropertyView />*/}
+						    <div id="Verified" className="container tab-pane fade">
+						      <NewProperty /> 
 						    </div>
-						    <div id="menu4" className="container tab-pane fade">
-						      <Query />
-						      <Query />
-						      <Query />
+						    <div id="Listed" className="container tab-pane fade">
+						      <NewProperty /> 
 						    </div>
-						    <div id="menu3" className="container tab-pane fade">
-						      {/*<PropertyView />*/}
+						    <div id="Query" className="container tab-pane fade">
+						      <Query />
 						    </div>
 						 </div>   
 					</div>

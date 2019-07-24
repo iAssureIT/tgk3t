@@ -33,19 +33,20 @@
 }
 .hSearch{
 	margin-top: 21px;
-    margin-left: 93px;
-    width: 444px;
     height: 43px;
 }
 .S-img{
-	left: 92px;
-    width: 71px;
     height: 43px;
     position: relative;
     top: 21px;
     background-size: 100%,100%;
     background-repeat: no-repeat;
     background-color: #000;
+}
+.tgkImg{
+    width:70%;
+    margin-left: 15%;
+    margin-top: 5px;
 }
 .S-img1{
     left: -20px;
@@ -87,8 +88,8 @@
     color: #fff;
     text-align: center;
 }
-.mb90{
-    margin-bottom: 90px;
+.mb30{
+    margin-bottom: 30px;
 }
 .intro{
     background-color: #f5ad3e !important;

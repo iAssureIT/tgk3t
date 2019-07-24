@@ -14,8 +14,10 @@ import Financials               from '../PostProperty/Financials/Financials.js';
 import Amenities                from '../PostProperty/Amenities/Amenities.js';
 import Availability             from '../PostProperty/Availability/Availability.js';
 import Location                 from '../PostProperty/Location/Location.js';
+
 import CongratsPage             from '../PostProperty/CongratsPage/CongratsPage.js';
 import ImageUpload              from '../PostProperty/ImageUpload/ImageUpload.js';
+
 
 
 import 'bootstrap/js/tab.js';
@@ -32,6 +34,7 @@ class BannerwithModal extends Component {
 			inputData:[],
 			proprtyType:"",
 			transactionType:"",
+			
 		}
 	}
 
@@ -40,12 +43,16 @@ class BannerwithModal extends Component {
 	}
 
 	componentDidMount() {
+		var formValues = {
+			startRange:0,
+			limitRange:6,
+		}
 		this.setState({
 			propertyType : "Residential",
 			transactionType : "Sell",
 		},()=>{
 			 axios
-	        .get('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType)
+	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
 	        .then( (res) =>{
 	          this.setState({
 	          	inputData : res.data,
@@ -63,12 +70,16 @@ class BannerwithModal extends Component {
 
 	getPropertyDetails(event,){
 		event.preventDefault();
+		var formValues = {
+			startRange:0,
+			limitRange:6,
+		}
 		this.setState({
 			propertyType : $(event.target).attr('proprtyType'),
 			transactionType : $(event.target).attr('transactionType'),
 		},()=>{
 			 axios
-	        .get('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType)
+	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
 	        .then( (res) =>{
 	          this.setState({
 	          	inputData : res.data,
@@ -86,7 +97,7 @@ class BannerwithModal extends Component {
 
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb90 ">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 ">
 				<div className=" col-lg-12  ">
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
@@ -106,14 +117,12 @@ class BannerwithModal extends Component {
 					  </ul>
 				 	</div>
 				</div>
-				<div className="col-lg-5 col-lg-offset-3">
-					<div className="col-lg-10">
-						<input type="text" placeholder="  Enter Society, Location or Address" className="hSearch"  />
+				<div className="col-lg-5 col-lg-offset-4 col-md-6 col-md-offset-3 noPad">
+					<div className="col-lg-9 noPad">
+						<input type="text" placeholder="Enter Society, Location or Address" className="col-lg-12 hSearch"  />
 					</div>
-					<div className="col-lg-1 S-img">
-						<div className=" col-lg-12 S-img1 ">
-							<img src="/images/TGK-key.png" />
-						</div>
+					<div className="col-lg-2 S-img noPad">
+						<img src="/images/TGK-key.png" className="col-lg-10 tgkImg noPad" />
 					</div>
 				</div>
 				<div className="col-lg-6 col-lg-offset-4 mt-64">
@@ -193,7 +202,6 @@ const mapStateToProps = (state)=>{
 		Location	 	: state.Location,
     	ImageUpload     : state.ImageUpload,
    		CongratsPage    : state.CongratsPage,
-
 	}
 };
 // const mapDispatchToProps = (dispatch)=>{

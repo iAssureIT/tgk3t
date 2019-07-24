@@ -11,7 +11,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import './SignUp.css';
 
 import axios from 'axios';
-axios.defaults.baseURL = 'http://localhost:3006';
+axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -93,12 +93,8 @@ class SignUp extends Component {
 			            .then((response)=> {
 			                console.log("-------userData------>>",response);
 		            		swal("Great","Information submitted successfully and OTP is sent to your registered Email ID and Mobile no","success");
-			                this.props.history.push("/confirm-otp");
-			                // this.setState({
-			                //   practiceExamReport : reconfirm-otpsponse.data
-			                // });
-			                // localStorage.setItem("token",response.data.token);
-			                // direct.setState({loggedIn:response.data.token})
+			                // this.props.history.push("/confirm-otp");
+			                this.props.history.push("/login");
 			            })
 			            .catch(function (error) {
 			                console.log(error);
@@ -203,16 +199,34 @@ class SignUp extends Component {
     }
 
 	render(){
-		var winHeight = window.innerHeight;
-        var divHeight = winHeight/4.5+'px';
+		// var winHeight = window.innerHeight;
+  //       var divHeight = winHeight/4.5+'px';
 		const {formerrors} = this.state;
 		console.log("formerrors====?>>>",formerrors);
+
+
+		  var windowWidth = $(window).width();
+    // console.log('ww',windowWidth);
+      if(windowWidth>=320&&windowWidth<=992){
+        var backImage = "visible-xs col-xs-12 visible-sm col-sm-12 noBackImage"
+        }else{
+        var backImage = "signUpBackground hidden-xs hidden-sm"
+      }
+
+
+    var winHeight = window.innerHeight;
+    var boxHeight = 520;
+    var divHeight = 450 +'px';
+      console.log("-------------------------------",this.state.loggedIn)
+    
 		return(
+
+		<div className={backImage} style={{"height": winHeight}}> 
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 signUpWrapper">
-        		<div className="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-12 formbg1 bg-success signupPadding signUpFormWrap loginOesWrap loginforms1" style={{"height": winHeight}}>
+        		<div className="col-lg-4 col-lg-offset-4 col-md-6 col-md-offset-3 col-sm-12 margintop20 formbg1 bg-success signupPadding signUpFormWrap loginOesWrap loginforms1" style={{"height": boxHeight}}>
 					<div className="divLoginInWrap">
 						<form id="signUpUser" onSubmit={this.usersignup.bind(this)}>
-	                    	<h3 className="signUpNameTitle2"><span className="bordbt">SIGN UP</span></h3>
+	                    	<h3 className="signUpNameTitle2 margintop0"><span className="bordbt">SIGN UP</span></h3>
 							<div className="col-lg-12 col-md-12 signUpInnerWrapperOES signupfrm">
 								<div className="form-group form-group1 col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent textpd boxMarg">
 							   		<span className="blocking-span noIb">
@@ -259,30 +273,43 @@ class SignUp extends Component {
 							    </div>
 						   		<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent marBtm">
 								    <div className="form-group form-group1 fltlft input-group col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-							   			<span className="blocking-span noIb">
+							   			{/*<span className="blocking-span noIb">
 											<input type="password" className="form-control pass oesSignUpForm confirmbtm inputTextPass" ref="signupPassword" name="signupPassword" required/>
 											<span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>					   			
 										</span>
-										<span className="input-group-addon customCls customCls1 glyphi-custommm">
+										<span className="input-group-addon eyeicon  glyphi-custommm">
 											<i className="fa fa-eye Pass showPwd" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
 											<i className="fa fa-eye-slash Pass hidePwd" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
 										</span>
 					                    <span className="focus-border">
 					                    	<i></i>
-					                    </span>
+					                    </span>*/}
+
+					                    <span className="blocking-span noIb">
+						                    <input type="password" className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="signupPassword" name="signupPassword" required/>
+						                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Password</span>                 
+						                  </span>
+						                <div className="showHideSignDiv">
+						                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+						                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+						                </div> 
+						                  <span className="focus-border">
+						                    <i></i>
+						                  </span>
 									</div>
 							   		<div className="input-group textpdEye fltlft col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
-							   			<span className="blocking-span noIb">
-											<input type="password" className="form-control pass oesSignUpForm confirmbtm inputTextPass" ref="signupConfirmPassword" name="signupConfirmPassword" required/>
-											<span className="floating-label1"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span>					   			
-										</span>
-										<span className="input-group-addon customCls customCls1 glyphi-custommm">
-											<i className="fa fa-eye Pass showPwd" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
-											<i className="fa fa-eye-slash Pass hidePwd" aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
-										</span>
-					                    <span className="focus-border">
-					                    	<i></i>
-					                    </span>
+							   			
+					                     <span className="blocking-span noIb">
+						                    <input type="password" className="form-control pass border3 oesSignUpForm confirmbtm inputTextPass tmsLoginTextBox" ref="signupConfirmPassword" name="signupConfirmPassword" required/>
+						                    <span className="floating-label1 lbfloatpass"><i className="fa fa-lock" aria-hidden="true"></i> Confirm Password</span>                 
+						                  </span>
+						                <div className="showHideSignDiv">
+						                  <i className="fa fa-eye showPwd showEyeupSign" aria-hidden="true" onClick={this.showSignPass.bind(this)}></i>
+						                  <i className="fa fa-eye-slash hidePwd hideEyeSignup " aria-hidden="true" onClick={this.hideSignPass.bind(this)}></i>
+						                </div> 
+						                  <span className="focus-border">
+						                    <i></i>
+						                  </span>
 									</div>
 								</div>
 							    <div className="form-group form-group1 col-lg-12 col-md-12 col-xs-12 col-sm-12 inputContent termspad">
@@ -310,14 +337,15 @@ class SignUp extends Component {
 							    	<input id="signUpBtn" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 acceptinput UMloginbutton UMloginbutton1 hvr-sweep-to-right" type="submit" value="Sign Up" disabled/>
 							    </div>		   
 
-						    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 pdcls">
-							    	<Link to='/' className="UMGrey signInbtn1 col-lg-12 col-md-12 col-sm-12 col-xs-12 mrleftsign">Sign In</Link> 	
+						    	<div className="col-lg-4 col-lg-offset-4 col-md-4 col-sm-4 col-xs-4 pdcls">
+							    	<Link to='/' className="UMGrey signInbtn1 col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Sign In</Link> 	
 						    	</div>
 						    </div> 
 					  	</form>
 				  	</div>
 				</div>
 			</div>
+		</div>
 		);
 	}
 

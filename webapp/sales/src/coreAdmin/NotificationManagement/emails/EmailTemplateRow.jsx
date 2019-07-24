@@ -1,11 +1,11 @@
 import React, { Component }    from 'react';
 import EditNotificationModal   from '../EditNotificationModal.jsx';
 import axios 				   from 'axios';
-
-axios.defaults.baseURL = 'http://localhost:3006';
-// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+import swal                     	from 'sweetalert';
+ 
+axios.defaults.baseURL = 'http://qatprmcorporate.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
 class EmailTemplateRow extends Component{
 
 	constructor(props) {
@@ -24,13 +24,39 @@ class EmailTemplateRow extends Component{
 	deleteEmailTemplate(event){
 		event.preventDefault();
 		var id = event.target.id;
-		axios.delete('/api/masternotifications'+id)
+		console.log("id",id);
+		const token = '';
+		const url = '/api/masternotifications/'+id ;
+		const headers = {
+			    "Authorization" : token,
+			    "Content-Type" 	: "application/json",
+			};
+
+		// axios.delete( url, headers )
+		// .then((response)=> {
+	 //    	console.log('delete response',response);
+		// }).catch((error)=> {
+		//     // handle error
+		//     console.log(error);
+		// });
+
+		axios({
+			method: "DELETE",
+			url : url,
+			headers: headers,
+			timeout: 3000,
+			data: null,
+		})
 		.then((response)=> {
-	    	// console.log('delete response',response);
+	    	console.log('delete response',response);
+	    	swal("Template deleted successfully","", "success");
+
 		}).catch((error)=> {
 		    // handle error
-		    // console.log(error);
+		    console.log(error);
 		});
+
+
 	}
 	editEmailNotify(event){
 		// var id = this.props.emailtemplateValues._id;

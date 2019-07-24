@@ -115,3 +115,6 @@ input[type=checkbox]:checked + .check-box::before,
 .propertyBox{
   cursor: pointer;
 }
+.pBoxSize:hover{
+  background-color: #eee !important;
+}

@@ -762,7 +762,7 @@
 .dropdown-content:after {
     position: absolute;
     top: -11px;
-    right: 14px;
+    right: 19px;
     display: inline-block;
     border-right: 10px solid transparent;
     border-bottom: 10px solid #f2f2f2;

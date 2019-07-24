@@ -62,9 +62,9 @@ class PropertyProfileView extends Component{
           propertyImages      : ['/images/profileImg2.jpg','/images/profileImg2.jpg'],
           propertyVideos      : ['https://youtu.be/vO0FgrPFnjM'],
           pricing             : postsdata.financial,
-          propertyDescription : postsdata.propertyDetails,
           propertyLocation    : postsdata.propertyLocation,
         });
+        console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch();
@@ -88,23 +88,14 @@ class PropertyProfileView extends Component{
                 <div className="col-lg-12 col-md-8 col-sm-8 col-xs-8 nameOfProperty" >
                   <div className="row">
                     <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2" >
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backButton" >
+                      <div className="col-lg-10 col-md-12 col-sm-12 col-xs-12 backButton" >
                         <img src="/images/back.png"/>
                       </div>
                     </div>
                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 row" >
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addressOfProperty" >
                             <label className="pull-left"> 
-                            {
-                              this.state.propertyLocation?
-                                this.state.propertyLocation.map((data,index)=>{
-                                  return(
-                                      <data>{data.address}</data>
-                                    );
-                                  })
-                              :
-                              null  
-                            }
+                            {this.state.propertyLocation && this.state.propertyLocation.address ? this.state.propertyLocation.address:"-"}
                             </label> 
                         <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 text-center forSaleButton pull-right">
                           FOR SALE
@@ -113,17 +104,8 @@ class PropertyProfileView extends Component{
                         <br/>
                        <div className="col-lg-12"> 
                         <div className="row">
-                         <i className="fa fa-map-marker" aria-hidden="true"></i> 
-                          {
-                             this.state.propertyLocation?
-                              this.state.propertyLocation.map((data,index)=>{
-                                return(
-                                    <data>{data.society+", "+data.area+", "+data.city}</data>
-                                  );
-                                })
-                            :
-                            "No Data Available"  
-                          }
+                         <i className="fa fa-map-marker" aria-hidden="true"></i> &nbsp;
+                          {this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.pincode : "-"}
                           </div>
                         </div>
                       </div>
@@ -137,9 +119,9 @@ class PropertyProfileView extends Component{
                     <AllocateToAgent />
                   </div>
                 </div>
-              <div className="row">
+              <div className="">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imagesOfProperty pull-right" >
-                  <div className="row ">
+                  <div className=" ">
                   <OwlCarousel
                         className=" owl-theme "
                         loop
@@ -190,62 +172,40 @@ class PropertyProfileView extends Component{
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="row">
-                      <div className="col-lg-5 col-md-6 col-sm-12 col-xs-12   ">
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12   ">
                         <div className="row"> 
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label className="row">Property Description</label>
                           </div>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <div className="row"> 
-                              {this.state.propertyDescription?
-                                this.state.propertyDescription.map((propertyDescription,index)=>{
-                                return(
-                                    <div key={index}>{propertyDescription.description}</div>
-                                  )
-                                })
-                                :
-                                "No Data Available"
-                              }
+                              {this.state.propertyFeatures && this.state.propertyFeatures.description?  this.state.propertyFeatures.description : "-"}                              
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <label className="row">Property Features</label>
+                              <label className="row">Key Features</label>
                             </div>
                             <div className="row"> 
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <div className="row"> 
-                                  <ul  className="bolder">
-                                    <table className="col-lg-12">
-                                      {this.state.propertyFeatures && this.state.propertyFeatures.length > 0 ?
-                                        this.state.propertyFeatures.map((data,index)=>{
-                                        return(
-                                          <div className="row">
-                                            <div className="col-lg-6" key={index}>
-                                                <tr><td><li>Furnished Status</li></td> : <td>{data.furnishedStatus ? <b>{data.furnishedStatus} </b> :"-" }</td></tr>
-                                                <tr><td><li>Bedrooms        </li></td> : <td>{data.bedrooms        ? <b>{data.bedrooms}        </b> : "-"}</td></tr>
-                                                <tr><td><li>Balconies       </li></td> : <td>{data.balconies       ? <b>{data.balconies}       </b> : "-"}</td></tr>
-                                                <tr><td><li>Bathrooms       </li></td> : <td>{data.bathrooms       ? <b>{data.bathrooms}       </b> : "-"}</td></tr>
-                                                <tr><td><li>Age of Property </li></td> : <td>{data.ageofProperty   ? <b>{data.ageofProperty}   </b> : "-"}</td></tr>
-                                            </div>
-                                            <div className="col-lg-6 pull-right">
-                                                <tr><td><li>Facing          </li></td> : <td>{data.facing          ? <b>{data.facing}          </b> : "-"}</td></tr>
-                                                <tr><td><li>Super Area      </li></td> : <td>{data.superArea       ? <b>{data.superArea}       </b> : "-"}<b>Sqft</b></td></tr>
-                                                <tr><td><li>Built up Area </li></td> : <td>{data.builtupArea     ? <b>{data.builtupArea}     </b> : "-"}<b>Sqft</b></td></tr>
-                                                <tr><td><li>Available From  </li></td> : <td>{data.availableFrom   ? <b>{data.availableFrom}   </b> : "-"}</td></tr>
-                                            </div>
-                                          </div>
-                                          )
-                                        })
-                                        :
-                                        null
-                                      }
-                                    </table>
-                                  </ul> 
+                                  <table className="col-lg-12">
+                                    <ul  className="bolder">
+                                      <tr><td><li>Furnished Status</li></td> : <td>{this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> :"-" }</td></tr>
+                                      <tr><td><li>Bedrooms        </li></td> : <td>{this.state.propertyFeatures.bedrooms        ? <b>{this.state.propertyFeatures.bedrooms}        </b> : "-"}</td></tr>
+                                      <tr><td><li>Balconies       </li></td> : <td>{this.state.propertyFeatures.balconies       ? <b>{this.state.propertyFeatures.balconies}       </b> : "-"}</td></tr>
+                                      <tr><td><li>Bathrooms       </li></td> : <td>{this.state.propertyFeatures.bathrooms       ? <b>{this.state.propertyFeatures.bathrooms}       </b> : "-"}</td></tr>
+                                      <tr><td><li>Age of Property </li></td> : <td>{this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty}   </b> : "-"}</td></tr>
+                                      <tr><td><li>Facing          </li></td> : <td>{this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</td></tr>
+                                      <tr><td><li>Super Area      </li></td> : <td>{this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></td></tr>
+                                      <tr><td><li>Built up Area  </li></td>  : <td>{this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></td></tr>
+                                      <tr><td><li>Available From  </li></td> : <td>{this.state.propertyFeatures.availableFrom   ? <b>{this.state.propertyFeatures.availableFrom}   </b> : "-"}</td></tr>
+                                    </ul> 
+                                  </table>
                                 </div>
                               </div>
                             </div>
@@ -264,10 +224,10 @@ class PropertyProfileView extends Component{
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 dottedBorder">
                     <div className="row">
-                      <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12   ">
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12   ">
                         <div className="row"> 
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                            <label className="row">Amenities Pricing</label>
+                            <label className="row">Amenities</label>
                           </div>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                               <div className="row">
@@ -296,11 +256,11 @@ class PropertyProfileView extends Component{
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <label className="row">Pricing</label>
+                              <label className="row">Financials</label>
                             </div>
                             <div className="row"> 
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -308,24 +268,16 @@ class PropertyProfileView extends Component{
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                    <div className="row">
                                      <ul  className="bolder">
-                                    {this.state.propertyFeatures?
-                                      this.state.propertyFeatures.map((propertyArea,index)=>{
-                                      return(
-                                          <div key="index">
-                                            <table>
-                                              <tbody>
-                                                <tr><td><li>Include Charges      </li></td> : <td>{this.state.pricing.includeCharges       ? <b>{this.state.pricing.includeCharges[0]}       </b> :"-" }</td></tr>
-                                                <tr><td><li>Expected Rate        </li></td> : <td>{this.state.pricing.expectedRate       ? <b>{this.state.pricing.expectedRate}       </b> :"-" }</td></tr>
-                                                <tr><td><li>Total Price          </li></td> : <td>{this.state.pricing.totalPrice         ? <b>{this.state.pricing.totalPrice}         </b> : "-"}</td></tr>
-                                                <tr><td><li>Maintainance Charges </li></td> : <td>{this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</td></tr>
-                                                <tr><td><li>Maintainance Per     </li></td> : <td>{this.state.pricing.maintenancePer ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</td></tr>
-                                              </tbody>
-                                            </table>
-                                          </div>
-                                        )
-                                      })
-                                      :
-                                      "No Data Available"
+                                    {
+                                    <table>
+                                      <tbody>
+                                        <tr><td><li>Include Charges      </li></td> : <td>{this.state.pricing.includeCharges       ? <b>{this.state.pricing.includeCharges[0]}       </b> :"-" }</td></tr>
+                                        <tr><td><li>Expected Rate        </li></td> : <td>{this.state.pricing.expectedRate       ? <b>{this.state.pricing.expectedRate}       </b> :"-" }</td></tr>
+                                        <tr><td><li>Total Price          </li></td> : <td>{this.state.pricing.totalPrice         ? <b>{this.state.pricing.totalPrice}         </b> : "-"}</td></tr>
+                                        <tr><td><li>Maintainance Charges </li></td> : <td>{this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</td></tr>
+                                        <tr><td><li>Maintainance Per     </li></td> : <td>{this.state.pricing.maintenancePer ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</td></tr>
+                                      </tbody>
+                                     </table> 
                                     }
                                   </ul> 
                                 </div>
@@ -350,16 +302,7 @@ class PropertyProfileView extends Component{
                         <label className="row">Location</label>
                       </div>
                   <br/>
-                      {
-                             this.state.propertyLocation?
-                              this.state.propertyLocation.map((data,index)=>{
-                                return(
-                                    <data>{data.society+", "+data.area+", "+data.city+", "+data.state+", "+data.country+", "+data.pincode}</data>
-                                  );
-                                })
-                            :
-                            "No Data Available"  
-                          }
+                      { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                     <div className="row">
                       <div className="mapouter"><div className="gmap_canvas"><iframe width="1200" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           

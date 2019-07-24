@@ -12,17 +12,14 @@
     color: #fff;
 }
 .noPad{
-	padding:0px !important;
-	margin: 0px !important;
+	padding-left:0px !important;
+	padding-right:0px !important;
 }
-.check2{
-	margin-left: -16px;
 
-}
 .mt19{
 	margin-top: 19px;
 }
 
-.tabHaed{
-	margin-left: 3%;
+.navPillsMargin{
+	margin-left: 0px !important
 }

@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { render }           from 'react-dom';
 import $ from "jquery";
 import axios from 'axios';
-import SimpleReactValidator from 'simple-react-validator';
+// import SimpleReactValidator from 'simple-react-validator';
 import swal from 'sweetalert';
-import InputMask      		from 'react-input-mask';
+import InputMask  from 'react-input-mask';
 
 
 const formValid = formerrors=>{
@@ -57,39 +57,45 @@ class CompanyInformation extends Component{
 
         city : " ",
         pincode : " ",
-     
-
-
-
       },
       subscription : {
-        
       }
-
     };
-   
     this.handleChange = this.handleChange.bind(this);
   }
-
-  componentWillReceiveProps(nextProps) {
-
-    
-  }
-  
   componentDidMount() {
-  
-    
+  var companyId = 2;
+    /*axios.get('/api/companysettings/'+ companyId)
+    .then( (res)=>{      
+      console.log("here company data",res.data);
+      this.setState({
+        companyName : res.data.companyName,
+        companyId   : 2,
+        companyContactNumber : res.data.companyContactNumber,
+        companyAltContactNumber : res.data.companyMobileNumber,
+        companyEmail            : res.data.companyEmail, 
+        companywebsite          : res.data.companywebsite, 
+        companyAddressLine1     : res.data.companyaddress,
+        companyDist             : res.data.district,
+        companyPincode          : res.data.pincode,
+        companyCity             : res.data.city,
+        companyState            : res.data.state,
+        companyCountry          : res.data.country,
+        taluka                  : res.data.taluka,
+        submitVal               : false,
+      });
+      console.log("this.this.state.companyName",this.state.companyName)
+    })
+    .catch((error)=>{
+      console.log("error = ",error);
+      // alert("Something went wrong! Please check Get URL.");
+    });*/
   
   }
-  componentWillMount() {
-    // this.validator = new SimpleReactValidator();
-  }
+ 
   removeCompanyImage(event){
     event.preventDefault();
     // var link = $(event.target).attr('data-link');
-   
-    
-
   }
 
   CompanyImage(){
@@ -144,12 +150,12 @@ class CompanyInformation extends Component{
                 companyAltContactNumber : this.state.companyAltContactNumber,
                 companyEmail            : this.state.companyEmail,
                 companywebsite          : this.state.companywebsite,
-                companyAddressLine1     : this.state.companyAddressLine1,
-                companyCountry          : this.state.companyCountry,
-                companyState            : this.state.companyState,
-                companyDist             : this.state.companyDist,
-                companyCity             : this.state.companyCity,
-                companyPincode          : this.state.companyPincode,
+                companyaddress          : this.state.companyAddressLine1,
+                country                 : this.state.companyCountry,
+                state                   : this.state.companyState,
+                district                : this.state.companyDist,
+                city                    : this.state.companyCity,
+                pincode                 : this.state.companyPincode,
                 taluka                  : this.state.taluka,
                 logoFilename            : this.state.logoFilename,
                 companyLogo             : this.state.companyLogo,
@@ -166,28 +172,57 @@ class CompanyInformation extends Component{
     var companyInfoFormValue = {
       companyName             : this.state.companyName,
       companyContactNumber    : this.state.companyContactNumber,
-      companyAltContactNumber : this.state.companyAltContactNumber,
+      companyMobileNumber     : this.state.companyAltContactNumber,
       companyEmail            : this.state.companyEmail,
+      companyAltEmail         : "",
+
       companywebsite          : this.state.companywebsite,
-      companyAddressLine1     : this.state.companyAddressLine1,
-      companyCountry          : this.state.companyCountry,
-      companyState            : this.state.companyState,
-      companyDist             : this.state.companyDist,
-      companyCity             : this.state.companyCity,
-      companyPincode          : this.state.companyPincode,
-      taluka                  : this.state.taluka,
+      companyaddress          : this.state.companyAddressLine1,
       logoFilename            : this.state.logoFilename,
       companyLogo             : this.state.companyLogo,
+     
+      
+
+      country                 : this.state.companyCountry,
+      state                   : this.state.companyState,
+      district                : this.state.companyDist,
+      city                    : this.state.companyCity,
+      pincode                 : this.state.companyPincode,
+      taluka                  : this.state.taluka,
+
+ 
+
     }//close array
   
+    console.log("companyInfoFormValue",companyInfoFormValue);
   if(formValid(this.state.formerrors)){
     console.log('companyName    : this.state.companyName');
 
-    axios.post('/api/companysettings',{companyInfoFormValue})
-    .then(function (response) {
+    axios.post('/api/companysettings',companyInfoFormValue)
+    .then( (response)=> {
       // handle success
       console.log("this is response===>>>",response);
-      swal("Good job!", "Company Information Submited!", "success")
+      swal("Good job!", "Company Information Submited!", "success");
+      this.setState({
+    
+      companyName             : "",
+      companyContactNumber    : "",
+      companyAltContactNumber : "",
+      companyEmail            : "",
+      companyAddressLine1     : "",
+      companyDist             : "",
+      companyPincode          : "",
+      companyCity             : "",
+      companyState            : "",
+      companyCountry          : "",
+      companyLogo             : "",
+      logoFilename            : "",
+      taluka                  : "",
+      companywebsite          : "",
+      });
+
+      
+
     })
     .catch(function (error) {
       // handle error
@@ -299,7 +334,7 @@ class CompanyInformation extends Component{
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12 noPadding">
                     <h4 className="basicinfotxt"><i className="fa fa-info-circle fonticons" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Basic Info</h4>
                   </div>
-                  <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  {/*<div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                    
                     <div className="col-lg-6 col-lg-offset-6 col-md-6 col-sm-12 col-xs-12 csImageWrapper">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 outerPhotoWrapper">
@@ -319,11 +354,11 @@ class CompanyInformation extends Component{
                           </div>
 
                             {<img className="col-lg-12 col-md-12 col-sm-12 ClientImgWrap1 displayLogoOne" src={this.CompanyImage()?this.CompanyImage() :"/images/preloader.gif"}/>}
-                            {/* {this.getUploadServicesPercentage()} */}
+                            
                         
                       </div>
                     </div>
-                  </div>
+                  </div>*/}
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp">
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -338,7 +373,8 @@ class CompanyInformation extends Component{
                           type="text" name="companyName" 
                           data-text="firstcompanyname"
                           className="form-control areaStaes"
-                          title="Please enter alphanumeric only" />
+                          title="Please enter alphanumeric only"
+                          value={this.state.companyName} />
                         
                         {this.state.formerrors.firstcompanyname &&(
                           <span className="text-danger">{formerrors.firstcompanyname}</span> 
@@ -425,7 +461,8 @@ class CompanyInformation extends Component{
                             type="text" name="companyAddressLine1" 
                             data-text="companyAddress"
                             className="form-control areaStaes"
-                            title="Please enter alphanumeric only" />
+                            title="Please enter alphanumeric only"
+                            value={this.state.companyAddressLine1} />
                           
                           {this.state.formerrors.companyAddress &&(
                             <span className="text-danger">{formerrors.companyAddress}</span> 

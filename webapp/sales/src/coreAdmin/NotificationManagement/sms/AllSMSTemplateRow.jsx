@@ -1,6 +1,7 @@
 import React, { Component }     from 'react';
 import EditNotificationModal    from '../EditNotificationModal.jsx';
 import axios 					from 'axios';
+import swal                     	from 'sweetalert';
 
 export default class AllSMSTemplateRow extends Component{
 
@@ -21,6 +22,7 @@ export default class AllSMSTemplateRow extends Component{
 		axios.get('/api/masternotifications/'+id)
 		.then((response)=> {
 	    	console.log('delete response',response);
+	    	
 	    	this.setState({
 				'templateType' 		: response.data.templateType,
 				'templateName'		: response.data.templateName,
@@ -38,6 +40,7 @@ export default class AllSMSTemplateRow extends Component{
 		console.log('id',id);
 		axios.delete('/api/masternotifications/'+id)
 		.then((response)=> {
+			swal("Template deleted successfully","", "success");
 	    	console.log('delete response',response);
 		}).catch((error)=> {
 		    // handle error
@@ -63,14 +66,14 @@ export default class AllSMSTemplateRow extends Component{
 										<span className="">&nbsp;&nbsp;&nbsp; Edit</span>
 									</div>
 								</span>
-								<span className="">
+								
 									<div className="deleteNotif" data-toggle="modal" data-target={`#${this.props.smstemplateValues._id}-rm`} id={this.props.smstemplateValues._id}>
 										<span>
 											<i className="fa fa-trash deleteEM" aria-hidden="true" id={this.props.smstemplateValues._id}></i>
 											<span>&nbsp;&nbsp;&nbsp; Delete</span>
 										</span>
 									</div>
-								</span>
+							
 							</div>
 						</div>
 

@@ -1,10 +1,8 @@
 .oneProp{
-	height: 425px;
+	height: 440px;
 	box-shadow: 0px 0px 10px #ccc;
 }
-.noPad{
-	padding: 0px !important;
-}
+
 .mt10{
 	margin-top: 10px;
 }
@@ -52,6 +50,13 @@
 	 width:50px;
 	 background-color: #fff;
 }
+
+.info{
+     position: absolute;
+     top:0px;
+     left: 0px;
+}
+
 #info1{
     z-index: 1;
     position: absolute;
@@ -81,6 +86,8 @@
     font-size: 11px;
     padding-top: 8px;
 }
+
+
 #priceDisplay{
 	z-index: 2;
     position: absolute;
@@ -101,7 +108,20 @@
 }
 
 
+.intrestBtn1 {
+    height: 34px;
+    position: absolute;
+    margin-top: 150px;
+    color: #fff;
+    background-color: #F1A94B;
+    margin-left: 45%;
+    border-radius: 4px;
+}
 
+.heartBtn{
+    cursor: pointer;
+    text-align: center;
+}
 
 
 

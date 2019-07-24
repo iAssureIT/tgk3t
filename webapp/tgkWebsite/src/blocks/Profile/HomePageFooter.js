@@ -27,7 +27,7 @@ class HomePageFooter extends Component{
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerDiv" >
-              <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContent" >
+              <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 noPad footerContent" >
                <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactUs" >
                 <label>Contact Us</label>              
                 </div>

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 
 // Section: 1 - SystemSecurity ******************************************************
 import Login            from '../systemSecurity/Login.js';
+import ConfirmOtp       from '../systemSecurity/ConfirmOtp.js';
 import ForgotPassword   from '../systemSecurity/ForgotPassword.js';
 import ResetPassword    from '../systemSecurity/ResetPassword.js';
 import SignUp           from '../systemSecurity/SignUp.js';
@@ -45,6 +46,7 @@ import $ from "jquery";
               <Route path="/forgot-pwd"     exact strict component={ ForgotPassword } />
               <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
               <Route path="/verify-account" exact strict component={ VerifyAccount } />
+              <Route path="/confirm-otp"    exact strict component={ ConfirmOtp } />
             </Switch>        
           </Router>
         </div>

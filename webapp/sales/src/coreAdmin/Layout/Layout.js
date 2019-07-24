@@ -10,25 +10,39 @@ import $ from "jquery";
 
 // Section: 1 - SystemSecurity ******************************************************
 import Login            from '../systemSecurity/Login.js';
+import ConfirmOtp       from '../systemSecurity/ConfirmOtp.js';
 import ForgotPassword   from '../systemSecurity/ForgotPassword.js';
 import ResetPassword    from '../systemSecurity/ResetPassword.js';
 import SignUp           from '../systemSecurity/SignUp.js';
 import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
 // import CommonPage        from './components/layouts/CommonLayout.js';
 
+
 import Header from '../common/header/Header.js'
 import Footer from '../common/footer/Footer.js'
 import Dashboard from '../dashboard/Dashboard.js'
 import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
 import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
-import UMListOfUsers from '../userManagement/UM/UMListOfUsers.js';
-import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
+// import UMListOfUsers from '../userManagement/UM/UMListOfUsers.js';
+import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
+// import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
+import EditUserProfile from '../../TGKSpecific/TGKuserManagement/UM/EditUserProfile.js';
 import UMRolesList from '../userManagement/Roles/UMRolesList.js';
-import CompanySetting from '../companysetting/Components/CompanySetting.js';
+// import CompanySetting from '../companysetting/Components/CompanySetting.js';
+import CompanySetting from '../../TGKSpecific/TGKcompanysetting/Components/CompanySetting.js';
 import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
+
 
 import Operation from '../../salesAgent/operations/Operation.js';
 import Profile from '../../salesAgent/operations/Profile/PropertyProfileView.js';
+
+
+// section- admin operation
+
+// import MasterData from '../../adminTGK/masterData/masterData.js';
+// import SellOMeter from '../../adminTGK/sell-o-meter/sellOMeter.js';
+// import ClassRating from '../../adminTGK/sell-o-meter/classRating.js';
+
 
 
 
@@ -57,6 +71,8 @@ componentDidMount(){
            $('#dashbordid').toggleClass('dashboardeffect');
        });
     });
+
+
     const token = localStorage.getItem("token");
     console.log("Dashboard Token = ",token);
     if(token!==null){
@@ -64,6 +80,8 @@ componentDidMount(){
       this.setState({
         loggedIn : true
       })
+    }else{
+      console.log("token is not available");
     }
               
   }
@@ -79,21 +97,7 @@ componentDidMount(){
       // this.props.history.push("/login");
     }
   }
-
-  render(){
-    {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===false){
-      return(
-            <div className="App container-fluid">
-                <div className="row">
-                  <div id="headerid" className="headerbackgroundcolor ">
-                    <div className="">
-                      <Header />
-                   </div>
-                  </div>
-                  <div className="">                  
-                    <div id="dashbordid" className="">
-                      <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
+/*
                       <Router>
                           <Switch>
                           <Route path="/umlistofusers" component={UMListOfUsers} exact />
@@ -104,9 +108,47 @@ componentDidMount(){
                           <Route path="/dashboard" component={Dashboard} exact />
 
                           <Route path="/companysetting" component={CompanySetting} exact />
+                          </Switch>        
+                      </Router>
+*/
 
-                          <Route path="/operation" component={Operation} exact />
+
+  render(){
+    console.log("props = ",this.props);
+    {console.log("loggedIn status layput = ", this.state.loggedIn)}
+    if(this.state.loggedIn===false){
+      return(
+            <div className="App container-fluid">
+           
+                <div className="row">
+                  <div id="headerid" className="headerbackgroundcolor headereffect">
+                    <div className="">
+                      <Header />
+                   </div>
+                  </div>
+                  <div className="">                  
+                    <div id="dashbordid" className="dashboardeffect">
+                     {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
+                      */} <Router>
+                          <Switch>
+                          <Route path="/umlistofusers" component={UMListOfUsers} exact />
+
+                          <Route path="/umroleslist" component={UMRolesList} exact />
+                          <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
+
+                          <Route path="/ViewTemplates" component={ViewTemplates} exact />
+                          <Route path="/" component={Dashboard} exact />
+
+                          <Route path="/companysetting" component={CompanySetting} exact />
+                            <Route path="/operation" component={Operation} exact />
                           <Route path="/profile/:id" component={Profile} exact />
+                         {/*----------------------------------------------*/}
+                          {/*<Route path="/masterdata" component={MasterData} exact />
+                          <Route path="/sellometer" component={SellOMeter} exact />
+                          <Route path="/classrating" component={ClassRating} exact />*/}
+
+                          
+
                           </Switch>        
                       </Router>
                     </div>
@@ -134,8 +176,9 @@ componentDidMount(){
               <Route path="/forgot-pwd"     exact strict component={ ForgotPassword } />
               <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
               <Route path="/verify-account" exact strict component={ VerifyAccount } />
-           
-
+              <Route path="/confirm-otp"    exact strict component={ ConfirmOtp } />
+              
+             
             </Switch>        
           </Router>
         </div>

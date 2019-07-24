@@ -13,25 +13,69 @@ import validator 					from 'validator';
 // import 'jquery-validation';
 import './notification.css';
 
-axios.defaults.baseURL = 'http://localhost:3006';
-// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+axios.defaults.baseURL = 'http://qatprmcorporate.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+
+
+  const formValid = formerrors=>{
+  console.log("formerrors",formerrors);
+  let valid = true;
+  Object.values(formerrors).forEach(val=>{
+  val.length>0 && (valid = false);
+  })
+  return valid;
+  }
+
+const emptydataRegex  = RegExp(/^\s*$/);
+const companyAddressRegex = RegExp(/^[a-zA-Z0-9\s,'/.-]*$/);
 class ViewTemplates extends Component{
 
+
    handleChange(event){
-	  const target = event.target;
+
+   	const datatype = event.target.getAttribute('data-text');
+    const {name,value} = event.target;
+    let formerrors = this.state.formerrors;
+    
+    console.log("datatype",datatype);
+    switch (datatype){
+     
+      
+
+      case 'message' : 
+        formerrors.message = emptydataRegex.test(value)   ? "Please Enter Data" :''  ;
+      break;
+
+      case 'subject' : 
+        formerrors.subject = emptydataRegex.test(value)   ? "Please Enter Data" :'';
+      break;
+       
+       default :
+       break;
+
+      //  case 'companyName' : 
+      //  formerrors.companyName = value.length < 1 && value.lenght > 0 ? 'Minimum 1 Character required' : "";
+      //  break;
+
+    }
+    // this.setState({formerrors,})
+    this.setState({ formerrors,
+      [name]:value
+    } );
+
+
+	 /* const target = event.target;
 	  const name   = target.name;
 	  this.setState({
 	  	[name]: event.target.value,
-	  });
+	  });*/
 	}
 
 
 	componentDidMount() {	
 	    $("html,body").scrollTop(0);	
 	   
-	    $.validator.addMethod("regxsubject", function(value, element, arg){          
+	    /*$.validator.addMethod("regxsubject", function(value, element, arg){          
 	    	return arg !== value;        
 	    }, "Please select one subject name");
 
@@ -73,7 +117,7 @@ class ViewTemplates extends Component{
 			    error.insertAfter("#subject");
 			  }  
 			}
-	    });
+	    });*/
 	} 
 	constructor(props){
 
@@ -89,7 +133,12 @@ class ViewTemplates extends Component{
 			    templateTypeerror 	: '',
 			    emailTemplates 		: {},
 	    		notificationTemplates : {},
-	    		smsTemplates 		: {}		   
+	    		smsTemplates 		: {},
+	    		formerrors :{
+			        message 		: '',
+			        subject 		: '',
+			       
+			      },		   
 	  	};
 		this.updateContent = this.updateContent.bind(this);
 	    this.onChange 		= this.onChange.bind(this);
@@ -181,7 +230,7 @@ class ViewTemplates extends Component{
 
 
 		event.preventDefault();
-		if($("#newTemplateForm").valid() && this.state.content){
+		// if($("#newTemplateForm").valid() && this.state.content){
 			var templateType     = this.state.templateType;
 			var templateName     = this.state.templateName;
 			var subject          = this.state.subject;
@@ -203,59 +252,75 @@ class ViewTemplates extends Component{
 					"content"       : cketext,
 				}
 				
-				
-				axios.post('/api/masternotifications', formValues)
-				.then((response)=> {					
-					if(templateType =='Email'){
-						var emailTemplatesList = this.state.emailTemplatesList;
-						console.log('data',response.data.dataBody);
-						emailTemplatesList.push(response.data.dataBody);
-						this.setState({
-							emailTemplatesList : emailTemplatesList
+				if(formValid(this.state.formerrors)){
+					axios.post('/api/masternotifications', formValues)
+					.then((response)=> {	
+					console.log('response',response);				
+						axios({
+							method: 'get',
+							url: '/api/masternotifications/list',
+						}).then((response)=> {
+							swal("Template added successfully","", "success");
+							var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
+							var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
+							var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
+						    this.setState({
+						    	emailTemplatesList 			: emailTemplatesList,
+						    	notificationTemplatesList 	: notificationTemplatesList,
+						    	smsTemplatesList 			: smsTemplatesList
+						    });
+
+						     this.setState({
+						    	templateType 	: '',
+						    	templateName 	: '',
+						    	subject 		: '',
+						    	content 		: ''
+						    });
+
+
+
+						    
+						}).catch(function (error) {
+						    
 						});
-					}else if(templateType =='SMS'){
-						var smsTemplatesList = this.state.smsTemplatesList;
-						smsTemplatesList.push(response.data.dataBody);
-						this.setState({
-							smsTemplatesList : smsTemplatesList
-						});
-					}else if(templateType =='Notification'){
-						var notificationTemplatesList = this.state.notificationTemplatesList;
-						notificationTemplatesList.push(response.data.dataBody);
-						this.setState({
-							notificationTemplatesList : notificationTemplatesList
-						});
-					}
-					swal({
-						title:'swal',
-						text: response.data.message ,
-						type: 'success',
-						showCancelButton: false,
-						confirmButtonColor: '#666',
-						confirmButtonText: 'Ok'
+						// swal({
+						// 	title:'swal',
+						// 	text: response.data ,
+						// 	type: 'success',
+						// 	showCancelButton: false,
+						// 	confirmButtonColor: '#666',
+						// 	confirmButtonText: 'Ok'
+						// });
+						// swal("{response.data}","", "success");
+						$('#createNotifyModal').hide();
+						$('.modal-backdrop').remove();
+
+
+					})
+					.catch(function (error) {
+						/*swal({
+							text: "esponse.data",
+							type: 'success',
+							showCancelButton: false,
+							confirmButtonColor: '#666',
+							confirmButtonText: 'Ok'
+						});*/
+					console.log(error);
+					})
+					.finally(function () {
+					// always executed
 					});
-					$('#createNotifyModal').hide();
-					$('.modal-backdrop').remove();
-				})
-				.catch(function (error) {
-					/*swal({
-						text: "esponse.data",
-						type: 'success',
-						showCancelButton: false,
-						confirmButtonColor: '#666',
-						confirmButtonText: 'Ok'
-					});*/
-				// console.log(error);
-				})
-				.finally(function () {
-				// always executed
-				});
+				}else
+				{
+				    swal("Please enter mandatory fields", "", "warning");
+				    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				}
 			}
-		}else{
+		/*}else{
 			this.setState({
 				contentError: 'This field is required.',
 			});
-		}
+		}*/
 	}
 
 
@@ -299,6 +364,7 @@ class ViewTemplates extends Component{
 
 
 	render(){
+		const {formerrors} = this.state;
 		const required = (value) => {
 		  if (!value.toString().trim().length) {
 		    // We can return string or jsx as the 'error' prop for the validated Component
@@ -325,7 +391,7 @@ class ViewTemplates extends Component{
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 secdiv">
             </div>
                <section className="">
-                    <div className="row">
+                    <div className="">
                       <div className="">
                          <div className="">
                                     
@@ -388,7 +454,10 @@ class ViewTemplates extends Component{
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												<div className="form-group">
 												 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Subject <span className="astrick">*</span></label>     						
-											        <input type="text" name="subject" validations={[required]} id="subject" value={this.state.subject} onChange={this.handleChange} className="subject col-lg-12 col-md-12 col-sm-12 col-xs-12 inputValid" required/>
+											        <input type="text" name="subject" data-text="subject" validations={[required]} id="subject" value={this.state.subject} onChange={this.handleChange} className="subject col-lg-12 col-md-12 col-sm-12 col-xs-12 inputValid" required/>
+													 {this.state.formerrors.subject &&(
+							                          <span className="text-danger">{formerrors.subject}</span> 
+							                        )}
 												</div>	
 											</div>
 										</div>
@@ -397,8 +466,12 @@ class ViewTemplates extends Component{
 												<div className="form-group">
 												 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Message <span className="astrick">*</span></label> 
 												 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">  
-													<CKEditor activeClass="p15" id="editor"  className="templateName" content={this.state.content} events={{"change": this.onChange}}/>
+													<CKEditor activeClass="p15" id="editor" data-text="message" className="templateName" content={this.state.content} events={{"change": this.onChange}}/>
 													<label className="error">{this.state.contentError}</label>
+												 	 {this.state.formerrors.message &&(
+							                          <span className="text-danger">{formerrors.message}</span> 
+							                        )}
+												 	 
 												 </div> 						
 												</div>	
 											</div>

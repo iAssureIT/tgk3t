@@ -2,6 +2,17 @@
 	height: 500px;
 }
 */
+.imgLogo{
+  margin-left: 70px;
+  padding: 5px 0px;
+}
+.zeromargin{
+  margin-top:  0px !important;
+  margin-bottom: 0px !important;
+}
+.clspadding{
+  padding: 4px;
+}
 a, a:hover, a:focus {
     color: inherit;
     text-decoration: none;
@@ -54,12 +65,21 @@ i, span {
     transition: all 0.80s;
 }
 
+.RightSide{
+  min-width: 250px !important;
+    max-width: 270px !important;
+}
 #sidebar.active {
     min-width: 80px;
     max-width: 80px;
     text-align: center;
 }
 
+.logopos{
+  margin-top: 13px !important;
+  margin-bottom: 10px !important;
+  text-align: center;
+}
 #sidebar.active .sidebar-header h4,  #sidebar.active .CTAs {
     display: none;
 }
@@ -99,7 +119,7 @@ i, span {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
+    padding: 4px;
     background: #222;
 }
 

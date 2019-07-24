@@ -5,6 +5,7 @@ import swal from 'sweetalert';
 
 import axios from 'axios';
 
+// import "../../../API";
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
   let valid = true;
@@ -18,6 +19,7 @@ const companycontact  = RegExp(/^[0-9][0-9]{9}$|^$/);
 const companylocation = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const companybuilding = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const companynameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
+const companypincodeRegex = RegExp(/^[1-9][0-9]{5}$/);
 class CompanyLocation extends Component{
   constructor(props) {
     super(props);
@@ -75,7 +77,7 @@ class CompanyLocation extends Component{
     switch (datatype){
      
       case 'companylocation' : 
-       formerrors.companylocation = companylocation.test(value)  && value.length>0 ? '' : "Please Enter valid reuirement";
+       formerrors.companylocation = companylocation.test(value)  && value.length>0 ? '' : "Please Enter valid Input";
        break;
 
        case 'companyMobile' : 
@@ -83,7 +85,7 @@ class CompanyLocation extends Component{
        break;
 
        case 'companyArea' : 
-        formerrors.companyArea = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid reuirement";
+        formerrors.companyArea = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid Input";
        break;
        
       case 'country' : 
@@ -107,7 +109,7 @@ class CompanyLocation extends Component{
       break;
 
       case 'pincode' : 
-        formerrors.pincode = companynameRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+        formerrors.pincode = companypincodeRegex.test(value)  && value.length>0 ? '' : "Invalid Pincode";
       break;
 
 
@@ -128,31 +130,47 @@ class CompanyLocation extends Component{
   componentDidMount(){
    
   }
-  submitCompanyLocation(event){
+  submitCompanyLocation=(event)=>{
     event.preventDefault();
     // var sessionVar = Session.get('location');
-  
+   // var companyId : 5;
+
     var companyLocationFormValue ={
-      companyLocation           : this.state.companyLocation,
-      companyEmailid            : this.state.Emailid,
-      companycontact            : this.state.companycontact,
-      companyaltcontact         : this.state.companyaltcontact,
-      companybuildingblock      : this.state.companybuildingblock,
-      companylandmark           : this.state.companylandmark,
+      Location                  : this.state.companyLocation,
+      companyId                 : 2,
+      // companyEmailid            : this.state.Emailid,
+      contactnumber             : this.state.companycontact,
+      // companyaltcontact         : this.state.companyaltcontact,
+      blockname                 : this.state.companybuildingblock,
+      landmark                  : this.state.companylandmark,
       companyCountry            : this.state.companyCountry,
       companyState              : this.state.companyState,
-      
-      companyDist               : this.state.companyDist,
-      taluka                    : this.state.taluka,
+      companyDistrict           : this.state.companyDist,
+      companytaluka             : this.state.taluka,
       companyCity               : this.state.companyCity,
       companyPincode            : this.state.companyPincode,
   
     }//close array
     if(formValid(this.state.formerrors)){
-    axios.patch('http://apitgk3t.iassureit.com',{companyLocationFormValue})
-    .then(function (response) {
+    axios.patch('/api/companysettings/location/add',companyLocationFormValue)
+    .then( (response)=> {
       // handle success
       console.log(response);
+      swal("Location Added Successfully", "", "success");
+
+      this.setState({
+        companyLocation         :"",
+        companycontact          :"",
+        companybuildingblock    :"",
+        companylandmark         :"",
+        companyCountry          :"",
+        companyState            :"",
+        companyDist             :"",
+        taluka                  :"",
+        companyCity             :"",
+        companyPincode          :"",
+
+      });
     })
     .catch(function (error) {
       // handle error
@@ -185,7 +203,7 @@ class CompanyLocation extends Component{
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  compForm">
                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Company Location</label><span className="astrick">*</span>
                             <input value={this.state.companyLocation} onChange={this.handleChange} data-text="companylocation" type="text" title="Please enter valid location" id="companyLocation" name="companyLocation" className="form-control CLcompanyLocation inputValid" required/>
                             {this.state.formerrors.companylocation &&(
@@ -197,7 +215,7 @@ class CompanyLocation extends Component{
                  
                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Contact Number</label><span className="astrick">*</span>
                             <input id="companycontact" value={this.state.companycontact} onChange={this.handleChange} data-text="companyMobile"  type="text" name="companycontact" title="Please enter valid number" className="form-control companyNo inputValid " required/>
                             {this.state.formerrors.companyMobile &&(
@@ -215,7 +233,7 @@ class CompanyLocation extends Component{
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Block Name/Building</label><span className="astrick">*</span>
                             <input value={this.state.companybuildingblock} onChange={this.handleChange} data-text="companyArea" type="text" id="companybuildingblock" title="Please enter valid address" name="companybuildingblock" className="form-control CLcompanyAddress inputValid " required/>
                             {this.state.formerrors.companyArea &&(
@@ -227,7 +245,7 @@ class CompanyLocation extends Component{
 
                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
                     <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="form-group">
+                        <div className="form-group margin15">
                             <label className="control-label statelabel locationlabel" >Near by Landmark</label>
                              <input value={this.state.companylandmark} onChange={this.handleChange} type="text" id="companylandmark"  name="companylandmark" className="form-control CLcompanylandmark inputValid" />
                         </div>
