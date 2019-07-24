@@ -107,13 +107,13 @@ class BannerwithModal extends Component {
 					<div className=" col-lg-12 noPad">
 					  <ul className="nav nav-pills textC noPad" role="tablist">
 					    <li className="nav-item col-lg-3 active">
-					      <a className="nav-link active textB  btn btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
+					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
 					    </li>
 					    <li className="nav-item col-lg-3   ">
-					      <a className="nav-link active textB btn btn-bg" property-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
+					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
 					    </li>
 					    <li className="nav-item col-lg-3   ">
-					      <a className="nav-link active textB btn btn-bg" property-type="Commercial" transaction-type="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
+					      <a className="nav-link active btn-bg" property-type="Commercial" transaction-type="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
 					  </ul>
 				 	</div>
@@ -130,7 +130,7 @@ class BannerwithModal extends Component {
 					<div className="col-lg-6 br2">
 						<span className="col-lg-12 postDetails">Welcome Owners</span>
 						<br/>
-						<button className="col-lg-8 col-lg-offset-2 btn bg-primary btnPost" data-toggle="modal" data-target="#postPropertyModal"> Post & Earn</button>
+						<button className=" postBtn " data-toggle="modal" data-target="#postPropertyModal"><span> Post & Earn</span></button>
 						<br/>
 						<span className="col-lg-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
 						</span>

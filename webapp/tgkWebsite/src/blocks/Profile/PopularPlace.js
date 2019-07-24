@@ -24,15 +24,12 @@ class PopularPlaces extends Component{
       <div className="container-fluid">
         <div className="row">
           <div className="formWrapper"> 
-             <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 " >
+             <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad" >
               <div className="row">
                    <div className="col-lg-6 col-lg-offset-5 col-md-8 col-sm-8 col-xs-8 mlDotp">
                       <span className="dotDiv"> </span><span className="mainDiv"></span><span className="dotDivRight"> </span>
                     </div>
-                  <div className="col-lg-12 col-md-8 col-sm-8 col-xs-8 ">
-                  </div>
-                  <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40 ">
-                  </div>
+  
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                   <div className="row">
                     <div className="headText col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Properties In Most Popular Places</div>

@@ -1,9 +1,9 @@
 {
-  "name": "companysettings",
+  "name": "tgkwebsite",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "admin-lte": "^2.4.10",
+    "admin-lte": "^2.4.11",
     "admin-lte-css": "^2.4.3",
     "axios": "^0.19.0",
     "bootstrap": "^3.4.1",
