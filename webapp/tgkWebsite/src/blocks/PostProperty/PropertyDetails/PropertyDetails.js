@@ -1,11 +1,7 @@
 import React , { Component }	from 'react';
-import { Link } 				from 'react-router-dom';
 import axios 					from 'axios';
-import $ 						from "jquery";
-import Financials 					from '../Financials/Financials.js';
-import swal                     from 'sweetalert';
 import { connect } 				from 'react-redux';
-import { Route , withRouter}    from 'react-router-dom';
+import {  withRouter}    from 'react-router-dom';
 
 import './PropertyDetails.css';
 import 'bootstrap/js/tab.js';
@@ -42,7 +38,7 @@ import 'bootstrap/js/modal.js';
 				.patch('/api/properties/patch/propertyDetails',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 200){
+					if(res.status === 200){
 						console.log("PropertyDetails Res = ",res);
 						this.props.redirectToAmenities(this.props.uid);
 					}

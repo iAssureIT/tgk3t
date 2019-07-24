@@ -13,7 +13,7 @@ export default class InfoCommercial extends Component {
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  personServices ">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-info">
 
-								<img src="images/15.png" />
+								<img alt=""  src="images/15.png" />
 								<br/>
 								<label className="mt10">Personalised Service</label>
 								<br/>
@@ -25,7 +25,7 @@ export default class InfoCommercial extends Component {
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-info">
-								<img src="images/16.png" />
+								<img alt=""  src="images/16.png" />
 
 								<br/>
 								<label className="mt10">Earning for Owners</label>
@@ -38,7 +38,7 @@ export default class InfoCommercial extends Component {
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-info">
-								<img src="images/17.png" />
+								<img alt=""  src="images/17.png" />
 								<br/>
 								<label className="mt10">Unbelivable Discount</label>
 								<br/>
@@ -49,7 +49,7 @@ export default class InfoCommercial extends Component {
 					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bg-info">
-								<img src="images/18.png" />
+								<img alt=""  src="images/18.png" />
 								<br/>
 								<label className="mt10">Best Properties in India</label>
 								<br/>

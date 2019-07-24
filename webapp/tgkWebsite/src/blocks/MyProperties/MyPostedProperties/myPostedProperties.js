@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios                from 'axios';
-import { Link }             from 'react-router-dom';
-import $                    from 'jquery';
-import {Router, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import Header 			    from "../../common/Header/Header.js";
 
 import './myPostedProperties.css';
@@ -40,18 +38,20 @@ import './myPostedProperties.css';
 		event.preventDefault();
 		timesClicked++;
 		var mod=timesClicked % 2;
+		var status="";
+		var elem="";
 		console.log("timesClicked",mod);
 		  if (mod === 0) {
-		    var elem = document.querySelector('i');
+		    elem = document.querySelector('i');
 		    elem.classList.remove('fa-heart-o');
 		    elem.classList.add('fa-heart');
-		    var status = "Interested"
+		     status = "Interested"
 		  }
 		  else if(mod === 1) {
-		    var elem = document.querySelector('i');
+		    elem = document.querySelector('i');
 		    elem.classList.add('fa-heart-o');
 		    elem.classList.remove('fa-heart');
-		    var status = "Express Interest"
+		     status = "Express Interest"
 		  }
 		  this.setState({
 		  	heartStatus : status,
@@ -84,7 +84,7 @@ import './myPostedProperties.css';
 												<i  className="fa fa-heart-o heartBtn" onClick={this.heartClick.bind(this)}></i>&nbsp;<span>{this.state.heartStatus}</span>
 											</h5>
 										</div>
-										<img className="propertyImgDiv" src="/images/profileImg1.jpg" />
+										<img alt=""  className="propertyImgDiv" src="/images/profileImg1.jpg" />
 									</div>
 									<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
@@ -115,10 +115,10 @@ import './myPostedProperties.css';
 										
 											<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 noPad pull-right">				
 												{myProperty.transactionType ?
-													myProperty.transactionType =="Sell" ?
+													myProperty.transactionType ==="Sell" ?
 													<span className="pull-right text-right col-lg-8  noPad transactionLabel">{myProperty.transactionType}</span>
 													:
-													myProperty.transactionType =="Rent" ?
+													myProperty.transactionType ==="Rent" ?
 													<span className="pull-right text-right col-lg-8 noPad transactionLabel">{myProperty.transactionType}</span>
 													:
 													null
@@ -131,25 +131,25 @@ import './myPostedProperties.css';
 										</div>
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
 											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-												<img src="/images/Icons/bed.png" className="imgIcon"/>&nbsp;
+												<img alt=""  src="/images/Icons/bed.png" className="imgIcon"/>&nbsp;
 												<span className="propertySubText1">
 													{myProperty.propertyDetails && myProperty.propertyDetails.bedrooms ? myProperty.propertyDetails.bedrooms : "-"}
 												</span>
 												<br/> Beds
 											</div>
 											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-												<img src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
+												<img alt=""  src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
 												<span className="propertySubText1">
 												{myProperty.propertyDetails && myProperty.propertyDetails.bathrooms ? myProperty.propertyDetails.bathrooms : "-"}
 												</span>
 												<br/>Baths
 											</div>
 											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-												<img src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
+												<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
 												<span className="propertySubText1">{myProperty.floor? myProperty.floor :"-"}  /  {myProperty.floor? myProperty.totalFloor :"-"}</span><br/>Floor / Total Floor
 											</div>
 											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-												<img src="/images/Icons/face.png" className="imgIcon"/>&nbsp;
+												<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;
 												<span className="propertySubText1">{myProperty.propertyDetails? myProperty.propertyDetails.facing :"-"}</span><br/>Facing
 											</div>
 										</div>
@@ -161,7 +161,7 @@ import './myPostedProperties.css';
 												Possession by : <span className="propertySubText2">Jul' 2019</span>
 											</div>
 											<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
-												<button className="btn pull-right btnDetails">Details&nbsp;<img className="btnImg" src="/images/TGK-key.png"/></button>
+												<button className="btn pull-right btnDetails">Details&nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>
 											</div>
 										</div>
 									</div>

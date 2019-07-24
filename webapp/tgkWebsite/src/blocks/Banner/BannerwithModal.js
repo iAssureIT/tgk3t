@@ -1,7 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import $ 						from "jquery";
-import {Route ,withRouter} 		from 'react-router-dom';
+import {withRouter} 		from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 import LoginMobNum              from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
@@ -75,8 +75,8 @@ class BannerwithModal extends Component {
 			limitRange:6,
 		}
 		this.setState({
-			propertyType : $(event.target).attr('proprtyType'),
-			transactionType : $(event.target).attr('transactionType'),
+			propertyType : $(event.target).attr('proprty-type'),
+			transactionType : $(event.target).attr('transaction-ype'),
 		},()=>{
 			 axios
 	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
@@ -106,13 +106,13 @@ class BannerwithModal extends Component {
 					<div className=" col-lg-12 noPad">
 					  <ul className="nav nav-pills textC noPad" role="tablist">
 					    <li className="nav-item col-lg-3 active">
-					      <a className="nav-link active textB  btn btn-bg" proprtyType="Residential" transactionType="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
+					      <a className="nav-link active textB  btn btn-bg" proprty-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
 					    </li>
 					    <li className="nav-item col-lg-3   ">
-					      <a className="nav-link active textB btn btn-bg" proprtyType="Residential" transactionType="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
+					      <a className="nav-link active textB btn btn-bg" proprty-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
 					    </li>
 					    <li className="nav-item col-lg-3   ">
-					      <a className="nav-link active textB btn btn-bg" proprtyType="Commercial" transactionType="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
+					      <a className="nav-link active textB btn btn-bg" proprty-type="Commercial" transaction-type="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
 					  </ul>
 				 	</div>
@@ -122,7 +122,7 @@ class BannerwithModal extends Component {
 						<input type="text" placeholder="Enter Society, Location or Address" className="col-lg-12 hSearch"  />
 					</div>
 					<div className="col-lg-2 S-img noPad">
-						<img src="/images/TGK-key.png" className="col-lg-10 tgkImg noPad" />
+						<img alt=""  src="/images/TGK-key.png" className="col-lg-10 tgkImg noPad" />
 					</div>
 				</div>
 				<div className="col-lg-6 col-lg-offset-4 mt-64">

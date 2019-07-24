@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import Moment from 'react-moment';
-import OwlCarousel     from 'react-owl-carousel';
-import axios        from 'axios';
-import {Router, withRouter} from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 
 import "./HomePageProperties.css";
 
 var timesClicked=0;
 class HomePageProperties extends Component {
 	constructor(props){
-    var timesClicked = 1;
 		super(props);
 		// console.log("1 = ", props);
 		this.state = {
@@ -48,24 +45,25 @@ class HomePageProperties extends Component {
       {propertyName:"Kumar Paradise",bed:2,bath:2,status:"Ready To Move",rate:"5700 / sqft Onwards",price:"31.46 Lac",location:"Hadapsar",timestamp:"2019-01-19","image":"/images/photo4.jpeg"},
 		];
 */
-	var images=['/images/photo1.jpeg']
   }
   heartClick(event){
     event.preventDefault();
     timesClicked++;
     var mod=timesClicked % 2;
+    var status= "";
+    var elem="";
     console.log("timesClicked",mod);
       if (mod === 0) {
-        var elem = document.querySelector('i');
+        elem = document.querySelector('i');
         elem.classList.remove('fa-heart-o');
         elem.classList.add('fa-heart');
-        var status = "Interested"
+        status = "Interested"
       }
       else if(mod === 1) {
-        var elem = document.querySelector('i');
+        elem = document.querySelector('i');
         elem.classList.add('fa-heart-o');
         elem.classList.remove('fa-heart');
-        var status = "Express Interest"
+        status = "Express Interest"
       }
       this.setState({
         heartStatus : status,
@@ -103,7 +101,7 @@ class HomePageProperties extends Component {
                                   <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt="" src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
@@ -111,7 +109,7 @@ class HomePageProperties extends Component {
                                         RESIDENTIAL TOWER
                                       </div>
                                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
-                                        FOR SALE
+                                        FOR {property.transactionType}
                                       </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
@@ -158,7 +156,7 @@ class HomePageProperties extends Component {
                                   <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt="" src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
@@ -216,7 +214,7 @@ class HomePageProperties extends Component {
                                   <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt="" src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
@@ -270,7 +268,7 @@ class HomePageProperties extends Component {
                                   <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt="" src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
@@ -325,7 +323,7 @@ class HomePageProperties extends Component {
                                   <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt="" src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">

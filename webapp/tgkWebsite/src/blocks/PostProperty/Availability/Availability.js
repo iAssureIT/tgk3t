@@ -1,11 +1,8 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import ReactTable 				from 'react-table'; //import react table
-import $ 						from "jquery";
-import swal                     from 'sweetalert';
-import { Link }					from 'react-router-dom';
 import { connect } 				from 'react-redux';
-import { Route , withRouter}    from 'react-router-dom';
+import {withRouter}    from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import 'react-table/react-table.css' //import css
 import './Availability.css';
@@ -43,7 +40,7 @@ import 'bootstrap/js/modal.js';
 				.patch('/api/properties/patch/availabilityPlan',formValues)
 				.then( (res) =>{
 					console.log("availabilityPlan",res);
-					if(res.status == 200){
+					if(res.status === 200){
 						/*swal("wow","great job done!","success");*/
 						this.props.redirectToImageUpload(this.props.uid);
 
@@ -92,11 +89,11 @@ import 'bootstrap/js/modal.js';
 
 	}
 	render() {
-		const data = [{
-   			Availability: 'Tanner Linsley',
-		    Time: 26,
+		// const data = [{
+  //  			Availability: 'Tanner Linsley',
+		//     Time: 26,
 		    
-		  }]
+		//   }]
 		const columns = [{
 			Header: 'Availability',
 			accessor: 'day'

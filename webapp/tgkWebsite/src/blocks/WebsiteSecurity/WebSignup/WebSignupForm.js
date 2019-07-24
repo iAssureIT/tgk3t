@@ -1,9 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import $ 						from "jquery";
-import { Route , withRouter}    from 'react-router-dom';
+import {withRouter}    from 'react-router-dom';
 import swal                     from 'sweetalert';
-import { Link }					from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 
@@ -37,7 +35,7 @@ import { connect } 				from 'react-redux';
 			axios
 				.post('/api/usersotp',formValues )
 				.then( (res) =>{
-					if(res.data.message == "NEW-USER-CREATED"){
+					if(res.data.message === "NEW-USER-CREATED"){
 						console.log("BasicInfo res = ",res);
 						swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
 						this.props.signUp(res.data.user_id, res.data.mobile,res.data.otp, res.data.message);
@@ -115,7 +113,7 @@ import { connect } 				from 'react-redux';
 					    	</div>
 						<div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								<img src="/images/1.png" className="build_img2"/>
+								<img alt=""  src="/images/1.png" className="build_img2"/>
 							</div>
 							<span className="col-lg-12 formImgB">
 								We charge tenants/buyers brokerage & share upto 50% with the property owners.

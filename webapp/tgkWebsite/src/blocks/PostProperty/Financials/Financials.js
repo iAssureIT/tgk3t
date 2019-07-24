@@ -1,11 +1,6 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import swal 					from 'sweetalert';
-import $ 						from "jquery";
-import Amenities 					from '../Amenities/Amenities.js';
-import PropertyDetails 					from '../PropertyDetails/PropertyDetails.js';
-import { Link }					from 'react-router-dom';
-import { Route , withRouter}    from 'react-router-dom';
+import { withRouter}    from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 import './Financials.css';
@@ -42,7 +37,7 @@ import 'bootstrap/js/modal.js';
 				.patch('/api/properties/patch/financials',formValues)
 				.then( (res) =>{
 					console.log("Financials res = ",res);
-					if(res.status == 200){
+					if(res.status === 200){
 						this.props.redirectToAvailability(this.props.uid);
 					}
 				})
@@ -53,11 +48,9 @@ import 'bootstrap/js/modal.js';
 
 		totalInclude(e){
 
-		  var otherProp;
 
 		  if(e.target.checked)
 		  {
-		  otherProp = e.target.getAttribute('value');
 
 		  this.state.includecharges.push(e.target.getAttribute('value'));
 

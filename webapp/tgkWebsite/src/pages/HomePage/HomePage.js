@@ -1,6 +1,4 @@
 import React , { Component }	from 'react';
-import axios 					from 'axios';
-import $ 						from "jquery";
 
 import Header 					from "../../blocks/common/Header/Header.js";
 import MainFooter  				from '../../blocks/common/MainFooter/MainFooter.js';

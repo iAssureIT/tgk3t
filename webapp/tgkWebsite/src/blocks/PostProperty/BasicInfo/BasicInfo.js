@@ -2,9 +2,8 @@ import React , { Component }  from 'react';
 import axios 				  from 'axios';
 import $ 					  from "jquery";
 import swal                   from 'sweetalert';
-import { Link }				  from 'react-router-dom';
 import { connect } 			  from 'react-redux';
-import { Route , withRouter}  from 'react-router-dom';
+import { withRouter}  from 'react-router-dom';
 
 import './BasicInfo.css';
 import 'bootstrap/js/tab.js';
@@ -29,7 +28,7 @@ import 'bootstrap/js/modal.js';
         	var message	= localStorage.getItem("message");
         	
 
-			if(message == "NEW-USER-CREATED"){
+			if(message === "NEW-USER-CREATED"){
 				swal("Welcome!","You are now logged in!","success");
 			}			
 
@@ -67,7 +66,7 @@ import 'bootstrap/js/modal.js';
 				.post('/api/properties',formValues)
 				.then( (res) =>{
 					console.log(res.data);
-					if(res.status == 200){
+					if(res.status === 200){
 						// swal("Good job!", "Property inserted successfully!", "success");
 						console.log("BasicInfo res = ",res);
 						this.props.redirectToLocation( res.data.propertyCode, res.data.property_id,this.props.uid);						
@@ -296,7 +295,7 @@ import 'bootstrap/js/modal.js';
 				  
 				<div className="col-lg-5 col-md-8 col-sm-12 col-xs-12 boxLayout">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<img src="images/2.png" className=""/>
+						<img alt=""  src="images/2.png" className=""/>
 					</div>
 			  	</div>
 

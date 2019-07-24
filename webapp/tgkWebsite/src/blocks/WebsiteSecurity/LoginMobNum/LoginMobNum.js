@@ -1,8 +1,6 @@
 import React, { Component }     from 'react';
 import axios 					from 'axios';
-import $ 						from "jquery";
-import { Redirect, withRouter } from 'react-router';
-import { Link }					from 'react-router-dom';
+import { withRouter } from 'react-router';
 import { connect } 				from 'react-redux';
 
 import './LoginMobNum.css';
@@ -35,7 +33,7 @@ class LoginMobNum extends Component {
 					console.log("message = ",response.data.message);
 					console.log("mobile = ",formValues.mobile);
 					
-					if(response.data.message == "MOBILE-NUMBER-EXISTS"){
+					if(response.data.message === "MOBILE-NUMBER-EXISTS"){
 						/*localStorage.removeItem("user_id");
 		        		localStorage.removeItem("mobile");
 		        		localStorage.removeItem("otp");	
@@ -88,7 +86,7 @@ class LoginMobNum extends Component {
 						    </div>
 						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<img src="images/1.png" className="build_img2"/>
+									<img alt=""  src="images/1.png" className="build_img2"/>
 								</div>
 								<span className="col-lg-12 formImgB">
 									We charge tenants/buyers brokerage & share upto 50% with the property owners.

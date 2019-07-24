@@ -1,9 +1,6 @@
 import React, { Component }     from 'react';
-import axios 					from 'axios';
-import $ 						from "jquery";
 import swal                     from 'sweetalert';
-import { Link }					from 'react-router-dom';
-import { Route , withRouter}    from 'react-router-dom';
+import {withRouter}    from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 
@@ -28,8 +25,8 @@ class LoginOtp extends Component {
 	handleNumber(event){
 		event.preventDefault();
 		var userOTP = this.refs.otp.value;
-		if(userOTP == this.props.OTP){
-			if(this.props.message == "NEW-USER-CREATED"){
+		if(userOTP === this.props.OTP){
+			if(this.props.message === "NEW-USER-CREATED"){
 				this.props.redirectToBasicInfo(this.props.uid);
 			}else{
 				this.props.history.push("/PropertyProfile");
@@ -76,7 +73,7 @@ class LoginOtp extends Component {
 						    </div>
 						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-									<img src="/images/1.png" className="build_img2"/>
+									<img alt=""  src="/images/1.png" className="build_img2"/>
 								</div>
 								<span className="col-lg-12 formImgB">
 									We charge tenants/buyers brokerage & share upto 50% with the property owners.

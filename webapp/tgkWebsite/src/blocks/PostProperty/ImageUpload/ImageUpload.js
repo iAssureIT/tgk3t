@@ -1,11 +1,8 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import { Link }					from 'react-router-dom';
 import { connect } 				from 'react-redux';
-import { Route , withRouter}    from 'react-router-dom';
+import { withRouter}    from 'react-router-dom';
 import swal 					from 'sweetalert';
-// import S3FileUpload 			from 'react-s3';
-import S3FileUpload 			from 'react-s3';
 /**/
 import "bootstrap/dist/css/bootstrap.min.css";
 import './ImageUpload.css';
@@ -53,7 +50,7 @@ var imgTitleArray = [];
 				.patch('/api/properties/patch/photos',formValues)
 				.then( (res) =>{
 					console.log(res);
-					if(res.status == 200){
+					if(res.status === 200){
 						// this.props.redirectToImageUpload();
 					}
 				})
@@ -67,14 +64,13 @@ var imgTitleArray = [];
 		}
 
 		handleChange(event){
-			let self = this;
 			   if (event.currentTarget.files && event.currentTarget.files[0]) {
 			   var file = event.currentTarget.files[0];
 			     	if (file) {
 			     	  var fileName  = file.name; 
 			     	console.log("fileName--------------->",fileName);
 			     	    var ext       = fileName.split('.').pop();  
-			                 	if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){    
+			                 	if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){    
 			                       if (file) {
 			                       	
 			                       	var objTitle=
@@ -123,7 +119,7 @@ var imgTitleArray = [];
 			// console.log("file --->",file)
 		 //   var pathName = URL.createObjectURL(file);
 		 //   var imgPathName = pathName.split('blob:');
-		   // console.log("img==",imgPathName)
+		   // console.log("img===",imgPathName)
 
 
 		    // var file = event.target.files[0];
@@ -147,7 +143,6 @@ var imgTitleArray = [];
 			}
 
 			deleteimage(e){
-				var index = e.target.getAttribute('id');
 				// var arry = this.state.imageTitleArray
 				var array = [...this.state.imageTitleArray]; // make a separate copy of the array
 			  var index = array.indexOf(e.target.value)
@@ -174,7 +169,7 @@ var imgTitleArray = [];
 								this.state.imageArray.map((data,index)=>{
 									return(
 										<div className="col-lg-3 imgcss" key={index}>
-											<img className="img-responsive" src={data.imgPath}/>
+											<img alt=""  className="img-responsive" src={data.imgPath}/>
 											<label id={index} onClick={this.deleteimage.bind(this)}>Close</label>
 										</div>)
 								})

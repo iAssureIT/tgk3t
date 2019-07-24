@@ -1,7 +1,7 @@
 import React, { Component }   from 'react';
 import axios                  from 'axios';
 import HomePageFooter         from '../../blocks/Profile/HomePageFooter.js';
-import RequestForm            from '../../blocks/RequestForm/RequestForm.js';
+// import RequestForm            from '../../blocks/RequestForm/RequestForm.js';
 import { connect }            from 'react-redux';
 import $                      from "jquery";
 
@@ -82,34 +82,34 @@ class PropertyProfile extends Component{
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 header">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                     <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 logoImgContainer">
-                        <img src="/images/Logo.png" />
+                        <img alt=""  src="/images/Logo.png" />
                     </div>
                     <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 pull-right ">
                       <nav className="navbar  navText mt10 ">
                           <ul className="nav navbar-nav ">
-                              <li className="active showActive"><a href="#">HOME</a></li>
+                              <li className="active showActive"><a href="#Home">HOME</a></li>
                               <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">ABOUT US&nbsp;<i className="fa fa-angle-down"></i></a>
+                                <a className="dropdown-toggle" data-toggle="dropdown" href="/tempUrl">ABOUT US&nbsp;<i className="fa fa-angle-down"></i></a>
                                 <ul className="dropdown-menu">
-                                  <li><a href="#">Page 1-1</a></li>
-                                  <li><a href="#">Page 1-2</a></li>
-                                  <li><a href="#">Page 1-3</a></li>
+                                  <li><a href="/tempUrl">Page 1-1</a></li>
+                                  <li><a href="/tempUrl">Page 1-2</a></li>
+                                  <li><a href="/tempUrl">Page 1-3</a></li>
                                 </ul>
                               </li>
                               <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">CONTACT US&nbsp;<i className="fa fa-angle-down"></i></a>
+                                <a className="dropdown-toggle" data-toggle="dropdown" href="/tempUrl">CONTACT US&nbsp;<i className="fa fa-angle-down"></i></a>
                                 <ul className="dropdown-menu">
-                                  <li><a href="#">Page 1-1</a></li>
-                                  <li><a href="#">Page 1-2</a></li>
-                                  <li><a href="#">Page 1-3</a></li>
+                                  <li><a href="/tempUrl">Page 1-1</a></li>
+                                  <li><a href="/tempUrl">Page 1-2</a></li>
+                                  <li><a href="/tempUrl">Page 1-3</a></li>
                                 </ul>
                               </li>
                               <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="#">MY PROFILE&nbsp;<i className="fa fa-angle-down"></i></a>
+                                <a className="dropdown-toggle" data-toggle="dropdown" href="/tempUrl">MY PROFILE&nbsp;<i className="fa fa-angle-down"></i></a>
                                 <ul className="dropdown-menu">
-                                  <li><a href="#">Page 1-1</a></li>
-                                  <li><a href="#">Page 1-2</a></li>
-                                  <li><a href="#">Page 1-3</a></li>
+                                  <li><a href="/tempUrl">Page 1-1</a></li>
+                                  <li><a href="/tempUrl">Page 1-2</a></li>
+                                  <li><a href="/tempUrl">Page 1-3</a></li>
                                 </ul>
                               </li>
                           </ul>
@@ -131,7 +131,7 @@ class PropertyProfile extends Component{
                   <div className="row">
                     <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 " >
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backButton" >
-                        <img src="/images/back.png"/>
+                        <img alt=""  src="/images/back.png"/>
                       </div>
                     </div>
                     <div className="col-lg-5 col-md-6 col-sm-6 col-xs-6 row" >
@@ -165,16 +165,16 @@ class PropertyProfile extends Component{
                   <div className="row">
                     <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
                       <div className="row">
-                        <iframe width="428" height="300" src="https://www.youtube.com/embed/9IC4dyn5Wpk" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>                      </div>                    
+                        <iframe width="428"  title="Property Video" height="300" src="https://www.youtube.com/embed/9IC4dyn5Wpk" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen ></iframe></div>                    
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
                       <div className="row">
-                        <img src="/images/profileImg2.jpg" />
+                        <img alt=""  src="/images/profileImg2.jpg" />
                       </div>                    
                     </div>
                     <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
                       <div className="row">
-                        <img src="/images/profileImg3.jpg" />
+                        <img alt=""  src="/images/profileImg3.jpg" />
                       </div>                    
                     </div>
                   </div>
@@ -471,7 +471,7 @@ class PropertyProfile extends Component{
                 Park Avenue Apartment,Magerpatta City,Hadapsar,Pune 411028
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                   <div className="row">
-                 <div className="mapouter"><div className="gmap_canvas"><iframe width="1200" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
+                 <div className="mapouter"><div className="gmap_canvas"><iframe width="1200" height="500" id="gmap_canvas"  title="Google Map" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
                 </div>
                 </div>
                 </div>

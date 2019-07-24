@@ -1,10 +1,6 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import $ 						from "jquery";
-import Availability 			from '../Availability/Availability.js';
-import Financials 				from '../Financials/Financials.js';
-import { Link }					from 'react-router-dom';
-import { Route , withRouter}    from 'react-router-dom';
+import { withRouter}    from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 import './Amenities.css';
@@ -17,8 +13,7 @@ import 'bootstrap/js/modal.js';
 		constructor(props){
 			super(props);
 			this.state = {
-				Amenities     :[],
-
+				Amenities     : [],
 			};
 			
 		}
@@ -37,7 +32,7 @@ import 'bootstrap/js/modal.js';
 				.patch('/api/properties/patch/amenities',formValues)
 				.then( (res) =>{
 					console.log("Amenities res = ",res);
-					if(res.status == 200){
+					if(res.status === 200){
 						this.props.redirectToFinancialDetails(this.props.uid);
 					}
 				})
@@ -47,12 +42,9 @@ import 'bootstrap/js/modal.js';
 		}
 
 		totalInclude(e){
-
-		  var otherProp;
-
 		  if(e.target.checked)
 		  {
-		  otherProp = e.target.getAttribute('value');
+		  // var otherProp = e.target.getAttribute('value');
 
 		  this.state.Amenities.push(e.target.getAttribute('value'));
 

@@ -1,11 +1,7 @@
 import React , { Component }	from 'react';
-import { Link } 				from 'react-router-dom';
 import axios 					from 'axios';
-import $ 						from "jquery";
-import Financials 					from '../Financials/Financials.js';
-import swal                     from 'sweetalert';
 import { connect } 				from 'react-redux';
-import { Route , withRouter}    from 'react-router-dom';
+import { withRouter}    from 'react-router-dom';
 
 import './Location.css';
 
@@ -45,7 +41,7 @@ import './Location.css';
 				.then( (res) =>{
 					console.log(res);
 
-					if(res.status == 200){
+					if(res.status === 200){
 						this.props.redirectToPropertyDetails(this.props.uid);
 					}
 				})
@@ -60,7 +56,7 @@ import './Location.css';
 		}
 
 		handlePincode(){
-				if(this.refs.pincode.value==''){
+				if(this.refs.pincode.value===''){
 					document.getElementById("selectState").selectedIndex=0;
 					document.getElementById("selectCity").selectedIndex=0;
 					document.getElementById("selectArea").selectedIndex=0;
