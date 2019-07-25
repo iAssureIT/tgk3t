@@ -114,7 +114,7 @@ componentDidMount(){
   render(){
     console.log("props = ",this.props);
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===false){
+    if(this.state.loggedIn===true){
       return(
             <div className="App container-fluid">
            
@@ -136,10 +136,10 @@ componentDidMount(){
                           <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
 
                           <Route path="/ViewTemplates" component={ViewTemplates} exact />
-                          <Route path="/" component={Dashboard} exact />
+                          <Route path="/dashboard" component={Dashboard} exact />
 
                           <Route path="/companysetting" component={CompanySetting} exact />
-
+                          
                          {/*----------------------------------------------*/}
 
                           <Route path="/masterdata" component={MasterData} exact />

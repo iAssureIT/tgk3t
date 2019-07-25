@@ -60,7 +60,7 @@ logout(){
         loggedIn : false
       })
       // browserHistory.push("/login");
-      this.props.history.push("/login");
+      // this.props.history.push("/login");
     }
   }
 
@@ -123,7 +123,7 @@ logout(){
                                          <button type="button" className="profilebtn btn">Profile</button></a>
                                       </span>
                                       <span className="pull-right">
-                                        <a  className="profileTitle btnpadd" >
+                                        <a  className="profileTitle btnpadd" href="/login">
                                         {/* <button type="button" className="profilebtn">Logout</button>*/}
                                       <button type="button" className="btn  profilebtn" onClick={this.logout.bind(this)}>Logout</button>
                                         </a>
