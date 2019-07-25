@@ -3,9 +3,11 @@ import axios 					from 'axios';
 import { connect } 				from 'react-redux';
 import { withRouter}    from 'react-router-dom';
 import swal 					from 'sweetalert';
+import S3FileUpload 			from 'react-s3';
 /**/
 // import "bootstrap/dist/css/bootstrap.min.css";
 import './ImageUpload.css';
+
 var imgArray = [];
 var imgTitleArray = [];
  class ImageUpload extends Component {
@@ -13,26 +15,66 @@ var imgTitleArray = [];
 	constructor(props){
 		super(props);
 		this.state = {
-			"nameOfFile"		: '',
+			"config"			: '',
 			"imageArray"  		: [],
-			"imageTitleArray" 	: []
+			"imageTitleArray" 	: [],
+			"S3url" 	        : ''
 		}
+
+		axios
+       .get('http://abacusapi.iassureit.com/projectsettings')
+       .then((response)=>{
+			const config = {
+			       bucketName : response.data.bucket,
+			       dirName  	: 'photos',
+			       region : response.data.region,
+			       accessKeyId : response.data.key,
+			       secretAccessKey : response.data.secret,
+			   }
+			   
+			this.setState({
+			config : config
+			})
+			       })
+       .catch(function(error){
+         	console.log(error);
+       })
+
 	}
 	uploadStudentImage(event){
    event.preventDefault();
    
  }
-
 		uploadImage(){
+			
+			var imageTitleArray = this.state.imageTitleArray;
+
+			for (var i = 0; imageTitleArray.length >i; i++) {
+				var imageTitleArray1 = imageTitleArray[i].fileInfo;
+
+				S3FileUpload
+				   .uploadFile(imageTitleArray1,this.state.config)
+				   .then((Data)=>{
+				   	console.log("Data = ",Data);
+						this.setState({
+						S3url : Data.location
+						})
+				   })
+				   .catch((error)=>{
+				   	console.log(error);
+				   })
+			}
+			var S3array = [];
+			var s3url =S3array.push(this.state.S3url)
 			const formValues = {
-				"property_id" : this.props.property_id,
-				"uid" 		  : this.props.uid,
-				"imageArray"  : this.state.imageArray,
-				"imageTitleArray" : this.state.imageTitleArray,
-				"imagePreviewUrl" : "/images/1.png",
+				"property_id" 		: this.props.property_id,
+				"uid" 		  		: this.props.uid,
+				"imageTitleArray"  	: this.state.imageTitleArray,
 
 			};
-			console.log("imageUpload req = ",formValues);
+
+			console.log("imageUpload req = ",s3url);
+			
 			
 			// S3FileUpload
 			//    .uploadFile(file,this.state.config)
@@ -94,10 +136,6 @@ var imgTitleArray = [];
 
 						    reader.readAsDataURL(file)
 
-
-
-
-
 			    					}else{          
 							            swal("File not uploaded","Something went wrong","error");  
 					               }     
@@ -154,7 +192,8 @@ var imgTitleArray = [];
 			}
 
 	render() {
-		console.log("imageArray",this.state.imageTitleArray);
+		console.log("imageTitleArray",this.state.imageTitleArray);
+		console.log("imageArray",this.state.imageArray);
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				<div className="col-lg-10  col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 backGround">
@@ -164,13 +203,13 @@ var imgTitleArray = [];
 							<input type="file" className="" accept=".jpg,.jpeg,.png" onChange={this.handleChange.bind(this)}/>
 
 						</div>
-						<div>
+						<div className="col-lg-12">
 							{this.state.imageArray?
 								this.state.imageArray.map((data,index)=>{
 									return(
-										<div className="col-lg-3 imgcss" key={index}>
-											<img alt=""  className="img-responsive" src={data.imgPath}/>
-											<label id={index} onClick={this.deleteimage.bind(this)}>Close</label>
+										<div className="col-lg-4 imgcss" key={index}>
+											<img style={{width:"150px"}} className="img-responsive" src={data.imgPath}/>
+											<label className="imgLabel" id={index} onClick={this.deleteimage.bind(this)}>&times;</label>
 										</div>)
 								})
 								:

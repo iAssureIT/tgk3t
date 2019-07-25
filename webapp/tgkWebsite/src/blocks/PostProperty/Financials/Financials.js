@@ -34,7 +34,8 @@ import './Financials.css';
 
 			};
 			console.log("Financials req = ",formValues);
-			axios
+			if( this.refs.totalprice.value!="" ){
+				axios
 				.patch('/api/properties/patch/financials',formValues)
 				.then( (res) =>{
 					console.log("Financials res = ",res);
@@ -45,6 +46,11 @@ import './Financials.css';
 				.catch((error) =>{
 					console.log("error = ", error);
 				});
+			}else{
+              swal("Please enter mandatory fields", "", "warning");
+              console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+			}
+			
 		}
 
 		totalInclude(e){
@@ -76,19 +82,13 @@ import './Financials.css';
 	 <div >
 		 	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<form id="form">
-			  {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 d">	
-					<label className="title_sz"> Financial Details For My Apartment </label>
-					<Link to="/HomePage" className=" ">
-						<button type="button" className="close">&times;</button>
-					</Link>
-				</div>
-			  </div>*/}
-			  {/*<hr />*/}
-			  <div className="hr_border row"></div>
+			  <div className=" row"></div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<span>Expected Rate</span>
+			  	 	<span className="col-lg-6 row">Expected Rate </span>
+
+			  	 	<span className="col-lg-4 pl44">Total Ask<span className="asterisk1">*</span></span>
+
 			  	 </div>
 			  </div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
@@ -200,7 +200,8 @@ import './Financials.css';
 		 	 </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  		<b>My Apartment is Availabe From</b>
+		  		<b>My Apartment is Availabel From</b>
+
 		  	</div>
 		  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30">

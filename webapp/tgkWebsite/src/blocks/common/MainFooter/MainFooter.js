@@ -78,7 +78,7 @@ class MainFooter extends Component{
                             <i className="fa fa-globe" aria-hidden="true"></i>&nbsp;  Website   : www.tgk.com
 
                           </div>
-                          <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails mt50" >
+                          <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails mt87" >
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
 
                                 <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13 ">

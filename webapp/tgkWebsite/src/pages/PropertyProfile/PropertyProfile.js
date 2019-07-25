@@ -70,9 +70,27 @@ class PropertyProfile extends Component{
       }
     )
     .catch();
+    this.props.setFormTitle("Let's Provide Details of Your Property for sell");
+
   }
 
   render() {
+    let header;
+    if (this.props.BasicInfo) {
+      header = "Let's Provide details of your property for sell";
+    }else if(this.props.Location){
+     header = "Let's Provide Details of Your Property Location"; 
+    }else if(this.props.PropertyDetails){
+     header = "Please provide property details of your property to SELL"; 
+   }else if(this.props.Amenities){
+     header = "My Apartment has following Amenities"; 
+   }else if(this.props.Financials){
+     header = "Financial Details For My Apartment"; 
+   }else if(this.props.Availability){
+     header = "Please tell us your availability to plan visit"; 
+   }else if(this.props.ImageUpload){
+     header = "Please Upload Images and a Video of your Property"; 
+   }
     return (
       <div className="container-fluid">
         <div className="row">
@@ -499,7 +517,9 @@ class PropertyProfile extends Component{
               <div className="modal-header">
                 <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
                 <h4 className="modal-title">
-                  <b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>
+                  {/**/}
+                  {/*<b> {this.props.formTitle} </b>*/}
+                  <b>  {header} </b>
                 </h4>
               </div>
 
@@ -540,11 +560,18 @@ const mapStateToProps = (state)=>{
     Location         : state.Location,
     ImageUpload      : state.ImageUpload,
     CongratsPage     : state.CongratsPage,
+    formTitle        : state.formTitle
+
   }
 };
 const mapDispatchToProps = (dispatch)=>{
   return {
-    showFirstForm  : ()=> dispatch({type: "SHOW_FIRST_FORM"}),
+    showFirstForm  : ()         => dispatch({type: "SHOW_FIRST_FORM"}),
+
+    setFormTitle   : (formTitle)=> dispatch({
+                                              type      : "SET_FORM_TITLE",
+                                              formTitle : formTitle,
+                                            }),
   }
 };
 

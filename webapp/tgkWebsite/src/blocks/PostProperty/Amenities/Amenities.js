@@ -1,7 +1,13 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import { withRouter}    from 'react-router-dom';
+import $ 						from "jquery";
+import swal                     from 'sweetalert';
+import { Link }					from 'react-router-dom';
+import { Route , withRouter}    from 'react-router-dom';
 import { connect } 				from 'react-redux';
+
+import Availability 			from '../Availability/Availability.js';
+import Financials 				from '../Financials/Financials.js';
 
 import './Amenities.css';
 // import 'bootstrap/js/tab.js';
@@ -21,14 +27,15 @@ import './Amenities.css';
 			event.preventDefault();
 			const formValues = {
 
-				"Amenities"			:this.state.Amenities,
+				"Amenities"			: this.state.Amenities,
 				"property_id" 		: this.props.property_id,
 				"uid" 				: this.props.uid,
 
 				
 			};
 			console.log("Amenities req = ",formValues);
-			axios
+			if(this.state.Amenities!=""){
+				 axios
 				.patch('/api/properties/patch/amenities',formValues)
 				.then( (res) =>{
 					console.log("Amenities res = ",res);
@@ -39,6 +46,11 @@ import './Amenities.css';
 				.catch((error) =>{
 					console.log("error = ", error);
 				});
+			}else{
+				swal("Please select atleast one amenity", "", "warning");
+                console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+			}
+			
 		}
 
 		totalInclude(e){
@@ -66,22 +78,13 @@ import './Amenities.css';
     return (
 		    <div className="col-lg-12 col-md-12  col-sm-12 col-xs-12 ">
 				<form id="form">
-			  {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-					<label className="title_sz">My Apartment has following Amenities</label>
-					<Link to="/HomePage" className=" ">
-						<button type="button" className="close">&times;</button>
-					</Link>
-				</div>
-			  </div>*/}
-			  {/*<hr />*/}
-			  <div className="hr_border1 hr_border row"></div>
-		  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
+			  <div className=" row"></div>
+		  	 {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
 		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	 		Select the Amenities available	
 		  	 	</div>
-		  	 </div>
-		  	 <div className="col-lg-12  col-md-10 col-sm-12 col-xs-12  ">
+		  	 </div>*/}
+		  	 <div className="col-lg-12  col-md-10 col-sm-12 col-xs-12 mt40 ">
 		  	 	<div className="col-lg-12 ">
 		  	 		<div className="col-lg-6 FF4I"><b>Internal</b></div>
 		  	 		<div className="col-lg-6 FF4I"><b>External</b></div>

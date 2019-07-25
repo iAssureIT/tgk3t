@@ -33,7 +33,7 @@ class BannerwithModal extends Component {
 		super();
 		this.state = {
 			inputData:[],
-			proprtyType:"",
+			propertyType:"",
 			transactionType:"",
 			
 		}
@@ -66,7 +66,10 @@ class BannerwithModal extends Component {
 	        .catch((error) =>{
 	          console.log("error = ", error);
 	        });	
-		})
+		});
+
+		this.props.setFormTitle("Owners earn upto 50% brokerage by selling/renting with us so let's get started");
+
 	}
 
 	getPropertyDetails(event,){
@@ -97,6 +100,30 @@ class BannerwithModal extends Component {
 	}
 
 	render() {
+		let header;
+
+		    if (this.props.BasicInfo) {
+		      header = "Let's Provide details of your property for sell";
+		    }else if(this.props.Location){
+		     header = "Let's Provide Details of Your Property Location"; 
+		    }else if(this.props.PropertyDetails){
+		     header = "Please provide property details of your property to SELL"; 
+		   }else if(this.props.Amenities){
+		     header = "My Apartment has following Amenities"; 
+		   }else if(this.props.Financials){
+		     header = "Financial Details For My Apartment"; 
+		   }else if(this.props.Availability){
+		     header = "Please tell us your availability to plan visit"; 
+		   }else if(this.props.ImageUpload){
+		     header = "Please Upload Images and a Video of your Property"; 
+		   }
+		   else if(this.props.LoginMobNum){
+		     header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+		   }else if(this.props.LoginOtp){
+		     header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+		   }else if(this.props.WebSignupForm){
+		     header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+		   }
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 ">
 				<div className=" col-lg-12  ">
@@ -154,7 +181,8 @@ class BannerwithModal extends Component {
 					      <div className="modal-header">
 					        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
 					        <h4 className="modal-title">
-					        	<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>
+					        	{/*<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>*/}
+					        	<b> {header} </b>
 					        </h4>
 					      </div>
 
@@ -203,11 +231,20 @@ const mapStateToProps = (state)=>{
 		Location	 	: state.Location,
     	ImageUpload     : state.ImageUpload,
    		CongratsPage    : state.CongratsPage,
+   		formTitle 	    : state.formTitle
 	}
 };
-// const mapDispatchToProps = (dispatch)=>{
-// 	return {
-// 	}
-// };
 
-export default connect(mapStateToProps)(withRouter(BannerwithModal));
+
+const mapDispatchToProps = (dispatch)=>{
+	return {
+		setFormTitle  : (formTitle)=> dispatch({
+													type    	: "SET_FORM_TITLE",
+													formTitle	: formTitle,
+												}),
+	}
+};
+
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(BannerwithModal));

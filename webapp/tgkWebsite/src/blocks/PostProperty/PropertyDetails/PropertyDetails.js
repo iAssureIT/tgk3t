@@ -34,8 +34,9 @@ import './PropertyDetails.css';
 				"uid" 				: this.props.uid,
 			};
 			console.log("PropertyDetails req = ",formValues);
-			
-			axios
+			if( this.state.furnishedstatus!="" &&  this.refs.builtupArea.value!="" )
+			{
+					axios
 				.patch('/api/properties/patch/propertyDetails',formValues)
 				.then( (res) =>{
 					console.log(res);
@@ -47,6 +48,11 @@ import './PropertyDetails.css';
 				.catch((error) =>{
 					console.log("error = ", error);
 				});
+			}else{
+				swal("Please enter mandatory fields", "", "warning");
+              	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+			}
+			
 		}
 
 		radioChange(event) {
@@ -62,18 +68,10 @@ import './PropertyDetails.css';
 	render() {
 	   	return (
     		<div >
-  		<div className=" col-lg-12 col-md-12  col-sm-12 col-xs-12">
+  		<div className=" col-lg-12 col-md-12  col-sm-12 col-xs-12 mt20">
 			<form  id="form">
-			  {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
-					<label className="title_sz"> Please provide property details of your property to SELL</label>
-					<Link to="/HomePage" className=" ">
-						<button type="button" className="close">&times;</button>
-					</Link>
-				</div>
-			  </div>*/}
-			  {/*<hr />*/}
-			  <div className="hr_border row"></div>
+			  
+			  <div className=" row"></div>
 		 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb10">
@@ -84,7 +82,8 @@ import './PropertyDetails.css';
 			  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="bedrooms">
 				    <span htmlFor="" className="mb7">Bedrooms</span>
-				  	 <div className="input-group inputBox-main " id="">
+
+				  	 <div className="input-group  " id="">
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
@@ -103,7 +102,8 @@ import './PropertyDetails.css';
 			  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="balconies">
 				    <span htmlFor="" className="mb7">Balconies</span>
-				    <div className="input-group inputBox-main " id="">
+
+				    <div className="input-group  " id="">
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
@@ -120,7 +120,7 @@ import './PropertyDetails.css';
 			   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="bathroom">
 				    <span htmlFor="" className="mb7">Bathroom</span>
-				    <div className="input-group inputBox-main " id="">
+				    <div className="input-group  " id="">
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
@@ -138,6 +138,7 @@ import './PropertyDetails.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 itIs">
 		  		<b>It is</b>
+		  		<span className="astrick">*</span>
 		  	</div>
 		  </div>
 		  <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 pl29">	
@@ -182,8 +183,8 @@ import './PropertyDetails.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="society">
-					    <span htmlFor="" className="mb5">Year Old</span>{/*<span className="asterisk">*</span>*/}
-						<div className="input-group inputBox-main " id="yearOld">
+					    <span htmlFor="" className="mb5">Year Old</span>
+						<div className="input-group  " id="yearOld">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
@@ -199,8 +200,8 @@ import './PropertyDetails.css';
 				  </div>
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="facing">
-					    <span htmlFor="" className="mb5">Facing</span>{/*<span className="asterisk">*</span>*/}
-						<div className="input-group inputBox-main " id="">
+					    <span htmlFor="" className="mb5">Facing</span>
+						<div className="input-group  " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     <i className="fa fa-building iconClr"></i>
 		                    </div>
@@ -219,7 +220,7 @@ import './PropertyDetails.css';
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="">
 					  <span htmlFor="" className="mb7">Super Area</span>
-					    <div className="input-group inputBox-main " id="">
+					    <div className="input-group  " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
@@ -234,7 +235,8 @@ import './PropertyDetails.css';
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >
 					  <span htmlFor="" className="mb7">Built Area</span>
-					    <div className="input-group inputBox-main " id="">
+					  <span className="astrick">*</span>
+					    <div className="input-group  " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
@@ -248,12 +250,12 @@ import './PropertyDetails.css';
 				  </div>
 		 	 </div>
 
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
 		  	
 		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
-		       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23" onClick={this.backToLocation.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
+		       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 " onClick={this.backToLocation.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 		  	</div>
-		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right mt23">
+		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right ">
 		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 		  	</div>
 		  </div>

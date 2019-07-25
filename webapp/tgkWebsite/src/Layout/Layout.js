@@ -18,10 +18,10 @@ import MyInterestedProperties from '../blocks/MyProperties/MyInterestedPropertie
         <div>
           <Router>
             <Switch>
-              <Route path="/"                 exact strict component={HomePage}  />
-              <Route path="/PropertyProfile"  exact strict component={PropertyProfile}  />
+              <Route path="/"                         exact strict component={HomePage}  />
+              <Route path="/PropertyProfile"          exact strict component={PropertyProfile}  />
               <Route path="/MyPostedProperties"       exact strict component={MyPostedProperties}  />
-              <Route path="/MyInterestedProperties"       exact strict component={MyInterestedProperties}  />
+              <Route path="/MyInterestedProperties"   exact strict component={MyInterestedProperties}  />
             </Switch>        
           </Router>
         </div>

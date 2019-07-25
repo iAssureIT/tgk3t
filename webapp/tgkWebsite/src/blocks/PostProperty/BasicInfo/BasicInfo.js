@@ -18,6 +18,7 @@ import './BasicInfo.css';
 				transactionType  : "Sell",
 				propertyHolder   : "",
 				propertType 	 : "",
+				propertySubType  : "",
 				// user_id 		 : localStorage.getItem("user_id"),
 			};
 			this.radioChange = this.radioChange.bind(this);
@@ -61,8 +62,8 @@ import './BasicInfo.css';
 				"uid"				:this.props.uid
 			};
 			console.log("BasicInfo===",formValues);
-
-			    axios
+			if(this.state.propertyHolder!="" && this.state.transactionType!="" && this.state.propertyType!="" && this.state.propertySubType!="" && this.refs.floor.value!="" && this.refs.totalfloor.value!="" ){
+					axios
 				.post('/api/properties',formValues)
 				.then( (res) =>{
 					console.log(res.data);
@@ -78,6 +79,11 @@ import './BasicInfo.css';
 					console.log("error = ", error);
 					// alert("Something Went wrong")
 				});
+			}else{
+				swal("Please enter mandatory fields", "", "warning");
+                console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+			}
+			    
 		}
 		selectType(event){
 			var selectedData = event.target.getAttribute('data-checked');
@@ -133,21 +139,13 @@ import './BasicInfo.css';
     	<div >
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			<form id="form">
-			  {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-					<label className="title_sz">Let's Provide Details of Your Property for sell</label>
-					<Link to="/HomePage" className=" ">
-						<button type="button" className="close">&times;</button>
-					 </Link>
-				</div>
-			  </div>*/}
-			  {/*<hr />*/}
-			  <div className="hr_border row"></div>
-		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">	
+			  <div className="row"></div>
+		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row mt30">	
 				<div className="col-lg-7 col-md-8 col-sm-12 col-xs-12">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						{/*<h3> uid = {this.props.uid} </h3>*/}
-				  	 	<label>I am</label> 
+				  	 	<label>I am</label>
+						<span className="astrick">*</span>
 				  	 </div>
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm"   >
 				    	<div className="col-lg-1 sellerType1"  >
@@ -179,10 +177,10 @@ import './BasicInfo.css';
 					    <div className="col-lg-1 col-lg-offset-3 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
-						      		 value="builder" 
+						      		 value="broker" 
 						      		 className="FrRadio" 
-						      		id="radio-example3"
-						      		 checked={this.state.propertyHolder === "builder"}
+						      		 id="radio-example3"
+						      		 checked={this.state.propertyHolder === "broker"}
 	               					 onChange={this.radioChange} 
 						      		 />
 					  			<i className="fa fa-users fa-1x logo1"></i>
@@ -192,11 +190,13 @@ import './BasicInfo.css';
 					  	<div className="col-lg-12 mb-40">
 					  			<span className=""> Owner</span>
 					  			<span className="ml-78"> Care Taker</span>
-					  			<span className="ml-76"> Builder</span>
+					  			<span className="ml-76"> Broker</span>
 					  	</div>
          		
 					  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				   			<label>I would like to</label>
+							<span className="astrick">*</span>
+
 				   		</div>
 				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	    		
 				    		{/*<input type="text" className="" ref="" id="" placeholder="Seller or renter"/>*/}	
@@ -212,11 +212,13 @@ import './BasicInfo.css';
 			            </div>
 						</div>
 
-						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+						{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				   			<label>Property Details</label>
-				   		</div>
+				   		</div>*/}
 				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
-				   			 Property Type
+				   			 <b>Property Type</b>
+							<span className="astrick">*</span>
+
 				   		</div>
 
 					   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -246,6 +248,8 @@ import './BasicInfo.css';
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
 			  		<b>My Apartment is on</b>
+					<span className="astrick">*</span>
+
 			  	</div>
 		  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  row">
@@ -265,6 +269,11 @@ import './BasicInfo.css';
 				    	<option>3</option>
 				    	<option>4</option>
 				    	<option>5</option>
+				    	<option>6</option>
+				    	<option>7</option>
+				    	<option>8</option>
+				    	<option>9</option>
+				    	<option>10</option>
 					</select>
 				</div>
 			  </div>
@@ -285,6 +294,12 @@ import './BasicInfo.css';
 					    	<option>4</option>
 					    	<option>5</option>
 					    	<option>6</option>
+					    	<option>7</option>
+					    	<option>8</option>
+					    	<option>9</option>
+					    	<option>10</option>
+					    	<option>11</option>
+					    	<option>12</option>
 						</select>
 					</div>
 				  </div>
@@ -303,7 +318,7 @@ import './BasicInfo.css';
 				  
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	
-		  	<div className="form-group col-lg-3	col-md-2 col-sm-4 col-xs-4 pull-right">
+		  	<div className="form-group col-lg-3	col-md-2 col-sm-4 col-xs-4 pull-right mt40">
 		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-4 col-xs-4" onClick={this.insertProperty.bind(this)} >Save & Next >></button>
 		  	</div>
 		  </div>

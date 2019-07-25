@@ -36,7 +36,8 @@ import './Location.css';
 				"uid" 				: this.props.uid,
 			};
 				console.log("Location",formValues);
-			axios
+				if(this.refs.state.value!="" && this.refs.city.value!="" && this.refs.area.value!="" && this.refs.subArea.value!="" && this.refs.society.value!="" && this.refs.housebuilding.value!="" ){
+				axios
 				.patch('/api/properties/patch/propertyLocation',formValues)
 				.then( (res) =>{
 					console.log(res);
@@ -49,6 +50,11 @@ import './Location.css';
 					console.log("error = ", error);
 					// alert("Something Went wrong")
 				});
+				}else{
+						swal("Please enter mandatory fields", "", "warning");
+              			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				}
+			
 		}
 
 		backToBasicInfo(){
@@ -74,15 +80,7 @@ import './Location.css';
 
 		return (
 			<div >
-			<div  className="col-lg-12 col-md-12 col-sm-12">
-				{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-						<label className="title_sz">Let's Provide Details of Your Property Location</label>
-						<Link to="/HomePage" className=" ">
-							<button type="button" className="close">&times;</button>
-						 </Link>
-					</div>
-			    </div>*/}
+			<div  className="col-lg-12 col-md-12 col-sm-12 mt40">
 			    <div className="row"></div>
 			    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 			    	<span className="locSpan col-lg-2 col-lg-offset-2  ">Pincode </span>
@@ -106,7 +104,8 @@ import './Location.css';
 				    <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					    <div className="form-group" id="bedrooms">
 					    	<span htmlFor="">State</span>
-					  		<div className="input-group inputBox-main " id="">
+							<span className="astrick">*</span>
+					  		<div className=" " id="">
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconSize12 iconClr"></i>
 			                    </div>*/}
@@ -122,7 +121,9 @@ import './Location.css';
 				    <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 					    <div className="form-group" id="bedrooms">
 					    	<span htmlFor="">City</span>
-					  		<div className="input-group inputBox-main " id="">
+							<span className="astrick">*</span>
+
+					  		<div className=" " id="">
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconSize12 iconClr"></i>
 			                    </div>*/}
@@ -137,8 +138,10 @@ import './Location.css';
 				    </div>
 					<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div className="form-group" id="balconies">
-						    <span htmlFor="">-- Area/Suburb --</span>
-						    <div className="input-group inputBox-main " id="">
+						    <span htmlFor="">Area/Suburb </span>
+							<span className="astrick">*</span>
+
+						    <div className=" " id="">
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconClr"></i>
 			                    </div>*/}
@@ -154,7 +157,9 @@ import './Location.css';
 				    <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 						<div className="form-group" id="bathroom">
 						    <span htmlFor="">Sub-Area</span>
-						    <div className="input-group inputBox-main " id="">
+							<span className="astrick">*</span>
+
+						    <div className=" " id="">
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconClr"></i>
 			                    </div>*/}
@@ -172,7 +177,9 @@ import './Location.css';
 			  		<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 					  	<div className="form-group"  id="" >
 						    <span htmlFor="">Society</span>
-						    <div className="input-group inputBox-main " id="">
+							<span className="astrick">*</span>
+
+						    <div className="input-group  " id="">
 						      	<div className="input-group-addon inputIcon">
 				                 <i className="fa fa-building iconClr"></i>
 			                    </div>
@@ -185,8 +192,9 @@ import './Location.css';
 					<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
 						  <div className="form-group"  id="" >
 							    <span htmlFor="">House/Building Number</span>
+								<span className="astrick">*</span>
 
-						    <div className="input-group inputBox-main " id="">
+						    <div className="input-group  " id="">
 						      	<div className="input-group-addon inputIcon">
 				                <i className="fa fa-building iconClr"></i>
 			                    </div>
@@ -200,7 +208,7 @@ import './Location.css';
 						  <div className="form-group"  id="" >
 							    <span htmlFor="">Landmark</span>
 
-						    <div className="input-group inputBox-main " id="">
+						    <div className="input-group  " id="">
 						      	<div className="input-group-addon inputIcon">
 				                <i className="fa fa-building iconClr"></i>
 			                    </div>
@@ -212,7 +220,7 @@ import './Location.css';
 					</div>
 			    </div>
 			</div>
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 actionArea">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40 ">
 			  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
 			       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToBasicInfo.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 			  	</div>

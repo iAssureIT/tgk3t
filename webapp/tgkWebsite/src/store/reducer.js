@@ -16,6 +16,7 @@ const initialState = {
 	mobFoundMsg 	: "",
 	propertyCode    : "",
 	property_id     : "",
+	formTitle 		: "",
 }
 
 const reducer = (state = initialState,action) => {
@@ -71,13 +72,13 @@ const reducer = (state = initialState,action) => {
 		newState.Location 			=false;
 		newState.PropertyDetails 	= true;
 		newState.propertyID 	    = action.propertyID;
-		newState.uid 			= action.uid;
+		newState.uid 				= action.uid;
 	}
 	if(action.type === "REDIRECT_TO_AMENITIES"){
 		newState.PropertyDetails = false;
 		newState.Amenities   	 = true;
 		newState.propertyID 	 = action.propertyID;
-		newState.uid 			= action.uid;
+		newState.uid 			 = action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_FINANCIAL"){
@@ -91,14 +92,14 @@ const reducer = (state = initialState,action) => {
 		newState.Financials 	    = false;
 		newState.Availability   	= true;
 		newState.propertyID         = action.propertyID;
-		newState.uid 			= action.uid;
+		newState.uid 				= action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_IMG_UPLOAD"){
 		newState.Availability      = false;
 		newState.ImageUpload 	   = true;
 		newState.propertyID        = action.propertyID;
-		newState.uid 			= action.uid;
+		newState.uid 			   = action.uid;
 
 	}
 if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
@@ -111,7 +112,7 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.CongratsPage 	   = true;
 		newState.ImageUpload 	   = false;
 		newState.propertyID        = action.propertyID;
-		newState.uid 			= action.uid;
+		newState.uid 			   = action.uid;
 
 	}
 
@@ -146,8 +147,8 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.ImageUpload 	    = false;
 	}
 	if(action.type === "BACK_TO_PROPERTY_DETAILS"){
-		newState.BasicInfo 	    	= false;
-		newState.PropertyDetails   	= true;
+		newState.BasicInfo 	    	= true;
+		newState.PropertyDetails   	= false;
 		newState.Financials   		= false;
 		newState.Amenities   		= false;
 		newState.Availability   	= false;
@@ -180,6 +181,10 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.Availability   	= true;
 		newState.Location   		= false;
 		newState.ImageUpload 	    = false;
+	}
+
+	if(action.type === "SET_FORM_TITLE"){
+		newState.formTitle 			= action.formTitle;
 	}
 
 	return newState;

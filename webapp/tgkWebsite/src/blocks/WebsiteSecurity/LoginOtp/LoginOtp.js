@@ -13,29 +13,25 @@ class LoginOtp extends Component {
 			};			
 		}
 
-	componentDidMount(){
-		console.log(this.props);
-   //      	var otp 	= localStorage.getItem("otp");
-   //      	var message	= localStorage.getItem("message");
-
-			// var otp 	= localStorage.removeItem("otp");
-   //      	var message	= localStorage.removeItem("message");
-
-	}
 	handleNumber(event){
 		event.preventDefault();
-		var userOTP = this.refs.otp.value;
-		if(userOTP === this.props.OTP){
-			if(this.props.message === "NEW-USER-CREATED"){
-				this.props.redirectToBasicInfo(this.props.uid);
-			}else{
-				this.props.history.push("/PropertyProfile");
-			}
-			
-		}else{
-			swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
-		}
 
+		var userOTP = this.refs.otp.value;
+		if(userOTP!=""){
+			if(userOTP == this.props.OTP){
+				if(this.props.message == "NEW-USER-CREATED"){
+					this.props.redirectToBasicInfo(this.props.uid);
+				}else{
+					this.props.history.push("/MyPostedProperties");
+				}
+			}else{
+				swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
+			}
+		}else{
+			swal("Please enter OTP", "", "warning");
+	        console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+		}
+		
 	}
 
 	render() {
@@ -44,22 +40,12 @@ class LoginOtp extends Component {
 			<div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<form id="" className=" ">
-						{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">	
-								<label className="title_sz">Owners earn upto 505 brokerage by selling/renting with us so let's get started</label>
-								<Link to="/HomePage" className=" ">
-									<button type="button" className="close">&times;</button>
-								 </Link>
-
-							</div>
-						</div>*/}
-						  {/*<hr />*/}
 						<div className="hr_border row"></div>
 						
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">	
 						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50 headline">
-								Verification code sent on your Registered Mobile Number
+								We have sent you an OTP for verification, please enter your OTP to continue
 							</div>
 							  <div className="form-group mt-150">
 							    <label htmlFor="">Kindly Enter Your Verification Code </label>
@@ -102,8 +88,7 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		redirectToBasicInfo  : (uid)=> dispatch({type: "REDIRECT_TO_BASIC_INFO",
-													 uid	: uid,
-
+												 uid : uid,
 		}),
 	}
 };

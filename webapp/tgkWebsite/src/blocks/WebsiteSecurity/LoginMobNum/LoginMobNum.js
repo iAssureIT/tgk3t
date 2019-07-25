@@ -2,70 +2,105 @@ import React, { Component }     from 'react';
 import axios 					from 'axios';
 import { withRouter } from 'react-router';
 import { connect } 				from 'react-redux';
-
+import swal						from 'sweetalert';
 import './LoginMobNum.css';
+
+const formValid = formerrors=>{
+  console.log("formerrors",formerrors);
+  let valid = true;
+  Object.values(formerrors).forEach(val=>{
+  val.length>0 && (valid = false);
+  })
+  return valid;
+  }
+
+const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 class LoginMobNum extends Component {
 
-	constructor(props,{match}){
+	constructor(props){
 			super(props);
 			this.state = {
-			};			
+				mobile : "",
+				formerrors :{
+				
+					clientMobile : " ",
+				
+				},
+			};
+    		this.handleChange = this.handleChange.bind(this);
 		}
 
-		// componentWillMount(){
-		// 	var param = this.props.match.params
-		// 	console.log("param--->",param.id);
-		// }
-
 		handleNumber(event){
+			
 			event.preventDefault();
 			var formValues = {
-				mobile : this.refs.mobile.value,
+				mobile : this.state.mobile,
 				countryCode:this.refs.countryCode.value
 			};
 			console.log("LoginMobNum==",formValues);
-			
-			axios
-				.post('/api/usersotp/verify_mobile',formValues)
-				.then((response)=>{
-					console.log("response = ",response.data);
-					console.log("message = ",response.data.message);
-					console.log("mobile = ",formValues.mobile);
-					
-					if(response.data.message === "MOBILE-NUMBER-EXISTS"){
-						/*localStorage.removeItem("user_id");
-		        		localStorage.removeItem("mobile");
-		        		localStorage.removeItem("otp");	
-		        		localStorage.removeItem("message");	
 
-						localStorage.setItem("user_id",response.data.user_id);
-						localStorage.setItem("mobile",response.data.mobile);
-						localStorage.setItem("otp",response.data.otp);
-						localStorage.setItem("message",response.data.message);*/
+			if(this.state.mobile!=""){
+
+				if(formValid(this.state.formerrors)){
+				axios
+					.post('/api/usersotp/verify_mobile',formValues)
+					.then((response)=>{
+						console.log("response = ",response.data);
+						console.log("message = ",response.data.message);
+						console.log("mobile = ",formValues.mobile);
 						
-						console.log("response.data.message = ",response.data.message);
+						if(response.data.message == "MOBILE-NUMBER-EXISTS"){
+							console.log("response.data.message = ",response.data.message);
 
-						this.props.mobileFound( response.data.user_id,
-												response.data.mobile,
-												response.data.otp,
-												response.data.message
-											  );
-						// this.props.history.push('/LoginOtp/');
-					}
-					else{
-						this.props.mobileNotFound(formValues.mobile);
-						// this.props.mobileNumber(formValues.mobile);
-						  //this.props.history.push('/WebSignupForm/'+formValues.mobile);
-					}
-				})
-				.catch(function(error){
-					console.log(error);
-				})
+							this.props.mobileFound( response.data.user_id,
+													response.data.mobile,
+													response.data.otp,
+													response.data.message
+												  );
+						}
+						else{
+							this.props.mobileNotFound(formValues.mobile);
+						}
+					})
+					.catch(function(error){
+						console.log(error);
+					})
+				}
+				}else{
+					swal("Please enter Mobile Number", "", "warning");
+	              console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				}
+
+			
+	}
+
+		handleChange(event){
+			event.preventDefault();
+			const datatype = event.target.getAttribute('data-text');
+		    const {name,value} = event.target;
+		    let formerrors = this.state.formerrors;
+			console.log("datatype",datatype);
+			switch (datatype){
+
+
+			case 'clientMobile' : 
+		       formerrors.clientMobile = clientmobileRegex.test(value)? '' : "Please Enter Numbers only";
+		       break;
+
+			default :
+			break;
+
+			}
+			this.setState({ formerrors,
+				[name]:value
+			} );
 		}
 
+
 	render() {
-				
+
+   	 const {formerrors} = this.state;
 		return (
 				<div >
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="xyz">
@@ -80,8 +115,16 @@ class LoginMobNum extends Component {
 							      			<option value="+91">+91</option>
 							      		</select>
 				                    </div>
-							    	<input type="Number" className="form-control" ref="mobile"  id="" placeholder="Mobile Number" data-text="user_mobile"/>
+							    	{/*<input  data-text="clientMobile" type="number" name="mobile" className="form-control" ref="mobile"  id="" placeholder="Mobile Number" onChange={this.handleChange}  />
+							  		{this.state.formerrors.clientMobile &&(
+										<span className="text-danger">{this.state.formerrors.clientMobile}</span>
+									)}*/}
+									  <input type="number" data-text="clientMobile" name="mobile" id="mobile" value={this.state.mobile}  ref="mobile" onChange={this.handleChange}  className="form-control " required />
+				                        
 							  	</div>
+							  	{this.state.formerrors.clientMobile &&(
+				                          <span className="text-danger">{formerrors.clientMobile}</span> 
+				                        )}
 							  </div>
 						    </div>
 						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
