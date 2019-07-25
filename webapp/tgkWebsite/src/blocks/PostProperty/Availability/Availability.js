@@ -1,5 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
+import swal 					from 'sweetalert';		
+
 import ReactTable 				from 'react-table'; //import react table
 import { connect } 				from 'react-redux';
 import {withRouter}    from 'react-router-dom';
@@ -186,7 +188,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
    			Availability: 'Tanner Linsley',
 		    Time: 26,
 		    
-		//   }]
+		  }]
 		const columns = [{
 			Header: 'Availability',
 			accessor: 'day'
