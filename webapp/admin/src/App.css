@@ -4,6 +4,9 @@
 .pointerCls{
   cursor: pointer;
 }
+.mar0{
+  margin: 0px !important;
+}
 .zeropadd{
   padding: 0px !important;
 }

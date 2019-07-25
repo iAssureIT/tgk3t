@@ -37,7 +37,7 @@ componentDidMount(){
                      <li className="active">
                     <a href="#" className="text-center">
                          {/*   <i className="glyphicon fa fa-server"></i> &nbsp;*/}
-                           CoreAdmin Sidebar
+                           Core Admin Modules
                      </a>
                     </li>
 
@@ -48,7 +48,7 @@ componentDidMount(){
                             Company Settings
                         </a>
                         <ul className="collapse list-unstyled" id="companysetting">
-                            <li><a href="/companysetting"> Company Settings</a></li>
+                            <li><a href="/companysetting"> <p className="leftpadd">Company Settings</p></a></li>
                           
                         </ul>
 
@@ -57,7 +57,7 @@ componentDidMount(){
                            Notification Management
                         </a>
                         <ul className="collapse list-unstyled" id="notifactions">
-                            <li><a href="/ViewTemplates">Notification</a></li>
+                            <li><a href="/ViewTemplates"><p className="leftpadd">Notification</p></a></li>
                            
                         </ul>
 
@@ -65,9 +65,9 @@ componentDidMount(){
                            <i className="glyphicon fa fa-user-circle"></i> &nbsp;
                            User Management
                         </a>
-                        <ul className="collapse list-unstyled" id="userman">
-                            <li><a href="/umlistofusers">List of Users</a></li>
-                           <li><a href="/umlistofemp">List of Employee</a></li>
+                        <ul className="collapse list-unstyled " id="userman">
+                            <li><a href="/umlistofusers"><p className="leftpadd">List of Users</p></a></li>
+                           <li><a href="/umlistofemp"><p className="leftpadd">Team Hierarchy</p></a></li>
                            
                         </ul>
                     </li>

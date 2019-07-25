@@ -28,7 +28,7 @@ class EditUserProfile extends Component{
 			"firstName"		: this.refs.firstName.value,
 			"lastName" 		: this.refs.lastName.value,
 			"emailId"  		: this.refs.username.value,
-			"mobileNumber"  : this.refs.mobNumber.value,
+			"mobileNumber"  : this.state.mobNumber,
 		}
 		console.log("formvalues",formvalues);
 				axios.patch('/api/users/'+userid, formvalues)
@@ -73,10 +73,16 @@ class EditUserProfile extends Component{
 				});
 	}
 
+	
 	handleChange(event){
-			event.preventDefault();
-	        const target = event.target;
-	        const name   = target.name;
+        const target = event.target.value;
+        const name   = event.target.name;
+        console.log('target',name, target);
+          this.setState({ 
+	      [name]:target
+	    },()=>{
+	    	// console.log('this state', this.state);
+	    })
 	}
 	
 	componentDidMount(){
@@ -85,21 +91,24 @@ class EditUserProfile extends Component{
 		console.log("userid-----------------------------------------",userid);
 		 axios.get('/api/users/'+ userid)
 	      .then( (res)=>{
-	        console.log(res.data);
+	        console.log("here data_______________",res.data);
 	        var FName = res.data.profile.fullName.split(' ');
 	        var FirstName = FName[0];
 	        var LastName = FName[1];
-	        var Email = res.data.profile.emailId;
-	        var Mnob  = res.data.mobileNumber;
+	        var Email = res.data.profile.emailId ? res.data.profile.emailId : null;
+	        var Mnob  = res.data.profile.mobileNumber ? res.data.profile.mobileNumber : null;
 
-	        console.log("f name", FirstName);
-	        console.log("L name", LastName);
+	        console.log("Mnob", Mnob);
+	        // console.log("L name", LastName);
 
-	      this.refs.firstName.value = FirstName 
-	      this.refs.lastName.value = LastName  
+	      this.refs.firstName.value = FirstName;
+	      this.refs.lastName.value = LastName;
 	     /* this.refs.fullname.value = FName */
-		  this.refs.username.value = Email
-		  this.refs.mobNumber.value = Mnob
+		  this.refs.username.value = Email;
+		  this.setState({
+		  	mobNumber : Mnob,
+		  });
+		  
 
 		 
 	      })
@@ -115,7 +124,7 @@ class EditUserProfile extends Component{
 					<div>					        
 					    <div className="">					        
 					         <section className="content-header">
-					            <h3 className="contentTitle">Edit User</h3>
+					          {/*  <h3 className="contentTitle">Edit User</h3>*/}
 					         </section>					         
 					          <section className="content viewContent">
 					            <div className="row">
@@ -128,20 +137,6 @@ class EditUserProfile extends Component{
 											<div className="box-body">												
 												<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12  EditUserProfileWrap">
 													<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12">
-														{/*<div className="col-lg-12 col-sm-12 col-xs-12 col-md-12 group btmmargin inputContent">
-															<label className="formLable">Full Name <label className="requiredsign">*</label></label>
-                                                          <span className="blocking-span">
-                                                           <div className="input-group inputBox-main  new_inputbx " >
-                                                             <div className="input-group-addon remove_brdr inputIcon">
-                                                             <i className="fa fa-user-circle fa "></i>
-                                                            </div>  
-                                                              <input type="text" style={{textTransform:'capitalize'}}
-                                                               className="form-control UMname inputText form-control  has-content"
-                                                                id="fullname" ref="fullname" name="fullname"  onChange={this.handleChange} placeholder="Full Name"/>
-                                                           </div>   
-                                                          </span>
-														</div>*/}	
-
 														   <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
                                                           <label className="formLable">First Name <label className="requiredsign">*</label></label>
                                                           <span className="blocking-span">
@@ -162,7 +157,7 @@ class EditUserProfile extends Component{
                                                              <div className="input-group-addon remove_brdr inputIcon">
                                                               <i className="fa fa-user-circle fa "></i>
                                                             </div>  
-                                                             <input type="text"className="form-control UMname inputText form-control  has-content" 
+                                                             <input type="text"className="form-control UMname inputText form-control  has-content indexcls" 
                                                              id="lastName" ref="lastName" name="lastName" onChange={this.handleChange}  placeholder="Last Name" />
                                                           </div>   
                                                           </span>
@@ -180,9 +175,9 @@ class EditUserProfile extends Component{
 	                                                             <div className="input-group-addon remove_brdr inputIcon">
 	                                                            <i className="fa fa-mobile"></i>
 	                                                            </div>  
-	                                                              <input type="text" style={{textTransform:'capitalize'}}
+	                                                              <InputMask  mask="9999999999"  type="text" style={{textTransform:'capitalize'}}
 	                                                               className="form-control UMname inputText form-control  has-content"
-	                                                                id="mobNumber" ref="mobNumber" name="mobNumber"  onChange={this.handleChange} placeholder="mobile number"/>
+	                                                                id="mobNumber" ref="mobNumber" name="mobNumber" value={this.state.mobNumber} onChange={this.handleChange} placeholder="mobile number"/>
 	                                                           </div>   
 	                                                          </span>
 														</div>	

@@ -52,7 +52,7 @@ import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.j
                          <div className="boxMinHeight boxMinHeighttab">
                          <div className="box-header with-border">
                           
-                               <h4 className="MasterBudgetTitle">Company Settings TGK specific</h4>
+                               <h4 className="MasterBudgetTitle">Company Settings</h4>
 
                           </div>
                           {/* <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact"> Company Settings </div>         */}

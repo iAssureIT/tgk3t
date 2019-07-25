@@ -2,6 +2,12 @@
   font-family:'Raleway-Regular';
   src: url("/fonts/MYRIADPROREGULAR.ttf");
 }
+.indexcls{
+  z-index: 0 !important;
+}
+.mrgtop6{
+  margin-top: 6px;
+}
 .centernote{
   text-align: center;
   height: 100px;

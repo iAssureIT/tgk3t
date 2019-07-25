@@ -209,9 +209,14 @@ class CompanyInformation extends Component{
       taluka                  : this.state.taluka,
     }
   
-    console.log("companyInfoFormValue",companyInfoFormValue);
-  // if(formValid(this.state.formerrors)){
+    console.log("companyInfoFormValueUpdate--------------------",companyInfoFormValueUpdate);
+    // formValid(this.state.formerrors)
+  if(this.state.companyName!= "" && this.state.companyContactNumber!= "" && this.state.companyEmail!= ""
+   && this.state.companywebsite!= "" && this.state.companyAddressLine1!= "" && this.state.companyCountry!= ""
+   && this.state.companyState!= "" && this.state.companyDist!= "" && this.state.companyCity!= "" && 
+    this.state.companyPincode!= "" && this.state.taluka!= ""){
     
+
     if(this.state.submitVal == true){
         axios.post('/api/tgkSpecificcompanysettings',companyInfoFormValue)
         .then( (response)=> {
@@ -242,7 +247,7 @@ class CompanyInformation extends Component{
         .catch(function (error) {
           // handle error
           console.log(error);
-          swal("", "Company Information submition failed!", "Danger")
+          swal("Sorry!", "Company Information submition failed!", "error")
 
         })
         .finally(function () {
@@ -295,10 +300,10 @@ class CompanyInformation extends Component{
 
         });
     }
-  // }else{
-  //   swal("Please enter mandatory fields", "", "warning");
-  //   console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-  // }
+  }else{
+    swal("Please enter mandatory fields", "", "warning");
+    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+  }
  
      
 
@@ -501,7 +506,7 @@ class CompanyInformation extends Component{
               </div>
 
               <div className="basicinfocmpset"> 
-              <h4 className="basicinfotxt"><i className="fa fa-map-marker fonticons" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Address</h4>
+              <h4 className="basicinfotxt"><i className="fa fa-map-marker fonticons" aria-hidden="true"></i>&nbsp;&nbsp;Address</h4>
                  
                 <div className="col-lg-12 col-md-4 col-sm-12 col-xs-12 compForm">
                   {/* <div className="form-group formht col-lg-12 col-md-4 col-sm-12 col-xs-12">

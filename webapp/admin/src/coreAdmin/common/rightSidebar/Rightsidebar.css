@@ -3,6 +3,10 @@
     padding-left: 20px;
 }
 
+.leftpadd{
+    padding-left: 20px;
+    margin: 0px !important;
+}
 
 #sidebar1 {
     min-width: 250px;

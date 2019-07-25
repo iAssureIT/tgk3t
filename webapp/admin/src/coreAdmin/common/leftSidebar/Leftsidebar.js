@@ -53,7 +53,7 @@ componentDidMount(){
                             Master Data
                         </a>
                         <ul className="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="/masterdata">Data 1</a></li>
+                            <li><a href="/masterdata">Amenities</a></li>
                             {/*<li><a href="#">Data 2</a></li>
                             <li><a href="#">Data 3</a></li>*/}
                         </ul>
@@ -63,8 +63,8 @@ componentDidMount(){
                             Sell-O-Meter
                         </a>
                         <ul className="collapse list-unstyled" id="sell-o-meter">
-                            <li><a href="/sellometer">Part 1</a></li>
-                            <li><a href="/classrating">Part 2</a></li>
+                            <li><a href="/sellometer">Property Indexation</a></li>
+                            <li><a href="/classrating">Sell-O-Meter Rating</a></li>
                             {/*<li><a href="#">Data 3</a></li>*/}
                         </ul>
 

@@ -390,11 +390,17 @@ class IAssureTableUM extends Component {
 				            },()=>{
 				            })
 				        }).catch((error)=>{ 
-				        	// swal("Sorry there is no data of "+searchText+ "","error");
+				        	swal("No results found","","error");
 				      });
 			}else{
 
 				console.log("there is no value");
+				 // console.log('completeDataCount in table', this.state.completeDataCount);
+			      this.setState({
+			      	tableHeading	  : this.props.tableHeading,
+			      	tableData 		  : this.props.tableData,
+			      	completeDataCount : this.props.completeDataCount
+			      })
 			}
 		// if(searchText && searchText.length != 0) {
 		// 	this.setState({
@@ -613,7 +619,7 @@ class IAssureTableUM extends Component {
     changepassword(event){
 		event.preventDefault();
 		var id = event.target.id;
-		// console.log('id',id);
+		console.log('id',id);
 		var password 		= this.state["resetPassword"+id];
 		var conPassword 	= this.state["resetPasswordConfirm"+id];
 
@@ -624,48 +630,42 @@ class IAssureTableUM extends Component {
 		}
 
 		var newID 		=  $(event.target).attr('id');
-		
-	/*
-		console.log("password", password);
-		console.log("conPassword", conPassword);
-		console.log("newID",newID);
-	*/
 		if(newID){
 			var resetPassword = newID;
 		}
+			if(password != "" && conPassword != null)
+			{
+				if(password==conPassword){
+					if(password.length >= 6){
+						axios.put('/api/users/resetpwd/'+ newID, formValues)
+					      .then( (res)=>{
+					      	console.log("response-------------",res);
+					  		  swal("Password has been changed successfully!!","", "success");
+					          this.refs.resetPassword.value				= '';
+					          this.refs.resetPasswordConfirm.value  	= '';
+					          var modalid="RestpwdModal-"+id;
+					  		  var modal = document.getElementById(modalid);
+					  		  modal.style.display = "none";
+	             			  $('.modal-backdrop').remove();
+					      })
+					      .catch((error)=>{
+					        console.log("error = ",error);
+					        swal("Sorry! Something went wrong","", "error");
+					        var modalid="RestpwdModal-"+id;
+					  		var modal = document.getElementById(modalid);
+					        modal.style.display = "none";
+	                        $('.modal-backdrop').remove();
 
-			if(password==conPassword){
-				if(password.length >= 6){
-					axios.put('/api/users/resetpwd/'+ newID, formValues)
-				      .then( (res)=>{
-				      	console.log("response-------------",res);
-				        // if(res.status == 200){
-				          swal("Password has been changed successfully!!","", "success");
-				          // this.state["usernames"+id] 				= '';
-				          this.refs.resetPassword.value				= '';
-				          this.refs.resetPasswordConfirm.value  	= '';
-				        // }
-
-				        this.setState({
-				        	show :false,
-				        });
-
-				         $('.modal-backdrop').remove();
-				      })
-				      .catch((error)=>{
-				        console.log("error = ",error);
-				        alert("We are sorry but something went Wrong.","","error");
-
-				        this.setState({
-				        	show :false,
-				        });
-
-				      });
+					      });
+					}else{
+						swal("Password should be at least 6 characters long","","error");				
+					}
 				}else{
-					swal("Password should be at least 6 characters long","","error");				
+					swal("Passwords don't match","","error");
 				}
 			}else{
-				swal("Password don't match","","error");
+				swal("Please enter mandatory fields", "", "warning");
+          		console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
 	}
 
@@ -758,7 +758,7 @@ class IAssureTableUM extends Component {
         return (
 	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
 	       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
-					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">User Per Page</label>
+					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Users Per Page</label>
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
 						<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
 							<option value="Not Selected" disabled>Select Limit</option>
@@ -778,8 +778,10 @@ class IAssureTableUM extends Component {
 				    </div>
 	        	</div>		
 	            <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NOpadding marginTop17">			            	        
-	                <div className="table-responsive">
-						<table className="table iAssureITtable-bordered table-striped table-hover">
+	                <div className="table-responsive  ">
+	                	<div className="scrolltbl">
+	                	{/*table-wrapper-scroll-y my-custom-scrollbar*/}
+						<table className="table iAssureITtable-bordered table-striped table-hover  ">
 	                        <thead className="tempTableHeader">	     
 		                        <tr className="">
 		                            { this.state.twoLevelHeader.apply == true ?
@@ -879,14 +881,15 @@ class IAssureTableUM extends Component {
 							    	*/}
 															<i className="fa fa-pencil " title="Edit" id={value._id} onClick={this.showprofile.bind(this)} ></i>&nbsp; &nbsp; 
 															{this.props.editId && this.props.editId == value._id? null :<i className={"fa fa-trash redFont "+value._id} id={value._id+'-Delete'} data-toggle="modal" title="Delete" data-target={`#${value._id}-rm`} ></i>}&nbsp; &nbsp; 
-															<i className="fa fa-key" title="Reset Password" id={value._id} data-toggle="modal" data-target={"#RestpwdModal-"+value._id}></i>&nbsp; &nbsp; 
+															<i className="fa fa-key" title="Reset Password" id={value._id} data-toggle="modal" data-target={"#RestpwdModal-"+value._id}></i>
 														
 														</span>
 
 													{/*	<UsereditModal userNot={value._id} data={value}/>*/}
 
-														{this.state.show == true ? 
-														<div className="modal fade modalHide" id={"RestpwdModal-"+value._id}  role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+														{/*this.state.show == true ? */
+														<div className="modal fade modalHide passwordModal" id={"RestpwdModal-"+value._id}  role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
+																		 {console.log("here modal id",value._id )}	
 																		  <div className="modal-dialog" role="document">
 																		    <div className="modal-content  ummodallftmg">
 																		      <div className="modal-header userHeader">
@@ -963,8 +966,8 @@ class IAssureTableUM extends Component {
 																		  </div>
 																	</div>	
 
-																	:
-																	null
+																	/*:
+																	null*/
 																}
 
 	                                                    <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${value._id}-rm`}  role="dialog">
@@ -1005,6 +1008,7 @@ class IAssureTableUM extends Component {
 								}
 	                    </tbody>
 	                    </table>
+	                    </div>
 	                    {this.state.tableData && this.state.tableData.length > 0 ?
 	                    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paginationAdminWrap">
 		                    	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">

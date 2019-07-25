@@ -1,3 +1,20 @@
+
+/*new css*/
+
+
+.my-custom-scrollbar {
+position: relative;
+height: 225px;
+overflow: auto;
+}
+.table-wrapper-scroll-y {
+display: block;
+}
+
+.scrolltbl{
+  overflow-y:auto;
+}
+/**/
 .iAssureITtable-bordered > thead > tr > th, .iAssureITtable-bordered > tbody > tr > th, .iAssureITtable-bordered > tfoot > tr > th, .iAssureITtable-bordered > thead > tr > td, .iAssureITtable-bordered > tbody > tr > td, .iAssureITtable-bordered > tfoot > tr > td {
     border: 1px solid #676767;
 }

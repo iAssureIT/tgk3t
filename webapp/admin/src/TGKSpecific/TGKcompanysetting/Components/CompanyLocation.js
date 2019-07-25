@@ -6,7 +6,7 @@ import swal from 'sweetalert';
 import axios from 'axios';
 import InputMask  from 'react-input-mask';
 
-// import "../../../API";
+import "../css/CompanySetting.css";
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
   let valid = true;
@@ -113,7 +113,7 @@ class CompanyLocation extends Component{
          break;*/
 
        case 'blockName' : 
-        formerrors.blockName = companybuilding.test(value)   && value.length>0? '' : "Please Enter valid Input";
+        formerrors.blockName = value.length>0? '' : "Please Enter valid Block Name";
        break;
        
        
@@ -265,10 +265,15 @@ class CompanyLocation extends Component{
     
     }
 
-    console.log("companyLocationFormValue",companyLocationFormValue);
-    console.log("this.state.formerrors",this.state.formerrors);
-    if(formValid(this.state.formerrors)){
+    console.log("companyLocationFormValue ____________________",companyLocationFormValue);
+    console.log("this.state.formerrors",formValid(this.state.formerrors));
+
+  if(this.state.companycontact!="" && this.state.companyCountry!="" && this.state.companyState!= "" 
+    && this.state.companyDist!= "" && this.state.taluka != ""       && this.state.companyCity!= ""
+    && this.state.companyPincode != "" && this.state.companyArea != ""
+     && this.state.companybuildingblock != "" && this.state.companyLocation != "" ){
       console.log("submitVal state",this.state.submitVal);
+
 
 
       if(this.state.submitVal == true)
@@ -406,13 +411,17 @@ class CompanyLocation extends Component{
                 
       }
 
-// here close submit value true
-    } 
-      else{
+    // here close submit value true
+    }else{
 
         console.log("here value of edit ",companyLocationFormValueupdate);
 
-        axios.patch('/api/tgkSpecificcompanysettings/location/edit',companyLocationFormValueupdate)
+        if(this.state.companyLocation  === 'Head Office' || this.state.companyLocation  === 'Sales Agent Office' )
+        {
+          // here axios
+           $('.subjectRow').css({'display':'none'});
+
+           axios.patch('/api/tgkSpecificcompanysettings/location/edit',companyLocationFormValueupdate)
         .then( (response)=> {
           // handle success
           console.log(response);
@@ -461,6 +470,7 @@ class CompanyLocation extends Component{
                       
                         this.setState({
                           allLoc : locationArray,
+                          submitVal               : false,
                         });
                       //   console.log("locationArray", locationArray);
                       // console.log("this.state.allLoc+++++++++++++++++",this.state.allLoc);
@@ -478,14 +488,96 @@ class CompanyLocation extends Component{
           // handle error
           console.log(error);
         })
-        .finally(function () {
-          // always executed
-        });
 
+        }else if(this.state.companyLocation  === 'Field Agent Office'){
+            
+
+            if(this.state.pincodeArea == "")
+            {
+              $('.subjectRowError').css({'display':'block'});
+            }else{
+               $('.subjectRowError').css({'display':'none'});
+
+               // here axiox
+
+
+           axios.patch('/api/tgkSpecificcompanysettings/location/edit',companyLocationFormValueupdate)
+        .then( (response)=> {
+          // handle success
+          console.log(response);
+          swal("Location Updated Successfully", "", "success");
+
+          this.setState({
+            companyLocation         :"",
+            companycontact          :"",
+            companybuildingblock    :"",
+            companylandmark         :"",
+            companyCountry          :"",
+            companyState            :"",
+            companyDist             :"",
+            taluka                  :"",
+            companyCity             :"",
+            companyPincode          :"",
+            companyArea             :"",
+            pincodeArea             :"",
+            areaName                :"",
+            submitVal               : false,
+          });
+           $('.subjectRow').css({'display':'none'});
+
+                  // here for table
+
+                    axios
+                    .get('/api/tgkSpecificcompanysettings/list')
+                    .then(
+                      (res)=>{
+                        console.log('res', res);
+                        const postsdata = res.data;
+                        console.log('postsdata',postsdata);
+                        this.setState({
+                          allPosts : postsdata,
+                        });
+
+
+                      let locationArray =[];
+                      if(this.state.allPosts!=null){
+
+                      
+                       locationArray = this.state.allPosts.map(function(item) { return item.companyLocationsInfo });
+                      }else{
+                         locationArray = "no data";
+                      }
+                      
+                        this.setState({
+                          allLoc : locationArray,
+                        });
+                      //   console.log("locationArray", locationArray);
+                      // console.log("this.state.allLoc+++++++++++++++++",this.state.allLoc);
+
+                      }
+                    )
+                    .catch((error)=>{
+
+                      console.log("error = ",error);
+                      // alert("Something went wrong! Please check Get URL.");
+                       });        
+
+        })
+        .catch(function (error) {
+          // handle error
+          console.log("updated already",error);
+
+        })
+
+             
+          }
+       
+       }
+       
         // update axios
       }
       
-  }else{
+  } else{
     swal("Please enter mandatory fields", "", "warning");
     console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
   }
@@ -500,17 +592,10 @@ selectType(event){
     },()=>{
       if(this.state.companyLocation  === 'Head Office' || this.state.companyLocation  === 'Sales Agent Office' ){
         $('.subjectRow').css({'display':'none'});
-         this.setState({
-          required : "",
-        })
-       /* this.state.formerrors.companyArea1 = "999";
-
-        console.log("this.state.companyArea1", this.state.formerrors.companyArea1);*/
+         
       }else if(this.state.companyLocation  === 'Field Agent Office'){
         $('.subjectRow').css({'display':'block'});
-        this.setState({
-          required : "required",
-        })
+       
       }
     });
     
@@ -556,6 +641,15 @@ selectType(event){
             companyArea             : maindata.areaName,
             pincodeArea             : maindata.pincodesCovered,
           });
+
+          if(maindata.Location  === 'Head Office' || maindata.Location  === 'Sales Agent Office' ){
+            $('.subjectRow').css({'display':'none'});
+             
+          }else if(maindata.Location  === 'Field Agent Office'){
+            $('.subjectRow').css({'display':'block'});
+           
+          }
+
         })
         .catch(function (error) {
           // handle error
@@ -978,18 +1072,18 @@ selectType(event){
         </div>
 
 
-          <div className="tablebox">  
+          <div className="tablebox row">  
                     <div className="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12 zeropadd">
                       <table className="table iAssureITtable-bordered table-striped table-hover">
                         <thead className="tempTableHeader">
                           <tr className="">
-                            <th className="umDynamicHeader srpadd textAlignCenter"> Location </th>
-                            <th className="umDynamicHeader srpadd textAlignCenter"> ContactNumber </th>
-                            <th className="umDynamicHeader srpadd textAlignCenter"> BlockName </th>
+                            <th className="umDynamicHeader srpadd textAlignCenter"> Company Location </th>
+                            <th className="umDynamicHeader srpadd textAlignCenter"> Contact Number </th>
+                            <th className="umDynamicHeader srpadd textAlignCenter"> Block Name </th>
                             <th className="umDynamicHeader srpadd textAlignCenter"> District </th>
                             <th className="umDynamicHeader srpadd textAlignCenter"> City </th>
-                            <th className="umDynamicHeader srpadd textAlignCenter"> LocationCode </th>
-                            <th className="umDynamicHeader srpadd textAlignCenter"> Action </th>
+                            <th className="umDynamicHeader srpadd textAlignCenter"> Location Code </th>
+                            <th className="umDynamicHeader srpadd textAlignCenter"> Actions </th>
 
                           </tr>
                         </thead>
@@ -1011,7 +1105,7 @@ selectType(event){
                                 {/*data-toggle="modal" title="Delete" data-target={`#${locData._id}-edit`}  */} 
                                   <i className="fa fa-pencil editTcon editIcon pointerCls"   title="Edit" id={locData._id} onClick={this.editLoc.bind(this)} ></i>
                                   &nbsp;&nbsp;
-                                  <i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${locData._id}-rm`} ></i>
+                                  <i className="deleteIcon roleDelete  redFont fa fa-trash delIcon mar0 detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${locData._id}-rm`} ></i>
                                 </td>
 
                                 <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${locData._id}-rm`}  role="dialog">

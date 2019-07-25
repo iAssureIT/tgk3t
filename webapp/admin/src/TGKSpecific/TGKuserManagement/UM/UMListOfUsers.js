@@ -50,6 +50,7 @@ class UMListOfUsers extends Component {
             checkedUser  : [],
             activeswal : false,
             blockswal : false,
+            confirmDel : false,
 		}
     	this.handleChange  = this.handleChange.bind(this);
 			
@@ -290,6 +291,16 @@ class UMListOfUsers extends Component {
 
 				  case 'cancel_selected':
 
+				  	// var modal = document.getElementById("deleteModal");
+       //              modal.style.display = "block";
+
+				  	// if(this.state.confirmDel == true)
+				  	// {
+				  	// 	console.log("here yes");
+				  	// }else{
+				  	// 	console.log("here no");
+				  	// }
+
 				    for(var i=0;i< checkedUsersList.length;i++)
 				  {
 				  	var selectedId = checkedUsersList[i];
@@ -367,7 +378,7 @@ class UMListOfUsers extends Component {
 				      .then(
 				        (res)=>{
 				          // console.log('res', res);
-				          swal("Role Added successfully","","success");
+				          swal("Assigned Role Added Successfully","","success");
 				          checkedUsersList = null;
 
 				          		// update table here
@@ -420,11 +431,11 @@ class UMListOfUsers extends Component {
 				  	}
 			
 				  	 axios
-				      .delete('/api/users/roledelete/',formValues)
+				      .post('/api/users/roledelete/',formValues)
 				      .then(
 				        (res)=>{
 				          // console.log('res', res);
-				          swal("Role deleted successfully","","success");
+				          swal("Assigned Role Removed Successfully","","success");
 				          checkedUsersList = null;
 
 				          		// update table here
@@ -627,6 +638,11 @@ class UMListOfUsers extends Component {
 
 	}
 
+	confirmDel(event){
+		this.setState({
+			confirmDel : true,
+		})
+	}
 	selectedUser(checkedUsersList){
 		// console.log('checkedUsersList', checkedUsersList);
 		this.setState({
@@ -656,11 +672,11 @@ render(){
 
 									<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12  paddingright">
 
-										<h4 className="usrmgnttitle weighttitle">User Management of TGK Specific</h4>
+										<h4 className="usrmgnttitle weighttitle">User Management</h4>
 									</div>
 									<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">
 										<button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform userbtn clickforhideshow" data-toggle="modal" data-target="#CreateUserModal">Add User</button>
-											<CreateUser />
+											<CreateUser getData={this.getData.bind(this)}/>
 									</div>
 									{/*<div className="col-lg-2 col-md-3 col-sm-12 col-xs-12 "  id="createmodalcl">
 										<a href="/umroleslist"><button type="button" className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 addexamform clickforhideshow">Add Role</button></a>
@@ -731,6 +747,35 @@ render(){
 					                      selectedUser={this.selectedUser.bind(this)} 
 										/>			
 									</div>
+
+									<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id="deleteModal"  role="dialog">
+										                    <div className=" modal-dialog adminModal adminModal-dialog">
+										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+																		          <span aria-hidden="true">&times;</span>
+																		        </button>
+																	        </div>
+															      		</div>
+										                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+
+										                                 <h4 className="blackFont textAlignCenter col-lg-12 col-md-12 col-sm-12 col-xs-12 examDeleteFont">Are you sure you want to delete this User?</h4>
+										                              </div>
+										                              
+										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
+										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
+										                                   </div>
+										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+										                                        <button  onClick={this.confirmDel.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>
+										                                   </div>
+										                              </div>
+										                         </div>
+										                    </div>
+										               </div>
+
 								</form>
 						    </div>
 

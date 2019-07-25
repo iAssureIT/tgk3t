@@ -125,8 +125,8 @@ class EditNotificationModal extends Component{
 			var cketext          = this.state.content;
 			if(templateType === '-- Select --' || templateName === '--Select Template Name--'){
 				swal({
-					title: 'Please fill in all the required fields',
-					text:"Please fill in all the required fields",
+					title: 'This field is required.',
+					text:"This field is required.",
 					type: 'success',
 					showCancelButton: false,
 					confirmButtonColor: '#666',

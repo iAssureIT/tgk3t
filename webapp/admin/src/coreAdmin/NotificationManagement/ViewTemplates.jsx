@@ -123,10 +123,10 @@ class ViewTemplates extends Component{
 
 		super(props);
 			this.state = {
-			    templateType    	: props.templateType,
-			    templateName    	: props.templateName,
-			    subject         	: props.subject ? props.subject : '',
-			    content         	: '',
+			    templateType    	: props.templateType ? props.templateType :"-- Select --",
+			    templateName    	: props.templateName ? props.templateName : "--Select Template Name--",
+			    subject         	: props.subject ? props.subject : null,
+			    content         	: null,
 			    contentError 		: '',
 			    subjecterror 		: '',
 			    templateNameerror 	: '',
@@ -317,87 +317,72 @@ class ViewTemplates extends Component{
 			var templateName     = this.state.templateName;
 			var subject          = this.state.subject;
 			var cketext          = this.state.content;
-			if(templateType === '-- Select --' || templateName === '--Select Template Name--'){
-				swal({
-					title: 'Please fill in all the required fields',
-					text:"Please fill in all the required fields",
-					type: 'success',
-					showCancelButton: false,
-					confirmButtonColor: '#666',
-					confirmButtonText: 'Ok'
-				});
+
+			console.log("here value of sub", this.state.subject);
+			console.log("here value of content", this.state.content);
+
+			console.log("here value of templatetype", this.state.templateType);
+			console.log("here value of templateName", this.state.templateName);
+			if( cketext === null  || templateType === '-- Select --' || templateName === '--Select Template Name--'){
+				swal("Please enter mandatory fields", "", "warning");
+          		console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}else{	
-				var formValues = {   
+
+				if(templateType === 'Email' && subject === null)
+				{
+					swal("Please enter mandatory fields", "", "warning");
+				}else{
+
+					var formValues = {   
 					"templateType"  : templateType,
 					"templateName"  : templateName,
 					"subject"       : subject,
 					"content"       : cketext,
+					}
+				
+						if(formValid(this.state.formerrors)){
+							axios.post('/api/masternotifications', formValues)
+							.then((response)=> {	
+							console.log('response',response);				
+								axios({
+									method: 'get',
+									url: '/api/masternotifications/list',
+								}).then((response)=> {
+									swal("Template added successfully","", "success");
+									var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
+									var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
+									var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
+								    this.setState({
+								    	emailTemplatesList 			: emailTemplatesList,
+								    	notificationTemplatesList 	: notificationTemplatesList,
+								    	smsTemplatesList 			: smsTemplatesList
+								    });
+
+								     this.setState({
+								    	templateType 	: '',
+								    	templateName 	: '',
+								    	subject 		: '',
+								    	content 		: ''
+								    });   
+								}).catch(function (error) {
+								    
+								});
+								
+								$('#createNotifyModal').hide();
+								$('.modal-backdrop').remove();
+							})
+							.catch(function (error) {
+								
+							console.log(error);
+							})
+						}else
+						{
+						    swal("Please enter mandatory fields", "", "warning");
+						    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+						}
+
 				}
 				
-				if(formValid(this.state.formerrors)){
-					axios.post('/api/masternotifications', formValues)
-					.then((response)=> {	
-					console.log('response',response);				
-						axios({
-							method: 'get',
-							url: '/api/masternotifications/list',
-						}).then((response)=> {
-							swal("Template added successfully","", "success");
-							var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
-							var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
-							var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
-						    this.setState({
-						    	emailTemplatesList 			: emailTemplatesList,
-						    	notificationTemplatesList 	: notificationTemplatesList,
-						    	smsTemplatesList 			: smsTemplatesList
-						    });
-
-						     this.setState({
-						    	templateType 	: '',
-						    	templateName 	: '',
-						    	subject 		: '',
-						    	content 		: ''
-						    });
-
-
-
-						    
-						}).catch(function (error) {
-						    
-						});
-						// swal({
-						// 	title:'swal',
-						// 	text: response.data ,
-						// 	type: 'success',
-						// 	showCancelButton: false,
-						// 	confirmButtonColor: '#666',
-						// 	confirmButtonText: 'Ok'
-						// });
-						// swal("{response.data}","", "success");
-						
-						$('#createNotifyModal').hide();
-						$('.modal-backdrop').remove();
-
-
-					})
-					.catch(function (error) {
-						/*swal({
-							text: "esponse.data",
-							type: 'success',
-							showCancelButton: false,
-							confirmButtonColor: '#666',
-							confirmButtonText: 'Ok'
-						});*/
-					console.log(error);
-					})
-					.finally(function () {
-					// always executed
-					});
-				}else
-				{
-				    swal("Please enter mandatory fields", "", "warning");
-				    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-				}
 			}
 		/*}else{
 			this.setState({
@@ -593,7 +578,7 @@ class ViewTemplates extends Component{
 	            		</div>
 	            		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div className="tab-content">
-							<div id="emailTemplates" className="tab-pane fade in active">
+							<div id="emailTemplates" className="tab-pane fade in active table-wrapper-scroll-y my-custom-scrollbar">
 							  <div className="">
 							  	<div className="sidertemplatebar col-lg-3 col-md-3 col-xs-12 col-sm-12">
 							  		<div className="row">

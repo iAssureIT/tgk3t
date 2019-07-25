@@ -44,21 +44,7 @@ class OfficeEmpList extends Component {
           });
 
 		          console.log("allresult-------------------------------------",this.state.allresult);
-		        //   let locationArray =[];
-		        //   if(this.state.allresult!=null){
-
-		          
-		        //    locationArray = this.state.allresult.map(function(item) { return item.companyLocationsInfo });
-		        //   }else{
-		        //      locationArray = null;
-		        //   }
-		    
-		        //   this.setState({
-		        //     office : locationArray,
-		        //   });
-		        //   console.log("locationArray", locationArray);
-		        // console.log("this.state.office+++++++++++++++++",this.state.office);
-		               
+		     
         }
       )
       .catch((error)=>{
@@ -67,15 +53,6 @@ class OfficeEmpList extends Component {
         // alert("Something went wrong! Please check Get URL.");
          });  
     }  
-
-	// selectedData(data){
-	// 	this.setState({
-	// 		allPosts : data,
-	// 	})
-
-	// 	console.log("here full data in props ______________________________",this.state.allPosts);
-	// }
-	
 
 	selectOffice(event){
 		var selectOffice = event.currentTarget.value;
@@ -139,7 +116,7 @@ class OfficeEmpList extends Component {
                                          <h4 className="weighttitle"><a href="/"><i className="cursorpointer fa fa-chevron-circle-left"></i></a></h4>
                                     </div>
                                     <div className=" col-lg-11 col-md-11 col-xs-11 col-sm-11 box-header with-border">
-                                         <h4 className="weighttitle">List of Employees</h4>
+                                         <h4 className="weighttitle">Team Hierarchy</h4>
                                     </div>
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addRolesInWrap">
 
@@ -184,7 +161,7 @@ class OfficeEmpList extends Component {
 																	<th className="umDynamicHeader srpadd textAlignCenter"> Full Name </th>
 																	<th className="umDynamicHeader srpadd textAlignCenter"> Mobile No </th>
 																	<th className="umDynamicHeader srpadd textAlignCenter"> Email ID </th>
-																	<th className="umDynamicHeader srpadd textAlignCenter"> Roles </th>
+																	<th className="umDynamicHeader srpadd textAlignCenter"> Role </th>
 																</tr>
 															</thead>
 															<tbody>
@@ -193,10 +170,10 @@ class OfficeEmpList extends Component {
 													
 												   		return( 
 																<tr>
-																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.fullName : null }</td>	
-																	<td className="textAlignLeft">{ roleData.mobileNumber ? roleData.mobileNumber : null }</td>	
-																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.emailId : null }</td>	
-																	<td className="textAlignLeft">{ roleData.roles[0] ? roleData.roles[0] : null }</td>		
+																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.fullName : "-" }</td>	
+																	<td className="textAlignLeft">{ roleData.profile ? roleData.profile.mobileNumber : "-" }</td>	
+																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.emailId : "-" }</td>	
+																	<td className="textAlignLeft">{ roleData.roles[0] ? roleData.roles[0] : "-" }</td>		
 																
 																
 
@@ -219,7 +196,7 @@ class OfficeEmpList extends Component {
 
 
 												:
-												<div className="centernote col-lg-12"> Please select office  </div>
+												<div className="centernote col-lg-12"> Please select Office Location  </div>
 
 										}
 
