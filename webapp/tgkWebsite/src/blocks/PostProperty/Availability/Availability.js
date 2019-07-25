@@ -233,7 +233,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					 	<div className="can-toggle genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox"/>
 				              <label className="formLable" htmlFor="d">
-				             	 <div className="can-toggle__switch" data-checked="Myself"  data-unchecked="someone" ></div>
+				             	 <div className="can-toggle__switch" data-checked="Myself"  data-unchecked="Someone" ></div>
 				                <div className="can-toggle__label-text"></div>
 				              </label>
 			            	</div>
@@ -258,15 +258,14 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			  	 	<label>Visit Schedule (Add as you may like)</label>
 			  	 </div>
 			  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
-		    	<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">	
+		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">	
+		    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">	
 		    		<label className=""> Availability <span className="astrick">*</span></label>
-
 					  <select className="custom-select form-control " ref="availability" placeholder="select" >
 				    	<option disabled>-- Select --</option>
-				    	<option value="everyDay"> Everyday (Mon-Sun)</option>
-				    	<option value="weekDays"> Weekdays (Mon-Fri)</option>
-				    	<option value="weekEnds"> Weekends (Sat-Sun)</option>
+				    	<option value="Everyday"> Everyday (Mon-Sun)</option>
+				    	<option value="Weekdays"> Weekdays (Mon-Fri)</option>
+				    	<option value="Weekends"> Weekends (Sat-Sun)</option>
 				    	<option value="Monday">   Monday 	</option>
 				    	<option value="Tuesday">  Tuesday 	</option>
 				    	<option value="Wednesday">Wednesday </option>
@@ -275,57 +274,59 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				    	<option value="Saturday"> Saturday 	</option>
 				    	<option value="Sunday">   Sunday 	</option>
 				    </select>
-				  </div>
+				</div>
 
 
-				  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-		    			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> From Time<span className="astrick">*</span> </label>
+				<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+	    			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> From Time<span className="astrick">*</span> </label>
 
-						<div className="col-lg-7 col-md-8 col-sm-8 col-xs-8"  id="" >
-						    <div className="input-group">
-						      	<div className="input-group-addon inputIcon">
-			                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
-			                    </div>
-							    <input type="time" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>
-						  	</div>
-						</div>
-					  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
-						    <div className="input-group" id="">
-							    <select className="form-control col-lg-12" ref="timeFromAMPM">
-							    	<option selected> AM </option>
-							    	<option> PM </option>
-							    </select>
-						  	</div>
-				  		</div>
-				  </div>
+					<div className="col-lg-7 col-md-8 col-sm-8 col-xs-8"  id="" >
+					    <div className="input-group">
+					      	<div className="input-group-addon inputIcon">
+		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
+		                    </div>
+						    <input type="time" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>
+					  	</div>
+					</div>
+				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
+					    <div className="input-group" id="">
+						    <select className="form-control col-lg-12" ref="timeFromAMPM">
+						    	<option selected> AM </option>
+						    	<option> PM </option>
+						    </select>
+					  	</div>
+			  		</div>
+				</div>
 
-				  <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-		    			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> To Time <span className="astrick">*</span></label>
+				<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+	    			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> To Time <span className="astrick">*</span></label>
 
-						<div className="col-lg-7 col-md-8 col-sm-8 col-xs-8"  id="" >
-						    <div className="input-group inputBox-main ">
-						      	<div className="input-group-addon inputIcon">
-			                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
-			                    </div>
-							    <input type="time" className="form-control col-lg-12" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>
-						  	</div>
-						</div>
-					  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
-						    <div className="input-group" id="">
-							    <select className="form-control col-lg-12" ref="timeToAMPM">
-							    	<option selected> AM </option>
-							    	<option> PM </option>
-							    </select>
-						  	</div>
-				  		</div>
-				  </div>
+					<div className="col-lg-7 col-md-8 col-sm-8 col-xs-8"  id="" >
+					    <div className="input-group inputBox-main ">
+					      	<div className="input-group-addon inputIcon">
+		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
+		                    </div>
+						    <input type="time" className="form-control col-lg-12" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>
+					  	</div>
+					</div>
+				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
+					    <div className="input-group" id="">
+						    <select className="form-control col-lg-12" ref="timeToAMPM">
+						    	<option selected> AM </option>
+						    	<option> PM </option>
+						    </select>
+					  	</div>
+			  		</div>
+			  	</div> 
+		  	</div>
+		  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			  	 <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 pull-right">
+			    	<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"></label>				  
+					<button className="btn btn-primary" onClick={this.handleAvailability.bind(this)}>Add Slot +</button>					  	
+				</div>
+			</div>	
 
-				  <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-		    		  <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> . </label>				  
-					  <button className="btn btn-primary" onClick={this.handleAvailability.bind(this)}>Add Slot +</button>					  	
-				  </div>
-		  </div>
-		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23">	
+		   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23">	
 		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	 	<ReactTable
 				    data={this.state.available}

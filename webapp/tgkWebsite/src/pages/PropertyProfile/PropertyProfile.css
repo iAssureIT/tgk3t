@@ -39,10 +39,10 @@ height: 45px;
 	cursor: pointer;
 }
 .addressOfProperty{
-    font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto', sans-serif;
 	margin-top: 28px;
 	height: 42px;
-    padding: 0px;
+  padding: 0px;
 }
 .addressOfProperty label{
   margin-bottom: 7px;

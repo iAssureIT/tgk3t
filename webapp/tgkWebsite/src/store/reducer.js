@@ -117,14 +117,14 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 	}
 
 	if(action.type === "SHOW_FIRST_FORM"){
-		newState.BasicInfo 	        = false;
+		newState.BasicInfo 	        = true;
 		newState.PropertyDetails   	= false;
 		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;
 		newState.CongratsPage       = false;
-		newState.ImageUpload        = true;
+		newState.ImageUpload        = false;
 		/*newState.uid 		        = "5d3088c36e513977e889d2d1";*/
 		newState.uid 		        = action.uid;
 	}

@@ -25,31 +25,28 @@ class PropertyProfile extends Component{
   
   constructor(props){
     super(props);
-    
+     var profileId = this.props.match.params.id;
+     console.log("contactId contactId",profileId);
     this.props.showFirstForm();  //for dispatch
 
     this.state = {
-      "nameOfProperty"    : "Park Avenue Apartment",
-      "addressOfProperty" : "Magerpatta City, Hadapsar, Pune 411028",
-      "checkValue"        : "Gas Pipeline",
-      "reviewCount"       : "3375 ",
-      "propertyID"        : "Pro100992",
-      "bedSpecification"  : "",
-      "bathSpecification" : "",
-      "areaInSq"          : "7711",
-      "priceOfProperty"   : "$11200",
-      "typeOfProperty"    : "", 
-      "nearBy"            : ["University","School"],
-      "propertyList"      : ["ESCADA APARTMENTS","1105th Avenue","6210 Camino La Costa"],
-      "monthlyPlan"       : "",
-      "ownerNumber"       : "+91 99221 34567",
-      "propertyAddress"   : "Magerpatta City,Hadapsar Pune, Maharastra 411028.",
-      // "countryCode" : "+91 ", // Intilize Here By default
-    
+      "checkValue"        : "",
+      "profileId"         : profileId,
+      "amenities"         : [],
+      "propertyImages"    : [],
+      "propertyVideos"    : [],
+      "propertyFeatures"  : [],
+      "features"          : [],
+      "areaInSqFeet"      : [],
+      "pricing"           : [],
+      "propertyFea"       : [],
+      "propertyDescription" : [],
+      "propertyLocation"  : [],
+      "transactionType"   : "",  
     }
   }
 
-  removeBackdrop(){
+ removeBackdrop(){
     $(".modal-backdrop").remove();    
   }
 
@@ -58,20 +55,26 @@ class PropertyProfile extends Component{
   }
   componentDidMount() {
     axios
-    .get('http://qatgk3tapi.iassureit.com/api/properties/list')
+    .get('http://qatgk3tapi.iassureit.com/api/properties/'+this.state.profileId)
     .then(
       (res)=>{
         console.log(res);
         const postsdata = res.data;
-        /*this.setState({
-          PropertyDetails : postsdata,
-        });*/
-    console.log("PropertyDetails",postsdata);   
+        this.setState({
+          propertyFeatures    : postsdata.propertyDetails,
+          amenities           : postsdata.Amenities,
+          propertyImages      : ['/images/profileImg2.jpg','/images/profileImg2.jpg'],
+          propertyVideos      : ['https://youtu.be/vO0FgrPFnjM'],
+          pricing             : postsdata.financial,
+          propertyLocation    : postsdata.propertyLocation,
+          transactionType     : postsdata.transactionType,
+        });
+        console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch();
-    this.props.setFormTitle("Let's Provide Details of Your Property for sell");
 
+     $(this).find('input[type="checkbox"]').is(':checked')
   }
 
   render() {
@@ -92,92 +95,46 @@ class PropertyProfile extends Component{
      header = "Please Upload Images and a Video of your Property"; 
    }
     return (
-      <div className="container-fluid">
-        <div className="row">
-          <div className="formWrapper ">   
-           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
-            <div className="row">
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 header">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 logoImgContainer">
-                        <img alt=""  src="/images/Logo.png" />
-                    </div>
-                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 pull-right ">
-                      <nav className="navbar  navText mt10 ">
-                          <ul className="nav navbar-nav ">
-                              <li className="active showActive"><a href="#Home">HOME</a></li>
-                              <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="/tempUrl">ABOUT US&nbsp;<i className="fa fa-angle-down"></i></a>
-                                <ul className="dropdown-menu">
-                                  <li><a href="/tempUrl">Page 1-1</a></li>
-                                  <li><a href="/tempUrl">Page 1-2</a></li>
-                                  <li><a href="/tempUrl">Page 1-3</a></li>
-                                </ul>
-                              </li>
-                              <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="/tempUrl">CONTACT US&nbsp;<i className="fa fa-angle-down"></i></a>
-                                <ul className="dropdown-menu">
-                                  <li><a href="/tempUrl">Page 1-1</a></li>
-                                  <li><a href="/tempUrl">Page 1-2</a></li>
-                                  <li><a href="/tempUrl">Page 1-3</a></li>
-                                </ul>
-                              </li>
-                              <li className="dropdown">
-                                <a className="dropdown-toggle" data-toggle="dropdown" href="/tempUrl">MY PROFILE&nbsp;<i className="fa fa-angle-down"></i></a>
-                                <ul className="dropdown-menu">
-                                  <li><a href="/tempUrl">Page 1-1</a></li>
-                                  <li><a href="/tempUrl">Page 1-2</a></li>
-                                  <li><a href="/tempUrl">Page 1-3</a></li>
-                                </ul>
-                              </li>
-                          </ul>
-                      </nav>
-              </div>
-
-                </div>
-                </div>
-              </div>
+      <div className="container-fluid ">
+        <div className="">
+          <div className="formWrapper row">   
+           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"  >
               <div className="row">
-                <div className="col-lg-12 labalDiv"> 
-                    <label>Property Profile</label>
+              <div className="col-lg-12 labalDiv"> 
+                  <label>Property Profile</label>
                 </div>     
-
               </div>
-             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName">
-                
-                <div className="col-lg-9 col-md-8 col-sm-8 col-xs-8 nameOfProperty" >
+             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName"> 
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameOfProperty" >
                   <div className="row">
-                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 " >
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 backButton" >
-                        <img alt=""  src="/images/back.png"/>
+                    <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2" >
+                      <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 backButton" >
+                        <img src="/images/back.png"/>
                       </div>
                     </div>
-                    <div className="col-lg-5 col-md-6 col-sm-6 col-xs-6 row" >
+                    <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 row" >
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addressOfProperty" >
-                        <label className="pull-left"> {this.state.nameOfProperty ? this.state.nameOfProperty : "Name of Property"}</label> 
-                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2  forSaleButton">
-                          FOR SALE
-                        </div> 
-                       
-                        <br/>
-                       <div className="col-lg-12"> 
-                        <div className="row">
-                         <i className="fa fa-map-marker" aria-hidden="true"></i> {this.state.addressOfProperty ? this.state.addressOfProperty : "Address of Property" }
+                          <label className="pull-left"> 
+                          {this.state.propertyLocation && this.state.propertyLocation.address ? this.state.propertyLocation.address:"-"}
+                          </label> 
+                          <div className="col-lg-1 col-md-1 col-sm-3 col-xs-3 text-center forSaleButton">
+                            FOR {this.state.transactionType}
+                          </div> 
+                          <br/>
+                          <div className="col-lg-12"> 
+                            <div className="row">
+                              <i className="fa fa-map-marker" aria-hidden="true"></i> &nbsp;
+                              {this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.pincode : "-"}
+                            </div>
                           </div>
-                        </div>
                       </div>
+                    </div>
+                    <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
+                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal"> Post New Property </button> 
                     </div>
                   </div>
                 </div>
-
-
-                <div className="col-lg-3 addressOfProperty"> 
-                  <button className="btn btn-primary pull-right" data-toggle="modal" data-target="#postPropertyModal"> Post New Property </button> 
-                </div>
-
-
               </div>
-              
               <div className="row">
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imagesOfProperty" >
                   <div className="row">
@@ -199,317 +156,158 @@ class PropertyProfile extends Component{
                 </div>
               </div>
            </div>
-           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40  " >
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mainDescriptionDiv ">
-                  <div className="row">
-                    <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12   ">
-                      <div className="row"> 
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  headingProp">
-                          <label className="row">Property Description</label>
-                        </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  color33 ">
-                          <div className="row"> 
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-                            It has survived not only five centuries, but also the leap into electronic typesetting, 
-                            remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets 
-                            containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker
-                            including versions of Lorem Ipsum.
+           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12   ">
+                        <div className="row"> 
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <label className="row">Property Description</label>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div className="row"> 
+                              {this.state.propertyFeatures && this.state.propertyFeatures.description?  this.state.propertyFeatures.description : "-"}                              
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12   ">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> 
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 headingProp  ">
-                          <label className="row">Property Features</label>
-                        </div>
-                      <div className="row"> 
-
-                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 row  ">
-                          <div className="row"> 
-                            <ul  className="bolder">
-                              <li>Residencial Property for Sale</li>
-                              <li>Residencial Property for Sale</li>
-                              <li>Residencial Property for Sale</li>
-                              <li>Residencial Property for Sale</li>
-                              <li>Residencial Property for Sale</li>
-                              <li>Residencial Property for Sale</li>
-                              <li>Residencial Property for Sale</li>
-                            </ul> 
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <label className="row">Key Features</label>
+                            </div>
+                            <div className="row"> 
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div className="row"> 
+                                  <table className="col-lg-12">
+                                    <ul  className="bolder">
+                                      <tr><td><li>Furnished Status</li></td> : <td>{this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus  ? <b>{this.state.propertyFeatures.furnishedStatus} </b> :"-" }</td></tr>
+                                      <tr><td><li>Bedrooms        </li></td> : <td>{this.state.propertyFeatures && this.state.propertyFeatures.bedrooms        ? <b>{this.state.propertyFeatures.bedrooms}        </b> : "-"}</td></tr>
+                                      <tr><td><li>Balconies       </li></td> : <td>{this.state.propertyFeatures &&this.state.propertyFeatures.balconies       ? <b>{this.state.propertyFeatures.balconies}       </b> : "-"}</td></tr>
+                                      <tr><td><li>Bathrooms       </li></td> : <td>{this.state.propertyFeatures && this.state.propertyFeatures.bathrooms       ? <b>{this.state.propertyFeatures.bathrooms}       </b> : "-"}</td></tr>
+                                      <tr><td><li>Age of Property </li></td> : <td>{this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty}   </b> : "-"}</td></tr>
+                                      <tr><td><li>Facing          </li></td> : <td>{this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</td></tr>
+                                      <tr><td><li>Super Area      </li></td> : <td>{this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></td></tr>
+                                      <tr><td><li>Built up Area  </li></td>  : <td>{this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></td></tr>
+                                      <tr><td><li>Available From  </li></td> : <td>{this.state.propertyFeatures && this.state.propertyFeatures.availableFrom   ? <b>{this.state.propertyFeatures.availableFrom}   </b> : "-"}</td></tr>
+                                    </ul> 
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 row  ">
-                          <div className="row"> 
-                            <ul  className="bolder">
-                              <li>Feature 1</li>
-                              <li>Feature 2</li>
-                              <li>Feature 3</li>
-                              <li>Feature 4</li>
-                              <li>Feature 5</li>
-                              <li>Feature 6</li>
-                             
-                            </ul> 
-                          </div>
-                        </div>
-                        </div>
-                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12  row">
-                          <div className="row"> 
-                            
-                          </div>
-                        </div>
-                      </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            </div>
            </div>
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12   " >
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-                  <div className="row">
-                    <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 fontR  ">
-                      <div className="row"> 
-                         <div className="col-lg-12 col-md-8 col-sm-8 col-xs-8 " >
-                          <div className="row">
-                            <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10   " >
-                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 headingProp">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 dottedBorder">
+                    <div className="row">
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12   ">
+                        <div className="row"> 
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                            <label className="row">Amenities</label>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                              <div className="row">
+                                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> 
                                     <div className="row">
-                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 ">
-                                          <label className="">Amenities Pricing</label>
-                                        </div> 
-                                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 "> 
-                                        <div className="row">
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer  ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
+                                      {this.state.amenities?
+                                        this.state.amenities.map((amenity,index)=>{
+                                          return(
+                                               <div key={index} className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                                                 <div className="row">
+                                                    <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer  ">
+                                                      <input type="checkbox" checked="true" />
+                                                      <span className="centreDetailCheck"></span>
+                                                    </div>
+                                                  </div>
+                                                  <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">    
+                                                      {amenity}        
+                                                  </div>
                                             </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                           {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-
-                                        </div>
-                                      </div>
-                                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 "> 
-                                        <div className="row">
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer  ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                           {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                           <div className="row">
-                                              <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer mt10 ">
-                                                <input type="checkbox" />
-                                                <span className="centreDetailCheck"></span>
-                                              </div>
-                                            </div>
-                                            <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">
-                                              {this.state.checkValue}
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                            );
+                                        })
+                                      :
+                                      null  
+                                      }
                                     </div>
                                   </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                              <label className="row">Financials</label>
+                            </div>
+                            <div className="row"> 
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <div className="row"> 
+                                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                                   <div className="row">
+                                     <ul  className="bolder">
+                                    {
+                                    <table>
+                                      <tbody>
+                                        <tr><td><li>Include Charges      </li></td> : <td>{this.state.pricing && this.state.pricing.includeCharges       ? <b>{this.state.pricing.includeCharges[0]}       </b> :"-" }</td></tr>
+                                        <tr><td><li>Expected Rate        </li></td> : <td>{this.state.pricing && this.state.pricing.expectedRate       ? <b>{this.state.pricing.expectedRate}       </b> :"-" }</td></tr>
+                                        <tr><td><li>Total Price          </li></td> : <td>{this.state.pricing && this.state.pricing.totalPrice         ? <b>{this.state.pricing.totalPrice}         </b> : "-"}</td></tr>
+                                        <tr><td><li>Maintainance Charges </li></td> : <td>{this.state.pricing && this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</td></tr>
+                                        <tr><td><li>Maintainance Per     </li></td> : <td>{this.state.pricing && this.state.pricing.maintenancePer ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</td></tr>
+                                      </tbody>
+                                     </table> 
+                                    }
+                                  </ul> 
                                 </div>
-                          </div>
-                         </div>
-                      </div>
-                    </div>
-                 <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12  fontR mt20 ">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 "> 
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 headingProp  ">
-                          <label className="row">Pricing</label>
-                        </div>
-                      <div className="row"> 
-
-                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 row  ">
-                          <div className="row"> 
-                            <ul className="bolder">
-                              <li>Super Area   : 3000 Sq.Ft.</li>
-                              <li>Built &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : 2500 Sq.Ft.</li>
-                              <li>Built &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : 2500 Sq.Ft.</li>
-                              <li>Built &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : 2500 Sq.Ft.</li>
-                              <li>Built &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : 2500 Sq.Ft.</li>
-                              <li>Built &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; : 2500 Sq.Ft.</li>
-                              
-                              
-                            </ul> 
+                                </div>
+                              </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                         <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12 row  ">
-                          <div className="row"> 
-                            <ul  className="bolder">
-                              <li>Pricing 1</li>
-                              <li>Pricing 2</li>
-                              <li>Pricing 3</li>
-                              <li>Pricing 4</li>
-                              <li>Pricing 5</li>
-                              <li>Pricing 6</li>
-                             
-                            </ul> 
-                          </div>
-                        </div>
-                        </div>
-                        <div className="col-lg-6 col-md-12 col-sm-12 col-xs-12  row">
-                          <div className="row"> 
-                            
-                          </div>
-                        </div>
-                      </div>
                       </div>
                     </div>
                   </div>
-              </div>
-            </div>
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12   ht700" >
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12   " >
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 dottedBorder LocationDiv fontR headingProp " >
-                <label>Location</label>
-                <br/>
-                Park Avenue Apartment,Magerpatta City,Hadapsar,Pune 411028
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
-                  <div className="row">
-                 <div className="mapouter"><div className="gmap_canvas"><iframe width="1200" height="500" id="gmap_canvas"  title="Google Map" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
-                </div>
-                </div>
                 </div>
               </div>
-            </div>
-            <div className="row">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12   " >
-              <div className="row">
-              <HomePageFooter />
-              </div>
-            </div>
             </div>
            </div>
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 dottedBorder" > 
+                        <label className="row">Location</label>
+                      </div>
+                  <br/>
+                      { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
+                    <div className="row">
+                      <div className="mapouter"><div className="gmap_canvas"><iframe width="1200" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
+                    </div>
+                  </div>
+               
+                  </div>
+                </div>
+              </div>
+             </div>
           </div>              
         </div>
-
-
-
-
-      {/*=== Modal starts here ===*/}
+        {/*=== Modal starts here ===*/}
         <div id="postPropertyModal" className="modal fade" role="dialog">
           <div className="modal-dialog modal-lg">
 

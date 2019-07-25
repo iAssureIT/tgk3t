@@ -201,7 +201,7 @@ import './Financials.css';
 		 	 </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		  		<b>My Apartment is Availabel From</b>
+		  		<b>My Apartment is Available From</b>
 
 		  	</div>
 		  </div>
