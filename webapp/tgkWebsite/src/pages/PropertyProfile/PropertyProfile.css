@@ -1,0 +1,459 @@
+.mt20{
+	margin-top: 20px;
+}
+.mb20{
+	margin-bottom: 20px;
+}
+.mt10{
+	margin-top:10px;
+}
+.mt40{
+  margin-top: 40px;
+}
+.propertyName{
+	height: 100px;
+}
+.nameOfProperty{
+	height: 100px;
+}
+.mainDescriptionDiv{
+    font-family: 'Roboto', sans-serif;
+  border-bottom-style: dotted;
+   border-color: #aaa;
+    border-width: 2px;
+  height: 200px;
+}
+.backButton{
+height: 45px;
+    margin-top: 28px;
+    padding: 0px;
+    padding-left: 12px;
+    padding-top: 12px;
+    background-color: #eaeaea;
+}
+.backButton img{
+	height: 15px;
+	filter: invert(71%);
+}
+.backButton:hover{
+	cursor: pointer;
+}
+.addressOfProperty{
+    font-family: 'Roboto', sans-serif;
+	margin-top: 28px;
+	height: 42px;
+    padding: 0px;
+}
+.addressOfProperty label{
+  margin-bottom: 7px;
+}
+.addressOfProperty i{
+	color: #efa73e;
+}
+.forSaleButton{
+   font-family: 'Roboto', sans-serif;
+    background-color: #00f;
+    height: 22px;
+    margin-left: 12px;
+    font-weight: 600;
+    margin-top: 2px;
+    padding: 5px;
+    padding-left: 9px;
+    border-radius: 3px;
+    font-size: 9px;
+    color: #fff;
+}
+.forSaleButton:hover{
+	cursor: pointer;
+}
+.height2000{
+    height: 2110px;
+
+}
+.imagesOfProperty{
+	height: 300px;
+}
+.imagesOfProperty img{
+	height:300px;
+	width: 100%;
+}
+.propertyFeaturesContainer{
+	/*background-color: #333;*/
+	height: 900px;
+	margin-top: 30px;
+}
+.propertyFeatures{
+	border:2px solid #ccc;
+	border-radius: 3px;
+}
+.sideDiv{
+	border:1px solid #ccc;
+	height: 900px;
+	border-radius: 3px;
+}
+.headingPropertyFeatures{
+    border-bottom: 2px solid #ccc;
+    margin-top: 20px;
+    padding: 0px !important;
+    padding-left: 10px;
+}
+.subHeadingPropertyFeatures{
+    border-bottom: 2px solid #ccc;
+    margin-top: 1px;
+    padding: 0px !important;
+    padding-left: 10px;
+}
+.noBorder{
+	border:none !important;
+}
+.fwNormal label{
+	font-weight: normal;
+}
+.menuContainer{
+	background-color: #3969fa;
+	color:#fff;
+	height: 50px;
+	margin-top: 20px;
+}
+.rightMargin{
+	height: 30px;
+    margin-top: 10px;
+    padding-top: 5px;
+    border-right: 1px solid #FFF;
+
+}
+
+.menuList  {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  position: sticky;
+  top: 0;
+}
+ .menuList li {
+  float: left;
+}
+.menuList li  {
+  display: block;
+  color: white !important;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+.menuList li:hover {
+  background-color: #111;
+  cursor: pointer;
+}
+/*.active {
+  background-color: #4CAF50;
+}*/
+.descrpDiv{
+	height: 155px;
+	border-bottom: 2px solid #aaa;
+}
+.vedioDiv{
+	height: 30px;
+	margin-top: 40px;
+    border-bottom: 2px solid #aaa;
+}
+.fontR{
+    font-family: 'Roboto', sans-serif;
+
+}
+/* Create a custom checkbox */
+.centreDetailContainer{
+    font-family: 'Roboto', sans-serif;
+  position: relative;
+/*  padding-left: 3px;
+ margin-bottom: 12px;
+*/  
+  align-content: center;
+  cursor: pointer;
+  font-size: 10px;
+  user-select: none;
+  text-align: center;
+  left:3px;
+}
+/* Hide the browser's default checkbox */
+.centreDetailContainer input {
+
+     position: relative;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+    /* right: 10px; */
+    margin-top: 2px;
+
+}
+.centreDetailCheck {
+  position: absolute;
+  top: 2px;
+  left: 52px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+/* On mouse-over, add a grey background color */
+.centreDetailContainer:hover input ~ .centreDetailCheck{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.centreDetailContainer input:checked ~ .centreDetailCheck {
+  background-color: #00f;
+  border:2px solid #efa73e;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.centreDetailCheck:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.centreDetailContainer input:checked ~ .centreDetailCheck:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.centreDetailContainer .centreDetailCheck:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+.centreDetaillistItem{
+  font-family: 'Montserrat',sans-serif !important;
+  padding-left: 14px;
+  padding-top: 5px;
+  font-size: 12px !important;
+}
+.checkText{
+    margin-left: 22px;
+    margin-top: -22px;
+
+}
+.videoContainer{
+	height: 400px;
+}
+.videoContainer iframe {
+    height: 400px;
+    width: 100%;
+}
+.mapouter{position:relative;text-align:right;height:500px;width:100%;}
+.gmap_canvas {overflow:hidden;background:none!important;height:500px;width:100%;}
+
+/*Global Css*/
+.inputBox-main{
+  border: 1px solid #979797 !important;
+  border-radius: 3px !important;
+  height: 30px !important;
+  font-size: 12px !important;
+}
+
+.inputBox{
+  font-family:'Montserrat',sans-serif;
+  height: 30px !important;
+  border: 2px solid #979797 !important;
+    font-size: 12px !important;
+}
+.inputBoxContainer{
+  border:2px solid #cccccc;
+  background-color: #efefef;
+  border-radius: 3px;
+  height: 60px;
+  padding-top:12px;
+}
+.getDirection{
+    background-color: #3969fa;
+    text-align: center;
+    padding: 7px;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.noHover:hover{
+  border:none !important;
+  border: 2px solid #979797 !important;
+}
+.calYear{
+    background-color: #fff;
+    border: 2px solid #979797 ;
+    border-left: none;
+    border-right: none;
+    margin-top: 40px;
+    height: 40px;
+    padding-top: 8px;
+}
+.star{
+    background-color: #f00;
+    height: 20px;
+    margin-right: 1px;
+    padding-left: 4px;
+    border-radius: 3px;
+    color: #fff;
+    text-align: center
+  }
+  .mt5{
+    margin-top: 5px;
+  }
+  .iconColor i{
+    color:#efa73e;
+  }
+  .countryCode{
+    border:1px solid #333;
+  }
+  .mortageCalcular{
+    height: 280px;
+    border:1px solid #aaa;
+    border-radius: 3px;
+  }
+  .headLineMortage{
+    padding-top:10px;
+    background-color: #f1eded;
+    height: 40px;
+/*    text-align: center;
+*/    color:#666;
+    border-top-right-radius: 3px;
+    border-top-left-radius: 3px; 
+    border-bottom: 1px solid #aaa;
+  }
+  .imputBoxMortage{
+    border-radius: 3px !important;
+    height: 30px;
+  }
+  .interestD{
+    border: 1px solid #aaa;
+    height: 60px;
+    padding-top: 12px;
+    font-size: 11px;
+    border-radius: 3px;
+  }
+  .calculateButton{
+    background-color: #efa73e;
+    border-radius: 3px;
+    text-align: center;
+    color: #fff;
+    padding-top: 5px;
+  }
+  .bottomBorder{
+    border-bottom: 1px solid #999;
+    height: 23px;
+  }
+  .header{
+    background-color:#2a3b93;
+    height:70px;
+  }
+  .mt10{
+    margin-top: 10px !important;
+  }
+  .logoImgContainer img {
+    height: 60px;
+    margin-left: 10px;
+    padding-top: 5px;
+}
+.height2983{
+  height: 2030px;
+}
+
+.footerContent{
+  padding-top: 65px;
+}
+.footerImgContainer img{
+  height: 70px;
+}
+.footerContactDetails{
+  color: #efefef;
+  font-size: 12px;
+}
+.footerContactDetails label{
+  font-size: 14px;
+}
+.footerScocial
+{ 
+   height: 30px;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0 !important;
+    background-color: #fff;
+    padding-top: 4px !important;
+    border: 1px solid #aaa;
+    text-align: center;
+    font-size: 17px;
+    color: #2a3b93;
+    margin-bottom: 20px;
+}
+.bottomDivFooter{
+    background-color: #1c2c66;
+    height: 50px;
+    padding-top: 15px;
+    color: #fff;
+}
+.bottomDivFooter label{
+  font-size: 12px;
+  font-weight: normal !important;
+}
+.rightDiv label{
+  margin-left: 35px;
+}
+.showActive a{
+  color: #d39849 !important;
+}
+.dottedBorder{
+  border-top-style:dotted;
+    border-color: #aaa;
+    border-width: 2px;
+
+}
+.LocationDiv{
+  padding-top: 20px;
+}
+.dottedBorder label{
+  padding-top: 20px;
+  padding-bottom: 5px;
+}
+.mapouter{
+  margin-top: 20px;
+}
+.ht700{
+  height: 700px;
+}
+.labalDiv{
+    font-family: 'Roboto', sans-serif;
+    background-color: #efefef;
+    padding: 0px;
+    padding-top: 20px;
+    font-size: 21px;
+    padding-bottom: 20px;
+    text-align: center;
+    color: #333;
+}
+.bolder{
+    list-style-type: square;
+
+}
+.headingProp label{
+  padding-bottom: 5px;
+  font-size: 17px;
+
+}
+.color33{
+  color: #666;
+}
+.bolder li{
+  font-weight: bold;
+}
+
+.postPropertyModalBody{
+  min-height: 500px;
+}

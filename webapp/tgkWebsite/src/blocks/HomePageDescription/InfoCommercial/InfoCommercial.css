@@ -1,0 +1,28 @@
+.divContainer{
+    margin-bottom: 50px;
+}
+.personServices{
+    font-family: 'Roboto', sans-serif;
+    margin-top: -42px;
+    background-color: #fff;
+    box-shadow: 3px 3px 10px #aaa;
+    height: 225px;
+    padding-top:6px;
+    font-size: 11px;
+    line-height: 20px;
+    text-align: center;
+}
+.personServices i{
+    color: #678afa;
+    font-size: 40px;
+}
+.personServices label{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+}
+
+/*.mt40{
+    margin-top: 80px !important;
+}*/

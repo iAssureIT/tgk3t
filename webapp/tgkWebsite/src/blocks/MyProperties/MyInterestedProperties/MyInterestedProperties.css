@@ -1,0 +1,89 @@
+.propertyBox{
+	border: 1px solid #ddd;
+	height: 170px; 
+	margin-top: 20px;
+	padding: 10px;
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+.propertyImgDiv{
+	height: 150px;
+	border: 1px solid #ddd;
+	width: 100%;
+}
+
+.myPropertiesInternal{
+	height:42px;
+}
+
+.headerDiv{
+	background-color: #044890 !important;
+	height: 100px;
+}
+
+.propertyHaedText{
+	font-weight: bold;
+}
+.propertySubText1{
+	font-weight: bold;
+	font-size: 16px;
+}
+.propertySubText2{
+	font-weight: bold;
+	font-size: 15px;
+}
+.mt20{
+	margin-top: 20px;
+}
+
+.intrestBtn{
+	position: absolute;
+	margin-top: 10px;
+	color:#fff;
+	background-color: #F1A94B;
+	padding: 5px;
+	margin-left:40%;
+	border-radius: 2px;
+}
+.img{
+
+}
+
+.bgGrey{
+	color: #C3C4C3;
+}
+
+.btnDetails{
+	background-color: #044890;
+	color: #ffffff;
+}
+.btnImg{
+	width:40%;
+}
+
+.heartBtn{
+	cursor: pointer;
+	text-align: center;
+}
+
+#triangle-topright {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 100px solid #F1A94B;
+    border-left: 100px solid transparent;
+    left: 92%;
+    top: 0px;
+}
+
+.transactionLabel{
+	position: absolute;
+	color: #fff;
+	margin-top: 0px;
+	font-size: 20px;
+	margin-left: 42%;
+	font-weight: bold;
+	transform: rotate(45deg);
+}
+
