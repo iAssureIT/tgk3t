@@ -53,8 +53,6 @@ import './HomePage.css';
 			    <PopularPlace />
 
 			    <MainFooter />
-
-			    
 			</div>
 		);
 	}

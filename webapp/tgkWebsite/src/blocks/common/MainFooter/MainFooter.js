@@ -3,22 +3,8 @@ import React, { Component }   from 'react';
 import "./MainFooter.css";
 
 
-class MainFooter extends Component{
+export default class MainFooter extends Component{
   
-  constructor(props){
-    super(props);
-   
-    this.state = {
-    
-    }
-  }
-  componentWillReceiveProps(nextProps){
-   
-  }
-  componentDidMount() {
-   
-  }
-
   render() {
      
     return (
@@ -27,7 +13,7 @@ class MainFooter extends Component{
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerDiv" >
               <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 noPad footerContent" >
                <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactUs" >
-                <label>Contact Us</label>              
+                <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center header">Contact Us</label>              
                 </div>
                  <div className="col-lg-6 col-md-10 col-sm-10 col-xs-10 footerContactUs" >
                   <div className="row" >
@@ -52,7 +38,7 @@ class MainFooter extends Component{
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 " >
                     <div className="col-lg-9 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12">
                       <div className="row">
-                       <button className="col-lg-3  col-md-12 col-sm-12 col-xs-12 sendButton pull-right">SEND</button>
+                       <button className="col-lg-3  col-md-12 col-sm-12 col-xs-12 sendButton btn  pull-right">SEND</button>
                       </div>
                     </div>
                   </div>
@@ -78,9 +64,10 @@ class MainFooter extends Component{
                             <i className="fa fa-globe" aria-hidden="true"></i>&nbsp;  Website   : www.tgk.com
 
                           </div>
-                          <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails mt87" >
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
 
+                          <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails noPad" >
+
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
                                 <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13 ">
                                   <div className="row">
                                     <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
@@ -116,18 +103,13 @@ class MainFooter extends Component{
                                     </div>
                                   </div>
                               </div>
-                    </div>
-
+                           </div>
                       </div>
                     </div>
                   </div>                       
                 </div>
-              
-             
-           
                 </div>
               </div>
-
            </div>
           <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 bottomDivFooter" >
             <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 " >
@@ -148,4 +130,3 @@ class MainFooter extends Component{
     );
   }
 }
-export default MainFooter

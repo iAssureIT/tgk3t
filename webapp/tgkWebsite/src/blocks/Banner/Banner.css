@@ -139,6 +139,12 @@
     color: #000;
 }
 
+
+.btn-bg:hover{
+    background-color: #fff !important;
+    color: #000;
+}
+
 .postBtn span {
   position: relative; 
   z-index: 1;

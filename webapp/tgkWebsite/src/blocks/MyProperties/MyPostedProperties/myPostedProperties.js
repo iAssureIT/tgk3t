@@ -78,7 +78,7 @@ import './myPostedProperties.css';
 							<div className="row pull-right" id="triangle-topright">				</div>	
 								
 								<div className="row">
-									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">				
+									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-right ">
 											<h5 className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-right intrestBtn">
 												<i  className="fa fa-heart-o heartBtn" onClick={this.heartClick.bind(this)}></i>&nbsp;<span>{this.state.heartStatus}</span>
@@ -155,10 +155,10 @@ import './myPostedProperties.css';
 										</div>
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
 											<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
-												Super Area : <b>3&nbsp;Sqft</b>
+												Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
 											</div>
 											<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
-												Possession by : <span className="propertySubText2">Jul' 2019</span>
+												Possession by : <span className="propertySubText2">{myProperty.propertyDetails ? myProperty.propertyDetails.availableFrom : "-"}</span>
 											</div>
 											<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
 												<button className="btn pull-right btnDetails">Details&nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>

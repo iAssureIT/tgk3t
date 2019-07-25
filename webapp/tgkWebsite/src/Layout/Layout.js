@@ -2,14 +2,13 @@ import React,{Component}                         from 'react';
 import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 import HomePage                                  from '../pages/HomePage/HomePage.js';
 import PropertyProfile                           from '../pages/PropertyProfile/PropertyProfile.js';
+import MyPostedProperties                        from '../blocks/MyProperties/MyPostedProperties/myPostedProperties.js';
+import MyInterestedProperties                    from '../blocks/MyProperties/MyInterestedProperties/MyInterestedProperties.js';
+import RentDetails                               from '../blocks/PostProperty/ResidentialRent/RentDetails/RentDetails.js';
+import CommercialSell                            from '../blocks/PostProperty/Commercial/CommercialSell/CommercialSell.js';
+import CommercialRent                            from '../blocks/PostProperty/Commercial/CommercialRent/CommercialRent.js';
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
-
-
-import MyPostedProperties from '../blocks/MyProperties/MyPostedProperties/myPostedProperties.js';
-import MyInterestedProperties from '../blocks/MyProperties/MyInterestedProperties/MyInterestedProperties.js';
-
 
  class Layout extends Component{
 
@@ -18,10 +17,13 @@ import MyInterestedProperties from '../blocks/MyProperties/MyInterestedPropertie
         <div>
           <Router>
             <Switch>
-              <Route path="/"                         exact strict component={HomePage}  />
-              <Route path="/PropertyProfile"          exact strict component={PropertyProfile}  />
-              <Route path="/MyPostedProperties"       exact strict component={MyPostedProperties}  />
-              <Route path="/MyInterestedProperties"   exact strict component={MyInterestedProperties}  />
+              <Route path="/"                       exact strict component={HomePage}  />
+              <Route path="/PropertyProfile"        exact strict component={PropertyProfile}  />
+              <Route path="/MyPostedProperties"     exact strict component={MyPostedProperties}  />
+              <Route path="/MyInterestedProperties" exact strict component={MyInterestedProperties}  />
+              <Route path="/RentDetails"            exact strict component={RentDetails}  />
+              <Route path="/CommercialSell"         exact strict component={CommercialSell}  />
+              <Route path="/CommercialRent"         exact strict component={CommercialRent}  />
             </Switch>        
           </Router>
         </div>
