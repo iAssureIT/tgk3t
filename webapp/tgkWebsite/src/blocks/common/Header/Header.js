@@ -11,19 +11,23 @@ import'./Header.css';
 
 class Header extends Component {
 
+
 	removeBackdrop(){
  		$(".modal-backdrop").remove();		
 	}	
 
 	login(){
-		this.props.loginMe();
+		const originPage = "header" ;
+		this.props.loginMobNum(originPage);
 	}
 
 	logout(){
+		localStorage.removeItem("uid");
 		this.props.logoutMe();
 	}
 
 	render() {
+		console.log("this.props.uid",this.props.uid);
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad  ">
 				<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-lg-offset-5">
@@ -31,7 +35,7 @@ class Header extends Component {
 				</div>
 				<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 pull-right headerMenu ">
 					<nav className="navbar">
-					    <ul className="nav navbar-nav pull-right">
+					    <ul className="nav navbar-nav">
 					      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#About">ABOUT US <span className="caret"></span></a>
 					        <ul className="dropdown-menu">
 					          <li><a href="#pag1">Company Profile</a></li>
@@ -45,7 +49,7 @@ class Header extends Component {
 					        </ul>
 					      </li>
 
-					      {this.props.uid ? (
+					      {localStorage.getItem("uid") ? (
 					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
 						          <li><a href="MyPostedProperties">My Listing</a></li>
@@ -57,7 +61,7 @@ class Header extends Component {
 					      	(
 					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">LOGIN <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
-						          <li><a href="#"  data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}>Login</a></li>
+						          <li><a href="#"  data-toggle="modal" data-target="#loginModal" onClick={this.login.bind(this)}>Login</a></li>
 						          <li><a href="#">Signup</a></li>
 						        </ul>
 					      	</li>
@@ -71,7 +75,7 @@ class Header extends Component {
 
 				{/*=== Modal starts here ===*/}
 				<div>
-					<div id="postPropertyModal" className="modal fade" role="dialog">
+					<div id="loginModal" className="modal fade" role="dialog">
 					  	<div className="modal-dialog modal-lg">
 						    <div className="modal-content">
 						      <div className="modal-header">
@@ -109,7 +113,7 @@ const mapStateToProps = (state)=>{
 };
 const mapDispatchToProps = (dispatch)=>{
   return {
-  	loginMe  : ()=>dispatch({type: "LOGIN_ME"}),
+  	loginMobNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
   	logoutMe : ()=>dispatch({type: "LOGOUT_ME"}),
   }
 };

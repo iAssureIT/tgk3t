@@ -1,6 +1,8 @@
 import React, { Component }     from 'react';
 import swal                     from 'sweetalert';
-import {withRouter}    from 'react-router-dom';
+import $ 						from "jquery";
+
+import {withRouter}    			from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 
@@ -13,16 +15,31 @@ class LoginOtp extends Component {
 			};			
 		}
 
+	removeBackdrop(){
+ 		$(".modal-backdrop").remove();		
+	}
+	
+
 	handleNumber(event){
 		event.preventDefault();
+		console.log("this.props.tempuid = ",this.props.tempuid);
+		console.log("this.props.originPage = ",this.props.originPage);
 
 		var userOTP = this.refs.otp.value;
 		if(userOTP!==""){
 			if(parseInt(userOTP) === parseInt(this.props.OTP)){
+				localStorage.setItem("uid",this.props.tempuid);
 				if(this.props.message === "NEW-USER-CREATED"){
-					this.props.redirectToBasicInfo(this.props.uid);
+					this.props.redirectToSignUp(this.props.tempuid);
 				}else{
-					this.props.history.push("/MyPostedProperties/"+this.props.uid);
+					if(this.props.originPage === "header"){
+						this.props.loginMe(this.props.tempuid);
+						this.props.history.push("/");
+						window.location.reload();
+					}
+					else{
+						this.props.redirectToBasicInfo(this.props.tempuid);
+					}
 				}
 			}else{
 				swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
@@ -35,7 +52,7 @@ class LoginOtp extends Component {
 	}
 
 	render() {
-		
+		console.log("originPage",this.props.originPage)
 		return (
 			<div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -81,15 +98,16 @@ const mapStateToProps = (state)=>{
 	return {
 		OTP 		: state.OTP,
 		message 	: state.mobFoundMsg,
-		uid  	 	: state.uid,
+		tempuid  	: state.tempuid,
+		originPage  : state.originPage,
 	}
 };
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToBasicInfo  : (uid)=> dispatch({type: "REDIRECT_TO_BASIC_INFO",
-												 uid : uid,
-		}),
+		redirectToSignUp  	 : (tempuid)=> dispatch({type: "REDIRECT_TO_SIGN_UP", uid : tempuid}),
+		redirectToBasicInfo  : (tempuid)=> dispatch({type: "REDIRECT_TO_BASIC_INFO", uid : tempuid}),
+  		loginMe  			 : (tempuid)=>dispatch({type: "LOGIN_ME", uid :tempuid}),
 	}
 };
 

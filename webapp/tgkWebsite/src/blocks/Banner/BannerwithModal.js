@@ -32,10 +32,19 @@ class BannerwithModal extends Component {
 	constructor(){
 		super();
 		this.state = {
-			inputData:[],
-			propertyType:"",
-			transactionType:"",
-			
+			inputData		: [],
+			propertyType 	: "",
+			transactionType : "",			
+		}
+	}
+
+	login(){
+		const originPage = "post" ;
+		const uid = localStorage.getItem("uid");
+		if(uid){
+			this.props.already_loggedIn(originPage,uid);
+		}else{
+			this.props.login_mobileNum(originPage);
 		}
 	}
 
@@ -49,7 +58,7 @@ class BannerwithModal extends Component {
 			limitRange:6,
 		}
 		this.setState({
-			propertyType : "Residential",
+			propertyType 	: "Residential",
 			transactionType : "Sell",
 		},()=>{
 			 axios
@@ -157,7 +166,7 @@ class BannerwithModal extends Component {
 					<div className="col-lg-6 br2">
 						<span className="col-lg-12 postDetails">Welcome Owners</span>
 						<br/>
-						<button className="postBtn" data-toggle="modal" data-target="#postPropertyModal"><span> Post & Earn</span></button>
+						<button className="postBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><span> Post & Earn</span></button>
 						<br/>
 						<span className="col-lg-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
 						</span>
@@ -221,6 +230,7 @@ class BannerwithModal extends Component {
 }
 
 const mapStateToProps = (state)=>{
+	console.log("state",state)
 	return {
 		LoginMobNum 	: state.LoginMobNum,
 		LoginOtp 		: state.LoginOtp,
@@ -244,6 +254,9 @@ const mapDispatchToProps = (dispatch)=>{
 													type    	: "SET_FORM_TITLE",
 													formTitle	: formTitle,
 												}),
+  		login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
+  		already_loggedIn : (originPage,uid)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid}),
+
 	}
 };
 

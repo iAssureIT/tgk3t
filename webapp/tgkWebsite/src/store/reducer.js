@@ -11,6 +11,7 @@ const initialState = {
 	CongratsPage	: false,
 	ImageUpload 	: false,
 	uid 			: "",
+	tempuid 		: "",
 	mobile 			: "",
 	OTP 			: "",
 	mobFoundMsg 	: "",
@@ -18,35 +19,32 @@ const initialState = {
 	property_id     : "",
 	formTitle 		: "",
 	token 			: "",
+	originPage      : "",
 }
 
 const reducer = (state = initialState,action) => {
 	const newState = {...state};
 
-	if(action.type === "MOBILE_FOUND"){
+	if(action.type === "MOBILE_ENTERED"){
 		newState.LoginMobNum 	= false;
 		newState.LoginOtp 		= true;
 		newState.WebSignupForm 	= false;
-		newState.uid 			= action.uid;
+		newState.tempuid 		= action.uid;
 		newState.mobile 		= action.mobile;
 		newState.OTP 			= action.OTP;
 		newState.mobFoundMsg 	= action.mobFoundMsg;
 	}
 
-	if(action.type === "MOBILE_NOT_FOUND"){
+	if(action.type === "REDIRECT_TO_SIGN_UP"){
 		newState.LoginMobNum 	= false;
 		newState.LoginOtp 		= false;
 		newState.WebSignupForm 	= true;
-		newState.mobile 		= action.mobile;
+		newState.tempuid 		= "";
+		newState.uid 			= action.uid;
 	}
-
-	// if(action.type === "USER_CREATED"){
-	// 	newState.LoginOtp 	= false;
-	// 	newState.BasicInfo	= true;
-	// }
+	
 
 	if(action.type === "SIGN_UP"){
-
 		newState.WebSignupForm 	= false;
 		newState.LoginOtp 		= true;
 		newState.uid 			= action.uid;
@@ -191,8 +189,26 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.uid = "";
 	}
 
-	if(action.type === "LOGIN_ME"){
+	if(action.type === "LOGIN_MOB_NUM"){
+		newState.originPage  = action.originPage;
 		newState.LoginMobNum = true;
+		newState.LoginOtp    = false;
+	}
+
+	if(action.type === "ALREADY_LOGGEDIN"){
+		newState.originPage  	= action.originPage;
+		newState.uid  			= action.uid;
+		newState.LoginMobNum 	= false;
+		newState.LoginOtp    	= false;
+		newState.WebSignupForm  = false;
+		newState.BasicInfo 		= true;
+	}
+
+	if(action.type === "LOGIN_ME"){
+		newState.LoginMobNum 	= false;
+		newState.LoginOtp    	= false;
+		newState.WebSignupForm  = false;
+		newState.uid         	= action.uid;
 	}
 
 	return newState;

@@ -44,15 +44,12 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				"countryCode": this.refs.countryCode.value,
 				"status"     : 'Active',
 				"role"       : 'Client',
-
-
-				
 			};
 			console.log("WebSignupForm==",formValues);
 		if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){
 			if(formValid(this.state.formerrors)){
 			axios
-				.post('/api/usersotp',formValues )
+				.patch('/api/usersotp/signup',formValues )
 				.then( (res) =>{
 					if(res.data.message === "NEW-USER-CREATED"){
 						console.log("BasicInfo res = ",res);

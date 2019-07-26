@@ -23,7 +23,7 @@ class LoginMobNum extends Component {
 			this.state = {
 				mobile : "",
 				formerrors :{				
-					clientMobile : " ",
+					clientMobile : "",
 				},
 			};
     		this.handleChange = this.handleChange.bind(this);
@@ -33,8 +33,8 @@ class LoginMobNum extends Component {
 			
 			event.preventDefault();
 			var formValues = {
-				mobile : this.state.mobile,
-				countryCode:this.refs.countryCode.value
+				mobileNumber : this.state.mobile,
+				countryCode  : this.refs.countryCode.value
 			};
 			console.log("LoginMobNum==",formValues);
 
@@ -45,21 +45,12 @@ class LoginMobNum extends Component {
 					.post('/api/usersotp/verify_mobile',formValues)
 					.then((response)=>{
 						console.log("response = ",response.data);
-						console.log("message = ",response.data.message);
-						console.log("mobile = ",formValues.mobile);
-						
-						if(response.data.message == "MOBILE-NUMBER-EXISTS"){
-							console.log("response.data.message = ",response.data.message);
-
-							this.props.mobileFound( response.data.user_id,
-													response.data.mobile,
-													response.data.otp,
-													response.data.message
-												  );
-						}
-						else{
-							this.props.mobileNotFound(formValues.mobile);
-						}
+						this.props.mobileEntered( 
+												response.data.user_id,
+												this.state.mobile,
+												response.data.otp,
+												response.data.message
+											);
 					})
 					.catch(function(error){
 						console.log(error);
@@ -69,25 +60,25 @@ class LoginMobNum extends Component {
 					swal("Please enter Mobile Number", "", "warning");
 	              console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 				}
-
 			
 	}
 
 		handleChange(event){
 			event.preventDefault();
+
+			// const mobile = this.refs.mobile.value;
+
 			const datatype = event.target.getAttribute('data-text');
 		    const {name,value} = event.target;
 		    let formerrors = this.state.formerrors;
 			console.log("datatype",datatype);
 			switch (datatype){
+				case 'clientMobile' : 
+			       formerrors.clientMobile = clientmobileRegex.test(value)? '' : "Please Enter Numbers only";
+			       break;
 
-
-			case 'clientMobile' : 
-		       formerrors.clientMobile = clientmobileRegex.test(value)? '' : "Please Enter Numbers only";
-		       break;
-
-			default :
-			break;
+				default :
+				break;
 
 			}
 			this.setState({ formerrors,
@@ -154,14 +145,13 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		mobileFound 	: (uid, mobile, OTP, mobFoundMsg)=> dispatch({
-									type: "MOBILE_FOUND",
+		mobileEntered 	: (uid, mobile, OTP, mobFoundMsg)=> dispatch({
+									type: "MOBILE_ENTERED",
 									uid: uid, 
 									mobile: mobile, 
 									OTP: OTP, 
 									mobFoundMsg: mobFoundMsg
 								}),
-		mobileNotFound 	: (mobileNumber)=> dispatch({type: "MOBILE_NOT_FOUND",mobile: mobileNumber}),
 	}
 };
 
