@@ -188,9 +188,9 @@ import './BasicInfo.css';
 					    </div>
 					</div>
 					  	<div className="col-lg-12 mb-40">
-					  			<span className=""> Owner</span>
-					  			<span className="ml-78"> Care Taker</span>
-					  			<span className="ml-76"> Broker</span>
+					  			<span className="col-lg-4 ownerLeft "> Owner</span>
+					  			<span className="col-lg-4 noPad"> Care Taker</span>
+					  			<span className="col-lg-4 brokerLeft"> Broker</span>
 					  	</div>
          		
 					  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

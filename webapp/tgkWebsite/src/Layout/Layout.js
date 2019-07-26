@@ -2,7 +2,7 @@ import React,{Component}                         from 'react';
 import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 import HomePage                                  from '../pages/HomePage/HomePage.js';
 import PropertyProfile                           from '../pages/PropertyProfile/PropertyProfile.js';
-import MyPostedProperties                        from '../blocks/MyProperties/MyPostedProperties/myPostedProperties.js';
+import MyPostedProperties                        from '../blocks/MyProperties/MyPostedProperties/MyPostedProperties.js';
 import MyInterestedProperties                    from '../blocks/MyProperties/MyInterestedProperties/MyInterestedProperties.js';
 import RentDetails                               from '../blocks/PostProperty/ResidentialRent/RentDetails/RentDetails.js';
 import CommercialSell                            from '../blocks/PostProperty/Commercial/CommercialSell/CommercialSell.js';

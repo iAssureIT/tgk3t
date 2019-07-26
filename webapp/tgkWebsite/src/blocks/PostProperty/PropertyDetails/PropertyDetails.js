@@ -90,13 +90,12 @@ import './PropertyDetails.css';
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
 					  	<select className="custom-select form-control "  ref="bedrooms" placeholder="select" >
-					    	<option className="hidden">select</option>
-					    	<option>1</option>
-					    	<option>2</option>
-					    	<option>3</option>
-					    	<option>4</option>
-					    	<option>4</option>
-					    	<option>5</option>
+					    	<option value="" className="hidden">select</option>
+					    	<option value="1">1</option>
+					    	<option value="2">2</option>
+					    	<option value="3">3</option>
+					    	<option value="4">4</option>
+					    	<option value="5">5</option>
 						</select>
 					</div>
 				  </div>
@@ -110,11 +109,11 @@ import './PropertyDetails.css';
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
 					    <select className="custom-select form-control " ref="balconies" placeholder="select" >
-					    	<option className="hidden">select</option>
-					    	<option>1</option>
-					    	<option>2</option>
-					    	<option>3</option>
-					    	<option>4</option>
+					    	<option value="" className="hidden">select</option>
+					    	<option value="1">1</option>
+					    	<option value="2">2</option>
+					    	<option value="3">3</option>
+					    	<option value="4">4</option>
 						</select>
 					</div>
 				  </div>
@@ -127,11 +126,11 @@ import './PropertyDetails.css';
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
 					    <select className="custom-select form-control " ref="bathroom" placeholder="select" >
-					    	<option className="hidden">select</option>
-					    	<option>1</option>
-					    	<option>2</option>
-					    	<option>3</option>
-					    	<option>4</option>
+					    	<option value="" className="hidden">select</option>
+					    	<option value="1">1</option>
+					    	<option value="2">2</option>
+					    	<option value="3">3</option>
+					    	<option value="4">4</option>
 						</select>
 					</div>
 				  </div>
@@ -191,11 +190,11 @@ import './PropertyDetails.css';
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 							<select className="custom-select form-control "  ref="ageofproperty" placeholder="select" >
-						    	<option className="hidden">--select year old--</option>
-						    	<option>1</option>
-						    	<option>2</option>
-						    	<option>3</option>
-						    	<option>4</option>
+						    	<option value="" className="hidden">--select year old--</option>
+						    	<option value="1">1</option>
+						    	<option value="2">2</option>
+						    	<option value="3">3</option>
+						    	<option value="4">4</option>
 							</select>
 						</div>				  
 					</div>
@@ -208,11 +207,11 @@ import './PropertyDetails.css';
 		                     <i className="fa fa-building iconClr"></i>
 		                    </div>
 							<select className="custom-select form-control "  ref="facing" placeholder="select" >
-						    	<option className="hidden">--select property facing--</option>
-						    	<option>East</option>
-						    	<option>West</option>
-						    	<option>North</option>
-						    	<option>South</option>
+						    	<option value="" className="hidden">--select property facing--</option>
+						    	<option value="East" >East</option>
+						    	<option value="West" >West</option>
+						    	<option value="North">North</option>
+						    	<option value="South">South</option>
 							</select>
 						</div>				  
 					</div>

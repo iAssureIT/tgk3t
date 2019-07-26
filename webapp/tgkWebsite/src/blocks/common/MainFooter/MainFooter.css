@@ -1,12 +1,12 @@
 .footerDiv{
     height: 540px;
-    background-color: #2a3b93;
+    background-color: #2A3B93;
     border-top: 20px solid #3969fa;
     color: #fff;
 }
 
 .header{
-	font-size: 25px;
+	font-size: 20px;
 }
 
 
@@ -29,10 +29,10 @@
 }
 
 .sendButton{
-	background-color: #008AFA;
+	background-color: #3969FA;
 	color: #fff !important;
 }
 
 .boarderR{
-	color: #666 !important;
+    border-radius: 5px;
 }

@@ -72,7 +72,7 @@
 
 .logo1{
     color: #ccc;
-    margin-left: -25px;
+    margin-left: -20px;
     position: absolute;
     z-index: 1;
     margin-top: 4px;
@@ -166,6 +166,13 @@
   background-color: #f7b313;
 }
 
+.brokerLeft{
+  padding-left: 6%;
+}
+
+.ownerLeft{
+  padding-left:1%; 
+}
  
 /*******************************************************************************************************
 /*************************************************************************************

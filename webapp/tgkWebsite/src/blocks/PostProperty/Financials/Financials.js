@@ -32,8 +32,8 @@ import './Financials.css';
 				"maintenancePer"	: this.state.maintenancePer,
 				"property_id" 		: this.props.property_id,
 				"uid" 				: this.props.uid,
-
 			};
+			
 			console.log("Financials req = ",formValues);
 			if( this.refs.totalprice.value!="" ){
 				axios

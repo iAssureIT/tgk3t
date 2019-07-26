@@ -56,7 +56,7 @@
 
 .btnDetails{
 	background-color: #044890;
-	color: #ffffff;
+	color: #ffffff !important;
 }
 .btnImg{
 	width:40%;
@@ -87,3 +87,6 @@
 	transform: rotate(45deg);
 }
 
+.newPost{
+	margin-top: 20px;
+}
