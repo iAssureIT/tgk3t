@@ -1,7 +1,28 @@
 import React, { Component } from 'react';
+import $ 					from "jquery";
+import {connect} 			from 'react-redux';
+
+import LoginMobNum              from '../../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+import LoginOtp                 from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
+import WebSignupForm            from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
+
 import'./Header.css';
 
-export default class Header extends Component {
+
+class Header extends Component {
+
+	removeBackdrop(){
+ 		$(".modal-backdrop").remove();		
+	}	
+
+	login(){
+		this.props.loginMe();
+	}
+
+	logout(){
+		this.props.logoutMe();
+	}
+
 	render() {
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad  ">
@@ -9,35 +30,89 @@ export default class Header extends Component {
 					<a href="/"><img alt=""  src="images/Logo.png" className="hImg pull-right"/></a>
 				</div>
 				<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 pull-right headerMenu ">
-					<nav className="navbar  ">
-					    <ul className="nav navbar-nav ">
-					      <li className="active"><a href="/">HOME</a></li>
+					<nav className="navbar">
+					    <ul className="nav navbar-nav pull-right">
 					      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#About">ABOUT US <span className="caret"></span></a>
 					        <ul className="dropdown-menu">
-					          <li><a href="#pag1">Page 1-1</a></li>
-					          <li><a href="#pag2">Page 1-2</a></li>
-					          <li><a href="#pag3">Page 1-3</a></li>
+					          <li><a href="#pag1">Company Profile</a></li>
+					          <li><a href="#pag2">Our Team</a></li>
 					        </ul>
 					      </li>
 					      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Contact">CONTACT US <span className="caret"></span></a>
 					        <ul className="dropdown-menu">
-					          <li><a href="#pag1">Page 1-1</a></li>
-					          <li><a href="#pag2">Page 1-2</a></li>
-					          <li><a href="#pag3">Page 1-3</a></li>
+					          <li><a href="#pag1">Contact</a></li>
+					          <li><a href="#pag2">Our Locations</a></li>
 					        </ul>
 					      </li>
-					      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
-					        <ul className="dropdown-menu">
-					          <li><a href="#pag1">Page 1-1</a></li>
-					          <li><a href="#pag2">Page 1-2</a></li>
-					          <li><a href="#pag3">Page 1-3</a></li>
-					        </ul>
-					      </li>
+
+					      {this.props.uid ? (
+					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
+						        <ul className="dropdown-menu">
+						          <li><a href="MyPostedProperties">My Listing</a></li>
+						          <li><a href="MyInterestedProperties">My Interests</a></li>
+						          <li><a onClick={this.logout.bind(this)} href="/">Logout</a></li>
+						        </ul>
+					      	</li>
+							) : 
+					      	(
+					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">LOGIN <span className="caret"></span></a>
+						        <ul className="dropdown-menu">
+						          <li><a href="#"  data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}>Login</a></li>
+						          <li><a href="#">Signup</a></li>
+						        </ul>
+					      	</li>
+
+					      	)
+					  }
 					      
 					    </ul>
 					</nav>
+				</div>
+
+				{/*=== Modal starts here ===*/}
+				<div>
+					<div id="postPropertyModal" className="modal fade" role="dialog">
+					  	<div className="modal-dialog modal-lg">
+						    <div className="modal-content">
+						      <div className="modal-header">
+						        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
+						        <h4 className="modal-title">
+						        	{/*<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>*/}
+						        	<b> Enter Your Mobile Number to Login </b>
+						        </h4>
+						      </div>
+						      <div className="modal-body col-lg-12">
+								{ this.props.LoginMobNum 	? <LoginMobNum /> 	  : null }
+								{ this.props.LoginOtp 		? <LoginOtp /> 		  : null }
+								{ this.props.WebSignupForm 	? <WebSignupForm />   : null }
+						      </div>
+
+						      <div className="modal-footer">
+						        {/*<button type="button" class="btn btn-primary" data-dismiss="modal">Next</button>*/}
+						      </div>
+						    </div>
+					  	</div>
+					</div>
 				</div>
 			</div>
 		);
 	}
 }
+
+const mapStateToProps = (state)=>{
+  return {
+	LoginMobNum 	: state.LoginMobNum,
+	LoginOtp 		: state.LoginOtp,
+	WebSignupForm 	: state.WebSignupForm,
+    uid 			: state.uid,
+  }
+};
+const mapDispatchToProps = (dispatch)=>{
+  return {
+  	loginMe  : ()=>dispatch({type: "LOGIN_ME"}),
+  	logoutMe : ()=>dispatch({type: "LOGOUT_ME"}),
+  }
+};
+
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header);

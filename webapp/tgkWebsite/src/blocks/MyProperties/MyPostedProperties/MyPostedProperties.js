@@ -22,18 +22,20 @@ import './MyPostedProperties.css';
  class MyPostedProperties extends Component {
 	constructor(props){
 		super(props);
-     	var profileId = this.props.match.params.id;
+     	// var profileId = this.props.match.params.id;
     	this.props.showFirstForm();  //for dispatch
 		this.state = {
-			"profileId"    : "5d3a93d65b0d95342ec7a803",
-			"myProperties" :[],
-			"userData"     :[],
-			"heartStatus"  :"Express Interest"
+			"uid"		   : '',
+			"myProperties" : [],
+			"userData"     : [],
+			"heartStatus"  : "Express Interest"
 		}
+
 	}
 	componentDidMount(){
+		$(".modal-backdrop").remove();
 	     axios
-	    .get('http://qatgk3tapi.iassureit.com/api/properties/mypropertylist/'+this.state.profileId)
+	    .get('http://qatgk3tapi.iassureit.com/api/properties/mypropertylist/'+this.props.uid)
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -248,6 +250,8 @@ import './MyPostedProperties.css';
 		)
 	}
 }
+
+
 const mapStateToProps = (state)=>{
   return {
     BasicInfo        : state.BasicInfo,
@@ -258,8 +262,9 @@ const mapStateToProps = (state)=>{
     Location         : state.Location,
     ImageUpload      : state.ImageUpload,
     CongratsPage     : state.CongratsPage,
-    formTitle        : state.formTitle
-
+    formTitle        : state.formTitle,
+    uid 			 : state.uid,
+    property_id		 : state.property_id,
   }
 };
 const mapDispatchToProps = (dispatch)=>{

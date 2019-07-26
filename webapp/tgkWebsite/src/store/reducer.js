@@ -1,5 +1,5 @@
 const initialState = {
-	LoginMobNum 	: true,
+	LoginMobNum 	: false,
 	LoginOtp 		: false,
 	WebSignupForm 	: false,
 	BasicInfo		: false,
@@ -17,6 +17,7 @@ const initialState = {
 	propertyCode    : "",
 	property_id     : "",
 	formTitle 		: "",
+	token 			: "",
 }
 
 const reducer = (state = initialState,action) => {
@@ -125,7 +126,6 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.Location           = false;
 		newState.CongratsPage       = false;
 		newState.ImageUpload        = false;
-		/*newState.uid 		        = "5d3088c36e513977e889d2d1";*/
 		newState.uid 		        = action.uid;
 	}
 	if(action.type === "BACK_TO_BASIC_INFO"){
@@ -185,6 +185,14 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 
 	if(action.type === "SET_FORM_TITLE"){
 		newState.formTitle 			= action.formTitle;
+	}
+
+	if(action.type === "LOGOUT_ME"){
+		newState.uid = "";
+	}
+
+	if(action.type === "LOGIN_ME"){
+		newState.LoginMobNum = true;
 	}
 
 	return newState;

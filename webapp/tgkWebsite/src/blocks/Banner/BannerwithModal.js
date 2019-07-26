@@ -157,7 +157,7 @@ class BannerwithModal extends Component {
 					<div className="col-lg-6 br2">
 						<span className="col-lg-12 postDetails">Welcome Owners</span>
 						<br/>
-						<button className=" postBtn " data-toggle="modal" data-target="#postPropertyModal"><span> Post & Earn</span></button>
+						<button className="postBtn" data-toggle="modal" data-target="#postPropertyModal"><span> Post & Earn</span></button>
 						<br/>
 						<span className="col-lg-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
 						</span>
@@ -212,6 +212,8 @@ class BannerwithModal extends Component {
 					  </div>
 					</div>
 				</div>
+
+				
 			
 			</div>
 		);
