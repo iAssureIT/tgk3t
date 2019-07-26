@@ -71,34 +71,34 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "REDIRECT_TO_PROPERTY"){
 		newState.Location 			=false;
 		newState.PropertyDetails 	= true;
-		newState.propertyID 	    = action.propertyID;
+		newState.property_id 	    = action.property_id;
 		newState.uid 				= action.uid;
 	}
 	if(action.type === "REDIRECT_TO_AMENITIES"){
 		newState.PropertyDetails = false;
 		newState.Amenities   	 = true;
-		newState.propertyID 	 = action.propertyID;
+		newState.property_id 	 = action.property_id;
 		newState.uid 			 = action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_FINANCIAL"){
 		newState.Amenities 	    = false;
 		newState.Financials   	= true;
-		newState.propertyID     = action.propertyID;
+		newState.property_id    = action.property_id;
 		newState.uid 			= action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_AVAILABILITY"){
 		newState.Financials 	    = false;
 		newState.Availability   	= true;
-		newState.propertyID         = action.propertyID;
+		newState.property_id        = action.property_id;
 		newState.uid 				= action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_IMG_UPLOAD"){
 		newState.Availability      = false;
 		newState.ImageUpload 	   = true;
-		newState.propertyID        = action.propertyID;
+		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
 
 	}
@@ -111,7 +111,7 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.Location      	   = false;
 		newState.CongratsPage 	   = true;
 		newState.ImageUpload 	   = false;
-		newState.propertyID        = action.propertyID;
+		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
 
 	}

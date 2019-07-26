@@ -1,5 +1,5 @@
 import React, { Component }   from 'react';
-import { Route , withRouter}  from 'react-router-dom';
+import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 import './CongratsPage.css';
@@ -23,7 +23,7 @@ import './CongratsPage.css';
 				</div>
 				<p className="col-lg-12 CP6">Your Property <b>Successfully</b> submitted & will be published soon!!!</p>
 				<div>
-					<button className="btn btn-primary CP7 pull-right" onClick={this.redirectToProfile.bind(this)}>Profile Preview</button>
+					<Redirect to={"/PropertyProfile/"+this.props.property_id} > <button className="btn btn-primary CP7 pull-right">Profile Preview</button> </Redirect>
 				</div>
 			</div>
 		);

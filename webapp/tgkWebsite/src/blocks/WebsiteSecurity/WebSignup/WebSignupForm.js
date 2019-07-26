@@ -49,7 +49,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				
 			};
 			console.log("WebSignupForm==",formValues);
-		if(this.state.name!="" && this.state.email!="" && this.state.city!=""  ){
+		if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){
 			if(formValid(this.state.formerrors)){
 			axios
 				.post('/api/usersotp',formValues )

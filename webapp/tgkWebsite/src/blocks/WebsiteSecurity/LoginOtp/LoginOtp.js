@@ -17,12 +17,12 @@ class LoginOtp extends Component {
 		event.preventDefault();
 
 		var userOTP = this.refs.otp.value;
-		if(userOTP!=""){
-			if(userOTP == this.props.OTP){
-				if(this.props.message == "NEW-USER-CREATED"){
+		if(userOTP!==""){
+			if(parseInt(userOTP) === parseInt(this.props.OTP)){
+				if(this.props.message === "NEW-USER-CREATED"){
 					this.props.redirectToBasicInfo(this.props.uid);
 				}else{
-					this.props.history.push("/MyPostedProperties");
+					this.props.history.push("/MyPostedProperties/"+this.props.uid);
 				}
 			}else{
 				swal("","Sorry, Your OTP is not Matching! Please try again!!","error");

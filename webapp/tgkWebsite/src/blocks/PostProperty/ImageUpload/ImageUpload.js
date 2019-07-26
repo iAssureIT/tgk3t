@@ -18,178 +18,150 @@ var imgTitleArray = [];
 			"config"			: '',
 			"imageArray"  		: [],
 			"imageTitleArray" 	: [],
-			"S3url" 	        : ''
+			"S3url" 	        : []
 		}
 
-		axios
-       .get('http://abacusapi.iassureit.com/projectsettings')
-       .then((response)=>{
-			const config = {
-			       bucketName : response.data.bucket,
-			       dirName  	: 'photos',
-			       region : response.data.region,
-			       accessKeyId : response.data.key,
-			       secretAccessKey : response.data.secret,
-			   }
-			   
-			this.setState({
-			config : config
-			})
-			       })
-       .catch(function(error){
-         	console.log(error);
-       })
 
 	}
-	uploadStudentImage(event){
-   event.preventDefault();
-   
- }
-		uploadImage(){
+	
+	uploadImage(event){
+		var imageTitleArray = this.state.imageTitleArray;
+
+		main();
+
+		
+		async function main(){
+			var config = await getConfig();
+			console.log("config = ",config);
 			
-			var imageTitleArray = this.state.imageTitleArray;
-
-			for (var i = 0; imageTitleArray.length >i; i++) {
-				var imageTitleArray1 = imageTitleArray[i].fileInfo;
-
-				S3FileUpload
-				   .uploadFile(imageTitleArray1,this.state.config)
-				   .then((Data)=>{
-				   	console.log("Data = ",Data);
-						this.setState({
-						S3url : Data.location
-						})
-				   })
-				   .catch((error)=>{
-				   	console.log(error);
-				   })
+			var s3urlArray = [];
+			for (var i = 0; i<imageTitleArray.length; i++) {
+				var s3url = await s3upload(imageTitleArray[i].fileInfo, config, this);
+				s3urlArray.push(s3url);
 			}
-			var S3array = [];
-			var s3url =S3array.push(this.state.S3url)
+
+			console.log("s3urlArray = ",s3urlArray);
+
 			const formValues = {
 				"property_id" 		: this.props.property_id,
 				"uid" 		  		: this.props.uid,
-				"imageTitleArray"  	: this.state.imageTitleArray,
-
+				"propertyImages"	: s3urlArray,
 			};
 
-			console.log("imageUpload req = ",s3url);
-			
-			
-			// S3FileUpload
-			//    .uploadFile(file,this.state.config)
-			//    .then((Data)=>{
-			//    	console.log("Data = ",Data);
-			// 		this.setState({
-			// 		userProfile : Data.location
-			// 		})
-			//    })
-			//    .catch((error)=>{
-			//    	console.log(error);
-			//    })
-
+			console.log("formValues = ",formValues);
+						
 			axios
-				.patch('/api/properties/patch/photos',formValues)
+				.patch('/api/properties/patch/images',formValues)
 				.then( (res) =>{
 					console.log(res);
 					if(res.status === 200){
-						// this.props.redirectToImageUpload();
-					}
+						swal("Great!","Images are Uploaded!", "success");
+						this.props.redirectToCongratsPage(this.props.uid,this.props.property_id);				}
 				})
 				.catch((error) =>{
-						this.props.redirectToCongratsPage(this.props.uid);
+
 					// console.log("error = ", error);
 				});
-		}
-		backToAvailability(){
-			this.props.backToAvailability();
+
 		}
 
-		handleChange(event){
-			   if (event.currentTarget.files && event.currentTarget.files[0]) {
-			   var file = event.currentTarget.files[0];
-			     	if (file) {
-			     	  var fileName  = file.name; 
-			     	console.log("fileName--------------->",fileName);
-			     	    var ext       = fileName.split('.').pop();  
-			                 	if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){    
-			                       if (file) {
-			                       	
-			                       	var objTitle=
-								    		{				   	
-										   	fileInfo :file
-										   }
-								   imgTitleArray.push(objTitle);
-								   this.setState({
-								   		imageTitleArray : imgTitleArray
-								   })
-								   var reader = new FileReader();
-								    reader.onloadend = () => {
-								    	var obj={
-										   	imgPath : reader.result,
-										   }
-										   imgArray.push(obj);
-										   this.setState({
-										   		imageArray : imgArray
-										   })
-								    }
+		function s3upload(image,configuration){
 
-						    reader.readAsDataURL(file)
-
-			    					}else{          
-							            swal("File not uploaded","Something went wrong","error");  
-					               }     
-			                  }else{ 
-			                      swal("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
-			                   }
-			   		}
-
-				}
-					// var file = event.target.files[0];
-					//   var reader = new FileReader();
-					//   var url = reader.readAsDataURL(file);
-					//   console.log("reader",reader.result)
-
-
-			// var file = event.target.files[0];
-			// var fileName = event.target.files[0].name;
-			// console.log("file Name",fileName)
-			// console.log("file --->",file)
-		 //   var pathName = URL.createObjectURL(file);
-		 //   var imgPathName = pathName.split('blob:');
-		   // console.log("img===",imgPathName)
-
-
-		    // var file = event.target.files[0];
-
-		    
-
-		   
-		   // var obj={
-		   // 	imgPath : reader.result
-		   // }
-		   // imgArray.push(obj);
-		   // this.setState({
-		   // 		imageArray : imgArray
-		   // })
+			return new Promise(function(resolve,reject){
+				S3FileUpload
+				   .uploadFile(image,configuration)
+				   .then((Data)=>{
+				   		console.log("Data = ",Data);
+				   		resolve(Data.location);
+				   })
+				   .catch((error)=>{
+				   		console.log(error);
+				   })
+			})
+		}
 
 
 
-			// this.setState({
-			// "nameOfFile" : fileName,
-			// })
-			}
+		function getConfig(){
+			return new Promise(function(resolve,reject){
+				axios
+			       .get('/api/projectSettings/get/one/S3')
+			       .then((response)=>{
+			       		console.log("proj set res = ",response.data);
+						const config = {
+							bucketName 		: response.data.bucket,
+							dirName  		: 'propertiesImages',
+							region 			: response.data.region,
+							accessKeyId 	: response.data.key,
+							secretAccessKey : response.data.secret,
+						}
+						resolve(config);						   
+					})
+			       .catch(function(error){
+			         	console.log(error);
+			       })
 
-			deleteimage(e){
-				// var arry = this.state.imageTitleArray
-				var array = [...this.state.imageTitleArray]; // make a separate copy of the array
-			  var index = array.indexOf(e.target.value)
-			  if (index !== -1) {
-			    array.splice(index, 1);
-			    this.setState({imageTitleArray: array});
-			  }
+			})
+		}
 
-			}
+	}
+
+
+	backToAvailability(){
+		this.props.backToAvailability();
+	}
+
+	handleImgChange(event){
+	   	if (event.currentTarget.files && event.currentTarget.files[0]) {
+	   		for(var i=0; i<event.currentTarget.files.length; i++){
+			   	var file = event.currentTarget.files[i];
+		     	if (file) {
+		     	  	var fileName  = file.name; 
+		     	    var ext = fileName.split('.').pop();  
+		            if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
+		                if (file) {
+	                       	var objTitle = { fileInfo :file }
+							imgTitleArray.push(objTitle);
+							// var reader = new FileReader();
+							// reader.onloadend = () => {
+						 	//    	var obj={
+							// 	   	imgPath : reader.result,
+							// 	}
+							// 	imgArray.push(obj);
+							//    	this.setState(prevState => ({
+							//    		imageArray : [...this.prevState.imageArray, imgArray]
+							//    	}))
+							// }
+					  //   	reader.readAsDataURL(file)
+		    			}else{          
+						    swal("File not uploaded","Something went wrong","error");  
+				        }//file
+		            }else{ 
+		                swal("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+		            }//file types
+		   		}//file
+
+	   		}//for 
+
+	   		if(i >= event.currentTarget.files.length){
+				this.setState({
+				   	imageTitleArray : imgTitleArray
+				});	   			
+	   		}
+
+		}
+	}
+
+	deleteimage(e){
+		// var arry = this.state.imageTitleArray
+		var array = [...this.state.imageTitleArray]; // make a separate copy of the array
+	  	var index = array.indexOf(e.target.value)
+		if (index !== -1) {
+		   array.splice(index, 1);
+		   this.setState({imageTitleArray: array});
+		}
+
+	}
 
 	render() {
 		console.log("imageTitleArray",this.state.imageTitleArray);
@@ -200,7 +172,7 @@ var imgTitleArray = [];
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contentHolder">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 uploadImg">
 							<label>Please Upload Images:</label>
-							<input type="file" className="" accept=".jpg,.jpeg,.png" onChange={this.handleChange.bind(this)}/>
+							<input type="file" className="" accept=".jpg,.jpeg,.png" onChange={this.handleImgChange.bind(this)} multiple/>
 
 						</div>
 						<div className="col-lg-12">
@@ -246,8 +218,9 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		backToAvailability  	        : ()=> dispatch({type: "BACK_TO_AVAILABILITY"}),
-		redirectToCongratsPage       : (uid)=> dispatch({type: "REDIRECT_TO_CONGRATS_PAGE",
-														uid:  uid
+		redirectToCongratsPage       : (uid,property_id)=> dispatch({type: "REDIRECT_TO_CONGRATS_PAGE",
+														 uid        :  uid,
+														 property_id:property_id
 	}),
 
 
