@@ -1,5 +1,5 @@
 @font-face{
-  font-family:'Raleway-Regular';
+  font-family:'Roboto', sans-serif !important;
   src: url("/fonts/MYRIADPROREGULAR.ttf");
 }
 /*.modal-backdrop.in {
@@ -46,7 +46,7 @@
   margin-top: 0px;
 }
 .numfont{
-  font-family: unset !important;
+  font-family: 'Roboto', sans-serif !important;
 }
 .examPageWrap{
  
@@ -73,7 +73,7 @@ background-size:16px 16px;
   padding: 0px!important;
 }
 .addCategoryBtn,.studRegister{
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .studRegister{
   background: #1a87c1;
@@ -108,15 +108,15 @@ background-size:16px 16px;
 .tableHeaderrr{
   background: #2189d1;
   color: #fff;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .tableHeaderrr tr th, .myAllTablee tr td{
   text-align: center;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   vertical-align: middle !important;
 }
 #ExamListTable tr td , .myAllTabler tr td{
-  font-family: 'Raleway-Regular';
+  font-family:'Roboto', sans-serif !important;
   vertical-align: middle !important;
 }
 .addRolWrap{
@@ -127,12 +127,12 @@ background-size:16px 16px;
 }
 .addrolesBtn{
   /*padding: 0px;*/
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   border-radius: 0px !important;
 }
 .addrolesBtn1{
   padding-right: 0px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .tableHeader tr th{
   background: #337ab7 !important;
@@ -149,7 +149,7 @@ background-size:16px 16px;
 }
 .tableHeader tr th, .myAllTable tr td{
   text-align: left;
-  font-family: 'Raleway-Regular';
+  font-family:'Roboto', sans-serif !important;
   border-right: 1px solid #eee;
   border-bottom: 1px solid #eee;
   white-space: pre-line;
@@ -161,7 +161,7 @@ background-size:16px 16px;
 }
 .myTable tr td, .csvuploadTab tr td{
   text-align: left;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   vertical-align: middle !important;
 }
 .csvuploadTab tr td, .csvuploadTab tr th{
@@ -208,7 +208,7 @@ background-size:16px 16px;
 
 .inputText{
 
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .questionFormWrap{
   margin-top: 4%;
@@ -251,10 +251,10 @@ background-size:16px 16px;
   text-align: center;
   border: 1px solid #eee;
   background: #efefef;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .uploadQuesinst{
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   font-size: 14px;
 }
 .paddingright{
@@ -318,7 +318,7 @@ ul {
     font-size: 12px;
     letter-spacing: 0.5px;
     color: #333;
-    font-family: 'Raleway-Regular';
+    font-family: 'Roboto', sans-serif !important;
 
 }
   .examDateWrap{
@@ -460,7 +460,7 @@ ul {
   height: 86px;
   opacity: 0;
   margin-top: -22px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   cursor: pointer;
 }
 .ClientImgWrap1{
@@ -485,7 +485,7 @@ ul {
   color: #1a87c1;
   font-size: 20px;
   /*font-weight: bold;*/
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .profileSection1{
   border-right: 1px solid #ddd;
@@ -504,14 +504,14 @@ ul {
 }
 .studName{
   text-align: center;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   color: #1d109d;
   font-weight: bold;
   margin-bottom: 0px;
 }
 .studemail{
   text-align: center;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .profileDivider{
   border-bottom: 1px solid #ddd;
@@ -522,7 +522,7 @@ ul {
   margin-bottom: 15px;
   text-align: center;
   /*font-weight: bold;*/
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .studProfileTit1{
   font-size: 18px;
@@ -530,7 +530,7 @@ ul {
   margin-top:54px;
   text-align: center;
   font-weight: bold;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .studProfileTit2{
   font-size: 20px;
@@ -538,7 +538,7 @@ ul {
   margin-top: 31%;
   text-align: center;
   font-weight: bold;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .studProfileTit21{
   font-size: 20px;
@@ -546,7 +546,7 @@ ul {
   margin-top: 10px;
   text-align: left;
   font-weight: bold;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   color:#333;
 }
 .studProfileTit3{
@@ -556,7 +556,7 @@ ul {
   margin-top: 19%;
   text-align: center;
   font-weight: bold;
-  font-family: 'Raleway-Regular';
+  
 }
 .studProfSubTit{
   font-weight: bold;
@@ -569,7 +569,7 @@ ul {
 .studContentWrap{
   padding-right: 0px;
   margin-bottom: 13px;
-  font-family: 'Raleway-Regular';
+  
 }
 .profileSection3 {
   margin-top: -11%;
@@ -630,7 +630,7 @@ ul {
 .questionTitsubWrap{
   padding-left: 0px;
   font-size: 28px;
-  font-family: 'Raleway-Regular';
+ 
   color:white;
   /*margin-top: 2%;*/
   min-height: 140px;
@@ -657,7 +657,7 @@ ul {
   margin-left: 14px;
     font-size: 14px;
     margin-top: 0px;
-    font-family: 'Raleway-Regular';
+   
     position: absolute;
 }
 .oesCarouselIndicator{
@@ -695,7 +695,7 @@ ul {
     line-height: 18px;
     margin-bottom: 2px;
     font-size: 9px;
-    font-family: 'Raleway-Regular';
+    font-family:'Roboto', sans-serif !important;
 }
 
 .oesCarouselIndicator .active{
@@ -778,7 +778,7 @@ ul {
 }
 .examDetailsWrap4{
   color: white;
-  font-family: 'Raleway-Regular';
+  font-family:'Roboto', sans-serif !important;
   padding-top: 5px;
   text-align: right;
   /*margin-right: 40px;*/
@@ -819,7 +819,7 @@ ul {
   color: #2E86C1;
   text-align: center;
   font-size: 16px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .congratsImg{
   width: 100%;
@@ -836,13 +836,13 @@ ul {
    margin-bottom: 2%;
   font-size: 66px;
   margin-top: -16px;
-  font-family: 'MYRIADPROREGULAR';
+  font-family: 'Roboto', sans-serif !important;
   color: #2E86C1;
 }
 .totalScore{
   padding-top: 6%;
   font-size: 22px;
-  font-family: 'MYRIADPROREGULAR';
+  font-family: 'Roboto', sans-serif !important;
 }
 .marksNameSec{
   color: #ff8102;
@@ -863,7 +863,7 @@ ul {
   color: #2E86C1;
   font-size: 22px;
   font-weight: bold;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .marksSec2{
   border: 1px solid #fff;
@@ -883,7 +883,7 @@ ul {
     border: 1px solid #2E86C1 !important;
     padding: 2px 0px !important;
     font-size: 14px !important;
-    font-family: 'Raleway-Regular';
+    font-family: 'Roboto', sans-serif !important;
     margin-top: 2px;
 }
 .oesCarouselIndicator .examFinishBtnnn, .examFinishBtnnn .active{
@@ -904,7 +904,7 @@ ul {
   color: #1d109d;
   font-size: 22px;
   margin-top: 2%;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   font-weight: 600;
 }
 .instructionList{
@@ -925,7 +925,7 @@ ul {
   background:#1d109d;
   padding-left: 30px;
   padding-right: 30px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .inactiveStat{
     width: 10px;
@@ -950,7 +950,7 @@ ul {
 
 .inputTextt{
   /*margin-bottom: 14px;*/
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .questionCatTab{
   margin-top: 30px;
@@ -1115,7 +1115,7 @@ ul {
     border-top: 1px solid #d2d6de;
 }
 .main-footer,.craeteExamBtn{
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .inputText title{
   text-transform: capitalize !important;
@@ -1179,7 +1179,7 @@ ul {
 .answerBottom .ABCD{
   padding: 0px;
     padding-top: 2px;
-    font-family: 'Raleway-Regular';
+    font-family:'Roboto', sans-serif !important;
 }
 
 /* Hide the browser's default checkbox */
@@ -1247,12 +1247,12 @@ ul {
 }*/
 .instructionSubBtn{
   margin-top: 15px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .instructionWrap{
   white-space: pre-line;
   white-space: pre-line;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   color: #333333;
   font-size: 16px;
 }
@@ -1261,7 +1261,7 @@ ul {
 }
 .OESDataNotAvailable tr td{
   font-size: 18px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   text-align: center;
   color: #333333;
 }
@@ -1304,12 +1304,12 @@ ul {
   font-size: 18px;
     padding: 0px;
     margin-bottom: 5px;
-    font-family: 'Raleway-Regular';
+    font-family: 'Roboto', sans-serif !important;
     margin-top: 11px;
     margin-left: 0px;
 }
 .studFrancName, .studTecherName{
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 /*------------ Sweet Alert Css ----------------*/
   .sweet-alert h2{
@@ -1404,7 +1404,7 @@ input:checked + .slider:before {
   top: 50%;
   left: 50%;
   font-size: 12px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 
 input:checked+ .slider .on
@@ -1432,7 +1432,7 @@ input:checked + .slider .off
 
 .yesContinueBtn, .notContinueBtn{
   margin-right: 20px;
-  font-family: "Raleway-Regular";
+  font-family: 'Roboto', sans-serif !important;
 
   margin-top: 15px;
 }
@@ -1571,7 +1571,7 @@ right: 15px;
 }
 .franchName{
     font-size: 11px;
-    font-family: 'Raleway-Regular';
+    font-family: 'Roboto', sans-serif !important;
     margin-top: 5px;
 }
 
@@ -1635,12 +1635,12 @@ right: 15px;
   text-align: center;
   font-size: 15px;
   font-weight: bold;
-  font-family: 'MYRIADPROREGULAR';
+  font-family: 'Roboto', sans-serif !important;
 }
 .totalScore {
   font-size: 44px;
   font-weight: bolder;
-  font-family: 'MYRIADPROREGULAR';
+  font-family: 'Roboto', sans-serif !important;
   text-align: center;
   color: #f18a1a;
 
@@ -1967,7 +1967,7 @@ background-size:16px 16px;
   padding: 0px!important;
 }
 .addCategoryBtn,.studRegister{
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .studRegister{
   background: #1a87c1;
@@ -2002,15 +2002,15 @@ background-size:16px 16px;
 .tableHeaderrr{
   background: #3c8dbc;
   color: #fff;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .tableHeaderrr tr th, .myAllTablee tr td{
   text-align: center;
-  font-family: 'Raleway-Regular';
+  font-family:'Roboto', sans-serif !important;
   vertical-align: middle !important;
 }
 #ExamListTable tr td , .myAllTabler tr td{
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   vertical-align: middle !important;
 }
 .addRolWrap{
@@ -2021,12 +2021,12 @@ background-size:16px 16px;
 }
 .addrolesBtn{
   /*padding: 0px;*/
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
   border-radius: 0px !important;
 }
 .addrolesBtn1{
   padding-right: 0px;
-  font-family: 'Raleway-Regular';
+  font-family: 'Roboto', sans-serif !important;
 }
 .tableHeader tr th{
   background: #337ab7 !important;

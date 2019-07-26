@@ -56,11 +56,22 @@ class IAssureTableUM extends Component {
 	componentWillReceiveProps(nextProps) {
         this.setState({
             tableData	    : nextProps.tableData,
-            completeDataCount : nextProps.completeDataCount
+            completeDataCount : nextProps.completeDataCount,
+            // unCheckedUser : nextProps.unCheckedUser
         },()=>{
         	this.paginationFunction();
-        	// console.log('completeDataCount=====', this.state.completeDataCount);	
+        	console.log('unCheckedUser', this.state.unCheckedUser);	
         })
+        if(nextProps && nextProps.unCheckedUser){
+        	nextProps.unCheckedUser.map((id, i)=>{
+        		console.log('id',id);
+	        	this.setState({
+	        		// [id] : false,
+	        		selectedUser : [],
+	        		unCheckedUser : []
+	        	})
+        	})
+        }
     }
 	componentWillUnmount(){
     	$("script[src='/js/adminSide.js']").remove();
@@ -380,7 +391,7 @@ class IAssureTableUM extends Component {
 									_id 			: a._id,
 									fullName        : a.profile.fullName,
 					                emailId    		: a.emails[0].address,
-					                mobNumber       : a.profile.mobileNumber, 
+					                mobileNumber       : a.profile.mobileNumber, 
 					                status        	: a.profile.status,	
 					                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
 								}
@@ -593,7 +604,7 @@ class IAssureTableUM extends Component {
 								_id 			: a._id,
 								fullName        : a.fullName,
 				                emailId    		: a.emailId,
-				                mobNumber       : a.mobNumber, 
+				                mobileNumber       : a.mobileNumber, 
 				                status        	: a.status,	
 				                roles 			: a.roles,
 							}
@@ -692,13 +703,11 @@ class IAssureTableUM extends Component {
         return $('.inputTextPass').attr('type', 'password');
     }
 
-  showprofile(e){
-	e.preventDefault();
-	// FlowRouter.go('/Profile/'+e.currentTarget.id);
-	this.props.history.push('/edituserprofile/'+e.currentTarget.id );
-	// console.log("here showprofile view",e.currentTarget.id);
+	showprofile(e){
+		e.preventDefault();
 
-}
+		this.props.history.push('/edituserprofile/'+e.currentTarget.id );
+	}
 
 
  checkAll(event) {
@@ -724,29 +733,43 @@ class IAssureTableUM extends Component {
         $('.userCheckbox').prop('checked',false);
       }
     }
+    uncheckAll(){
+
+    }
 	 
 
 	selectedId(event){
-		
-		var data = event.currentTarget.id;
-		console.log("data", data);
-
-		// var all = this.state.allid;
-		var otherProp;
 		var selectedUser = this.state.selectedUser;
-		if(event.target.checked  ){
-			otherProp = event.target.value;
-			selectedUser.push(event.target.value);
-
-		}else{
-			selectedUser.pop(event.target.value);
-		}
+		var data = event.target.id;
+		var value = event.target.checked;
+		console.log("data", data);
 		this.setState({
-			selectedUser : selectedUser
+			[data] : value,
 		},()=>{
-			console.log('selectedUser', this.state.selectedUser);
-			this.props.selectedUser(this.state.selectedUser);
+			if(this.state[data] == true ){
+				selectedUser.push(data);
+				this.setState({
+					selectedUser : selectedUser
+				},()=>{
+					console.log('selectedUser', this.state.selectedUser);
+					this.props.selectedUser(this.state.selectedUser);
+				})
+			}else{
+				selectedUser.pop(data);
+				this.setState({
+					selectedUser : selectedUser
+				},()=>{
+					console.log('selectedUser', this.state.selectedUser);
+					this.props.selectedUser(this.state.selectedUser);
+				})
+			}
+			
+			
 		})
+		
+		
+		
+		
 	}
 
 
@@ -834,7 +857,7 @@ class IAssureTableUM extends Component {
 											return(
 												<tr key={i} className="">
 													{/*console.log("values",value)*/}
-													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" value={value._id} id={value._id} onChange={this.selectedId.bind(this)}/></td>
+													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" checked={this.state[value._id]}  id={value._id} onChange={this.selectedId.bind(this)}/></td>
 													
 													{/*<td>{value._id}</td>*/}
 													{/*<td className="textAlignCenter">{this.state.startRange+1+i}</td>*/}
@@ -852,7 +875,7 @@ class IAssureTableUM extends Component {
 																		}else{
 																			var bN = value1 ? parseInt(value1.replace(this.state.reN, ""), 10) : '';
 																			if(bN){
-																				var textAlign = 'textAlignRight';
+																				var textAlign = 'textAlignLeft';
 																			}else{
 																				var textAlign = 'textAlignLeft';
 																			}
@@ -889,7 +912,7 @@ class IAssureTableUM extends Component {
 
 														{/*this.state.show == true ? */
 														<div className="modal fade modalHide passwordModal" id={"RestpwdModal-"+value._id}  role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-																		 {console.log("here modal id",value._id )}	
+																		 {/*console.log("here modal id",value._id)*/}	
 																		  <div className="modal-dialog" role="document">
 																		    <div className="modal-content  ummodallftmg">
 																		      <div className="modal-header userHeader">

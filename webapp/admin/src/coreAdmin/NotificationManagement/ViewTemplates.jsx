@@ -37,7 +37,7 @@ class ViewTemplates extends Component{
     const {name,value} = event.target;
     let formerrors = this.state.formerrors;
     
-    console.log("datatype",datatype);
+    // console.log("datatype",datatype);
     switch (datatype){
      
       
@@ -171,7 +171,7 @@ class ViewTemplates extends Component{
 		return [];
 	}
 	getData(){
-		console.log('getData');
+		// console.log('getData');
 		axios({
 			method: 'get',
 			url: '/api/masternotifications/list',
@@ -308,7 +308,7 @@ class ViewTemplates extends Component{
 	  }
 
 	submitTemplate(event){
-		console.log('submitTemplate');
+		// console.log('submitTemplate');
 
 
 		event.preventDefault();
@@ -323,12 +323,12 @@ class ViewTemplates extends Component{
 
 			console.log("here value of templatetype", this.state.templateType);
 			console.log("here value of templateName", this.state.templateName);
-			if( cketext === null  || templateType === '-- Select --' || templateName === '--Select Template Name--'){
+			if( cketext === null || cketext == "" || templateType === '-- Select --' || templateName === '--Select Template Name--'){
 				swal("Please enter mandatory fields", "", "warning");
-          		console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+          		// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}else{	
 
-				if(templateType === 'Email' && subject === null)
+				if(templateType === 'Email' && (subject === null || subject == ""))
 				{
 					swal("Please enter mandatory fields", "", "warning");
 				}else{
@@ -343,42 +343,60 @@ class ViewTemplates extends Component{
 						if(formValid(this.state.formerrors)){
 							axios.post('/api/masternotifications', formValues)
 							.then((response)=> {	
-							console.log('response',response);				
-								axios({
-									method: 'get',
-									url: '/api/masternotifications/list',
-								}).then((response)=> {
+							console.log('response here of add --------------',response);	
+								if(response.data.message== "Master Notification Template Name already exists")
+								{
+									swal("This template already exists","", "error");
+									 this.setState({
+									    	templateType 	: '-- Select --',
+									    	templateName 	: '--Select Template Name--',
+									    	subject 		: "",
+									    	content 		: null
+									    });   
+								}else{
 									swal("Template added successfully","", "success");
-									var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
-									var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
-									var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
-								    this.setState({
-								    	emailTemplatesList 			: emailTemplatesList,
-								    	notificationTemplatesList 	: notificationTemplatesList,
-								    	smsTemplatesList 			: smsTemplatesList
-								    });
+								}			
+									axios({
+										method: 'get',
+										url: '/api/masternotifications/list',
+									}).then((response)=> {
+										console.log("here are the response--------------------", response);
+										
+										var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
+										var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
+										var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
+									    this.setState({
+									    	emailTemplatesList 			: emailTemplatesList,
+									    	notificationTemplatesList 	: notificationTemplatesList,
+									    	smsTemplatesList 			: smsTemplatesList
+									    });
 
-								     this.setState({
-								    	templateType 	: '',
-								    	templateName 	: '',
-								    	subject 		: '',
-								    	content 		: ''
-								    });   
-								}).catch(function (error) {
-								    
-								});
-								
-								$('#createNotifyModal').hide();
-								$('.modal-backdrop').remove();
-							})
-							.catch(function (error) {
-								
-							console.log(error);
-							})
+									     this.setState({
+									    	templateType 	: '-- Select --',
+									    	templateName 	: '--Select Template Name--',
+									    	subject 		: "",
+									    	content 		: null
+									    },()=>{
+									    	console.log("here sub", this.state.subject);
+									    	console.log("here content", this.state.content);
+									    });   
+									}).catch(function (error) {
+									    
+
+									});
+									
+									$('#createNotifyModal').hide();
+									$('.modal-backdrop').remove();
+								})
+								.catch(function (error) {
+									
+
+								// console.log(error);
+								})
 						}else
 						{
 						    swal("Please enter mandatory fields", "", "warning");
-						    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+						    // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 						}
 
 				}
@@ -424,7 +442,7 @@ class ViewTemplates extends Component{
       		});
       	}else{
       		this.setState({
-      			contentError : 'This field is required'
+      			contentError : ''
       		})
       	}
       })
@@ -436,7 +454,7 @@ class ViewTemplates extends Component{
 		const required = (value) => {
 		  if (!value.toString().trim().length) {
 		    // We can return string or jsx as the 'error' prop for the validated Component
-		    return <span className="error">This field id required.</span>;
+		    return <span className="error"></span>;
 		  }
 		};
 		 

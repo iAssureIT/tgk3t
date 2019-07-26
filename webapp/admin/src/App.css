@@ -1,6 +1,12 @@
 .App {
 /*  text-align: center;
 */}
+
+/*html *
+{
+   font-family:'Roboto', sans-serif !important;
+}*/
+
 .pointerCls{
   cursor: pointer;
 }

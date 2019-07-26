@@ -124,34 +124,34 @@ componentDidMount(){
                       <Header />
                    </div>
                   </div>
-                  <div className="">                  
-                    <div id="dashbordid" className="">
-                     {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
-                      */} <Router>
-                          <Switch>
-                          <Route path="/umlistofusers" component={UMListOfUsers} exact />
-                          <Route path="/umlistofemp" component={UMListOfEmp} exact />
+                      <div className="">                  
+                        <div id="dashbordid" className="">
+                         {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
+                          */} <Router>
+                              <Switch>
+                              <Route path="/umlistofusers" component={UMListOfUsers} exact />
+                              <Route path="/umlistofemp" component={UMListOfEmp} exact />
 
-                          <Route path="/umroleslist" component={UMRolesList} exact />
-                          <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
+                              <Route path="/umroleslist" component={UMRolesList} exact />
+                              <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
 
-                          <Route path="/ViewTemplates" component={ViewTemplates} exact />
-                          <Route path="/dashboard" component={Dashboard} exact />
+                              <Route path="/ViewTemplates" component={ViewTemplates} exact />
+                              <Route path="/dashboard" component={Dashboard} exact />
 
-                          <Route path="/companysetting" component={CompanySetting} exact />
-                          
-                         {/*----------------------------------------------*/}
+                              <Route path="/companysetting" component={CompanySetting} exact />
+                              
+                             {/*----------------------------------------------*/}
 
-                          <Route path="/masterdata" component={MasterData} exact />
-                          <Route path="/sellometer" component={SellOMeter} exact />
-                          <Route path="/classrating" component={ClassRating} exact />
+                              <Route path="/masterdata" component={MasterData} exact />
+                              <Route path="/sellometer" component={SellOMeter} exact />
+                              <Route path="/classrating" component={ClassRating} exact />
 
-                          
+                              
 
-                          </Switch>        
-                      </Router>
-                    </div>
-                  </div>
+                              </Switch>        
+                          </Router>
+                        </div>
+                      </div>
                   <div className="leftsidebarbackgroundcolor">
                     <div className="row">
                        <Leftsidebar />

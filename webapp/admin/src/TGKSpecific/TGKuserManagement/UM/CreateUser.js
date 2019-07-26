@@ -314,7 +314,7 @@ class CreateUser extends Component {
                                                               <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
                                                              
                                                                <select className="form-control" value={this.state.role} onChange={this.handleChange} ref ="role" id="role" name="role" data-text="role">
-                                                                    <option  selected="true" disabled> --Select-- </option>
+                                                                    <option  hidden> --Select-- </option>
                                                                     <option value="Technical Admin" > Technical Admin </option>
                                                                     <option value="Executive Admin" > Executive Admin </option>
                                                                     <option value="Sales Manager" > Sales Manager </option>
@@ -333,7 +333,7 @@ class CreateUser extends Component {
                                                               <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
                                                                     <select className="form-control" value={this.state.officeid} ref ="office" id="office" name="office" data-text="office">
-                                                                        <option hidden> --select-- </option>
+                                                                        <option hidden> --Select-- </option>
                                                                         <option value="Head Office">  Head Office </option>
                                                                         <option value="Sales Agent Office"> Sales Agent Office </option>
                                                                            { this.state.office != null ?

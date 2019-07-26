@@ -64,7 +64,7 @@ export default class AllSMSTemplateRow extends Component{
 		var text= this.props.smstemplateValues.content ? this.props.smstemplateValues.content : 'abc';
 		var regex = new RegExp(/(<([^>]+)>)/ig);
 		text = text.replace(regex, '');
-		console.log('smstemplateValues',this.props.smstemplateValues);
+		// console.log('smstemplateValues',this.props.smstemplateValues);
 		if(this.props.smstemplateValues.content){
 			
 	        return (

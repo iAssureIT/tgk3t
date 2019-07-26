@@ -25,7 +25,7 @@ class UMListOfUsers extends Component {
 
                 fullName        : 'User Name',
                 emailId    		: 'Email',
-                mobNumber       : 'Mobile Number', 
+                mobileNumber    : 'Mobile Number', 
                 status        	: 'Status',
                 roles        	: 'Role',
                 actions        	: 'Action',
@@ -71,13 +71,13 @@ class UMListOfUsers extends Component {
 		}
 		axios.post('/api/users/userslist', data)
 		.then( (res)=>{      
-			// console.log("herer",res);
+			console.log("herer=========================>>>>>>>>>>",res.data);
 			var tableData = res.data.map((a, i)=>{
 				return {
 					_id 			: a._id,
 					fullName        : a.fullName,
 	                emailId    		: a.emailId,
-	                mobNumber       : a.mobNumber, 
+	                mobileNumber       : a.mobileNumber, 
 	                status        	: a.status,	
 	                roles 			: a.roles,
 				}
@@ -93,6 +93,7 @@ class UMListOfUsers extends Component {
 			// console.log("error = ",error);
 			// alert("Something went wrong! Please check Get URL.");
 		});
+		// this.getData(this.state.startRange, this.state.limitRange)
 	}
 	getData(startRange, limitRange){    
 		var data = {
@@ -106,7 +107,7 @@ class UMListOfUsers extends Component {
 					_id 			: a._id,
 					fullName        : a.fullName,
 	                emailId    		: a.emailId,
-	                mobNumber       : a.mobNumber, 
+	                mobileNumber       : a.mobileNumber, 
 	                status        	: a.status,	
 	                roles 			: a.roles,
 				}
@@ -171,6 +172,7 @@ class UMListOfUsers extends Component {
 				          this.setState({
 				          	blockswal : true,
 				          	checkedUser : null,
+
 				          })
 
 				         
@@ -190,7 +192,7 @@ class UMListOfUsers extends Component {
 													_id 			: a._id,
 													fullName        : a.fullName,
 									                emailId    		: a.emailId,
-									                mobNumber       : a.mobNumber, 
+									                mobileNumber       : a.mobileNumber, 
 									                status        	: a.status,	
 									                roles 			: a.roles,
 												}
@@ -215,6 +217,7 @@ class UMListOfUsers extends Component {
 				      });
 
 				   }  
+
 
 				   	if(this.state.blockswal == true)
 				   	{
@@ -258,7 +261,7 @@ class UMListOfUsers extends Component {
 													_id 			: a._id,
 													fullName        : a.fullName,
 									                emailId    		: a.emailId,
-									                mobNumber       : a.mobNumber, 
+									                mobileNumber       : a.mobileNumber, 
 									                status        	: a.status,	
 									                roles 			: a.roles,
 												}
@@ -336,7 +339,7 @@ class UMListOfUsers extends Component {
 													_id 			: a._id,
 													fullName        : a.fullName,
 									                emailId    		: a.emailId,
-									                mobNumber       : a.mobNumber, 
+									                mobileNumber       : a.mobileNumber, 
 									                status        	: a.status,	
 									                roles 			: a.roles,
 												}
@@ -394,7 +397,7 @@ class UMListOfUsers extends Component {
 													_id 			: a._id,
 													fullName        : a.fullName,
 									                emailId    		: a.emailId,
-									                mobNumber       : a.mobNumber, 
+									                mobileNumber       : a.mobileNumber, 
 									                status        	: a.status,	
 									                roles 			: a.roles,
 												}
@@ -451,7 +454,7 @@ class UMListOfUsers extends Component {
 													_id 			: a._id,
 													fullName        : a.fullName,
 									                emailId    		: a.emailId,
-									                mobNumber       : a.mobNumber, 
+									                mobileNumber       : a.mobileNumber, 
 									                status        	: a.status,	
 									                roles 			: a.roles,
 												}
@@ -477,6 +480,9 @@ class UMListOfUsers extends Component {
 
 				    break;
 				}
+				this.setState({
+				   	unCheckedUser : checkedUsersList
+				})
 			}else{
 				// this.refs.userListDropdown.value = '-';
 				// swal({
@@ -512,7 +518,7 @@ class UMListOfUsers extends Component {
 										_id 			: a._id,
 										fullName        : a.fullName,
 						                emailId    		: a.emailId,
-						                mobNumber       : a.mobNumber, 
+						                mobileNumber       : a.mobileNumber, 
 						                status        	: a.status,	
 						                roles 			: a.roles,
 									}
@@ -543,7 +549,7 @@ class UMListOfUsers extends Component {
 										_id 			: a._id,
 										fullName        : a.profile.fullName,
 						                emailId    		: a.emails[0].address,
-						                mobNumber       : a.profile.mobileNumber, 
+						                mobileNumber       : a.profile.mobileNumber, 
 						                status        	: a.profile.status,	
 						                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
 									}
@@ -588,7 +594,7 @@ class UMListOfUsers extends Component {
 										_id 			: a._id,
 										fullName        : a.fullName,
 						                emailId    		: a.emailId,
-						                mobNumber       : a.mobNumber, 
+						                mobileNumber       : a.mobileNumber, 
 						                status        	: a.status,	
 						                roles 			: a.roles,
 									}
@@ -620,7 +626,7 @@ class UMListOfUsers extends Component {
 									_id 			: a._id,
 									fullName        : a.profile.fullName,
 					                emailId    		: a.emails[0].address,
-					                mobNumber       : a.profile.mobileNumber, 
+					                mobileNumber       : a.profile.mobileNumber, 
 					                status        	: a.profile.status,	
 					                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
 								}
@@ -745,6 +751,7 @@ render(){
 					                      tableData={this.state.tableData} 
 					                      getSearchText={this.getSearchText.bind(this)}
 					                      selectedUser={this.selectedUser.bind(this)} 
+					                      unCheckedUser={this.state.unCheckedUser}
 										/>			
 									</div>
 

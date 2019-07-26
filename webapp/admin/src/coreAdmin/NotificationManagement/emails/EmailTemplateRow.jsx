@@ -86,7 +86,7 @@ class EmailTemplateRow extends Component{
     this.props.getEmailData(id);
 	}
 	render(evt) {
-			console.log('this.props.emailtemplateValues',this.props.emailtemplateValues, this.props.emailtemplateValues._id);
+			// console.log('this.props.emailtemplateValues',this.props.emailtemplateValues, this.props.emailtemplateValues._id);
 			var text = this.props.emailtemplateValues.content ? this.props.emailtemplateValues.content : ''; 
 			// console.log("textes=",text);
 			var regex = new RegExp(/(<([^>]+)>)/ig);
