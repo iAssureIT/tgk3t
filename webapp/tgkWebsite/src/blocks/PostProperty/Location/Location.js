@@ -34,7 +34,7 @@ import './Location.css';
 				"landmark" 			: this.refs.landmark.value,
 				"address" 	        : this.refs.housebuilding.value,
 				"pincode" 			: this.refs.pincode.value,
-				"property_id" 		: this.props.property_id,
+				"property_id" 		: localStorage.getItem("propertyId"),
 				"uid" 				: this.props.uid,
 			};
 				console.log("Location",formValues);

@@ -48,7 +48,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				"timeTo" 		      : this.refs.timeTo.value,
 				"timeToAMPM" 		  : this.refs.timeToAMPM.value,
         		"contactPerson"       : this.state.contactPerson,
-				"property_id" 		  : this.props.property_id,
+				"property_id" 		  : localStorage.getItem("propertyId"),
 				"uid" 				  : this.props.uid,
 			};
 			console.log("Availability req = ",formValues);

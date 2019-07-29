@@ -103,7 +103,7 @@ const reducer = (state = initialState,action) => {
 		newState.uid 			   = action.uid;
 
 	}
-if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
+	if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.BasicInfo 	       = false;
 		newState.PropertyDetails   = false;
 		newState.Financials   	   = false;
@@ -114,7 +114,6 @@ if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
 		newState.ImageUpload 	   = false;
 		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
-
 	}
 
 	if(action.type === "SHOW_FIRST_FORM"){

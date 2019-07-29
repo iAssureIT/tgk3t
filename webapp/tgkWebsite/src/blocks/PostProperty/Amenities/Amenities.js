@@ -28,7 +28,7 @@ import './Amenities.css';
 			const formValues = {
 
 				"Amenities"			: this.state.Amenities,
-				"property_id" 		: this.props.property_id,
+				"property_id" 		: localStorage.getItem("propertyId"),
 				"uid" 				: this.props.uid,
 
 				

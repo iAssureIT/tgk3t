@@ -69,6 +69,7 @@ import './BasicInfo.css';
 					console.log(res.data);
 					if(res.status === 200){
 						// swal("Good job!", "Property inserted successfully!", "success");
+						localStorage.setItem('propertyId',res.data.property_id)
 						console.log("BasicInfo res = ",res);
 						this.props.redirectToLocation( res.data.propertyCode, res.data.property_id,this.props.uid);						
 					}else{

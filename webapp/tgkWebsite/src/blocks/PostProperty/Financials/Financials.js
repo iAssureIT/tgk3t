@@ -30,7 +30,7 @@ import './Financials.css';
 				"includeCharges"	: this.state.includecharges,
 				"maintenanceCharges": this.state.maintenanceCharges,
 				"maintenancePer"	: this.state.maintenancePer,
-				"property_id" 		: this.props.property_id,
+				"property_id" 		: localStorage.getItem("propertyId"),
 				"uid" 				: this.props.uid,
 			};
 			

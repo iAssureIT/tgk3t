@@ -32,7 +32,7 @@ import './PropertyDetails.css';
 				"facing" 			: this.refs.facing.value,
 				"superArea" 		: this.refs.superArea.value,
 				"builtupArea" 		: this.refs.builtupArea.value,
-				"property_id" 		: this.props.property_id,
+				"property_id" 		: localStorage.getItem("propertyId"),
 				"uid" 				: this.props.uid,
 			};
 			console.log("PropertyDetails req = ",formValues);

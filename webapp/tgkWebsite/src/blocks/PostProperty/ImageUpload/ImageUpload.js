@@ -26,13 +26,13 @@ var imgTitleArray = [];
 	
 	uploadImage(event){
 		var imageTitleArray = this.state.imageTitleArray;
-
+		var uid 			= localStorage.getItem("uid");
+		var propertyId 		= localStorage.getItem("propertyId");
 		main();
 
 		
 		async function main(){
 			var config = await getConfig();
-			console.log("config = ",config);
 			
 			var s3urlArray = [];
 			for (var i = 0; i<imageTitleArray.length; i++) {
@@ -43,8 +43,8 @@ var imgTitleArray = [];
 			console.log("s3urlArray = ",s3urlArray);
 
 			const formValues = {
-				"property_id" 		: this.props.property_id,
-				"uid" 		  		: this.props.uid,
+				"property_id" 		: propertyId,
+				"uid" 		  		: uid,
 				"propertyImages"	: s3urlArray,
 			};
 
@@ -56,7 +56,7 @@ var imgTitleArray = [];
 					console.log(res);
 					if(res.status === 200){
 						swal("Great!","Images are Uploaded!", "success");
-						this.props.redirectToCongratsPage(this.props.uid,this.props.property_id);				}
+						this.props.redirectToCongratsPage(uid,propertyId)}
 				})
 				.catch((error) =>{
 
@@ -217,11 +217,11 @@ const mapStateToProps = (state)=>{
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		backToAvailability  	        : ()=> dispatch({type: "BACK_TO_AVAILABILITY"}),
-		redirectToCongratsPage       : (uid,property_id)=> dispatch({type: "REDIRECT_TO_CONGRATS_PAGE",
-														 uid        :  uid,
-														 property_id:property_id
-	}),
+		backToAvailability  	     : ()=> dispatch({type: "BACK_TO_AVAILABILITY"}),
+		redirectToCongratsPage 		 : (uid,propertyId)=> dispatch({type: "REDIRECT_TO_CONGRATS_PAGE",
+											 uid         :  uid,
+											 property_id :  propertyId,	
+								}),
 
 
 	}
