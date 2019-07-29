@@ -1,8 +1,10 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import {withRouter}    from 'react-router-dom';
+import {withRouter}   		    from 'react-router-dom';
 import swal                     from 'sweetalert';
 import { connect } 				from 'react-redux';
+
+import './WebSignup.css';
 
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
@@ -113,7 +115,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 					<div className="hr_border row"></div>
 					    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 
-					  		<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-75">
+					  		<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 mt75">
 								  	<label className="mb5">Let us know you to sell or rent your property faster</label>
 
 					  			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12	">
@@ -169,8 +171,8 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 									</div>
 								</div>	
 					    	</div>
-						<div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 boxLayout1">
+							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 								<img alt=""  src="/images/1.png" className="build_img2"/>
 							</div>
 							<span className="col-lg-12 formImgB">

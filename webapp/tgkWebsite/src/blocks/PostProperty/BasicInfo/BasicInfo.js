@@ -42,11 +42,10 @@ import './BasicInfo.css';
 		    $('#radio-example3').click(function(){
 		        $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
 		    });
-
-    		localStorage.removeItem("mobile");
-    		localStorage.removeItem("otp");	
-    		localStorage.removeItem("message");	
-
+		     var $select = $(".1-100");
+		    for (var i=-2;i<=60;i++){
+		        $select.append($('<option></option>').val(i).html(i))
+		    }
 		}
 
 		insertProperty(event){
@@ -142,13 +141,13 @@ import './BasicInfo.css';
 			<form id="form">
 			  <div className="row"></div>
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row mt30">	
-				<div className="col-lg-7 col-md-8 col-sm-12 col-xs-12">
+				<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						{/*<h3> uid = {this.props.uid} </h3>*/}
 				  	 	<label>I am</label>
 						<span className="astrick">*</span>
 				  	 </div>
-				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm"   >
+				  	<div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 crc_mrg_btm"   >
 				    	<div className="col-lg-1 sellerType1"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
@@ -158,11 +157,11 @@ import './BasicInfo.css';
 						      		 checked={this.state.propertyHolder === "owner"}
 	               					 onChange={this.radioChange} />
 
-					  			<i className="fa fa-users fa-1x logo1"></i>
+					  			<i className=" logo1"><img src="images/owner.png" /></i>
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 sellerType2"  >
+					    <div className="col-lg-1 col-lg-offset-2 sellerType2"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="careTaker" 
@@ -171,11 +170,11 @@ import './BasicInfo.css';
 						      		 checked={this.state.propertyHolder === "careTaker"}
 	               					 onChange={this.radioChange}/>
 
-					  			<i className="fa fa-users fa-1x logo1"></i>
+					  			<i className=" logo1"><img src="images/careTaker.png" /></i>
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 sellerType3"   >
+					    <div className="col-lg-1 col-lg-offset-2 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="broker" 
@@ -184,11 +183,11 @@ import './BasicInfo.css';
 						      		 checked={this.state.propertyHolder === "broker"}
 	               					 onChange={this.radioChange} 
 						      		 />
-					  			<i className="fa fa-users fa-1x logo1"></i>
+					  			<i className=" logo1"><img src="images/broker.png" /></i>
 						    </label>
 					    </div>
 					</div>
-					  	<div className="col-lg-12 mb-40">
+					  	<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mb-40">
 					  			<span className="col-lg-4 ownerLeft "> Owner</span>
 					  			<span className="col-lg-4 noPad"> Care Taker</span>
 					  			<span className="col-lg-4 brokerLeft"> Broker</span>
@@ -219,13 +218,10 @@ import './BasicInfo.css';
 				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
 				   			 <b>Property Type</b>
 							<span className="astrick">*</span>
-
 				   		</div>
 
 					   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 						  <div className="form-group" id="">
-	{/*					    <label for="exampleFormControlInput1">Bedroom</label><span className="asterisk">*</span>
-	*/}					    {/*<input type="text" className="form-control" ref="bedroom" id="exampleFormControlInput1" placeholder=""/>*/}
 						  	 <select className="custom-select form-control" ref="propertytype" onChange={this.selectProp.bind(this)}>
 						    	<option	value="" hidden>Select Property Type </option>
 						    	<option	disabled>ALL RESIDENTIAL </option>
@@ -256,25 +252,28 @@ import './BasicInfo.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  row">
 		  	<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
 			  <div className="form-group" id="floor">
+			  	<label>Floor</label>
 		  		<div className="input-group inputBox-main " id="">
 			      	<div className="input-group-addon inputIcon">
-                     	<i className="fa fa-building iconClr"></i>
+                     	<i className=" iconClr"><img src="images/floor.png" /></i>
                     </div>
-			  		<select className="custom-select form-control "  ref="floor" placeholder="Floor" >
-				    	<option className="hidden">Floor</option>
-				    	<option>Upper Base</option>
-				    	<option>Lower Base</option>
-				    	<option>Ground</option>
-				    	<option>1</option>
-				    	<option>2</option>
-				    	<option>3</option>
-				    	<option>4</option>
-				    	<option>5</option>
-				    	<option>6</option>
-				    	<option>7</option>
-				    	<option>8</option>
-				    	<option>9</option>
-				    	<option>10</option>
+			  		<select className="custom-select form-control 1-100"  ref="floor" placeholder="Floor" id='select'>
+				    	
+				    	{/*
+				    	<option value="" className="hidden">Floor</option>
+				    	<option value="-2">Lower Base(-2)</option>
+				    	<option value="-1">Upper Base(-1)</option>
+				    	<option value="0">Ground(0)</option>
+				    	<option value="1">1</option>
+				    	<option value="2">2</option>
+				    	<option value="3">3</option>
+				    	<option value="4">4</option>
+				    	<option value="5">5</option>
+				    	<option value="6">6</option>
+				    	<option value="7">7</option>
+				    	<option value="8">8</option>
+				    	<option value="9">9</option>
+				    	<option value="10">10</option>*/}
 					</select>
 				</div>
 			  </div>
@@ -282,25 +281,29 @@ import './BasicInfo.css';
 
 			<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  <div className="form-group" id="totalfloor">
+			  		<label>Total Floor</label>
+
 				  	{/*<input type="text" className="form-control" ref="totalfloor" id="exampleFormControlInput1" placeholder="Total floor"/>*/}
 				  	<div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
-	                     <i className="fa fa-building iconClr"></i>
+	                     <i className="iconClr"><img src="images/floor.png" /></i>
 	                    </div>
-					  	<select className="custom-select form-control "  ref="totalfloor" placeholder="Floor" >
-					    	<option className="hidden">Total Floor</option>
-					    	<option>1</option>
-					    	<option>2</option>
-					    	<option>3</option>
-					    	<option>4</option>
-					    	<option>5</option>
-					    	<option>6</option>
-					    	<option>7</option>
-					    	<option>8</option>
-					    	<option>9</option>
-					    	<option>10</option>
-					    	<option>11</option>
-					    	<option>12</option>
+					  	<select className="custom-select form-control 1-100"  ref="totalfloor" placeholder="Floor" >
+					    	{/*<option value="" className="hidden">Total Floor</option>
+					    	<option value="1">1</option>
+					    	<option value="2">2</option>
+					    	<option value="3">3</option>
+					    	<option value="4">4</option>
+					    	<option value="5">5</option>
+					    	<option value="6">6</option>
+					    	<option value="7">7</option>
+					    	<option value="8">8</option>
+					    	<option value="9">9</option>
+					    	<option value="10">10</option>
+					    	<option value="11">11</option>
+					    	<option value="12">12</option>
+					    	<option value="13">13</option>
+					    	<option value="14">14</option>*/}
 						</select>
 					</div>
 				  </div>
@@ -309,7 +312,7 @@ import './BasicInfo.css';
 
 			  	</div>
 				  
-				<div className="col-lg-5 col-md-8 col-sm-12 col-xs-12 boxLayout">
+				<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 boxLayout">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<img alt=""  src="images/2.png" className=""/>
 					</div>

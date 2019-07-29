@@ -2,7 +2,8 @@ import React , { Component }	from 'react';
 import axios 					from 'axios';
 import { withRouter}    		from 'react-router-dom';
 import { connect } 				from 'react-redux';
-import swal 					from 'sweetalert';		
+import swal 					from 'sweetalert';
+import $						from 'jquery';		
 
 import './Financials.css';
 
@@ -19,6 +20,22 @@ import './Financials.css';
 			};
 			
 		}
+		componentDidMount(){
+			$('#totalAsk').keyup(function(event) {
+			  // skip for arrow keys
+			  if(event.which >= 37 && event.which <= 40) return;
+			  // format number
+			  $(this).val(function(index, value) {
+			    return value
+			    .replace(/\D/g, "")
+			    .replace(/\B(?=(\d{3})+(?!\d))/g,",")
+			    ;
+			  });
+			});
+
+			 var today = new Date().toISOString().split('T')[0];
+    		document.getElementsByName("somedate")[0].setAttribute('min', today);
+		}
 
 		updateUser(event){
 			event.preventDefault();
@@ -28,8 +45,8 @@ import './Financials.css';
 				"availableFrom" 	: this.refs.availableFrom.value,
 				"description" 		: this.refs.description.value,
 				"includeCharges"	: this.state.includecharges,
-				"maintenanceCharges": this.state.maintenanceCharges,
-				"maintenancePer"	: this.state.maintenancePer,
+				"maintenanceCharges": this.refs.maintenanceCharges.value,
+				"maintenancePer"	: this.refs.maintenancePer.value,
 				"property_id" 		: localStorage.getItem("propertyId"),
 				"uid" 				: this.props.uid,
 			};
@@ -87,9 +104,7 @@ import './Financials.css';
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 	<span className="col-lg-6 row">Expected Rate </span>
-
 			  	 	<span className="col-lg-4 pl44">Total Ask<span className="asterisk1">*</span></span>
-
 			  	 </div>
 			  </div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
@@ -100,9 +115,9 @@ import './Financials.css';
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-				    <input type="number" className="form-control" ref="expectedrate"  id="" placeholder="Expected Rate"/>
+				    <input type="number" className="form-control" ref="expectedrate"  id="" placeholder="Expected Rate" min="0"/>
 				  			<div className="input-group-addon inputIcon">
-		                     Sq ft
+		                     /Sq ft
 		                    </div>
 		                 </div>
 				  </div>
@@ -114,7 +129,7 @@ import './Financials.css';
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 			  	 	
-					    <input type="number" className="form-control" ref="totalprice" id="" placeholder="Total Ask"/>
+					    <input type="" className="form-control" ref="totalprice" id="totalAsk" placeholder="Total Ask" min="0" />
 					  </div>
 					  </div>
 				 </div>
@@ -124,44 +139,43 @@ import './Financials.css';
 			  	 	<label>My Total Ask includes</label>
 			  	 </div>
 			  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl30">	
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">	
+				    <label className="container1 checkbox-inline col-lg-2"><span className="fs1">Car Park</span>
+						  <input type="checkbox"
+						  		 value="carPark" 
+					      		 id="1"
+					      		 name="userCheckbox"
+					      		 onChange={this.totalInclude.bind(this)} />
+						  <span className="checkmark1"></span>
 
-			  	 	<label className="checkbox-inline">
-				      <input type="checkbox"
-				      		 value="carPark" 
-				      		 id="1"
-				      		 name="userCheckbox"
-				      		 onChange={this.totalInclude.bind(this)}
+					</label>
+				    <label className="container1 checkbox-inline col-lg-4 row"><span className="fs2">One Time Maintenace</span>
+						  <input type="checkbox"
+						  		 value="oneTimeMaintenace" 
+					      		 id="2"
+					      		 name="userCheckbox"
+					      		 onChange={this.totalInclude.bind(this)} />
+						  <span className="checkmark1"></span>
 
-				      		 />Car Park 
-				    </label>
-				    <label className="checkbox-inline pl44">
-				      <input type="checkbox" 
-				      		 value="oneTimeMaintenace" 
-				      		 id="2"
-				      		 name="userCheckbox"
-				      		 onChange={this.totalInclude.bind(this)}
+					</label>
+				    <label className="container1 checkbox-inline col-lg-3 row"><span className="fs2">Stamp Duty</span>
+						  <input type="checkbox"
+						  		 value="stampDuty" 
+					      		 id="3"
+					      		 name="userCheckbox"
+					      		 onChange={this.totalInclude.bind(this)} />
+						  <span className="checkmark1"></span>
 
-				      		 />One Time Maintenance 
-				    </label>
-				    <label className="checkbox-inline pl35">
-				      <input type="checkbox"  
-				      		 value="stampDuty" 
-				      		 id="3"
-				      		 name="userCheckbox"
-				      		 onChange={this.totalInclude.bind(this)}
+					</label>
+				    <label className="container1 checkbox-inline col-lg-3"><span className="fs2">Club House</span>
+						  <input type="checkbox"
+						  		 value="clubHouse" 
+					      		 id="4"
+					      		 name="userCheckbox"
+					      		 onChange={this.totalInclude.bind(this)} />
+						  <span className="checkmark1"></span>
 
-				      		 />Stamp Duty 
-				    </label>
-				    <label className="checkbox-inline pl35">
-				      <input type="checkbox" 
-				      		 value="clubHouse"
-				      		 id="4"
-				      		 name="userCheckbox"
-				      		 onChange={this.totalInclude.bind(this)} 
-
-				      		 />Club House 
-				    </label>
+					</label>
 		  </div>
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -180,7 +194,7 @@ import './Financials.css';
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 					    {/*<span className="asterisk">*</span>*/}
-				    	<input type="number" className="form-control" ref="maintenanceCharges" id="" placeholder="Maintenance Charge"/>	
+				    	<input type="number" className="form-control" ref="maintenanceCharges" id="" placeholder="Maintenance Charge" min="0" defaultValue="0"/>	
 				  		</div>
 				  </div>
 				  </div>
@@ -191,7 +205,7 @@ import './Financials.css';
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 		                    <select className="custom-select form-control " ref="maintenancePer" placeholder="select" >
-						    	<option className="hidden">Select</option>
+						    	<option className="hidden" disabled>--Select--</option>
 						    	<option value="month">Month</option>
 						    	<option value="year">Year</option>
 							</select>
@@ -202,7 +216,6 @@ import './Financials.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  		<b>My Apartment is Available From</b>
-
 		  	</div>
 		  </div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30">
@@ -210,10 +223,10 @@ import './Financials.css';
 			  <div className="form-group margBtm_5" id="date">
 			    <span htmlFor="exampleFormControlInput1">Date</span>{/*<span className="asterisk">*</span>*/}
 			    <div className="input-group inputBox-main " id="">
-			    <input type="date" className="form-control" ref="availableFrom"  id="" />
-				  	<div className="input-group-addon inputIcon">
+			    	<div className="input-group-addon inputIcon">
 		                <i className="fa fa-building iconClr"></i>
 		            </div>
+			    	<input type="date" className="form-control" ref="availableFrom"  id="" name="somedate"/>
 			  	</div>
 			  </div>
 			</div>
@@ -246,7 +259,7 @@ import './Financials.css';
 const mapStateToProps = (state)=>{
 	return {
 		property_id : state.property_id,
-		uid			    : state.uid
+		uid			: state.uid
 
 	}
 };

@@ -307,11 +307,11 @@ class PropertyProfile extends Component{
         <div id="postPropertyModal" className="modal fade" role="dialog">
           <div className="modal-dialog modal-lg">
 
-            <div className="modal-content">
+            <div className="modal-content" style={{marginTop:"52px"}}>
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
+                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
                 <h4 className="modal-title">
-                  <b> {header} </b>
+                  <b style={{paddingLeft:"28px"}}> {header} </b>
                 </h4>
               </div>
 

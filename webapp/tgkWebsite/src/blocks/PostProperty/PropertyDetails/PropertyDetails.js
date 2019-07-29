@@ -67,6 +67,17 @@ import './PropertyDetails.css';
 		this.props.backToLocation();
 	}
 
+	builtArea(){
+		const builtArea=parseInt(this.refs.builtupArea.value);
+		const superArea=parseInt(this.refs.superArea.value);
+		console.log("builtArea",builtArea);
+		console.log("superArea",superArea);
+
+		if(builtArea >= superArea){
+			alert("Built up area is not greater than super area");
+		}
+	}
+
 	render() {
 	   	return (
     		<div >
@@ -90,7 +101,7 @@ import './PropertyDetails.css';
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
 					  	<select className="custom-select form-control "  ref="bedrooms" placeholder="select" >
-					    	<option value="" className="hidden">select</option>
+					    	<option value="" className="hidden">--Select--</option>
 					    	<option value="1">1</option>
 					    	<option value="2">2</option>
 					    	<option value="3">3</option>
@@ -109,7 +120,7 @@ import './PropertyDetails.css';
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
 					    <select className="custom-select form-control " ref="balconies" placeholder="select" >
-					    	<option value="" className="hidden">select</option>
+					    	<option value="" className="hidden">--Select--</option>
 					    	<option value="1">1</option>
 					    	<option value="2">2</option>
 					    	<option value="3">3</option>
@@ -120,13 +131,13 @@ import './PropertyDetails.css';
 			  </div>
 			   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 				  <div className="form-group" id="bathroom">
-				    <span htmlFor="" className="mb7">Bathroom</span>
+				    <span htmlFor="" className="mb7">Bathrooms</span>
 				    <div className="input-group  " id="">
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="fa fa-building iconClr"></i>
 	                    </div>
 					    <select className="custom-select form-control " ref="bathroom" placeholder="select" >
-					    	<option value="" className="hidden">select</option>
+					    	<option value="" className="hidden">--Select--</option>
 					    	<option value="1">1</option>
 					    	<option value="2">2</option>
 					    	<option value="3">3</option>
@@ -151,7 +162,7 @@ import './PropertyDetails.css';
 		      		 id="radio-example1"
 		      		 checked={this.state.furnishedstatus === "fullfurnished"}
    					 onChange={this.radioChange} />   
-		      <span className="mb5">Full furnished</span> 
+		      <span className="mb5">Fully furnished</span> 
 
 		    </label>
 		    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
@@ -184,13 +195,13 @@ import './PropertyDetails.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="society">
-					    <span htmlFor="" className="mb5">Year Old</span>
+					    <span htmlFor="" className="mb5">Year Old(s)</span>
 						<div className="input-group  " id="yearOld">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
 							<select className="custom-select form-control "  ref="ageofproperty" placeholder="select" >
-						    	<option value="" className="hidden">--select year old--</option>
+						    	<option value="" className="hidden">--Property Age--</option>
 						    	<option value="1">1</option>
 						    	<option value="2">2</option>
 						    	<option value="3">3</option>
@@ -207,11 +218,15 @@ import './PropertyDetails.css';
 		                     <i className="fa fa-building iconClr"></i>
 		                    </div>
 							<select className="custom-select form-control "  ref="facing" placeholder="select" >
-						    	<option value="" className="hidden">--select property facing--</option>
-						    	<option value="East" >East</option>
-						    	<option value="West" >West</option>
-						    	<option value="North">North</option>
-						    	<option value="South">South</option>
+						    	<option value="" className="hidden">--Select property facing--</option>
+						    	<option value="East" >    East</option>
+						    	<option value="West" >    West</option>
+						    	<option value="North">    North</option>
+						    	<option value="South">    South</option>
+						    	<option value="Northeast">Northeast</option>
+						    	<option value="Northwest">Northwest</option>
+						    	<option value="Southeast">Southeast</option>
+						    	<option value="Southwest">Southwest</option>
 							</select>
 						</div>				  
 					</div>
@@ -225,7 +240,8 @@ import './PropertyDetails.css';
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-				    	<input type="number" className="form-control" ref="superArea" id="" placeholder="Super Area"/>	
+				    	<input type="number" className="form-control" ref="superArea" id="" placeholder="Super Area" min="0" id="first" />	
+				  			
 				  			<div className="input-group-addon inputIcon">
 		                     Sq ft
 		                    </div>
@@ -235,13 +251,13 @@ import './PropertyDetails.css';
 				  </div>
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >
-					  <span htmlFor="" className="mb7">Built Area</span>
+					  <span htmlFor="" className="mb7">Built Up Area</span>
 					  <span className="astrick">*</span>
 					    <div className="input-group  " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-					    	<input type="number" className="form-control" ref="builtupArea" name="" placeholder="Built Area"/>
+					    	<input type="number" className="form-control" ref="builtupArea" name="" placeholder="Built Up Area" min="0" id="second" onBlur={this.builtArea.bind(this)}/>
 					    {/*<div className="errorMsg">{this.state.errors.builtupArea}</div>*/}
 					  		<div className="input-group-addon inputIcon">
 		                     Sq ft

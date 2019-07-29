@@ -42,7 +42,6 @@ const reducer = (state = initialState,action) => {
 		newState.tempuid 		= "";
 		newState.uid 			= action.uid;
 	}
-	
 
 	if(action.type === "SIGN_UP"){
 		newState.WebSignupForm 	= false;
@@ -117,9 +116,9 @@ const reducer = (state = initialState,action) => {
 	}
 
 	if(action.type === "SHOW_FIRST_FORM"){
-		newState.BasicInfo 	        = true;
+		newState.BasicInfo 	        = false;
 		newState.PropertyDetails   	= false;
-		newState.Financials   	    = false;
+		newState.Financials   	    = true;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;

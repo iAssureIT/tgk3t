@@ -91,7 +91,7 @@ import './Amenities.css';
 		  	 	</div>
 		  	 		<div className="col-lg-12  mb20">
 		  	 			<div className="col-lg-6 FF4I1">
-		  	 				<label className="checkbox-inline col-lg-12 pt20 ">
+		  	 				{/*<label className="checkbox-inline col-lg-12 pt20 ">
 						      <input type="checkbox"
 						      		 value="gasPipeline" 
 						      		 id="1"
@@ -99,149 +99,137 @@ import './Amenities.css';
 						      		 onChange={this.totalInclude.bind(this)}
 
 						      		 /> <i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Gas Pipeline
-						    </label>
-						    <label className="checkbox-inline col-lg-12 pt20 pl31">
-						      <input type="checkbox" 
-						      		 value="internetServices" 
+						    </label>*/}
+						    <label className="container"> <span>Gas Pipeline</span>
+							  <input type="checkbox"
+							  		 value="gasPipeline" 
+						      		 id="1"
+						      		 name="userCheckbox"
+						      		 onChange={this.totalInclude.bind(this)} />
+							  <span className="checkmark"></span>
+
+							</label>
+						     <label className="container"><span className="pl33">Internet Services</span>
+							  <input type="checkbox"
+							  		 value="internetServices" 
 						      		 id="3"
 						      		 name="userCheckbox"
-						      		 onChange={this.totalInclude.bind(this)}
+						      		 onChange={this.totalInclude.bind(this)} />
+							  <span className="checkmark"></span>
 
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Internet Services 
-						    </label>
-
-						    <label className="checkbox-inline col-lg-9 pt20 ">
-						      <input type="checkbox"
-						      		 value="lift" 
+							</label>
+						    <label className="container"><span className="pr65">Lift</span>
+							  <input type="checkbox"
+							  		 value="lift" 
 						      		 id="5"
 						      		 name="userCheckbox"
-						      		 onChange={this.totalInclude.bind(this)}
+						      		 onChange={this.totalInclude.bind(this)} />
+							  <span className="checkmark"></span>
 
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Lift 
-						    </label>
-
-						     <label className="checkbox-inline col-lg-12 pt20 pl14">
-							      <input type="checkbox" 
-							      		 value="airConditioner" 
+							</label>
+							    <label className="container"><span className="pl21">Air Conditioner</span>
+								  <input type="checkbox"
+								  		 value="airConditioner" 
 							      		 id="7"
 							      		 name="userCheckbox"
-							      		 onChange={this.totalInclude.bind(this)}
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
-							      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Air Conditioner
-							    </label>
-
-							    <label className="checkbox-inline col-lg-10 pt20 pl31 ">
-							      <input type="checkbox"
-							      		 value="intercom" 
-							      		 id="9"
+								</label>
+							    <label className="container"><span className="pr22">Intercom</span>
+								  <input type="checkbox"
+								  		 value="intercom" 
+							      		 id="7"
 							      		 name="userCheckbox"
-							      		 onChange={this.totalInclude.bind(this)}
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
-							      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Intercom
-							    </label>
-
-							    <label className="checkbox-inline col-lg-12 pt20 pl11">
-							      <input type="checkbox" 
-							      		 value="powerBackup"
+								</label>
+							    <label className="container"><span className="pl20">Power Backup</span>
+								  <input type="checkbox"
+								  		 value="powerBackup" 
 							      		 id="11"
 							      		 name="userCheckbox"
-							      		 onChange={this.totalInclude.bind(this)} 
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
-							      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Power Backup
-							    </label>
+								</label>
+								<label className="container"><span className="pl10">Water Supply</span>
+								  <input type="checkbox"
+								  		 value="waterSupply" 
+							      		 id="11"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
-							    <label className="checkbox-inline col-lg-12 pt20 pl3">
-								      <input type="checkbox" 
-								      		 value="waterSupply"
-								      		 id="13"
-								      		 name="userCheckbox"
-								      		 onChange={this.totalInclude.bind(this)} 
-
-								      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Water Supply
 								</label>
 		  	 			</div>
 		  	 				{/*External*/}
 
 		  	 			<div className="col-lg-6 FF4I1"> 
-		  	 				<label className="checkbox-inline col-lg-12 pt20">
-							      <input type="checkbox" 
-							      		 value="clubHouse" 
+							    <label className="container"><span>Club House</span>
+								  <input type="checkbox"
+								  		 value="clubHouse" 
 							      		 id="2"
 							      		 name="userCheckbox"
-							      		 onChange={this.totalInclude.bind(this)}
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
-							      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Club House
-							    </label>
-
-							    <label className="checkbox-inline col-lg-12 pt20 pl35">
-							      <input type="checkbox" 
-							      		 value="shoppingCenter"
+								</label>
+							    <label className="container"><span className="pl38">Shopping Center</span>
+								  <input type="checkbox"
+								  		 value="shoppingCenter" 
 							      		 id="4"
 							      		 name="userCheckbox"
-							      		 onChange={this.totalInclude.bind(this)} 
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
-							      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Shopping Center 
-							    </label>
+								</label>
+						    	<label className="container"><span className="pl95">Sewage Treatment Plan</span>
+								  <input type="checkbox"
+								  		 value="sewageTreatmentPlan" 
+							      		 id="6"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
+								</label>
+							    <label className="container"><span className="pl35">Swimming Pool</span>
+									  <input type="checkbox"
+									  		 value="swimmingPool" 
+								      		 id="8"
+								      		 name="userCheckbox"
+								      		 onChange={this.totalInclude.bind(this)} />
+									  <span className="checkmark"></span>
 
-				  	 		<label className="checkbox-inline col-lg-12 pt20 pl87">
-						      <input type="checkbox" 
-						      		 value="sewageTreatmentPlan" 
-						      		 id="6"
-						      		 name="userCheckbox"
-						      		 onChange={this.totalInclude.bind(this)}
+								</label>
+						    	<label className="container"><span className="pl64">Children's Play Area</span>
+								  <input type="checkbox"
+								  		 value="childrenPlay" 
+							      		 id="10"
+							      		 name="userCheckbox"
+							      		 onChange={this.totalInclude.bind(this)} />
+								  <span className="checkmark"></span>
 
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Sewage Treatment Plan 
-						    </label>
+								</label>
+							    <label className="container"><span className="pl18">Internal Gym</span>
+									  <input type="checkbox"
+									  		 value="internalGym" 
+								      		 id="12"
+								      		 name="userCheckbox"
+								      		 onChange={this.totalInclude.bind(this)} />
+									  <span className="checkmark"></span>
 
-						    <label className="checkbox-inline col-lg-12 pt20 pl25">
-						      <input type="checkbox" 
-						      		 value="swimmingPool"
-						      		 id="8"
-						      		 name="userCheckbox"
-						      		 onChange={this.totalInclude.bind(this)} 
+								</label>
+							    <label className="container"><span className="pr44">Park</span>
+									  <input type="checkbox"
+									  		 value="park" 
+								      		 id="14"
+								      		 name="userCheckbox"
+								      		 onChange={this.totalInclude.bind(this)} />
+									  <span className="checkmark"></span>
 
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Swimming Pool 
-						    </label>
-
-						    
-						    
-						    
-
-				  	 		<label className="checkbox-inline col-lg-12 pt20 pl61">
-						      <input type="checkbox" 
-						      		 value="childrenPlay" 
-						      		 id="10"
-						      		 name="userCheckbox"
-						      		 onChange={this.totalInclude.bind(this)}
-
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Children's Play Area
-						    </label>
-
-				   
-				    
-
-						     <label className="checkbox-inline col-lg-12 pt20 pl10">
-						      <input type="checkbox" 
-						      		 value="internalGym" 
-						      		 id="12"
-						      		 name="userCheckbox"
-						      		 onChange={this.totalInclude.bind(this)}
-
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Internal Gym 
-						    </label>
-						    
-
-						    <label className="checkbox-inline col-lg-10 pt20 pl11">
-						      <input type="checkbox" 
-						      		 value="park"
-						      		 id="14"
-						      		 name="userCheckbox"
-						      		 onChange={this.totalInclude.bind(this)} 
-
-						      		 /><i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Park
-						    </label>
-	
+								</label>
 		  	 			</div>
 		  	 		</div>
 			       
