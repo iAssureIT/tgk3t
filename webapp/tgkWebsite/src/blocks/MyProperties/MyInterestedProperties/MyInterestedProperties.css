@@ -87,3 +87,6 @@
 	transform: rotate(45deg);
 }
 
+.myInterProp{
+	min-height: 500px;
+}

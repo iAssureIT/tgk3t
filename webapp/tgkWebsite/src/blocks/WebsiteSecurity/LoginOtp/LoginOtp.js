@@ -31,6 +31,7 @@ class LoginOtp extends Component {
 				localStorage.setItem("uid",this.props.tempuid);
 				if(this.props.message === "NEW-USER-CREATED"){
 					this.props.redirectToSignUp(this.props.tempuid);
+
 				}else{
 					if(this.props.originPage === "header"){
 						this.props.loginMe(this.props.tempuid);

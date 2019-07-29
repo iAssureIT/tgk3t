@@ -37,29 +37,35 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			event.preventDefault();
 			// console.log("abc");
 			const formValues = {
-				"name" 		 : this.state.name,
-				"email" 	 : this.state.email,
-				"city"       : this.state.city,
-				"mobile"     : this.refs.mobile.value,
-				"countryCode": this.refs.countryCode.value,
-				"status"     : 'Active',
-				"role"       : 'Client',
+				"userID" 		: localStorage.getItem("uid"),
+				"name" 		 	: this.state.name,
+				"email" 	 	: this.state.email,
+				"city"       	: this.state.city,
+				"mobileNumber"  : this.refs.mobile.value,
+				"countryCode"	: this.refs.countryCode.value,
+				"status"     	: 'Active',
+				"role"       	: 'Client',
 			};
 			console.log("WebSignupForm==",formValues);
 		if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){
 			if(formValid(this.state.formerrors)){
 			axios
-				.patch('/api/usersotp/signup',formValues )
+				.patch('/api/usersotp/signup',formValues)
 				.then( (res) =>{
-					if(res.data.message === "NEW-USER-CREATED"){
+					if(res.data.message === "NUSER-UPDATED"){
 						console.log("BasicInfo res = ",res);
-						swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
-						this.props.signUp(res.data.user_id, res.data.mobile,res.data.otp, res.data.message);
+						if(this.props.originPage === "header")
+						{
+							this.props.history.push("/");
+							window.location.reload();
+						}else{
+							this.props.redirectToBasicInfo(res.data.user_id);
+						}
 					}
 				})
 				.catch((error) =>{
 					console.log("error = ", error);
-					swal("Sorry!!", "Mobile Number is already exits.", "error");
+					swal("Sorry!!", "User not found.", "error");
 				});
 			}
 		}else{
@@ -186,19 +192,14 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 
 const mapStateToProps = (state)=>{
 	return {
-		mobile 	: state.mobile
+		mobile 	: state.mobile,
+		originPage  : state.originPage,
 	}
 };
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		signUp 	: (user_id, mobile, otp, newUsermessage)=> dispatch({
-										type 			: "SIGN_UP",
-										uid 			: user_id, 
-										mobile 			: mobile, 
-										OTP 			: otp, 
-										newUsermessage 	: newUsermessage,
-									}),
+		redirectToBasicInfo  : (uid)=> dispatch({ uid : uid, type: "REDIRECT_TO_BASIC_INFO"}),
 	}
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(WebSignupForm));

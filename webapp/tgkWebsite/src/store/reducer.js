@@ -46,7 +46,8 @@ const reducer = (state = initialState,action) => {
 
 	if(action.type === "SIGN_UP"){
 		newState.WebSignupForm 	= false;
-		newState.LoginOtp 		= true;
+		newState.LoginOtp 		= false;
+		newState.BasicInfo 		= true;
 		newState.uid 			= action.uid;
 		newState.mobile 		= action.mobile;
 		newState.OTP 			= action.OTP;
@@ -54,6 +55,7 @@ const reducer = (state = initialState,action) => {
 	}
 
 	if(action.type === "REDIRECT_TO_BASIC_INFO"){
+		newState.WebSignupForm 	= false;
 		newState.LoginOtp 	= false;
 		newState.BasicInfo 	= true;
 		newState.uid 		= action.uid;

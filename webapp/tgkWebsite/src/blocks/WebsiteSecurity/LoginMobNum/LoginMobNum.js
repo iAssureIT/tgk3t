@@ -51,6 +51,7 @@ class LoginMobNum extends Component {
 												response.data.otp,
 												response.data.message
 											);
+						swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
 					})
 					.catch(function(error){
 						console.log(error);

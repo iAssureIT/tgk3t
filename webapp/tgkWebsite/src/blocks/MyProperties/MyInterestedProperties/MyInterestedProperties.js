@@ -63,12 +63,7 @@ import './MyInterestedProperties.css';
 	}
 	render() {
 		return (
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-					<div className="row">	
-						<div className="headerDiv">
-							<Header />
-						</div>
-					</div>	
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myInterProp">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<h3 className="text-center propertyHaedText">My Interested Properties</h3>
 					</div>
@@ -79,7 +74,7 @@ import './MyInterestedProperties.css';
 							<div className="row pull-right" id="triangle-topright">				</div>	
 								
 								<div className="row">
-									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">				
+									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-right ">
 											<h5 className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-right intrestBtn">
 												<i  className="fa fa-heart-o heartBtn" onClick={this.heartClick.bind(this)}></i>&nbsp;<span>{this.state.heartStatus}</span>

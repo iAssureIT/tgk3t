@@ -90,3 +90,7 @@
 .newPost{
 	margin-top: 20px;
 }
+
+.myPostProp{
+	min-height: 500px;
+}

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import axios                from 'axios';
 import { Link } 			from 'react-router-dom';
 import {withRouter} 		from 'react-router-dom';
-import Header 			    from "../../common/Header/Header.js";
 import { connect }          from 'react-redux';
 import $                    from "jquery";
 
@@ -22,10 +21,10 @@ import './MyPostedProperties.css';
  class MyPostedProperties extends Component {
 	constructor(props){
 		super(props);
-     	// var profileId = this.props.match.params.id;
+     	var uid = localStorage.getItem("uid");
     	this.props.showFirstForm();  //for dispatch
 		this.state = {
-			"uid"		   : '',
+			"uid"		   : uid,
 			"myProperties" : [],
 			"userData"     : [],
 			"heartStatus"  : "Express Interest"
@@ -101,12 +100,7 @@ import './MyPostedProperties.css';
 	    }
 
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">	
-					<div className="headerDiv">
-						<Header />
-					</div>
-				</div>
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPostProp noPad">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 newPost">
 				 	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
                       <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal"> Post New Property </button> 
