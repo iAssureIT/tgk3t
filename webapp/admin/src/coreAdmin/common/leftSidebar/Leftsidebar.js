@@ -33,10 +33,8 @@ componentDidMount(){
             <aside className="leftsidebar">
             <div className="wrapper">
             <nav id="sidebar">
-                <div className="sidebar-header">{/*
-                    <h4 className="logopos">ProjectAdmin Sidebar</h4>*/}
-                    <h4 className=" zeromargin"><img className="imgLogo " src="images/Logo.png"  alt="TGK" width="80px" height="45px" /></h4>
-                  
+                <div className="sidebar-header">
+                    <h4 className=" zeromargin"><img className="imgLogo " src="images/Logo.png"  alt="TGK" width="100%" height="45px" /></h4>
                     <strong className="clspadding">  <img src="images/Keylogo.png"  alt="TGK" height="28px"/></strong>
                 </div>
 

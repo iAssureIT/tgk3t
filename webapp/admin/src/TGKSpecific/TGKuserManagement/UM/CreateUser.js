@@ -182,7 +182,8 @@ class CreateUser extends Component {
                     var modal = document.getElementById("CreateUserModal");
                     modal.style.display = "none";
                     $('.modal-backdrop').remove();
-                    this.props.history.push("/umlistofusers");       
+                    // this.props.history.push("/umlistofusers");       
+                    window.location.reload();
                 })
               .catch((error)=>{
                 console.log("error = ",error);

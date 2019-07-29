@@ -3,9 +3,13 @@
 }
 */
 .imgLogo{
-  margin-left: 70px;
+ /* margin-left: 70px;*/
   padding: 5px 0px;
+  transition: all 0.15s ease 0s;
+  padding-left: 65px;
+  padding-right: 65px;
 }
+
 .zeromargin{
   margin-top:  0px !important;
   margin-bottom: 0px !important;
@@ -59,7 +63,7 @@ i, span {
 
 #sidebar {
     min-width: 228px;
-    max-width: 250px;
+    max-width: 230px;
     background: #333;
     color: #fff;
     transition: all 0.80s;

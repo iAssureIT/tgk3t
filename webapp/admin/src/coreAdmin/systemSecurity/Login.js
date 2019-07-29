@@ -48,7 +48,8 @@ class Login extends Component {
         localStorage.setItem("token",response.data.token);
         console.log("localStorage =",localStorage);
         // browserHistory.replace('/');
-        this.props.history.push("/dashboard");
+        this.props.history.push("/");
+        window.location.reload();
         // direct.setState({loggedIn:response.data.token})
         if(localStorage==null){
           swal("Invalid Email or Password","Please Enter valid email and password","warning");

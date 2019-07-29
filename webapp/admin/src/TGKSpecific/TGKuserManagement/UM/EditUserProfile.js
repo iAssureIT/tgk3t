@@ -16,6 +16,8 @@ class EditUserProfile extends Component{
 	  		userProfile : "",
 	  		firstName : "",
 	  		lastName  : "",
+	  		role 	  : "",
+	  		office    : [],
 			}	  	
 			 this.handleChange = this.handleChange.bind(this);
 	  }
@@ -182,6 +184,52 @@ class EditUserProfile extends Component{
 	                                                          </span>
 														</div>	
 													</div>
+														<div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12 createusr">
+                                                         <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent">
+                                                           <label className="formLable col-lg-12 col-md-12">Role <label className="requiredsign"></label></label>
+                                                              <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
+                                                             
+                                                               <select className="form-control" value={this.state.role} onChange={this.handleChange} ref ="role" id="role" name="role" data-text="role">
+                                                                    <option  hidden> --Select-- </option>
+                                                                    <option value="Technical Admin" > Technical Admin </option>
+                                                                    <option value="Executive Admin" > Executive Admin </option>
+                                                                    <option value="Sales Manager" > Sales Manager </option>
+                                                                    <option value="Sales Agent" > Sales Agent </option>
+                                                                    <option value="Field Manager" > Field Manager </option>
+                                                                    <option value=" Field Agent" >  Field Agent </option>
+                                                                    </select>
+
+                                                              </span>
+                                                               
+                                                          </div>
+
+                                                          <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
+                                                              <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
+                                                                  <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
+                                                                    <select className="form-control" value={this.state.officeid} ref ="office" id="office" name="office" data-text="office">
+                                                                        <option hidden> --Select-- </option>
+                                                                        <option value="Head Office">  Head Office </option>
+                                                                        <option value="Sales Agent Office"> Sales Agent Office </option>
+                                                                           { this.state.office != null ?
+                                                                          this.state.office[0].map( (locData, index)=>{
+                                                                          // console.log('locData',locData);
+                                                                           return( 
+
+                                                                                 <option key={index} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+
+
+                                                                                   )}
+                                                                           )
+                                                                          :
+                                                                          null
+
+                                                                        }
+                                                                    </select>
+
+                                                                  </span>
+                                                           </div>
+                                                     </div>
+
 													<br/>
 														<div className="col-lg-6 col-sm-12 col-xs-12 col-md-12 pull-right btmmargin userProfileEditBtn">
 																<button onClick={this.handleSubmit.bind(this)} className="btn btn-primary pull-right">&nbsp; &nbsp;Update Profile&nbsp; &nbsp;</button>

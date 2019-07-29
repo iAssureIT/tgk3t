@@ -1,7 +1,11 @@
 .App {
 /*  text-align: center;
 */}
-
+.cameraimg{
+  color: #000;
+  font-size: 30px;
+  margin-right: 80px;
+}
 /*html *
 {
    font-family:'Roboto', sans-serif !important;
@@ -66,11 +70,16 @@
 {
     background-color: #3c8dbc;
   }
+.longmar{
 
-.headereffect
-{
-    width: 94%!important;
-  }
+  margin-left: 82px !important;
+  transition: all 0.8s ease 0s;
+}
+.smallmar{
+ 
+  margin-left: 228px;
+  transition: all 0.8s ease 0s;
+}
   .dashboardeffect
 {
     width: 94.2%!important;

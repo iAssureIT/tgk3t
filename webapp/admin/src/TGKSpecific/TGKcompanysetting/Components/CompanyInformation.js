@@ -5,7 +5,7 @@ import axios from 'axios';
 // import SimpleReactValidator from 'simple-react-validator';
 import swal from 'sweetalert';
 import InputMask  from 'react-input-mask';
-
+import S3FileUpload from 'react-s3';
 import "../../../API";
 
 const formValid = formerrors=>{
@@ -27,6 +27,8 @@ class CompanyInformation extends Component{
    constructor(props) {
     super(props);
     this.state = {
+      config                  : "",
+      userProfile             : "",
       companyId               : "",
       companyName             : "",
       companyContactNumber    : "",
@@ -122,23 +124,62 @@ class CompanyInformation extends Component{
     //   }
     // }
   }
-  imgBrowse(e){
-   
-    e.preventDefault();
-    // let self=this;      
-    //   if(e.currentTarget.files){
-    //   var file=e.currentTarget.files[0];
-    //   if(file){
-    //     var fileExt=e.currentTarget.files[0].name.split('.').pop();
-    //     if (fileExt == 'jpg' || fileExt == 'jpeg' || fileExt == 'svg' || fileExt == 'png' ) {
-    //        attachLogoToS3Function(file,self);
-    //     }else{
-    //     swal({
-    //       title:"abc",
-    //       text:'Please upload only .jpg/.jpeg/.svg/.png files'});
-    //     }
-    //   }
-    // }           
+  imgBrowse(event){
+   event.preventDefault();
+     // let self = this;
+     // if (event.currentTarget.files && event.currentTarget.files[0]) {
+     // var file = event.currentTarget.files[0];
+     //    if (file) {
+     //      var fileName  = file.name; 
+     //    console.log("fileName--------------->",fileName);
+     //        var ext       = fileName.split('.').pop();  
+     //                if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){    
+     //                     if (file) {
+     //                      S3FileUpload
+     // .uploadFile(file,this.state.config)
+     // .then((Data)=>{
+     //  console.log("Data = ",Data);
+     //  this.setState({
+     //  userProfile : Data.location
+     //  },()=>{
+     //       console.log("state of userprofile", this.state.userProfile); 
+     //  })
+
+       
+            axios
+             .get('/api/projectsettings/get/one/S3')
+             .then((response)=>{
+              console.log("response data hereeeeeeeeeeeeeeeeeee",response);
+              const config = {
+                 bucketName : response.data.bucket,
+                 dirName    : 'photos',
+                 region : response.data.region,
+                 accessKeyId : response.data.key,
+                 secretAccessKey : response.data.secret,
+              }
+              this.setState({
+              config : config
+              })
+                     })
+                     .catch(function(error){
+                        console.log(error);
+                     })
+
+     //  })
+     //  .catch((error)=>{
+     //     console.log(error);
+     //  })
+     //      // addStudentProfileImage(file,self);
+     //  }else{          
+     //          swal("File not uploaded","Something went wrong","error");  
+     //             }     
+     //                }else{ 
+     //                    swal("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+     //                 }
+     //  }
+
+     // }
+     
   }
 
   componentWillReceiveProps(nextProps) {
@@ -402,7 +443,7 @@ class CompanyInformation extends Component{
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12 noPadding">
                     <h4 className="basicinfotxt"><i className="fa fa-info-circle fonticons" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Basic Info</h4>
                   </div>
-                  {/*<div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  {<div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                    
                     <div className="col-lg-6 col-lg-offset-6 col-md-6 col-sm-12 col-xs-12 csImageWrapper">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 outerPhotoWrapper">
@@ -413,20 +454,20 @@ class CompanyInformation extends Component{
                           <div className="col-lg-12 col-md-12 col-sm-12ClientImgWrap1 displayBlockOne">
                             {
                             this.CompanyImage() ==='../images/CSLogo.png' ?  <i className="fa fa-camera fonticons paddingNoImageUpload col-lg-2 col-md-2 col-sm-2   styleUpload" title="Add Photo.">
-                            <input type="file" className="col-lg-1 col-md-1 col-sm-1 col-xs-12 browseDoc" accept="image/*" onChange={this.imgBrowse.bind(this)}/> </i>
+                            <input type="file" accept=".jpg,.jpeg,.png" className="col-lg-1 col-md-1 col-sm-1 col-xs-12 browseDoc" accept="image/*" onChange={this.imgBrowse.bind(this)}/> </i>
                               :
-                              <i className="fa fa-camera fonticons paddingNoImageUpload col-lg-2  styleUpload" title="Change Photo.">
+                              <i className="fa fa-camera fonticons paddingNoImageUpload col-lg-2  styleUpload cameraimg" title="Change Photo.">
                                 <input type="file" className="col-lg-1 col-md-1 col-sm-1 col-xs-1 browseDoc" accept="image/*" onChange={this.imgBrowse.bind(this)}/>
                               </i>
                             }
                           </div>
 
-                            {<img className="col-lg-12 col-md-12 col-sm-12 ClientImgWrap1 displayLogoOne" src={this.CompanyImage()?this.CompanyImage() :"/images/preloader.gif"}/>}
+                            {/*<img className="col-lg-12 col-md-12 col-sm-12 ClientImgWrap1 displayLogoOne" src={this.CompanyImage()?this.CompanyImage() :"/images/preloader.gif"}/>*/}
                             
                         
                       </div>
                     </div>
-                  </div>*/}
+                  </div>}
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp">
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">

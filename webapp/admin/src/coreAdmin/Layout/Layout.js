@@ -61,7 +61,7 @@ componentDidMount(){
     });
     $(document).ready(function () {
        $('#sidebarCollapse').on('click', function () {
-           $('#headerid').toggleClass('headereffect');
+           $('#sidebarCollapse').toggleClass('longmar');
        });
     });
     $(document).ready(function () {
@@ -81,6 +81,18 @@ componentDidMount(){
     }else{
       console.log("token is not available");
     }
+
+    window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+      document.getElementById("mySidenav").style.top = "0";
+    } else {
+      document.getElementById("mySidenav").style.top = "50px";
+    }
+  }
+
+
               
   }
 
@@ -95,20 +107,7 @@ componentDidMount(){
       // this.props.history.push("/login");
     }
   }
-/*
-                      <Router>
-                          <Switch>
-                          <Route path="/umlistofusers" component={UMListOfUsers} exact />
-                          <Route path="/umroleslist" component={UMRolesList} exact />
-                          <Route path="/edituserprofile" component={EditUserProfile} exact />
 
-                          <Route path="/ViewTemplates" component={ViewTemplates} exact />
-                          <Route path="/dashboard" component={Dashboard} exact />
-
-                          <Route path="/companysetting" component={CompanySetting} exact />
-                          </Switch>        
-                      </Router>
-*/
 
 
   render(){
@@ -117,50 +116,56 @@ componentDidMount(){
     if(this.state.loggedIn===true){
       return(
             <div className="App container-fluid">
-           
-                <div className="row">
+            
+              <div className="container-fluid headerbackgroundcolor padd0" id="headerid" >
+               <Header />
+              </div>
+
+                {/*<div className="row">
                   <div id="headerid" className="headerbackgroundcolor ">
                     <div className="">
                       <Header />
                    </div>
-                  </div>
-                      <div className="">                  
-                        <div id="dashbordid" className="">
-                         {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
-                          */} <Router>
-                              <Switch>
-                              <Route path="/umlistofusers" component={UMListOfUsers} exact />
-                              <Route path="/umlistofemp" component={UMListOfEmp} exact />
+                  </div>*/}
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="">                  
+                          <div id="dashbordid" className="">
+                           {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
+                            */} <Router>
+                                <Switch>
+                                <Route path="/umlistofusers" component={UMListOfUsers} exact />
+                                <Route path="/umlistofemp" component={UMListOfEmp} exact />
 
-                              <Route path="/umroleslist" component={UMRolesList} exact />
-                              <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
+                                <Route path="/umroleslist" component={UMRolesList} exact />
+                                <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
 
-                              <Route path="/ViewTemplates" component={ViewTemplates} exact />
-                              <Route path="/dashboard" component={Dashboard} exact />
+                                <Route path="/ViewTemplates" component={ViewTemplates} exact />
+                                <Route path="/dashboard" component={Dashboard} exact />
+                                <Route path="/" component={Dashboard} exact />
 
-                              <Route path="/companysetting" component={CompanySetting} exact />
-                              
-                             {/*----------------------------------------------*/}
+                                <Route path="/companysetting" component={CompanySetting} exact />
+                                
+                               {/*----------------------------------------------*/}
 
-                              <Route path="/masterdata" component={MasterData} exact />
-                              <Route path="/sellometer" component={SellOMeter} exact />
-                              <Route path="/classrating" component={ClassRating} exact />
+                                <Route path="/masterdata" component={MasterData} exact />
+                                <Route path="/sellometer" component={SellOMeter} exact />
+                                <Route path="/classrating" component={ClassRating} exact />
 
-                              
+                                
 
-                              </Switch>        
-                          </Router>
+                                </Switch>        
+                            </Router>
+                          </div>
                         </div>
-                      </div>
-                  <div className="leftsidebarbackgroundcolor">
-                    <div className="row">
-                       <Leftsidebar />
-                    </div>
-                  </div>
-                  <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-                    <div className="">
-                   </div>
-                  </div>
+                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                          <div className="leftsidebarbackgroundcolor">
+                            <div className="row">
+                               <Leftsidebar />
+                            </div>
+                          </div>
+                        </div>
+
+                  
                 </div>
             </div> 
         );

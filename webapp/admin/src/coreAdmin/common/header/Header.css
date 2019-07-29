@@ -137,7 +137,16 @@ padding: 5px 5px !important;
   /*.sidenav {padding-top: 15px;}*/
   .sidenav a {font-size: 18px;}
 }
-
+.barbtn{
+   padding-top: 20px;
+  padding-bottom: 15px;
+  padding-left: 5px
+}
+.smallmar{
+ 
+  margin-left: 228px;
+  transition: all 0.8s ease 0s;
+}
 #mysidenav{
       transition: all 0.8s ease 0s;
       z-index: 100;
@@ -146,9 +155,36 @@ padding: 5px 5px !important;
 
 #headerid{
   position: absolute;
-  width: 82.5%;
+  width: 100%;
   right: 0px;
   transition: all 0.8s;
   }
 
 
+/*new css*/
+
+#sidebarLogo.active .sidebar-header h4,  #sidebarLogo.active .CTAs {
+    display: none;
+}
+
+#sidebarLogo.active .sidebar-header strong {
+    display: block;
+}
+
+#sidebarLogo .sidebar-header {
+    padding: 4px;
+    background: #222;
+}
+
+#sidebarLogo .sidebar-header strong {
+    display: none;
+    font-size: 1.8em;
+}
+
+#sidebarLogo .sidebar-header h3, #sidebarLogo .CTAs {
+        display: none;
+    }
+
+#sidebarLogo .sidebar-header strong {
+        display: block;
+    }
