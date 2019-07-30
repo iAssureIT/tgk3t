@@ -715,6 +715,7 @@ class IAssureTable extends Component {
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
+																
 																if(value1){
 																	
 																	if($.type(value1) == 'string'){

@@ -72,25 +72,17 @@ componentDidMount(){
 
 
     const token = localStorage.getItem("token");
-    console.log("Dashboard Token = ",token);
+    // console.log("Dashboard Token = ",token);
     if(token!==null){
-    console.log("*********===***********imin ",token);
+    // console.log("*********===***********imin ",token);
       this.setState({
         loggedIn : true
       })
     }else{
-      console.log("token is not available");
+      // console.log("token is not available");
     }
 
-    window.onscroll = function() {scrollFunction()};
-
-  function scrollFunction() {
-    if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-      document.getElementById("mySidenav").style.top = "0";
-    } else {
-      document.getElementById("mySidenav").style.top = "50px";
-    }
-  }
+    
 
 
               
@@ -99,7 +91,7 @@ componentDidMount(){
   logout(){
     var token = localStorage.removeItem("token");
       if(token!==null){
-      console.log("Header Token = ",token);
+      // console.log("Header Token = ",token);
       this.setState({
         loggedIn : false
       })
@@ -111,9 +103,25 @@ componentDidMount(){
 
 
   render(){
-    console.log("props = ",this.props);
-    {console.log("loggedIn status layput = ", this.state.loggedIn)}
+    // console.log("props = ",this.props);
+    // {console.log("loggedIn status layput = ", this.state.loggedIn)}
     if(this.state.loggedIn===true){
+      
+      window.onscroll = function() {scrollFunction()};
+
+      function scrollFunction() {
+        if( document.getElementById("mySidenav"))
+        {
+            if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+              document.getElementById("mySidenav").style.top = "0";
+            } else {
+              document.getElementById("mySidenav").style.top = "50px";
+            }
+
+        }
+        
+      }
+
       return(
             <div className="App container-fluid">
             

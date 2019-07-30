@@ -1,14 +1,14 @@
-import React, { Component } 		  from 'react';
-import CreateUser 					       from './CreateUser.js';
-import axios                        from 'axios';
-import _                        from 'underscore';
-import swal                     	from 'sweetalert';
+import React, { Component } from 'react';
+import CreateUser 			from './CreateUser.js';
+import axios                from 'axios';
+import _                    from 'underscore';
+import swal                 from 'sweetalert';
 import './userManagement.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
 import IAssureTableUM from '../../TGKIAssureTableUM/IAssureTable.jsx';
-
+import $ from 'jquery';
 import  UMDelRolRow from './UMDelRolRow.jsx';
 import  UMAddRolRow from './UMAddRolRow.jsx';
 import  UMSelectRoleUsers from './UMSelectRoleUsers.jsx';
@@ -51,6 +51,7 @@ class UMListOfUsers extends Component {
             activeswal : false,
             blockswal : false,
             confirmDel : false,
+            unCheckedUser : [],
 		}
     	this.handleChange  = this.handleChange.bind(this);
 			
@@ -72,21 +73,33 @@ class UMListOfUsers extends Component {
 		axios.post('/api/users/userslist', data)
 		.then( (res)=>{      
 			console.log("herer=========================>>>>>>>>>>",res.data);
+			// var tableData = res.data.map((a, i)=>{
+			// 	return {
+			// 		_id 			: a._id,
+			// 		fullName        : a.fullName,
+	  //               emailId    		: a.emailId,
+	  //               mobileNumber    : a.mobileNumber, 
+	  //               status        	: a.status,	
+	  //               roles 			: a.roles,
+	  //               checked         : false,
+			// 	}
+			// })
 			var tableData = res.data.map((a, i)=>{
 				return {
 					_id 			: a._id,
-					fullName        : a.fullName,
-	                emailId    		: a.emailId,
-	                mobileNumber       : a.mobileNumber, 
-	                status        	: a.status,	
-	                roles 			: a.roles,
+					fullName        : a.fullName ? a.fullName : "-",
+	                emailId    		: a.emailId ? a.emailId : "-",
+	                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+	                status        	: a.status ? a.status : "-",	
+	                roles 			: a.roles ? a.roles : "-",
+	                checked        : false,
 				}
 			})
 			this.setState({
 	          completeDataCount : res.data.length,
 	          tableData 		: tableData,          
 	        },()=>{
-	        	// console.log('tableData', this.state.tableData);
+	        	console.log('tableData', this.state.tableData);
 	        })
 		})
 		.catch((error)=>{
@@ -105,11 +118,12 @@ class UMListOfUsers extends Component {
         	var tableData = res.data.map((a, i)=>{
 				return {
 					_id 			: a._id,
-					fullName        : a.fullName,
-	                emailId    		: a.emailId,
-	                mobileNumber       : a.mobileNumber, 
-	                status        	: a.status,	
-	                roles 			: a.roles,
+					fullName        : a.fullName ? a.fullName : "-",
+	                emailId    		: a.emailId ? a.emailId : "-",
+	                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+	                status        	: a.status ? a.status : "-",	
+	                roles 			: a.roles ? a.roles : "-",
+	                checked        : false,
 				}
 			})
         	// console.log('res============', res.data);
@@ -190,11 +204,12 @@ class UMListOfUsers extends Component {
 											var tableData = res.data.map((a, i)=>{
 												return {
 													_id 			: a._id,
-													fullName        : a.fullName,
-									                emailId    		: a.emailId,
-									                mobileNumber       : a.mobileNumber, 
-									                status        	: a.status,	
-									                roles 			: a.roles,
+													fullName        : a.fullName ? a.fullName : "-",
+									                emailId    		: a.emailId ? a.emailId : "-",
+									                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+									                status        	: a.status ? a.status : "-",	
+									                roles 			: a.roles ? a.roles : "-",
+									                checked        : false,
 												}
 											})
 											this.setState({
@@ -259,11 +274,12 @@ class UMListOfUsers extends Component {
 											var tableData = res.data.map((a, i)=>{
 												return {
 													_id 			: a._id,
-													fullName        : a.fullName,
-									                emailId    		: a.emailId,
-									                mobileNumber       : a.mobileNumber, 
-									                status        	: a.status,	
-									                roles 			: a.roles,
+													fullName        : a.fullName ? a.fullName : "-",
+									                emailId    		: a.emailId ? a.emailId : "-",
+									                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+									                status        	: a.status ? a.status : "-",	
+									                roles 			: a.roles ? a.roles : "-",
+									                checked        : false,
 												}
 											})
 											this.setState({
@@ -294,75 +310,9 @@ class UMListOfUsers extends Component {
 
 				  case 'cancel_selected':
 
-				  	// var modal = document.getElementById("deleteModal");
-       //              modal.style.display = "block";
+				 	 $('#deleteModal').addClass("in");
+				 	 $('#deleteModal').css("display","block");
 
-				  	// if(this.state.confirmDel == true)
-				  	// {
-				  	// 	console.log("here yes");
-				  	// }else{
-				  	// 	console.log("here no");
-				  	// }
-
-				    for(var i=0;i< checkedUsersList.length;i++)
-				  {
-				  	var selectedId = checkedUsersList[i];
-				  	
-				  	// console.log("selected i",selectedId);
-				  	const token = '';
-				  	const url = '/api/users/'+selectedId ;
-					const headers = {
-						    "Authorization" : token,
-						    "Content-Type" 	: "application/json",
-						};
-					axios({
-						method: "DELETE",
-						url : url,
-						headers: headers,
-						timeout: 3000,
-						data: null,
-					})
-					.then((response)=> {
-				    	// console.log('delete response',response);
-				    	swal("User deleted successfully","", "success");
-
-				    		// update table here
-				          		var data = {
-											"startRange"        : this.state.startRange,
-								            "limitRange"        : this.state.limitRange, 
-										}
-										axios.post('/api/users/userslist', data)
-										.then( (res)=>{      
-											// console.log("herer",res);
-											var tableData = res.data.map((a, i)=>{
-												return {
-													_id 			: a._id,
-													fullName        : a.fullName,
-									                emailId    		: a.emailId,
-									                mobileNumber       : a.mobileNumber, 
-									                status        	: a.status,	
-									                roles 			: a.roles,
-												}
-											})
-											this.setState({
-									          completeDataCount : res.data.length,
-									          tableData 		: tableData,          
-									        },()=>{
-									        	// console.log('tableData', this.state.tableData);
-									        })
-										})
-										.catch((error)=>{
-											// console.log("error = ",error);
-											// alert("Something went wrong! Please check Get URL.");
-										});
-
-
-					}).catch((error)=> {
-					    // console.log(error);
-					});
-
-
-				   }  
 					break;
 
 				  case 'add':
@@ -380,8 +330,14 @@ class UMListOfUsers extends Component {
 				      .post('/api/users/roleadd/',formValues)
 				      .then(
 				        (res)=>{
-				          // console.log('res', res);
-				          swal("Assigned Role Added Successfully","","success");
+				          console.log('res----------------', res);
+				          if(res.data.message =="Role is already exists")
+				          {
+				          	swal("Role is already assigned","","error");
+				          }
+				          else{
+
+				          	swal("Assigned Role Added Successfully","","success");
 				          checkedUsersList = null;
 
 				          		// update table here
@@ -395,11 +351,12 @@ class UMListOfUsers extends Component {
 											var tableData = res.data.map((a, i)=>{
 												return {
 													_id 			: a._id,
-													fullName        : a.fullName,
-									                emailId    		: a.emailId,
-									                mobileNumber       : a.mobileNumber, 
-									                status        	: a.status,	
-									                roles 			: a.roles,
+													fullName        : a.fullName ? a.fullName : "-",
+									                emailId    		: a.emailId ? a.emailId : "-",
+									                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+									                status        	: a.status ? a.status : "-",	
+									                roles 			: a.roles ? a.roles : "-",
+									                checked        : false,
 												}
 											})
 											this.setState({
@@ -413,6 +370,9 @@ class UMListOfUsers extends Component {
 											// console.log("error = ",error);
 											// alert("Something went wrong! Please check Get URL.");
 										});
+
+				          }
+				          
 										
 				        }).catch((error)=>{ 
 
@@ -420,6 +380,12 @@ class UMListOfUsers extends Component {
 				      });
 
 				   }  
+
+				   this.setState({
+				   	unCheckedUser : []
+				},()=>{
+					console.log("unCheckedUser",this.state.unCheckedUser);
+				})
 				    break;
 
 				  case 'remove':
@@ -452,11 +418,12 @@ class UMListOfUsers extends Component {
 											var tableData = res.data.map((a, i)=>{
 												return {
 													_id 			: a._id,
-													fullName        : a.fullName,
-									                emailId    		: a.emailId,
-									                mobileNumber       : a.mobileNumber, 
-									                status        	: a.status,	
-									                roles 			: a.roles,
+													fullName        : a.fullName ? a.fullName : "-",
+									                emailId    		: a.emailId ? a.emailId : "-",
+									                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+									                status        	: a.status ? a.status : "-",	
+									                roles 			: a.roles ? a.roles : "-",
+									                checked         : false,
 												}
 											})
 											this.setState({
@@ -481,7 +448,9 @@ class UMListOfUsers extends Component {
 				    break;
 				}
 				this.setState({
-				   	unCheckedUser : checkedUsersList
+				   	unCheckedUser : []
+				},()=>{
+					console.log("unCheckedUser",this.state.unCheckedUser);
 				})
 			}else{
 				// this.refs.userListDropdown.value = '-';
@@ -515,12 +484,13 @@ class UMListOfUsers extends Component {
 								// swal("Success! Showing "+selectedValue,"","success");
 								var tableData = res.data.map((a, i)=>{
 									return {
-										_id 			: a._id,
-										fullName        : a.fullName,
-						                emailId    		: a.emailId,
-						                mobileNumber       : a.mobileNumber, 
-						                status        	: a.status,	
-						                roles 			: a.roles,
+													_id 			: a._id,
+													fullName        : a.fullName ? a.fullName : "-",
+									                emailId    		: a.emailId ? a.emailId : "-",
+									                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+									                status        	: a.status ? a.status : "-",	
+									                roles 			: a.roles ? a.roles : "-",
+									                checked         : false,
 									}
 								})
 								this.setState({
@@ -546,12 +516,13 @@ class UMListOfUsers extends Component {
 					          var data = res.data.data;
 					          var tableData = data.map((a, i)=>{
 									return {
-										_id 			: a._id,
-										fullName        : a.profile.fullName,
-						                emailId    		: a.emails[0].address,
-						                mobileNumber       : a.profile.mobileNumber, 
-						                status        	: a.profile.status,	
+										_id 			: a._id ? a._id : '-' ,
+										fullName        : a.profile.fullName ? a.profile.fullName : '-',
+						                emailId    		: a.emails[0].address ? a.emails[0].address : '-',
+						                mobileNumber    : a.profile.mobileNumber ? a.profile.mobileNumber : '-', 
+						                status        	: a.profile.status ? a.profile.status : "-",	
 						                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
+										 checked        : false,
 									}
 								})
 					          	this.setState({
@@ -591,12 +562,13 @@ class UMListOfUsers extends Component {
 								// swal("Success! Showing "+selectedValue,"","success");
 								var tableData = res.data.map((a, i)=>{
 									return {
-										_id 			: a._id,
-										fullName        : a.fullName,
-						                emailId    		: a.emailId,
-						                mobileNumber       : a.mobileNumber, 
-						                status        	: a.status,	
-						                roles 			: a.roles,
+													_id 			: a._id,
+													fullName        : a.fullName ? a.fullName : "-",
+									                emailId    		: a.emailId ? a.emailId : "-",
+									                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+									                status        	: a.status ? a.status : "-",	
+									                roles 			: a.roles ? a.roles : "-",
+									                checked         : false,
 									}
 								})
 								this.setState({
@@ -623,12 +595,13 @@ class UMListOfUsers extends Component {
 				          var data = res.data.data;
 				          var tableData = data.map((a, i)=>{
 								return {
-									_id 			: a._id,
-									fullName        : a.profile.fullName,
-					                emailId    		: a.emails[0].address,
-					                mobileNumber       : a.profile.mobileNumber, 
-					                status        	: a.profile.status,	
-					                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
+										_id 			: a._id ? a._id : '-' ,
+										fullName        : a.profile.fullName ? a.profile.fullName : '-',
+						                emailId    		: a.emails[0].address ? a.emails[0].address : '-',
+						                mobileNumber    : a.profile.mobileNumber ? a.profile.mobileNumber : '-', 
+						                status        	: a.profile.status ? a.profile.status : "-",	
+						                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
+										 checked        : false,
 								}
 							})
 				          	this.setState({
@@ -645,9 +618,81 @@ class UMListOfUsers extends Component {
 	}
 
 	confirmDel(event){
-		this.setState({
-			confirmDel : true,
-		})
+
+			event.preventDefault();
+			var checkedUsersList     = this.state.checkedUser;
+			// console.log('id array here', checkedUsersList);
+			
+			if( checkedUsersList.length > 0 ){
+				var selectedValue        = this.refs.userListDropdown.value;
+				var keywordSelectedValue = selectedValue.split('$')[0];
+				var role                 = selectedValue.split('$')[1];
+		
+				 for(var i=0;i< checkedUsersList.length;i++)
+					  {
+					  	var selectedId = checkedUsersList[i];
+					  	
+					  	// console.log("selected i",selectedId);
+					  	const token = '';
+					  	const url = '/api/users/'+selectedId ;
+						const headers = {
+							    "Authorization" : token,
+							    "Content-Type" 	: "application/json",
+							};
+						axios({
+							method: "DELETE",
+							url : url,
+							headers: headers,
+							timeout: 3000,
+							data: null,
+						})
+						.then((response)=> {
+					    	// console.log('delete response',response);
+					    	swal("User deleted successfully","", "success");
+					    		 $('#deleteModal').removeClass("in");
+								 $('#deleteModal').css("display","none");
+					    		// update table here
+					          		var data = {
+												"startRange"        : this.state.startRange,
+									            "limitRange"        : this.state.limitRange, 
+											}
+											axios.post('/api/users/userslist', data)
+											.then( (res)=>{      
+												// console.log("herer",res);
+												var tableData = res.data.map((a, i)=>{
+													return {
+														_id 			: a._id,
+														fullName        : a.fullName ? a.fullName : "-",
+										                emailId    		: a.emailId ? a.emailId : "-",
+										                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+										                status        	: a.status ? a.status : "-",	
+										                roles 			: a.roles ? a.roles : "-",
+										                checked         : false,
+													}
+												})
+												this.setState({
+										          completeDataCount : res.data.length,
+										          tableData 		: tableData,          
+										        },()=>{
+										        	// console.log('tableData', this.state.tableData);
+										        })
+											})
+											.catch((error)=>{
+												// console.log("error = ",error);
+												// alert("Something went wrong! Please check Get URL.");
+											});
+
+
+						}).catch((error)=> {
+						    // console.log(error);
+						});
+
+
+					   }  
+				}
+				else{
+					console.log("pleaseselect 1 user");
+				}
 	}
 	selectedUser(checkedUsersList){
 		// console.log('checkedUsersList', checkedUsersList);
@@ -658,6 +703,16 @@ class UMListOfUsers extends Component {
 		// console.log("this.state.checkedUser",this.state.checkedUser);
 
 	}
+
+	closeModal(event){
+
+		 $('#deleteModal').removeClass("in");
+		 $('#deleteModal').css("display","none");
+		 // $('#deleteModal').css("display","none");
+
+
+	}
+
 render(){
 	// console.log('this.state.completeDataCount', this.state.completeDataCount);
 	var adminRolesListDataList = this.state.adminRolesListData;
@@ -751,7 +806,7 @@ render(){
 					                      tableData={this.state.tableData} 
 					                      getSearchText={this.getSearchText.bind(this)}
 					                      selectedUser={this.selectedUser.bind(this)} 
-					                      unCheckedUser={this.state.unCheckedUser}
+					                      unCheckedUser={this.state.unCheckedUser ? this.state.unCheckedUser : [] } 
 										/>			
 									</div>
 
@@ -761,7 +816,7 @@ render(){
 										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
 															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
-																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+																		        <button type="button" className="adminCloseButton" data-dismiss="modal" onClick={this.closeModal.bind(this)} aria-label="Close">
 																		          <span aria-hidden="true">&times;</span>
 																		        </button>
 																	        </div>
@@ -773,7 +828,7 @@ render(){
 										                              
 										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
+										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal" onClick={this.closeModal.bind(this)}>CANCEL</button>
 										                                   </div>
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 										                                        <button  onClick={this.confirmDel.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">DELETE</button>

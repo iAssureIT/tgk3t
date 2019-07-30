@@ -14,6 +14,7 @@ export default class Header extends Component{
    super(props);
     this.state = {
               loggedIn : false,
+              showProfile: false,
     }
   }
 
@@ -64,6 +65,12 @@ logout(){
     }
   }
 
+  showData(){
+    this.setState({
+      showProfile : true,
+    })
+  }
+
 
   render(){
 
@@ -97,8 +104,8 @@ logout(){
                      { /*<div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
                       <img src="image/person.png" className="img "/>
                       </div>*/}
-                      <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6 dropdown ">
-                      <span className="headicon">Alexander Pierce &nbsp;</span>
+                      <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6 dropdown " onClick={this.showData.bind(this)}>
+                      <span className="headicon">{localStorage.fullName ? localStorage.fullName : "Super Admin" } &nbsp; </span>
                       
 
                      
@@ -106,7 +113,8 @@ logout(){
                         <button className="dropbtn arrowbtn">
                          <span className="hidden-xs angleright"><i className="fa fa-angle-down" aria-hidden="true"></i></span>
                         </button>
-                        <div className="dropdown-content wid260 marTop" >
+                        { this.state.showProfile == true ? 
+                        <div className="dropdown-content wid260 marTop"  >
                             <ul className="paddleft nomargin">
                               <li className="user-header">
                                 <ul className="menu paddleft">
@@ -118,9 +126,9 @@ logout(){
                                           </div>
                                           <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 pull-right padd0 marTop">
                                            <h5 className=" nomargin ">
-                                              Alexander Pierce
+                                             {localStorage.fullName ? localStorage.fullName : "Super Admin" }
                                            </h5>
-                                            <h6> alexander@gmail.com </h6>
+                                            <h6> {localStorage.email ? localStorage.email : "superAdmin@gmail.com" }  </h6>
                                           </div>
                                       </div>
                                     </a>
@@ -128,8 +136,8 @@ logout(){
                                     <div className="profilefoot"> 
                                     <div>                                     
                                       <span className="pull-left">
-                                        <a  className=" profileTitle btnpadd " >
-                                         <button type="button" className="profilebtn btn">Profile</button></a>
+                                       {/* <a  className=" profileTitle btnpadd " >
+                                         <button type="button" className="profilebtn btn">Profile</button></a>*/}
                                       </span>
                                       <span className="pull-right">
                                         <a  className="profileTitle btnpadd" href="/login">
@@ -145,6 +153,10 @@ logout(){
                               </li>                                        
                             </ul>
                         </div>
+
+                        :
+                        null
+                      }
                     </span>
 
 

@@ -18,6 +18,7 @@ class EditUserProfile extends Component{
 	  		lastName  : "",
 	  		role 	  : "",
 	  		office    : [],
+	  		allPosts   : [],
 			}	  	
 			 this.handleChange = this.handleChange.bind(this);
 	  }
@@ -31,6 +32,8 @@ class EditUserProfile extends Component{
 			"lastName" 		: this.refs.lastName.value,
 			"emailId"  		: this.refs.username.value,
 			"mobileNumber"  : this.state.mobNumber,
+			"roles"         :  this.state.role,
+          "officeLocation"  : this.refs.office.value,
 		}
 		console.log("formvalues",formvalues);
 				axios.patch('/api/users/'+userid, formvalues)
@@ -118,6 +121,38 @@ class EditUserProfile extends Component{
 	        console.log("error = ",error);
 	        alert("Something went wrong! Please check Get URL.");
 	      });
+
+// for office data 
+	       axios
+	      .get('/api/tgkSpecificcompanysettings/list')
+	      .then(
+	        (res)=>{
+	          console.log('res------------------', res);
+	          const postsdata = res.data;
+	          console.log('postsdata',postsdata);
+	          this.setState({
+	            allPosts : postsdata,
+	          });
+	          // console.log("allPosts___________________",this.state.allPosts);
+	          let locationArray =[];
+	          if(this.state.allPosts!=null){
+	            locationArray = this.state.allPosts.map(function(item) { return item.companyLocationsInfo });
+	          }else{
+	             locationArray = "no data";
+	          }
+	          this.setState({
+	            office : locationArray,
+	          });
+	        console.log("office",this.state.office);  
+	        
+	        }
+	      )
+	      .catch((error)=>{
+
+	        console.log("error = ",error);
+	        // alert("Something went wrong! Please check Get URL.");
+	         });  
+
 	}
   	
 	render(){      
@@ -154,7 +189,7 @@ class EditUserProfile extends Component{
                                                       </div>
                                                       <div className=" col-lg-6 col-md-6 col-xs-6 col-sm-6 inputContent">
                                                           <label className="formLable">Last Name <label className="requiredsign">*</label></label>
-                                                          <span className="blocking-span row">
+                                                          <span className="blocking-span ">
                                                           <div className="input-group inputBox-main  new_inputbx " >
                                                              <div className="input-group-addon remove_brdr inputIcon">
                                                               <i className="fa fa-user-circle fa "></i>
@@ -183,12 +218,11 @@ class EditUserProfile extends Component{
 	                                                           </div>   
 	                                                          </span>
 														</div>	
-													</div>
-														<div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12 createusr">
-                                                         <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent">
-                                                           <label className="formLable col-lg-12 col-md-12">Role <label className="requiredsign"></label></label>
+
+														  <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 btmmargin inputContent">
+                                                           <label className="formLable col-lg-12 col-md-12 padd0 btmmargin">Role <label className="requiredsign"></label></label>
                                                               <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                             
+                                                             	
                                                                <select className="form-control" value={this.state.role} onChange={this.handleChange} ref ="role" id="role" name="role" data-text="role">
                                                                     <option  hidden> --Select-- </option>
                                                                     <option value="Technical Admin" > Technical Admin </option>
@@ -203,6 +237,10 @@ class EditUserProfile extends Component{
                                                                
                                                           </div>
 
+													</div>
+														<div className="signuppp col-lg-12 col-md-12 col-sm-12 col-xs-12 createusr">
+                                                       
+
                                                           <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
                                                               <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
@@ -211,6 +249,7 @@ class EditUserProfile extends Component{
                                                                         <option value="Head Office">  Head Office </option>
                                                                         <option value="Sales Agent Office"> Sales Agent Office </option>
                                                                            { this.state.office != null ?
+                                                                           	this.state.office[0] != null ?
                                                                           this.state.office[0].map( (locData, index)=>{
                                                                           // console.log('locData',locData);
                                                                            return( 
@@ -222,7 +261,8 @@ class EditUserProfile extends Component{
                                                                            )
                                                                           :
                                                                           null
-
+                                                                          :
+                                                                          null
                                                                         }
                                                                     </select>
 

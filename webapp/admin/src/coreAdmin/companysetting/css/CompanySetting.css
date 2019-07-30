@@ -228,7 +228,7 @@
   }
   .tabs-left>li.active>a::after{content: "";
     position: absolute;
-    top: 7.5px;
+    top: 9.5px;
     right: -10px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;

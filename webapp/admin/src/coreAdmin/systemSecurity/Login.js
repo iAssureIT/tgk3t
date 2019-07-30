@@ -46,6 +46,10 @@ class Login extends Component {
         // });
 
         localStorage.setItem("token",response.data.token);
+        localStorage.setItem("admin_ID",response.data.user_ID);
+        // localStorage.setItem("admin_email",response.data.email);
+        // localStorage.setItem("admin_fullName",response.data.fullName);
+
         console.log("localStorage =",localStorage);
         // browserHistory.replace('/');
         this.props.history.push("/");

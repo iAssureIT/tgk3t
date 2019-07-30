@@ -9,7 +9,7 @@ import 'bootstrap/js/modal.js';
 import './userManagement.css';
 
 const formValid = formerrors=>{
-  console.log("formerrors",formerrors);
+  // console.log("formerrors",formerrors);
   let valid = true;
   Object.values(formerrors).forEach(val=>{
   val.length>0 && (valid = false);
@@ -93,7 +93,7 @@ class CreateUser extends Component {
         (res)=>{
           // console.log('res', res);
           const postsdata = res.data;
-          console.log('postsdata',postsdata);
+          // console.log('postsdata',postsdata);
           this.setState({
             allPosts : postsdata,
           });

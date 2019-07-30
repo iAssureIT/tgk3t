@@ -8,12 +8,12 @@ import './IAssureTable.css';
 
 // import '../systemSecurity/SignUp.css';
 /*import { BrowserRouter as Router,Link,Route,Switch } from 'react-router-dom';*/
-import { Route , withRouter} from 'react-router-dom';
+import {   withRouter} from 'react-router-dom';
 
 /*import UsereditModal   from '../userManagement/UM/UsereditModal.jsx';*/
 
 
-var sum = 0;
+// var sum = 0;
 class IAssureTableUM extends Component {
 	constructor(props){
 		super(props);
@@ -25,7 +25,6 @@ class IAssureTableUM extends Component {
 		    "reN" 						: /[^0-9]/g,
 		    "sort" 	  					: true,
 		    "examMasterData2" 			: '',
-		    "activeClass" 				: 'activeQueDataCircle',
 		    "paginationArray" 			: [],
 		    "startRange" 				: 0,
 		    "limitRange" 				: 10,
@@ -60,15 +59,15 @@ class IAssureTableUM extends Component {
             // unCheckedUser : nextProps.unCheckedUser
         },()=>{
         	this.paginationFunction();
-        	console.log('unCheckedUser', this.state.unCheckedUser);	
+        	// console.log('unCheckedUser', this.state.unCheckedUser);	
         })
         if(nextProps && nextProps.unCheckedUser){
         	nextProps.unCheckedUser.map((id, i)=>{
-        		console.log('id',id);
+        	
 	        	this.setState({
-	        		// [id] : false,
-	        		selectedUser : [],
-	        		unCheckedUser : []
+	        		[id] : false,
+	        	},()=>{
+	        		console.log(" selectedUser in receive props", this.state.selectedUser);
 	        	})
         	})
         }
@@ -373,7 +372,7 @@ class IAssureTableUM extends Component {
 	}
 	tableSearch(){
     	var searchText = this.refs.tableSearch.value;
-    	console.log("here search data",searchText);
+    	// console.log("here search data",searchText);
     	var formValues =
     	{
 			searchText : searchText,
@@ -388,11 +387,11 @@ class IAssureTableUM extends Component {
 				          var data = res.data.data;
 				          var tableData = data.map((a, i)=>{
 								return {
-									_id 			: a._id,
-									fullName        : a.profile.fullName,
-					                emailId    		: a.emails[0].address,
-					                mobileNumber       : a.profile.mobileNumber, 
-					                status        	: a.profile.status,	
+									_id 			: a._id ? a._id : '-' ,
+									fullName        : a.profile.fullName ? a.profile.fullName : '-',
+					                emailId    		: a.emails[0].address ? a.emails[0].address : '-',
+					                mobileNumber       : a.profile.mobileNumber ? a.profile.mobileNumber :'-', 
+					                status        	: a.profile.status ? a.profile.status : '-',	
 					                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
 								}
 							})
@@ -602,11 +601,12 @@ class IAssureTableUM extends Component {
 						var tableData = res.data.map((a, i)=>{
 							return {
 								_id 			: a._id,
-								fullName        : a.fullName,
-				                emailId    		: a.emailId,
-				                mobileNumber       : a.mobileNumber, 
-				                status        	: a.status,	
-				                roles 			: a.roles,
+								fullName        : a.fullName ? a.fullName : "-",
+				                emailId    		: a.emailId ? a.emailId : "-",
+				                mobileNumber    : a.mobileNumber ? a.mobileNumber : "-", 
+				                status        	: a.status ? a.status : "-",	
+				                roles 			: a.roles ? a.roles : "-",
+				                checked        : false,
 							}
 						})
 						this.setState({
@@ -684,7 +684,7 @@ class IAssureTableUM extends Component {
 	handleChange(event){
         const target = event.target.value;
         const name   = event.target.name;
-        console.log('target',name, target);
+        // console.log('target',name, target);
           this.setState({ 
 	      [name]:target
 	    },()=>{
@@ -742,7 +742,10 @@ class IAssureTableUM extends Component {
 		var selectedUser = this.state.selectedUser;
 		var data = event.target.id;
 		var value = event.target.checked;
-		console.log("data", data);
+		var index = event.target.getAttribute('data-index');
+		console.log("index", index);
+		this.props.tableData[index].checked = value;
+
 		this.setState({
 			[data] : value,
 		},()=>{
@@ -754,15 +757,16 @@ class IAssureTableUM extends Component {
 					console.log('selectedUser', this.state.selectedUser);
 					this.props.selectedUser(this.state.selectedUser);
 				})
-			}else{
-				selectedUser.pop(data);
-				this.setState({
-					selectedUser : selectedUser
-				},()=>{
-					console.log('selectedUser', this.state.selectedUser);
-					this.props.selectedUser(this.state.selectedUser);
-				})
 			}
+			// else{
+			// 	selectedUser.pop(data);
+			// 	this.setState({
+			// 		selectedUser : selectedUser
+			// 	},()=>{
+			// 		console.log('selectedUser', this.state.selectedUser);
+			// 		this.props.selectedUser(this.state.selectedUser);
+			// 	})
+			// }
 			
 			
 		})
@@ -853,19 +857,22 @@ class IAssureTableUM extends Component {
 	                        <tbody>
 	                           { this.state.tableData && this.state.tableData.length > 0 ?
 	                           		this.state.tableData.map( 
-										(value, i)=> {													
+										(value, i)=> {	
+										// console.log("value of tabledata",value);												
 											return(
 												<tr key={i} className="">
+
 													{/*console.log("values",value)*/}
-													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" checked={this.state[value._id]}  id={value._id} onChange={this.selectedId.bind(this)}/></td>
+													<td className="textAlignCenter"><input type="checkbox" ref="userCheckbox" name="userCheckbox" className="userCheckbox" checked={value.checked}  id={value._id} data-index={i} onChange={this.selectedId.bind(this)}/></td>
 													
 													{/*<td>{value._id}</td>*/}
 													{/*<td className="textAlignCenter">{this.state.startRange+1+i}</td>*/}
 													{
 														Object.entries(value).map( 
 															([key, value1], i)=> {
+																// console.log('key==========',key);
+
 																if(value1){
-																	
 																	if($.type(value1) == 'string'){
 																		var regex = new RegExp(/(<([^>]+)>)/ig);
 																		var value2 = value1 ? value1.replace(regex,'') : '';
@@ -883,18 +890,20 @@ class IAssureTableUM extends Component {
 																		var found = Object.keys(this.state.tableHeading).filter((k)=> {
 																		  return k == key;
 																		});
+
 																		if(found.length > 0){
-																			if(key != 'id'){
+																			
+																			if(key != 'checked'){
+																				// console.log(key, key != 'checked');
 																				return(<td className={textAlign} key={i}><div className={textAlign} dangerouslySetInnerHTML={{ __html:value1}}></div></td>); 						
-																			}else{
-																				
-																			}
+																			}													
 																		}
 																	}															
-																}else{
-																	// console.log('value1', value1);
-																	return(<td key={i}></td>);
 																}
+																// else{
+																// 	// console.log('value1', value1);
+																// 	return(<td key={i}></td>);
+																// }
 															}
 														)
 													}
@@ -930,7 +939,7 @@ class IAssureTableUM extends Component {
 																				                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 
 																				                <div className="FormWrapper col-lg-12 col-md-12 col-sm-12 col-xs-12">
-																				                    <form id={value._id} >
+																				                    
 																				                       
 
 
@@ -979,7 +988,7 @@ class IAssureTableUM extends Component {
 																				                            <button className="btn col-lg-12 col-md-12 col-sm-12 col-xs-12 btnSubmit outlinebox" onClick={this.changepassword.bind(this)} id={value._id}>Reset Password</button>
 																				                        </div>
 																				                           
-																				                    </form>
+																				                   
 																				                </div>
 																				              </div>
 																				        </div>
@@ -1032,48 +1041,48 @@ class IAssureTableUM extends Component {
 	                    </tbody>
 	                    </table>
 	                    </div>
-	                    {this.state.tableData && this.state.tableData.length > 0 ?
-	                    	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paginationAdminWrap">
-		                    	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-			                    	{ 
-				                    		// this.state.limitRange >=  this.state.dataLength?		                    		
-				                    		this.state.dataLength?		                    		
-					                    	null
-					                    	:
-			                    			<div className="btn btn-primary" onClick={this.showFirstTweentyButtons.bind(this)} title="Fast Backward"><i className="fa fa-fast-backward"></i></div>
-			                    	}
-		                    	</div>
-		                    	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-			                    	{ 
-			                    		// this.state.limitRange >=  this.state.dataLength?                  		
-			                    		this.state.dataLength?                  		
-				                    	null
-				                    	:
-				                    	<div className="btn btn-primary" onClick={this.showPreviousPaginationButtons.bind(this)} title="Previous"><i className="fa fa-caret-left"></i></div>
-				                    }
-			                    </div>
-								<ol className="questionNumDiv paginationAdminOES col-lg-8 col-md-8 col-sm-8 col-xs-8 mainExamMinDeviceNoPad">										 
-									{this.state.paginationArray}
-								</ol>
-								<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-									{
-										this.state.paginationArray.length < 20 ?
-										null
-										:
-										<div className="btn btn-primary" onClick={this.showNextPaginationButtons.bind(this)} title="Next"><i className="fa fa-caret-right"></i></div>
-									}
-								</div>
-								<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
-									{
-										this.state.paginationArray.length < 20 ?
-										null
-										:
-										<div className="btn btn-primary" onClick={this.showLastTweentyButtons.bind(this)} title="Fast Forward"><i className="fa fa-fast-forward"></i></div>
-									}
-								</div>							
-							</div>
-							:
-							null
+	                    {/*this.state.tableData && this.state.tableData.length > 0 ?*/
+	      //               	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 paginationAdminWrap">
+		     //                	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+			    //                 	{ 
+				   //                  		// this.state.limitRange >=  this.state.dataLength?		                    		
+				   //                  		this.state.dataLength?		                    		
+					  //                   	null
+					  //                   	:
+			    //                 			<div className="btn btn-primary" onClick={this.showFirstTweentyButtons.bind(this)} title="Fast Backward"><i className="fa fa-fast-backward"></i></div>
+			    //                 	}
+		     //                	</div>
+		     //                	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+			    //                 	{ 
+			    //                 		// this.state.limitRange >=  this.state.dataLength?                  		
+			    //                 		this.state.dataLength?                  		
+				   //                  	null
+				   //                  	:
+				   //                  	<div className="btn btn-primary" onClick={this.showPreviousPaginationButtons.bind(this)} title="Previous"><i className="fa fa-caret-left"></i></div>
+				   //                  }
+			    //                 </div>
+							// 	<ol className="questionNumDiv paginationAdminOES col-lg-8 col-md-8 col-sm-8 col-xs-8 mainExamMinDeviceNoPad">										 
+							// 		{this.state.paginationArray}
+							// 	</ol>
+							// 	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+							// 		{
+							// 			this.state.paginationArray.length < 20 ?
+							// 			null
+							// 			:
+							// 			<div className="btn btn-primary" onClick={this.showNextPaginationButtons.bind(this)} title="Next"><i className="fa fa-caret-right"></i></div>
+							// 		}
+							// 	</div>
+							// 	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1">
+							// 		{
+							// 			this.state.paginationArray.length < 20 ?
+							// 			null
+							// 			:
+							// 			<div className="btn btn-primary" onClick={this.showLastTweentyButtons.bind(this)} title="Fast Forward"><i className="fa fa-fast-forward"></i></div>
+							// 		}
+							// 	</div>							
+							// </div>
+							// :
+							// null
 	                    }
 	                    
 	                </div>                        
