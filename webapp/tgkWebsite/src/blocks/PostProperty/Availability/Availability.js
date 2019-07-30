@@ -42,17 +42,13 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			event.preventDefault();
 			const formValues = {
 				"contactPersonMobile" : this.state.contactPersonMobile,
-				"availability" 		  : this.refs.availability.value,
-				"timeFrom" 		  	  : this.refs.timeFrom.value,
-				"timeFromAMPM" 		  : this.refs.timeFromAMPM.value,
-				"timeTo" 		      : this.refs.timeTo.value,
-				"timeToAMPM" 		  : this.refs.timeToAMPM.value,
         		"contactPerson"       : this.state.contactPerson,
 				"property_id" 		  : localStorage.getItem("propertyId"),
 				"uid" 				  : this.props.uid,
+				"available"			  : this.state.available
 			};
 			console.log("Availability req = ",formValues);
-		    if(this.refs.availability.value!="" && this.refs.timeFrom.value!="" && this.refs.timeFromAMPM.value!="" && this.refs.timeTo.value!="" && this.refs.timeToAMPM.value!=""){
+		    if(this.state.available!=""){
 		    		if(formValid(this.state.formerrors)){
 				axios
 				.patch('/api/properties/patch/availabilityPlan',formValues)
@@ -120,6 +116,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 		$('input[name=timeFrom').val('');
 		$('input[name=timeTo').val('');
+		$('select[name=availableDay').val('');
 
 
 
@@ -165,7 +162,11 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 	}
 	deleteData(row)
 	{
+		console.log('availability',this.state.available)
 		console.log("rowId",row);
+
+		this.state.available.splice(row,1)
+		this.setState({available:this.state.available})
 	}
 
 	handleChange(event){
@@ -193,11 +194,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 	render() {
    	 const {formerrors} = this.state;
 
-		const data = [{
-   			Availability: 'Tanner Linsley',
-		    Time: 26,
-		    
-		  }]
+   	 	const data = this.state.available;
+   	 	console.log('data',data)
 		const columns = [{
 			Header: 'Availability',
 			accessor: 'day'
@@ -207,11 +205,11 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			},
 			{
 			Header: 'Action',
-			accessor: 'Action',
+			accessor: 'id',
 			Cell: row => 
           (
           <div className="actionDiv col-lg-offset-3">
-              <div className="col-lg-6" onClick={() => this.deleteData(row.original)}>
+              <div className="col-lg-6" id={row.index} onClick={() => this.deleteData(row.index)}>
             <i className="fa fa-trash"> </i>
               </div>
              
@@ -252,9 +250,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					  <div className="form-group"  id="builtArea" >
 						  <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
-		                     	<i className="fa fa-rupee iconClr"></i>
+		                     	<i className="fa fa-mobile iconClr"></i>
 		                    </div>
-					    		<input type="number" data-text="clientMobile" name="contactPersonMobile" value={this.state.contactPersonMobile} onChange={this.handleChange.bind(this)} className="form-control" ref="contactPersonMobile"  placeholder="Phone Number" required/>
+					    		<input type="number" data-text="clientMobile" name="contactPersonMobile" value={this.state.contactPersonMobile} onChange={this.handleChange.bind(this)} className="form-control" ref="contactPersonMobile" min="0" placeholder="Phone Number" />
 					  		</div>
 					  		{this.state.formerrors.clientMobile &&(
 		                          <span className="text-danger">{formerrors.clientMobile}</span> 
@@ -270,7 +268,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">	
 		    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">	
 		    		<label className=""> Availability <span className="astrick">*</span></label>
-					  <select className="custom-select form-control " ref="availability" placeholder="select" >
+					  <select className="custom-select form-control " ref="availability" placeholder="select" name="availableDay" >
 				    	<option disabled>-- Select --</option>
 				    	<option value="Everyday"> Everyday (Mon-Sun)</option>
 				    	<option value="Weekdays"> Weekdays (Mon-Fri)</option>
@@ -338,7 +336,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23">	
 		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	 	<ReactTable
-				    data={this.state.available}
+				    data={data}
 				    columns={columns}
 				    className={"-striped -highlight"}
 				    minRows={3}

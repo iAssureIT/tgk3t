@@ -1,7 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import { connect } 				from 'react-redux';
-import { withRouter}    from 'react-router-dom';
+import { withRouter}            from 'react-router-dom';
 import swal 					from 'sweetalert';
 import S3FileUpload 			from 'react-s3';
 /**/
@@ -86,7 +86,7 @@ var imgTitleArray = [];
 				axios
 			       .get('/api/projectSettings/get/one/S3')
 			       .then((response)=>{
-			       		console.log("proj set res = ",response.data);
+			       		// console.log("proj set res = ",response.data);
 						const config = {
 							bucketName 		: response.data.bucket,
 							dirName  		: 'propertiesImages',

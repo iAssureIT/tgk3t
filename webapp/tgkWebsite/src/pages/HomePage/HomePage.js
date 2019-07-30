@@ -37,7 +37,10 @@ import './HomePage.css';
 				<BannerwithModal inputData={this.inputData.bind(this)}/>
 
 					{/*<!-- Tab panes -->*/}
+
 				<div className="tab-content">
+
+
 				    <div id="Buy" className="tab-pane active"><br/>
 		    			<InfoSale />
 				    </div>

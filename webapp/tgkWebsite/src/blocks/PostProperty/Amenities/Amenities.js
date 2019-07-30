@@ -100,7 +100,7 @@ import './Amenities.css';
 
 						      		 /> <i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Gas Pipeline
 						    </label>*/}
-						    <label className="container"> <span>Gas Pipeline</span>
+						    <label className="container2"> <span>Gas Pipeline</span>
 							  <input type="checkbox"
 							  		 value="gasPipeline" 
 						      		 id="1"
@@ -109,7 +109,7 @@ import './Amenities.css';
 							  <span className="checkmark"></span>
 
 							</label>
-						     <label className="container"><span className="pl33">Internet Services</span>
+						     <label className="container2"><span className="pl33">Internet Services</span>
 							  <input type="checkbox"
 							  		 value="internetServices" 
 						      		 id="3"
@@ -118,7 +118,7 @@ import './Amenities.css';
 							  <span className="checkmark"></span>
 
 							</label>
-						    <label className="container"><span className="pr65">Lift</span>
+						    <label className="container2"><span className="pr65">Lift</span>
 							  <input type="checkbox"
 							  		 value="lift" 
 						      		 id="5"
@@ -127,7 +127,7 @@ import './Amenities.css';
 							  <span className="checkmark"></span>
 
 							</label>
-							    <label className="container"><span className="pl21">Air Conditioner</span>
+							    <label className="container2"><span className="pl21">Air Conditioner</span>
 								  <input type="checkbox"
 								  		 value="airConditioner" 
 							      		 id="7"
@@ -136,7 +136,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container"><span className="pr22">Intercom</span>
+							    <label className="container2"><span className="pr22">Intercom</span>
 								  <input type="checkbox"
 								  		 value="intercom" 
 							      		 id="7"
@@ -145,7 +145,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container"><span className="pl20">Power Backup</span>
+							    <label className="container2"><span className="pl20">Power Backup</span>
 								  <input type="checkbox"
 								  		 value="powerBackup" 
 							      		 id="11"
@@ -154,7 +154,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-								<label className="container"><span className="pl10">Water Supply</span>
+								<label className="container2"><span className="pl10">Water Supply</span>
 								  <input type="checkbox"
 								  		 value="waterSupply" 
 							      		 id="11"
@@ -167,7 +167,7 @@ import './Amenities.css';
 		  	 				{/*External*/}
 
 		  	 			<div className="col-lg-6 FF4I1"> 
-							    <label className="container"><span>Club House</span>
+							    <label className="container2"><span>Club House</span>
 								  <input type="checkbox"
 								  		 value="clubHouse" 
 							      		 id="2"
@@ -176,7 +176,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container"><span className="pl38">Shopping Center</span>
+							    <label className="container2"><span className="pl38">Shopping Center</span>
 								  <input type="checkbox"
 								  		 value="shoppingCenter" 
 							      		 id="4"
@@ -185,7 +185,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-						    	<label className="container"><span className="pl95">Sewage Treatment Plan</span>
+						    	<label className="container2"><span className="pl95">Sewage Treatment Plan</span>
 								  <input type="checkbox"
 								  		 value="sewageTreatmentPlan" 
 							      		 id="6"
@@ -194,7 +194,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container"><span className="pl35">Swimming Pool</span>
+							    <label className="container2"><span className="pl35">Swimming Pool</span>
 									  <input type="checkbox"
 									  		 value="swimmingPool" 
 								      		 id="8"
@@ -203,7 +203,7 @@ import './Amenities.css';
 									  <span className="checkmark"></span>
 
 								</label>
-						    	<label className="container"><span className="pl64">Children's Play Area</span>
+						    	<label className="container2"><span className="pl64">Children's Play Area</span>
 								  <input type="checkbox"
 								  		 value="childrenPlay" 
 							      		 id="10"
@@ -212,7 +212,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container"><span className="pl18">Internal Gym</span>
+							    <label className="container2"><span className="pl18">Internal Gym</span>
 									  <input type="checkbox"
 									  		 value="internalGym" 
 								      		 id="12"
@@ -221,7 +221,7 @@ import './Amenities.css';
 									  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container"><span className="pr44">Park</span>
+							    <label className="container2"><span className="pr44">Park</span>
 									  <input type="checkbox"
 									  		 value="park" 
 								      		 id="14"

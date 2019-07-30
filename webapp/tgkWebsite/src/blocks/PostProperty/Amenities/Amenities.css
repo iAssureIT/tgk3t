@@ -156,8 +156,8 @@
 .pr44{
   padding-right: 44px;
 }
-/* The container */
-.container {
+/* The container2 */
+.container2 {
   display: block;
   position: relative;
   /*padding-left: 35px;*/
@@ -170,7 +170,7 @@
 }
 
 /* Hide the browser's default checkbox */
-.container input {
+.container2 input {
   position: absolute;
   opacity: 0;
   cursor: pointer;
@@ -189,12 +189,12 @@
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.container2:hover input ~ .checkmark {
   background-color: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.container2 input:checked ~ .checkmark {
   background-color: #aaa;
 }
 
@@ -206,12 +206,12 @@
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+.container2 input:checked ~ .checkmark:after {
   display: block;
 }
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+.container2 .checkmark:after {
   left: 9px;
   top: 5px;
   width: 5px;

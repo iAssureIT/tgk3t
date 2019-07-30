@@ -42,6 +42,7 @@ import './BasicInfo.css';
 		    $('#radio-example3').click(function(){
 		        $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
 		    });
+		    
 		     var $select = $(".1-100");
 		    for (var i=-2;i<=60;i++){
 		        $select.append($('<option></option>').val(i).html(i))
