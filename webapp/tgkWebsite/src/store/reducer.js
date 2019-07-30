@@ -238,18 +238,33 @@ const reducer = (state = initialState,action) => {
 	}
 
 	if(action.type === "ALREADY_LOGGEDIN"){
-		newState.originPage  	= action.originPage;
-		newState.uid  			= action.uid;
-		newState.LoginMobNum 	= false;
-		newState.LoginOtp    	= false;
-		newState.WebSignupForm  = false;
-		newState.BasicInfo 		= true;
+		newState.originPage  		= action.originPage;
+		newState.uid  				= action.uid;
+		newState.LoginMobNum 		= false;
+		newState.LoginOtp    		= false;
+		newState.WebSignupForm  	= false;
+		newState.BasicInfo 			= true;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
 	}
 
 	if(action.type === "LOGIN_ME"){
-		newState.LoginMobNum 	= false;
-		newState.LoginOtp    	= false;
-		newState.WebSignupForm  = false;
+		newState.LoginMobNum 		= false;
+		newState.LoginOtp    		= false;
+		newState.WebSignupForm  	= false;
+		newState.BasicInfo 			= false;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
 		newState.uid         	= action.uid;
 	}
 

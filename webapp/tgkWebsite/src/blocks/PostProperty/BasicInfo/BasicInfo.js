@@ -64,7 +64,7 @@ import './BasicInfo.css';
 				"floor"         	: this.refs.floor.value,
 				"totalFloor"    	: this.refs.totalfloor.value,
 				"listing"       	: false,
-				"uid"				:this.props.uid
+				"uid"				: this.props.uid
 			};
 			console.log("BasicInfo===",formValues);
 			if(this.state.propertyHolder!="" && this.state.transactionType!="" && this.state.propertyType!="" && this.state.propertySubType!="" && this.refs.floor.value!="" && this.refs.totalfloor.value!="" ){

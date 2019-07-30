@@ -180,7 +180,11 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				 		</div>
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margTop">
 						  	<div className="form-group col-lg-12">
-						       <button type="Submit" className="btn bg-primary pull-right nxt_btn" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
+						       {this.props.originPage === "header" ?
+						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn" onClick={this.submit.bind(this)}> Save &rArr;</button>
+						       		:
+						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
+					  			}
 					  		</div>
 						</div>
 				</form>
