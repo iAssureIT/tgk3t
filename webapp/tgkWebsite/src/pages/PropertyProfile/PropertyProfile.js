@@ -36,7 +36,6 @@ class PropertyProfile extends Component{
   constructor(props){
     super(props);
      var profileId = this.props.match.params.id;
-    this.props.showFirstForm();  //for dispatch
 
     this.state = {
       "checkValue"        : "",
@@ -63,11 +62,13 @@ class PropertyProfile extends Component{
    
   }
   componentDidMount() {
+    this.props.showFirstForm();  //for dispatch
+
     axios
     .get('http://qatgk3tapi.iassureit.com/api/properties/'+this.state.profileId)
     .then(
       (res)=>{
-        console.log(res);
+        // console.log(res);
         const postsdata = res.data;
         this.setState({
           propertyFeatures    : postsdata.propertyDetails,
@@ -78,7 +79,7 @@ class PropertyProfile extends Component{
           propertyLocation    : postsdata.propertyLocation,
           transactionType     : postsdata.transactionType,
         });
-        console.log("postsdata.propertyDetails",res.data);
+        // console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch();
@@ -91,6 +92,22 @@ class PropertyProfile extends Component{
   }
 
   render() {
+
+    console.log(
+        this.props.BasicInfo,
+        this.props.Location, 
+        this.props.Amenities,
+            this.props.PropertyDetails,
+            this.props.Financials      ,
+            this.props.Amenities       ,
+            this.props.Availability    ,
+            this.props.CongratsPage    ,
+            this.props.ImageUpload     ,
+    );
+
+
+
+    
     let header;
     if (this.props.BasicInfo) {
       header = "Let's Provide details of your property for sell";
@@ -346,15 +363,17 @@ class PropertyProfile extends Component{
              </div>
           </div>              
         </div>
+
+
         {/*=== Modal starts here ===*/}
         <div id="postPropertyModal" className="modal fade" role="dialog">
           <div className="modal-dialog modal-lg">
 
-            <div className="modal-content" style={{marginTop:"52px"}}>
+            <div className="modal-content">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
+                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
                 <h4 className="modal-title">
-                  <b style={{paddingLeft:"28px"}}> {header} </b>
+                  <b> {header} </b>
                 </h4>
               </div>
 
@@ -378,6 +397,8 @@ class PropertyProfile extends Component{
 
           </div>
         </div>
+
+
       </div>
     );
   }

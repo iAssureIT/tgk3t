@@ -22,7 +22,6 @@ import './MyPostedProperties.css';
 	constructor(props){
 		super(props);
      	var uid = localStorage.getItem("uid");
-    	this.props.showFirstForm();  //for dispatch
 		this.state = {
 			"uid"		   : uid,
 			"myProperties" : [],
@@ -32,6 +31,8 @@ import './MyPostedProperties.css';
 
 	}
 	componentDidMount(){
+    	this.props.showFirstForm();  //for dispatch
+
 		$(".modal-backdrop").remove();
 	     axios
 	    .get('http://qatgk3tapi.iassureit.com/api/properties/mypropertylist/'+this.state.uid)
@@ -208,15 +209,18 @@ import './MyPostedProperties.css';
 						)
 					})
 				}
+
+
+
 				{/*=== Modal starts here ===*/}
 		        <div id="postPropertyModal" className="modal fade" role="dialog">
 		          <div className="modal-dialog modal-lg">
 
-		            <div className="modal-content " style={{marginTop:"52px"}}>
+		            <div className="modal-content">
 		              <div className="modal-header">
-		                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
+		                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
 		                <h4 className="modal-title">
-		                  <b style={{paddingLeft:"28px"}}> {header} </b>
+		                  <b> {header} </b>
 		                </h4>
 		              </div>
 
@@ -240,6 +244,7 @@ import './MyPostedProperties.css';
 
 		          </div>
 		        </div>
+
 			</div>
 		)
 	}

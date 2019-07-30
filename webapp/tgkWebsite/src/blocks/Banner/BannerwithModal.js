@@ -68,7 +68,7 @@ class BannerwithModal extends Component {
 	          	inputData : res.data,
 	          },()=>{
 	          	this.props.inputData(this.state.inputData);
-	          	console.log("inputData",this.state.inputData);
+	          	// console.log("inputData",this.state.inputData);
 	          })
 
 	        })
@@ -98,7 +98,7 @@ class BannerwithModal extends Component {
 	          	inputData : res.data,
 	          },()=>{
 	          	this.props.inputData(this.state.inputData);
-	          	console.log("inputData",this.state.inputData);
+	          	// console.log("inputData",this.state.inputData);
 	          })
 
 	        })
@@ -190,7 +190,6 @@ class BannerwithModal extends Component {
 					      <div className="modal-header">
 					        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
 					        <h4 className="modal-title">
-					        	{/*<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>*/}
 					        	<b style={{paddingLeft:"28px"}}> {header} </b>
 					        </h4>
 					      </div>
@@ -213,7 +212,6 @@ class BannerwithModal extends Component {
 					      </div>
 
 					      <div className="modal-footer">
-					        {/*<button type="button" class="btn btn-primary" data-dismiss="modal">Next</button>*/}
 					      </div>
 
 					    </div>
@@ -230,7 +228,7 @@ class BannerwithModal extends Component {
 }
 
 const mapStateToProps = (state)=>{
-	console.log("state",state)
+	// console.log("state",state)
 	return {
 		LoginMobNum 	: state.LoginMobNum,
 		LoginOtp 		: state.LoginOtp,

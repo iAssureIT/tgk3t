@@ -116,13 +116,13 @@ const reducer = (state = initialState,action) => {
 	}
 
 	if(action.type === "SHOW_FIRST_FORM"){
-		newState.BasicInfo 	        = false;
+		newState.BasicInfo 	        = true;
 		newState.PropertyDetails   	= false;
 		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;
-		newState.CongratsPage       = true;
+		newState.CongratsPage       = false;
 		newState.ImageUpload        = false;
 		newState.uid 		        = action.uid;
 	}

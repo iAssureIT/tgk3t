@@ -9,15 +9,7 @@ import './MyPostedProperties.css';
  class MyPostedProperties extends Component {
 	constructor(){
 		super();
-		this.state = {
-			inputData:[],
-		}
-	}
-
-	inputData(inputData){
-		this.setState({
-			inputData : inputData,
-		})
+		console.log("On MyPostedProperties Page = ", localStorage.getItem("uid") );
 	}
 	render() {
 		return (

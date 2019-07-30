@@ -70,7 +70,7 @@ var imgTitleArray = [];
 				S3FileUpload
 				   .uploadFile(image,configuration)
 				   .then((Data)=>{
-				   		console.log("Data = ",Data);
+				   		// console.log("Data = ",Data);
 				   		resolve(Data.location);
 				   })
 				   .catch((error)=>{

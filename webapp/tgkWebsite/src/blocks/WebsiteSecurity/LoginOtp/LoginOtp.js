@@ -61,7 +61,7 @@ class LoginOtp extends Component {
 						<div className="hr_border row"></div>
 						
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						  	<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 ">	
+						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">	
 						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50 headline">
 								We have sent you an OTP for verification, please enter your OTP to continue
 							</div>
@@ -75,8 +75,8 @@ class LoginOtp extends Component {
 							  	</div>
 							  </div>
 						    </div>
-						 <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 boxLayout1">
-								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									<img alt=""  src="/images/1.png" className="build_img2"/>
 								</div>
 								<span className="col-lg-12 formImgB">

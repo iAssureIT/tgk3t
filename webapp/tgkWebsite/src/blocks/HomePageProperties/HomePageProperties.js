@@ -19,7 +19,7 @@ class HomePageProperties extends Component {
       this.setState({
         propertiesData : nextProps.inputData,
       },()=>{
-        console.log("propertiesData",this.state.propertiesData);
+        // console.log("propertiesData",this.state.propertiesData);
       })
     }
   }
@@ -31,7 +31,7 @@ class HomePageProperties extends Component {
 	render() {
 		var count = this.state.propertiesData.length;
 		var mod =count % 3;
-    console.log("mod",mod)
+    // console.log("mod",mod)
 		return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

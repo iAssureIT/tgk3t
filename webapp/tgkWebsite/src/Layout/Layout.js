@@ -19,8 +19,8 @@ import 'font-awesome/css/font-awesome.min.css';
             <Switch>
               <Route path="/"                           exact strict component={HomePage}  />
               <Route path="/PropertyProfile/:id"        exact strict component={PropertyProfile}  />
-              <Route path="/MyPostedProperties"         exact strict component={MyPostedProperties}  />
               <Route path="/MyInterestedProperties"     exact strict component={MyInterestedProperties}  />
+              <Route path="/MyPostedProperties"         exact strict component={MyPostedProperties}  />
               <Route path="/RentDetails"                exact strict component={RentDetails}  />
               <Route path="/CommercialSell"             exact strict component={CommercialSell}  />
               <Route path="/CommercialRent"             exact strict component={CommercialRent}  />
