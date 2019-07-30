@@ -237,11 +237,11 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  	<div className="form-group" id="superArea">
-					 	<div className="can-toggle genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
+					 	<div className="can-toggle1 genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox"/>
 				              <label className="formLable" htmlFor="d">
-				             	 <div className="can-toggle__switch" data-checked="Myself"  data-unchecked="Someone" ></div>
-				                <div className="can-toggle__label-text"></div>
+				             	 <div className="can-toggle1__switch" data-checked="Myself"  data-unchecked="Someone" ></div>
+				                <div className="can-toggle1__label-text"></div>
 				              </label>
 			            	</div>
 				  	</div>

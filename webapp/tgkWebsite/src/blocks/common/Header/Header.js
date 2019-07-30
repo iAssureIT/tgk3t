@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import $ 					from "jquery";
 import {connect} 			from 'react-redux';
+import { Link } 			from 'react-router-dom';
 
 import LoginMobNum              from '../../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
 import LoginOtp                 from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
@@ -55,9 +56,9 @@ class Header extends Component {
 					      {localStorage.getItem("uid") ? (
 					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
-						          <li><a href="MyPostedProperties">My Listing</a></li>
-						          <li><a href="MyInterestedProperties">My Interests</a></li>
-						          <li><a onClick={this.logout.bind(this)} href="/">Logout</a></li>
+						          <li><Link to="/MyPostedProperties">My Listing</Link></li>
+						          <li><Link to="/MyInterestedProperties">My Interests</Link></li>
+						          <li><Link onClick={this.logout.bind(this)} to="/">Logout</Link></li>
 						        </ul>
 					      	</li>
 							) : 
