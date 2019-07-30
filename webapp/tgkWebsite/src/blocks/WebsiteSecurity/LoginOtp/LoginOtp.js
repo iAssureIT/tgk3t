@@ -85,7 +85,7 @@ class LoginOtp extends Component {
 						 </div>
 						</div>
 						  	<div className=" col-lg-2 pull-right btnNext">
-							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; >> </button>
+							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
 						  	</div>
 					</form>
 				</div>

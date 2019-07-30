@@ -38,13 +38,13 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			// console.log("abc");
 			const formValues = {
 				"userID" 		: localStorage.getItem("uid"),
-				"name" 		 	: this.state.name,
-				"email" 	 	: this.state.email,
+				"fullName" 		: this.state.name,
+				"emailId" 	 	: this.state.email,
 				"city"       	: this.state.city,
 				"mobileNumber"  : this.refs.mobile.value,
 				"countryCode"	: this.refs.countryCode.value,
 				"status"     	: 'Active',
-				"role"       	: 'Client',
+				"roles"       	: 'Client',
 			};
 			console.log("WebSignupForm==",formValues);
 		if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){
@@ -52,7 +52,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			axios
 				.patch('/api/usersotp/signup',formValues)
 				.then( (res) =>{
-					if(res.data.message === "NUSER-UPDATED"){
+					if(res.data.message === "USER-UPDATED"){
 						console.log("BasicInfo res = ",res);
 						if(this.props.originPage === "header")
 						{
@@ -180,7 +180,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				 		</div>
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margTop">
 						  	<div className="form-group col-lg-12">
-						       <button type="Submit" className="btn bg-primary pull-right nxt_btn" onClick={this.submit.bind(this)}>Post & Earn>></button>
+						       <button type="Submit" className="btn bg-primary pull-right nxt_btn" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
 					  		</div>
 						</div>
 				</form>
@@ -192,7 +192,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 
 const mapStateToProps = (state)=>{
 	return {
-		mobile 	: state.mobile,
+		mobile 		: state.mobile,
 		originPage  : state.originPage,
 	}
 };

@@ -43,8 +43,12 @@ import './BasicInfo.css';
 		        $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
 		    });
 		    
-		     var $select = $(".1-100");
+		     var $select = $(".Fl60");
 		    for (var i=-2;i<=60;i++){
+		        $select.append($('<option></option>').val(i).html(i))
+		    }
+		     var $select = $(".1-60");
+		    for (var i=1;i<=60;i++){
 		        $select.append($('<option></option>').val(i).html(i))
 		    }
 		}
@@ -253,12 +257,12 @@ import './BasicInfo.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  row">
 		  	<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
 			  <div className="form-group" id="floor">
-			  	<label>Floor</label>
 		  		<div className="input-group inputBox-main " id="">
 			      	<div className="input-group-addon inputIcon">
                      	<i className=" iconClr"><img src="images/floor.png" /></i>
                     </div>
-			  		<select className="custom-select form-control 1-100"  ref="floor" placeholder="Floor" id='select'>
+			  		<select className="custom-select form-control Fl60"  ref="floor" placeholder="Floor" id='select'>
+				    	<option value="" className="hidden">Floor</option>
 				    	
 				    	{/*
 				    	<option value="" className="hidden">Floor</option>
@@ -282,14 +286,13 @@ import './BasicInfo.css';
 
 			<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  <div className="form-group" id="totalfloor">
-			  		<label>Total Floor</label>
-
 				  	{/*<input type="text" className="form-control" ref="totalfloor" id="exampleFormControlInput1" placeholder="Total floor"/>*/}
 				  	<div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="iconClr"><img src="images/floor.png" /></i>
 	                    </div>
-					  	<select className="custom-select form-control 1-100"  ref="totalfloor" placeholder="Floor" >
+					  	<select className="custom-select form-control 1-60"  ref="totalfloor" placeholder="Floor" >
+					    	<option value="" className="hidden">Total Floors</option>
 					    	{/*<option value="" className="hidden">Total Floor</option>
 					    	<option value="1">1</option>
 					    	<option value="2">2</option>
@@ -324,7 +327,7 @@ import './BasicInfo.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	
 		  	<div className="form-group col-lg-3	col-md-2 col-sm-4 col-xs-4 pull-right mt40">
-		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-4 col-xs-4" onClick={this.insertProperty.bind(this)} >Save & Next >></button>
+		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-4 col-xs-4" onClick={this.insertProperty.bind(this)} >Save & Next &rArr;</button>
 		  	</div>
 		  </div>
 		  

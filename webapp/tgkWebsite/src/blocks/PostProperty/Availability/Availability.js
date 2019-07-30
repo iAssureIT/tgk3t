@@ -142,20 +142,20 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		var timeFromVal = this.refs.timeFrom.value;
 
 		if(timeToVal<timeFromVal){
-			alert("To Time should not be less than From Time");
+			// alert("To Time should not be less than From Time");
 
 		}else{
 			var timeTo 	= timeToVal.split(":");
-		if(timeTo[0] > 12){
-			timeTo[0] = parseInt(timeTo) - 12; 
-			if(timeTo[0] < 10){
-				var newtimeTo = "0" + timeTo[0] + ":" + timeTo[1] ;
-			}else{
-				var newtimeTo = timeTo[0] + ":" + timeTo[1] ;
+			if(timeTo[0] > 12){
+				timeTo[0] = parseInt(timeTo) - 12; 
+				if(timeTo[0] < 10){
+					var newtimeTo = "0" + timeTo[0] + ":" + timeTo[1] ;
+				}else{
+					var newtimeTo = timeTo[0] + ":" + timeTo[1] ;
+				}
+				this.refs.timeTo.value = newtimeTo;
+				this.refs.timeToAMPM.value = "PM";
 			}
-			this.refs.timeTo.value = newtimeTo;
-			this.refs.timeToAMPM.value = "PM";
-		}
 		}
 
 		
@@ -297,8 +297,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					</div>
 				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
 					    <div className="input-group" id="">
-						    <select className="form-control col-lg-12" ref="timeFromAMPM">
-						    	<option selected> AM </option>
+						    <select className="form-control col-lg-12" ref="timeFromAMPM" defaultValue="AM">
+						    	<option > AM </option>
 						    	<option> PM </option>
 						    </select>
 					  	</div>
@@ -318,9 +318,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					</div>
 				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
 					    <div className="input-group" id="">
-						    <select className="form-control col-lg-12" ref="timeToAMPM">
-						    	<option selected> AM </option>
-						    	<option> PM </option>
+						    <select className="form-control col-lg-12" ref="timeToAMPM" defaultValue="PM">
+						    	<option > AM </option>
+						    	<option > PM </option>
 						    </select>
 					  	</div>
 			  		</div>

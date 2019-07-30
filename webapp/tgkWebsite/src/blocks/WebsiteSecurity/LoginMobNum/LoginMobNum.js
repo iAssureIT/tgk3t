@@ -101,7 +101,7 @@ class LoginMobNum extends Component {
 							    <label htmlFor="">Please enter your Mobile No</label>
 							    <div className="input-group inputBox-main " id="">
 							      	<div className="input-group-addon inputIcon">
-							      		<select ref="countryCode">
+							      		<select ref="countryCode" className="countryCode">
 							      			<option value="+91">+91</option>
 							      		</select>
 				                    </div>
@@ -127,7 +127,7 @@ class LoginMobNum extends Component {
 						 </div>
 						</div>
 						  	<div className=" col-lg-2 pull-right btnNext">
-							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp;>> </button>
+							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
 						  	</div>
 					</form>
 				</div>
