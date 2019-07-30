@@ -44,6 +44,7 @@ import './BasicInfo.css';
 		    });
 		    
 		     var $select = $(".Fl60");
+
 		    for (var i=-2;i<=60;i++){
 		        $select.append($('<option></option>').val(i).html(i))
 		    }
@@ -75,7 +76,7 @@ import './BasicInfo.css';
 						// swal("Good job!", "Property inserted successfully!", "success");
 						localStorage.setItem('propertyId',res.data.property_id)
 						console.log("BasicInfo res = ",res);
-						this.props.redirectToLocation( res.data.propertyCode, res.data.property_id,this.props.uid);						
+						this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
 					}else{
 						// alert(" Please Fill all fields")
 					}

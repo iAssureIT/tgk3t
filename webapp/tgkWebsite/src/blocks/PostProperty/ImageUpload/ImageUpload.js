@@ -18,7 +18,7 @@ var imgTitleArray = [];
 			"config"			: '',
 			"imageArray"  		: [],
 			"imageTitleArray" 	: [],
-			"S3url" 	        : []
+			"S3url" 	        : [],
 		}
 
 
@@ -29,8 +29,29 @@ var imgTitleArray = [];
 		var uid 			= localStorage.getItem("uid");
 		var propertyId 		= localStorage.getItem("propertyId");
 	
-		main();
 		
+
+		main().then(formValues => {
+			console.log("3 formValues = ",formValues);
+
+			axios
+				.patch('/api/properties/patch/images',formValues)
+				.then( (res) =>{
+					console.log("response = ", res);
+					if(res.status === 200){
+						console.log("res = ", res);
+						this.props.redirectToCongratsPage(uid,propertyId);
+					}
+
+				})
+				.catch((error) =>{
+					console.log("error = ", error);
+				});				
+			
+		});
+
+
+
 		async function main(){
 			var config = await getConfig();
 			
@@ -40,29 +61,16 @@ var imgTitleArray = [];
 				s3urlArray.push(s3url);
 			}
 
-			console.log("s3urlArray = ",s3urlArray);
-
 			const formValues = {
 				"property_id" 		: propertyId,
 				"uid" 		  		: uid,
 				"propertyImages"	: s3urlArray,
 			};
 
-			console.log("formValues = ",formValues);
-						
-			axios
-				.patch('/api/properties/patch/images',formValues)
-				.then( (res) =>{
-					console.log(res);
-					if(res.status === 200){
-						swal("Great!","Images are Uploaded!", "success");
-						this.props.redirectToCongratsPage(uid,propertyId)
-					}
-				})
-				.catch((error) =>{
-					console.log("error = ", error);
-				});
+			console.log("1 formValues = ",formValues);
+			return Promise.resolve(formValues);
 		}
+
 
 		function s3upload(image,configuration){
 
@@ -105,6 +113,12 @@ var imgTitleArray = [];
 
 	}
 
+/*	redirectToCongratsPage()
+	{
+		if(this.state.status === true){
+			this.props.redirectToCongratsPage(localStorage.getItem('uid'),localStorage.getItem('propertyId'))
+		}
+	}*/
 
 	backToAvailability(){
 		this.props.backToAvailability();

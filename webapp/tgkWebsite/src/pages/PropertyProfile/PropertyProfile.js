@@ -32,6 +32,7 @@ const OwlCarousel = Loadable({
 axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
+
 class PropertyProfile extends Component{
   constructor(props){
     super(props);
@@ -62,6 +63,9 @@ class PropertyProfile extends Component{
    
   }
   componentDidMount() {
+    // let i=0;
+    // window.location.reload();
+    // $(".modal-backdrop").remove();     
     this.props.showFirstForm();  //for dispatch
 
     axios

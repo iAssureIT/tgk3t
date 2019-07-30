@@ -2,15 +2,15 @@ import React, { Component }   			from 'react';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 						from 'react-redux';
 
+
 import './CongratsPage.css';
 
  class CongratsPage extends Component {
+ 	redirectToProfile(){
+ 			this.props.history.push("/PropertyProfile/"+this.props.property_id);
+   			window.location.reload();
+ 	}
 
-	redirectToProfile(){
-
-				this.props.history.push("/PropertyProfile/"+this.props.property_id);
-
-	}
 	render() {
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -23,7 +23,7 @@ import './CongratsPage.css';
 				</div>
 				<p className="col-lg-12 CP6">Your Property <b>Successfully</b> submitted & will be published soon!!!</p>
 				<div>
-					<Redirect to={"/PropertyProfile/"+this.props.property_id} > <button className="btn btn-primary CP7 pull-right">Profile Preview</button> </Redirect>
+					 <button className="btn btn-primary CP7 pull-right" onClick={this.redirectToProfile.bind(this)}>Profile Preview</button>
 				</div>
 			</div>
 		);

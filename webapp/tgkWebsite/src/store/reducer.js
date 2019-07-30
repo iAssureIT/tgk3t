@@ -54,69 +54,111 @@ const reducer = (state = initialState,action) => {
 	}
 
 	if(action.type === "REDIRECT_TO_BASIC_INFO"){
-		newState.WebSignupForm 	= false;
-		newState.LoginOtp 	    = false;
-		newState.BasicInfo 	    = true;
-		newState.uid 		    = action.uid;
-
+		newState.WebSignupForm 		= false;
+		newState.LoginOtp 	    	= false;
+		newState.BasicInfo 	    	= true;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
+		newState.uid 		    	= action.uid;
 	}
+
 	if(action.type === "REDIRECT_TO_LOCATION"){
-		newState.BasicInfo 		= false;
-		newState.Location 	    = true;
-		newState.propertyCode   = action.propertyCode;
-		newState.property_id    = action.property_id;
-		newState.uid 			= action.uid;
+		newState.BasicInfo 	        = false;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = true;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
+		newState.propertyCode   	= action.propertyCode;
+		newState.property_id    	= action.property_id;
+		newState.uid 				= action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_PROPERTY"){
-		newState.Location 			=false;
-		newState.PropertyDetails 	= true;
+		newState.BasicInfo 	        = false;
+		newState.PropertyDetails   	= true;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
 		newState.property_id 	    = action.property_id;
 		newState.uid 				= action.uid;
 	}
 	if(action.type === "REDIRECT_TO_AMENITIES"){
-		newState.PropertyDetails = false;
-		newState.Amenities   	 = true;
+		newState.BasicInfo 	        = false;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = true;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
 		newState.property_id 	 = action.property_id;
 		newState.uid 			 = action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_FINANCIAL"){
-		newState.Amenities 	    = false;
-		newState.Financials   	= true;
+		newState.BasicInfo 	        = false;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = true;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
 		newState.property_id    = action.property_id;
 		newState.uid 			= action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_AVAILABILITY"){
-		newState.Financials 	    = false;
+		newState.BasicInfo 	        = false;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
 		newState.Availability   	= true;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = false;
 		newState.property_id        = action.property_id;
 		newState.uid 				= action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_IMG_UPLOAD"){
-		newState.Availability      = false;
-		newState.ImageUpload 	   = true;
+		newState.BasicInfo 	        = false;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = false;
+		newState.ImageUpload        = true;
 		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
-		newState.BasicInfo 	       = false;
-		newState.PropertyDetails   = false;
-		newState.Financials   	   = false;
-		newState.Amenities   	   = false;
-		newState.Availability      = false;
-		newState.Location      	   = false;
-		newState.CongratsPage 	   = true;
-		newState.ImageUpload 	   = false;
+		newState.BasicInfo 	        = false;
+		newState.PropertyDetails   	= false;
+		newState.Financials   	    = false;
+		newState.Amenities   	    = false;
+		newState.Availability   	= false;
+		newState.Location           = false;
+		newState.CongratsPage       = true;
+		newState.ImageUpload        = false;
 		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
 	}
-
 	if(action.type === "SHOW_FIRST_FORM"){
-		newState.BasicInfo 	        = false;
+		newState.BasicInfo 	        = true;
 		newState.PropertyDetails   	= false;
 		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
