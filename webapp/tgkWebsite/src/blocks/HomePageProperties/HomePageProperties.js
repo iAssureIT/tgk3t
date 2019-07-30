@@ -69,7 +69,7 @@ class HomePageProperties extends Component {
                                   </div>
                                   <div className="row">
                                     <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                       <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                       <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                     </div>
                                   </div> 
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -81,7 +81,7 @@ class HomePageProperties extends Component {
                                   <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                     <div className=" col-lg-9 row">
                                       <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> Apartment </b></div>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
                                     </div>
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
@@ -123,7 +123,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -135,7 +135,7 @@ class HomePageProperties extends Component {
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className=" col-lg-9 row">
                                     <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> Apartment </b></div>
+                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                     <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
                                   </div>
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
@@ -180,7 +180,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -192,7 +192,7 @@ class HomePageProperties extends Component {
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className=" col-lg-9 row">
                                     <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> Apartment </b></div>
+                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                     <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
                                   </div>
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
@@ -233,7 +233,7 @@ class HomePageProperties extends Component {
                                     </div>
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -245,7 +245,7 @@ class HomePageProperties extends Component {
                                     <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                       <div className=" col-lg-9 row">
                                         <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                        <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> Apartment </b></div>
+                                        <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                         <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
                                       </div>
                                       <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
@@ -288,7 +288,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={"/images/photo5.jpeg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -300,7 +300,7 @@ class HomePageProperties extends Component {
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className=" col-lg-9 row">
                                     <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> Apartment </b></div>
+                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                     <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
                                   </div>
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">

@@ -28,8 +28,8 @@ var imgTitleArray = [];
 		var imageTitleArray = this.state.imageTitleArray;
 		var uid 			= localStorage.getItem("uid");
 		var propertyId 		= localStorage.getItem("propertyId");
+	
 		main();
-
 		
 		async function main(){
 			var config = await getConfig();
@@ -56,13 +56,12 @@ var imgTitleArray = [];
 					console.log(res);
 					if(res.status === 200){
 						swal("Great!","Images are Uploaded!", "success");
-						this.props.redirectToCongratsPage(uid,propertyId)}
+						this.props.redirectToCongratsPage(uid,propertyId)
+					}
 				})
 				.catch((error) =>{
-
-					// console.log("error = ", error);
+					console.log("error = ", error);
 				});
-
 		}
 
 		function s3upload(image,configuration){

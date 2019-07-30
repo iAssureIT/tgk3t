@@ -2,7 +2,7 @@ import React, { Component }   from 'react';
 import axios                  from 'axios';
 import $                      from 'jquery';
 import Loadable               from 'react-loadable';
-import AllocateToAgent       from './allocateFieldAgent/allocateFieldAgent.js'
+import AllocateToAgent        from './allocateFieldAgent/allocateFieldAgent.js'
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 // import HomePageFooter         from './HomePageFooter.js';

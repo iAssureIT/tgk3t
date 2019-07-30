@@ -13,12 +13,21 @@ import Financials             from '../../blocks/PostProperty/Financials/Financi
 import Availability           from '../../blocks/PostProperty/Availability/Availability.js';
 import CongratsPage           from '../../blocks/PostProperty/CongratsPage/CongratsPage.js';
 import ImageUpload            from '../../blocks/PostProperty/ImageUpload/ImageUpload.js';
+import Loadable               from 'react-loadable';
 
 import Header                 from "../../blocks/common/Header/Header.js";
 
 import "./PropertyProfile.css";
+import 'owl.carousel/dist/assets/owl.carousel.css';
+import 'owl.carousel/dist/assets/owl.theme.default.css';
 
-
+const OwlCarousel = Loadable({
+   
+  loader: () => import('react-owl-carousel'),
+  loading() {
+    return <div className="col-sm-12 col-xs-12 col-lg-2 col-lg-offset-5 col-md-12 loadingImg"><img src="../images/loadersglms.gif" className="img-responsive" alt="loading"/></div>
+  }
+});
 
 axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
@@ -63,7 +72,7 @@ class PropertyProfile extends Component{
         this.setState({
           propertyFeatures    : postsdata.propertyDetails,
           amenities           : postsdata.Amenities,
-          propertyImages      : ['/images/profileImg2.jpg','/images/profileImg2.jpg'],
+          propertyImages      : postsdata.Images,
           propertyVideos      : ['https://youtu.be/vO0FgrPFnjM'],
           pricing             : postsdata.financial,
           propertyLocation    : postsdata.propertyLocation,
@@ -75,6 +84,10 @@ class PropertyProfile extends Component{
     .catch();
 
      $(this).find('input[type="checkbox"]').is(':checked')
+  }
+
+  displayImages(){
+    return this.state.propertyImages;
   }
 
   render() {
@@ -142,23 +155,53 @@ class PropertyProfile extends Component{
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imagesOfProperty" >
-                  <div className="row">
-                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
-                      <div className="row">
-                        <iframe width="428"  title="Property Video" height="300" src="https://www.youtube.com/embed/9IC4dyn5Wpk" frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowFullScreen ></iframe></div>                    
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
-                      <div className="row">
-                        <img alt=""  src="/images/profileImg2.jpg" />
-                      </div>                    
-                    </div>
-                    <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 imgDiv1" >
-                      <div className="row">
-                        <img alt=""  src="/images/profileImg3.jpg" />
-                      </div>                    
-                    </div>
-                  </div>
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imagesOfProperty noPad" >
+                  {/*<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad" >
+                  {this.state.propertyImages?
+                      this.state.propertyVideos.map((video,index)=>{
+                      return(
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
+                            <div className="row">
+                                <video width="385" height="300" controls>
+                                      <source src={video} type="video/mp4" />
+                                </video>
+                            </div>                    
+                          </div>   
+                        );
+                      })
+                       :
+                      null
+                  }
+                  </div>*/}
+                  {this.displayImages() && this.displayImages().length >0 ?
+                    <OwlCarousel
+                        className=" owl-theme "
+                        loop
+                        nav
+                        dots={false}
+                        items={3}
+                        margin={0}
+                        // slideBy={2}
+                        navText={["<div class='fa fa-angle-left blogleftarrow'></div>","<div class='fa fa-angle-right blogrightarrow'></div>"]}
+                        // responsive={
+                        // {'0':{items:this.props.items},'768':{items:this.props.items}, '992':{items:this.props.items}, '1200':{items:this.props.items}}
+                        // }
+                        autoplay={true}
+                        autoplayHoverPause={true}
+                        >
+                        {
+                          this.displayImages().map((propertyImages,index)=>{
+                          return(
+                                <div key={index}  >
+                                    <img className="item" src={propertyImages} />
+                                </div>                    
+                            )
+                          })
+                        }
+                    </OwlCarousel> 
+                    :
+                    null
+                    }   
                 </div>
               </div>
            </div>

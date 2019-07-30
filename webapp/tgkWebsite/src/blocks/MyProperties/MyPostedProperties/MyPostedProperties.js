@@ -34,7 +34,7 @@ import './MyPostedProperties.css';
 	componentDidMount(){
 		$(".modal-backdrop").remove();
 	     axios
-	    .get('http://qatgk3tapi.iassureit.com/api/properties/mypropertylist/'+this.props.uid)
+	    .get('http://qatgk3tapi.iassureit.com/api/properties/mypropertylist/'+this.state.uid)
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -111,7 +111,7 @@ import './MyPostedProperties.css';
 				</div>
 				{this.state.myProperties.map((myProperty,index)=>{
 				return(
-					<div key="index" className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
+					<div key={index} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
 						<div className="row pull-right" id="triangle-topright">				</div>	
 							<div className="row">
 								<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
@@ -120,7 +120,7 @@ import './MyPostedProperties.css';
 											<i  className="fa fa-heart-o heartBtn" onClick={this.heartClick.bind(this)}></i>&nbsp;<span>{this.state.heartStatus}</span>
 										</h5>
 									</div>
-									<img alt=""  className="propertyImgDiv" src="/images/profileImg1.jpg" />
+									<img alt=""  className="propertyImgDiv" src={myProperty.Images[0]} />
 								</div>
 								<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
