@@ -110,7 +110,7 @@ class BannerwithModal extends Component {
 
 	render() {
 		let header;
-			console.log("this.props.CongratsPage",this.props.CongratsPage);
+			// console.log("this.props.CongratsPage",this.props.CongratsPage);
 		    if (this.props.BasicInfo) {
 		      header = "Let's Provide details of your property for sell";
 		    }else if(this.props.Location){

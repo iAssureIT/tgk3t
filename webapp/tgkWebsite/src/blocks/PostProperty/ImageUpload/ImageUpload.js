@@ -201,7 +201,7 @@ var imgTitleArray = [];
 				       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToAvailability.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 				  	</div>
 				  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
-				       <button className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.uploadImage.bind(this)} >Save & Next &nbsp; &nbsp; &rArr;</button>
+				       <button className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.uploadImage.bind(this)} >Finish &nbsp; &nbsp; &rArr;</button>
 				  	</div>
 				</div>
 			</div>

@@ -55,9 +55,9 @@ const reducer = (state = initialState,action) => {
 
 	if(action.type === "REDIRECT_TO_BASIC_INFO"){
 		newState.WebSignupForm 	= false;
-		newState.LoginOtp 	= false;
-		newState.BasicInfo 	= true;
-		newState.uid 		= action.uid;
+		newState.LoginOtp 	    = false;
+		newState.BasicInfo 	    = true;
+		newState.uid 		    = action.uid;
 
 	}
 	if(action.type === "REDIRECT_TO_LOCATION"){
@@ -118,11 +118,11 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "SHOW_FIRST_FORM"){
 		newState.BasicInfo 	        = false;
 		newState.PropertyDetails   	= false;
-		newState.Financials   	    = true;
+		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;
-		newState.CongratsPage       = false;
+		newState.CongratsPage       = true;
 		newState.ImageUpload        = false;
 		newState.uid 		        = action.uid;
 	}

@@ -1,7 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import swal 					from 'sweetalert';		
-
+import $						from 'jquery';
 import ReactTable 				from 'react-table'; //import react table
 import { connect } 				from 'react-redux';
 import {withRouter}    from 'react-router-dom';
@@ -107,13 +107,21 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 		availability.push({
 			"day" : day,
-			"time" : time
+			"time" : time,
+
 		});
 
 		this.setState({
 			"available" : availability,
+				
+
 
 		});
+
+		$('input[name=timeFrom').val('');
+		$('input[name=timeTo').val('');
+
+
 
 	}
 
@@ -244,7 +252,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					  <div className="form-group"  id="builtArea" >
 						  <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
-		                     	<i className="fa fa-building iconClr"></i>
+		                     	<i className="fa fa-rupee iconClr"></i>
 		                    </div>
 					    		<input type="number" data-text="clientMobile" name="contactPersonMobile" value={this.state.contactPersonMobile} onChange={this.handleChange.bind(this)} className="form-control" ref="contactPersonMobile"  placeholder="Phone Number" required/>
 					  		</div>
@@ -256,7 +264,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		 	 </div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<label>Visit Schedule (Add as you may like)</label>
+			  	 	<label>Visit Schedule (Add as many as You Like)</label>
 			  	 </div>
 			  </div>
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">	
@@ -286,7 +294,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
 		                    </div>
-						    <input type="time" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>
+						    <input type="time" name="timeFrom" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>
 					  	</div>
 					</div>
 				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
@@ -307,7 +315,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
 		                    </div>
-						    <input type="time" className="form-control col-lg-12" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>
+						    <input type="time" className="form-control col-lg-12" name="timeTo" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>
 					  	</div>
 					</div>
 				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >

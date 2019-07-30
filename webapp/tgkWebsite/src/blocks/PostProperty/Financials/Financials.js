@@ -32,6 +32,17 @@ import './Financials.css';
 			    ;
 			  });
 			});
+			$('#expRate').keyup(function(event) {
+			  // skip for arrow keys
+			  if(event.which >= 37 && event.which <= 40) return;
+			  // format number
+			  $(this).val(function(index, value) {
+			    return value
+			    .replace(/\D/g, "")
+			    .replace(/\B(?=(\d{3})+(?!\d))/g,",")
+			    ;
+			  });
+			});
 
 			 var today = new Date().toISOString().split('T')[0];
     		document.getElementsByName("somedate")[0].setAttribute('min', today);
@@ -113,9 +124,9 @@ import './Financials.css';
 				    {/*<span className="asterisk">*</span>*/}
 				     <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
-		                     	<i className="fa fa-building iconClr"></i>
+		                     	<i className="fa fa-rupee iconClr"></i>
 		                    </div>
-				    <input type="number" className="form-control" ref="expectedrate"  id="" placeholder="Expected Rate" min="0"/>
+				    <input type="" className="form-control" ref="expectedrate"  id="expRate" placeholder="Expected Rate" min="0"/>
 				  			<div className="input-group-addon inputIcon">
 		                     /Sq ft
 		                    </div>
@@ -126,7 +137,7 @@ import './Financials.css';
 					  <div className="form-group" id="totalprice">
 					    <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
-		                     	<i className="fa fa-building iconClr"></i>
+		                     	<i className="fa fa-rupee iconClr"></i>
 		                    </div>
 			  	 	
 					    <input type="" className="form-control" ref="totalprice" id="totalAsk" placeholder="Total Ask" min="0" />
@@ -180,6 +191,7 @@ import './Financials.css';
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  		<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+		  			<span>Maintenance</span>
 		  			
 		  		</div>
 		  		<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -191,7 +203,7 @@ import './Financials.css';
 					  <div className="form-group" id="">
 					  <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
-		                     	<i className="fa fa-building iconClr"></i>
+		                     	<i className="fa fa-rupee iconClr"></i>
 		                    </div>
 					    {/*<span className="asterisk">*</span>*/}
 				    	<input type="number" className="form-control" ref="maintenanceCharges" id="" placeholder="Maintenance Charge" min="0" defaultValue="0"/>	
