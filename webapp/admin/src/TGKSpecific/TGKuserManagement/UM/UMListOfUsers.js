@@ -43,6 +43,7 @@ class UMListOfUsers extends Component {
             	{ roleName : "Sales Agent"},
             	{ roleName : "Field Manager"},
             	{ roleName : "Field Agent"},
+            	{ roleName : "Client"},
             	
             	  
             ],
@@ -334,11 +335,13 @@ class UMListOfUsers extends Component {
 				          if(res.data.message =="Role is already exists")
 				          {
 				          	swal("Role is already assigned","","error");
+				          	this.setState({
+							   	unCheckedUser : []
+							})
 				          }
 				          else{
-
-				          	swal("Assigned Role Added Successfully","","success");
-				          checkedUsersList = null;
+							swal("Assigned Role Added Successfully","","success");
+				          	checkedUsersList = null;
 
 				          		// update table here
 				          		var data = {
@@ -466,8 +469,8 @@ class UMListOfUsers extends Component {
 				event.preventDefault();
 				var selectedValue        = this.refs.roleListDropdown.value;
 				var keywordSelectedValue = selectedValue.split('$')[0];
-				// console.log("selectedValue",selectedValue);			
-				// console.log("keywordSelectedValue ------------------",keywordSelectedValue);
+				console.log("selectedValue",selectedValue);			
+				console.log("keywordSelectedValue ------------------",keywordSelectedValue);
 					var formValues ={
 						searchText : selectedValue,
 					}
