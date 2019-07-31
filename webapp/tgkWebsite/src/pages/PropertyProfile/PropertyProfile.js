@@ -163,7 +163,7 @@ class PropertyProfile extends Component{
                             {this.state.propertyLocation && this.state.propertyLocation.address ? this.state.propertyLocation.address:"-"}
                             </label> 
                             <div className="col-lg-1 col-md-1 col-sm-3 col-xs-3 text-center forSaleButton">
-                              FOR {this.state.transactionType && this.state.transactionType==="Sell" ? "SELL" : "RENT"}
+                              FOR {this.state.transactionType && this.state.transactionType==="Sell" ? "SALE" : "RENT"}
                             </div> 
                             <br/>
                             <div className="col-lg-12"> 
@@ -331,11 +331,31 @@ class PropertyProfile extends Component{
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                      <div className="row">
                                        <ul  className="bolder">
-                                          <li className="col-lg-6 noPad">Include Charges     </li> <span className="col-lg-6 noPad"> : {this.state.pricing && this.state.pricing.includeCharges     ? <b>{this.state.pricing.includeCharges[0]}  </b> : "-"}</span>
-                                          <li className="col-lg-6 noPad">Expected Rate       </li> <span className="col-lg-6 noPad"> : {this.state.pricing && this.state.pricing.expectedRate       ? <b>{this.state.pricing.expectedRate}       </b> : "-"}</span>
-                                          <li className="col-lg-6 noPad">Total Price         </li> <span className="col-lg-6 noPad"> : {this.state.pricing && this.state.pricing.totalPrice         ? <b>{this.state.pricing.totalPrice}         </b> : "-"}</span>
-                                          <li className="col-lg-6 noPad">Maintainance Charges</li> <span className="col-lg-6 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
-                                          <li className="col-lg-6 noPad">Maintainance Per    </li> <span className="col-lg-6 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                          <li className="col-lg-4 noPad">Include Charges</li> 
+                                          <span className="col-lg-8 noPad"> : 
+                                          {this.state.pricing && this.state.pricing.includeCharges     ? 
+                                            <b>{
+                                            this.state.pricing.includeCharges.map((includeCharges,index)=>{
+                                              console.log("index = ",index);
+                                                var comma = ", ";
+                                                var i = index;
+                                                if(index >= (this.state.pricing.includeCharges.length-1) ){
+                                                  comma = "";
+                                                }
+
+                                              console.log("comma = ",comma);
+                                                return(
+                                                    <b key={i++}>
+                                                        {" "+includeCharges+comma}
+                                                    </b>                  
+                                                  )
+                                                })
+                                          }  </b> : "-"}
+                                          </span>
+                                          <li className="col-lg-4 noPad">Expected Rate       </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.expectedRate       ? <b>{this.state.pricing.expectedRate}       </b> : "-"}</span>
+                                          <li className="col-lg-4 noPad">Total Price         </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.totalPrice         ? <b>{this.state.pricing.totalPrice}         </b> : "-"}</span>
+                                          <li className="col-lg-4 noPad">Maintainance Charges</li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
+                                          <li className="col-lg-4 noPad">Maintainance Per    </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                         </ul>
                                     </div>
                                   </div>

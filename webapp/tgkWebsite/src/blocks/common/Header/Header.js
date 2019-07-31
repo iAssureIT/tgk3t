@@ -64,11 +64,8 @@ class Header extends Component {
 					      	</li>
 							) : 
 					      	(
-					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">LOGIN <span className="caret"></span></a>
-						        <ul className="dropdown-menu">
-						          <li><a href="#"  data-toggle="modal" data-target="#loginModal" onClick={this.login.bind(this)}>Login</a></li>
-						          <li><a href="#">Signup</a></li>
-						        </ul>
+					      	<li className=""><a className="" data-toggle="dropdown" href="#Profile"  data-toggle="modal" data-target="#loginModal" onClick={this.login.bind(this)}>LOGIN </a>
+						       
 					      	</li>
 
 					      	)

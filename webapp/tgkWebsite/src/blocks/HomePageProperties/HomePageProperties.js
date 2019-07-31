@@ -98,7 +98,7 @@ class HomePageProperties extends Component {
                                       <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                      <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i> {moment(property.status.createdAt).format('MMMM Do YYYY')}
+                                      <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i> {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                     </div>
                                   </div>
                                 </div>
@@ -152,7 +152,7 @@ class HomePageProperties extends Component {
                                   <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.status.createdAt).format('MMMM Do YYYY')}
+                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -209,7 +209,7 @@ class HomePageProperties extends Component {
                                   <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.status.createdAt).format('MMMM Do YYYY')}
+                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -262,7 +262,7 @@ class HomePageProperties extends Component {
                                       <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                       </div>
                                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                      <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.status.createdAt).format('MMMM Do YYYY')}
+                                      <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                       </div>
                                     </div>
                                   </div>
@@ -317,7 +317,7 @@ class HomePageProperties extends Component {
                                   <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.status.createdAt).format('MMMM Do YYYY')}
+                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>

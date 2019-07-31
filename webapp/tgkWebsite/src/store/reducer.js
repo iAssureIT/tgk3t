@@ -187,8 +187,8 @@ const reducer = (state = initialState,action) => {
 		newState.ImageUpload 	    = false;
 	}
 	if(action.type === "BACK_TO_PROPERTY_DETAILS"){
-		newState.BasicInfo 	    	= true;
-		newState.PropertyDetails   	= false;
+		newState.BasicInfo 	    	= false;
+		newState.PropertyDetails   	= true;
 		newState.Financials   		= false;
 		newState.Amenities   		= false;
 		newState.Availability   	= false;
