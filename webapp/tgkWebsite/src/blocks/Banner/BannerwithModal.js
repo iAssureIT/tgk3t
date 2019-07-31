@@ -111,11 +111,11 @@ class BannerwithModal extends Component {
 	render() {
 		let header;
 			// console.log("this.props.CongratsPage",this.props.CongratsPage);
-		    if (this.props.BasicInfo) {
+		   if (this.props.BasicInfo) {
 		      header = "Let's Provide details of your property for sell";
-		    }else if(this.props.Location){
+		   }else if(this.props.Location){
 		     header = "Let's Provide Details of Your Property Location"; 
-		    }else if(this.props.PropertyDetails){
+		   }else if(this.props.PropertyDetails){
 		     header = "Please provide property details of your property to SELL"; 
 		   }else if(this.props.Amenities){
 		     header = "My Apartment has following Amenities"; 
@@ -133,6 +133,7 @@ class BannerwithModal extends Component {
 		   }else if(this.props.WebSignupForm){
 		     header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
 		   }
+		   
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 ">
 				<div className=" col-lg-12  ">

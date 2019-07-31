@@ -6,11 +6,8 @@ import { connect } 			  from 'react-redux';
 import { withRouter}  from 'react-router-dom';
 
 import './BasicInfo.css';
-// import 'bootstrap/js/tab.js';
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import 'bootstrap/js/modal.js';
 
- class BasicInfo extends Component{
+class BasicInfo extends Component{
 
 		constructor(props){
 			super(props);
