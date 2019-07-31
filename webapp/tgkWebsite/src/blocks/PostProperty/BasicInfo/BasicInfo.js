@@ -160,7 +160,7 @@ class BasicInfo extends Component{
 						      		 checked={this.state.propertyHolder === "owner"}
 	               					 onChange={this.radioChange} />
 
-					  			<i className=" logo1"><img src="images/owner.png" /></i>
+					  			<i className=" logo1"><img src="/images/owner.png" /></i>
 						    </label>
 					    </div>
 
@@ -173,7 +173,7 @@ class BasicInfo extends Component{
 						      		 checked={this.state.propertyHolder === "careTaker"}
 	               					 onChange={this.radioChange}/>
 
-					  			<i className=" logo1"><img src="images/careTaker.png" /></i>
+					  			<i className=" logo1"><img src="/images/careTaker.png" /></i>
 						    </label>
 					    </div>
 
@@ -186,7 +186,7 @@ class BasicInfo extends Component{
 						      		 checked={this.state.propertyHolder === "broker"}
 	               					 onChange={this.radioChange} 
 						      		 />
-					  			<i className=" logo1"><img src="images/broker.png" /></i>
+					  			<i className=" logo1"><img src="/images/broker.png" /></i>
 						    </label>
 					    </div>
 					</div>
@@ -257,7 +257,7 @@ class BasicInfo extends Component{
 			  <div className="form-group" id="floor">
 		  		<div className="input-group inputBox-main " id="">
 			      	<div className="input-group-addon inputIcon">
-                     	<i className=" iconClr"><img src="images/floor.png" /></i>
+                     	<i className=" iconClr"><img src="/images/floor.png" /></i>
                     </div>
 			  		<select className="custom-select form-control Fl60"  ref="floor" placeholder="Floor" id='select'>
 				    	<option value="" className="hidden">Floor</option>
@@ -287,7 +287,7 @@ class BasicInfo extends Component{
 				  	{/*<input type="text" className="form-control" ref="totalfloor" id="exampleFormControlInput1" placeholder="Total floor"/>*/}
 				  	<div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
-	                     <i className="iconClr"><img src="images/floor.png" /></i>
+	                     <i className="iconClr"><img src="/images/floor.png" /></i>
 	                    </div>
 					  	<select className="custom-select form-control 1-60"  ref="totalfloor" placeholder="Floor" >
 					    	<option value="" className="hidden">Total Floors</option>
@@ -316,7 +316,7 @@ class BasicInfo extends Component{
 				  
 				<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 boxLayout">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						<img alt=""  src="images/2.png" className=""/>
+						<img alt=""  src="/images/2.png" className=""/>
 					</div>
 			  	</div>
 

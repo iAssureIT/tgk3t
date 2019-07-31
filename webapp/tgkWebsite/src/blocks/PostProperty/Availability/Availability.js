@@ -92,7 +92,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		this.props.backToFinancials();
 	}
 	handleAvailability(event){
-
 		event.preventDefault();
 		var availability = this.state.available;
 
@@ -101,22 +100,26 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					 + ' - ' + 
 				   this.refs.timeTo.value + " " + this.refs.timeToAMPM.value ;
 
-		availability.push({
+		if(day!="" && time!="" && availability!=""){
+			availability.push({
 			"day" : day,
 			"time" : time,
 
-		});
+			});
+			this.setState({
+				"available" : availability,
+			});
 
-		this.setState({
-			"available" : availability,
-				
+			$('input[name=timeFrom').val('');
+			$('input[name=timeTo').val('');
+			$('select[name=availableDay').val('');
 
+		}else{
+			alert("Please fill up the Time slot");
+		};	
+		
 
-		});
-
-		$('input[name=timeFrom').val('');
-		$('input[name=timeTo').val('');
-		$('select[name=availableDay').val('');
+		
 
 
 
@@ -195,7 +198,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
    	 const {formerrors} = this.state;
 
    	 	const data = this.state.available;
-   	 	console.log('data',data)
+   	 	// console.log('data',data)
 		const columns = [{
 			Header: 'Availability',
 			accessor: 'day'
@@ -220,14 +223,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
      <div >
            <div className="col-lg-12  col-md-12 col-sm-12 col-xs-12">
 			<form id="form">
-			  {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 title_pd">	
-			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	
-					<label className="title_sz">Please tell us your availability to plan visit</label>
-					<Link to="/HomePage" className=" ">
-						<button type="button" className="close">&times;</button>
-					</Link>
-				</div>
-			  </div>*/}
 			  <div className="row"></div>
 			   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -269,7 +264,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">	
 		    		<label className=""> Availability <span className="astrick">*</span></label>
 					  <select className="custom-select form-control " ref="availability" placeholder="select" name="availableDay" >
-				    	<option disabled>-- Select --</option>
+				    	<option value="">-- Select --</option>
 				    	<option value="Everyday"> Everyday (Mon-Sun)</option>
 				    	<option value="Weekdays"> Weekdays (Mon-Fri)</option>
 				    	<option value="Weekends"> Weekends (Sat-Sun)</option>

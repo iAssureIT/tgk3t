@@ -202,10 +202,11 @@ import './PropertyDetails.css';
 		                    </div>
 							<select className="custom-select form-control "  ref="ageofproperty" placeholder="select" >
 						    	<option value="" className="hidden">--Property Age--</option>
-						    	<option value="1">1</option>
-						    	<option value="2">2</option>
-						    	<option value="3">3</option>
-						    	<option value="4">4</option>
+						    	<option value="New">New(Less than a year)</option>
+						    	<option value="1-2 Years">1-2 Years</option>
+						    	<option value="2-5 Years">2-5 Years</option>
+						    	<option value="5-8 Years">5-8 Years</option>
+						    	<option value=">8 Years">>8 Years</option>
 							</select>
 						</div>				  
 					</div>
@@ -240,7 +241,7 @@ import './PropertyDetails.css';
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-				    	<input type="number" className="form-control" ref="superArea" id="" placeholder="Super Area" min="0" id="first" />	
+				    	<input type="number" className="form-control" ref="superArea" placeholder="Super Area" min="0" max="20000" id="first" />	
 				  			
 				  			<div className="input-group-addon inputIcon">
 		                     Sq ft
@@ -257,8 +258,7 @@ import './PropertyDetails.css';
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-					    	<input type="number" className="form-control" ref="builtupArea" name="" placeholder="Built Up Area" min="0" id="second" onBlur={this.builtArea.bind(this)}/>
-					    {/*<div className="errorMsg">{this.state.errors.builtupArea}</div>*/}
+					    	<input type="number" className="form-control" ref="builtupArea" name="" placeholder="Built Up Area" min="0" max="20000" id="second" onBlur={this.builtArea.bind(this)}/>
 					  		<div className="input-group-addon inputIcon">
 		                     Sq ft
 		                    </div>

@@ -75,7 +75,7 @@ class LoginMobNum extends Component {
 			console.log("datatype",datatype);
 			switch (datatype){
 				case 'clientMobile' : 
-			       formerrors.clientMobile = clientmobileRegex.test(value)? '' : "Please Enter Numbers only";
+			       formerrors.clientMobile = clientmobileRegex.test(value)? '' : "Please enter a valid phone number";
 			       break;
 
 				default :
@@ -96,20 +96,24 @@ class LoginMobNum extends Component {
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="xyz">
 					<form id="" className=" ">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-150">	
+						  	<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-150">	
 							  <div className="form-group">
 							    <label htmlFor="">Please enter your Mobile No</label>
 							    <div className="input-group inputBox-main " id="">
+							    	<div className="input-group-addon inputIcon">
+							      		<img src="images/phone.png" />
+				                    </div>
 							      	<div className="input-group-addon inputIcon">
 							      		<select ref="countryCode" className="countryCode">
 							      			<option value="+91">+91</option>
 							      		</select>
 				                    </div>
+				                    
 							    	{/*<input  data-text="clientMobile" type="number" name="mobile" className="form-control" ref="mobile"  id="" placeholder="Mobile Number" onChange={this.handleChange}  />
 							  		{this.state.formerrors.clientMobile &&(
 										<span className="text-danger">{this.state.formerrors.clientMobile}</span>
 									)}*/}
-									  <input type="number" data-text="clientMobile" name="mobile" id="mobile" value={this.state.mobile}  ref="mobile" onChange={this.handleChange}  className="form-control " required />
+									  <input type="number" data-text="clientMobile" name="mobile" id="mobile" value={this.state.mobile}  ref="mobile" onChange={this.handleChange}  className="form-control " placeHolder="Mobile" required />
 				                        
 							  	</div>
 							  	{this.state.formerrors.clientMobile &&(
@@ -117,8 +121,8 @@ class LoginMobNum extends Component {
 				                        )}
 							  </div>
 						    </div>
-						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
-								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+						 <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 boxLayout1">
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 									<img alt=""  src="images/1.png" className="build_img2"/>
 								</div>
 								<span className="col-lg-12 formImgB">

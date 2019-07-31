@@ -233,12 +233,12 @@ import './Financials.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30">
 		  	<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 			  <div className="form-group margBtm_5" id="date">
-			    <span htmlFor="exampleFormControlInput1">Date</span>{/*<span className="asterisk">*</span>*/}
+			    <span htmlFor="exampleFormControlInput1">Date</span>
 			    <div className="input-group inputBox-main " id="">
 			    	<div className="input-group-addon inputIcon">
 		                <i className="fa fa-building iconClr"></i>
 		            </div>
-			    	<input type="date" className="form-control" ref="availableFrom"  id="" name="somedate"/>
+			    	<input type="date" className="form-control" ref="availableFrom"  id="" name="somedate" min="1900-01-01" max="2999-12-31"/>
 			  	</div>
 			  </div>
 			</div>
@@ -246,7 +246,7 @@ import './Financials.css';
 		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  <div className="form-group" id="">
-			    <label htmlFor="exampleFormControlInput1">Description</label>{/*<span className="asterisk">*</span>*/}
+			    <label htmlFor="exampleFormControlInput1">Description</label>
 			    <textarea className="form-control" rows="3" cols="5" ref="description"  id="" />
 			  </div>
 			</div>
