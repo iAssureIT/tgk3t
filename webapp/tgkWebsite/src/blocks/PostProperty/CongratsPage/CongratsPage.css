@@ -1,12 +1,14 @@
 .CP1{
 	text-align: center;
-    font-size: 40px;
-    color:#3784db;
+    font-size: 42px;
+    color: #3784db;
+    position: relative;
+    left: 40px;
+    top: 44px;
 }
 .CP2{
 	text-align: center;
     font-size: 22px;
-    margin-top: 20px;
 }
 .CP3{
 	text-align: center;
@@ -26,4 +28,12 @@
 }
 .CP7{
     text-align: center;
+}
+.fontColor{
+    font-style: italic;
+    color: #ff9100;
+}
+.congColor{
+    color: #3684db;
+    font-style: italic;
 }

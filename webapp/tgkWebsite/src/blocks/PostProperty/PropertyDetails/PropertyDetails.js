@@ -74,7 +74,8 @@ import './PropertyDetails.css';
 		console.log("superArea",superArea);
 
 		if(builtArea >= superArea){
-			alert("Built up area is not greater than super area");
+			swal("Built Up Area should not be greater than Super Area", "", "warning");
+
 		}
 	}
 
@@ -158,9 +159,9 @@ import './PropertyDetails.css';
 			 <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 		      <input type="radio"
 		             name="optradio"  
-		             value="fullfurnished" 
+		             value="Fully furnished" 
 		      		 id="radio-example1"
-		      		 checked={this.state.furnishedstatus === "fullfurnished"}
+		      		 checked={this.state.furnishedstatus === "Fully furnished"}
    					 onChange={this.radioChange} />   
 		      <span className="mb5">Fully furnished</span> 
 
@@ -168,9 +169,9 @@ import './PropertyDetails.css';
 		    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
 		      <input type="radio" 
 		      		 name="optradio" 
-		      		 value="semifurnished" 
+		      		 value="Semi furnished" 
 		      		 id="radio-example2"
-		      		 checked={this.state.furnishedstatus === "semifurnished"}
+		      		 checked={this.state.furnishedstatus === "Semi furnished"}
    					 onChange={this.radioChange} />  
 		  	 	<span className="mb5">Semi furnished</span>  
 
@@ -178,9 +179,9 @@ import './PropertyDetails.css';
 		    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
 		      <input type="radio"
 		      		 name="optradio" 
-		      		 value="unfurnished" 
+		      		 value="Unfurnished" 
 		      		 id="radio-example3"
-		      		 checked={this.state.furnishedstatus === "unfurnished"}
+		      		 checked={this.state.furnishedstatus === "Unfurnished"}
    					 onChange={this.radioChange} /> 
 		  	 	<span className="mb5">Unfurnished</span>  
 
@@ -195,7 +196,7 @@ import './PropertyDetails.css';
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group" id="society">
-					    <span htmlFor="" className="mb5">Year Old(s)</span>
+					    <span htmlFor="" className="mb5">Year(s) Old</span>
 						<div className="input-group  " id="yearOld">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
@@ -235,20 +236,18 @@ import './PropertyDetails.css';
 		  </div>
 		   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-					  <div className="form-group" id="">
+					<div className="form-group" id="">
 					  <span htmlFor="" className="mb7">Super Area</span>
 					    <div className="input-group  " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-building iconClr"></i>
 		                    </div>
-				    	<input type="number" className="form-control" ref="superArea" placeholder="Super Area" min="0" max="20000" id="first" />	
-				  			
+				    			<input type="number" className="form-control" ref="superArea" placeholder="Super Area" min="0" max="20000" id="first" />	
 				  			<div className="input-group-addon inputIcon">
 		                     Sq ft
 		                    </div>
 				  		</div>
-
-				  </div>
+				  	</div>
 				  </div>
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >

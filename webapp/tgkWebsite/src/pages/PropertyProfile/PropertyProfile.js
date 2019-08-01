@@ -92,7 +92,7 @@ class PropertyProfile extends Component{
           propertyFeatures    : postsdata.propertyDetails,
           amenities           : postsdata.Amenities,
           propertyImages      : postsdata.Images,
-          propertyVideos      : ['https://youtu.be/vO0FgrPFnjM'],
+          propertyVideos      : postsdata.Video,
           pricing             : postsdata.financial,
           propertyLocation    : postsdata.propertyLocation,
           transactionType     : postsdata.transactionType,
@@ -107,6 +107,9 @@ class PropertyProfile extends Component{
 
   displayImages(){
     return this.state.propertyImages;
+  }
+  displayVideo(){
+    return this.state.propertyVideo;
   }
 
   render() {
@@ -199,7 +202,7 @@ class PropertyProfile extends Component{
                         null
                     }
                     </div>*/}
-                    {this.displayImages() && this.displayImages().length >0 ?
+                    {(this.displayImages() && this.displayImages().length >0) || (this.displayVideo() && this.displayVideo().length >0) ?
                       <OwlCarousel
                           className=" owl-theme "
                           loop
@@ -216,6 +219,7 @@ class PropertyProfile extends Component{
                           autoplayHoverPause={true}
                           >
                           {
+                            this.state.propertyImages ? 
                             this.displayImages().map((propertyImages,index)=>{
                             return(
                                   <div key={index}  >
@@ -223,6 +227,21 @@ class PropertyProfile extends Component{
                                   </div>                    
                               )
                             })
+                            :
+                            null
+                          }
+                          {this.state.propertyVideo ?
+                            this.displayVideo().map((propertyVideos,index)=>{
+                            return(
+                                  <div key={index}  >
+                                      <video width="385" height="300" controls>
+                                          <source src={propertyVideos} type="video/mp4" />
+                                      </video>
+                                  </div>                    
+                              )
+                            })
+                            :
+                            null
                           }
                       </OwlCarousel> 
                       :

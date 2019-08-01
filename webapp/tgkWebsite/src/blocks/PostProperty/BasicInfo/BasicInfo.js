@@ -61,6 +61,7 @@ class BasicInfo extends Component{
 				"floor"         	: this.refs.floor.value,
 				"totalFloor"    	: this.refs.totalfloor.value,
 				"listing"       	: false,
+				"status"			: "WIP",
 				"uid"				: this.props.uid
 			};
 			console.log("BasicInfo===",formValues);
@@ -124,7 +125,6 @@ class BasicInfo extends Component{
 				    });
 
 		 }
-
 	selectProp(event){
 	 	var selectedValue = event.currentTarget.value;
 	 	var propertyTypeVal = selectedValue.split("-");
@@ -136,6 +136,14 @@ class BasicInfo extends Component{
  			propertySubType : propertySubType,
  		});
 	}
+	totalFloor(){
+		const floor     =parseInt(this.refs.floor.value);
+		const totalfloor=parseInt(this.refs.totalfloor.value);
+
+		if(floor >= totalfloor){
+			swal("Floor should not be greater than Total Floors", "", "warning");
+		}
+	}
 
 	render() {
     return (
@@ -146,7 +154,6 @@ class BasicInfo extends Component{
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row mt30">	
 				<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						{/*<h3> uid = {this.props.uid} </h3>*/}
 				  	 	<label>I am</label>
 						<span className="astrick">*</span>
 				  	 </div>
@@ -202,8 +209,6 @@ class BasicInfo extends Component{
 
 				   		</div>
 				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	    		
-				    		{/*<input type="text" className="" ref="" id="" placeholder="Seller or renter"/>*/}	
-		{/*		  	 		<label className="labelMarg">One Time MAintenance</label>  */}
 				  	 	<div className="form-group" id="">
 							<div className="can-toggle genderbtn demo-rebrand-2 " onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox" />
@@ -261,22 +266,6 @@ class BasicInfo extends Component{
                     </div>
 			  		<select className="custom-select form-control Fl60"  ref="floor" placeholder="Floor" id='select'>
 				    	<option value="" className="hidden">Floor</option>
-				    	
-				    	{/*
-				    	<option value="" className="hidden">Floor</option>
-				    	<option value="-2">Lower Base(-2)</option>
-				    	<option value="-1">Upper Base(-1)</option>
-				    	<option value="0">Ground(0)</option>
-				    	<option value="1">1</option>
-				    	<option value="2">2</option>
-				    	<option value="3">3</option>
-				    	<option value="4">4</option>
-				    	<option value="5">5</option>
-				    	<option value="6">6</option>
-				    	<option value="7">7</option>
-				    	<option value="8">8</option>
-				    	<option value="9">9</option>
-				    	<option value="10">10</option>*/}
 					</select>
 				</div>
 			  </div>
@@ -289,23 +278,8 @@ class BasicInfo extends Component{
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="iconClr"><img src="/images/floor.png" /></i>
 	                    </div>
-					  	<select className="custom-select form-control 1-60"  ref="totalfloor" placeholder="Floor" >
+					  	<select className="custom-select form-control 1-60"  ref="totalfloor" onBlur={this.totalFloor.bind(this)} >
 					    	<option value="" className="hidden">Total Floors</option>
-					    	{/*<option value="" className="hidden">Total Floor</option>
-					    	<option value="1">1</option>
-					    	<option value="2">2</option>
-					    	<option value="3">3</option>
-					    	<option value="4">4</option>
-					    	<option value="5">5</option>
-					    	<option value="6">6</option>
-					    	<option value="7">7</option>
-					    	<option value="8">8</option>
-					    	<option value="9">9</option>
-					    	<option value="10">10</option>
-					    	<option value="11">11</option>
-					    	<option value="12">12</option>
-					    	<option value="13">13</option>
-					    	<option value="14">14</option>*/}
 						</select>
 					</div>
 				  </div>

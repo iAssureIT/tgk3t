@@ -113,7 +113,7 @@ class LoginMobNum extends Component {
 							  		{this.state.formerrors.clientMobile &&(
 										<span className="text-danger">{this.state.formerrors.clientMobile}</span>
 									)}*/}
-									  <input type="number" data-text="clientMobile" name="mobile" id="mobile" value={this.state.mobile}  ref="mobile" onChange={this.handleChange}  className="form-control " placeHolder="Mobile" required />
+									  <input type="number" data-text="clientMobile" name="mobile" id="mobile" value={this.state.mobile}  ref="mobile" onChange={this.handleChange}  className="form-control " placeholder="Mobile" required />
 				                        
 							  	</div>
 							  	{this.state.formerrors.clientMobile &&(

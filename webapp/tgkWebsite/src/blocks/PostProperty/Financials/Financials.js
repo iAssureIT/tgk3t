@@ -238,7 +238,7 @@ import './Financials.css';
 			    	<div className="input-group-addon inputIcon">
 		                <i className="fa fa-building iconClr"></i>
 		            </div>
-			    	<input type="date" className="form-control" ref="availableFrom"  id="" name="somedate" min="1900-01-01" max="2999-12-31"/>
+			    	<input type="date" className="form-control" ref="availableFrom"  id="" name="somedate" min="1900-01-01" max="2100-12-31"/>
 			  	</div>
 			  </div>
 			</div>

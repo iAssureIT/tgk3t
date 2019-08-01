@@ -115,7 +115,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			$('select[name=availableDay').val('');
 
 		}else{
-			alert("Please fill up the Time slot");
+              swal("Please fill up the Time slot", "", "warning");
+
 		};	
 		
 
@@ -226,7 +227,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			  <div className="row"></div>
 			   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<label>Who will show?</label>
+			  	 	<label className="col-lg-6">Who will show?</label>
+			  	 	<label className="col-lg-6">Phone Number<span className="astrick">*</span></label>
 			  	 </div>
 			  </div>
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	

@@ -26,6 +26,7 @@ var imgTitleArray = [];
 	
 	uploadImage(event){
 		var imageTitleArray = this.state.imageTitleArray;
+		var video 			= this.state.video;
 		var uid 			= localStorage.getItem("uid");
 		var propertyId 		= localStorage.getItem("propertyId");
 	
@@ -35,7 +36,7 @@ var imgTitleArray = [];
 			console.log("3 formValues = ",formValues);
 
 			axios
-				.patch('/api/properties/patch/images',formValues)
+				.patch('/api/properties/patch/gallery',formValues)
 				.then( (res) =>{
 					console.log("response = ", res);
 					if(res.status === 200){
@@ -61,10 +62,14 @@ var imgTitleArray = [];
 				s3urlArray.push(s3url);
 			}
 
+			var videoUrl = await s3uploadVideo(video, config, this);
+
 			const formValues = {
 				"property_id" 		: propertyId,
 				"uid" 		  		: uid,
 				"propertyImages"	: s3urlArray,
+				"video"				: videoUrl,
+				"status"			: "New"
 			};
 
 			console.log("1 formValues = ",formValues);
@@ -77,6 +82,21 @@ var imgTitleArray = [];
 			return new Promise(function(resolve,reject){
 				S3FileUpload
 				   .uploadFile(image,configuration)
+				   .then((Data)=>{
+				   		// console.log("Data = ",Data);
+				   		resolve(Data.location);
+				   })
+				   .catch((error)=>{
+				   		console.log(error);
+				   })
+			})
+		}
+
+		function s3uploadVideo(video,configuration){
+
+			return new Promise(function(resolve,reject){
+				S3FileUpload
+				   .uploadFile(video,configuration)
 				   .then((Data)=>{
 				   		// console.log("Data = ",Data);
 				   		resolve(Data.location);
@@ -147,10 +167,10 @@ var imgTitleArray = [];
 							// }
 					  //   	reader.readAsDataURL(file)
 		    			}else{          
-						    swal("File not uploaded","Something went wrong","error");  
+						    swal("Images not uploaded","Something went wrong","error");  
 				        }//file
 		            }else{ 
-		                swal("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+		                swal("Please upload Image","Allowed images formats are (jpg,png,jpeg)","warning");   
 		            }//file types
 		   		}//file
 
@@ -162,6 +182,28 @@ var imgTitleArray = [];
 				});	   			
 	   		}
 
+		}
+	}
+
+	handleVideoChange(event){
+	   	if (event.currentTarget.files && event.currentTarget.files[0]) {
+		   	var file = event.currentTarget.files[0];
+	     	if (file) {
+	     	  	var fileName  = file.name; 
+	     	    var ext = fileName.split('.').pop();  
+	            if(ext==="mp4" || ext==="avi" || ext==="ogv"){
+	                if (file) {
+	                	this.setState({
+	                		video : { fileInfo : file }
+	                	});
+	                	console.log("video = ", file);
+	    			}else{          
+					    swal("Video not uploaded","Something went wrong","error");  
+			        }//file
+	            }else{ 
+	                swal("Please upload Correct Video","Allowed Formats are .mp4, .avi, .ogv","warning");   
+	            }//file types
+	   		}//file
 		}
 	}
 
@@ -177,8 +219,8 @@ var imgTitleArray = [];
 	}
 
 	render() {
-		console.log("imageTitleArray",this.state.imageTitleArray);
-		console.log("imageArray",this.state.imageArray);
+		// console.log("imageTitleArray",this.state.imageTitleArray);
+		// console.log("imageArray",this.state.imageArray);
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				<div className="col-lg-10  col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 backGround">
@@ -194,7 +236,7 @@ var imgTitleArray = [];
 									return(
 										<div className="col-lg-4 imgcss" key={index}>
 											<img style={{width:"150px"}} className="img-responsive" src={data.imgPath}/>
-											<label className="imgLabel" id={index} onClick={this.deleteimage.bind(this)}>&times;</label>
+											<label className="imgLabel" id={index} handleVideoChange  onClick={this.deleteimage.bind(this)}>&times;</label>
 										</div>)
 								})
 								:
@@ -204,8 +246,7 @@ var imgTitleArray = [];
 						
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 uploadVideo">
 							<label>Please Upload Video:</label>
-							<input type="file" className="" accept=".mp3,.mp4"  />
-
+							<input type="file" className="" accept=".mp4, .avi, .ogv" onChange={this.handleVideoChange.bind(this)} />
 						</div>
 					</div>
 				</div>
