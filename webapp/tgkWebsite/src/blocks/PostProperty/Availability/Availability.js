@@ -343,9 +343,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			</div>
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
-		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+		  	{/*<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
 		       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23" onClick={this.backToFinancials.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
-		  	</div>
+		  	</div>*/}
 		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
 		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23"  onClick={this.insertAvailability.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 		  	</div>

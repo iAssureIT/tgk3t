@@ -3,7 +3,7 @@ import axios 				  from 'axios';
 import $ 					  from "jquery";
 import swal                   from 'sweetalert';
 import { connect } 			  from 'react-redux';
-import { withRouter}  from 'react-router-dom';
+import { withRouter}  		  from 'react-router-dom';
 
 import './BasicInfo.css';
 

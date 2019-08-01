@@ -112,26 +112,26 @@ class BannerwithModal extends Component {
 		let header;
 			// console.log("this.props.CongratsPage",this.props.CongratsPage);
 		   if (this.props.BasicInfo) {
-		      header = "Let's Provide details of your property for sell";
+		      header = "Let's provide details of your property ";
 		   }else if(this.props.Location){
-		     header = "Let's Provide Details of Your Property Location"; 
+		     header = "Let's provide details of your property location"; 
 		   }else if(this.props.PropertyDetails){
-		     header = "Please provide property details of your property to SELL"; 
+		     header = "Let's provide details of your property "; 
 		   }else if(this.props.Amenities){
-		     header = "My Apartment has following Amenities"; 
+		     header = "My apartment has following Amenities"; 
 		   }else if(this.props.Financials){
-		     header = "Financial Details For My Apartment"; 
+		     header = "Financial details for my apartment"; 
 		   }else if(this.props.Availability){
 		     header = "Please tell us your availability to plan visit"; 
 		   }else if(this.props.ImageUpload){
-		     header = "Please Upload Images and a Video of your Property"; 
+		     header = "Please Upload Images and a Video of your property"; 
 		   }
 		   else if(this.props.LoginMobNum){
-		     header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
 		   }else if(this.props.LoginOtp){
-		     header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
 		   }else if(this.props.WebSignupForm){
-		     header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
 		   }
 		   
 		return (
