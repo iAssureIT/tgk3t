@@ -122,7 +122,7 @@ import './MyPostedProperties.css';
 												<i  className="fa fa-heart-o heartBtn" onClick={this.heartClick.bind(this)}></i>&nbsp;<span>{this.state.heartStatus}</span>
 											</h5>
 										</div>*/}
-									</div>
+									
 									<img alt=""  className="propertyImgDiv" src={myProperty.gallery.Images[0]} />
 								</div>
 								<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
