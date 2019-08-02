@@ -19,20 +19,26 @@ export default class Leftsidebar extends Component{
   }
    
 componentDidMount(){
-
+                 /*$(document).ready(function () {
+                 $('#sidebarCollapse').on('click', function () {
+                     $('#sidebar').toggleClass('active');
+                 });
+             });*/
           }    
+  
+
   render(){
     return(
     <div>
             <aside className="leftsidebar">
             <div className="wrapper">
-            <nav id="sidebar" className="active">
-                <div className="sidebar-header" >{/*
-                    <h4 className="logopos">ProjectAdmin Sidebar</h4>*/}
-                    <h4 className=" zeromargin"><img className="imgLogo " src="images/Logo.png"  alt="TGK" width="80px" height="45px" /></h4>
+            <nav id="sidebar">
+                <div className="sidebar-header">
+                    <h4 className=" zeromargin"><img className="imgLogo " src="images/Logo.png"  alt="TGK" width="100%" height="45px" /></h4>
                     <strong className="clspadding">  <img src="images/Keylogo.png"  alt="TGK" height="28px"/></strong>
                 </div>
-                   <ul className="list-unstyled components">
+
+                <ul className="list-unstyled components">
                     <li className="active">
                     <a href="#">
                             <i className="glyphicon glyphicon-briefcase"></i>
@@ -44,31 +50,27 @@ componentDidMount(){
                             <i className="glyphicon glyphicon-wrench" data-toggle="collapse" aria-expanded="false"></i>
                             Operations
                      </a>
-                    </li><li className="">
-                    <a href="#">
-                            <i className="glyphicon glyphicon-briefcase"></i>
-                            Reports
-                     </a>
                     </li>
-                    <li>
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon glyphicon-home"></i>
-                            Master Data
+                   { <li>
+                        <a href="#">
+                            <i className="glyphicon glyphicon-link"></i>
+                           Master Data
                         </a>
-                        <ul className="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="/umlistofusers">Data 1</a></li>
-                            <li><a href="#">Data 2</a></li>
-                            <li><a href="#">Data 3</a></li>
-                        </ul>
-
-                        
-                    </li>
-                    
+                    </li>}
+                   { <li>
+                        <a href="#">
+                            <i className="glyphicon glyphicon-paperclip"></i>
+                            Reports
+                        </a>
+                    </li>}
                     
                 </ul>
-            </nav>
-          </div>
-        </aside>
+
+               </nav>
+
+        </div>
+ 
+            </aside>
       </div>
     );
   }

@@ -1,13 +1,53 @@
 .App {
 /*  text-align: center;
 */}
-
+.cameraimg{
+  color: #000;
+  font-size: 30px;
+  margin-right: 80px;
+}
+/*html *
+{
+   font-family:'Roboto', sans-serif !important;
+}*/
+#sidebar.active {
+    min-width: 80px;
+    max-width: 80px;
+    text-align: center;
+}
+#sidebar {
+    min-width: 228px;
+    max-width: 230px;
+    background: #333;
+    color: #fff;
+    transition: all 0.80s;
+}
+.pointerCls{
+  cursor: pointer;
+}
+.mar0{
+  margin: 0px !important;
+}
+.zeropadd{
+  padding: 0px !important;
+}
+.marbtm30{
+  margin-bottom: 30px;
+}
+.tablebox{
+  margin-top: 30px;
+}
+.leftmar{
+  margin-left: 10px;
+}
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
   pointer-events: none;
 }
-
+.zzero{
+  z-index: 0!important;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -41,14 +81,18 @@
 {
     background-color: #3c8dbc;
   }
-
-.headereffect
-{
-    width: 94%!important;
-  }
+.longmar{
+  margin-left: 82px !important;
+  transition: all 0.8s ease 0s;
+}
+.smallmar{
+ 
+  margin-left: 228px;
+  transition: all 0.8s ease 0s;
+}
   .dashboardeffect
 {
-    width: 94.2%!important;
+    width: 82.2%!important;
   }
 .leftsidebarbackgroundcolor{
   position: fixed!important;
@@ -63,32 +107,6 @@
 .emptyclass{
   height: 100px;
 }
+.kbhj{
 
-.tableinnetWrap1 {
-    border-top: 2px solid #00c0ef !important;
-}
-
-.innerblock {
-    display: block;
-    min-height: 80px;
-    background: #fff;
-    border-radius: 2px;
-}
-
-.innerblock1 {
-    min-height: 3000px;
-    padding: 1% 1% 1% 1%!important;
-    margin-top: 15px;
-    margin-left: 10px;
-    margin-right: 5px;
-    margin-bottom: 15px;
-}
-
-.noLRPad {
-    padding-left: 0%!important;
-    padding-right: 0%!important;
-}
-
-.bodyDiv{
-  background-color: #dadada;
 }
