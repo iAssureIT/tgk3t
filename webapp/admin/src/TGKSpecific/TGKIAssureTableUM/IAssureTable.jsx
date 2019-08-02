@@ -36,6 +36,7 @@ class IAssureTableUM extends Component {
 		    show 						: true,
 		    selectedUser 				:[],
 		    allid						:null,
+		    searchTextInp 				: "",
 		    // "usernames"					: "",
 		}
 		this.deleteExam = this.deleteExam.bind(this);
@@ -372,7 +373,11 @@ class IAssureTableUM extends Component {
 	}
 	tableSearch(){
     	var searchText = this.refs.tableSearch.value;
-    	// console.log("here search data",searchText);
+
+    	this.setState({
+    		searchTextInp : searchText,
+    	});
+    	console.log("here search data",searchText);
     	var formValues =
     	{
 			searchText : searchText,
@@ -400,7 +405,7 @@ class IAssureTableUM extends Component {
 				            },()=>{
 				            })
 				        }).catch((error)=>{ 
-				        	swal("No results found","","error");
+				        	// swal("No results found","","error");
 				      });
 			}else{
 
@@ -423,6 +428,12 @@ class IAssureTableUM extends Component {
 		// 	this.props.getData(this.state.startRange, this.state.limitRange);
 	 //    }
     	 
+    }
+    finalSearch(){
+
+    	var data = this.state.searchTextInp;
+    	console.log("here data",data);
+    	
     }
     showNextPaginationButtons(){
     	var beforeDataLength = this.state.dataLength > 0 ? this.state.dataLength : 20;
@@ -800,8 +811,8 @@ class IAssureTableUM extends Component {
 				<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding">
 	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
 	        		<div className="input-group">
-				        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
-				    	<span className="input-group-addon"><i className="fa fa-search"></i></span>
+				        <input type="text" onChange={this.tableSearch.bind(this)} placeholder="Search by user name" className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
+				    	<span className="input-group-addon" onClick={this.finalSearch.bind(this)}><i className="fa fa-search"></i> </span>
 				    </div>
 	        	</div>		
 	            <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NOpadding marginTop17">			            	        

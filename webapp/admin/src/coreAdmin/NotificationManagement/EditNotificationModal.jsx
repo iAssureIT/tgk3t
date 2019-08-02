@@ -173,6 +173,8 @@ class EditNotificationModal extends Component{
 					this.setState({
 						shown : false,
 					});
+					$('#editNotifyModal-'+this.props.emailNot).hide();
+				    $('.modal-backdrop').remove();
 				console.log('error============',error);
 				})
 			}
@@ -225,7 +227,7 @@ class EditNotificationModal extends Component{
 		if(this.props.emailNot){
 	        return (
 	        	<div>
-	        		{this.state.shown == true ? 
+	        		
 					<div className="modal fade modalHide" id={"editNotifyModal-"+this.props.emailNot} role="dialog">
 					  	<div className="modal-dialog modal-lg" role="document">
 					    	<div className="modal-content modalContent col-lg-12 NOpadding">
@@ -304,9 +306,7 @@ class EditNotificationModal extends Component{
 					   		</div>
 					  	</div>
 					</div>
-					:
-					null
-				}
+					
 				</div>
 		    );
 		}else{

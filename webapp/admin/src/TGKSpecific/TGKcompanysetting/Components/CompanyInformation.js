@@ -380,32 +380,32 @@ class CompanyInformation extends Component{
          formerrors.companywebsitename = companywebsiteRegex.test(value)  && value.length>0 ? '' : "Please enter a valid Company Website";
       break;
 
-       case 'companyAddress' : 
-       formerrors.companyAddress = companyAddressRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+      case 'companyAddress' : 
+       formerrors.companyAddress = companyAddressRegex.test(value)  && value.length>0 ? '' : "Please enter a valid Address";
       break;
     
       case 'country' : 
-        formerrors.country = companynameRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+        formerrors.country = companynameRegex.test(value)  && value.length>0 ? '' : "Please enter a valid Country";
       break;
     
       case 'state' : 
-        formerrors.state = companynameRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+        formerrors.state = companynameRegex.test(value)  && value.length>0 ? '' : "Please enter a valid State";
       break;
     
       case 'district' : 
-        formerrors.district = companynameRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+        formerrors.district = companynameRegex.test(value)  && value.length>0 ? '' : "Please enter a valid District";
       break;
 
       case 'taluka' : 
-        formerrors.taluka = companynameRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+        formerrors.taluka = companynameRegex.test(value)  && value.length>0 ? '' : "Please enter a valid Taluka";
       break;
 
       case 'city' : 
-        formerrors.city = companynameRegex.test(value)  && value.length>0 ? '' : "Invalid Field";
+        formerrors.city = companynameRegex.test(value)  && value.length>0 ? '' : "Please enter a valid City";
       break;
 
       case 'pincode' : 
-        formerrors.pincode = companypincodeRegex.test(value)   && value.length>0? '' : "Invalid Field";
+        formerrors.pincode = companypincodeRegex.test(value)   && value.length>0? '' : "Please enter a valid Pincode";
       break;
        
        default :

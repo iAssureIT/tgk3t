@@ -612,7 +612,7 @@ class UMListOfUsers extends Component {
 				            },()=>{
 				            })
 				        }).catch((error)=>{ 
-				        	swal("Sorry there is no data of "+selectedValue, "","error");
+				        	swal("Sorry there are no "+selectedValue+"users", "","error");
 				      });
 					}
 
