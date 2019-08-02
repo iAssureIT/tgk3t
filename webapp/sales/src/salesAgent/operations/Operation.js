@@ -1,9 +1,27 @@
 import React, { Component }   from 'react';
+import $ 					  from "jquery";
 import Query                  from './query/Query.js';
 import './Operation.css';
-import  NewProperty from './newProperty/NewProperty.js';
+import  Properties from './Properties/Properties.js';
+
 
 export default class Operation extends Component {
+	constructor(props){
+		super(props);
+		// console.log("1 = ", props);
+		this.state = {
+			propertyStatus :"WIP",
+		}
+	}
+
+	propertyStatus(event){
+		event.preventDefault();
+		this.setState({
+			propertyStatus : $(event.target).attr('property-status'),
+		})
+
+	}
+
 	render() {
 		return (
 			<div className="container-fluid bodyDiv ">
@@ -15,25 +33,25 @@ export default class Operation extends Component {
 					 <div className=" col-lg-12 col-md-12">
 						  <ul className="nav nav-pills textC col-lg-12 col-md-12 noPad" role="tablist">
 						    <li className="nav-item col-lg-2 col-md-2 active navPillsMargin ">
-						      <a className="nav-link active textB " data-toggle="pill" href="#WIP">WIP
+						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="WIP" onClick={this.propertyStatus.bind(this)}>WIP
 						      </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin ">
-						      <a className="nav-link active textB " data-toggle="pill" href="#New">New
+						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="New" onClick={this.propertyStatus.bind(this)}>New
 						      </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#ReListing">Re-Listing </a>
+						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="ReListing" onClick={this.propertyStatus.bind(this)}>Re-Listing </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#Verified">Verified </a>
+						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Verified" onClick={this.propertyStatus.bind(this)}>Verified </a>
 						       <span className="badge badge-secondary label-warning badgeP">3</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#Listed">Listed </a>
+						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Listed" onClick={this.propertyStatus.bind(this)}>Listed </a>
 						       <span className="badge badge-secondary label-warning badgeP">9</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
@@ -45,32 +63,8 @@ export default class Operation extends Component {
 					  
 					  {/*<!-- Tab panes -->*/}
 					  <div className="tab-content col-lg-10 col-lg-offset-1 noPad ">
-						     <div id="WIP" className="container active tab-pane ">
-						       <NewProperty /> 
-						    </div>
-						    <div id="New" className="container tab-pane fade "><br/>
-							    <div className="col-lg-12 noPad ">
-								  	<div className="col-lg-1">
-									    <input type="checkbox" id="cbtest"  className="check selectall"/>
-									    <label htmlFor="cbtest" className="check-box"></label> 
-									</div>
-									<div className="col-lg-3 mt19">
-										<button className="bg success ">Assign To Field Agent</button>
-									</div>
-									<div className="col-lg-4 mt19">
-										<button className="bg success  ">Verify & List</button>
-									</div>
-							  	</div>
-							    <NewProperty /> 
-						    </div>
-						    <div id="ReListing" className="container tab-pane fade">
-						      <NewProperty /> 
-						    </div>
-						    <div id="Verified" className="container tab-pane fade">
-						      <NewProperty /> 
-						    </div>
-						    <div id="Listed" className="container tab-pane fade">
-						      <NewProperty /> 
+						     <div id="propertyStatus" className="container active tab-pane ">
+						       <Properties status={this.state.propertyStatus} /> 
 						    </div>
 						    <div id="Query" className="container tab-pane fade">
 						      <Query />

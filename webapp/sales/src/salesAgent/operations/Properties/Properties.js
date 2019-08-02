@@ -5,10 +5,10 @@ import $                    from 'jquery';
 import Progressbar          from '../progressBar/Progressbar.js';
 import {Router, withRouter} from 'react-router-dom';
 import '../progressBar/Progressbar.css';
-import './NewProperty.css';
+import './Properties.css';
 
 
- class NewProperty extends Component {
+ class Properties extends Component {
 	constructor(props){
 		super(props);
 		// console.log("1 = ", props);
@@ -18,8 +18,13 @@ import './NewProperty.css';
 		}
 	}
 	componentDidMount(){
+		var formValues = {
+			user_id :"",
+			status	:"",
+		}
+		console.log("formValues",formValues);
 	    axios
-	    .get('http://qatgk3tapi.iassureit.com/api/properties/list')
+	    .post('http://qatgk3tapi.iassureit.com/api/properties/post/sa/displaylist')
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -46,6 +51,7 @@ import './NewProperty.css';
 	render() {
 		return (
 			<div className="">
+				<h1>{this.props.status}</h1>
 				{
 					this.state.propertiesData.map((property,index)=>{
 						return(
@@ -94,4 +100,4 @@ import './NewProperty.css';
 		)
 	}
 }
-export default withRouter(NewProperty);
+export default withRouter(Properties);
