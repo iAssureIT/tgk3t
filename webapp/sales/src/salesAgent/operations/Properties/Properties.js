@@ -18,13 +18,23 @@ import './Properties.css';
 		}
 	}
 	componentDidMount(){
-		var formValues = {
-			user_id :"",
-			status	:"",
+
+
+		$(".selectall").click(function(){
+		$(".individual").prop("checked",$(this).prop("checked"));
+		});
+	}
+
+
+   componentWillReceiveProps(nextProps){
+    if(nextProps && nextProps.status){
+      	var formValues = {
+			user_id :"5d3ec084e7381f059964f5be",
+			status	:nextProps.status,
 		}
 		console.log("formValues",formValues);
 	    axios
-	    .post('http://qatgk3tapi.iassureit.com/api/properties/post/sa/displaylist')
+	    .post('/api/properties/post/sa/displaylist'+formValues)
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -36,11 +46,8 @@ import './Properties.css';
 	      }
 	    )
 	    .catch();
-
-		$(".selectall").click(function(){
-		$(".individual").prop("checked",$(this).prop("checked"));
-		});
-	}
+    }
+  }
 
 	profileView(event){
 		event.preventDefault()

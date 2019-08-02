@@ -34,7 +34,7 @@ import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 
 import Operation from '../../salesAgent/operations/Operation.js';
-import Profile from '../../salesAgent/operations/Profile/PropertyProfileView.js';
+import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile.js';
 
 
 // section- admin operation
