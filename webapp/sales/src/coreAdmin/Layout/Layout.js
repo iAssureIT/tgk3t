@@ -34,7 +34,7 @@ import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 
 import Operation from '../../salesAgent/operations/Operation.js';
-import Profile from '../../salesAgent/operations/Profile/PropertyProfileView.js';
+import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile.js';
 
 
 // section- admin operation
@@ -63,7 +63,7 @@ componentDidMount(){
     });
     $(document).ready(function () {
        $('#sidebarCollapse').on('click', function () {
-           $('#headerid').toggleClass('headereffect');
+           $('#headerid').toggleClass('longmar');
        });
     });
     $(document).ready(function () {
@@ -116,7 +116,7 @@ componentDidMount(){
   render(){
     console.log("props = ",this.props);
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===false){
+    if(this.state.loggedIn===true){
       return(
             <div className="App container-fluid">
            
