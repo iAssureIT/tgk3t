@@ -105,7 +105,7 @@ componentDidMount(){
   render(){
     // console.log("props = ",this.props);
     // {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===true){
+    if(this.state.loggedIn===false){
       
       window.onscroll = function() {scrollFunction()};
 
