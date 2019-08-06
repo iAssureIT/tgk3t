@@ -96,9 +96,15 @@ logout(){
                 </div>
                 <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 ">
                   <div className="">
+<<<<<<< Updated upstream
                    { /*<div onClick={this.toggleNav.bind(this)}className="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center pull-right hover">
                     <i className="fa fa-cogs headicon "></i>
                   </div>*/}
+=======
+                   { <div onClick={this.toggleNav.bind(this)}className="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center pull-right hover">
+                    <i className="fa fa-cogs headicon "></i>
+                  </div>}
+>>>>>>> Stashed changes
                   <div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 pull-right text-center padd0 hover">
                     <div className="row">
                      { /*<div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">

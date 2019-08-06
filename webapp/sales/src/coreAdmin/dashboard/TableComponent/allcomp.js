@@ -24,8 +24,8 @@
               
             </div>
             <div className="col-lg-7  ">
-                <div>CPU TRAFFIC</div>
-                <div className="per"><strong>90</strong><small>%</small></div>
+                <div>TOTAL USERS</div>
+                <div className="per"><strong>100</strong></div>
             </div>
             
           </div>
@@ -41,8 +41,8 @@
               
             </div>
             <div className="col-lg-7  ">
-                <div>LIKES</div>
-                <div className="per"><strong>41,410</strong></div>
+                <div>TOTAL PROPERTIES</div>
+                <div className="per"><strong>200</strong></div>
             </div>
           </div>
         </div>
@@ -55,8 +55,8 @@
               
             </div>
             <div className="col-lg-7  ">
-                <div>SALES</div>
-                <div className="per"><strong>760</strong></div>
+                <div>BUY/RENT TRANSACTIONS</div>
+                <div className="per"><strong>500</strong></div>
             </div>
           </div>
         </div>
@@ -69,8 +69,8 @@
               
             </div>
             <div className="col-lg-7  ">
-                <div>NEW MEMBERS</div>
-                <div className="per"><strong>2,000</strong></div>
+                <div>TOTAL REVENUE</div>
+                <div className="per"><strong>1,50,00,000</strong></div>
             </div>
           </div>
         </div>

@@ -37,7 +37,7 @@ class ViewTemplates extends Component{
     const {name,value} = event.target;
     let formerrors = this.state.formerrors;
     
-    console.log("datatype",datatype);
+    // console.log("datatype",datatype);
     switch (datatype){
      
       
@@ -74,7 +74,7 @@ class ViewTemplates extends Component{
 
 	componentDidMount() {	
 	    $("html,body").scrollTop(0);	
-	   
+	   this.getData();
 	    /*$.validator.addMethod("regxsubject", function(value, element, arg){          
 	    	return arg !== value;        
 	    }, "Please select one subject name");
@@ -123,10 +123,10 @@ class ViewTemplates extends Component{
 
 		super(props);
 			this.state = {
-			    templateType    	: props.templateType,
-			    templateName    	: props.templateName,
-			    subject         	: props.subject ? props.subject : '',
-			    content         	: '',
+			    templateType    	: props.templateType ? props.templateType :"-- Select --",
+			    templateName    	: props.templateName ? props.templateName : "--Select Template Name--",
+			    subject         	: props.subject ? props.subject : null,
+			    content         	: null,
 			    contentError 		: '',
 			    subjecterror 		: '',
 			    templateNameerror 	: '',
@@ -140,11 +140,38 @@ class ViewTemplates extends Component{
 			       
 			      },		   
 	  	};
-		this.updateContent = this.updateContent.bind(this);
-	    this.onChange 		= this.onChange.bind(this);
-	    this.handleChange = this.handleChange.bind(this);
+		this.updateContent 		= this.updateContent.bind(this);
+	    this.onChange 			= this.onChange.bind(this);
+	    this.handleChange 		= this.handleChange.bind(this);
+	    this.getEmailData  		= this.getEmailData.bind(this);
+	    this.deleteData     	= this.deleteData.bind(this);
+	    this.getNotiData  		= this.getNotiData.bind(this);
+	    this.getSmsData  		= this.getSmsData.bind(this);
+
 	}
-	componentWillMount(){
+	// componentWillMount(){
+	// 	this.getData();
+	// }
+	componentWillReceiveProps(nextProps){
+		this.getData();
+	}
+	AllNotificationTemplates(){
+		const id = this.state.currentNotificationId;
+		var notificationTemplates = this.state.notificationTemplates;
+		if(notificationTemplates && notificationTemplates.length>0){
+			for(var i=0; i<notificationTemplates.length; i++){
+				if(notificationTemplates[i]._id === id){
+					$('.defaultNotification').css({'display':'none'});
+					return [notificationTemplates[i]];
+				}
+			}
+		}else{
+			return [];
+		}
+		return [];
+	}
+	getData(){
+		// console.log('getData');
 		axios({
 			method: 'get',
 			url: '/api/masternotifications/list',
@@ -162,22 +189,6 @@ class ViewTemplates extends Component{
 		    
 		});
 	}
-	AllNotificationTemplates(){
-		const id = this.state.currentNotificationId;
-		var notificationTemplates = this.state.notificationTemplates;
-		if(notificationTemplates && notificationTemplates.length>0){
-			for(var i=0; i<notificationTemplates.length; i++){
-				if(notificationTemplates[i]._id === id){
-					$('.defaultNotification').css({'display':'none'});
-					return [notificationTemplates[i]];
-				}
-			}
-		}else{
-			return [];
-		}
-		return [];
-	}
-
 	AllsmsTemplates(){
 		const id = this.state.currentSMSId;
 		// console.log("id",id);
@@ -205,6 +216,49 @@ class ViewTemplates extends Component{
 			})
 		});
     }
+    getEmailData(id){
+	  if (id) {
+	  axios({
+					method: 'get',
+					// url: 'http://localhost:3048/api/masternotifications/'+id,
+					url: '/api/masternotifications/'+id,
+				}).then((response)=> {
+	    this.setState({
+						emailTemplates : response.data
+					})
+				});
+	  }
+	}
+
+	getNotiData(id){
+		 if (id) {
+	  axios({
+					method: 'get',
+					// url: 'http://localhost:3048/api/masternotifications/'+id,
+					url: '/api/masternotifications/'+id,
+				}).then((response)=> {
+	    this.setState({
+						notificationTemplates : response.data
+					})
+				});
+	  }
+	}
+
+	getSmsData(id){
+		 if (id) {
+	  axios({
+					method: 'get',
+					// url: 'http://localhost:3048/api/masternotifications/'+id,
+					url: '/api/masternotifications/'+id,
+				}).then((response)=> {
+	    this.setState({
+						smsTemplates : response.data
+					})
+				});
+	  }
+	}
+
+
     getNotificationId(id){
     	axios({
 			method: 'get',
@@ -225,8 +279,36 @@ class ViewTemplates extends Component{
 			})
 		});
     }
+
+    deleteData(type,id){
+	  if (type && id) {
+		  if (type == "Email") {
+		  var emailarray = [...this.state.emailTemplatesList]; // make a separate copy of the array
+		  var index = emailarray.findIndex((obj)=>{return obj._id == id});
+			  if (index !== -1) {
+			    emailarray.splice(index, 1);
+			    this.setState({emailTemplatesList: emailarray,emailTemplates:{}});
+			  }
+			  }else if (type == "Notification") {
+			        var notificationarray = [...this.state.notificationTemplatesList]; // make a separate copy of the array
+			  var notificationindex = notificationarray.findIndex((obj)=>{return obj._id == id});
+					  if (notificationindex !== -1) {
+					    notificationarray.splice(notificationindex, 1);
+					    this.setState({notificationTemplatesList: notificationarray,notificationTemplates:{}});
+					  }
+			  }else if (type == "SMS") {
+					        var smsarray = [...this.state.smsTemplatesList]; // make a separate copy of the array
+					  var smsindex = smsarray.findIndex((obj)=>{return obj._id == id});
+					  if (smsindex !== -1) {
+					    smsarray.splice(smsindex, 1);
+					    this.setState({smsTemplatesList: smsarray,smsTemplates:{}});
+					  }
+			  }
+		  }
+	  }
+
 	submitTemplate(event){
-		console.log('submitTemplate');
+		// console.log('submitTemplate');
 
 
 		event.preventDefault();
@@ -235,86 +317,90 @@ class ViewTemplates extends Component{
 			var templateName     = this.state.templateName;
 			var subject          = this.state.subject;
 			var cketext          = this.state.content;
-			if(templateType === '-- Select --' || templateName === '--Select Template Name--'){
-				swal({
-					title: 'Please fill in all the required fields',
-					text:"Please fill in all the required fields",
-					type: 'success',
-					showCancelButton: false,
-					confirmButtonColor: '#666',
-					confirmButtonText: 'Ok'
-				});
+
+			console.log("here value of sub", this.state.subject);
+			console.log("here value of content", this.state.content);
+
+			console.log("here value of templatetype", this.state.templateType);
+			console.log("here value of templateName", this.state.templateName);
+			if( cketext === null || cketext == "" || templateType === '-- Select --' || templateName === '--Select Template Name--'){
+				swal("Please enter mandatory fields", "", "warning");
+          		// console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}else{	
-				var formValues = {   
+
+				if(templateType === 'Email' && (subject === null || subject == ""))
+				{
+					swal("Please enter mandatory fields", "", "warning");
+				}else{
+
+					var formValues = {   
 					"templateType"  : templateType,
 					"templateName"  : templateName,
 					"subject"       : subject,
 					"content"       : cketext,
+					}
+				
+						if(formValid(this.state.formerrors)){
+							axios.post('/api/masternotifications', formValues)
+							.then((response)=> {	
+							console.log('response here of add --------------',response);	
+								if(response.data.message== "Master Notification Template Name already exists")
+								{
+									swal("This template already exists","", "error");
+									 this.setState({
+									    	templateType 	: '-- Select --',
+									    	templateName 	: '--Select Template Name--',
+									    	subject 		: "",
+									    	content 		: null
+									    });   
+								}else{
+									swal("Template added successfully","", "success");
+								}			
+									axios({
+										method: 'get',
+										url: '/api/masternotifications/list',
+									}).then((response)=> {
+										console.log("here are the response--------------------", response);
+										
+										var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
+										var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
+										var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
+									    this.setState({
+									    	emailTemplatesList 			: emailTemplatesList,
+									    	notificationTemplatesList 	: notificationTemplatesList,
+									    	smsTemplatesList 			: smsTemplatesList
+									    });
+
+									     this.setState({
+									    	templateType 	: '-- Select --',
+									    	templateName 	: '--Select Template Name--',
+									    	subject 		: "",
+									    	content 		: null
+									    },()=>{
+									    	console.log("here sub", this.state.subject);
+									    	console.log("here content", this.state.content);
+									    });   
+									}).catch(function (error) {
+									    
+
+									});
+									
+									$('#createNotifyModal').hide();
+									$('.modal-backdrop').remove();
+								})
+								.catch(function (error) {
+									
+
+								// console.log(error);
+								})
+						}else
+						{
+						    swal("Please enter mandatory fields", "", "warning");
+						    // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+						}
+
 				}
 				
-				if(formValid(this.state.formerrors)){
-					axios.post('/api/masternotifications', formValues)
-					.then((response)=> {	
-					console.log('response',response);				
-						axios({
-							method: 'get',
-							url: '/api/masternotifications/list',
-						}).then((response)=> {
-							swal("Template added successfully","", "success");
-							var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
-							var notificationTemplatesList = response.data.filter((a)=>{ return a.templateType == "Notification"});	   	    
-							var smsTemplatesList = response.data.filter((a)=>{ return a.templateType == "SMS"});	   	    
-						    this.setState({
-						    	emailTemplatesList 			: emailTemplatesList,
-						    	notificationTemplatesList 	: notificationTemplatesList,
-						    	smsTemplatesList 			: smsTemplatesList
-						    });
-
-						     this.setState({
-						    	templateType 	: '',
-						    	templateName 	: '',
-						    	subject 		: '',
-						    	content 		: ''
-						    });
-
-
-
-						    
-						}).catch(function (error) {
-						    
-						});
-						// swal({
-						// 	title:'swal',
-						// 	text: response.data ,
-						// 	type: 'success',
-						// 	showCancelButton: false,
-						// 	confirmButtonColor: '#666',
-						// 	confirmButtonText: 'Ok'
-						// });
-						// swal("{response.data}","", "success");
-						$('#createNotifyModal').hide();
-						$('.modal-backdrop').remove();
-
-
-					})
-					.catch(function (error) {
-						/*swal({
-							text: "esponse.data",
-							type: 'success',
-							showCancelButton: false,
-							confirmButtonColor: '#666',
-							confirmButtonText: 'Ok'
-						});*/
-					console.log(error);
-					})
-					.finally(function () {
-					// always executed
-					});
-				}else
-				{
-				    swal("Please enter mandatory fields", "", "warning");
-				    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-				}
 			}
 		/*}else{
 			this.setState({
@@ -356,7 +442,7 @@ class ViewTemplates extends Component{
       		});
       	}else{
       		this.setState({
-      			contentError : 'This field is required'
+      			contentError : ''
       		})
       	}
       })
@@ -368,7 +454,7 @@ class ViewTemplates extends Component{
 		const required = (value) => {
 		  if (!value.toString().trim().length) {
 		    // We can return string or jsx as the 'error' prop for the validated Component
-		    return <span className="error">This field id required.</span>;
+		    return <span className="error"></span>;
 		  }
 		};
 		 
@@ -400,7 +486,7 @@ class ViewTemplates extends Component{
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border mrgntop">
 
 						<div className="col-lg-4 col-md-3 col-sm-6 col-xs-12 UMtitle NOpadding-left">
-							<h4 className="usrmgnttitle weighttitle">View All Templates</h4>
+							<h4 className="usrmgnttitle weighttitle">All Templates</h4>
 						</div>
 						<div className="col-lg-2 col-lg-offset-6 col-md-3 col-md-offset-8 col-sm-6 col-xs-12"  id="createmodalcl">
 							<button className="addexamform clickforhideshow col-lg-12 col-md-12 col-sm-12 col-xs-12 " data-toggle="modal" data-target="#createNotifyModal" data-whatever="@mdo"><i className="fa" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Add Template</button>
@@ -510,7 +596,7 @@ class ViewTemplates extends Component{
 	            		</div>
 	            		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 							<div className="tab-content">
-							<div id="emailTemplates" className="tab-pane fade in active">
+							<div id="emailTemplates" className="tab-pane fade in active table-wrapper-scroll-y my-custom-scrollbar">
 							  <div className="">
 							  	<div className="sidertemplatebar col-lg-3 col-md-3 col-xs-12 col-sm-12">
 							  		<div className="row">
@@ -525,7 +611,7 @@ class ViewTemplates extends Component{
 										<h1>Please Select The Template</h1>
 										<i className="fa fa-hand-o-left" aria-hidden="true"></i>
 									</div>
-									{this.state.emailTemplates ? <EmailTemplateRow  emailtemplateValues={this.state.emailTemplates}/> : null}
+									{this.state.emailTemplates ? <EmailTemplateRow deleteData={this.deleteData.bind(this)} getData={this.getData.bind(this)} getEmailData={this.getEmailData.bind(this)} emailtemplateValues={this.state.emailTemplates}/> : null}
 								</div> 
 							  </div>
 							</div>
@@ -541,7 +627,7 @@ class ViewTemplates extends Component{
 										<h1>Please Select The Template</h1>
 										<i className="fa fa-hand-o-left" aria-hidden="true"></i>
 									</div>
-									{this.state.notificationTemplates ? <AllNotificationTemplateRow notificationtemplateValues={this.state.notificationTemplates}/> : null}									  
+									{this.state.notificationTemplates ? <AllNotificationTemplateRow deleteData={this.deleteData.bind(this)} getNotiData={this.getNotiData.bind(this)} notificationtemplateValues={this.state.notificationTemplates}/> : null}									  
 								</div>
 							  </div>
 							</div>
@@ -557,7 +643,7 @@ class ViewTemplates extends Component{
 										<h1>Please Select The Template</h1>
 										<i className="fa fa-hand-o-left" aria-hidden="true"></i>
 									</div>
-									{this.state.smsTemplates?<AllSMSTemplateRow smstemplateValues={this.state.smsTemplates}/>:null}									  
+									{this.state.smsTemplates?<AllSMSTemplateRow deleteData={this.deleteData.bind(this)} getSmsData={this.getSmsData.bind(this)} smstemplateValues={this.state.smsTemplates}/>:null}									  
 								</div>
 							  </div>
 							</div>

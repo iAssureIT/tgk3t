@@ -24,17 +24,21 @@ import Dashboard from '../dashboard/Dashboard.js'
 import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
 import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
 // import UMListOfUsers from '../userManagement/UM/UMListOfUsers.js';
-import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
-// import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
-import EditUserProfile from '../../TGKSpecific/TGKuserManagement/UM/EditUserProfile.js';
-import UMRolesList from '../userManagement/Roles/UMRolesList.js';
-// import CompanySetting from '../companysetting/Components/CompanySetting.js';
-import CompanySetting from '../../TGKSpecific/TGKcompanysetting/Components/CompanySetting.js';
-import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
+// import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
+// import UMListOfEmp from '../../TGKSpecific/TGKuserManagement/UM/OfficeEmpList.js';
 
+<<<<<<< Updated upstream
 
 import Operation from '../../salesAgent/operations/Operation.js';
 import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile.js';
+=======
+// // import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
+// import EditUserProfile from '../../TGKSpecific/TGKuserManagement/UM/EditUserProfile.js';
+// import UMRolesList from '../userManagement/Roles/UMRolesList.js';
+// // import CompanySetting from '../companysetting/Components/CompanySetting.js';
+// import CompanySetting from '../../TGKSpecific/TGKcompanysetting/Components/CompanySetting.js';
+// import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
+>>>>>>> Stashed changes
 
 
 // section- admin operation
@@ -45,6 +49,8 @@ import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile
 
 
 
+import Operation from '../../salesAgent/operations/Operation.js';
+import Profile from '../../salesAgent/operations/Profile/PropertyProfileView.js';
 
  class Layout extends Component{
   
@@ -63,7 +69,11 @@ componentDidMount(){
     });
     $(document).ready(function () {
        $('#sidebarCollapse').on('click', function () {
+<<<<<<< Updated upstream
            $('#headerid').toggleClass('longmar');
+=======
+           $('#sidebarCollapse').toggleClass('longmar');
+>>>>>>> Stashed changes
        });
     });
     $(document).ready(function () {
@@ -74,22 +84,26 @@ componentDidMount(){
 
 
     const token = localStorage.getItem("token");
-    console.log("Dashboard Token = ",token);
+    // console.log("Dashboard Token = ",token);
     if(token!==null){
-    console.log("*********===***********imin ",token);
+    // console.log("*********===***********imin ",token);
       this.setState({
         loggedIn : true
       })
     }else{
-      console.log("token is not available");
+      // console.log("token is not available");
     }
+
+    
+
+
               
   }
 
   logout(){
     var token = localStorage.removeItem("token");
       if(token!==null){
-      console.log("Header Token = ",token);
+      // console.log("Header Token = ",token);
       this.setState({
         loggedIn : false
       })
@@ -97,71 +111,89 @@ componentDidMount(){
       // this.props.history.push("/login");
     }
   }
-/*
-                      <Router>
-                          <Switch>
-                          <Route path="/umlistofusers" component={UMListOfUsers} exact />
-                          <Route path="/umroleslist" component={UMRolesList} exact />
-                          <Route path="/edituserprofile" component={EditUserProfile} exact />
 
-                          <Route path="/ViewTemplates" component={ViewTemplates} exact />
-                          <Route path="/dashboard" component={Dashboard} exact />
-
-                          <Route path="/companysetting" component={CompanySetting} exact />
-                          </Switch>        
-                      </Router>
-*/
 
 
   render(){
+<<<<<<< Updated upstream
     console.log("props = ",this.props);
     {console.log("loggedIn status layput = ", this.state.loggedIn)}
     if(this.state.loggedIn===true){
+=======
+    // console.log("props = ",this.props);
+    // {console.log("loggedIn status layput = ", this.state.loggedIn)}
+    if(this.state.loggedIn===false){
+      
+      window.onscroll = function() {scrollFunction()};
+
+      function scrollFunction() {
+        if( document.getElementById("mySidenav"))
+        {
+            if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+              document.getElementById("mySidenav").style.top = "0";
+            } else {
+              document.getElementById("mySidenav").style.top = "50px";
+            }
+
+        }
+        
+      }
+
+>>>>>>> Stashed changes
       return(
             <div className="App container-fluid">
-           
-                <div className="row">
-                  <div id="headerid" className="headerbackgroundcolor headereffect">
+            
+              <div className="container-fluid headerbackgroundcolor padd0" id="headerid" >
+               <Header />
+              </div>
+
+                {/*<div className="row">
+                  <div id="headerid" className="headerbackgroundcolor ">
                     <div className="">
                       <Header />
                    </div>
-                  </div>
-                  <div className="">                  
-                    <div id="dashbordid" className="dashboardeffect">
-                     {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
-                      */} <Router>
-                          <Switch>
-                          <Route path="/umlistofusers" component={UMListOfUsers} exact />
+                  </div>*/}
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="">                  
+                          <div id="dashbordid" className="">
+                           {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
+                            */} <Router>
+                                <Switch>
+                                {/*<Route path="/umlistofusers" component={UMListOfUsers} exact />
+                                <Route path="/umlistofemp" component={UMListOfEmp} exact />
 
-                          <Route path="/umroleslist" component={UMRolesList} exact />
-                          <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
+                                <Route path="/umroleslist" component={UMRolesList} exact />
+                                <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
 
-                          <Route path="/ViewTemplates" component={ViewTemplates} exact />
-                          <Route path="/" component={Dashboard} exact />
+                                <Route path="/ViewTemplates" component={ViewTemplates} exact />*/}
+                                <Route path="/dashboard" component={Dashboard} exact />
+                                <Route path="/" component={Dashboard} exact />
 
-                          <Route path="/companysetting" component={CompanySetting} exact />
-                            <Route path="/operation" component={Operation} exact />
-                          <Route path="/profile/:id" component={Profile} exact />
-                         {/*----------------------------------------------*/}
-                          {/*<Route path="/masterdata" component={MasterData} exact />
-                          <Route path="/sellometer" component={SellOMeter} exact />
-                          <Route path="/classrating" component={ClassRating} exact />*/}
+                                {/*<Route path="/companysetting" component={CompanySetting} exact />
+                                */}
+                               {/*----------------------------------------------*/}
 
-                          
+                                {/*<Route path="/masterdata" component={MasterData} exact />
+                                <Route path="/sellometer" component={SellOMeter} exact />
+                                <Route path="/classrating" component={ClassRating} exact />*/}
 
-                          </Switch>        
-                      </Router>
-                    </div>
-                  </div>
-                  <div className="leftsidebarbackgroundcolor">
-                    <div className="row">
-                       <Leftsidebar />
-                    </div>
-                  </div>
-                  <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-2 col-md-offset-2 col-sm-offset-2 col-xs-offset-2">
-                    <div className="">
-                   </div>
-                  </div>
+                                <Route path="/operation" component={Operation} exact />
+                               <Route path="/profile/:id" component={Profile} exact />
+                       
+
+                                </Switch>        
+                            </Router>
+                          </div>
+                        </div>
+                        <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                          <div className="leftsidebarbackgroundcolor">
+                            <div className="row">
+                               <Leftsidebar />
+                            </div>
+                          </div>
+                        </div>
+
+                  
                 </div>
             </div> 
         );

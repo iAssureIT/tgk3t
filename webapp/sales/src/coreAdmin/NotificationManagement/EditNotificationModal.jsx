@@ -20,6 +20,9 @@ class EditNotificationModal extends Component{
 	   	'optionA'			: '',
 	   	'messageError' 		: '',
 	   	shown 				: true,
+	   	emailTemplatesList 			: "",
+		notificationTemplatesList 	: "",
+		smsTemplatesList 			: "",
 	  };
 
 	    this.handleChange = this.handleChange.bind(this);
@@ -32,6 +35,7 @@ class EditNotificationModal extends Component{
 			'subject'			: nextProps.data.subject,
 			'content'			: nextProps.data.content,
 		});
+		// this.props.sendData();
 	}
 
 	handleChange(event){
@@ -121,8 +125,8 @@ class EditNotificationModal extends Component{
 			var cketext          = this.state.content;
 			if(templateType === '-- Select --' || templateName === '--Select Template Name--'){
 				swal({
-					title: 'Please fill in all the required fields',
-					text:"Please fill in all the required fields",
+					title: 'This field is required.',
+					text:"This field is required.",
 					type: 'success',
 					showCancelButton: false,
 					confirmButtonColor: '#666',
@@ -144,18 +148,35 @@ class EditNotificationModal extends Component{
 						shown : false,
 					});
 					console.log('response --==',response);
+					if (templateType  == "Email") {
+						this.props.emailGetData(editId)
+
+					}
+					if (templateType  == "Notification") {
+						this.props.notiGetData(editId)
+
+					}
+
+					if (templateType  == "SMS") {
+						this.props.smsGetData(editId)
+
+					}
+
+
+					$('#editNotifyModal-'+this.props.emailNot).hide();
+				    $('.modal-backdrop').remove();
+                   
 				})
-				.catch(function (error) {
+				.catch((error)=> {
 					
 					swal(" Sorry! Template can't update successfully","", "error");
 					this.setState({
 						shown : false,
 					});
+					$('#editNotifyModal-'+this.props.emailNot).hide();
+				    $('.modal-backdrop').remove();
 				console.log('error============',error);
 				})
-				.finally(function () {
-				// always executed
-				});
 			}
 		}else{
 			this.setState({
@@ -206,7 +227,7 @@ class EditNotificationModal extends Component{
 		if(this.props.emailNot){
 	        return (
 	        	<div>
-	        		{this.state.shown == true ? 
+	        		
 					<div className="modal fade modalHide" id={"editNotifyModal-"+this.props.emailNot} role="dialog">
 					  	<div className="modal-dialog modal-lg" role="document">
 					    	<div className="modal-content modalContent col-lg-12 NOpadding">
@@ -285,9 +306,7 @@ class EditNotificationModal extends Component{
 					   		</div>
 					  	</div>
 					</div>
-					:
-					null
-				}
+					
 				</div>
 		    );
 		}else{

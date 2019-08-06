@@ -1,6 +1,7 @@
 import React, { Component } 		  from 'react';
 import CreateUser 					       from './CreateUser.js';
 import axios                        from 'axios';
+// import _                        from 'underscore';
 import './userManagement.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
