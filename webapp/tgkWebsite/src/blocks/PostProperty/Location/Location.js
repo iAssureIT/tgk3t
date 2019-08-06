@@ -14,9 +14,10 @@ import './Location.css';
 			this.state = {
 				"selected"  		: "",
 				"listofStates"		: "",
-				"listofDistrict"	: ""
-				
+				"listofDistrict"	: "",
+				"index" 			: "",
 			};
+			this.handleChange = this.handleChange.bind(this);
 		}
 	componentDidMount(){
 		this.getState();
@@ -39,7 +40,10 @@ import './Location.css';
 				"pincode" 			: this.refs.pincode.value,
 				"property_id" 		: localStorage.getItem("propertyId"),
 				"uid" 				: this.props.uid,
+				"index"				: this.state.index,
 			};
+				 localStorage.setItem("index",this.state.index);
+
 				console.log("Location",formValues);
 				if(this.refs.state.value!="" && this.refs.city.value!="" && this.refs.area.value!="" && this.refs.subArea.value!="" && this.refs.society.value!="" && this.refs.housebuilding.value!="" ){
 				axios
@@ -208,7 +212,48 @@ getDistrict(stateCode){
       console.log('error', error);
     });
   }
+
+
+  handleChange(event){
+        const target = event.target.value;
+        const name   = event.target.name;
+        console.log('target',name, target);
+          this.setState({ 
+        [name]:target
+      },()=>{
+        // console.log('this state', this.state);
+      })
+  }
+
 	render() {
+
+		// "state" 			: this.refs.state.value,
+		// 		"city" 				: this.refs.city.value,
+		// 		"area" 			    : this.refs.area.value,
+		// 		"subArea" 			: this.refs.subArea.value,
+		// 		"society" 		    : this.refs.society.value,
+
+	var cityName = this.state.city;
+    var areaName = this.state.area;
+    var subareaName = this.state.subArea;
+    var societyName = this.state.society;
+    
+    console.log("cityName",cityName); 
+    console.log("areaName",areaName); 
+    console.log("subareaName",subareaName); 
+    console.log("societyName",societyName); 
+
+
+    if(cityName != null &&  areaName != null && subareaName != null && societyName != null)
+    {
+       var first  = cityName.toUpperCase().slice(0,2);
+       var second = areaName.toUpperCase().slice(0,2);
+       var third  = subareaName.toUpperCase().slice(0,2);
+       var forth  = societyName.toUpperCase().slice(0,2);
+
+       this.state.index = first+second+third+forth;
+       console.log("index here", this.state.index);
+    }
 
 		return (
 			<div >
@@ -266,7 +311,7 @@ getDistrict(stateCode){
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconSize12 iconClr"></i>
 			                    </div>*/}
-							  	<select className="custom-select form-control "   ref="city" placeholder="select"  id="selectCity" onChange={this.selectCity.bind(this)} >
+							  	<select className="custom-select form-control " value={this.state.city} name="city" ref="city" placeholder="select"  id="selectCity" onChange={this.selectCity.bind(this)} >
 							    	<option disabled>-- City --</option>
 							    	{
                                     this.state.listofDistrict && this.state.listofDistrict.length > 0 ? 
@@ -294,7 +339,7 @@ getDistrict(stateCode){
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconClr"></i>
 			                    </div>*/}
-							    <select className="custom-select form-control " ref="area" placeholder="select" id="selectArea">
+							    <select className="custom-select form-control " onChange={this.handleChange} name="area" ref="area" placeholder="select" id="selectArea">
 							    	<option disabled>-- Area --</option>
 							    	<option>Hadapsar</option>
 							    	<option>Kothrud</option>
@@ -312,7 +357,7 @@ getDistrict(stateCode){
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconClr"></i>
 			                    </div>*/}
-							    <select className="custom-select form-control"   ref="subArea" placeholder="select" id="selectSubArea">
+							    <select className="custom-select form-control" onChange={this.handleChange} name="subArea"  ref="subArea" placeholder="select" id="selectSubArea">
 							    	<option disabled>-- Select Subarea --</option>
 							    	<option>Magarpatta City</option>
 							    	<option>Satavwadi</option>
@@ -333,7 +378,7 @@ getDistrict(stateCode){
 				                 <i className="fa fa-building iconClr"></i>
 			                    </div>
 							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-							    <input type="text" className="form-control" ref="society"  placeholder="Enter Society"/>
+							    <input type="text" className="form-control" ref="society" onChange={this.handleChange}  name="society" placeholder="Enter Society"/>
 							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 						  	</div>
 				        </div>

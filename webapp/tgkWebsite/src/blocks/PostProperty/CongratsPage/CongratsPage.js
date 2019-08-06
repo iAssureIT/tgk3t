@@ -1,11 +1,32 @@
 import React, { Component }   			from 'react';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 						from 'react-redux';
+import axios 					from 'axios';
 
 
 import './CongratsPage.css';
 
  class CongratsPage extends Component {
+
+ 	componentDidMount(){
+		
+		var prop_index = localStorage.getItem("index");
+		console.log("here prop_index", prop_index);
+
+			axios
+				.patch('/api/properties/post/findindexper',prop_index)
+				.then( (res) =>{
+					console.log("resposnse here===================>",res);
+
+					
+				})
+				.catch((error) =>{
+					console.log("error = ", error);
+					// alert("Something Went wrong")
+				});
+
+	}
+
  	redirectToProfile(){
  			this.props.history.push("/PropertyProfile/"+this.props.property_id);
    			window.location.reload();
