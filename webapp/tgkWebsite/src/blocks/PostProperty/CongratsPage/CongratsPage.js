@@ -2,22 +2,41 @@ import React, { Component }   			from 'react';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 						from 'react-redux';
 import axios 					from 'axios';
-
-
+import GaugeChart from 'react-gauge-chart'
+import * as d3 from "d3";
 import './CongratsPage.css';
 
  class CongratsPage extends Component {
+
+ 	constructor(props){
+			super(props);
+			this.state = {
+				
+				percentage : ""
+			};
+		}
+
 
  	componentDidMount(){
 		
 		var prop_index = localStorage.getItem("index");
 		console.log("here prop_index", prop_index);
+		var formvalues = {
+			
+			 "index" 			: prop_index
+
+		}
 
 			axios
-				.patch('/api/properties/post/findindexper',prop_index)
+				.post('/api/properties/post/findindexper',formvalues)
 				.then( (res) =>{
 					console.log("resposnse here===================>",res);
+					var cash_per = res.data.data.earnings;
+					console.log("here earnings",cash_per);
 
+					this.setState({
+						percentage : cash_per
+					});
 					
 				})
 				.catch((error) =>{
@@ -33,6 +52,16 @@ import './CongratsPage.css';
  	}
 
 	render() {
+		var data =  this.state.percentage;
+
+		const needleRotation = {
+		    transform: "rotate("+data+ "deg)",
+		    transformOrigin: "bottom center",
+		    transition : "transform 3s",
+		}
+
+
+
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -41,9 +70,11 @@ import './CongratsPage.css';
 					<img src="/images/fireworks.png" className="col-lg-3 col-lg-offset-2" style={{height:"154px"}} />
 				</div>
 				<p className="col-lg-12 CP2">Your Property is <b className="fontColor">FAST SELLING HOT POTATO</b></p>
-				<p className="col-lg-12 CP3">and qaulifies for a <b className="fontColor">40%</b> brokerage to be paid by us on successful deal through us </p>
+				<p className="col-lg-12 CP3">and qualifies for a <b className="fontColor">40%</b> brokerage to be paid by us on successful deal through us </p>
 				<div className="col-lg-12 CP4">
-					<img alt=""  src="/images/3.png" />
+					<img src="images/meter2.png" />
+					<img src="images/meter1.png" className="needle" style={needleRotation} />
+
 					<b className="col-lg-12 CP5">Sell-O-Meter</b>
 				</div>
 				<p className="col-lg-12 CP6">Your Property <b className="congColor">Successfully</b> submitted & will be published soon!!!</p>
