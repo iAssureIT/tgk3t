@@ -28,23 +28,9 @@
 .mt-10{
 	margin-top: 10px;
 }
-.hSearch{
-	margin-top: 21px;
-    height: 43px;
-}
-.S-img{
-    height: 43px;
-    position: relative;
-    top: 21px;
-    background-size: 100%,100%;
-    background-repeat: no-repeat;
-    background-color: #000;
-}
-.tgkImg{
-    width:70%;
-    margin-left: 15%;
-    margin-top: 5px;
-}
+
+
+
 .S-img1{
     left: -20px;
     top:7px;
@@ -169,7 +155,6 @@
   -webkit-transform: translateX(-9%) translateY(-25%) rotate(45deg);
   transform: translateX(-9%) translateY(-25%) rotate(45deg);
 }
-
 
 
 

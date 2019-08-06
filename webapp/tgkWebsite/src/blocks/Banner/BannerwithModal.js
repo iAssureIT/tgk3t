@@ -18,7 +18,7 @@ import Location                 from '../PostProperty/Location/Location.js';
 
 import CongratsPage             from '../PostProperty/CongratsPage/CongratsPage.js';
 import ImageUpload              from '../PostProperty/ImageUpload/ImageUpload.js';
-
+import SearchProperty           from '../SearchProperty/SearchProperty.js';
 
 
 // import 'bootstrap/js/tab.js';
@@ -135,7 +135,7 @@ class BannerwithModal extends Component {
 		   }
 		   
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 ">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30">
 				<div className=" col-lg-12  ">
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
@@ -155,13 +155,8 @@ class BannerwithModal extends Component {
 					  </ul>
 				 	</div>
 				</div>
-				<div className="col-lg-5 col-lg-offset-4 col-md-6 col-md-offset-3 noPad">
-					<div className="col-lg-9 noPad">
-						<input type="text" placeholder="Enter Society, Location or Address" className="col-lg-12 hSearch"  />
-					</div>
-					<div className="col-lg-2 S-img noPad">
-						<img alt=""  src="/images/TGK-key.png" className="col-lg-10 tgkImg noPad" />
-					</div>
+				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 noPad">
+					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType}/>
 				</div>
 				<div className="col-lg-8 col-lg-offset-2 mt-64">
 					<div className="col-lg-6 br2">

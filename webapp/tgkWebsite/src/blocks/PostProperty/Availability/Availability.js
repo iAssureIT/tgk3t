@@ -100,18 +100,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					 + ' - ' + 
 				   this.refs.timeTo.value + " " + this.refs.timeToAMPM.value ;
 
-				 //   availability.push({
-					// "day" : day,
-					// "time" : time,
-
-					// });
-					// this.setState({
-					// 	"available" : availability,
-					// });
-
-		if(day!="" && time!=""){
-			console.log("day",day);
-			console.log("time",time);
+		
+		if(day!="" && time!="" && availability!=""){
 			availability.push({
 			"day" : day,
 			"time" : time,
@@ -128,12 +118,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
               swal("Please fill up the Time slot", "", "warning");
 
 		};	
-		
-
-		
-
-
-
 	}
 
 	timeFromVal(){

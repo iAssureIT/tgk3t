@@ -27,18 +27,10 @@ import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
 // import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
 // import UMListOfEmp from '../../TGKSpecific/TGKuserManagement/UM/OfficeEmpList.js';
 
-<<<<<<< Updated upstream
 
 import Operation from '../../salesAgent/operations/Operation.js';
 import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile.js';
-=======
-// // import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
-// import EditUserProfile from '../../TGKSpecific/TGKuserManagement/UM/EditUserProfile.js';
-// import UMRolesList from '../userManagement/Roles/UMRolesList.js';
-// // import CompanySetting from '../companysetting/Components/CompanySetting.js';
-// import CompanySetting from '../../TGKSpecific/TGKcompanysetting/Components/CompanySetting.js';
-// import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
->>>>>>> Stashed changes
+
 
 
 // section- admin operation
@@ -48,9 +40,6 @@ import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile
 // import ClassRating from '../../adminTGK/sell-o-meter/classRating.js';
 
 
-
-import Operation from '../../salesAgent/operations/Operation.js';
-import Profile from '../../salesAgent/operations/Profile/PropertyProfileView.js';
 
  class Layout extends Component{
   
@@ -69,11 +58,7 @@ componentDidMount(){
     });
     $(document).ready(function () {
        $('#sidebarCollapse').on('click', function () {
-<<<<<<< Updated upstream
-           $('#headerid').toggleClass('longmar');
-=======
            $('#sidebarCollapse').toggleClass('longmar');
->>>>>>> Stashed changes
        });
     });
     $(document).ready(function () {
@@ -115,14 +100,10 @@ componentDidMount(){
 
 
   render(){
-<<<<<<< Updated upstream
-    console.log("props = ",this.props);
-    {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===true){
-=======
+
     // console.log("props = ",this.props);
     // {console.log("loggedIn status layput = ", this.state.loggedIn)}
-    if(this.state.loggedIn===false){
+    if(this.state.loggedIn===true){
       
       window.onscroll = function() {scrollFunction()};
 
@@ -139,7 +120,7 @@ componentDidMount(){
         
       }
 
->>>>>>> Stashed changes
+    if(this.state.loggedIn===false){
       return(
             <div className="App container-fluid">
             

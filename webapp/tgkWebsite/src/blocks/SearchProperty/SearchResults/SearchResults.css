@@ -1,0 +1,87 @@
+.searchDiv{
+	height: 50px;
+	background-color: #D7D7D7;
+}
+
+.searchBar{
+	margin-top: 7px;
+}
+
+.result{
+	margin-top: 30px;
+	height: 200px
+}
+.bgWhite{
+	background-color: #fff;
+}
+
+.topRightTriangle{
+	left: 90.5% !importantt;
+}
+.searchResults{
+	background-color: #EEEEEE;
+	height: 2500px;
+}
+
+.pad{
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+.marginLeft{
+	margin-left: 5px;
+	margin-top: 5px;
+}
+
+.goBtn{
+	background-color: #000;
+	color: #fff;
+	margin-left: 8px;
+}
+.sqftMt{
+	margin-top: 7px;
+}
+
+
+.selectOption{
+	cursor: pointer;
+}
+
+
+.selectOption:hover{
+	background-color: #eee;
+}
+
+.areaBtn .dropdown-menu{
+	min-width: 300px !important;
+}
+
+
+.propertyType .dropdown-menu{
+	min-width: 500px !important;
+}
+
+.propertyType{
+	padding-left: 3%;
+}
+
+.mt36{
+	  margin-top: 36px;
+}
+
+.constructionBtn .dropdown-menu{
+	min-width: 200px !important;
+}
+
+.sDrop{
+	background-color: #044890 !important;
+	color: #fff;
+}
+
+.caretMl{
+	margin-left: 30% !important;
+}
+
+.caretMlC{
+	margin-left: 10% !important;
+}
