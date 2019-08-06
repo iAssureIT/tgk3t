@@ -1,7 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import $ 						from "jquery";
-import {withRouter, Link} 		    from 'react-router-dom';
+import {withRouter, Link} 		from 'react-router-dom';
 import { connect } 				from 'react-redux';
 
 import './SearchResults.css';
@@ -19,6 +19,7 @@ class SearchResults extends Component {
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 	componentDidMount() {
+		console.log("data",localStorage.getItem('searchData'))
 
 		var formValues = {
 			startRange:0,
@@ -168,17 +169,6 @@ class SearchResults extends Component {
 									</select>
 								</div>
 							</div>
-					
-
-					{/*		<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12">
-							  	<div className="dropdown">
-								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Floor
-								    <span className="caret"></span></button>
-								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
-							      		<div className="floorOption"></div>
-								    </ul>
-								</div>
-							</div>*/}
 
 							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 areaBtn">
 							  	<div className="dropdown">

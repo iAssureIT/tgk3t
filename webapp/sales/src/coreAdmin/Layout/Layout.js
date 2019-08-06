@@ -41,7 +41,7 @@ import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile
 
 
 
- class Layout extends Component{
+class Layout extends Component{
   
   constructor(props) {
     super();
@@ -198,5 +198,6 @@ componentDidMount(){
       );
     }
   }
+}
 }
 export default Layout;
