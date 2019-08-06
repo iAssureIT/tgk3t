@@ -40,8 +40,12 @@ import './MyPostedProperties.css';
 	      (res)=>{
 	        console.log(res);
 	        const postsdata = res.data;
+	        console.log("postsdata",postsdata);
+      			// var city = postsdata[2].propertyLocation.city.split('|')[0];
+
 	        this.setState({
 	          myProperties : postsdata,
+	          // propertyCity :city,
 	        });
 	   		 console.log("PropertyDetails",postsdata); 
 
@@ -146,7 +150,7 @@ import './MyPostedProperties.css';
 													&nbsp;
 													{myProperty.propertyLocation  &&  myProperty.propertyLocation.city && myProperty.propertyLocation.society
 														? 
-														myProperty.propertyLocation.society +", "+myProperty.propertyLocation.city 
+														myProperty.propertyLocation.society +", "+myProperty.propertyLocation.city/*this.state.propertyCity*/ 
 														:
 														 "-"
 													}

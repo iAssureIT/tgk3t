@@ -18,22 +18,19 @@ var imgTitleArray = [];
 			"config"			: '',
 			"imageArray"  		: [],
 			"imageTitleArray" 	: [],
+			"videoArray" 		: [],
 			"S3url" 	        : [],
 		}
-
-
 	}
 	
 	uploadImage(event){
 		var imageTitleArray = this.state.imageTitleArray;
-		var video 			= this.state.video;
+		var video 			= this.state.videoArray;
 		var uid 			= localStorage.getItem("uid");
 		var propertyId 		= localStorage.getItem("propertyId");
 	
-		
-
 		main().then(formValues => {
-			console.log("3 formValues = ",formValues);
+			// console.log("3 formValues = ",formValues);
 
 			axios
 				.patch('/api/properties/patch/gallery',formValues)
@@ -59,10 +56,14 @@ var imgTitleArray = [];
 			var s3urlArray = [];
 			for (var i = 0; i<imageTitleArray.length; i++) {
 				var s3url = await s3upload(imageTitleArray[i].fileInfo, config, this);
+				console.log("s3Url = ",s3url);
 				s3urlArray.push(s3url);
 			}
 
-			var videoUrl = await s3uploadVideo(video, config, this);
+			// var videoUrl = 'abc';
+			var videoUrl = await s3uploadVideo(video[0].fileInfo, config, this);
+			console.log("videoUrl",videoUrl);
+
 
 			const formValues = {
 				"property_id" 		: propertyId,
@@ -78,8 +79,10 @@ var imgTitleArray = [];
 
 
 		function s3upload(image,configuration){
+			console.log("s3upload v = ", image);
+			console.log("s3upload configuration = ", configuration);
 
-			return new Promise(function(resolve,reject){
+			return new Promise((resolve,reject)=>{
 				S3FileUpload
 				   .uploadFile(image,configuration)
 				   .then((Data)=>{
@@ -93,12 +96,13 @@ var imgTitleArray = [];
 		}
 
 		function s3uploadVideo(video,configuration){
-
-			return new Promise(function(resolve,reject){
+			console.log("s3uploadVideo v = ", video);
+			console.log("s3uploadVideo configuration = ", configuration);
+			return new Promise((resolve,reject)=>{
 				S3FileUpload
 				   .uploadFile(video,configuration)
 				   .then((Data)=>{
-				   		// console.log("Data = ",Data);
+				   		console.log("DataVideo = ",Data);
 				   		resolve(Data.location);
 				   })
 				   .catch((error)=>{
@@ -110,7 +114,7 @@ var imgTitleArray = [];
 
 
 		function getConfig(){
-			return new Promise(function(resolve,reject){
+			return new Promise((resolve,reject)=>{
 				axios
 			       .get('/api/projectSettings/get/one/S3')
 			       .then((response)=>{
@@ -121,6 +125,7 @@ var imgTitleArray = [];
 							region 			: response.data.region,
 							accessKeyId 	: response.data.key,
 							secretAccessKey : response.data.secret,
+							ACL 			: 'public-read',
 						}
 						resolve(config);						   
 					})
@@ -151,7 +156,7 @@ var imgTitleArray = [];
 		     	if (file) {
 		     	  	var fileName  = file.name; 
 		     	    var ext = fileName.split('.').pop();  
-		            if(ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
+		            if( ext==="jpg" || ext==="png" || ext==="jpeg" || ext==="JPG" || ext==="PNG" || ext==="JPEG"){
 		                if (file) {
 	                       	var objTitle = { fileInfo :file }
 							imgTitleArray.push(objTitle);
@@ -186,24 +191,34 @@ var imgTitleArray = [];
 	}
 
 	handleVideoChange(event){
+		var videoArray = [];
 	   	if (event.currentTarget.files && event.currentTarget.files[0]) {
-		   	var file = event.currentTarget.files[0];
-	     	if (file) {
-	     	  	var fileName  = file.name; 
-	     	    var ext = fileName.split('.').pop();  
-	            if(ext==="mp4" || ext==="avi" || ext==="ogv"){
-	                if (file) {
-	                	this.setState({
-	                		video : { fileInfo : file }
-	                	});
-	                	console.log("video = ", file);
-	    			}else{          
-					    swal("Video not uploaded","Something went wrong","error");  
-			        }//file
-	            }else{ 
-	                swal("Please upload Correct Video","Allowed Formats are .mp4, .avi, .ogv","warning");   
-	            }//file types
-	   		}//file
+	   		for(var i=0; i<event.currentTarget.files.length; i++){
+			   	var file = event.currentTarget.files[0];
+		     	if (file) {
+		     	  	var fileName  = file.name; 
+		     	    var ext = fileName.split('.').pop();  
+		            if(ext==="mp4" || ext==="avi" || ext==="ogv"){
+		                if (file) {
+	                       	var objTitle = { fileInfo :file };
+							videoArray.push(objTitle);
+		                	console.log("video = ", file);
+		    			}else{          
+						    swal("Video not uploaded","Something went wrong","error");  
+				        }//file
+		            }else{ 
+		                swal("Please upload Correct Video","Allowed Formats are .mp4, .avi, .ogv","warning");   
+		            }//file types
+		   		}//file
+		   	}//for
+
+	   		if(i >= event.currentTarget.files.length){
+				this.setState({
+				   	videoArray : videoArray
+				});	   			
+	   		}
+
+
 		}
 	}
 
