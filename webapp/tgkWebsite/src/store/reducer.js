@@ -20,6 +20,8 @@ const initialState = {
 	formTitle 		: "",
 	token 			: "",
 	originPage      : "",
+	transactionType : "",
+	propertyType    : "",
 }
 
 const reducer = (state = initialState,action) => {
@@ -159,13 +161,13 @@ const reducer = (state = initialState,action) => {
 	}
 	if(action.type === "SHOW_FIRST_FORM"){
 		newState.BasicInfo 	        = false;
-		newState.PropertyDetails   	= false;
+		newState.PropertyDetails   	= true;
 		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;
 		newState.CongratsPage       = false;
-		newState.ImageUpload        = true;
+		newState.ImageUpload        = false;
 		newState.uid 		        = action.uid;
 	}
 	if(action.type === "BACK_TO_BASIC_INFO"){
@@ -265,7 +267,11 @@ const reducer = (state = initialState,action) => {
 		newState.Location           = false;
 		newState.CongratsPage       = false;
 		newState.ImageUpload        = false;
-		newState.uid         	= action.uid;
+		newState.uid         	   = action.uid;
+	}
+	if(action.type === "PROPERTY_FLOW"){
+		newState.propertyType         	= action.propertyType;
+		newState.transactionType        = action.transactionType;
 	}
 
 	return newState;

@@ -108,9 +108,6 @@
 .pl2{
   padding-left: 2px;
 }
-.pl35{
-  padding-left: 35px;
-}
 .pl87{
   padding-left: 87px;
 }
@@ -138,9 +135,7 @@
 .pl38{
   padding-left: 38px;
 }
-.pl95{
-  padding-left: 95px;
-}
+
 .pl64{
   padding-left: 64px;
 }
@@ -219,7 +214,78 @@
   height: 10px;
   border: solid white;
   border-width: 0 3px 3px 0;
-  -webkit-transform: rotate(45deg);
-  -ms-transform: rotate(45deg);
   transform: rotate(45deg);
 } 
+
+.Ameni1{
+    position: relative;
+    right: 6px;
+}
+.Ameni2{
+    position: relative;
+    left: 26px;
+}
+.Ameni3{
+    position: relative;
+    right: 8px;
+}
+.Ameni4{
+    position: relative;
+    left: 14px;
+}
+.Ameni5{
+    position: relative;
+    right: 8px;
+}
+.Ameni6{
+    position: relative;
+    left: 11px;
+}
+.Ameni7{
+    position: relative;
+    left: 3px;
+}
+.Ameni8{
+    position: relative;
+    right: 9px;
+}
+.Ameni9{
+    position: relative;
+    left: 29px;
+}
+.Ameni10{
+    position: relative;
+    left: 38px;
+}
+.Ameni11{
+    position: relative;
+    left: 9px;
+}
+.Ameni12{
+    position: relative;
+    left: 25px;
+}
+.Ameni13{
+    position: relative;
+    left: 0px;
+}
+.Ameni14{
+    position: relative;
+    right   :  7px;
+}
+.ameniSpan10{
+  position: relative;
+  left: 46px;
+}
+.ameniSpan11{
+  position: relative;
+  left: 17px;
+}
+.ameniSpan12{
+  position: relative;
+  left: 31px;
+}
+.ameniSpan13{
+  position: relative;
+  left: 8px;
+}

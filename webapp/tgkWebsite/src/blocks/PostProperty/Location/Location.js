@@ -39,8 +39,10 @@ import './Location.css';
 				"address" 	        : this.refs.housebuilding.value,
 				"pincode" 			: this.refs.pincode.value,
 				"property_id" 		: localStorage.getItem("propertyId"),
-				"uid" 				: this.props.uid,
 				"index"				: this.state.index,
+				"uid" 				: localStorage.getItem("uid"),
+				
+
 			};
 				 localStorage.setItem("index",this.state.index);
 
@@ -293,6 +295,7 @@ getDistrict(stateCode){
                                     this.state.listofStates.map((data, index)=>{
                                       return(
                                         <option key={index} value={data.stateName+'|'+data._id+'|'+data.stateCode}>{data.stateName}</option> 
+
                                       );
                                     })
                                     :
@@ -318,6 +321,7 @@ getDistrict(stateCode){
                                     this.state.listofDistrict.map((data, index)=>{
                                       return(
                                         <option key={index} value={data.districtName+'|'+data._id}>{data.districtName}</option>
+                                        
                                       );
                                     })
                                     :

@@ -44,7 +44,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				"contactPersonMobile" : this.state.contactPersonMobile,
         		"contactPerson"       : this.state.contactPerson,
 				"property_id" 		  : localStorage.getItem("propertyId"),
-				"uid" 				  : this.props.uid,
+				"uid" 				  : localStorage.getItem("uid"),
 				"available"			  : this.state.available
 			};
 			console.log("Availability req = ",formValues);
@@ -93,14 +93,25 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 	}
 	handleAvailability(event){
 		event.preventDefault();
-		var availability = this.state.available;
+		const availability = this.state.available;
 
-		var day  = this.refs.availability.value ;
-		var time = this.refs.timeFrom.value + " " + this.refs.timeFromAMPM.value 
+		const day  = this.refs.availability.value ;
+		const time = this.refs.timeFrom.value + " " + this.refs.timeFromAMPM.value 
 					 + ' - ' + 
 				   this.refs.timeTo.value + " " + this.refs.timeToAMPM.value ;
 
-		if(day!="" && time!="" && availability!=""){
+				 //   availability.push({
+					// "day" : day,
+					// "time" : time,
+
+					// });
+					// this.setState({
+					// 	"available" : availability,
+					// });
+
+		if(day!="" && time!=""){
+			console.log("day",day);
+			console.log("time",time);
 			availability.push({
 			"day" : day,
 			"time" : time,
@@ -108,12 +119,11 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			});
 			this.setState({
 				"available" : availability,
+			},()=>{
+				$('input[name=timeFrom').val('');
+				$('input[name=timeTo').val('');
+				$('select[name=availableDay').val('');
 			});
-
-			$('input[name=timeFrom').val('');
-			$('input[name=timeTo').val('');
-			$('select[name=availableDay').val('');
-
 		}else{
               swal("Please fill up the Time slot", "", "warning");
 

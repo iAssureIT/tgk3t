@@ -26,7 +26,8 @@ import './Amenities.css';
 
 				"Amenities"			: this.state.Amenities,
 				"property_id" 		: localStorage.getItem("propertyId"),
-				"uid" 				: this.props.uid,
+				"uid" 				: localStorage.getItem("uid"),
+				
 
 				
 			};
@@ -97,7 +98,7 @@ import './Amenities.css';
 
 						      		 /> <i className="fa fa-users icon_Clr"></i>&nbsp;&nbsp;Gas Pipeline
 						    </label>*/}
-						    <label className="container2"> <span>Gas Pipeline</span>
+						    <label className="container2"> <span className="Ameni1"><img src="/images/gasPipe.png" /></span> <span>Gas Pipeline</span>
 							  <input type="checkbox"
 							  		 value="gasPipeline" 
 						      		 id="1"
@@ -106,7 +107,7 @@ import './Amenities.css';
 							  <span className="checkmark"></span>
 
 							</label>
-						     <label className="container2"><span className="pl33">Internet Services</span>
+						     <label className="container2"> <span className="Ameni2"><img src="/images/internet.png" /></span> <span className="pl33">Internet Services</span>
 							  <input type="checkbox"
 							  		 value="internetServices" 
 						      		 id="3"
@@ -115,7 +116,7 @@ import './Amenities.css';
 							  <span className="checkmark"></span>
 
 							</label>
-						    <label className="container2"><span className="pr65">Lift</span>
+						    <label className="container2"> <span className="Ameni3"><img src="/images/lift.png" /></span> <span className="pr65">Lift</span>
 							  <input type="checkbox"
 							  		 value="lift" 
 						      		 id="5"
@@ -124,7 +125,7 @@ import './Amenities.css';
 							  <span className="checkmark"></span>
 
 							</label>
-							    <label className="container2"><span className="pl21">Air Conditioner</span>
+							    <label className="container2"> <span className="Ameni4"><img src="/images/ac.png" /></span> <span className="pl21">Air Conditioner</span>
 								  <input type="checkbox"
 								  		 value="airConditioner" 
 							      		 id="7"
@@ -133,7 +134,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container2"><span className="pr22">Intercom</span>
+							    <label className="container2"> <span className="Ameni5"><img src="/images/intercom.png" /></span> <span className="pr22">Intercom</span>
 								  <input type="checkbox"
 								  		 value="intercom" 
 							      		 id="7"
@@ -142,7 +143,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container2"><span className="pl18">Power Backup</span>
+							    <label className="container2"> <span className="Ameni6"><img src="/images/powerBk.png" /></span> <span className="pl18">Power Backup</span>
 								  <input type="checkbox"
 								  		 value="powerBackup" 
 							      		 id="11"
@@ -151,7 +152,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-								<label className="container2"><span className="pl10">Water Supply</span>
+								<label className="container2"> <span className="Ameni7"><img src="/images/water.png" /></span> <span className="pl10">Water Supply</span>
 								  <input type="checkbox"
 								  		 value="waterSupply" 
 							      		 id="11"
@@ -164,7 +165,7 @@ import './Amenities.css';
 		  	 				{/*External*/}
 
 		  	 			<div className="col-lg-6 FF4I1"> 
-							    <label className="container2"><span>Club House</span>
+							    <label className="container2"> <span className="Ameni8"><img src="/images/club.png" /></span> <span>Club House</span>
 								  <input type="checkbox"
 								  		 value="clubHouse" 
 							      		 id="2"
@@ -173,7 +174,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container2"><span className="pl38">Shopping Center</span>
+							    <label className="container2"> <span className="Ameni9"><img src="/images/shopping.png" /></span> <span className="pl38">Shopping Center</span>
 								  <input type="checkbox"
 								  		 value="shoppingCenter" 
 							      		 id="4"
@@ -182,7 +183,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-						    	<label className="container2"><span className="pl95">Sewage Treatment Plan</span>
+						    	<label className="container2"> <span className="Ameni10"><img src="/images/sewage.png" /></span> <span className="ameniSpan10">Sewage Treatment Plan</span>
 								  <input type="checkbox"
 								  		 value="sewageTreatmentPlan" 
 							      		 id="6"
@@ -191,7 +192,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container2"><span className="pl35">Swimming Pool</span>
+							    <label className="container2"> <span className="Ameni11"><img src="/images/pool.png" /></span> <span className="ameniSpan11">Swimming Pool</span>
 									  <input type="checkbox"
 									  		 value="swimmingPool" 
 								      		 id="8"
@@ -200,7 +201,7 @@ import './Amenities.css';
 									  <span className="checkmark"></span>
 
 								</label>
-						    	<label className="container2"><span className="pl64">Children's Play Area</span>
+						    	<label className="container2"> <span className="Ameni12"><img src="/images/playArea.png" /></span> <span className="ameniSpan12">Children's Play Area</span>
 								  <input type="checkbox"
 								  		 value="childrenPlay" 
 							      		 id="10"
@@ -209,7 +210,7 @@ import './Amenities.css';
 								  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container2"><span className="pl18">Internal Gym</span>
+							    <label className="container2"> <span className="Ameni13"><img src="/images/gym.png" /></span> <span className="ameniSpan13">Internal Gym</span>
 									  <input type="checkbox"
 									  		 value="internalGym" 
 								      		 id="12"
@@ -218,7 +219,7 @@ import './Amenities.css';
 									  <span className="checkmark"></span>
 
 								</label>
-							    <label className="container2"><span className="pr44">Park</span>
+							    <label className="container2"> <span className="Ameni14"><img src="/images/park.png" /></span> <span className="pr44">Park</span>
 									  <input type="checkbox"
 									  		 value="park" 
 								      		 id="14"

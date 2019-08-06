@@ -62,7 +62,8 @@ class BasicInfo extends Component{
 				"totalFloor"    	: this.refs.totalfloor.value,
 				"listing"       	: false,
 				"status"			: "WIP",
-				"uid"				: this.props.uid
+				"uid" 				: localStorage.getItem("uid"),
+
 			};
 			console.log("BasicInfo===",formValues);
 			if(this.state.propertyHolder!="" && this.state.transactionType!="" && this.state.propertyType!="" && this.state.propertySubType!="" && this.refs.floor.value!="" && this.refs.totalfloor.value!="" ){
@@ -75,6 +76,7 @@ class BasicInfo extends Component{
 						localStorage.setItem('propertyId',res.data.property_id)
 						console.log("BasicInfo res = ",res);
 						this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
+						this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
 					}else{
 						// alert(" Please Fill all fields")
 					}
@@ -233,11 +235,11 @@ class BasicInfo extends Component{
 						  	 <select className="custom-select form-control" ref="propertytype" onChange={this.selectProp.bind(this)}>
 						    	<option	value="" hidden>Select Property Type </option>
 						    	<option	disabled>ALL RESIDENTIAL </option>
-						    	<option value="Residential-MultiStoreyApt">MultiStorey Apartment</option>
+						    	<option value="Residential-StudioApt">Studio Apartment</option>
 						    	<option value="Residential-ResidentialHouse">Residential House</option>
+						    	<option value="Residential-MultiStoreyApt">MultiStorey Apartment</option>
 						    	<option value="Residential-Villa">Villa</option>
 						    	<option value="Residential-Penthouse">Penthouse</option>
-						    	<option value="Residential-StudioApt">Studio Apartment</option>
 						    	<option	disabled>ALL COMMERCIAL </option>
 						    	<option value="Commercial-CommercialOS">Commercial Office Space</option>
 						    	<option value="Commercial-OfficeIT">Office in IT Park/SEZ</option>
@@ -329,11 +331,15 @@ const mapStateToProps = (state)=>{
 const mapDispatchToProps = (dispatch)=>{
 	return {
 		redirectToLocation  : (propertyCode, property_id,uid)=> dispatch({type    : "REDIRECT_TO_LOCATION",
-													  
-													   propertyCode	: propertyCode,
-													   property_id	: property_id,
-													   uid:uid
-												}),
+																		   propertyCode	: propertyCode,
+																		   property_id	: property_id,
+																		   uid          :uid
+																	}),
+		propertyFlow  : (transactionType, propertyType)=> dispatch({type    : "PROPERTY_FLOW",
+																   transactionType	: transactionType,
+																   propertyType	    : propertyType,
+																   
+																}),
 	}
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(BasicInfo));
