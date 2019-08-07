@@ -57,14 +57,17 @@ class PropertyProfile extends Component{
       "propertyDescription" : [],
       "propertyLocation"  : [],
       "transactionType"   : "",  
+      "prop_id"           : "",
     }
   }
 
   login(){
     const originPage = "post" ;
     const uid = localStorage.getItem("uid");
-    if(uid){
-      this.props.already_loggedIn(originPage,uid);
+    const prop_id  = this.state.prop_id;
+    console.log("property id here",this.state.prop_id);
+    if(uid && prop_id){
+      this.props.already_loggedIn(originPage,uid,prop_id);
     }else{
       this.props.login_mobileNum(originPage);
     }
@@ -89,15 +92,16 @@ class PropertyProfile extends Component{
         // console.log(res);
         const postsdata = res.data;
         this.setState({
+          prop_id             : postsdata._id,
           propertyFeatures    : postsdata.propertyDetails,
           amenities           : postsdata.Amenities,
-          propertyImages      : postsdata.Images,
+          propertyImages      : postsdata.gallery.Images,
           propertyVideos      : postsdata.Video,
           pricing             : postsdata.financial,
           propertyLocation    : postsdata.propertyLocation,
           transactionType     : postsdata.transactionType,
         });
-        // console.log("postsdata.propertyDetails",res.data);
+        console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch();
@@ -106,7 +110,33 @@ class PropertyProfile extends Component{
   }
 
   displayImages(){
-    return this.state.propertyImages;
+    console.log("here img link",this.state.propertyImages);
+    var imageArray=[];
+    if(this.state.propertyImages.length >=3)
+    {
+      for(var i = 0 ; i <=this.state.propertyImages.length ; i++){
+        imageArray.push(this.state.propertyImages);
+      }
+    }else{
+      var count = 3 - this.state.propertyImages.length;
+      console.log("count",count);
+        if(count<=2)
+        {
+          for(var i = 0 ; i <=count ; i++){
+          imageArray.push(this.state.propertyImages);
+          }
+        }
+        if(3-count != 0){
+          for(var j =0 ; j <= 3-count ;j++){
+          imageArray.push("/images/loading_img.jpg"); 
+          }
+        }
+      }
+      
+
+    
+  
+    return imageArray;
   }
   displayVideo(){
     return this.state.propertyVideo;
@@ -178,7 +208,7 @@ class PropertyProfile extends Component{
                         </div>
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
-                        <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Post New Property </button> 
+                        <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Edit Property </button> 
                       </div>
                     </div>
                   </div>
@@ -221,14 +251,18 @@ class PropertyProfile extends Component{
                           {
                             this.state.propertyImages ? 
                             this.displayImages().map((propertyImages,index)=>{
+
                             return(
+
                                   <div key={index}  >
                                       <img className="item" src={propertyImages} />
                                   </div>                    
                               )
                             })
                             :
-                            null
+                                  <div>
+                                      <img className="item" src="/images/loading_img.jpg" />
+                                  </div>  
                           }
                           {this.state.propertyVideo ?
                             this.displayVideo().map((propertyVideos,index)=>{
@@ -474,7 +508,7 @@ const mapDispatchToProps = (dispatch)=>{
                           formTitle : formTitle,
                         }),
     login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
-    already_loggedIn : (originPage,uid)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid}),
+    already_loggedIn : (originPage,uid,prop_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, prop_id:prop_id}),
 
   }
 };

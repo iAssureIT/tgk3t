@@ -22,6 +22,7 @@ const initialState = {
 	originPage      : "",
 	transactionType : "",
 	propertyType    : "",
+	prop_id 		: "",
 }
 
 const reducer = (state = initialState,action) => {
@@ -67,6 +68,7 @@ const reducer = (state = initialState,action) => {
 		newState.CongratsPage       = false;
 		newState.ImageUpload        = false;
 		newState.uid 		    	= action.uid;
+
 	}
 
 	if(action.type === "REDIRECT_TO_LOCATION"){
@@ -243,6 +245,7 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "ALREADY_LOGGEDIN"){
 		newState.originPage  		= action.originPage;
 		newState.uid  				= action.uid;
+		newState.prop_id  			= action.prop_id;
 		newState.LoginMobNum 		= false;
 		newState.LoginOtp    		= false;
 		newState.WebSignupForm  	= false;

@@ -52,10 +52,33 @@ import './CongratsPage.css';
 
 	render() {
 		var data =  this.state.percentage;
+		var per = 0;
+		if(data <=10)
+		{
+			per = 18;
+		}
+		if(data <=20)
+		{
+			per = 18+18;
+		}
+		if(data <=30)
+		{
+			per = 18+18+18;
+		}
+		if(data <=40)
+		{
+			per = 18+18+18+18;
+		}
+		if(data <=50)
+		{
+			per = 18+18+18+18+18;
+		}
 
+		console.log("data",data);
+		console.log("per",per);
 		const needleRotation = {
-		    transform: "rotate("+data+ "deg)",
-		    transformOrigin: "bottom center",
+		    transform: "rotate("+per+"deg)",
+		    transformOrigin: "90% 55%",
 		    transition : "transform 3s",
 		}
 
@@ -69,10 +92,10 @@ import './CongratsPage.css';
 					<img src="/images/fireworks.png" className="col-lg-3 col-lg-offset-2" style={{height:"154px"}} />
 				</div>
 				<p className="col-lg-12 CP2">Your Property is <b className="fontColor">FAST SELLING HOT POTATO</b></p>
-				<p className="col-lg-12 CP3">and qualifies for a <b className="fontColor">40%</b> brokerage to be paid by us on successful deal through us </p>
+				<p className="col-lg-12 CP3">and qualifies for a <b className="fontColor">{this.state.percentage!="" ? this.state.percentage+"%" : null}</b> brokerage to be paid by us on successful deal through us </p>
 				<div className="col-lg-12 CP4">
-					<img src="images/meter2.png" />
-					<img src="images/meter1.png" className="needle" style={needleRotation} />
+					<img src="images/meter.png" />
+					<img src="images/needle1.png" className="needle" style={needleRotation} />
 
 					<b className="col-lg-12 CP5">Sell-O-Meter</b>
 				</div>

@@ -17,6 +17,9 @@ class BasicInfo extends Component{
 				propertType 	 : "",
 				propertySubType  : "",
 				// user_id 		 : localStorage.getItem("user_id"),
+				fullPropTtype    : "",
+				prop_id          : "",
+				updatestatus     : false,
 			};
 			this.radioChange = this.radioChange.bind(this);
 		}
@@ -25,6 +28,69 @@ class BasicInfo extends Component{
 
         	var message	= localStorage.getItem("message");
         	
+        	console.log("prop id ", this.props.prop_id);
+        	var prop_id = this.props.prop_id ? this.props.prop_id : null;
+		        if(prop_id !== null)
+		        {
+		        	this.setState({
+		        		updatestatus : true,
+		        	})
+		        }
+		        else{
+		        	this.setState({
+		        		updatestatus : false,
+		        	})
+		        }
+        	console.log("here var updatestatus",this.state.updatestatus);
+        	axios
+				.get('/api/properties/'+prop_id)
+				.then( (res) =>{
+					console.log("resposnse here===================>",res);
+
+					this.setState({
+								propertyHolder  : res.data.propertyHolder,
+				        		transactionType : res.data.transactionType,
+								propertyType 	: res.data.propertyType,
+								propertySubType : res.data.propertySubType,
+								// fullPropTtype   : 
+							});
+
+					this.refs.floor.value = res.data.floor;
+					this.refs.totalfloor.value = res.data.totalFloor;
+					
+					var fullProp = this.state.propertyType+ '-' + this.state.propertySubType;
+					console.log("here full type", fullProp);
+
+					this.setState({
+
+						fullPropTtype : fullProp,
+					});
+					// console.log("here propertyHolder",this.state.propertyHolder);	
+					// console.log("here transactionType",this.state.transactionType);	
+					console.log("here propertyType",this.state.propertyType);	
+					console.log("here propertySubType",this.state.propertySubType);	
+					// console.log("here this.refs.floor.value ",this.refs.floor.value );	
+					// console.log("here this.refs.totalfloor.value ",this.refs.totalfloor.value );	
+
+					if(this.state.propertyHolder === "owner")
+					{
+						  $('.sellerType1').addClass('highlight').siblings().removeClass('highlight'); 	
+					}
+					if(this.state.propertyHolder === "careTaker")
+					{
+						$('.sellerType2').addClass('highlight').siblings().removeClass('highlight'); 
+					}
+					if(this.state.propertyHolder === "broker")
+					{
+						$('.sellerType3').addClass('highlight').siblings().removeClass('highlight'); 	
+					}
+
+					
+				})
+				.catch((error) =>{
+					console.log("error = ", error);
+					// alert("Something Went wrong")
+				});
 
 			if(message === "NEW-USER-CREATED"){
 				swal("Welcome!","You are now logged in!","success");
@@ -53,6 +119,8 @@ class BasicInfo extends Component{
 
 		insertProperty(event){
 			event.preventDefault();
+			
+			console.log("submit updatestatus",this.state.updatestatus);
 			const formValues = {
 				"propertyHolder" 	: this.state.propertyHolder,
         		"transactionType"	: this.state.transactionType,
@@ -67,24 +135,52 @@ class BasicInfo extends Component{
 			};
 			console.log("BasicInfo===",formValues);
 			if(this.state.propertyHolder!="" && this.state.transactionType!="" && this.state.propertyType!="" && this.state.propertySubType!="" && this.refs.floor.value!="" && this.refs.totalfloor.value!="" ){
+					
+				if(this.state.updatestatus== true)
+				{
+					console.log("update axios");
+
 					axios
-				.post('/api/properties',formValues)
-				.then( (res) =>{
-					console.log(res.data);
-					if(res.status === 200){
-						// swal("Good job!", "Property inserted successfully!", "success");
-						localStorage.setItem('propertyId',res.data.property_id)
-						console.log("BasicInfo res = ",res);
-						this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
-						this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
-					}else{
-						// alert(" Please Fill all fields")
-					}
-				})
-				.catch((error) =>{
-					console.log("error = ", error);
-					// alert("Something Went wrong")
-				});
+					.patch('/api/properties',formValues)
+					.then( (res) =>{
+						console.log(res.data);
+						if(res.status === 200){
+							// swal("Good job!", "Property inserted successfully!", "success");
+							localStorage.setItem('propertyId',res.data.property_id)
+							console.log("BasicInfo res = ",res);
+							this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
+							this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
+						}else{
+							// alert(" Please Fill all fields")
+						}
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+						// alert("Something Went wrong")
+					});
+
+				}else{
+
+					axios
+					.post('/api/properties',formValues)
+					.then( (res) =>{
+						console.log(res.data);
+						if(res.status === 200){
+							// swal("Good job!", "Property inserted successfully!", "success");
+							localStorage.setItem('propertyId',res.data.property_id)
+							console.log("BasicInfo res = ",res);
+							this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
+							this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
+						}else{
+							// alert(" Please Fill all fields")
+						}
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+						// alert("Something Went wrong")
+					});
+
+				}
 			}else{
 				swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -128,6 +224,17 @@ class BasicInfo extends Component{
 
 		 }
 	selectProp(event){
+
+
+		const target = event.target.value;
+        const name   = event.target.name;
+        // console.log('target',name, target);
+          this.setState({ 
+	      [name]:target
+	    },()=>{
+	    	// console.log('this state', this.state);
+	    })
+
 	 	var selectedValue = event.currentTarget.value;
 	 	var propertyTypeVal = selectedValue.split("-");
 	 	var propertyType = propertyTypeVal[0];
@@ -212,7 +319,7 @@ class BasicInfo extends Component{
 				   		</div>
 				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	    		
 				  	 	<div className="form-group" id="">
-							<div className="can-toggle genderbtn demo-rebrand-2 " onChange={this.selectType.bind(this)}>
+							<div className="can-toggle genderbtn demo-rebrand-2 " value={this.state.transactionType} onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox" />
 				              <label className="formLable" htmlFor="d">
 				             	 <div className="can-toggle__switch" data-checked="Rent" data-unchecked="Sell" ></div>
@@ -232,7 +339,7 @@ class BasicInfo extends Component{
 
 					   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 						  <div className="form-group" id="">
-						  	 <select className="custom-select form-control" ref="propertytype" onChange={this.selectProp.bind(this)}>
+						  	 <select className="custom-select form-control" ref="propertytype" name="fullPropTtype" value={this.state.fullPropTtype} onChange={this.selectProp.bind(this)}>
 						    	<option	value="" hidden>Select Property Type </option>
 						    	<option	disabled>ALL RESIDENTIAL </option>
 						    	<option value="Residential-StudioApt">Studio Apartment</option>
@@ -319,6 +426,7 @@ const mapStateToProps = (state)=>{
 	console.log("bState===",state);
   return {
     uid             : state.uid,
+    prop_id         : state.prop_id,
 	BasicInfo		: state.BasicInfo,
 	PropertyDetails	: state.PropertyDetails,
 	Financials		: state.Financials,
@@ -330,10 +438,11 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToLocation  : (propertyCode, property_id,uid)=> dispatch({type    : "REDIRECT_TO_LOCATION",
+		redirectToLocation  : (propertyCode, property_id,uid,prop_id)=> dispatch({type    : "REDIRECT_TO_LOCATION",
 																		   propertyCode	: propertyCode,
 																		   property_id	: property_id,
-																		   uid          :uid
+																		   uid          : uid,
+																		   // prop_id 		: prop_id,
 																	}),
 		propertyFlow  : (transactionType, propertyType)=> dispatch({type    : "PROPERTY_FLOW",
 																   transactionType	: transactionType,

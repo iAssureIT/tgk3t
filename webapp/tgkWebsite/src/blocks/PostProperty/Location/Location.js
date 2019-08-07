@@ -20,6 +20,23 @@ import './Location.css';
 			this.handleChange = this.handleChange.bind(this);
 		}
 	componentDidMount(){
+
+		// console.log("prop id ", this.props.prop_id);
+  //       	var prop_id = this.props.prop_id;
+  //       	console.log("here var prop id", prop_id);
+        	
+  //       	axios
+		// 		.get('/api/properties/'+prop_id)
+		// 		.then( (res) =>{
+		// 			console.log("resposnse here===================>",res);					
+					
+		// 		})
+		// 		.catch((error) =>{
+		// 			console.log("error = ", error);
+		// 			// alert("Something Went wrong")
+		// 		});
+
+
 		this.getState();
 					document.getElementById("selectState").selectedIndex=0;
 					document.getElementById("selectCity").selectedIndex=0;

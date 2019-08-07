@@ -85,6 +85,13 @@ import './MyPostedProperties.css';
 		$(".modal-backdrop").remove();    
 	}
 
+	goProfile(event){
+		var id = event.target.id;
+		console.log("here id", id);
+		// this.props.history.push("/PropertyProfile/"+id);
+  //  			window.location.reload();
+	}
+
 	render() {
 		let header;
 	  
@@ -116,8 +123,9 @@ import './MyPostedProperties.css';
 				</div>
 				{this.state.myProperties && this.state.myProperties.length>0  ?
 					this.state.myProperties.map((myProperty,index)=>{
+						console.log("here details",myProperty);
 					return(
-						<div key={index} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
+						<div key={index} id={myProperty._id} onClick={this.goProfile.bind(this)} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
 							<div className="row pull-right" id="triangle-topright">				</div>	
 								<div className="row">
 									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				

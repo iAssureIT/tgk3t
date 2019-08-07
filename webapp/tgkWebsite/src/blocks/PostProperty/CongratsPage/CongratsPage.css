@@ -1,8 +1,9 @@
 .needle{
     position: absolute;
     float: left;
-    bottom: 30px;
-    margin-left: -190px;
+   
+    right: 406px;
+    bottom: 40px;
 /*    transform: rotate(-90deg);
     transform-origin: bottom center;
 
