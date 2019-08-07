@@ -1,9 +1,8 @@
 import React, { Component }   			from 'react';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 						from 'react-redux';
-import axios 					from 'axios';
-import GaugeChart from 'react-gauge-chart'
-import * as d3 from "d3";
+import axios 							from 'axios';
+
 import './CongratsPage.css';
 
  class CongratsPage extends Component {

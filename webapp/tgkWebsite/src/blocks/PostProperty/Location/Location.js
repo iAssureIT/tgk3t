@@ -137,7 +137,8 @@ getDistrict(stateCode){
   }
   selectCity(event){
   	this.setState({
-  		[event.target.name] : event.target.value
+  		// [event.target.name] : event.target.value
+  		[event.target.name] : event.target.value.split('|')[0]
   	})
   	this.getArea(event.target.value);
   }
