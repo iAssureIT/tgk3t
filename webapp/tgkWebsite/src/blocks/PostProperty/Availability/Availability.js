@@ -100,6 +100,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					 + ' - ' + 
 				   this.refs.timeTo.value + " " + this.refs.timeToAMPM.value ;
 
+
 		if(day!="" && time!=""){
 			console.log("day",day);
 			console.log("time",time);
