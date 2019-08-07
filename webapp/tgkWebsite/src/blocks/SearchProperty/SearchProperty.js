@@ -47,7 +47,11 @@ class SearchProperty extends Component {
 			var property  	 	= this.refs.transactionType.value.split("-");
 			var propertyType 	= property[0];
 			var transactionType = property[1];
+			this.setState({
+				transactionType	: this.refs.transactionType.value,
+			})
 		}
+
 
 		const formValues = {
 			transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
@@ -70,7 +74,6 @@ class SearchProperty extends Component {
 		  else{
 		  this.state.propertySubType.pop(e.target.getAttribute('value'));
 		  console.log("propertySubType",this.state.propertySubType);
-
 		  }
 	}
 

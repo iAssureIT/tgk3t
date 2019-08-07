@@ -14,12 +14,53 @@ class SearchResults extends Component {
 			budgetList1 	: [],
 			budgetList2 	: [],
 			inputData  		: "",
-			propertyType	: "Commercial-Sell"
+			propertyType	: "Commercial-Sell",
+			budget          : "",
+			propertySubType : [],
+			location        : "",
+			floor           : "",
+			constructionType: [],
+			all 			: []
 		}
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 	componentDidMount() {
-		console.log("data",localStorage.getItem('searchData'))
+		var data = JSON.parse(localStorage.getItem('searchData'));
+		if(data)
+		{
+			this.setState({
+				location		: data.location,
+				budget 			: data.budget,
+				propertySubType	: data.propertySubType,
+				propertyType	: data.propertyType+"-"+data.transactionType,
+			},()=>{
+					var propertySubType = [];
+					if(data.propertyType === "Residential")
+					{
+						propertySubType = [{name:'MultiStory Apartment'},{name:'Residential House'},{name:'Studio Apartment'},{name:'Villa / Bunglow'},{name:'Penthouse'}];
+					}
+					else{
+						propertySubType = [{name:'Office in IT Park/SEZ'},{name:'Commercial Office Space'},{name:'Commercial Showroom'},{name:'Commercial Shop'},{name:'Industrial Building'},{name:'Warehouse/Godown'}];
+					}
+					console.log("propertySubType",propertySubType);
+					this.state.all = propertySubType.map((item,index)=>{
+					var propPresent = this.state.propertySubType.find((obj)=>{
+						return item.name === obj
+					})
+					console.log("propPresent",propPresent);
+					var newObj = Object.assign({},item);
+					if(propPresent){
+						newObj.checked = true
+					}else{
+						newObj.checked = false
+					}
+					return newObj;
+				})
+				
+			})
+		
+		}
+					
 
 		var formValues = {
 			startRange:0,
@@ -56,6 +97,9 @@ class SearchResults extends Component {
 		    for (var i=-2;i<=60;i++){
 		        $select.append($('<option></option>').val(i).html(i))
 		    }
+
+
+
 	}
 
 	propertyType(event){
@@ -67,24 +111,49 @@ class SearchResults extends Component {
 
 
 	handleSearch(event){
-		event.preventDefault();
-		var propertyType = this.refs.propertyType.value;
+		const target = event.target.value;
+		const name   = event.target.name;
 		this.setState({
-			propertyType : this.refs.propertyType.value,
+			[name]       : target
+		},()=>{
+			console.log("name",name);
+			console.log("target",target);
 		})
+		
+		if(event.target.checked)
+		{
+			this.state.propertySubType.push(event.target.getAttribute('value'));
+			this.state.constructionType.push(event.target.getAttribute('value'));
+			// console.log("propertySubType",this.state.propertySubType);
+			// console.log("constructionType",this.state.constructionType);
+		}
+		else{
+			this.state.propertySubType.pop(event.target.getAttribute('value'));
+			this.state.constructionType.pop(event.target.getAttribute('value'));
+			// console.log("propertySubType",this.state.propertySubType);
+			// console.log("constructionType",this.state.constructionType);
+		}
+
 	}
 
 
 	render() {
+		// console.log("floor",this.state.floor);
+		// console.log("location",this.state.location);
+		// console.log("budget",this.state.budget);
+		// console.log("propertySubType",this.state.propertySubType);
+		// console.log("propertyType",this.state.propertyType);
+		console.log("all",this.state.all);
+	
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
 				<form>
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 searchDiv">
 						{/*---------------Search Bar-------------------*/}
-						<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 searchBar">
-							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad">
+						<div className="col-lg-4 col-md-12 col-xs-12 col-sm-12 searchBar">
+							<div className="col-lg-2 col-md-1 col-xs-12 col-sm-12 noPad">
 							  	<div className="dropdown">
-									<select className="custom-select form-control"  ref="propertyType" placeholder="" id='select' onChange={this.handleSearch.bind(this)}>
+									<select className="custom-select form-control"  ref="propertyType" placeholder="" id='select' name="propertyType" value={this.state.propertyType} onChange={this.handleSearch.bind(this)}>
 							    		<optgroup label="Residential">
 											<option value="Residential-Sell">Buy</option>
 											<option value="Residential-Rent">Rent</option>
@@ -96,18 +165,20 @@ class SearchResults extends Component {
 									</select>
 								</div>
 							</div>
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad">
+							<div className="col-lg-10 col-md-2 col-xs-12 col-sm-12 noPad">
 								<div className="form-group"  id="" >
 								    <div className="input-group inputBox-main " id="">
-								    	<input type="text" className="form-control" ref="" name="" placeholder="Enter Location..."/>
+								    	<input type="text" className="form-control" ref="location" name="location" value={this.state.location} placeholder="Enter Location..." onChange={this.handleSearch.bind(this)}/>
 								  		<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-search"></i>
 					                    </div>
 								  	</div>
 								</div>
 							</div>
-
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 propertyType">
+						</div>
+						<div className="col-lg-8 col-md-12 col-xs-12 col-sm-12 searchDiv1">
+							
+							<div className="col-lg-4 col-md-3 col-xs-12 col-sm-12 propertyType noPad">
 							  	<div className="dropdown" id="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
@@ -116,23 +187,28 @@ class SearchResults extends Component {
 										<div className="col-lg-12">
 										  	<div className="col-lg-12">
 												<h5>Commercial</h5>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Office Space</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Shop / Showroom</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Commercial Land</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Warehouse</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Industrial Building</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Industrial Shed</span>
+												{
+													this.state.all.map((data,index)=>{
+														return(
+															<span className="col-lg-6 noPad"><input type="checkBox" value={data.name} key={index} checked={data.checked} onChange={this.handleSearch.bind(this)}/>&nbsp;{data.name}</span>
+														)
+													})
+
+												}
 											</div>
 										</div>
 										:
 										<div className="col-lg-12">
 										  	<div className="col-lg-12">
 												<h5>Residential</h5>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;MultiStory Apartment</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Residential House</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Studio Apartment</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Villa / Bunglow</span>
-												<span className="col-lg-6"><input type="checkBox" />&nbsp;Penthouse</span>
+												{
+													this.state.all.map((data,index)=>{
+														return(
+															<span className="col-lg-6 noPad"><input type="checkBox" value={data.name} key={index} checked={data.checked} onChange={this.handleSearch.bind(this)}/>&nbsp;{data.name}</span>
+														)
+													})
+
+												}
 											</div>
 										</div>
 										}
@@ -141,36 +217,41 @@ class SearchResults extends Component {
 							</div>
 
 
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad">
 							  	<div className="dropdown">
-									<select className="custom-select form-control"  ref="" placeholder="">
+							    {this.state.propertyType === "Commercial-Sell" || this.state.propertyType === "Residential-Sell" ?
+									<select className="custom-select form-control"  ref="budget" value={this.state.budget} name="budget" placeholder="" onChange={this.handleSearch.bind(this)}>
 									   	<option value="" className="hidden">Budget</option>
-							    		{this.state.propertyType === "Commercial-Sell" || this.state.propertyType === "Residential-Sell" ?
-							    			this.state.budgetList1.map((budget,index)=>{
+							    			{this.state.budgetList1.map((budget,index)=>{
 									    		return(
-									    				<option value="" key={index} className="selectOption">{budget}</option>
+									    				<option value={budget} key={index} className="selectOption">{budget}</option>
 									    			);
 									    		})
-										:
-										this.state.budgetList2.map((budget,index)=>{
-								    		return(
-								    				<option value="" key={index} className="selectOption">{budget}</option>
-								    			);
-								    		})
+							    			}
+									</select>
+									:
+									<select className="custom-select form-control"  ref="budget" name="budget" value={this.state.budget} placeholder="" onChange={this.handleSearch.bind(this)}>
+										<option value="" className="hidden">Budget</option>
+										{this.state.budgetList2.map((budget,index)=>{
+									    		return(
+									    				<option value={budget} key={index} className="selectOption">{budget}</option>
+									    			);
+									    		})
 										}
 									</select>
+								}	
 								</div>
 							</div>
 						
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad">
 							  	<div className="dropdown">
-									<select className="custom-select form-control floorOption"  ref="" placeholder="" id=''>
+									<select className="custom-select form-control floorOption" ref="floor" name="floor" value={this.state.floor}  id='' onChange={this.handleSearch.bind(this)}>
 									  	<option value="" className="hidden">Floor</option>
 									</select>
 								</div>
 							</div>
 
-							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 areaBtn">
+							<div className="col-lg-2 col-md-1 col-xs-12 col-sm-12 areaBtn noPad">
 							  	<div className="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Area
 								    <span className="caret caretMl"></span></button>
@@ -183,13 +264,13 @@ class SearchResults extends Component {
 								</div>
 							</div>
 
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 constructionBtn">
+							<div className="col-lg-2 col-md-3 col-xs-12 col-sm-12 constructionBtn noPad">
 							  	<div className="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Construction Status
 								    <span className="caret caretMlC"></span></button>
 								    <ul className="dropdown-menu col-lg-10 col-md-12 col-xs-12 col-sm-12 pad mt36">
-								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox"/> Ready To Move</div>
-								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox"/> Under Construction</div>
+								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox" value="Ready To Move" onChange={this.handleSearch.bind(this)}/> Ready To Move</div>
+								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox" value="Under Construction" onChange={this.handleSearch.bind(this)}/> Under Construction</div>
 								    </ul>
 								</div>
 							</div>

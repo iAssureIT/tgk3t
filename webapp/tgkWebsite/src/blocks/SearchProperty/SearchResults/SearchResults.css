@@ -4,9 +4,8 @@
 }
 
 .searchBar{
-	margin-top: 7px;
+	margin-top: 7PX;
 }
-
 .result{
 	margin-top: 30px;
 	height: 200px
@@ -85,3 +84,35 @@
 .caretMlC{
 	margin-left: 10% !important;
 }
+
+.searchDiv .btn{
+	border-radius: 0px !important;
+	height: 50px;
+}
+
+.searchDiv input:focus, textarea:focus, select:focus{
+	border-radius: 0px !important;
+ }
+
+ .searchDiv select {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+}
+
+ .searchDiv .form-control{
+  	border : 0px !important;
+ }
+.searchDiv .input-group-addon{
+  	border : 0px !important;
+}
+
+ .searchDiv1 select {
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+  height:50px;
+}
+ 
+ .searchDiv1 .form-control{
+  	height:50px;
+  	border : 0px !important;
+ }
