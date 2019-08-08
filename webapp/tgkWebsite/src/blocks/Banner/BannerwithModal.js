@@ -135,27 +135,27 @@ class BannerwithModal extends Component {
 		   }
 		   
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30">
-				<div className=" col-lg-12  ">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 banner">
+				<div className="col-lg-12  ">
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
 				</div>
-				<div className="col-lg-6 col-lg-offset-4 mt-10 noPad">
+				<div className="col-lg-6 col-lg-offset-3 mt-10">
 					<div className=" col-lg-12 noPad">
-					  <ul className="nav nav-pills textC noPad" role="tablist">
-					    <li className="nav-item col-lg-3 active">
+					  <ul className="nav nav-pills textC" role="tablist">
+					    <li className="nav-item col-lg-4 active">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
 					    </li>
-					    <li className="nav-item col-lg-3   ">
+					    <li className="nav-item col-lg-4">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
 					    </li>
-					    <li className="nav-item col-lg-3   ">
+					    <li className="nav-item col-lg-4">
 					      <a className="nav-link active btn-bg" property-type="Commercial" transaction-type="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
 					  </ul>
 				 	</div>
 				</div>
-				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 noPad">
+				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
 					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType}/>
 				</div>
 				<div className="col-lg-8 col-lg-offset-2 mt-64">

@@ -60,12 +60,14 @@
 	min-width: 500px !important;
 }
 
-.propertyType{
-	padding-left: 3%;
+.property{
+	border-right : 1px solid #eee !important;
+	border-top   : 2px solid #F9A944 !important;
 }
 
+
 .mt36{
-	  margin-top: 36px;
+	  margin-top: 50px;
 }
 
 .constructionBtn .dropdown-menu{
@@ -85,7 +87,7 @@
 	margin-left: 10% !important;
 }
 
-.searchDiv .btn{
+.searchDiv1 .btn{
 	border-radius: 0px !important;
 	height: 50px;
 }
@@ -101,18 +103,25 @@
 
  .searchDiv .form-control{
   	border : 0px !important;
+	border-radius: 0px !important;
+
  }
 .searchDiv .input-group-addon{
   	border : 0px !important;
 }
 
  .searchDiv1 select {
-  -webkit-appearance: none;
   -webkit-border-radius: 0px;
   height:50px;
+  cursor: pointer;
 }
  
  .searchDiv1 .form-control{
   	height:50px;
   	border : 0px !important;
  }
+
+
+/*---------------------checkbox Start-----------*/
+
+/*-----------Checkbox End------------*/

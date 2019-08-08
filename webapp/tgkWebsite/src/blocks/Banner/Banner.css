@@ -156,7 +156,9 @@
   transform: translateX(-9%) translateY(-25%) rotate(45deg);
 }
 
-
+.banner .nav-pills>li+li{
+  margin-left: 0% !important
+}
 
 
 

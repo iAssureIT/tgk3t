@@ -10,11 +10,13 @@ class SearchProperty extends Component {
 	constructor(){
 		super();
 		this.state = {
-			budgetList1 	: [],
-			budgetList2 	: [],
-			transactionType : "Commercial-Sell",
-			budget          : "",
-			propertySubType : [],
+			budgetList1 			: [],
+			budgetList2 			: [],
+			transactionType 		: "Commercial-Sell",
+			budget          		: "",
+			propertySubType 		: [],
+			propertySubTypeArray	: [],
+			location        		: "",
 		}
 		this.handleSearch = this.handleSearch.bind(this);
 	}
@@ -28,8 +30,17 @@ class SearchProperty extends Component {
 						  "1.6 - 1.8 Cr","1.8 - 1.99 Cr"] ,
 			budgetList2 : ["5000","10000","15000","20000","25000","30000","40000","50000","60000","80000", "1 Lac", "1.2 Lac", "1.5 Lac"] 
 		})
-
+		var propertySubType = [];
+					if(this.props.propertyType === "Commercial")
+					{
+						propertySubType = ['Office in IT Park/SEZ','Commercial Office Space','Commercial Showroom','Commercial Shop','Industrial Building','Warehouse/Godown'];
+					}
+					else{
+						propertySubType = ['MultiStory Apartment','Residential House','Studio Apartment','Villa / Bunglow','Penthouse'];
+					}
+		this.setState({propertySubTypeArray:propertySubType})
 	}
+
 
 	propertyType(event){
 		event.preventDefault()
@@ -49,9 +60,9 @@ class SearchProperty extends Component {
 			var transactionType = property[1];
 			this.setState({
 				transactionType	: this.refs.transactionType.value,
+				location 		: this.refs.location.value,
 			})
 		}
-
 
 		const formValues = {
 			transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
@@ -80,7 +91,7 @@ class SearchProperty extends Component {
 
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 				<form>
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 searchProperty noPad">
 						{this.props.propertyType === "Commercial" ?
@@ -105,76 +116,80 @@ class SearchProperty extends Component {
 						</div>
 						}
 
-						<div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 searchDrop" id="pType" onClick={this.propertyType.bind(this)}>
-							<div className="col-lg-12 noPad">
-							   	Property Type
-					  			&nbsp;<i className="fa fa-caret-down pull-right"></i>
-					  		</div>
+						<div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 propertyType noPad">
+							  	<div className="dropdown" id="dropdown">
+								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
+								    <span className="caret caretMl"></span></button>
+								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt39">
+							      		{this.props.propertyType === "Commercial" ?
+										<div className="col-lg-12 ">
+										  	<div className="col-lg-12">
+												<h5>Commercial</h5>
+												{
+													this.state.propertySubTypeArray.map((data,index)=>{
+														return(
+															<span className="col-lg-6 noPad">
+																<input type="checkbox" className="" value={data} key={index}  onChange={this.propertySubType.bind(this)}/>&nbsp;{data}
+															</span>
+														)
+													})
 
-						</div>
+												}
+											</div>
+										</div>
+										:
+										<div className="col-lg-12">
+										  	<div className="col-lg-12">
+												<h5>Residential</h5>
+												{
+													this.state.propertySubTypeArray.map((data,index)=>{
+														return(
+															<span className="col-lg-6 noPad"><input type="checkBox" value={data} key={index} onChange={this.propertySubType.bind(this)}/>&nbsp;{data}</span>
+														)
+													})
+
+												}
+											</div>
+										</div>
+										}
+								    </ul>
+								</div>
+							</div>
 						
-						<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad" onClick={this.budget.bind(this)}>
-							<div className="col-lg-12 noPad">
-					  			 <div className="form-group noPad">
-							  		<div className="col-lg-12 input-group noPad">
-								  		<select className="form-control col-lg-12 noPad budgetOption" ref="budget" onChange={this.handleSearch.bind(this)}>
-									    	<option value=""  className="hidden">Budget</option>
-									    	{this.props.transactionType === "Sell"  || this.state.transactionType === "Commercial-Sell"?
-								    			this.state.budgetList1.map((budget,index)=>{
+							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad" onClick={this.budget.bind(this)}>
+								<div className="col-lg-12 noPad">
+						  			 <div className="form-group noPad">
+								  		<div className="col-lg-12 input-group noPad">
+									  		<select className="form-control col-lg-12 noPad budgetOption" ref="budget" onChange={this.handleSearch.bind(this)}>
+										    	<option value=""  className="hidden">Budget</option>
+										    	{this.props.transactionType === "Sell"  || this.state.transactionType === "Commercial-Sell"?
+									    			this.state.budgetList1.map((budget,index)=>{
+											    		return(
+											    				<option value={budget} key={index} className="selectOption">{budget}</option>
+											    			);
+											    		})
+												:
+												this.state.budgetList2.map((budget,index)=>{
 										    		return(
 										    				<option value={budget} key={index} className="selectOption">{budget}</option>
 										    			);
 										    		})
-											:
-											this.state.budgetList2.map((budget,index)=>{
-									    		return(
-									    				<option value={budget} key={index} className="selectOption">{budget}</option>
-									    			);
-									    		})
-											}
-										</select>
-									</div>
-								  </div>
-					  		</div>
-						</div>
-						<div className="col-lg-1 sImg noPad">
-							<Link to={"/SearchResults"}>	
-								<img alt=""  src="/images/TGK-key.png" className="col-lg-12 tgkImg noPad" />
-							</Link>
-						</div>
-					</div>
-					<div className="col-lg-12">
-						<div className="col-lg-4 noDiv"></div>
-						{this.props.propertyType === "Commercial" ?
-							<div className="col-lg-12" id="propertyDiv">
-						  	<div className="col-lg-12">
-								<h5>Commercial</h5>
-								<span className="col-lg-6"><input type="checkBox" value="Office in IT Park/SEZ" onChange={this.propertySubType.bind(this)} />&nbsp;Office in IT Park/SEZ</span>
-								<span className="col-lg-6"><input type="checkBox" value="Commercial Office Space" onChange={this.propertySubType.bind(this)} />&nbsp;Commercial Office Space</span>
-								<span className="col-lg-6"><input type="checkBox" value="Commercial Showroom" onChange={this.propertySubType.bind(this)}/>&nbsp;Commercial Showroom</span>
-								<span className="col-lg-6"><input type="checkBox" value="Commercial Shop" onChange={this.propertySubType.bind(this)}/>&nbsp; Commercial Shop</span>
-								<span className="col-lg-6"><input type="checkBox" value="Industrial Building" onChange={this.propertySubType.bind(this)}/>&nbsp;Industrial Building</span>
-								<span className="col-lg-6"><input type="checkBox" value="Warehouse/Godown" onChange={this.propertySubType.bind(this)}/>&nbsp;Warehouse/Godown </span>
+												}
+											</select>
+										</div>
+									  </div>
+						  		</div>
+							</div>
+							<div className="col-lg-1 sImg noPad">
+									<Link to={"/SearchResults"}>	
+										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 tgkImg noPad" />
+									</Link>
 							</div>
 						</div>
-						:
-
-						<div className="col-lg-12" id="propertyDiv">
-						  	<div className="col-lg-12 noPad">
-								<h5>Residential</h5>
-								<span className="col-lg-6"><input type="checkBox" value="MultiStory Apartment" onChange={this.propertySubType.bind(this)}/>&nbsp;MultiStory Apartment</span>
-								<span className="col-lg-6"><input type="checkBox" value="Residential House" onChange={this.propertySubType.bind(this)}/>&nbsp;Residential House</span>
-								<span className="col-lg-6"><input type="checkBox" value="Studio Apartment" onChange={this.propertySubType.bind(this)}/>&nbsp;Studio Apartment</span>
-								<span className="col-lg-6"><input type="checkBox" value="Villa / Bunglow" onChange={this.propertySubType.bind(this)}/>&nbsp;Villa / Bunglow</span>
-								<span className="col-lg-6"><input type="checkBox" value="Penthouse" onChange={this.propertySubType.bind(this)}/>&nbsp;Penthouse</span>
-							</div>
-						</div>
-						}
-					</div>
-				</form>
-			</div>
-		);
+					</form>
+				</div>
+			);
+		}
 	}
-}
 
 export default withRouter(SearchProperty);
