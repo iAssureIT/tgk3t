@@ -1,10 +1,42 @@
 import React, { Component }   from 'react';
+import axios          from 'axios';
+
 
 import "./MainFooter.css";
 
 
 export default class MainFooter extends Component{
-  
+
+  sendNotification(event){
+    event.preventDefault();
+    const formValues = {
+        "name"          : this.refs.name.value,
+        "email"         : this.refs.email.value,
+        "mobileNumber"  : this.refs.mobileNumber.value,
+        "message"       : this.refs.message.value,
+      };
+      console.log("notification",formValues); 
+    //     const name = this.refs.name.value;
+    //     const email = this.refs.email.value;
+    //     const message = this.refs.message.value;
+    // axios({
+    //         method: "POST", 
+    //         url:"http://localhost:3002/send", 
+    //         data: {
+    //             name: name,   
+    //             email: email,  
+    //             messsage: message
+    //         }
+    //     }).then((response)=>{
+    //         if (response.data.msg === 'success'){
+    //             alert("Message Sent."); 
+    //             this.resetForm()
+    //         }else if(response.data.msg === 'fail'){
+    //             alert("Message failed to send.")
+    //         }
+    //     })
+
+  }
   render() {
     return (
       <div className="container-fluid">
@@ -20,25 +52,23 @@ export default class MainFooter extends Component{
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  mt20" >
                     <div className="row">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
-                        <input type="text" className="form-control" placeholder="Name"  ref="direction" />
+                        <input type="text" className="form-control" placeholder="Name"  ref="name" />
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                        <input type="text" className="form-control" placeholder="Email"  ref="direction" />
+                        <input type="email" className="form-control" placeholder="Email"  ref="email" />
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                        <input type="text" className="form-control" placeholder="Phone"  ref="direction" />
+                        <input type="number" className="form-control" placeholder="Phone"  ref="mobileNumber"  min="0"/>
                       </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 ">
-                        <div className="">
-                          <textarea rows="5" cols="70" className="boarderR" placeholder="  Message"></textarea>
-                        </div>
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 textColor">
+                        <textarea rows="5" cols="71"  placeholder="  Message" ref="message"></textarea>
                       </div>
                     </div>
                   </div>
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 " >
                     <div className="col-lg-9 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12">
                       <div className="row">
-                       <button className="col-lg-3  col-md-12 col-sm-12 col-xs-12 sendButton btn  pull-right">SEND</button>
+                       <button className="col-lg-3  col-md-12 col-sm-12 col-xs-12 sendButton btn  pull-right" onClick={this.sendNotification.bind(this)}>SEND</button>
                       </div>
                     </div>
                   </div>

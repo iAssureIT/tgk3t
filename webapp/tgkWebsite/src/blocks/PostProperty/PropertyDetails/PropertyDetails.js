@@ -43,7 +43,7 @@ import './PropertyDetails.css';
 			console.log("PropertyDetails req = ",formValues);
 			if( this.state.furnishedstatus!="" &&  this.refs.builtupArea.value!="" )
 			{
-					axios
+				axios
 				.patch('/api/properties/patch/propertyDetails',formValues)
 				.then( (res) =>{
 					console.log(res);

@@ -159,79 +159,79 @@ getDistrict(stateCode){
   	})
   	this.getArea(event.target.value);
   }
-  getArea(city){
-  	console.log('city', city);
-  	axios({
-      method: 'get',
-      url: 'http://locationapi.iassureit.com/api/districts/get/list/'+city+'/IN',
-    }).then((response)=> {
-        // console.log('response ==========', response.data);
-        this.setState({
-          listofArea : response.data
-        },()=>{
-        console.log('listofArea', this.state.listofArea);
-        })
-    }).catch(function (error) {
-      console.log('error', error);
-    });
-  }
-    districtCoveredChange(event){    
-    event.preventDefault();
-    var districtCovered = event.target.value;
-    // console.log('districtCovered', districtCovered);
-    this.setState({
-      districtCovered: districtCovered
-    },()=>{
-      var selectedDistrict = this.state.districtCovered.split('|')[0];
-      console.log("selectedDistrict",selectedDistrict);
-      this.setState({
-        selectedDistrict :selectedDistrict
-      },()=>{
-      console.log('selectedDistrict',this.state.selectedDistrict);
-      this.getBlock(this.state.stateCode, this.state.selectedDistrict);
-      })
-    });
-  }
-  getBlock(stateCode, selectedDistrict){
-    axios({
-      method: 'get',
-      url: 'http://locationapi.iassureit.com/api/blocks/get/list/'+selectedDistrict+'/'+stateCode+'/IN',
-    }).then((response)=> {
-        console.log('response ==========', response.data);
-        this.setState({
-          listofBlocks : response.data
-        },()=>{
-        console.log('listofBlocks', this.state.listofBlocks);
-        })
-    }).catch(function (error) {
-      console.log('error', error);
-    });
-  }
-  selectBlock(event){
-    event.preventDefault();
-    var blockCovered = event.target.value;
-    this.setState({
-      blockCovered : blockCovered
-    },()=>{
-      console.log("blockCovered",blockCovered);
-      this.getVillages(this.state.stateCode, this.state.selectedDistrict, this.state.blockCovered);
-    });
-  }
-  getVillages(stateCode, selectedDistrict, blockCovered){
-    axios({
-      method: 'get',
-      url: 'http://locationapi.iassureit.com/api/cities/get/list/'+blockCovered+'/'+selectedDistrict+'/'+stateCode+'/IN',
-    }).then((response)=> {
-        console.log('response ==========', response.data);
-        this.setState({
-          listofVillages : response.data
-        },()=>{
-        console.log('listofVillages', this.state.listofVillages);
-        })
-    }).catch(function (error) {
-      console.log('error', error);
-    });
-  }
+  // getArea(city){
+  // 	console.log('city', city);
+  // 	axios({
+  //     method: 'get',
+  //     url: 'http://locationapi.iassureit.com/api/districts/get/list/'+city+'/IN',
+  //   }).then((response)=> {
+  //       console.log('response ==========', response.data);
+  //       this.setState({
+  //         listofArea : response.data
+  //       },()=>{
+  //       console.log('listofArea', this.state.listofArea);
+  //       })
+  //   }).catch(function (error) {
+  //     console.log('error', error);
+  //   });
+  // }
+  //   districtCoveredChange(event){    
+  //   event.preventDefault();
+  //   var districtCovered = event.target.value;
+  //   console.log('districtCovered', districtCovered);
+  //   this.setState({
+  //     districtCovered: districtCovered
+  //   },()=>{
+  //     var selectedDistrict = this.state.districtCovered.split('|')[0];
+  //     console.log("selectedDistrict",selectedDistrict);
+  //     this.setState({
+  //       selectedDistrict :selectedDistrict
+  //     },()=>{
+  //     console.log('selectedDistrict',this.state.selectedDistrict);
+  //     this.getBlock(this.state.stateCode, this.state.selectedDistrict);
+  //     })
+  //   });
+  // }
+  // getBlock(stateCode, selectedDistrict){
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://locationapi.iassureit.com/api/blocks/get/list/'+selectedDistrict+'/'+stateCode+'/IN',
+  //   }).then((response)=> {
+  //       console.log('response ==========', response.data);
+  //       this.setState({
+  //         listofBlocks : response.data
+  //       },()=>{
+  //       console.log('listofBlocks', this.state.listofBlocks);
+  //       })
+  //   }).catch(function (error) {
+  //     console.log('error', error);
+  //   });
+  // }
+  // selectBlock(event){
+  //   event.preventDefault();
+  //   var blockCovered = event.target.value;
+  //   this.setState({
+  //     blockCovered : blockCovered
+  //   },()=>{
+  //     console.log("blockCovered",blockCovered);
+  //     this.getVillages(this.state.stateCode, this.state.selectedDistrict, this.state.blockCovered);
+  //   });
+  // }
+  // getVillages(stateCode, selectedDistrict, blockCovered){
+  //   axios({
+  //     method: 'get',
+  //     url: 'http://locationapi.iassureit.com/api/cities/get/list/'+blockCovered+'/'+selectedDistrict+'/'+stateCode+'/IN',
+  //   }).then((response)=> {
+  //       console.log('response ==========', response.data);
+  //       this.setState({
+  //         listofVillages : response.data
+  //       },()=>{
+  //       console.log('listofVillages', this.state.listofVillages);
+  //       })
+  //   }).catch(function (error) {
+  //     console.log('error', error);
+  //   });
+  // }
 
 
   handleChange(event){

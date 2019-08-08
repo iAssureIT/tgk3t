@@ -135,7 +135,6 @@ class BasicInfo extends Component{
 			};
 			console.log("BasicInfo===",formValues);
 			if(this.state.propertyHolder!="" && this.state.transactionType!="" && this.state.propertyType!="" && this.state.propertySubType!="" && this.refs.floor.value!="" && this.refs.totalfloor.value!="" ){
-					
 				if(this.state.updatestatus== true)
 				{
 					console.log("update axios");
