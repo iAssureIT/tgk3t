@@ -23,12 +23,39 @@ class SearchProperty extends Component {
 	componentDidMount() {
 	localStorage.removeItem('searchData');
 	this.setState({
-			budgetList1 : ["00 - 05 Lac","05 - 10 Lac","10 - 20 Lac","30 - 40 Lac",
-						  "20 - 30 Lac", "30 - 40 Lac","40 - 50 Lac",
-						  "50 - 60 Lac","60 - 70 Lac","70 - 80 Lac",
-						  "80 - 99 Lac","1 - 1.2 Cr","1.2 - 1.4 Cr","1.4 - 1.6 Cr",
-						  "1.6 - 1.8 Cr","1.8 - 1.99 Cr"] ,
-			budgetList2 : ["5000","10000","15000","20000","25000","30000","40000","50000","60000","80000", "1 Lac", "1.2 Lac", "1.5 Lac"] 
+			
+			budgetList1 : [
+				{value: 1000000, option: "Upto 10 Lac"},
+				{value: 2000000, option: "Upto 20 Lac"},
+				{value: 3000000, option: "Upto 30 Lac"},
+				{value: 4000000, option: "Upto 40 Lac"},
+				{value: 5000000, option: "Upto 50 Lac"},
+				{value: 6000000, option: "Upto 60 Lac"},
+				{value: 7000000, option: "Upto 70 Lac"},
+				{value: 8000000, option: "Upto 80 Lac"},
+				{value: 9000000, option: "Upto 90 Lac"},
+				{value: 10000000, option: "Upto 1 Cr"},
+				{value: 20000000, option: "Upto 2 Cr"},
+				{value: 30000000, option: "Upto 3 Cr"},
+				{value: 50000000, option: "Upto 5 Cr"},
+				{value: 100000000, option: "Upto 10 Cr"},
+			],
+
+			budgetList2 : [
+				{value: 5000, option: "Upto 5000"},
+				{value: 10000, option: "Upto 10000"},
+				{value: 15000, option: "Upto 15000"},
+				{value: 20000, option: "Upto 20000"},
+				{value: 25000, option: "Upto 25000"},
+				{value: 30000, option: "Upto 30000"},
+				{value: 40000, option: "Upto 40000"},
+				{value: 50000, option: "Upto 50000"},
+				{value: 60000, option: "Upto 60000"},
+				{value: 70000, option: "Upto 70000"},
+				{value: 80000, option: "Upto 80000"},
+				{value: 90000, option: "Upto 90000"},
+				{value: 100000, option: "Upto 1 Lac"},
+			]
 		})
 		var propertySubType = [];
 					if(this.props.propertyType === "Commercial")
@@ -39,6 +66,34 @@ class SearchProperty extends Component {
 						propertySubType = ['MultiStory Apartment','Residential House','Studio Apartment','Villa / Bunglow','Penthouse'];
 					}
 		this.setState({propertySubTypeArray:propertySubType})
+
+
+
+		// 	if(this.props.propertyType == "Commercial"){
+		// 	var property  	 	= this.refs.transactionType.value.split("-");
+		// 	var propertyType 	= property[0];
+		// 	var transactionType = property[1];
+		// 	this.setState({
+		// 		transactionType	: this.refs.transactionType.value,
+		// 	})
+		// }
+
+		// console.log("this.props.propertyType == ", this.props.propertyType );
+
+		// const formValues = {
+		// 	// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
+		// 	transactionType : this.props.propertyType == "Commercial" ? transactionType : "sell",
+		// 	location        : this.refs.location.value,
+		// 	budget 			: this.refs.budget.value,
+		// 	// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
+		// 	propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
+		// 	propertySubType : this.state.propertySubType,
+		// 	areaMin 		: 0,
+		// 	areaMax 		: 0,
+		// 	floor			: "",
+		// }
+		// var searchData = JSON.stringify(formValues);
+		// localStorage.setItem("searchData",searchData);
 	}
 
 
@@ -65,16 +120,50 @@ class SearchProperty extends Component {
 		}
 
 		const formValues = {
-			transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
+			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
+			transactionType : this.props.propertyType == "Commercial" ? transactionType : "sell",
 			location        : this.refs.location.value,
 			budget 			: this.refs.budget.value,
-			propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
+			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
+			propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
+			areaMin 		: 0,
+			areaMax 		: 0,
+			floor			: "",
+			constructionType : "",
 		}
 		var searchData = JSON.stringify(formValues);
 		localStorage.setItem("searchData",searchData);
-	}
 
+	}
+	searchResultbtn(){
+		if(this.props.propertyType == "Commercial"){
+			var property  	 	= this.refs.transactionType.value.split("-");
+			var propertyType 	= property[0];
+			var transactionType = property[1];
+			this.setState({
+				transactionType	: this.refs.transactionType.value,
+				location 		: this.refs.location.value,
+			})
+		}
+
+		const formValues = {
+			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
+			transactionType : this.props.propertyType == "Commercial" ? transactionType : "sell",
+			location        : this.refs.location.value,
+			budget 			: this.refs.budget.value,
+			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
+			propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
+			propertySubType : this.state.propertySubType,
+			areaMin 		: 0,
+			areaMax 		: 0,
+			floor			: "",
+			constructionType: "",
+		}
+		var searchData = JSON.stringify(formValues);
+		localStorage.setItem("searchData",searchData);
+
+	}
 	propertySubType(e){
 		  if(e.target.checked)
 		  {
@@ -165,13 +254,13 @@ class SearchProperty extends Component {
 										    	{this.props.transactionType === "Sell"  || this.state.transactionType === "Commercial-Sell"?
 									    			this.state.budgetList1.map((budget,index)=>{
 											    		return(
-											    				<option value={budget} key={index} className="selectOption">{budget}</option>
+											    				<option value={budget.value} key={index} className="selectOption">{budget.option}</option>
 											    			);
 											    		})
 												:
 												this.state.budgetList2.map((budget,index)=>{
 										    		return(
-										    				<option value={budget} key={index} className="selectOption">{budget}</option>
+										    				<option value={budget.value} key={index} className="selectOption">{budget.option}</option>
 										    			);
 										    		})
 												}
@@ -181,7 +270,7 @@ class SearchProperty extends Component {
 						  		</div>
 							</div>
 							<div className="col-lg-1 sImg noPad">
-									<Link to={"/SearchResults"}>	
+									<Link to={"/SearchResults"} onClick={this.searchResultbtn.bind(this)}>	
 										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 tgkImg noPad" />
 									</Link>
 							</div>
