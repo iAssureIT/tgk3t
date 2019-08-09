@@ -1,9 +1,9 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
+import $ 						from 'jquery';
 import swal 					from 'sweetalert';		
-
 import { connect } 				from 'react-redux';
-import { withRouter}    from 'react-router-dom';
+import { withRouter}    		from 'react-router-dom';
 
 import './Location.css';
 
@@ -11,44 +11,34 @@ import './Location.css';
 
  	constructor(props){
 			super(props);
+			
 			this.state = {
 				"selected"  		: "",
 				"listofStates"		: "",
-				"listofDistrict"	: "",
+				"listofBlocks"		: "",
+				"listofAreas"		: "",
+				"village"			: "",
 				"index" 			: "",
+				"districtName"		: "",
+				"subAreaList"		: ["Akashvani", "Amanora Chambers", "Fursungi", "Gadital", "KalePadal", "Magarpatta City","Sasane Nagar", "Satavwadi"],
 			};
 			this.handleChange = this.handleChange.bind(this);
 		}
 	componentDidMount(){
 
-		// console.log("prop id ", this.props.prop_id);
-  //       	var prop_id = this.props.prop_id;
-  //       	console.log("here var prop id", prop_id);
-        	
-  //       	axios
-		// 		.get('/api/properties/'+prop_id)
-		// 		.then( (res) =>{
-		// 			console.log("resposnse here===================>",res);					
-					
-		// 		})
-		// 		.catch((error) =>{
-		// 			console.log("error = ", error);
-		// 			// alert("Something Went wrong")
-		// 		});
-
-
 		this.getState();
-					document.getElementById("selectState").selectedIndex=0;
-					document.getElementById("selectCity").selectedIndex=0;
-					document.getElementById("selectArea").selectedIndex=0;
-					document.getElementById("selectSubArea").selectedIndex=0;	
+
+		// document.getElementById("selectState").selectedIndex=0;
+		// document.getElementById("selectCity").selectedIndex=0;
+		// document.getElementById("selectArea").selectedIndex=0;
+		// document.getElementById("selectSubArea").selectedIndex=0;	
 	}
 	insertLocation(event){
 			event.preventDefault();	
 			const formValues = {
 				"country" 			: "India",
-				"state" 			: this.refs.state.value,
-				"city" 				: this.refs.city.value,
+				"state" 			: this.state.state.split('|')[0],
+				"city" 				: this.state.city.split('|')[0],
 				"area" 			    : this.refs.area.value,
 				"subArea" 			: this.refs.subArea.value,
 				"society" 		    : this.refs.society.value,
@@ -91,15 +81,15 @@ import './Location.css';
 
 		handlePincode(){
 				if(this.refs.pincode.value===''){
-					document.getElementById("selectState").selectedIndex=0;
-					document.getElementById("selectCity").selectedIndex=0;
-					document.getElementById("selectArea").selectedIndex=0;
-					document.getElementById("selectSubArea").selectedIndex=0;
+					// document.getElementById("selectState").selectedIndex=0;
+					// document.getElementById("selectCity").selectedIndex=0;
+					// document.getElementById("selectArea").selectedIndex=0;
+					// document.getElementById("selectSubArea").selectedIndex=0;
 				}else{
 					// document.getElementById("selectState").selectedIndex=1;
 					// document.getElementById("selectCity").selectedIndex=1;
-					document.getElementById("selectArea").selectedIndex=1;
-					document.getElementById("selectSubArea").selectedIndex=1;
+					// document.getElementById("selectArea").selectedIndex=1;
+					// document.getElementById("selectSubArea").selectedIndex=1;
 				}
 			
 		}
@@ -131,138 +121,95 @@ selectState(event){
         stateCode :stateCode
       },()=>{
       console.log('stateCode',this.state.stateCode);
-      this.getDistrict(this.state.stateCode);
+      this.getBlockbyState(this.state.stateCode);
       })
     });
     // this.handleChange(event);
 }
 
-getDistrict(stateCode){
+getBlockbyState(stateCode){
+        console.log('stateCode ==========', stateCode);
     axios({
       method: 'get',
-      url: 'http://locationapi.iassureit.com/api/districts/get/list/'+stateCode+'/IN',
+      url: 'http://locationapi.iassureit.com/api/blocks/get/BlocksByState/'+stateCode+'/IN',
     }).then((response)=> {
-        // console.log('response ==========', response.data);
+        console.log('response ==========', response.data);
         this.setState({
-          listofDistrict : response.data
+          listofBlocks : response.data,
+          districtName : response.data[0].districtName
         },()=>{
-        console.log('listofDistrict', this.state.listofDistrict);
+        console.log('listofBlocks', this.state.listofBlocks);
+        console.log('districtName', this.state.districtName);
         })
     }).catch(function (error) {
       console.log('error', error);
     });
   }
+   selectBlock(event){
+    event.preventDefault();
+    var city = event.target.value;
+    var districtName = $('option:selected', event.target).attr('data-districtname');
+    this.setState({
+      city : city,
+      districtName:districtName
+    },()=>{
+      var cityCode = this.state.city.split('|')[1];
+      // console.log("districtName",districtName);
+      // this.getVillages(this.state.stateCode, this.state.districtName, this.state.city);
+      this.getAreas(this.state.city, this.state.districtName, this.state.stateCode );
+    });
+  }
+  getAreas(blockName, districtName, stateCode){
+    axios({
+      method: 'get',
+      url: 'http://locationapi.iassureit.com/api/areas/get/list/'+blockName+'/'+districtName+'/'+stateCode+'/IN',
+    }).then((response)=> {
+        // console.log('response ==========', response.data);
+        this.setState({
+          listofAreas : response.data
+        },()=>{
+        console.log('listofAreas', this.state.listofAreas);
+        })
+    }).catch(function (error) {
+      console.log('error', error);
+    });
+  }
+  
+  selectVillage(event){
+    event.preventDefault();
+    var village = event.target.value;
+      console.log("village",village);
+    this.setState({
+      village : village,
+    },()=>{
+      console.log("village",village);
+    });
+    // this.handleChange();
+  }
   selectCity(event){
   	this.setState({
   		// [event.target.name] : event.target.value
-  		[event.target.name] : event.target.value.split('|')[0]
+  		[event.target.name] : event.target.value
   	})
-  	this.getArea(event.target.value);
+  	// this.getArea(event.target.value);
   }
-  // getArea(city){
-  // 	console.log('city', city);
-  // 	axios({
-  //     method: 'get',
-  //     url: 'http://locationapi.iassureit.com/api/districts/get/list/'+city+'/IN',
-  //   }).then((response)=> {
-  //       console.log('response ==========', response.data);
-  //       this.setState({
-  //         listofArea : response.data
-  //       },()=>{
-  //       console.log('listofArea', this.state.listofArea);
-  //       })
-  //   }).catch(function (error) {
-  //     console.log('error', error);
-  //   });
-  // }
-  //   districtCoveredChange(event){    
-  //   event.preventDefault();
-  //   var districtCovered = event.target.value;
-  //   console.log('districtCovered', districtCovered);
-  //   this.setState({
-  //     districtCovered: districtCovered
-  //   },()=>{
-  //     var selectedDistrict = this.state.districtCovered.split('|')[0];
-  //     console.log("selectedDistrict",selectedDistrict);
-  //     this.setState({
-  //       selectedDistrict :selectedDistrict
-  //     },()=>{
-  //     console.log('selectedDistrict',this.state.selectedDistrict);
-  //     this.getBlock(this.state.stateCode, this.state.selectedDistrict);
-  //     })
-  //   });
-  // }
-  // getBlock(stateCode, selectedDistrict){
-  //   axios({
-  //     method: 'get',
-  //     url: 'http://locationapi.iassureit.com/api/blocks/get/list/'+selectedDistrict+'/'+stateCode+'/IN',
-  //   }).then((response)=> {
-  //       console.log('response ==========', response.data);
-  //       this.setState({
-  //         listofBlocks : response.data
-  //       },()=>{
-  //       console.log('listofBlocks', this.state.listofBlocks);
-  //       })
-  //   }).catch(function (error) {
-  //     console.log('error', error);
-  //   });
-  // }
-  // selectBlock(event){
-  //   event.preventDefault();
-  //   var blockCovered = event.target.value;
-  //   this.setState({
-  //     blockCovered : blockCovered
-  //   },()=>{
-  //     console.log("blockCovered",blockCovered);
-  //     this.getVillages(this.state.stateCode, this.state.selectedDistrict, this.state.blockCovered);
-  //   });
-  // }
-  // getVillages(stateCode, selectedDistrict, blockCovered){
-  //   axios({
-  //     method: 'get',
-  //     url: 'http://locationapi.iassureit.com/api/cities/get/list/'+blockCovered+'/'+selectedDistrict+'/'+stateCode+'/IN',
-  //   }).then((response)=> {
-  //       console.log('response ==========', response.data);
-  //       this.setState({
-  //         listofVillages : response.data
-  //       },()=>{
-  //       console.log('listofVillages', this.state.listofVillages);
-  //       })
-  //   }).catch(function (error) {
-  //     console.log('error', error);
-  //   });
-  // }
-
 
   handleChange(event){
-        const target = event.target.value;
-        const name   = event.target.name;
-        console.log('target',name, target);
-          this.setState({ 
-        [name]:target
-      },()=>{
-        // console.log('this state', this.state);
-      })
+      //   const target = event.target.value;
+      //   const name   = event.target.name;
+      //   console.log('target',name, target);
+      //     this.setState({ 
+      //   [name]:target
+      // },()=>{
+      //   // console.log('this state', this.state);
+      // })
   }
 
 	render() {
-
-		// "state" 			: this.refs.state.value,
-		// 		"city" 				: this.refs.city.value,
-		// 		"area" 			    : this.refs.area.value,
-		// 		"subArea" 			: this.refs.subArea.value,
-		// 		"society" 		    : this.refs.society.value,
-
 	var cityName = this.state.city;
     var areaName = this.state.area;
     var subareaName = this.state.subArea;
     var societyName = this.state.society;
-    
-    console.log("cityName",cityName); 
-    console.log("areaName",areaName); 
-    console.log("subareaName",subareaName); 
-    console.log("societyName",societyName); 
-
 
     if(cityName != null &&  areaName != null && subareaName != null && societyName != null)
     {
@@ -272,7 +219,7 @@ getDistrict(stateCode){
        var forth  = societyName.toUpperCase().slice(0,2);
 
        this.state.index = first+second+third+forth;
-       console.log("index here", this.state.index);
+       // console.log("index here", this.state.index);
     }
 
 		return (
@@ -306,7 +253,7 @@ getDistrict(stateCode){
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconSize12 iconClr"></i>
 			                    </div>*/}
-							  	<select className="custom-select form-control"   ref="state" placeholder="select" id="selectState" onChange={this.selectState.bind(this)}>
+							  	<select className="custom-select form-control"   ref="state" placeholder="select" id="selectState" value={this.state.state}  onChange={this.selectState.bind(this)}>
 							    	<option value="">-- State --</option>
 							    	{
                                     this.state.listofStates ?
@@ -332,13 +279,13 @@ getDistrict(stateCode){
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconSize12 iconClr"></i>
 			                    </div>*/}
-							  	<select className="custom-select form-control " value={this.state.city} name="city" ref="city" placeholder="select"  id="selectCity" onChange={this.selectCity.bind(this)} >
-							    	<option disabled>-- City --</option>
+							  	<select className="custom-select form-control " value={this.state.city} name="city" ref="city" placeholder="select"  id="selectCity" onChange={this.selectBlock.bind(this)} >
+							    	<option value="">-- City --</option>
 							    	{
-                                    this.state.listofDistrict && this.state.listofDistrict.length > 0 ? 
-                                    this.state.listofDistrict.map((data, index)=>{
+                                    this.state.listofBlocks && this.state.listofBlocks.length > 0 ? 
+                                    this.state.listofBlocks.map((data, index)=>{
                                       return(
-                                        <option key={index} value={data.districtName+'|'+data._id}>{data.districtName}</option>
+                                        <option key={index} value={data.blockName} data-districtname={data.districtName} >{data.blockName}</option>
                                         
                                       );
                                     })
@@ -361,17 +308,25 @@ getDistrict(stateCode){
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconClr"></i>
 			                    </div>*/}
-							    <select className="custom-select form-control " onChange={this.handleChange} name="area" ref="area" placeholder="select" id="selectArea">
-							    	<option disabled>-- Area --</option>
-							    	<option>Hadapsar</option>
-							    	<option>Kothrud</option>
-							    	<option>Aundh</option>
+							    <select className="custom-select form-control" value={this.state.village} name="village" onChange={this.selectVillage.bind(this)} name="area" ref="area" placeholder="select" id="selectArea">
+							    	<option value="">-- Area --</option>
+							    	{
+                                    this.state.listofAreas && this.state.listofAreas.length > 0 ? 
+                                    this.state.listofAreas.map((data, index)=>{
+                                      return(
+                                        <option key={index} value={data.areaName} >{data.areaName}</option>
+                                        
+                                      );
+                                    })
+                                    :
+                                    <option disabled>Select State first</option>
+                                  }   
 								</select>
 							</div>
 						  </div>
 					</div>
 				    <div className="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-						<div className="form-group" id="bathroom">
+						<div className="form-group" id="">
 						    <span htmlFor="">Sub-Area</span>
 							<span className="astrick">*</span>
 
@@ -379,12 +334,22 @@ getDistrict(stateCode){
 						      	{/*<div className="input-group-addon inputIcon">
 			                     <i className="fa fa-building iconClr"></i>
 			                    </div>*/}
-							    <select className="custom-select form-control" onChange={this.handleChange} name="subArea"  ref="subArea" placeholder="select" id="selectSubArea">
+							    {/*<select className="custom-select form-control" onChange={this.handleChange} name="subArea"  ref="subArea" placeholder="select" id="selectSubArea">
 							    	<option disabled>-- Select Subarea --</option>
 							    	<option>Magarpatta City</option>
 							    	<option>Satavwadi</option>
 							    	<option>Sasane Nagar</option>
-								</select>
+								</select>*/}
+							    <input type="text" list="subAreaList" className="form-control" ref="subArea" name="subArea" placeholder="Enter Subarea"/>
+
+							    <datalist id="subAreaList">
+							    	{this.state.subAreaList.map( (subAreaName,index)=>{
+							    		console.log("subareaName = ", subAreaName);
+							    		return(<option value={subAreaName} key={index} />)
+							    	})}
+							    </datalist>
+
+
 							</div>
 						</div>
 				    </div>

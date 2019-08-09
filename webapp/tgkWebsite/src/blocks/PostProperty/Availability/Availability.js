@@ -49,7 +49,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			};
 			console.log("Availability req = ",formValues);
 		    if(this.state.available!=""){
-		    		if(formValid(this.state.formerrors)){
+		    		
 				axios
 				.patch('/api/properties/patch/availabilityPlan',formValues)
 				.then( (res) =>{
@@ -63,12 +63,11 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				.catch((error) =>{
 					console.log("error = ", error);
 				});
+			}else{
+				swal("Please enter mandatory fields", "", "warning");
+	        	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
-		    }else{
-              swal("Please enter mandatory fields", "", "warning");
-              console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-
-		    }
+		    
 			
 		}
 		selectType(event){
@@ -221,26 +220,29 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
            <div className="col-lg-12  col-md-12 col-sm-12 col-xs-12">
 			<form id="form">
 			  <div className="row"></div>
-			   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			   {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 	<label className="col-lg-6">Who will show?</label>
 			  	 	<label className="col-lg-6">Phone Number<span className="astrick">*</span></label>
 			  	 </div>
-			  </div>
+			  </div>*/}
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				  	<div className="form-group" id="superArea">
+				  	<div className="form-group" id="">
+			  	 		<label className="">Who will show?</label>
 					 	<div className="can-toggle1 genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox"/>
 				              <label className="formLable" htmlFor="d">
 				             	 <div className="can-toggle1__switch" data-checked="Myself"  data-unchecked="Someone" ></div>
 				                <div className="can-toggle1__label-text"></div>
 				              </label>
-			            	</div>
+			            </div>
 				  	</div>
 				  </div>
-				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-					  <div className="form-group"  id="builtArea" >
+				  {this.state.contactPerson == "Someone" ? 
+				  	 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					  <div className="form-group"  id="" >
+			  	 		<label className="">Phone Number</label>
 						  <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-mobile iconClr"></i>
@@ -252,6 +254,20 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		                        )}
 					  </div>
 				  </div>
+				  :
+				   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+					  <div className="form-group"  id="" >
+			  	 		<label className="">Phone Number</label>
+						  <div className="input-group inputBox-main " id="">
+					      	<div className="input-group-addon inputIcon">
+		                     	<i className="fa fa-mobile iconClr"></i>
+		                    </div>
+					    		<input type="number"  name="contactPersonMobile" value={this.props.availableMobile} disabled className="form-control" ref="" min="0" placeholder="Phone Number" />
+					  		</div>
+					  </div>
+				  </div>
+				  }
+				 
 		 	 </div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -357,8 +373,10 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 const mapStateToProps = (state)=>{
 	return {
-		property_id  : state.property_id,
-		uid			    : state.uid
+		property_id     : state.property_id,
+		uid			    : state.uid,
+		availableMobile : state.availableMobile,
+
 
 	}
 };

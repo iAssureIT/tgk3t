@@ -38,22 +38,11 @@ class Header extends Component {
 				<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-lg-offset-5">
 					<a href="/"><img alt=""  src="/images/Logo.png" className="hImg pull-right"/></a>
 				</div>
-				<div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 pull-right headerMenu ">
+				<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 pull-right headerMenu ">
 					<nav className="navbar">
 					    <ul className="nav navbar-nav">
-					      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#About">ABOUT US <span className="caret"></span></a>
-					        <ul className="dropdown-menu">
-					          <li><a href="#pag1">Company Profile</a></li>
-					          <li><a href="#pag2">Our Team</a></li>
-					        </ul>
-					      </li>
-					      <li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Contact">CONTACT US <span className="caret"></span></a>
-					        <ul className="dropdown-menu">
-					          <li><a href="#pag1">Contact</a></li>
-					          <li><a href="#pag2">Our Locations</a></li>
-					        </ul>
-					      </li>
-
+					    	 <li><Link to="/AboutUs">ABOUT US</Link></li>
+					   
 					      {localStorage.getItem("uid") ? (
 					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
 						        <ul className="dropdown-menu">

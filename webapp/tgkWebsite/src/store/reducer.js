@@ -22,6 +22,7 @@ const initialState = {
 	originPage      : "",
 	transactionType : "",
 	propertyType    : "",
+	availableMobile : "",
 	prop_id 		: "",
 }
 
@@ -276,6 +277,9 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "PROPERTY_FLOW"){
 		newState.propertyType         	= action.propertyType;
 		newState.transactionType        = action.transactionType;
+	}
+	if(action.type === "AVAILABLE_MOBILE"){
+		newState.availableMobile         = action.availableMobile;
 	}
 
 	return newState;

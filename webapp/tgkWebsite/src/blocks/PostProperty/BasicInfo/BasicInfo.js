@@ -107,8 +107,10 @@ class BasicInfo extends Component{
 		    });
 		    
 		     var $select = $(".Fl60");
+		        $select.append($('<option></option>').val(-1).html("Basement"))
+		        $select.append($('<option></option>').val(0).html("Ground"))
 
-		    for (var i=-2;i<=60;i++){
+		    for (var i=1;i<=60;i++){
 		        $select.append($('<option></option>').val(i).html(i))
 		    }
 		     var $select = $(".1-60");
@@ -374,6 +376,7 @@ class BasicInfo extends Component{
                     </div>
 			  		<select className="custom-select form-control Fl60"  ref="floor" placeholder="Floor" id='select'>
 				    	<option value="" className="hidden">Floor</option>
+				    	<option value="" className="hidden">Ground Floor</option>
 					</select>
 				</div>
 			  </div>
