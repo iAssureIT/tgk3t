@@ -9,10 +9,7 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import './lib/router.js';
 
-
-axios.defaults.baseURL = 'http://localhost:50012/';
-
-// axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 

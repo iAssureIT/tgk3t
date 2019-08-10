@@ -51,8 +51,10 @@ class LoginMobNum extends Component {
 												response.data.otp,
 												response.data.message
 											);
-						this.props.availableMobile(this.state.mobile);
-						swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
+						// this.props.availableMobile(this.state.mobile);
+							localStorage.setItem('availableMobile',this.state.mobile)
+
+						// swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
 					})
 					.catch(function(error){
 						console.log(error);
@@ -155,13 +157,13 @@ const mapDispatchToProps = (dispatch)=>{
 									type: "MOBILE_ENTERED",
 									uid: uid, 
 									mobile: mobile, 
-									OTP: OTP, 
+									OTP: OTP, 	
 									mobFoundMsg: mobFoundMsg
 								}),
-		availableMobile : (availableMobile)=>dispatch({
-										type: "AVAILABLE_MOBILE",
-										availableMobile:availableMobile
-										})
+		// availableMobile : (availableMobile)=>dispatch({
+		// 								type: "AVAILABLE_MOBILE",
+		// 								availableMobile:availableMobile
+		// 								})
 	}
 };
 

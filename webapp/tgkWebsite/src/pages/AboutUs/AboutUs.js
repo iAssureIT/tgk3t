@@ -8,7 +8,7 @@ import AboutUsInfo  			from './AboutUsInfo.js';
 export default class AboutUs extends Component {
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad BoxSize">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad BoxSize1">
 				<Header />
 				<AboutUsInfo />
 				<MainFooter />

@@ -31,8 +31,8 @@ var imgTitleArray = [];
 	
 		main().then(formValues => {
 			// console.log("3 formValues = ",formValues);
-
-			axios
+			if(this.state.imgTitleArray!="" || this.state.videoArray!=""){
+				axios
 				.patch('/api/properties/patch/gallery',formValues)
 				.then( (res) =>{
 					console.log("response = ", res);
@@ -44,7 +44,9 @@ var imgTitleArray = [];
 				})
 				.catch((error) =>{
 					console.log("error = ", error);
-				});				
+				});	
+			}
+						
 			
 		});
 

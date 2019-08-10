@@ -47,7 +47,7 @@ import './MyPostedProperties.css';
 	          myProperties : postsdata,
 	          // propertyCity :city,
 	        });
-	   		 console.log("PropertyDetails",postsdata); 
+	   		 // console.log("PropertyDetails",postsdata); 
 
 	      }
 	    )
@@ -102,9 +102,9 @@ import './MyPostedProperties.css';
 	    }else if(this.props.PropertyDetails){
 	    	header = "Let's provide details of your property"; 
 	    }else if(this.props.Amenities){
-	    	header = "My apartment has following Amenities"; 
+	    	header = "My property has following Amenities"; 
 	    }else if(this.props.Financials){
-	    	header = "Financial details for my apartment"; 
+	    	header = "Financial details for my property"; 
 	    }else if(this.props.Availability){
 	    	header = "Please tell us your availability to plan visit"; 
 	    }else if(this.props.ImageUpload){
@@ -123,7 +123,7 @@ import './MyPostedProperties.css';
 				</div>
 				{this.state.myProperties && this.state.myProperties.length>0  ?
 					this.state.myProperties.map((myProperty,index)=>{
-						console.log("here details",myProperty);
+						// console.log("here details",myProperty);
 					return(
 						<div key={index} id={myProperty._id} onClick={this.goProfile.bind(this)} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
 							<div className="row pull-right" id="triangle-topright">				</div>	

@@ -3,7 +3,7 @@ import axios 					from 'axios';
 import swal 					from 'sweetalert';		
 
 import { connect } 				from 'react-redux';
-import {  withRouter}    from 'react-router-dom';
+import {  withRouter}    		from 'react-router-dom';
 
 import './PropertyDetails.css';
 
@@ -14,6 +14,9 @@ import './PropertyDetails.css';
 			this.state = {
 				furnishedStatus   : '',
 				personal 		  : '',
+				bedrooms 		  : '',
+				balconies 		  : '',
+				bathrooms 		  : '',
 				pantry 			  : '',
 				washrooms    	  : ''
 			};
@@ -25,13 +28,13 @@ import './PropertyDetails.css';
 		updateUser(event){
 			event.preventDefault();
 			const formValues = {
-				"bedrooms" 			: this.refs.bedrooms.value,
-				"balconies" 		: this.refs.balconies.value,
+				"bedrooms" 			: this.state.bedrooms,
+				"balconies" 		: this.state.balconies,
 				"washrooms" 		: this.state.washrooms,
 				"furnishedStatus"   : this.state.furnishedstatus,
 				"personal"		    : this.state.personal,
 				"pantry"		    : this.state.pantry,
-				"bathrooms" 		: this.refs.bathroom.value,
+				"bathrooms" 		: this.state.bathrooms,
 				"ageofProperty" 	: this.refs.ageofproperty.value,
 				"facing" 			: this.refs.facing.value,
 				"superArea" 		: this.refs.superArea.value,
@@ -95,12 +98,17 @@ import './PropertyDetails.css';
 			}
 		}
 		handleChange(event){
-			event.preventDefault();
-			var washroom = this.refs.washrooms.value;
+			// event.preventDefault();
+			// var washroom = this.refs.washrooms.value;
+			// this.setState({
+	  //     	"washrooms":washroom,
+			//     });
+			// console.log("washroom value",washroom);
+			const target = event.target.value;
+			const name   = event.target.name;
 			this.setState({
-	      	"washrooms":washroom,
-			    });
-			console.log("washroom value",washroom);
+				[name]       : target
+			});
 		 }
 		
 
@@ -111,7 +119,7 @@ import './PropertyDetails.css';
 					<div className=" row"></div>
 		 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb10">
-					  		<b>My Apartment has</b>
+					  		<b>My Property has</b>
 					  	</div>
 			  		</div>
 			  		{
@@ -124,7 +132,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     <i className="fa fa-building iconClr"></i>
 				                    </div>
-								    <select className="custom-select form-control " ref="washrooms"  value= {this.state.washrooms} onChange={this.handleChange.bind(this)} placeholder="select" >
+								    <select className="custom-select form-control " ref="washrooms" name="washrooms" value= {this.state.washrooms} onChange={this.handleChange.bind(this)} placeholder="select" >
 								    	<option value="" className="hidden">--Select--</option>
 								    	<option value="0">0</option>
 								    	<option value="1">1</option>
@@ -136,7 +144,7 @@ import './PropertyDetails.css';
 							</div>
 						</div>
 						<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
-						    <span htmlFor="" className="mb7 col-lg-12 row">Personal</span>
+						    <span htmlFor="" className="mb7 col-lg-12 row">Personal Washroom</span>
 							<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
 						             name=""  
@@ -192,7 +200,7 @@ import './PropertyDetails.css';
 								      	<div className="input-group-addon inputIcon">
 					                     <i className="fa fa-building iconClr"></i>
 					                    </div>
-									  	<select className="custom-select form-control "  ref="bedrooms" placeholder="select" >
+									  	<select className="custom-select form-control "  ref="bedrooms" name="bedrooms" value= {this.state.bedrooms} onChange={this.handleChange.bind(this)}  placeholder="select" >
 									    	<option value="" className="hidden">--Select--</option>
 									    	<option value="1">1</option>
 									    	<option value="2">2</option>
@@ -210,7 +218,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     <i className="fa fa-building iconClr"></i>
 				                    </div>
-								    <select className="custom-select form-control " ref="balconies" placeholder="select" >
+								    <select className="custom-select form-control " ref="balconies" name="balconies" value= {this.state.balconies} onChange={this.handleChange.bind(this)}  placeholder="select" >
 								    	<option value="" className="hidden">--Select--</option>
 								    	<option value="1">1</option>
 								    	<option value="2">2</option>
@@ -227,7 +235,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     <i className="fa fa-building iconClr"></i>
 				                    </div>
-								    <select className="custom-select form-control " ref="bathroom" placeholder="select" >
+								    <select className="custom-select form-control " ref="bathrooms" name="bathrooms" value= {this.state.bathrooms} onChange={this.handleChange.bind(this)}  placeholder="select" >
 								    	<option value="" className="hidden">--Select--</option>
 								    	<option value="1">1</option>
 								    	<option value="2">2</option>
@@ -295,11 +303,12 @@ import './PropertyDetails.css';
 					                    </div>
 										<select className="custom-select form-control "  ref="ageofproperty" placeholder="select" >
 									    	<option value="" className="hidden">--Property Age--</option>
+									    	<option value="Under Construction">Under Construction</option>
 									    	<option value="New">New(Less than a year)</option>
-									    	<option value="1-2 Years">1-2 Years</option>
-									    	<option value="2-5 Years">2-5 Years</option>
-									    	<option value="5-8 Years">5-8 Years</option>
-									    	<option value=">8 Years">>8 Years</option>
+									    	<option value="1-2 ">1-2 Years</option>
+									    	<option value="2-5 ">2-5 Years</option>
+									    	<option value="5-8 ">5-8 Years</option>
+									    	<option value=">8 ">>8 Years</option>
 										</select>
 									</div>				  
 								</div>

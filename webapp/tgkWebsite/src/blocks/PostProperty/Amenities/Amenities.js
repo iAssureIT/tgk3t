@@ -100,7 +100,7 @@ import './Amenities.css';
 						    </label>*/}
 						    <label className="container2"> <span className="Ameni1"><img src="/images/gasPipe.png" /></span> <span>Gas Pipeline</span>
 							  <input type="checkbox"
-							  		 value="gasPipeline" 
+							  		 value="Gas Pipeline" 
 						      		 id="1"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)} />
@@ -109,16 +109,16 @@ import './Amenities.css';
 							</label>
 						     <label className="container2"> <span className="Ameni2"><img src="/images/internet.png" /></span> <span className="pl33">Internet Services</span>
 							  <input type="checkbox"
-							  		 value="internetServices" 
+							  		 value="Internet Services" 
 						      		 id="3"
-						      		 name="userCheckbox"
+						      		 name="usrCheckbox"
 						      		 onChange={this.totalInclude.bind(this)} />
 							  <span className="checkmark"></span>
 
 							</label>
 						    <label className="container2"> <span className="Ameni3"><img src="/images/lift.png" /></span> <span className="pr65">Lift</span>
 							  <input type="checkbox"
-							  		 value="lift" 
+							  		 value="Lift" 
 						      		 id="5"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)} />
@@ -127,7 +127,7 @@ import './Amenities.css';
 							</label>
 							    <label className="container2"> <span className="Ameni4"><img src="/images/ac.png" /></span> <span className="pl21">Air Conditioner</span>
 								  <input type="checkbox"
-								  		 value="airConditioner" 
+								  		 value="Air Conditioner" 
 							      		 id="7"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -136,7 +136,7 @@ import './Amenities.css';
 								</label>
 							    <label className="container2"> <span className="Ameni5"><img src="/images/intercom.png" /></span> <span className="pr22">Intercom</span>
 								  <input type="checkbox"
-								  		 value="intercom" 
+								  		 value="Intercom" 
 							      		 id="7"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -145,7 +145,7 @@ import './Amenities.css';
 								</label>
 							    <label className="container2"> <span className="Ameni6"><img src="/images/powerBk.png" /></span> <span className="pl18">Power Backup</span>
 								  <input type="checkbox"
-								  		 value="powerBackup" 
+								  		 value="Power Backup" 
 							      		 id="11"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -154,7 +154,7 @@ import './Amenities.css';
 								</label>
 								<label className="container2"> <span className="Ameni7"><img src="/images/water.png" /></span> <span className="pl10">Water Supply</span>
 								  <input type="checkbox"
-								  		 value="waterSupply" 
+								  		 value="Water Supply" 
 							      		 id="11"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -167,7 +167,7 @@ import './Amenities.css';
 		  	 			<div className="col-lg-6 FF4I1"> 
 							    <label className="container2"> <span className="Ameni8"><img src="/images/club.png" /></span> <span>Club House</span>
 								  <input type="checkbox"
-								  		 value="clubHouse" 
+								  		 value="Club House" 
 							      		 id="2"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -176,7 +176,7 @@ import './Amenities.css';
 								</label>
 							    <label className="container2"> <span className="Ameni9"><img src="/images/shopping.png" /></span> <span className="pl38">Shopping Center</span>
 								  <input type="checkbox"
-								  		 value="shoppingCenter" 
+								  		 value="Shopping Center" 
 							      		 id="4"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -185,7 +185,7 @@ import './Amenities.css';
 								</label>
 						    	<label className="container2"> <span className="Ameni10"><img src="/images/sewage.png" /></span> <span className="ameniSpan10">Sewage Treatment Plan</span>
 								  <input type="checkbox"
-								  		 value="sewageTreatmentPlan" 
+								  		 value="Sewage Treatment Plan" 
 							      		 id="6"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -194,7 +194,7 @@ import './Amenities.css';
 								</label>
 							    <label className="container2"> <span className="Ameni11"><img src="/images/pool.png" /></span> <span className="ameniSpan11">Swimming Pool</span>
 									  <input type="checkbox"
-									  		 value="swimmingPool" 
+									  		 value="Swimming Pool" 
 								      		 id="8"
 								      		 name="userCheckbox"
 								      		 onChange={this.totalInclude.bind(this)} />
@@ -203,7 +203,7 @@ import './Amenities.css';
 								</label>
 						    	<label className="container2"> <span className="Ameni12"><img src="/images/playArea.png" /></span> <span className="ameniSpan12">Children's Play Area</span>
 								  <input type="checkbox"
-								  		 value="childrenPlay" 
+								  		 value="Children Play" 
 							      		 id="10"
 							      		 name="userCheckbox"
 							      		 onChange={this.totalInclude.bind(this)} />
@@ -212,7 +212,7 @@ import './Amenities.css';
 								</label>
 							    <label className="container2"> <span className="Ameni13"><img src="/images/gym.png" /></span> <span className="ameniSpan13">Internal Gym</span>
 									  <input type="checkbox"
-									  		 value="internalGym" 
+									  		 value="Internal Gym" 
 								      		 id="12"
 								      		 name="userCheckbox"
 								      		 onChange={this.totalInclude.bind(this)} />
@@ -221,7 +221,7 @@ import './Amenities.css';
 								</label>
 							    <label className="container2"> <span className="Ameni14"><img src="/images/park.png" /></span> <span className="pr44">Park</span>
 									  <input type="checkbox"
-									  		 value="park" 
+									  		 value="Park" 
 								      		 id="14"
 								      		 name="userCheckbox"
 								      		 onChange={this.totalInclude.bind(this)} />

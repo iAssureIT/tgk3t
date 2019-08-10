@@ -16,17 +16,58 @@ import './Location.css';
 				"selected"  		: "",
 				"listofStates"		: "",
 				"listofBlocks"		: "",
-				"listofAreas"		: "",
+		        "listofBlocks" 		: [{	blockName: "Pune",
+										countryCode: "IN",
+										districtName: "Pune",
+										pincode: "",
+										stateCode: "MH",
+										stateName: "Maharashtra",
+										_id: "5d4a5ff4fc34542228e3f7fbx",
+									 }],
+		        "districtName" 		: "Pune",
+
+				"listofAreas"	: 	[ 
+										{
+									        "_id": "5d4d05e5d18c8365d08e7658a",
+									        "countryCode": "IN",
+									        "stateName": "Maharashtra",
+									        "stateCode": "MH",
+									        "districtName": "Pune",
+									        "blockName": "Pune",
+									        "cityName": "",
+									        "areaName": "Hadapsar",
+									        "pincode": "411028"
+									    },
+										{
+									        "_id": "5d4d05e5d18c8365d08e7658a",
+									        "countryCode": "IN",
+									        "stateName": "Maharashtra",
+									        "stateCode": "MH",
+									        "districtName": "Pune",
+									        "blockName": "Pune",
+									        "cityName": "",
+									        "areaName": "Kharadi",
+									        "pincode": "411014"
+									    },
+									],
 				"village"			: "",
 				"index" 			: "",
-				"districtName"		: "",
-				"subAreaList"		: ["Akashvani", "Amanora Chambers", "Fursungi", "Gadital", "KalePadal", "Magarpatta City","Sasane Nagar", "Satavwadi"],
+				"subAreaList"		: ["Akashvani", "Amanora Chambers", "Fursungi", "Gadital", "KalePadal", "Magarpatta Township","Sasane Nagar", "Satavwadi"],
 			};
 			this.handleChange = this.handleChange.bind(this);
 		}
 	componentDidMount(){
 
-		this.getState();
+	    axios({
+	      method: 'get',
+	      url: 'http://locationapi.iassureit.com/api/states/get/list/IN',
+	    }).then((response)=> {
+	        this.setState({
+	          listofStates : response.data
+	        })
+	    }).catch(function (error) {
+	      console.log('error', error);
+	    });
 
 		// document.getElementById("selectState").selectedIndex=0;
 		// document.getElementById("selectCity").selectedIndex=0;
@@ -47,9 +88,7 @@ import './Location.css';
 				"pincode" 			: this.refs.pincode.value,
 				"property_id" 		: localStorage.getItem("propertyId"),
 				"index"				: this.state.index,
-				"uid" 				: localStorage.getItem("uid"),
-				
-
+				"uid" 				: localStorage.getItem("uid"),				
 			};
 				 localStorage.setItem("index",this.state.index);
 
@@ -94,21 +133,6 @@ import './Location.css';
 			
 		}
 
-  getState(){
-    axios({
-      method: 'get',
-      url: 'http://locationapi.iassureit.com/api/states/get/list/IN',
-    }).then((response)=> {
-        // console.log('response ==========', response.data);
-        this.setState({
-          listofStates : response.data
-        },()=>{
-        // console.log('listofStates', this.state.listofStates);
-        })
-    }).catch(function (error) {
-      console.log('error', error);
-    });
-  }
 selectState(event){
     event.preventDefault();
     var selectedState = event.target.value;
@@ -135,8 +159,17 @@ getBlockbyState(stateCode){
     }).then((response)=> {
         console.log('response ==========', response.data);
         this.setState({
-          listofBlocks : response.data,
-          districtName : response.data[0].districtName
+          // listofBlocks : response.data,
+          // districtName : response.data[0].districtName
+          listofBlocks : [{	blockName: "Pune",
+							countryCode: "IN",
+							districtName: "Pune",
+							pincode: "",
+							stateCode: "MH",
+							stateName: "Maharashtra",
+							_id: "5d4a5ff4fc34542228e3f7fbx",
+						 }],
+          districtName : "Pune"
         },()=>{
         console.log('listofBlocks', this.state.listofBlocks);
         console.log('districtName', this.state.districtName);
@@ -259,8 +292,7 @@ getBlockbyState(stateCode){
                                     this.state.listofStates ?
                                     this.state.listofStates.map((data, index)=>{
                                       return(
-                                        <option key={index} value={data.stateName+'|'+data._id+'|'+data.stateCode}>{data.stateName}</option> 
-
+                                        <option key={index} value={data.stateName+'|'+data._id+'|'+data.stateCode} selected={data.stateCode=='MH'}> {data.stateName} </option> 
                                       );
                                     })
                                     :
@@ -285,7 +317,7 @@ getBlockbyState(stateCode){
                                     this.state.listofBlocks && this.state.listofBlocks.length > 0 ? 
                                     this.state.listofBlocks.map((data, index)=>{
                                       return(
-                                        <option key={index} value={data.blockName} data-districtname={data.districtName} >{data.blockName}</option>
+                                        <option key={index} value={data.blockName} data-districtname={data.districtName} selected={data.blockName=='Pune'} >{data.blockName}</option>
                                         
                                       );
                                     })

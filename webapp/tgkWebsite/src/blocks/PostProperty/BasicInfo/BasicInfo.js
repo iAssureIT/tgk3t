@@ -247,10 +247,10 @@ class BasicInfo extends Component{
  		});
 	}
 	totalFloor(){
-		const floor     =parseInt(this.refs.floor.value);
-		const totalfloor=parseInt(this.refs.totalfloor.value);
+		const floor      = parseInt(this.refs.floor.value);
+		const totalfloor = parseInt(this.refs.totalfloor.value);
 
-		if(floor >= totalfloor){
+		if(floor > totalfloor || floor != totalfloor){
 			swal("Floor should not be greater than Total Floors", "", "warning");
 		}
 	}
@@ -362,7 +362,7 @@ class BasicInfo extends Component{
 
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
-			  		<b>My Apartment is on</b>
+			  		<b>My Property is on</b>
 					<span className="astrick">*</span>
 
 			  	</div>

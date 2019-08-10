@@ -14,7 +14,9 @@ import './Financials.css';
 			this.state = {
 				includecharges     : [],
 				monthlyRent		   : '',
-				depositAmount 	   : ''
+				depositAmount 	   : '',
+				monthlyRent 	   : '',
+				totalPrice 	  	   : ''
 			};
 			
 		}
@@ -75,8 +77,8 @@ import './Financials.css';
 		updateUser(event){
 			event.preventDefault();
 			const formValues = {
-				"expectedRate" 		: this.refs.expectedrate.value,
-				"totalPrice" 		: this.refs.totalprice.value,
+				"expectedRate" 		: this.state.expectedRate,
+				"totalPrice" 		: this.state.totalPrice,
 				"monthlyRent" 		: this.state.monthlyRent,
 				"depositAmount" 	: this.state.depositAmount,
 				"availableFrom" 	: this.refs.availableFrom.value,
@@ -90,7 +92,7 @@ import './Financials.css';
 			};
 			
 			console.log("Financials req = ",formValues);
-			if( this.refs.totalprice.value!="" ){
+			if( this.state.totalPrice!="" || this.state.monthlyRent!="" ){
 				axios
 				.patch('/api/properties/patch/financials',formValues)
 				.then( (res) =>{
@@ -131,13 +133,22 @@ import './Financials.css';
 	    }
 
 	    handleChange(event){
-	    	event.preventDefault();
-	    	var monthlyRent = this.refs.monthlyRent.value;
-	    	var depositAmount = this.refs.depositAmount.value;
-	    	this.setState({
-	      	"monthlyRent"  : monthlyRent,
-	      	"depositAmount": depositAmount
-			    });
+	    	// event.preventDefault();
+	    	// var monthlyRent = this.refs.monthlyRent.value;
+	    	// var depositAmount = this.refs.depositAmount.value;
+	    	// var monthlyRent = this.refs.monthlyRent.value;
+	    	// var totalAsk = this.refs.totalAsk.value;
+	    	// this.setState({
+	     //  	"monthlyRent"  : monthlyRent,
+	     //  	"depositAmount": depositAmount,
+	     //  	"monthlyRent": monthlyRent,
+	     //  	"totalAsk": totalAsk
+			   //  });
+			const target = event.target.value;
+			const name   = event.target.name;
+			this.setState({
+				[name]       : target
+			});
 
 	    	
 	    }
@@ -150,7 +161,7 @@ import './Financials.css';
 				<form id="form">
 				  	<div className=" row"></div>
 				  	{
-				  		this.props.transactionType == "Commercial" ?
+				  		this.props.transactionType == "Rent" ?
 				  		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
 							<span>Monthly Rent</span>
@@ -159,7 +170,7 @@ import './Financials.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-rupee iconClr"></i>
 				                    </div>
-									<input type="" className="form-control" ref="monthlyRent" value={this.state.monthlyRent} onChange={this.handleChange.bind(this)} id="monthlyRent" placeholder="Monthly Rent" min="0"/>
+									<input type="" className="form-control" ref="monthlyRent" name="monthlyRent" value={this.state.monthlyRent} onChange={this.handleChange.bind(this)} id="monthlyRent" placeholder="Monthly Rent" min="0"/>
 							     </div>
 							</div>
 						</div>
@@ -170,7 +181,7 @@ import './Financials.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-rupee iconClr"></i>
 				                    </div>
-									<input type="" className="form-control" ref="depositAmount" value={this.state.depositAmount} onChange={this.handleChange.bind(this)}   id="depositAmount" placeholder="Deposit Amount" min="0"/>
+									<input type="" className="form-control" ref="depositAmount" name="depositAmount" value={this.state.depositAmount} onChange={this.handleChange.bind(this)}   id="depositAmount" placeholder="Deposit Amount" min="0"/>
 							     </div>
 							</div>
 
@@ -185,7 +196,7 @@ import './Financials.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-rupee iconClr"></i>
 				                    </div>
-						   	        <input type="" className="form-control" ref="expectedrate"  id="expRate" placeholder="Expected Rate" min="0"/>
+						   	        <input type="" className="form-control" ref="expectedrate" name="expectedRate" value={this.state.expectedRate} onChange={this.handleChange.bind(this)} id="expRate" placeholder="Expected Rate" min="0"/>
 							     	<div className="input-group-addon inputIcon">
 				                     /Sq ft
 				                    </div>
@@ -200,7 +211,7 @@ import './Financials.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-rupee iconClr"></i>
 				                    </div>
-							   	    <input type="" className="form-control" ref="totalprice" id="totalAsk" placeholder="Total Ask" min="0" />
+							   	    <input type="" className="form-control" ref="totalprice" name="totalPrice" value={this.state.totalPrice} onChange={this.handleChange.bind(this)} id="totalAsk" placeholder="Total Ask" min="0" />
 							     </div>
 							</div>
 
@@ -217,16 +228,16 @@ import './Financials.css';
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">	
 					    <label className="container1 checkbox-inline col-lg-2"><span className="fs1">Car Park</span>
 							  <input type="checkbox"
-							  		 value="carPark" 
+							  		 value="Car Park" 
 						      		 id="1"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)} />
 							  <span className="checkmark1"></span>
 
 						</label>
-					    <label className="container1 checkbox-inline col-lg-4 row"><span className="fs2">One Time Maintenace</span>
+					    <label className="container1 checkbox-inline col-lg-4 row"><span className="fs2">One Time Maintenance</span>
 							  <input type="checkbox"
-							  		 value="oneTimeMaintenace" 
+							  		 value="One Time Maintenance" 
 						      		 id="2"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)} />
@@ -235,7 +246,7 @@ import './Financials.css';
 						</label>
 					    <label className="container1 checkbox-inline col-lg-3 row"><span className="fs2">Stamp Duty</span>
 							  <input type="checkbox"
-							  		 value="stampDuty" 
+							  		 value="Stamp Duty" 
 						      		 id="3"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)} />
@@ -244,7 +255,7 @@ import './Financials.css';
 						</label>
 					    <label className="container1 checkbox-inline col-lg-3"><span className="fs2">Club House</span>
 							  <input type="checkbox"
-							  		 value="clubHouse" 
+							  		 value="Club House" 
 						      		 id="4"
 						      		 name="userCheckbox"
 						      		 onChange={this.totalInclude.bind(this)} />
@@ -329,8 +340,9 @@ import './Financials.css';
 }
 const mapStateToProps = (state)=>{
 	return {
-		property_id : state.property_id,
-		uid			: state.uid
+		property_id 	: state.property_id,
+		uid				: state.uid,
+		transactionType	: state.transactionType,
 
 	}
 };

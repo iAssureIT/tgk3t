@@ -37,6 +37,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				
 				},
 			};
+   			
+
 		}
 		insertAvailability(event){
 			event.preventDefault();
@@ -191,7 +193,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		}
 
 	render() {
-   	 const {formerrors} = this.state;
+		const availableMobile = localStorage.getItem("availableMobile");
+   			console.log("availableMobile",availableMobile);
+   	    const {formerrors} = this.state;
 
    	 	const data = this.state.available;
    	 	// console.log('data',data)
@@ -262,7 +266,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-mobile iconClr"></i>
 		                    </div>
-					    		<input type="number"  name="contactPersonMobile" value={this.props.availableMobile} disabled className="form-control" ref="" min="0" placeholder="Phone Number" />
+					    		<input type="number"  name="contactPersonMobile" value={availableMobile} className="form-control" ref="" min="0" placeholder="Phone Number" disabled/>
 					  		</div>
 					  </div>
 				  </div>

@@ -118,9 +118,9 @@ class BannerwithModal extends Component {
 		   }else if(this.props.PropertyDetails){
 		     header = "Let's provide details of your property "; 
 		   }else if(this.props.Amenities){
-		     header = "My apartment has following Amenities"; 
+		     header = "My property has following Amenities"; 
 		   }else if(this.props.Financials){
-		     header = "Financial details for my apartment"; 
+		     header = "Financial details for my property"; 
 		   }else if(this.props.Availability){
 		     header = "Please tell us your availability to plan visit"; 
 		   }else if(this.props.ImageUpload){
