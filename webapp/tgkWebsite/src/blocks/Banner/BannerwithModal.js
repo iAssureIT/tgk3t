@@ -133,6 +133,8 @@ class BannerwithModal extends Component {
 		   }else if(this.props.WebSignupForm){
 		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
 		   }
+
+		   console.log("his.state.propertyType",this.state.propertyType);
 		   
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 banner">

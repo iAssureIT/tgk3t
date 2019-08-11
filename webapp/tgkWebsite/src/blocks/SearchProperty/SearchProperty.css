@@ -18,6 +18,10 @@
     border-radius:5px;
 }
 
+.searchProperty select {
+  -webkit-border-radius: 0px;
+}
+
 #budget  input:focus, textarea:focus, select:focus{
       outline: none;
  }

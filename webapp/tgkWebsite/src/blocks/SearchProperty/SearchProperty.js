@@ -12,6 +12,8 @@ class SearchProperty extends Component {
 		this.state = {
 			budgetList1 			: [],
 			budgetList2 			: [],
+			propertyList1			: [],
+			propertyList2			: [],
 			transactionType 		: "Commercial-Sell",
 			budget          		: "",
 			propertySubType 		: [],
@@ -55,17 +57,24 @@ class SearchProperty extends Component {
 				{value: 80000, option: "Upto 80000"},
 				{value: 90000, option: "Upto 90000"},
 				{value: 100000, option: "Upto 1 Lac"},
+			],
+			propertyList1 : [
+				{name:'MultiStory Apartment'},
+				{name:'Residential House'},
+				{name:'Studio Apartment'},
+				{name:'Villa / Bunglow'},
+				{name:'Penthouse'}
+			],
+
+			propertyList2 : [
+				{name:'Office in IT Park/SEZ'},
+				{name:'Commercial Office Space'},
+				{name:'Commercial Showroom'},
+				{name:'Commercial Shop'},
+				{name:'Industrial Building'},
+				{name:'Warehouse/Godown'}
 			]
 		})
-		var propertySubType = [];
-					if(this.props.propertyType === "Commercial")
-					{
-						propertySubType = ['Office in IT Park/SEZ','Commercial Office Space','Commercial Showroom','Commercial Shop','Industrial Building','Warehouse/Godown'];
-					}
-					else{
-						propertySubType = ['MultiStory Apartment','Residential House','Studio Apartment','Villa / Bunglow','Penthouse'];
-					}
-		this.setState({propertySubTypeArray:propertySubType})
 
 
 
@@ -179,6 +188,8 @@ class SearchProperty extends Component {
 
 
 	render() {
+		console.log("this.props.propertyType",this.props.propertyType)
+
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 				<form>
@@ -215,10 +226,10 @@ class SearchProperty extends Component {
 										  	<div className="col-lg-12">
 												<h5>Commercial</h5>
 												{
-													this.state.propertySubTypeArray.map((data,index)=>{
+													this.state.propertyList2.map((data,index)=>{
 														return(
 															<span className="col-lg-6 noPad">
-																<input type="checkbox" className="" value={data} key={index}  onChange={this.propertySubType.bind(this)}/>&nbsp;{data}
+																<input type="checkbox" className="" value={data.name} key={index}  onChange={this.propertySubType.bind(this)}/>&nbsp;{data.name}
 															</span>
 														)
 													})
@@ -231,9 +242,9 @@ class SearchProperty extends Component {
 										  	<div className="col-lg-12">
 												<h5>Residential</h5>
 												{
-													this.state.propertySubTypeArray.map((data,index)=>{
+													this.state.propertyList1.map((data,index)=>{
 														return(
-															<span className="col-lg-6 noPad"><input type="checkBox" value={data} key={index} onChange={this.propertySubType.bind(this)}/>&nbsp;{data}</span>
+															<span className="col-lg-6 noPad"><input type="checkBox" value={data.name} key={index} onChange={this.propertySubType.bind(this)}/>&nbsp;{data.name}</span>
 														)
 													})
 

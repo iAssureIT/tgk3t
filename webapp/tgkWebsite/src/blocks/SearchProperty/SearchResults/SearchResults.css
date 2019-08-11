@@ -80,9 +80,13 @@
 	border-top   : 2px solid #F9A944 !important;
 }
 
+.property:hover{
+	background-color: #f00;
+}
 
 .mt36{
 	  margin-top: 50px;
+	  border-top: 2px solid #F9A944;
 }
 
 .constructionBtn .dropdown-menu{
@@ -112,12 +116,12 @@
  }
 
  .searchDiv select {
-  -webkit-appearance: none;
-  -webkit-border-radius: 0px;
+  -webkit-border-radius: 0px !important;
+  outline: none;
 }
 
  .searchDiv .form-control{
-  	border : 0px !important;
+  	border : 0px solid #fff!important;
 	border-radius: 0px !important;
 
  }
@@ -136,7 +140,24 @@
   	border : 0px !important;
  }
 
+ .searchDiv1 .btn:focus, .btn:hover{
+ 	outline: none !important;
+ 	background-color: #F9A944;
+ 	color: #fff;
+ }
 
+.badgeP{
+	position 	: absolute;
+    top 		: 0px;
+    left 		: 0px;
+    z-index 	: 1;
+    height		: 20px;
+    width       : 25px;
+    color 		: #424bf5;
+	background 	: transparent;
+}
 /*---------------------checkbox Start-----------*/
 
 /*-----------Checkbox End------------*/
+
+
