@@ -107,6 +107,7 @@
 
 .constructionBtn .dropdown-menu{
 	min-width: 200px !important;
+	text-align: left !important;
 }
 
 .sDrop{
@@ -114,12 +115,9 @@
 	color: #fff;
 }
 
-.caretMl{
-	margin-left: 30% !important;
-}
-
-.caretMlC{
-	margin-left: 10% !important;
+.caret{
+	float: right;
+	margin-top: 8px;
 }
 
 .searchDiv1 .btn{

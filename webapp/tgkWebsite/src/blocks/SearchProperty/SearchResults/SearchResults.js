@@ -586,7 +586,7 @@ class SearchResults extends Component {
 							  	<div className="dropdown" id="dropdown">
 						       		<span className="badge badge-secondary badgeP"><i className="fa fa-check"></i></span>
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
-								    <span className="caret"></span></button>
+								    <span className="caret pull-right"></span></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
 							      		{this.state.propertyType === "Commercial" && this.state.propertyTypeBoolean === true?
 										<div className="col-lg-12">

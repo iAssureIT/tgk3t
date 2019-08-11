@@ -227,7 +227,7 @@ class SearchProperty extends Component {
 
 						<div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 propertyType noPad">
 							  	<div className="dropdown" id="dropdown">
-								    <button className="dropdown-toggle  btn col-lg-12" type="button" data-toggle="dropdown">Property Type
+								    <button className="dropdown-toggle btn col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt39">
 							      		{this.props.propertyType === "Commercial" ?

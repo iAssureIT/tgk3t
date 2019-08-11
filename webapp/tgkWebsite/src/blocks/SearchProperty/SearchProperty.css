@@ -91,5 +91,10 @@
 }
 
 .mt39{
-    margin-top: 39px;
+    margin-top: 42px;
+    border-top   : 2px solid #F9A944 !important;
+}
+
+.searchProperty .dropdown-menu{
+    line-height: 25px !important
 }
