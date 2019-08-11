@@ -218,7 +218,7 @@ class SearchProperty extends Component {
 
 						<div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 propertyType noPad">
 							  	<div className="dropdown" id="dropdown">
-								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
+								    <button className="dropdown-toggle  btn col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt39">
 							      		{this.props.propertyType === "Commercial" ?
@@ -282,7 +282,7 @@ class SearchProperty extends Component {
 							</div>
 							<div className="col-lg-1 sImg noPad">
 									<Link to={"/SearchResults"} onClick={this.searchResultbtn.bind(this)}>	
-										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 tgkImg noPad" />
+										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 tgkImg" />
 									</Link>
 							</div>
 						</div>

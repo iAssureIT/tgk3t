@@ -27,10 +27,22 @@
 }
 .bgWhite{
 	background-color: #fff;
+	border-right : 1px solid #eee !important;
+	border-top   : 2px solid #F9A944 !important;
+}
+
+.bgWhite:hover{
+	color: #fff;
+	background-color: #F9A944;
+}
+
+.bgWhite:focus{
+	color: #fff;
+	background-color: #0C4890;
 }
 
 .topRightTriangle{
-	left: 90.5% !importantt;
+	left: 90.5% !important;
 }
 .searchResults{
 	background-color: #EEEEEE;
@@ -76,8 +88,12 @@
 }
 
 .property{
-	border-right : 1px solid #eee !important;
-	border-top   : 2px solid #F9A944 !important;
+	
+	/*margin-top   : 3px;*/
+}
+
+.property .dropdown-menu{
+	line-height: 25px !important
 }
 
 .property:hover{
@@ -108,8 +124,9 @@
 
 .searchDiv1 .btn{
 	border-radius: 0px !important;
-	height: 46px;
+	height: 47px;
 }
+
 
 .searchDiv input:focus, textarea:focus, select:focus{
 	border-radius: 0px !important;
@@ -121,12 +138,12 @@
 }
 
  .searchDiv .form-control{
-  	border : 0px solid #fff!important;
-	border-radius: 0px !important;
+  	/*border : 0px solid #fff!important;*/
+	/*border-radius: 0px !important;*/
 
  }
 .searchDiv .input-group-addon{
-  	border : 0px !important;
+  	/*border : 0px !important;*/
 }
 
  .searchDiv1 select {
@@ -142,8 +159,8 @@
 
  .searchDiv1 .btn:focus, .btn:hover{
  	outline: none !important;
- 	background-color: #F9A944;
- 	color: #fff;
+/* 	background-color: #F9A944;
+ 	color: #fff;*/
  }
 
 .badgeP{
@@ -153,8 +170,12 @@
     z-index 	: 1;
     height		: 20px;
     width       : 25px;
-    color 		: #424bf5;
+    color 		: #0C4890;
 	background 	: transparent;
+}
+
+.bgWhite + .badgeP:hover{
+	color: #fff;
 }
 /*---------------------checkbox Start-----------*/
 

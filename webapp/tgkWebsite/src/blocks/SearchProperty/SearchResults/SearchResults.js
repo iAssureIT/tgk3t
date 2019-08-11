@@ -352,20 +352,19 @@ class SearchResults extends Component {
 	}
 
 	handleBHK(event){
-		var flatType=[];
 		if(event.target.checked)
 		{
-			flatType.push(event.target.getAttribute('value'));
-			console.log("flatType",flatType);
+			this.state.flatType.push(event.target.getAttribute('value'));
 		}
 		else{
-			flatType.pop(event.target.getAttribute('value'));
-			console.log("flatType",flatType);
+			this.state.flatType.pop(event.target.getAttribute('value'));
 		}
-		this.setState({flatType : flatType})
+		this.setState({flatType : this.state.flatType},()=>{
+			console.log("flatType",this.state.flatType);
+		})
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.floor = this.state.flatType;
+		formValues.flatType = this.state.flatType;
 
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
@@ -604,7 +603,7 @@ class SearchResults extends Component {
 									{this.state.transactionType === "sell" ?
 									    this.state.budgetList1.map((budget,index)=>{
 								    		return(
-												<span className="col-lg-12">
+												<span className="col-lg-12 checkbg">
 								    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" onChange={this.handleBudget.bind(this)} />&nbsp; {budget.option}
 								    			</span>
 								    			);
@@ -635,7 +634,7 @@ class SearchResults extends Component {
 								    	{
 								    		this.state.flatTypeList.map((flatType,index)=>{
 									    		return(
-														<span className="col-lg-12">
+														<span className="col-lg-12 checkbg">
 									    					<input type="checkbox" value={flatType.value} key={index} className="selectOption" onChange={this.handleBHK.bind(this)}/>&nbsp; {flatType.option}
 									    				</span>
 									    			);
@@ -676,7 +675,7 @@ class SearchResults extends Component {
 								    		this.state.floorList.map((floor,index)=>{
 									    		return(
 													<span className="col-lg-12">
-										    			<input type="radio" value={floor.value} key={index} ref="floor" name="floor" className="selectOption" onChange={this.handleFloor.bind(this)}/>&nbsp;{floor.option}
+										    			<input type="radio" value={floor.value} key={index} ref="floor" name="floor" className="selectOption" onChange={this.handleFloor.bind(this)}/>&nbsp; {floor.option}
 													</span>
 									    		);
 									    	})
