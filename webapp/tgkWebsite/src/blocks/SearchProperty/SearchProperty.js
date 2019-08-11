@@ -130,16 +130,21 @@ class SearchProperty extends Component {
 
 		const formValues = {
 			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
-			transactionType : this.props.propertyType == "Commercial" ? transactionType : "sell",
+			transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
 			location        : this.refs.location.value,
 			budget 			: this.refs.budget.value,
 			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
 			propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
-			areaMin 		: 0,
-			areaMax 		: 0,
+			// areaMin 		: 0,
+			// areaMax 		: 0,
 			floor			: "",
-			constructionType : "",
+			// constructionType: "",
+			furnishedStatus : "",
+			flatType 		: "",
+			propertyAge 	: "",
+			availability    : "",
+
 		}
 		var searchData = JSON.stringify(formValues);
 		localStorage.setItem("searchData",searchData);
@@ -158,16 +163,20 @@ class SearchProperty extends Component {
 
 		const formValues = {
 			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
-			transactionType : this.props.propertyType == "Commercial" ? transactionType : "sell",
+			transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
 			location        : this.refs.location.value,
 			budget 			: this.refs.budget.value,
 			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
 			propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
-			areaMin 		: 0,
-			areaMax 		: 0,
+			// areaMin 		: 0,
+			// areaMax 		: 0,
 			floor			: "",
-			constructionType: "",
+			// constructionType: "",
+			furnishedStatus : "",
+			flatType 		: "",
+			propertyAge 	: "",
+			availability    : "",
 		}
 		var searchData = JSON.stringify(formValues);
 		localStorage.setItem("searchData",searchData);

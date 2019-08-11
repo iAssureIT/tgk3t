@@ -63,6 +63,7 @@ class SearchResults extends Component {
 						propertySubType = this.state.propertyList2;
 					}
 					console.log("propertySubType",propertySubType);
+
 					var propertySubTypeList = propertySubType.map((item,index)=>{
 					var propPresent = this.state.propertySubType.find((obj)=>{
 						return item.name === obj
@@ -82,7 +83,7 @@ class SearchResults extends Component {
 
 
   		axios
-			.post("http://localhost:50012/api/search/properties/", data)
+			.post("/api/search/properties/", data)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -131,7 +132,7 @@ class SearchResults extends Component {
 				{value:  "0", 	option: "Ground"	},
 				{value: '1-5', 	option: "1-5"		},
 				{value: '5-10', option: "5-10"		},
-				{value: '<10',	option: "Higher floors"}
+				{value: '>10',	option: "Higher floors"}
 			],
 
 			flatTypeList : [
@@ -146,8 +147,10 @@ class SearchResults extends Component {
 				{value: "New", 	option: "New"	},
 				{value: "1-2", 	option: "1 - 2 Years"	},
 				{value: "2-5", 	option: "2 - 5 Years"	},
-				{value: "5-8",  option: "5 - 8 BHK" },
-				{value: "<8",	option: "< 8 Years"	}
+				{value: "5-8",  option: "5 - 8 Years" },
+				{value: ">8",	option: "> 8 Years"	},
+				{value: "Under Construction",	option: "Under Construction"},
+
 			],
 
 			MISCList : [
@@ -217,6 +220,61 @@ class SearchResults extends Component {
 		})
 	}
 
+	handlePropTranType(event){
+		console.log("selected value = ",event.target.value);
+		var propertyTransactionType 	= event.target.value.split("-");
+		console.log("propertyTransactionType",propertyTransactionType)
+		this.setState({
+			propertyType 	: propertyTransactionType[0],
+			transactionType : propertyTransactionType[1],
+		},()=>{
+			console.log("under propertyType",this.state.propertyType);
+
+			var formValues = JSON.parse(localStorage.getItem("searchData"));
+			formValues.propertyType = this.state.propertyType;
+			formValues.transactionType = this.state.transactionType;
+
+			console.log("formValues",formValues);
+			var searchData = JSON.stringify(formValues);
+
+			localStorage.removeItem("searchData");
+			localStorage.setItem("searchData",searchData);
+
+		  	axios
+				.post("/api/search/properties/", formValues)
+				.then((searchResults) => {
+					console.log("here result =",searchResults.data);
+					this.setState({ inputData : searchResults.data });
+				})
+		        .catch((error) =>{
+		         	console.log("error = ", error);
+		        });	
+
+		})
+	}
+
+	handleLocation(event){
+		console.log("selected value = ",event.target.value);
+		this.setState({location : event.target.value});
+
+		var formValues = JSON.parse(localStorage.getItem("searchData"));
+		formValues.location = event.target.value;
+		console.log("formValues",formValues);
+		var searchData = JSON.stringify(formValues);
+
+		localStorage.removeItem("searchData");
+		localStorage.setItem("searchData",searchData);
+
+	  	axios
+			.post("/api/search/properties/", formValues)
+			.then((searchResults) => {
+				console.log("here result =",searchResults.data);
+				this.setState({ inputData : searchResults.data });
+			})
+	        .catch((error) =>{
+	         	console.log("error = ", error);
+	        });	
+	}
 
 	handleArea(){
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -228,7 +286,7 @@ class SearchResults extends Component {
 		localStorage.setItem("searchData",searchData);
 
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -246,14 +304,14 @@ class SearchResults extends Component {
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.budget = event.target.value;
-
+		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -268,14 +326,15 @@ class SearchResults extends Component {
 		this.setState({furnish : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.floor = event.target.value;
+		formValues.furnishedStatus = event.target.value;
+		console.log("formValues",formValues);
 
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -290,14 +349,15 @@ class SearchResults extends Component {
 		this.setState({propertyAge : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.floor = event.target.value;
+		formValues.propertyAge = event.target.value;
+		console.log("formValues",formValues);
 
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -312,14 +372,14 @@ class SearchResults extends Component {
 		this.setState({availability : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.floor = event.target.value;
-
+		formValues.availability = event.target.value;
+		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -335,13 +395,14 @@ class SearchResults extends Component {
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.floor = event.target.value;
+		console.log("formValues",formValues);
 
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -365,13 +426,13 @@ class SearchResults extends Component {
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.flatType = this.state.flatType;
-
+		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -393,7 +454,7 @@ class SearchResults extends Component {
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -468,14 +529,14 @@ class SearchResults extends Component {
 		this.setState({propertySubTypeList:propertySubTypeList});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.floor = this.state.all;
-
+		formValues.propertySubType = this.state.propertySubType;
+		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
 	  	axios
-			.post("http://localhost:50012/api/search/properties/", formValues)
+			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
@@ -496,7 +557,7 @@ class SearchResults extends Component {
 						<div className="col-lg-4 col-md-12 col-xs-12 col-sm-12 searchBar">
 							<div className="col-lg-2 col-md-1 col-xs-12 col-sm-12 noPad">
 							  	<div className="dropdown">
-									<select className="custom-select form-control"  ref="propertyTransactionType" placeholder="" id='select' name="propertyTransactionType" value={this.state.propertyTransactionType} onChange={this.handleSearch.bind(this)}>
+									<select className="custom-select form-control"  ref="propertyTransactionType" placeholder="" id='select' name="propertyTransactionType" value={this.state.propertyTransactionType} onChange={this.handlePropTranType.bind(this)}>
 							    		<optgroup label="Residential">
 											<option value="Residential-Sell">Buy</option>
 											<option value="Residential-Rent">Rent</option>
@@ -511,7 +572,7 @@ class SearchResults extends Component {
 							<div className="col-lg-10 col-md-2 col-xs-12 col-sm-12 noPad">
 								<div className="form-group"  id="" >
 								    <div className="input-group inputBox-main " id="">
-								    	<input type="text" className="form-control" ref="location" name="location" value={this.state.location} placeholder="Enter Location..." onChange={this.handleSearch.bind(this)}/>
+								    	<input type="text" className="form-control" ref="location" name="location" value={this.state.location} placeholder="Enter Location..." onChange={this.handleLocation.bind(this)}/>
 								  		<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-search"></i>
 					                    </div>
