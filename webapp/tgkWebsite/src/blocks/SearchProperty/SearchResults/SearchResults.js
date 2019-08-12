@@ -52,8 +52,8 @@ class SearchResults extends Component {
 				propertyTransactionType	: data.propertyType+"-"+data.transactionType,
 				propertyType            : data.propertyType,
 				transactionType         : data.transactionType,
-				propertyTypeBoolean		: true,
 			},()=>{
+				console.log("propertyTransactionType",this.state.propertyTransactionType);
 					var propertySubType = [];
 					if(data.propertyType === "Residential")
 					{
@@ -62,23 +62,55 @@ class SearchResults extends Component {
 					else{
 						propertySubType = this.state.propertyList2;
 					}
-					console.log("propertySubType",propertySubType);
 
 					var propertySubTypeList = propertySubType.map((item,index)=>{
-					var propPresent = this.state.propertySubType.find((obj)=>{
-						return item.name === obj
+						var propPresent = this.state.propertySubType.find((obj)=>{
+							return item.name === obj
+						})
+						var newObj = Object.assign({},item);
+						if(propPresent){
+							newObj.checked = true
+						}else{
+							newObj.checked = false
+						}
+						return newObj;
 					})
-					var newObj = Object.assign({},item);
-					console.log("propPresent",propPresent);
-					if(propPresent){
-						newObj.checked = true
-					}else{
-						newObj.checked = false
+					this.setState({
+						propertySubTypeList:propertySubTypeList
+					},()=>{
+						this.setState({
+							propertyTypeBoolean : true
+						})
+					});
+
+					var budget = [];
+					if(data.propertyType === "Residential")
+					{
+						budget = this.state.budgetList1;
 					}
-					return newObj;
+					else{
+						budget = this.state.budgetList2;
+					}
+					console.log("budget",budget);
+					console.log("budget",this.state.budget);
+
+					var budgetList = budget.map((item,index)=>{
+						var budgetPresent = this.state.budget.find((obj)=>{
+							return item.value === parseInt(obj)
+						});
+						var newObj = Object.assign({},item);
+						console.log("propPresent",budgetPresent);
+						if(budgetPresent){
+							newObj.checked = true
+						}else{
+							newObj.checked = false
+						}
+						return newObj;
+					})
+					this.setState({budgetList:budgetList},()=>{
+						console.log("budgetList",this.state.budgetList);
+					});
 				})
-				this.setState({propertySubTypeList:propertySubTypeList});
-			})
 		}
 
 
@@ -180,18 +212,6 @@ class SearchResults extends Component {
 			propertyTransList : [
 			]
 			})
-
-		
-
-
-
-		var $select = $(".floorOption");
-		$select.append($('<option></option>').val(-1).html("Basement"));
-		$select.append($('<option></option>').val(0).html("Ground"));
-
-	    for (var i=1;i<=60;i++){
-	        $select.append($('<option></option>').val(i).html(i))
-	    }
 	}
 
 	propertyType(event){
@@ -205,7 +225,6 @@ class SearchResults extends Component {
 		const name   = event.target.name;
 		this.setState({
 			[name]       		: target,
-			propertyTypeBoolean	: false,
 		},()=>{
 			console.log("name",name);
 			console.log("target",target);
@@ -227,6 +246,8 @@ class SearchResults extends Component {
 		this.setState({
 			propertyType 	: propertyTransactionType[0],
 			transactionType : propertyTransactionType[1],
+			propertyTransactionType : event.target.value,
+			propertyTypeBoolean :false,
 		},()=>{
 			console.log("under propertyType",this.state.propertyType);
 
@@ -299,11 +320,44 @@ class SearchResults extends Component {
 	}
 
 	handleBudget(event){
-		console.log("selected Budget = ",event.target.value);
-		this.setState({budget : event.target.value});
+		var checkedBudget=[];
+		if(event.currentTarget.checked)
+		{
+			checkedBudget = [event.currentTarget.getAttribute('value')];
+			console.log("checkedBudget",checkedBudget);
+			var budgetList=this.state.budgetList;
+			for(let i=0; i <budgetList.length; i++){
+				for (let j=0; j < checkedBudget.length; j++) {
+					if(budgetList[i].value === checkedBudget){
+						budgetList[i].checked = true;
+					}
+				}
+			}
+			this.setState({
+				budgetList : budgetList,
+			},()=>{
+				console.log("budgetList=>",this.state.budgetList);
+			});
+		
+		}else{
+			checkedBudget = [event.currentTarget.getAttribute('value')];
+			var budgetList=this.state.budgetList;
+			for(let i=0; i <budgetList.length; i++){
+				for (let j=0; j < checkedBudget.length; j++){
+					if(budgetList[i].value === checkedBudget){
+						budgetList[i].checked = false;
+					}
+				}
+			}
+			this.setState({
+				budgetList : budgetList,
+			},()=>{
+				console.log("budgetList=>",this.state.budgetList);
+			});
+		}
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.budget = event.target.value;
+		formValues.budget = event.currentTarget.value;
 		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 
@@ -413,13 +467,12 @@ class SearchResults extends Component {
 	}
 
 	handleBHK(event){
-		if(event.target.checked)
-		{
+		if(event.target.checked){
 			this.state.flatType.push(event.target.getAttribute('value'));
-		}
-		else{
+		}else{
 			this.state.flatType.pop(event.target.getAttribute('value'));
 		}
+
 		this.setState({flatType : this.state.flatType},()=>{
 			console.log("flatType",this.state.flatType);
 		})
@@ -464,72 +517,44 @@ class SearchResults extends Component {
 	        });	
 	}
 
-	handlePropSubType1(event){
-		event.preventDefault();
-		const checkedPropSubType=[]
-		if(event.target.checked)
-		{
-			this.state.propertySubType.push(event.target.getAttribute('value'));
-			console.log("propertySubType push",this.state.propertySubType);
-		}
-		else{
-			this.state.propertySubType.pop(event.target.getAttribute('value'));
-			console.log("propertySubType pop",this.state.propertySubType);
-		}
-		var propertySubTypeList=this.state.propertySubTypeList;
-		for(let i=0; i <this.state.propertySubTypeList.length; i++){
-			for (let j=0; j < this.state.propertySubType.length; j++) {
-				if(this.state.propertySubTypeList[i].name === this.state.propertySubType[j]){
-					propertySubTypeList[i].checked = true;
-				}else{
-					propertySubTypeList[i].checked = false;
-				}
-				this.setState({
-					propertySubTypeList : propertySubTypeList,
-				});
-			}
-		
-		}
-	}
-
 	handlePropSubType(event){
+		var checkedPropSubType=[];
 		if(event.target.checked)
 		{
-			this.state.propertySubType.push(event.target.getAttribute('value'));
-			console.log("propertySubType push",this.state.propertySubType);
-		}
-		else{
-			for (var i = this.state.propertySubType.length - 1; i >= 0; i--) {
-				if(this.state.propertySubType[i] === event.target.getAttribute('value')){
-					this.state.propertySubType.splice(i,1)
+			checkedPropSubType = event.target.getAttribute('value');
+			var propertySubTypeList=this.state.propertySubTypeList;
+			for(let i=0; i <propertySubTypeList.length; i++){
+				for (let j=0; j < checkedPropSubType.length; j++) {
+					if(propertySubTypeList[i].name === checkedPropSubType){
+						propertySubTypeList[i].checked = true;
+					}
 				}
 			}
+			this.setState({
+				propertySubTypeList : propertySubTypeList,
+			},()=>{
+				console.log("propertySubTypeList=>",this.state.propertySubTypeList);
+			});
+		
+		}else{
+			checkedPropSubType = event.target.getAttribute('value');
+			var propertySubTypeList=this.state.propertySubTypeList;
+			for(let i=0; i <propertySubTypeList.length; i++){
+				for (let j=0; j < checkedPropSubType.length; j++){
+					if(propertySubTypeList[i].name === checkedPropSubType){
+						propertySubTypeList[i].checked = false;
+					}
+				}
+			}
+			this.setState({
+				propertySubTypeList : propertySubTypeList,
+			},()=>{
+				console.log("propertySubTypeList=>",this.state.propertySubTypeList);
+			});
 		}
-		console.log("this.state.propertySubType",this.state.propertySubType);
-		var propertySubType = [];
-			if(this.state.propertyType === "Residential"){
-				propertySubType = [{name:'MultiStory Apartment'},{name:'Residential House'},{name:'Studio Apartment'},{name:'Villa / Bunglow'},{name:'Penthouse'}];
-			}else{
-				propertySubType = [{name:'Office in IT Park/SEZ'},{name:'Commercial Office Space'},{name:'Commercial Showroom'},{name:'Commercial Shop'},{name:'Industrial Building'},{name:'Warehouse/Godown'}];
-			}
-			console.log("propertySubType",propertySubType);
-			var propertySubTypeList = propertySubType.map((item,index)=>{
-			var propPresent = this.state.propertySubType.find((obj)=>{
-				return item.name === obj
-			})
-			var newObj = Object.assign({},item);
-			console.log("propPresent",propPresent);
-			if(propPresent){
-				newObj.checked = true
-			}else{
-				newObj.checked = false
-			}
-			return newObj;
-		})
-		this.setState({propertySubTypeList:propertySubTypeList});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.propertySubType = this.state.propertySubType;
+		formValues.propertySubType = this.state.propertySubTypeList;
 		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
@@ -545,7 +570,6 @@ class SearchResults extends Component {
 	         	console.log("error = ", error);
 	        });	
 	}
-
 
 	render() {
 		console.log("propertyTypeBoolean",this.state.propertyTypeBoolean);
@@ -581,7 +605,6 @@ class SearchResults extends Component {
 							</div>
 						</div>
 						<div className="col-lg-8 col-md-12 col-xs-12 col-sm-12 searchDiv1">
-							
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 property propertyType noPad">
 							  	<div className="dropdown" id="dropdown">
 						       		<span className="badge badge-secondary badgeP"><i className="fa fa-check"></i></span>
@@ -620,7 +643,7 @@ class SearchResults extends Component {
 											</div>
 										</div>
 										:
-										this.state.propertyType === "Commercial" && this.state.propertyTypeBoolean === false?
+										this.state.propertyType === "Commercial"?
 										<div className="col-lg-12">
 										  	<div className="col-lg-12">
 												<h5>Commercial</h5>
@@ -652,8 +675,6 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-
-
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
 						       		<span className="badge badge-secondary badgeP"><i className="fa fa-check"></i></span>
@@ -661,19 +682,19 @@ class SearchResults extends Component {
 								   		<span className="caret"></span>
 								   	</button>
 								    <ul className="dropdown-menu col-lg-12 noPad mt36">
-									{this.state.transactionType === "sell" ?
-									    this.state.budgetList1.map((budget,index)=>{
+									{this.state.transactionType === "Sell" ?
+									    this.state.budgetList.map((budget,index)=>{
 								    		return(
 												<span className="col-lg-12 checkbg">
-								    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" onChange={this.handleBudget.bind(this)} />&nbsp; {budget.option}
+								    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; {budget.option}
 								    			</span>
 								    			);
 									    	})
 									    :
-									    this.state.budgetList2.map((budget,index)=>{
+									    this.state.budgetList.map((budget,index)=>{
 								    		return(
 													<span className="col-lg-12">
-									    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" onChange={this.handleBudget.bind(this)} />&nbsp; {budget.option}
+									    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; {budget.option}
 									    			</span>
 								    			);
 								    		})
@@ -681,7 +702,6 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-
 							<div className="col-lg-1 col-md-2 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.flatType && this.state.flatType.length >0 ? 
@@ -692,15 +712,15 @@ class SearchResults extends Component {
 									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">BHK
 								    <span className="caret"></span></button>
 								    <ul className="dropdown-menu col-lg-12 noPad mt36">
-								    	{
-								    		this.state.flatTypeList.map((flatType,index)=>{
-									    		return(
-														<span className="col-lg-12 checkbg">
-									    					<input type="checkbox" value={flatType.value} key={index} className="selectOption" onChange={this.handleBHK.bind(this)}/>&nbsp; {flatType.option}
-									    				</span>
-									    			);
-									    		})
-								    	}
+							    	{
+						    			this.state.flatTypeList.map((flatType,index)=>{
+							    			return(
+												<span className="col-lg-12 checkbg">
+							    					<input type="checkbox" value={flatType.value} key={index} className="selectOption" onChange={this.handleBHK.bind(this)}/>&nbsp; {flatType.option}
+							    				</span>
+							    			);
+							    		})
+							    	}
 								    </ul>
 								</div>
 							</div>
@@ -720,8 +740,6 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-
-							
 							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.floor ? 
@@ -828,32 +846,27 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>*/}
-							
 						</div>
-
 					</div>
 				</form>
 
 			{/*-------------------Results------------------------*/}
 				
-					<div className="col-lg-12  col-md-10 col-xs-12 col-sm-12 noPad">
+				<div className="col-lg-12  col-md-10 col-xs-12 col-sm-12 noPad">
 				{
-					this.state.inputData.length>0 
-						? 
-							this.state.inputData.map( (property,index)=>{ 
-								return(	<div className={"x-"+index} key={index}> <PropBox myProperty={property}/> </div>  );
-							})
-						:
-							<div className="boxmsg col-lg-8 col-lg-offset-2"><p> 
-								Properties for this search options could not be found. <br/> 
-								Please change the search filters and try again. 
-							</p>
-							</div>
-
+					this.state.inputData.length>0 ? 
+						this.state.inputData.map( (property,index)=>{ 
+							return(	<div className={"x-"+index} key={index}> <PropBox myProperty={property}/> </div>  );
+						})
+					:
+					<div className="boxmsg col-lg-8 col-lg-offset-2">
+						<p> 
+							Properties for this search options could not be found. <br/> 
+							Please change the search filters and try again. 
+						</p>
+					</div>
 				}
-				
 				</div>
-
 			</div>
 		);
 	}

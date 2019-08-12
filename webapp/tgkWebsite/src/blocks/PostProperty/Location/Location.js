@@ -16,7 +16,7 @@ import './Location.css';
 				"selected"  		: "",
 				"listofStates"		: "",
 				"listofBlocks"		: "",
-		        "listofBlocks" 		: [{	blockName: "Pune",
+		        "listofBlocks" 		: [{blockName: "Pune",
 										countryCode: "IN",
 										districtName: "Pune",
 										pincode: "",

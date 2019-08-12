@@ -12,7 +12,7 @@ export default class PropBox extends React.Component {
 
 		return (
 			<div className="col-lg-12 col-md-1 col-xs-12 col-sm-12 result noPad">						
-				<div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox bgWhite">			
+				<div className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox">			
 					<div className="row pull-right topRightTriangle" id="triangle-topright"> 
 					</div>	
 					<div className="row">
@@ -47,18 +47,14 @@ export default class PropBox extends React.Component {
 								</div>
 							
 								<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 noPad pull-right">		
-								<span class="pull-right text-right col-lg-8  noPad transactionLabel">{this.props.myProperty.transactionType}  </span>
-							
-									{this.props.myProperty.transactionType ?
-										this.props.myProperty.transactionType ==="Sell" ?
+									{this.props.myProperty.transactionType && this.props.myProperty.transactionType === "Sell" ?
 										<span className="pull-right text-right col-lg-8  noPad transactionLabel">Sale</span>
 										:
 										this.props.myProperty.transactionType ==="Rent" ?
 										<span className="pull-right text-right col-lg-8 noPad transactionLabel">{this.props.myProperty.transactionType}</span>
 										:
 										null
-									:
-									"-"
+									
 									}
 								</div>	
 								

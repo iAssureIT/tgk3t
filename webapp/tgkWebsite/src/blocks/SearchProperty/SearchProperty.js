@@ -78,31 +78,31 @@ class SearchProperty extends Component {
 
 
 
-		// 	if(this.props.propertyType == "Commercial"){
-		// 	var property  	 	= this.refs.transactionType.value.split("-");
-		// 	var propertyType 	= property[0];
-		// 	var transactionType = property[1];
-		// 	this.setState({
-		// 		transactionType	: this.refs.transactionType.value,
-		// 	})
-		// }
+			if(this.props.propertyType === "Commercial"){
+			var property  	 	= this.refs.transactionType.value.split("-");
+			var propertyType 	= property[0];
+			var transactionType = property[1];
+			this.setState({
+				transactionType	: this.refs.transactionType.value,
+			})
+		}
 
-		// console.log("this.props.propertyType == ", this.props.propertyType );
+		console.log("this.props.propertyType == ", this.props.propertyType );
 
-		// const formValues = {
-		// 	// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
-		// 	transactionType : this.props.propertyType == "Commercial" ? transactionType : "sell",
-		// 	location        : this.refs.location.value,
-		// 	budget 			: this.refs.budget.value,
-		// 	// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
-		// 	propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
-		// 	propertySubType : this.state.propertySubType,
-		// 	areaMin 		: 0,
-		// 	areaMax 		: 0,
-		// 	floor			: "",
-		// }
-		// var searchData = JSON.stringify(formValues);
-		// localStorage.setItem("searchData",searchData);
+		const formValues = {
+			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
+			transactionType : this.props.propertyType === "Commercial" ? transactionType : "Sell",
+			location        : this.refs.location.value,
+			budget 			: [this.state.budget],
+			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
+			propertyType   	: this.props.propertyType === "Commercial" ? propertyType : "Residential",
+			propertySubType : this.state.propertySubType,
+			areaMin 		: 0,
+			areaMax 		: 0,
+			floor			: "",
+		}
+		var searchData = JSON.stringify(formValues);
+		localStorage.setItem("searchData",searchData);
 	}
 
 
@@ -118,7 +118,7 @@ class SearchProperty extends Component {
 	}
 	
 	handleSearch(event){
-		if(this.props.propertyType == "Commercial"){
+		if(this.props.propertyType === "Commercial"){
 			var property  	 	= this.refs.transactionType.value.split("-");
 			var propertyType 	= property[0];
 			var transactionType = property[1];
@@ -129,12 +129,12 @@ class SearchProperty extends Component {
 		}
 
 		const formValues = {
-			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
-			transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
+			transactionType : this.props.propertyType === "Commercial" ? transactionType : this.props.transactionType,
+			// transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
 			location        : this.refs.location.value,
-			budget 			: this.refs.budget.value,
+			budget 			: [this.state.budget],
 			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
-			propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
+			propertyType   	: this.props.propertyType === "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
 			// areaMin 		: 0,
 			// areaMax 		: 0,
@@ -151,7 +151,7 @@ class SearchProperty extends Component {
 
 	}
 	searchResultbtn(){
-		if(this.props.propertyType == "Commercial"){
+		if(this.props.propertyType === "Commercial"){
 			var property  	 	= this.refs.transactionType.value.split("-");
 			var propertyType 	= property[0];
 			var transactionType = property[1];
@@ -162,12 +162,12 @@ class SearchProperty extends Component {
 		}
 
 		const formValues = {
-			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
-			transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
+			transactionType : this.props.propertyType === "Commercial" ? transactionType : this.props.transactionType,
+			// transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
 			location        : this.refs.location.value,
-			budget 			: this.refs.budget.value,
+			budget 			: [this.state.budget],
 			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
-			propertyType   	: this.props.propertyType == "Commercial" ? propertyType : "Residential",
+			propertyType   	: this.props.propertyType === "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
 			// areaMin 		: 0,
 			// areaMax 		: 0,
@@ -195,9 +195,14 @@ class SearchProperty extends Component {
 		  }
 	}
 
+	handleBudget(event){
+		this.setState({budget: event.target.value})
+	}
+
 
 	render() {
 		console.log("this.props.propertyType",this.props.propertyType)
+		console.log("this.state.transactionType",this.props.transactionType)
 
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
@@ -265,30 +270,33 @@ class SearchProperty extends Component {
 								</div>
 							</div>
 						
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad" onClick={this.budget.bind(this)}>
-								<div className="col-lg-12 noPad">
-						  			 <div className="form-group noPad">
-								  		<div className="col-lg-12 input-group noPad">
-									  		<select className="form-control col-lg-12 noPad budgetOption" ref="budget" onChange={this.handleSearch.bind(this)}>
-										    	<option value=""  className="hidden">Budget</option>
-										    	{this.props.transactionType === "Sell"  || this.state.transactionType === "Commercial-Sell"?
-									    			this.state.budgetList1.map((budget,index)=>{
-											    		return(
-											    				<option value={budget.value} key={index} className="selectOption">{budget.option}</option>
-											    			);
-											    		})
-												:
-												this.state.budgetList2.map((budget,index)=>{
-										    		return(
-										    				<option value={budget.value} key={index} className="selectOption">{budget.option}</option>
-										    			);
-										    		})
-												}
-											</select>
-										</div>
-									  </div>
-						  		</div>
+							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
+							  	<div className="dropdown">
+							  	 	<button className="btn dropdown-toggle  col-lg-12" type="button" data-toggle="dropdown">Budget
+								   		<span className="caret"></span>
+								   	</button>
+								    <ul className="dropdown-menu col-lg-12 noPad mt39">
+									{this.props.transactionType === "Sell"|| (this.props.propertyType === "Commercial" && this.state.transactionType === "Commercial-Sell")?
+									    this.state.budgetList1.map((budget,index)=>{
+								    		return(
+												<span className="col-lg-12 checkbg">
+								    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; {budget.option}
+								    			</span>
+								    			);
+									    	})
+									    :
+									    this.state.budgetList2.map((budget,index)=>{
+								    		return(
+													<span className="col-lg-12">
+									    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; {budget.option}
+									    			</span>
+								    			);
+								    		})
+								    	}
+								    </ul>
+								</div>
 							</div>
+
 							<div className="col-lg-1 sImg noPad">
 									<Link to={"/SearchResults"} onClick={this.searchResultbtn.bind(this)}>	
 										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 tgkImg" />
