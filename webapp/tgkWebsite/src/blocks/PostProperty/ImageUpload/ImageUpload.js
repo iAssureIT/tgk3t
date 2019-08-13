@@ -63,8 +63,12 @@ var imgTitleArray = [];
 			}
 
 			// var videoUrl = 'abc';
-			var videoUrl = await s3uploadVideo(video[0].fileInfo, config, this);
-			console.log("videoUrl",videoUrl);
+			if(video[0]){
+				var videoUrl = await s3uploadVideo(video[0].fileInfo, config, this);
+				console.log("videoUrl",videoUrl);
+			}else{
+				var videoUrl = "";
+			}
 
 
 			const formValues = {

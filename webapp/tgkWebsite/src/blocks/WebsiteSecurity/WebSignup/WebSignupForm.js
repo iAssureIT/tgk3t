@@ -13,7 +13,8 @@ const formValid = formerrors=>{
   return valid;
   }
 
-const clientnameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
+// const clientnameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$|^$/);
+const clientnameRegex = RegExp(/^[a-zA-Z ]*$/);
 const emailRegex = RegExp (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 
@@ -170,7 +171,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 								</div>	
 					    	</div>
 						<div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 								<img alt=""  src="/images/1.png" className="build_img2"/>
 							</div>
 							<span className="col-lg-12 formImgB">

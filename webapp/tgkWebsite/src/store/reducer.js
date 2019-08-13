@@ -164,8 +164,8 @@ const reducer = (state = initialState,action) => {
 	}
 	if(action.type === "SHOW_FIRST_FORM"){
 
-		newState.BasicInfo 	        = false;
-		newState.PropertyDetails   	= true;
+		newState.BasicInfo 	        = true;
+		newState.PropertyDetails   	= false;
 		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
@@ -250,7 +250,7 @@ const reducer = (state = initialState,action) => {
 		newState.LoginMobNum 		= false;
 		newState.LoginOtp    		= false;
 		newState.WebSignupForm  	= false;
-		newState.BasicInfo 			= true;
+		newState.BasicInfo 			= true;			
 		newState.PropertyDetails   	= false;
 		newState.Financials   	    = false;
 		newState.Amenities   	    = false;

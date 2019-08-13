@@ -41,7 +41,7 @@ class BasicInfo extends Component{
 		        		updatestatus : false,
 		        	})
 		        }
-        	console.log("here var updatestatus",this.state.updatestatus);
+        	// console.log("here var updatestatus",this.state.updatestatus);
         	axios
 				.get('/api/properties/'+prop_id)
 				.then( (res) =>{
@@ -250,7 +250,11 @@ class BasicInfo extends Component{
 		const floor      = parseInt(this.refs.floor.value);
 		const totalfloor = parseInt(this.refs.totalfloor.value);
 
-		if(floor > totalfloor || floor != totalfloor){
+		// if(floor > totalfloor || floor != totalfloor){
+		// 	swal("Floor should not be greater than Total Floors", "", "warning");
+		// }
+
+		if(floor > totalfloor){
 			swal("Floor should not be greater than Total Floors", "", "warning");
 		}
 	}

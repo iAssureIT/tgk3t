@@ -22,8 +22,8 @@ class LoginOtp extends Component {
 
 	handleNumber(event){
 		event.preventDefault();
-		console.log("this.props.tempuid = ",this.props.tempuid);
-		console.log("this.props.originPage = ",this.props.originPage);
+		// console.log("this.props.tempuid = ",this.props.tempuid);
+		// console.log("this.props.originPage = ",this.props.originPage);
 
 		var userOTP = this.refs.otp.value;
 		if(userOTP!==""){
@@ -53,7 +53,7 @@ class LoginOtp extends Component {
 	}
 
 	render() {
-		console.log("originPage",this.props.originPage)
+		// console.log("originPage",this.props.originPage)
 		return (
 			<div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -76,7 +76,7 @@ class LoginOtp extends Component {
 							  </div>
 						    </div>
 						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
-								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 									<img alt=""  src="/images/1.png" className="build_img2"/>
 								</div>
 								<span className="col-lg-12 formImgB">
@@ -95,7 +95,7 @@ class LoginOtp extends Component {
 }
 
 const mapStateToProps = (state)=>{
-	console.log('signUp',state);
+	// console.log('signUp',state);
 	return {
 		OTP 		: state.OTP,
 		message 	: state.mobFoundMsg,
