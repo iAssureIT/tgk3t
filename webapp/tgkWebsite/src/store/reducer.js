@@ -164,9 +164,9 @@ const reducer = (state = initialState,action) => {
 	}
 	if(action.type === "SHOW_FIRST_FORM"){
 
-		newState.BasicInfo 	        = false;
+		newState.BasicInfo 	        = true;
 		newState.PropertyDetails   	= false;
-		newState.Financials   	    = true;
+		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;
