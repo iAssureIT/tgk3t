@@ -8,7 +8,6 @@ import "./HomePageProperties.css";
 class HomePageProperties extends Component {
 	constructor(props){
 		super(props);
-		// console.log("1 = ", props);
 		this.state = {
 			propertiesData:[],
 		}
@@ -19,19 +18,14 @@ class HomePageProperties extends Component {
       this.setState({
         propertiesData : nextProps.inputData,
       },()=>{
-        // console.log("propertiesData",this.state.propertiesData);
+        console.log("propertiesData",this.state.propertiesData);
       })
     }
   }
-
-
-
-
-
-	render() {
+  
+  render() {
 		var count = this.state.propertiesData.length;
 		var mod =count % 3;
-    // console.log("mod",mod)
 		return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -66,10 +60,13 @@ class HomePageProperties extends Component {
                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                       <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                     </div>
+                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn">
+                                      <i className="fa fa-heart pr8" aria-hidden="true"></i>Express Interest
+                                    </div>
                                   </div>
                                   <div className="row">
                                     <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                       <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                       <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                     </div>
                                   </div> 
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -120,10 +117,13 @@ class HomePageProperties extends Component {
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
+                                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn">
+                                    <i className="fa fa-heart pr8" aria-hidden="true"></i>Express Interest
+                                  </div>
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -149,10 +149,10 @@ class HomePageProperties extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
-                                  <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                    <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -161,7 +161,6 @@ class HomePageProperties extends Component {
                           }
                         }else if(mod === 1){
                           if(count === index+1){
-                          	// console.log(index+1);
                             return(
                             <div key={index}  className="mt10 col-lg-4 col-md-4 col-sm-4 col-xs-4">
                               <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
@@ -177,10 +176,13 @@ class HomePageProperties extends Component {
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
+                                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn">
+                                    <i className="fa fa-heart pr8" aria-hidden="true"></i>Express Interest
+                                  </div>
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -206,10 +208,10 @@ class HomePageProperties extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
-                                  <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                    <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -230,10 +232,13 @@ class HomePageProperties extends Component {
                                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                       </div>
+                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn">
+                                        <i className="fa fa-heart pr8" aria-hidden="true"></i>Express Interest
+                                      </div>
                                     </div>
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -259,10 +264,10 @@ class HomePageProperties extends Component {
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
-                                      <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                        <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                       </div>
                                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                      <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                        <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                       </div>
                                     </div>
                                   </div>
@@ -285,10 +290,13 @@ class HomePageProperties extends Component {
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
+                                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn">
+                                    <i className="fa fa-heart pr8" aria-hidden="true"></i>Express Interest
+                                  </div>
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.Images && property.Images.length > 0 ? property.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -314,10 +322,10 @@ class HomePageProperties extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
-                                  <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                  <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                   <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>

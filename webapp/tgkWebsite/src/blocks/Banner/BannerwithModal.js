@@ -21,10 +21,6 @@ import ImageUpload              from '../PostProperty/ImageUpload/ImageUpload.js
 import SearchProperty           from '../SearchProperty/SearchProperty.js';
 
 
-// import 'bootstrap/js/tab.js';
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import 'bootstrap/js/modal.js';
-
 import './Banner.css';
 
 class BannerwithModal extends Component {
@@ -108,6 +104,33 @@ class BannerwithModal extends Component {
 		})
 	}
 
+	inputData(inputData){
+		var formValues = {
+			startRange:0,
+			limitRange:6,
+		}
+		console.log("inputData",inputData)
+		this.setState({
+			propertyType    : inputData.propertyType,
+			transactionType : inputData.transactionType,
+		},()=>{
+			axios
+	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
+	        .then( (res) =>{
+	          this.setState({
+	          	inputData : res.data,
+	          },()=>{
+	          	// this.props.inputData(this.state.inputData);
+	          	// console.log("inputData",this.state.inputData);
+	          })
+
+	        })
+	        .catch((error) =>{
+	          console.log("error = ", error);
+	        });
+		})
+	}
+
 	render() {
 		let header;
 			// console.log("this.props.CongratsPage",this.props.CongratsPage);
@@ -151,13 +174,13 @@ class BannerwithModal extends Component {
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
 					    </li>
 					    <li className="nav-item col-lg-4">
-					      <a className="nav-link active btn-bg" property-type="Commercial" transaction-type="Rent" data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
+					      <a className="nav-link active btn-bg" property-type="Commercial" transaction-type="Sell"  data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
 					  </ul>
 				 	</div>
 				</div>
 				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
-					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType}/>
+					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType} inputData={this.inputData.bind(this)}/>
 				</div>
 				<div className="col-lg-8 col-lg-offset-2 mt-64">
 					<div className="col-lg-6 br2">
@@ -192,22 +215,18 @@ class BannerwithModal extends Component {
 					      </div>
 
 					      <div className="modal-body col-lg-12">
-
-						{ this.props.LoginMobNum 	? <LoginMobNum /> 	  : null }
-						{ this.props.LoginOtp 		? <LoginOtp /> 		  : null }
-						{ this.props.WebSignupForm 	? <WebSignupForm />   : null }
-						{ this.props.BasicInfo 		? <BasicInfo /> 	  : null }
-						{ this.props.PropertyDetails? <PropertyDetails /> : null }
-						{ this.props.Financials 	? <Financials /> 	  : null }
-						{ this.props.Amenities 		? <Amenities /> 	  : null }
-						{ this.props.Availability 	? <Availability /> 	  : null }
-						{ this.props.Location		? <Location /> 		  : null }
-						{ this.props.CongratsPage	? <CongratsPage /> 	  : null }
-						{ this.props.ImageUpload	? <ImageUpload /> 	  : null }
-
-
+								{ this.props.LoginMobNum 	? <LoginMobNum /> 	  : null }
+								{ this.props.LoginOtp 		? <LoginOtp /> 		  : null }
+								{ this.props.WebSignupForm 	? <WebSignupForm />   : null }
+								{ this.props.BasicInfo 		? <BasicInfo /> 	  : null }
+								{ this.props.PropertyDetails? <PropertyDetails /> : null }
+								{ this.props.Financials 	? <Financials /> 	  : null }
+								{ this.props.Amenities 		? <Amenities /> 	  : null }
+								{ this.props.Availability 	? <Availability /> 	  : null }
+								{ this.props.Location		? <Location /> 		  : null }
+								{ this.props.CongratsPage	? <CongratsPage /> 	  : null }
+								{ this.props.ImageUpload	? <ImageUpload /> 	  : null }
 					      </div>
-
 					      <div className="modal-footer">
 					      </div>
 

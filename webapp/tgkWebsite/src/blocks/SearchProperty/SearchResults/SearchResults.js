@@ -83,7 +83,7 @@ class SearchResults extends Component {
 					});
 
 					var budget = [];
-					if(data.propertyType === "Residential"){
+					if(data.transactionType === "Sell"){
 						budget = this.state.budgetList1;
 					}else{
 						budget = this.state.budgetList2;
@@ -108,7 +108,7 @@ class SearchResults extends Component {
 					});
 				})
 
-			if(data.propertySubType.length > 0){
+			if(data.propertySubType && data.propertySubType.length > 0){
 				this.setState({
 					checkPropValue      : true
 				})
@@ -178,13 +178,12 @@ class SearchResults extends Component {
 			],
 
 			propertyAgeList : [
+				{value: "Under Construction",	option: "Under Construction"},
 				{value: "New", 	option: "New"	},
 				{value: "1-2", 	option: "1 - 2 Years"	},
 				{value: "2-5", 	option: "2 - 5 Years"	},
 				{value: "5-8",  option: "5 - 8 Years" },
 				{value: ">8",	option: "> 8 Years"	},
-				{value: "Under Construction",	option: "Under Construction"},
-
 			],
 
 			MISCList : [
@@ -199,7 +198,7 @@ class SearchResults extends Component {
 				{name:'MultiStory Apartment'},
 				{name:'Residential House'},
 				{name:'Studio Apartment'},
-				{name:'Villa / Bunglow'},
+				{name:'Villa'},
 				{name:'Penthouse'}
 			],
 
@@ -476,6 +475,7 @@ class SearchResults extends Component {
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
 		console.log("here searchData",searchData);
+		
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
@@ -568,12 +568,30 @@ class SearchResults extends Component {
 			this.setState({
 				propertySubTypeList : propertySubTypeList,
 			},()=>{
-				console.log("propertySubTypeList=>",this.state.propertySubTypeList);
+			// 	const data = this.state.propertySubTypeList;
+			// 	let found = data.find(element => element.checked === true);
+			// 	console.log("found",found);
+			// 	if(found && found.length > 0){
+			// 		this.setState({
+			// 			checkPropValue : true
+			// 		})
+			// 	}
+			// 	else{
+			// 		this.setState({
+			// 			checkPropValue : false
+			// 		})
+			// 	}
 			});
 		}
 
+
+
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.propertySubType = this.state.propertySubTypeList;
+		var propertySubType = [];
+		for (var i = this.state.propertySubTypeList.length - 1; i >= 0; i--) {
+			propertySubType[i] = this.state.propertySubTypeList[i].name;
+		}
+		formValues.propertySubType = propertySubType;
 		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
@@ -588,6 +606,7 @@ class SearchResults extends Component {
 	        .catch((error) =>{
 	         	console.log("error = ", error);
 	        });	
+
 	}
 
 	render() {
@@ -633,7 +652,7 @@ class SearchResults extends Component {
 						<div className="col-lg-8 col-md-12 col-xs-12 col-sm-12 searchDiv1">
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 property propertyType noPad">
 							  	<div className="dropdown" id="dropdown">
-						       		{this.state.checkPropValue ? 
+						       		{this.state.checkPropValue === true ? 
 						       			<span className="badge badge-secondary badgeP">
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
@@ -897,10 +916,10 @@ class SearchResults extends Component {
 									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Availability
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 mt36">
-										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="Immediate" ref="" className="" value="Immediate" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="Immediate">Immediate</label><br /><span className="radioBoxBlock"></span></span>
-										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoWeeks" ref="" className="" value="2 Weeks" onChange={this.handleAvailability.bind(this)} />&nbsp; <label htmlFor="twoWeeks">2 Weeks</label><br /><span className="radioBoxBlock"></span></span>
-										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoFourWeeks" ref="" className="" value="2-4 Weeks" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="twoFourWeeks">2-4 Weeks</label><br /><span className="radioBoxBlock"></span></span>
-										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="afterAMonth" ref="" className="" value="After a month" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="afterAMonth">After a month</label><br /><span className="radioBoxBlock"></span></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="Immediate" ref="" className="" value="0" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="Immediate">Immediate</label><br /><span className="radioBoxBlock"></span></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoWeeks" ref="" className="" value="14" onChange={this.handleAvailability.bind(this)} />&nbsp; <label htmlFor="twoWeeks">2 Weeks</label><br /><span className="radioBoxBlock"></span></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoFourWeeks" ref="" className="" value="30" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="twoFourWeeks">2-4 Weeks</label><br /><span className="radioBoxBlock"></span></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="afterAMonth" ref="" className="" value="31" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="afterAMonth">After a month</label><br /><span className="radioBoxBlock"></span></span>
 								    </ul>
 								</div>
 							</div>

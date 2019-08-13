@@ -89,7 +89,7 @@ export default class PropBox extends React.Component {
 									Super Area : <b>{this.props.myProperty.propertyDetails ? this.props.myProperty.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
 								</div>
 								<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
-									Possession by : <span className="propertySubText2">{this.props.myProperty.propertyDetails ? this.props.myProperty.propertyDetails.availableFrom : "-"}</span>
+									Possession by : <span className="propertySubText2">{this.props.myProperty.financial ? this.props.myProperty.financial.availableFrom : "-"}</span>
 								</div>
 								<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
                               		<Link to={"/PropertyProfile/"+this.props.myProperty._id} target="_blank">

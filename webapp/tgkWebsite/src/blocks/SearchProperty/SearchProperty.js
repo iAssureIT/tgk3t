@@ -134,8 +134,13 @@ class SearchProperty extends Component {
 			var transactionType = property[1];
 			this.setState({
 				transactionType	: this.refs.transactionType.value,
-				location 		: event.target.value,
+				location 		: this.state.location,
 			})
+			var commercialData ={
+				propertyType    : propertyType,
+				transactionType : transactionType,
+			}
+			this.props.inputData(commercialData);
 		}
 
 	
