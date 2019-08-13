@@ -136,8 +136,8 @@ class BasicInfo extends Component{
 
 			};
 			console.log("BasicInfo===",formValues);
-			if(this.state.propertyHolder!="" && this.state.transactionType!="" && this.state.propertyType!="" && this.state.propertySubType!="" && this.refs.floor.value!="" && this.refs.totalfloor.value!="" ){
-				if(this.state.updatestatus== true)
+			if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && this.refs.floor.value!=="" && this.refs.totalfloor.value!=="" ){
+				if(this.state.updatestatus=== true)
 				{
 					console.log("update axios");
 
@@ -275,39 +275,39 @@ class BasicInfo extends Component{
 				    	<div className="col-lg-1 sellerType1"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
-						      		 value="owner" 
+						      		 value="Owner" 
 						      		 className="FrRadio" 
 						      		 id="radio-example1"
 						      		 checked={this.state.propertyHolder === "owner"}
 	               					 onChange={this.radioChange} />
 
-					  			<i className=" logo1"><img src="/images/owner.png" /></i>
+					  			<i className=" logo1"><img src="/images/owner.png" alt="" /></i>
 						    </label>
 					    </div>
 
 					    <div className="col-lg-1 col-lg-offset-2 sellerType2"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
-						      		 value="careTaker" 
+						      		 value="Care Taker" 
 						      		 className="FrRadio" 
 						      		 id="radio-example2"
 						      		 checked={this.state.propertyHolder === "careTaker"}
 	               					 onChange={this.radioChange}/>
 
-					  			<i className=" logo1"><img src="/images/careTaker.png" /></i>
+					  			<i className=" logo1"><img src="/images/careTaker.png" alt="" /></i>
 						    </label>
 					    </div>
 
 					    <div className="col-lg-1 col-lg-offset-2 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
-						      		 value="broker" 
+						      		 value="Broker" 
 						      		 className="FrRadio" 
 						      		 id="radio-example3"
 						      		 checked={this.state.propertyHolder === "broker"}
 	               					 onChange={this.radioChange} 
 						      		 />
-					  			<i className=" logo1"><img src="/images/broker.png" /></i>
+					  			<i className=" logo1"><img src="/images/broker.png" alt="" /></i>
 						    </label>
 					    </div>
 					</div>
@@ -347,18 +347,18 @@ class BasicInfo extends Component{
 						  	 <select className="custom-select form-control" ref="propertytype" name="fullPropTtype" value={this.state.fullPropTtype} onChange={this.selectProp.bind(this)}>
 						    	<option	value="" hidden>Select Property Type </option>
 						    	<option	disabled>ALL RESIDENTIAL </option>
-						    	<option value="Residential-StudioApt">Studio Apartment</option>
-						    	<option value="Residential-ResidentialHouse">Residential House</option>
-						    	<option value="Residential-MultiStoreyApt">MultiStorey Apartment</option>
+						    	<option value="Residential-Studio Apartment">Studio Apartment</option>
+						    	<option value="Residential-Residential House">Residential House</option>
+						    	<option value="Residential-MultiStorey Apartment">MultiStorey Apartment</option>
 						    	<option value="Residential-Villa">Villa</option>
 						    	<option value="Residential-Penthouse">Penthouse</option>
 						    	<option	disabled>ALL COMMERCIAL </option>
-						    	<option value="Commercial-CommercialOS">Commercial Office Space</option>
-						    	<option value="Commercial-OfficeIT">Office in IT Park/SEZ</option>
-						    	<option value="Commercial-CommercialS">Commercial Shop</option>
-						    	<option value="Commercial-CommercialSR">Commercial Showroom</option>
-						    	<option value="Commercial-Warehouse">Warehouse/Godown </option>
-						    	<option value="Commercial-Industrial">Industrial Building</option>
+						    	<option value="Commercial-Commercial Office Space">Commercial Office Space</option>
+						    	<option value="Commercial-Office in IT Park/SEZ">Office in IT Park/SEZ</option>
+						    	<option value="Commercial-Commercial Shop">Commercial Shop</option>
+						    	<option value="Commercial-Commercial Showroom">Commercial Showroom</option>
+						    	<option value="Commercial-Warehouse/Godown">Warehouse/Godown </option>
+						    	<option value="Commercial-Industrial Building">Industrial Building</option>
 							</select>
 							{/*<div className="errorMsg">{this.state.errors.bedroom}</div>*/}
 						  </div>
@@ -376,7 +376,7 @@ class BasicInfo extends Component{
 			  <div className="form-group" id="floor">
 		  		<div className="input-group inputBox-main " id="">
 			      	<div className="input-group-addon inputIcon">
-                     	<i className=" iconClr"><img src="/images/floor.png" /></i>
+                     	<i className=" iconClr"><img src="/images/floor.png" alt="" /></i>
                     </div>
 			  		<select className="custom-select form-control Fl60"  ref="floor" placeholder="Floor" id='select'>
 				    	<option value="" className="hidden">Floor</option>
@@ -391,7 +391,7 @@ class BasicInfo extends Component{
 				  	{/*<input type="text" className="form-control" ref="totalfloor" id="exampleFormControlInput1" placeholder="Total floor"/>*/}
 				  	<div className="input-group inputBox-main " id="">
 				      	<div className="input-group-addon inputIcon">
-	                     <i className="iconClr"><img src="/images/floor.png" /></i>
+	                     <i className="iconClr"><img src="/images/floor.png" alt="" /></i>
 	                    </div>
 					  	<select className="custom-select form-control 1-60"  ref="totalfloor" onBlur={this.totalFloor.bind(this)} >
 					    	<option value="" className="hidden">Total Floors</option>

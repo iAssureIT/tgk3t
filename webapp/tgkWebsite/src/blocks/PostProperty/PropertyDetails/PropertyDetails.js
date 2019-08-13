@@ -305,10 +305,10 @@ import './PropertyDetails.css';
 									    	<option value="" className="hidden">--Property Age--</option>
 									    	<option value="Under Construction">Under Construction</option>
 									    	<option value="New">New(Less than a year)</option>
-									    	<option value="1-2 ">1-2 Years</option>
-									    	<option value="2-5 ">2-5 Years</option>
-									    	<option value="5-8 ">5-8 Years</option>
-									    	<option value=">8 ">>8 Years</option>
+									    	<option value="1-2">1-2 Years</option>
+									    	<option value="2-5">2-5 Years</option>
+									    	<option value="5-8">5-8 Years</option>
+									    	<option value=">8">>8 Years</option>
 										</select>
 									</div>				  
 								</div>

@@ -141,19 +141,29 @@ import './MyPostedProperties.css';
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
 										<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 propertySubText1">				
 											<i className="fa fa-inr"></i>&nbsp;
+											{myProperty.financial.totalPrice ?
+												<span>
+												{myProperty.financial.totalPrice}
+												</span>
+											:
+											myProperty.financial.monthlyRent ?
 											<span>
-												{myProperty.financial && myProperty.financial.totalPrice ? myProperty.financial.totalPrice : "-"}
+												{myProperty.financial.monthlyRent}
 											</span>
+											:
+											"-"
+											}	
 										</div>
 
-												<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 propertySubText1">				
-													{
-														myProperty.propertyDetails && myProperty.propertyDetails.bedrooms ? myProperty.propertyDetails.bedrooms 
-														: 
-														"-"
-													}
-													&nbsp;BHK
-													&nbsp;
+												<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 propertySubText1">
+													{myProperty.propertyType === "Residential" ? 
+														 <span>
+														 {myProperty.propertyDetails.bedrooms} 														  BHK  &nbsp;&nbsp;
+														 </span>
+													:
+													null
+												    }				
+													
 													<i className="fa fa-map-marker text-warning"/>
 													&nbsp;
 													{myProperty.propertyLocation  &&  myProperty.propertyLocation.city && myProperty.propertyLocation.society
@@ -182,18 +192,36 @@ import './MyPostedProperties.css';
 											</div>
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
 												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-													<img alt=""  src="/images/Icons/bed.png" className="imgIcon"/>&nbsp;
-													<span className="propertySubText1">
-														{myProperty.propertyDetails && myProperty.propertyDetails.bedrooms ? myProperty.propertyDetails.bedrooms : "-"}
-													</span>
-													<br/> Beds
+													{
+														myProperty.propertyType ==="Residential" ?
+														<span className="propertySubText1">
+														<img alt=""  src="/images/Icons/bed.png" className="imgIcon"/>&nbsp;
+															{ myProperty.propertyDetails.bedrooms }
+															<br/><p style={{fontWeight:"100"}}>Bedrooms</p>
+														</span>
+														:
+														<span className="propertySubText1">
+														<img alt=""  src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
+														{ myProperty.propertyDetails.washrooms}
+														<br/><p style={{fontWeight:"100"}}>Washrooms</p>
+														</span>
+													}
 												</div>
-												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-													<img alt=""  src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
-													<span className="propertySubText1">
-														{myProperty.propertyDetails && myProperty.propertyDetails.bathrooms ? myProperty.propertyDetails.bathrooms : "-"}
-													</span>
-													<br/>Baths
+												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">
+													{
+														myProperty.propertyType ==="Residential" ?
+														<span className="propertySubText1">
+														<img alt=""  src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
+															{ myProperty.propertyDetails.bathrooms }
+															<br/><p style={{fontWeight:"100"}}>Bathrooms</p>
+														</span>
+														:
+														<span className="propertySubText1">
+														<img alt=""  src="/images/Icons/coffee.png" className="imgIcon" style={{width:"27px"}}/>&nbsp;
+														{ myProperty.propertyDetails.pantry}
+														<br/><p style={{fontWeight:"100"}}>Pantry</p>
+														</span>
+													}				
 												</div>
 												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;

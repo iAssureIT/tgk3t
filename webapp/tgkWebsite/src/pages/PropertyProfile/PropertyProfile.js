@@ -57,6 +57,7 @@ class PropertyProfile extends Component{
       "propertyDescription" : [],
       "propertyLocation"  : [],
       "transactionType"   : "",  
+      "propertyType"      : "",  
       "prop_id"           : "",
     }
   }
@@ -96,10 +97,11 @@ class PropertyProfile extends Component{
           propertyFeatures    : postsdata.propertyDetails,
           amenities           : postsdata.Amenities,
           propertyImages      : postsdata.gallery.Images,
-          propertyVideos      : postsdata.Video,
+          propertyVideos      : postsdata.video,
           pricing             : postsdata.financial,
           propertyLocation    : postsdata.propertyLocation,
           transactionType     : postsdata.transactionType,
+          propertyType        : postsdata.propertyType   
         });
         console.log("postsdata.propertyDetails",res.data);
       }
@@ -195,7 +197,7 @@ class PropertyProfile extends Component{
                             <label className="pull-left"> 
                             {this.state.propertyLocation && this.state.propertyLocation.address ? this.state.propertyLocation.address:"-"}
                             </label> 
-                            <div className="col-lg-1 col-md-1 col-sm-3 col-xs-3 text-center forSaleButton">
+                            <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center forSaleButton">
                               FOR {this.state.transactionType && this.state.transactionType==="Sell" ? "SALE" : "RENT"}
                             </div> 
                             <br/>
@@ -311,10 +313,26 @@ class PropertyProfile extends Component{
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <ul className="col-lg-6 col-md-6 col-sm-12 col-xs-12 bolder">   
                                   <li className="col-lg-6 noPad">Furnished Status</li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Bedrooms        </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.bedrooms        ? <b>{this.state.propertyFeatures.bedrooms}        </b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Balconies       </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.balconies       ? <b>{this.state.propertyFeatures.balconies}       </b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Bathrooms       </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.bathrooms       ? <b>{this.state.propertyFeatures.bathrooms}       </b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Age of Property </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty}   </b> : "-"}</span>
+                                  {this.state.propertyType === "Commercial" ?
+                                      <b>
+                                        <li className="col-lg-6 noPad">Washrooms    </li> 
+                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures.washrooms}</b></span>
+                                        <li className="col-lg-6 noPad">Personal WC </li> 
+                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures.personal}</b></span>
+                                        <li className="col-lg-6 noPad">Pantry  </li> 
+                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures.pantry}</b></span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-6 noPad">Bedrooms    </li> 
+                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures.bedrooms}</b></span>
+                                        <li className="col-lg-6 noPad">Bathrooms    </li> 
+                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures.bathrooms}</b></span>
+                                        <li className="col-lg-6 noPad">Balconies    </li> 
+                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures.balconies}</b></span>
+                                      </b>
+                                  }
+                                  <li className="col-lg-6 noPad">Age of Property </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
                                 </ul>
                                 <ul className="col-lg-6 col-md-6 col-sm-12 col-xs-12 bolder">   
                                   <li className="col-lg-6 noPad">Facing          </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
@@ -405,8 +423,28 @@ class PropertyProfile extends Component{
                                                 })
                                           }  </b> : "-"}
                                           </span>
-                                          <li className="col-lg-4 noPad">Expected Rate       </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.expectedRate       ? <b>{this.state.pricing.expectedRate}       </b> : "-"}</span>
-                                          <li className="col-lg-4 noPad">Total Price         </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.totalPrice         ? <b>{this.state.pricing.totalPrice}         </b> : "-"}</span>
+                                          {this.state.pricing && this.state.pricing.expectedRate ?
+                                            <b>
+                                              <li className="col-lg-4 noPad">Expected Rate    </li> 
+                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.expectedRate}</b></span>
+                                            </b>
+                                          : 
+                                          <b>
+                                              <li className="col-lg-4 noPad">Monthly Rent    </li> 
+                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.monthlyRent}</b></span>
+                                            </b>
+                                          }
+                                          {this.state.pricing && this.state.pricing.totalPrice ?
+                                            <b>
+                                              <li className="col-lg-4 noPad">Total Price    </li> 
+                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.totalPrice}</b></span>
+                                            </b>
+                                          : 
+                                          <b>
+                                              <li className="col-lg-4 noPad">Deposit Amount    </li> 
+                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.depositAmount}</b></span>
+                                            </b>
+                                          }
                                           <li className="col-lg-4 noPad">Maintainance Charges</li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
                                           <li className="col-lg-4 noPad">Maintainance Per    </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                         </ul>

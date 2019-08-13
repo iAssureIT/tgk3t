@@ -198,16 +198,16 @@ export default class MainFooter extends Component{
                         <img alt=""  src="/images/Logo.png" />
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails mt40" >
-                        <i className="fa fa-mobile fontMobile" aria-hidden="true"></i>&nbsp;   Phone 1 : +91 9999778745
+                        <i className="fa fa-mobile fontMobile" aria-hidden="true"></i>&nbsp;   Phone 1 : +91 9952 040 040
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails" >
-                        <i className="fa fa-mobile fontMobile" aria-hidden="true"></i>&nbsp;   Phone 2 : +91 9999778745
+                        <i className="fa fa-mobile fontMobile" aria-hidden="true"></i>&nbsp;   Phone 2 : +91 7776 040 040
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails" >
-                        <i className="fa fa-envelope"></i>&nbsp; Email&nbsp; &nbsp;    :  info@tgk.com
+                        <i className="fa fa-envelope"></i>&nbsp; Email&nbsp; &nbsp;   : customercare@thegoldenkey.co.jp<br/><p className="col-lg-6 col-lg-offset-2" style={{paddingLeft:"7px"}}>sales@thegoldenkey.co.jp</p>
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails" >
-                        <i className="fa fa-globe" aria-hidden="true"></i>&nbsp;  Website   : www.tgk.com
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails1" >
+                        <i className="fa fa-globe" aria-hidden="true"></i>&nbsp;  Website  : www.tgk.com
                       </div>
                         <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails noPad" >
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">

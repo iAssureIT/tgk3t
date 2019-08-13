@@ -50,7 +50,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				"available"			  : this.state.available
 			};
 			console.log("Availability req = ",formValues);
-		    if(this.state.available!=""){
+		    if(this.state.available!==""){
 		    		
 				axios
 				.patch('/api/properties/patch/availabilityPlan',formValues)
@@ -102,7 +102,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				   this.refs.timeTo.value + " " + this.refs.timeToAMPM.value ;
 
 
-		if(day!="" && time!=""){
+		if(day!=="" && time!==""){
 			console.log("day",day);
 			console.log("time",time);
 			availability.push({
@@ -243,7 +243,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			            </div>
 				  	</div>
 				  </div>
-				  {this.state.contactPerson == "Someone" ? 
+				  {this.state.contactPerson === "Someone" ? 
 				  	 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >
 			  	 		<label className="">Phone Number</label>

@@ -15,7 +15,7 @@ import './Financials.css';
 				includecharges     : [],
 				monthlyRent		   : '',
 				depositAmount 	   : '',
-				monthlyRent 	   : '',
+				expectedRate 	   : '',
 				totalPrice 	  	   : ''
 			};
 			

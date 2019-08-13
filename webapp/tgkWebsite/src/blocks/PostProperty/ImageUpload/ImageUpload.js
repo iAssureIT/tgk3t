@@ -31,7 +31,7 @@ var imgTitleArray = [];
 	
 		main().then(formValues => {
 			// console.log("3 formValues = ",formValues);
-			if(this.state.imgTitleArray!="" || this.state.videoArray!=""){
+			if(this.state.imgTitleArray!=="" || this.state.videoArray!==""){
 				axios
 				.patch('/api/properties/patch/gallery',formValues)
 				.then( (res) =>{
@@ -256,7 +256,7 @@ var imgTitleArray = [];
 								this.state.imageArray.map((data,index)=>{
 									return(
 										<div className="col-lg-4 imgcss" key={index}>
-											<img style={{width:"150px"}} className="img-responsive" src={data.imgPath}/>
+											<img style={{width:"150px"}} className="img-responsive" src={data.imgPath} alt="" />
 											<label className="imgLabel" id={index} handleVideoChange  onClick={this.deleteimage.bind(this)}>&times;</label>
 										</div>)
 								})
