@@ -316,7 +316,7 @@ class SearchProperty extends Component {
 													this.state.propertyList2.map((data,index)=>{
 														return(
 															<span className="col-lg-6 noPad inputStyledbtn">
-																<input type="checkbox" className="" value={data.name} key={index}  onChange={this.propertySubType.bind(this)}/>&nbsp;{data.name}
+																<input type="checkbox" className="" value={data.name} id={data.name} key={index}  onChange={this.propertySubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
 																<span className="checkBoxBlock"></span>
 															</span>
 														)
@@ -332,7 +332,10 @@ class SearchProperty extends Component {
 												{
 													this.state.propertyList1.map((data,index)=>{
 														return(
-															<span key={index} className="col-lg-6 noPad inputStyledbtn"><input type="checkBox" value={data.name} key={index} onChange={this.propertySubType.bind(this)}/>&nbsp;{data.name}<span className="checkBoxBlock"></span></span>
+															<span key={index} className="col-lg-6 noPad inputStyledbtn">
+																<input type="checkBox" value={data.name} id={data.name} onChange={this.propertySubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</span>
 														)
 													})
 
@@ -354,7 +357,7 @@ class SearchProperty extends Component {
 									    this.state.budgetList1.map((budget,index)=>{
 								    		return(
 												<span  key={index} className="col-lg-12 inputStyledbtn">
-								    				<input type="radio" value={budget.value} ref="budget" name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; {budget.option}
+								    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
 								    				<span className="radioBoxBlock"></span>
 								    			</span>
 								    			);
@@ -362,8 +365,8 @@ class SearchProperty extends Component {
 									    :
 									    this.state.budgetList2.map((budget,index)=>{
 								    		return(
-													<span className="col-lg-12 inputStyledbtn">
-									    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; {budget.option}
+													<span className="col-lg-12 inputStyledbtn" key={index}>
+									    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
 									    				<span className="radioBoxBlock"></span>
 									    			</span>
 								    			);

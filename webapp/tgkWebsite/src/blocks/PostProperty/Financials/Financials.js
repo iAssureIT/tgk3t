@@ -77,14 +77,14 @@ import './Financials.css';
 		updateUser(event){
 			event.preventDefault();
 			const formValues = {
-				"expectedRate" 		: this.state.expectedRate,
-				"totalPrice" 		: this.state.totalPrice,
-				"monthlyRent" 		: this.state.monthlyRent,
-				"depositAmount" 	: this.state.depositAmount,
+				"expectedRate" 		: this.state.expectedRate.replace(/,/g, ''),
+				"totalPrice" 		: this.state.totalPrice.replace(/,/g, ''),
+				"monthlyRent" 		: this.state.monthlyRent.replace(/,/g, ''),
+				"depositAmount" 	: this.state.depositAmount.replace(/,/g, ''),
 				"availableFrom" 	: this.refs.availableFrom.value,
 				"description" 		: this.refs.description.value,
 				"includeCharges"	: this.state.includecharges,
-				"maintenanceCharges": this.refs.maintenanceCharges.value,
+				"maintenanceCharges": this.refs.maintenanceCharges.value.replace(/,/g, ''),
 				"maintenancePer"	: this.refs.maintenancePer.value,
 				"property_id" 		: localStorage.getItem("propertyId"),
 				"uid" 				: localStorage.getItem("uid"),
@@ -146,6 +146,7 @@ import './Financials.css';
 			   //  });
 			const target = event.target.value;
 			const name   = event.target.name;
+			console.log(name + "=" +target);
 			this.setState({
 				[name]       : target
 			});
