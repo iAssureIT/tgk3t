@@ -3,7 +3,7 @@ import axios 					from 'axios';
 import $ 						from "jquery";
 import {withRouter, Link} 		from 'react-router-dom';
 import { connect } 				from 'react-redux';
-import PropBox from './propBox.js';
+import PropBox 					from './propBox.js';
 import './SearchResults.css';
 
 class SearchResults extends Component {
@@ -35,7 +35,10 @@ class SearchResults extends Component {
 			propertyAge             : "",
 			availability            : "",
 			propertyTypeBoolean		: false,
+			budgetBoolean			: false,
+			checkPropValue			: false,
 			propertyTransList		: [],
+			locSearchResults		: "",
 		}
 		this.handleSearch = this.handleSearch.bind(this);
 	}
@@ -55,11 +58,9 @@ class SearchResults extends Component {
 			},()=>{
 				console.log("propertyTransactionType",this.state.propertyTransactionType);
 					var propertySubType = [];
-					if(data.propertyType === "Residential")
-					{
+					if(data.propertyType === "Residential"){
 						propertySubType = this.state.propertyList1;
-					}
-					else{
+					}else{
 						propertySubType = this.state.propertyList2;
 					}
 
@@ -75,31 +76,24 @@ class SearchResults extends Component {
 						}
 						return newObj;
 					})
+
 					this.setState({
-						propertySubTypeList:propertySubTypeList
-					},()=>{
-						this.setState({
-							propertyTypeBoolean : true
-						})
+						propertySubTypeList : propertySubTypeList,
+						propertyTypeBoolean : true,
 					});
 
 					var budget = [];
-					if(data.propertyType === "Residential")
-					{
+					if(data.propertyType === "Residential"){
 						budget = this.state.budgetList1;
-					}
-					else{
+					}else{
 						budget = this.state.budgetList2;
 					}
-					console.log("budget",budget);
-					console.log("budget",this.state.budget);
 
 					var budgetList = budget.map((item,index)=>{
 						var budgetPresent = this.state.budget.find((obj)=>{
 							return item.value === parseInt(obj)
 						});
 						var newObj = Object.assign({},item);
-						console.log("propPresent",budgetPresent);
 						if(budgetPresent){
 							newObj.checked = true
 						}else{
@@ -108,16 +102,24 @@ class SearchResults extends Component {
 						return newObj;
 					})
 					this.setState({budgetList:budgetList},()=>{
-						console.log("budgetList",this.state.budgetList);
+						this.setState({
+							budgetBoolean : true
+						})
 					});
 				})
+
+			if(data.propertySubType.length > 0){
+				this.setState({
+					checkPropValue      : true
+				})
+			}
 		}
 
 
   		axios
 			.post("/api/search/properties/", data)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
+				console.log("searchResults =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -144,18 +146,18 @@ class SearchResults extends Component {
 			],
 
 			budgetList2 : [
-				{value: 5000, option: "Upto 5000"},
-				{value: 10000, option: "Upto 10000"},
-				{value: 15000, option: "Upto 15000"},
-				{value: 20000, option: "Upto 20000"},
-				{value: 25000, option: "Upto 25000"},
-				{value: 30000, option: "Upto 30000"},
-				{value: 40000, option: "Upto 40000"},
-				{value: 50000, option: "Upto 50000"},
-				{value: 60000, option: "Upto 60000"},
-				{value: 70000, option: "Upto 70000"},
-				{value: 80000, option: "Upto 80000"},
-				{value: 90000, option: "Upto 90000"},
+				{value: 5000,  option: "Upto 5,000"},
+				{value: 10000, option: "Upto 10,000"},
+				{value: 15000, option: "Upto 15,000"},
+				{value: 20000, option: "Upto 20,000"},
+				{value: 25000, option: "Upto 25,000"},
+				{value: 30000, option: "Upto 30,000"},
+				{value: 40000, option: "Upto 40,000"},
+				{value: 50000, option: "Upto 50,000"},
+				{value: 60000, option: "Upto 60,000"},
+				{value: 70000, option: "Upto 70,000"},
+				{value: 80000, option: "Upto 80,000"},
+				{value: 90000, option: "Upto 90,000"},
 				{value: 100000, option: "Upto 1 Lac"},
 			],
 
@@ -212,6 +214,19 @@ class SearchResults extends Component {
 			propertyTransList : [
 			]
 			})
+
+
+		 $(".dropdown").hover(            
+            function() {
+                $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+                $(this).toggleClass('open');
+                $('b', this).toggleClass("caret caret-up");                
+            },
+            function() {
+                $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+                $(this).toggleClass('open');
+                $('b', this).toggleClass("caret caret-up");                
+            });
 	}
 
 	propertyType(event){
@@ -226,11 +241,7 @@ class SearchResults extends Component {
 		this.setState({
 			[name]       		: target,
 		},()=>{
-			console.log("name",name);
-			console.log("target",target);
-
 		var propertyTransactionType 	= this.state.propertyTransactionType.split("-");
-		console.log("propertyTransactionType",propertyTransactionType)
 		this.setState({
 			propertyType 	: propertyTransactionType[0],
 			transactionType : propertyTransactionType[1],
@@ -244,13 +255,12 @@ class SearchResults extends Component {
 		var propertyTransactionType 	= event.target.value.split("-");
 		console.log("propertyTransactionType",propertyTransactionType)
 		this.setState({
-			propertyType 	: propertyTransactionType[0],
-			transactionType : propertyTransactionType[1],
+			propertyType 			: propertyTransactionType[0],
+			transactionType 		: propertyTransactionType[1],
 			propertyTransactionType : event.target.value,
-			propertyTypeBoolean :false,
+			propertyTypeBoolean 	:false,
+			budgetBoolean			:false,
 		},()=>{
-			console.log("under propertyType",this.state.propertyType);
-
 			var formValues = JSON.parse(localStorage.getItem("searchData"));
 			formValues.propertyType = this.state.propertyType;
 			formValues.transactionType = this.state.transactionType;
@@ -264,7 +274,6 @@ class SearchResults extends Component {
 		  	axios
 				.post("/api/search/properties/", formValues)
 				.then((searchResults) => {
-					console.log("here result =",searchResults.data);
 					this.setState({ inputData : searchResults.data });
 				})
 		        .catch((error) =>{
@@ -275,8 +284,54 @@ class SearchResults extends Component {
 	}
 
 	handleLocation(event){
+
+
 		console.log("selected value = ",event.target.value);
-		this.setState({location : event.target.value});
+		this.setState({
+			location : event.target.value
+		},()=>{
+			if(this.state.location.length>=3)
+			{
+				console.log("location",this.state.location);
+			axios({
+			      method: 'get',
+			      url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
+			    })				
+				.then((searchResults) => {
+					var cities = searchResults.data.map(a=>a.cityName);
+					cities = [...new Set(cities)];
+
+					var areas = searchResults.data.map(a=>a.areaName);
+					areas = [...new Set(areas)];
+
+					var subareaName = searchResults.data.map(a=>a.subareaName);
+					subareaName = [...new Set(subareaName)];
+
+					for(let i=0; i<cities.length; i++) {
+						for(let j=0; j<areas.length; j++) {
+							areas[j] = areas[j] + ', ' + cities[i];
+						}
+					}
+
+					for(let i=0; i<cities.length; i++) {
+						for(let j=0; j<subareaName.length; j++) {
+							subareaName[j] = subareaName[j] + ', ' + cities[i];
+						}
+					}
+
+					var citiesAreas = cities.concat(areas);
+					var citiesAreassubAreas = citiesAreas.concat(subareaName);
+
+
+					this.setState({
+						locSearchResults : citiesAreassubAreas,
+					});					
+				})
+		        .catch((error) =>{
+		         	console.log("error = ", error);
+		        });	
+			}
+		});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.location = event.target.value;
@@ -289,7 +344,6 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -309,7 +363,6 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 				this.refs.areaMin.value = "";
 				this.refs.areaMax.value = "";
@@ -320,42 +373,14 @@ class SearchResults extends Component {
 	}
 
 	handleBudget(event){
-		var checkedBudget=[];
-		if(event.currentTarget.checked)
-		{
-			checkedBudget = [event.currentTarget.getAttribute('value')];
-			console.log("checkedBudget",checkedBudget);
-			var budgetList=this.state.budgetList;
-			for(let i=0; i <budgetList.length; i++){
-				for (let j=0; j < checkedBudget.length; j++) {
-					if(budgetList[i].value === checkedBudget){
-						budgetList[i].checked = true;
-					}
-				}
+		// var budget = [];
+		this.state.budgetList.map((item,index)=>{
+			if(item.value == parseInt(event.currentTarget.value)){	
+				item.checked = true
+			}else{
+				item.checked = false				
 			}
-			this.setState({
-				budgetList : budgetList,
-			},()=>{
-				console.log("budgetList=>",this.state.budgetList);
-			});
-		
-		}else{
-			checkedBudget = [event.currentTarget.getAttribute('value')];
-			var budgetList=this.state.budgetList;
-			for(let i=0; i <budgetList.length; i++){
-				for (let j=0; j < checkedBudget.length; j++){
-					if(budgetList[i].value === checkedBudget){
-						budgetList[i].checked = false;
-					}
-				}
-			}
-			this.setState({
-				budgetList : budgetList,
-			},()=>{
-				console.log("budgetList=>",this.state.budgetList);
-			});
-		}
-
+		})
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.budget = event.currentTarget.value;
 		console.log("formValues",formValues);
@@ -367,7 +392,6 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -376,7 +400,6 @@ class SearchResults extends Component {
 	}
 
 	handleFurnish(event){
-		console.log("selected furnish = ",event.target.value);
 		this.setState({furnish : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -386,11 +409,9 @@ class SearchResults extends Component {
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
-		console.log("here searchData",searchData);
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -519,8 +540,7 @@ class SearchResults extends Component {
 
 	handlePropSubType(event){
 		var checkedPropSubType=[];
-		if(event.target.checked)
-		{
+		if(event.target.checked){
 			checkedPropSubType = event.target.getAttribute('value');
 			var propertySubTypeList=this.state.propertySubTypeList;
 			for(let i=0; i <propertySubTypeList.length; i++){
@@ -535,7 +555,6 @@ class SearchResults extends Component {
 			},()=>{
 				console.log("propertySubTypeList=>",this.state.propertySubTypeList);
 			});
-		
 		}else{
 			checkedPropSubType = event.target.getAttribute('value');
 			var propertySubTypeList=this.state.propertySubTypeList;
@@ -572,7 +591,6 @@ class SearchResults extends Component {
 	}
 
 	render() {
-		console.log("propertyTypeBoolean",this.state.propertyTypeBoolean);
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
 				<form>
@@ -596,7 +614,15 @@ class SearchResults extends Component {
 							<div className="col-lg-10 col-md-2 col-xs-12 col-sm-12 noPad">
 								<div className="form-group"  id="" >
 								    <div className="input-group inputBox-main " id="">
-								    	<input type="text" className="form-control" ref="location" name="location" value={this.state.location} placeholder="Enter Location..." onChange={this.handleLocation.bind(this)}/>
+								    	<input type="text" className="form-control" list="locationSearches" ref="location" name="location" value={this.state.location} placeholder="Enter Location..." onChange={this.handleLocation.bind(this)}/>
+										<datalist id="locationSearches">
+									    	{this.state.locSearchResults.length>0 ?
+									    		this.state.locSearchResults.map( (result,index)=>{
+										    		return(<option value={result} key={index} />)
+									    		})
+									    		: ""
+									    	}								
+										</datalist>
 								  		<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-search"></i>
 					                    </div>
@@ -607,9 +633,13 @@ class SearchResults extends Component {
 						<div className="col-lg-8 col-md-12 col-xs-12 col-sm-12 searchDiv1">
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 property propertyType noPad">
 							  	<div className="dropdown" id="dropdown">
-						       		<span className="badge badge-secondary badgeP"><i className="fa fa-check"></i></span>
+						       		{this.state.checkPropValue ? 
+						       			<span className="badge badge-secondary badgeP">
+						       			<i className="fa fa-check"></i></span> 
+						       		: null
+						       		}
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
-								    <span className="caret pull-right"></span></button>
+								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
 							      		{this.state.propertyType === "Commercial" && this.state.propertyTypeBoolean === true?
 										<div className="col-lg-12">
@@ -618,9 +648,10 @@ class SearchResults extends Component {
 												{
 													this.state.propertySubTypeList.map((data,index)=>{
 														return(
-															<span className="col-lg-6 noPad">
-																<input type="checkbox" name ="propertySubType"ref="propertySubType" className="" value={data.name} key={index} checked={data.checked} onChange={this.handlePropSubType.bind(this)}/>&nbsp;{data.name}
-															</span>
+															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
+																<input type="checkbox" name ="propertySubType" ref="propertySubType" className="" value={data.name}  checked={data.checked} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</div>
 														)
 													})
 
@@ -635,7 +666,10 @@ class SearchResults extends Component {
 												{
 													this.state.propertySubTypeList.map((data,index)=>{
 														return(
-															<span className="col-lg-6 noPad"><input type="checkbox" name ="propertySubType" ref="propertySubType" value={data.name} key={index} checked={data.checked} onChange={this.handlePropSubType.bind(this)}/>&nbsp;{data.name}</span>
+															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
+																<input type="checkbox" name ="propertySubType" ref="propertySubType" checked={data.checked} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</div>
 														)
 													})
 
@@ -650,7 +684,10 @@ class SearchResults extends Component {
 												{
 													this.state.propertyList2.map((data,index)=>{
 														return(
-															<span className="col-lg-6 noPad"><input type="checkbox" name ="propertySubType" ref="propertySubType" value={data.name} key={index}  onChange={this.handlePropSubType.bind(this)}/>&nbsp;{data.name}</span>
+															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
+																<input type="checkbox" name ="propertySubType" ref="propertySubType" value={data.name} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</div>
 														)
 													})
 
@@ -664,7 +701,10 @@ class SearchResults extends Component {
 												{
 													this.state.propertyList1.map((data,index)=>{
 														return(
-															<span className="col-lg-6 noPad"><input type="checkbox" name ="propertySubType" ref="propertySubType" value={data.name} key={index}  onChange={this.handlePropSubType.bind(this)}/>&nbsp;{data.name}</span>
+															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
+																<input type="checkbox" name ="propertySubType" ref="propertySubType" value={data.name} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</div>
 														)
 													})
 
@@ -677,27 +717,49 @@ class SearchResults extends Component {
 							</div>
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
-						       		<span className="badge badge-secondary badgeP"><i className="fa fa-check"></i></span>
+						       		<span className="badge badge-secondary badgeP"><i className="fa fa-check"></i></span> 
 							  	 	<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Budget
-								   		<span className="caret"></span>
+								   		<b className="caret pull-right"></b>
 								   	</button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt36">
-									{this.state.transactionType === "Sell" ?
+								    <ul className="dropdown-menu scrollable-menu col-lg-12 pad mt36">
+									{this.state.transactionType === "Sell" &&  this.state.budgetBoolean === true?
 									    this.state.budgetList.map((budget,index)=>{
 								    		return(
-												<span className="col-lg-12 checkbg">
-								    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; {budget.option}
+												<span key={index} className="col-lg-12 checkbg inputStyledbtn">
+								    				<input type="radio" value={budget.value} id={budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+													<span className="radioBoxBlock"></span>
 								    			</span>
 								    			);
 									    	})
 									    :
+									    this.state.transactionType === "Rent" &&  this.state.budgetBoolean === true?
 									    this.state.budgetList.map((budget,index)=>{
 								    		return(
-													<span className="col-lg-12">
-									    				<input type="radio" value={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; {budget.option}
-									    			</span>
+												<span className="col-lg-12 inputStyledbtn">
+								    				<input type="radio" value={budget.value} id={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+													<span className="radioBoxBlock"></span>
+								    			</span>
 								    			);
 								    		})
+									    :
+									    this.state.transactionType === "Sell" ?
+									    this.state.budgetList1.map((budget,index)=>{
+								    		return(
+												<span key={index} className="col-lg-12 inputStyledbtn">
+								    				<input type="radio" value={budget.value} id={budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+													<span className="radioBoxBlock"></span>
+								    			</span>
+								    			);
+								    		})
+									    :
+								      	this.state.budgetList2.map((budget,index)=>{
+							    			return(
+												<span className="col-lg-12 inputStyledbtn">
+								    				<input type="radio" value={budget.value} id={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+													<span className="radioBoxBlock"></span>
+								    			</span>
+							    				);
+							    			})
 								    	}
 								    </ul>
 								</div>
@@ -709,20 +771,24 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">BHK
-								    <span className="caret"></span></button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt36">
-							    	{
-						    			this.state.flatTypeList.map((flatType,index)=>{
-							    			return(
-												<span className="col-lg-12 checkbg">
-							    					<input type="checkbox" value={flatType.value} key={index} className="selectOption" onChange={this.handleBHK.bind(this)}/>&nbsp; {flatType.option}
-							    				</span>
-							    			);
-							    		})
-							    	}
+									<button className="btn dropdown-toggle bgWhite col-lg-12 pad" type="button" data-toggle="dropdown">BHK
+								    <b className="caret pull-right"></b></button>
+								    <ul className="dropdown-menu col-lg-12 pad mt36">
+										<div className="col-md-12">
+								    	{
+							    			this.state.flatTypeList.map((flatType,index)=>{
+								    			return(
+													<span key={index} className="col-lg-12 noPad inputStyledbtn">
+								    					<input type="checkbox" value={flatType.value}  className="selectOption" id={flatType.value} onChange={this.handleBHK.bind(this)}/>&nbsp; <label htmlFor={flatType.value}>{flatType.option}</label>
+														<span className="checkBoxBlock"></span>
+								    				</span>
+								    			);
+								    		})
+								    	}
+								    	</div>
 								    </ul>
 								</div>
+
 							</div>
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
@@ -732,11 +798,23 @@ class SearchResults extends Component {
 						       		: null
 						       		}
 									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Furnished
-								    <span className="caret"></span></button>
+								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 mt36">
-										<span className="col-lg-12"><input type="radio" name="furnishedStatus" ref="" className="" value="Full furnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; Full furnished<br /></span>
-										<span className="col-lg-12"><input type="radio" name="furnishedStatus" ref="" className="" value="Semi furnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; Semi furnished<br /></span>
-										<span className="col-lg-12"><input type="radio" name="furnishedStatus" ref="" className="" value="Unfurnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; Unfurnished<br /></span>
+										<span className="col-lg-12 inputStyledbtn">
+											<input type="radio" name="furnishedStatus" ref="" className="" id="fullFurnished" value="Full furnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; 
+											<label htmlFor="fullFurnished">Full furnished<br /></label>
+											<span className="radioBoxBlock"></span>
+										</span>
+										<span className="col-lg-12 inputStyledbtn">
+											<input type="radio" name="furnishedStatus" ref="" className="" id="semiFurnished" value="Semi furnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; 
+											<label htmlFor="semiFurnished">Semi furnished<br /></label>
+											<span className="radioBoxBlock"></span>
+										</span>
+										<span className="col-lg-12 inputStyledbtn">
+											<input type="radio" name="furnishedStatus" ref="" className="" id="unfurnished" value="Unfurnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; 
+											<label htmlFor="unfurnished">Unfurnished<br /></label>
+											<span className="radioBoxBlock"></span>
+										</span>
 								    </ul>
 								</div>
 							</div>
@@ -747,14 +825,15 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Floor
-								    <span className="caret"></span></button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt36">
+									<button className="btn dropdown-toggle bgWhite col-lg-12 " type="button" data-toggle="dropdown">Floor
+								    <b className="caret pull-right"></b></button>
+								    <ul className="dropdown-menu col-lg-12 pad mt36">
 								    	{
 								    		this.state.floorList.map((floor,index)=>{
 									    		return(
-													<span className="col-lg-12">
-										    			<input type="radio" value={floor.value} key={index} ref="floor" name="floor" className="selectOption" onChange={this.handleFloor.bind(this)}/>&nbsp; {floor.option}
+													<span className="col-lg-12 inputStyledbtn" key={index}>
+										    			<input type="radio" value={floor.value} key={index} ref="floor" name="floor" id={floor.value} className="selectOption" onChange={this.handleFloor.bind(this)}/>&nbsp; <label htmlFor={floor.value}>{floor.option}</label>
+														<span className="radioBoxBlock"></span>
 													</span>
 									    		);
 									    	})
@@ -770,13 +849,14 @@ class SearchResults extends Component {
 						       		: null
 						       		}
 									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Age
-								    <span className="caret"></span></button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt36">
+								    <b className="caret pull-right"></b></button>
+								    <ul className="dropdown-menu col-lg-12 noPad mt36 pAge">
 								    	{
 								    		this.state.propertyAgeList.map((age,index)=>{
 									    		return(
-													<span className="col-lg-12">
-									    					<input type="radio" value={age.value} key={index} ref="age" name="propertyAge" className="selectOption" onChange={this.handleAge.bind(this)}/> &nbsp; {age.option}
+													<span className="col-lg-12 inputStyledbtn" key={index}>
+									    				<input type="radio" value={age.value} id={age.value} ref="age" name="propertyAge" className="selectOption" onChange={this.handleAge.bind(this)}/> &nbsp; <label htmlFor={age.value}>{age.option}</label>
+														<span className="radioBoxBlock"></span>
 									    			</span>
 									    		);
 									    	})
@@ -792,13 +872,14 @@ class SearchResults extends Component {
 						       		: null
 						       		}
 									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">MISC
-								    <span className="caret"></span></button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt36">
+								    <b className="caret pull-right"></b></button>
+								    <ul className="dropdown-menu col-lg-12 noPad mt36 misc">
 								    	{
 								    		this.state.MISCList.map((misc,index)=>{
 									    		return(
-														<span className="col-lg-12">
-									    					<input type="radio" value={misc.value} key={index} ref="age" name="propertyAge" className="selectOption" /> &nbsp; {misc.option}
+														<span key={index} className="col-lg-12 inputStyledbtn">
+									    					<input type="radio" value={misc.value} ref="age" name="propertyAge" className="selectOption" /> &nbsp; {misc.option}
+															<span className="radioBoxBlock"></span>
 									    				</span>
 									    			);
 									    		})
@@ -814,19 +895,19 @@ class SearchResults extends Component {
 						       		: null
 						       		}
 									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Availability
-								    <span className="caret"></span></button>
+								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 mt36">
-										<span className="col-lg-12"><input type="radio" name="availability" ref="" className="" value="Immediate" onChange={this.handleAvailability.bind(this)}/>&nbsp; Immediate<br /></span>
-										<span className="col-lg-12"><input type="radio" name="availability" ref="" className="" value="2 Weeks" onChange={this.handleAvailability.bind(this)} />&nbsp; 2 Weeks<br /></span>
-										<span className="col-lg-12"><input type="radio" name="availability" ref="" className="" value="2-4 Weeks" onChange={this.handleAvailability.bind(this)}/>&nbsp; 2-4 Weeks<br /></span>
-										<span className="col-lg-12"><input type="radio" name="availability" ref="" className="" value="After a month" onChange={this.handleAvailability.bind(this)}/>&nbsp; After a month<br /></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="Immediate" ref="" className="" value="Immediate" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="Immediate">Immediate</label><br /><span className="radioBoxBlock"></span></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoWeeks" ref="" className="" value="2 Weeks" onChange={this.handleAvailability.bind(this)} />&nbsp; <label htmlFor="twoWeeks">2 Weeks</label><br /><span className="radioBoxBlock"></span></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoFourWeeks" ref="" className="" value="2-4 Weeks" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="twoFourWeeks">2-4 Weeks</label><br /><span className="radioBoxBlock"></span></span>
+										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="afterAMonth" ref="" className="" value="After a month" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="afterAMonth">After a month</label><br /><span className="radioBoxBlock"></span></span>
 								    </ul>
 								</div>
 							</div>
 							{/*<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 areaBtn noPad property">
 							  	<div className="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Area
-								    <span className="caret"></span></button>
+								    <span className="caret pull-right"></span></button>
 								    <ul className="dropdown-menu col-lg-12 noPad mt36">
 							      		<input type="text" className="col-lg-3 col-md-3 col-xs-12 col-sm-12 marginLeft" ref="areaMin" placeholder="Min" />
 							      		<input type="text" className="col-lg-3 col-md-3 col-xs-12 col-sm-12 marginLeft" ref="areaMax" placeholder="Max" />
@@ -839,7 +920,7 @@ class SearchResults extends Component {
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 constructionBtn noPad property">
 							  	<div className="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Construction Status
-								    <span className="caretC"></span></button>
+								    <span className="caret pull-rightC"></span></button>
 								    <ul className="dropdown-menu col-lg-10 col-md-12 col-xs-12 col-sm-12 pad mt36">
 								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox" value="Ready To Move" name="constructionType" ref="constructionType" onChange={this.handleConstruction.bind(this)}/> Ready To Move</div>
 								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox" value="Under Construction" name="constructionType" ref="constructionType" onChange={this.handleConstruction.bind(this)}/> Under Construction</div>
@@ -852,7 +933,7 @@ class SearchResults extends Component {
 
 			{/*-------------------Results------------------------*/}
 				
-				<div className="col-lg-12  col-md-10 col-xs-12 col-sm-12 noPad">
+				<div className="col-lg-12 col-md-10 col-xs-12 col-sm-12 noPad">
 				{
 					this.state.inputData.length>0 ? 
 						this.state.inputData.map( (property,index)=>{ 

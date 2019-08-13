@@ -4,11 +4,9 @@
 }
 .boxmsg{
 	height: 220px;
-	margin: auto;
 	text-align: center;
 	border: 1px solid #ccc !important;
 	margin-top:60px;
-	left:200px;
 	color: #999;
 }
 
@@ -36,10 +34,10 @@
 	background-color: #F9A944;
 }
 
-.bgWhite:focus{
+/*.bgWhite:focus{
 	color: #fff;
 	background-color: #0C4890;
-}
+}*/
 
 .topRightTriangle{
 	left: 90.5% !important;
@@ -105,6 +103,8 @@
 .constructionBtn .dropdown-menu{
 	min-width: 200px !important;
 	text-align: left !important;
+	max-height: 150px;
+    overflow-y: scroll;
 }
 
 .sDrop{
@@ -172,8 +172,154 @@
 .bgWhite + .badgeP:hover{
 	color: #fff;
 }
-/*---------------------checkbox Start-----------*/
 
-/*-----------Checkbox End------------*/
+.caret-up { 
+    border-left: 4px solid rgba(0, 0, 0, 0);
+    border-right: 4px solid rgba(0, 0, 0, 0);
+    border-bottom: 4px solid;
+    margin-top: 7px;
+    display: inline-block;
+}
 
 
+.property label{
+	font-weight: normal !important;
+}
+
+.pAge{
+	width:200px;
+}
+
+.misc{
+	width: 200px;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 250px;
+    overflow-x: hidden;
+}
+
+
+/*-------------------------------------------------*/
+/* Create a custom checkbox */
+.inputStyledbtn{
+  position: relative;
+  padding-top: 5px;
+  align-content: center;
+  cursor: pointer;
+  user-select: none;
+}
+/* Hide the browser's default checkbox */
+.inputStyledbtn input {
+    position: relative;
+    opacity: 0;
+    z-index: 1;
+    cursor: pointer;
+    height: 17px;
+    width: 17px;
+    /* right: 10px; */
+    margin-top: 2px;
+}
+.checkBoxBlock {
+  position: absolute;
+  top: 7px;
+  left: 0px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 3px;
+  border: 2px solid #ddd;
+  z-index: 0;
+}
+.radioBoxBlock {
+  position: absolute;
+  top: 8px;
+  left: 51px;
+  vertical-align: center !important;
+  align-content: center;
+  height: 17px;
+  width: 17px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+  margin-left: -37px;
+  z-index: 0;
+}
+.plusContainer{
+    font-family: 'PT Sans', sans-serif;
+
+}
+/* On mouse-over, add a grey background color */
+.inputStyledbtn:hover input ~ .checkBoxBlock{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.inputStyledbtn input:checked ~ .checkBoxBlock {
+  background-color: #F9A944;
+  border:2px solid #F9A944;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkBoxBlock:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.inputStyledbtn input:checked ~ .checkBoxBlock:after {
+  display: block;
+}
+/* Style the checkmark/indicator */
+.inputStyledbtn .checkBoxBlock:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+/* On mouse-over, add a grey background color */
+.inputStyledbtn:hover input ~ .radioBoxBlock{
+  background-color: #eee;
+}
+/* When the checkbox is checked, add a blue background */
+.inputStyledbtn input:checked ~ .radioBoxBlock {
+  background-color: #F9A944;
+  border:2px solid #F9A944;
+}
+/* Create the checkmark/indicator (hidden when not checked) */
+.radioBoxBlock:after {
+  position: absolute;
+  display: none;
+}
+/* Show the checkmark when checked */
+.inputStyledbtn input:checked ~ .radioBoxBlock:after {
+  display: block;
+   background-color: transparent;
+}
+/* Style the checkmark/indicator */
+.inputStyledbtn .radioBoxBlock:after {
+  left: 4px;
+  top: 0px;
+  width: 6px;
+  height: 10px;
+  align-content: center;
+  border: solid white;
+  border-width: 0 3px 3px 0;  
+
+
+  transform: rotate(45deg);
+}
+.centreDetaillistItemEcommerce{
+  padding-left: 25px;
+  font-family: 'PT Sans', sans-serif;
+
+  padding-top: 5px;
+  font-size: 12px !important;
+}	
+
+/*--------------------------------------------*/
