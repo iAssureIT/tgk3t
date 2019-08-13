@@ -308,11 +308,7 @@ import './PropertyDetails.css';
 									    	<option value="1-2">1-2 Years</option>
 									    	<option value="2-5">2-5 Years</option>
 									    	<option value="5-8">5-8 Years</option>
-<<<<<<< Updated upstream
-									    	<option value=">8">>8 Years</option>
-=======
 									    	<option value=">8"> >8 Years</option>
->>>>>>> Stashed changes
 										</select>
 									</div>				  
 								</div>
