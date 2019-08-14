@@ -17,7 +17,7 @@ class SearchResults extends Component {
 			propertyList1			: [],
 			propertyList2			: [],
 			inputData  				: "",
-			propertyTransactionType	: "Commercial-Sell",
+			propertyTransactionType	: "Residential-Sell",
 			budget          		: [],
 			propertySubType 		: [],
 			propertyType            : "",
@@ -34,29 +34,25 @@ class SearchResults extends Component {
 			furnish                	: "",
 			propertyAge             : "",
 			availability            : "",
-			propertyTypeBoolean		: false,
-			budgetBoolean			: false,
 			checkPropValue			: false,
+			checkBudgetValue		: false,
 			propertyTransList		: [],
 			locSearchResults		: "",
 		}
-		this.handleSearch = this.handleSearch.bind(this);
 	}
 
 	componentDidMount() {
 		var data = JSON.parse(localStorage.getItem('searchData'));
-		console.log("data",data);
 		if(data)
 		{
 			this.setState({
 				location				: data.location,
-				budget 					: data.budget,
+				budget 					: [data.budget],
 				propertySubType			: data.propertySubType,
 				propertyTransactionType	: data.propertyType+"-"+data.transactionType,
 				propertyType            : data.propertyType,
 				transactionType         : data.transactionType,
 			},()=>{
-				console.log("propertyTransactionType",this.state.propertyTransactionType);
 					var propertySubType = [];
 					if(data.propertyType === "Residential"){
 						propertySubType = this.state.propertyList1;
@@ -79,7 +75,6 @@ class SearchResults extends Component {
 
 					this.setState({
 						propertySubTypeList : propertySubTypeList,
-						propertyTypeBoolean : true,
 					});
 
 					var budget = [];
@@ -101,16 +96,17 @@ class SearchResults extends Component {
 						}
 						return newObj;
 					})
-					this.setState({budgetList:budgetList},()=>{
-						this.setState({
-							budgetBoolean : true
-						})
-					});
+					this.setState({budgetList:budgetList});
 				})
 
 			if(data.propertySubType && data.propertySubType.length > 0){
 				this.setState({
-					checkPropValue      : true
+					checkPropValue      : true,
+				})
+			}
+			if(data.budget!==""){
+				this.setState({
+					checkBudgetValue    : true,
 				})
 			}
 		}
@@ -119,7 +115,6 @@ class SearchResults extends Component {
   		axios
 			.post("/api/search/properties/", data)
 			.then((searchResults) => {
-				console.log("searchResults =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -129,36 +124,36 @@ class SearchResults extends Component {
 
 		this.setState({
 			budgetList1 : [
-				{value: 1000000, option: "Upto 10 Lac"},
-				{value: 2000000, option: "Upto 20 Lac"},
-				{value: 3000000, option: "Upto 30 Lac"},
-				{value: 4000000, option: "Upto 40 Lac"},
-				{value: 5000000, option: "Upto 50 Lac"},
-				{value: 6000000, option: "Upto 60 Lac"},
-				{value: 7000000, option: "Upto 70 Lac"},
-				{value: 8000000, option: "Upto 80 Lac"},
-				{value: 9000000, option: "Upto 90 Lac"},
-				{value: 10000000, option: "Upto 1 Cr"},
-				{value: 20000000, option: "Upto 2 Cr"},
-				{value: 30000000, option: "Upto 3 Cr"},
-				{value: 50000000, option: "Upto 5 Cr"},
-				{value: 100000000, option: "Upto 10 Cr"},
+				{value: 1000000, option: "Upto 10 Lac", checked:false},
+				{value: 2000000, option: "Upto 20 Lac", checked:false},
+				{value: 3000000, option: "Upto 30 Lac", checked:false},
+				{value: 4000000, option: "Upto 40 Lac", checked:false},
+				{value: 5000000, option: "Upto 50 Lac", checked:false},
+				{value: 6000000, option: "Upto 60 Lac", checked:false},
+				{value: 7000000, option: "Upto 70 Lac", checked:false},
+				{value: 8000000, option: "Upto 80 Lac",checked:false},
+				{value: 9000000, option: "Upto 90 Lac",checked:false},
+				{value: 10000000, option: "Upto 1 Cr",checked:false},
+				{value: 20000000, option: "Upto 2 Cr",checked:false},
+				{value: 30000000, option: "Upto 3 Cr",checked:false},
+				{value: 50000000, option: "Upto 5 Cr",checked:false},
+				{value: 100000000, option: "Upto 10 Cr",checked:false},
 			],
 
 			budgetList2 : [
-				{value: 5000,  option: "Upto 5,000"},
-				{value: 10000, option: "Upto 10,000"},
-				{value: 15000, option: "Upto 15,000"},
-				{value: 20000, option: "Upto 20,000"},
-				{value: 25000, option: "Upto 25,000"},
-				{value: 30000, option: "Upto 30,000"},
-				{value: 40000, option: "Upto 40,000"},
-				{value: 50000, option: "Upto 50,000"},
-				{value: 60000, option: "Upto 60,000"},
-				{value: 70000, option: "Upto 70,000"},
-				{value: 80000, option: "Upto 80,000"},
-				{value: 90000, option: "Upto 90,000"},
-				{value: 100000, option: "Upto 1 Lac"},
+				{value: 5000,  option: "Upto 5,000",checked:false},
+				{value: 10000, option: "Upto 10,000",checked:false},
+				{value: 15000, option: "Upto 15,000",checked:false},
+				{value: 20000, option: "Upto 20,000",checked:false},
+				{value: 25000, option: "Upto 25,000",checked:false},
+				{value: 30000, option: "Upto 30,000",checked:false},
+				{value: 40000, option: "Upto 40,000",checked:false},
+				{value: 50000, option: "Upto 50,000",checked:false},
+				{value: 60000, option: "Upto 60,000",checked:false},
+				{value: 70000, option: "Upto 70,000",checked:false},
+				{value: 80000, option: "Upto 80,000",checked:false},
+				{value: 90000, option: "Upto 90,000",checked:false},
+				{value: 100000, option: "Upto 1 Lac",checked:false},
 			],
 
 			floorList : [
@@ -195,20 +190,20 @@ class SearchResults extends Component {
 			],
 
 			propertyList1 : [
-				{name:'MultiStory Apartment'},
-				{name:'Residential House'},
-				{name:'Studio Apartment'},
-				{name:'Villa'},
-				{name:'Penthouse'}
+				{name:'MultiStory Apartment', checked:false},
+				{name:'Residential House', checked:false},
+				{name:'Studio Apartment', checked:false},
+				{name:'Villa', checked:false},
+				{name:'Penthouse', checked:false}
 			],
 
 			propertyList2 : [
-				{name:'Office in IT Park/SEZ'},
-				{name:'Commercial Office Space'},
-				{name:'Commercial Showroom'},
-				{name:'Commercial Shop'},
-				{name:'Industrial Building'},
-				{name:'Warehouse/Godown'}
+				{name:'Office in IT Park/SEZ', checked:false},
+				{name:'Commercial Office Space', checked:false},
+				{name:'Commercial Showroom', checked:false},
+				{name:'Commercial Shop', checked:false},
+				{name:'Industrial Building', checked:false},
+				{name:'Warehouse/Godown', checked:false}
 			],
 			propertyTransList : [
 			]
@@ -234,25 +229,8 @@ class SearchResults extends Component {
 		$("#budget").hide();
 	}
 
-	handleSearch(event){
-		const target = event.target.value;
-		const name   = event.target.name;
-		this.setState({
-			[name]       		: target,
-		},()=>{
-		var propertyTransactionType 	= this.state.propertyTransactionType.split("-");
-		this.setState({
-			propertyType 	: propertyTransactionType[0],
-			transactionType : propertyTransactionType[1],
-		})
-
-		})
-	}
-
 	handlePropTranType(event){
-		console.log("selected value = ",event.target.value);
 		var propertyTransactionType 	= event.target.value.split("-");
-		console.log("propertyTransactionType",propertyTransactionType)
 		this.setState({
 			propertyType 			: propertyTransactionType[0],
 			transactionType 		: propertyTransactionType[1],
@@ -261,10 +239,66 @@ class SearchResults extends Component {
 			budgetBoolean			:false,
 		},()=>{
 			var formValues = JSON.parse(localStorage.getItem("searchData"));
-			formValues.propertyType = this.state.propertyType;
+			var propertySubType = [];
+			if(this.state.propertyType === "Residential"){
+					propertySubType = this.state.propertyList1;
+			}else{
+					propertySubType = this.state.propertyList2;
+			}
+
+			this.setState({
+				propertySubTypeList : propertySubType
+			},()=>{
+				var propertySubType = [];
+				for (var i = this.state.propertySubTypeList.length - 1; i >= 0; i--) {
+					if(this.state.propertySubTypeList[i].checked === true){
+						var pSubType = this.state.propertySubTypeList[i].name;
+						if(pSubType){
+							propertySubType.push(pSubType);
+						}
+					}
+				}
+				formValues.propertySubType = propertySubType;
+				var found = this.state.propertySubTypeList.find((element)=>{return element.checked === true}); 
+				if(found && found.checked === true){
+					this.setState({checkPropValue:true})
+				}else{
+					this.setState({checkPropValue:false})
+				}
+			})
+
+			var budget = [];
+			if(this.state.transactionType === "Sell"){
+				budget = this.state.budgetList1;
+			}else{
+				budget = this.state.budgetList2;
+			}
+
+			this.setState({
+				budgetList : budget,
+			},()=>{
+				var budgetList = [];
+				for (var i = this.state.budgetList.length - 1; i >= 0; i--) {
+					if(this.state.budgetList[i].checked === true){
+						var budgetValue = this.state.budgetList[i].name;
+						if(budgetValue){
+							budgetList.push(budgetValue);
+						}
+					}
+				}
+				formValues.budget = budgetList;
+				var found = this.state.budgetList.find((element)=>{return element.checked === true}); 
+				if(found && found.checked === true){
+					this.setState({checkBudgetValue:true})
+				}else{
+					this.setState({checkBudgetValue:false})
+				}
+			})
+
+			var formValues = JSON.parse(localStorage.getItem("searchData"));	
+			formValues.propertyType    = this.state.propertyType;
 			formValues.transactionType = this.state.transactionType;
 
-			console.log("formValues",formValues);
 			var searchData = JSON.stringify(formValues);
 
 			localStorage.removeItem("searchData");
@@ -278,20 +312,15 @@ class SearchResults extends Component {
 		        .catch((error) =>{
 		         	console.log("error = ", error);
 		        });	
-
 		})
 	}
 
 	handleLocation(event){
-
-
-		console.log("selected value = ",event.target.value);
 		this.setState({
 			location : event.target.value
 		},()=>{
 			if(this.state.location.length>=3)
 			{
-				console.log("location",this.state.location);
 			axios({
 			      method: 'get',
 			      url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
@@ -334,7 +363,6 @@ class SearchResults extends Component {
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.location = event.target.value;
-		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 
 		localStorage.removeItem("searchData");
@@ -380,9 +408,16 @@ class SearchResults extends Component {
 				item.checked = false				
 			}
 		})
+
+		var found = this.state.budgetList.find((element)=>{return element.checked === true}); 
+		if(found && found.checked === true){
+			this.setState({checkBudgetValue:true})
+		}else{
+			this.setState({checkBudgetValue:false})
+		}
+
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.budget = event.currentTarget.value;
-		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 
 		localStorage.removeItem("searchData");
@@ -403,7 +438,6 @@ class SearchResults extends Component {
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.furnishedStatus = event.target.value;
-		console.log("formValues",formValues);
 
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
@@ -419,21 +453,17 @@ class SearchResults extends Component {
 	}
 
 	handleAge(event){
-		console.log("selected propertyAge = ",event.target.value);
 		this.setState({propertyAge : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.propertyAge = event.target.value;
-		console.log("formValues",formValues);
 
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
-		console.log("here searchData",searchData);
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -442,20 +472,16 @@ class SearchResults extends Component {
 	}
 
 	handleAvailability(event){
-		console.log("selected Availability = ",event.target.value);
 		this.setState({availability : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.availability = event.target.value;
-		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
-		console.log("here searchData",searchData);
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -464,22 +490,17 @@ class SearchResults extends Component {
 	}
 
 	handleFloor(event){
-		console.log("selected floor = ",event.target.value);
 		this.setState({floor : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.floor = event.target.value;
-		console.log("formValues",formValues);
 
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
-		console.log("here searchData",searchData);
-		
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -494,21 +515,16 @@ class SearchResults extends Component {
 			this.state.flatType.pop(event.target.getAttribute('value'));
 		}
 
-		this.setState({flatType : this.state.flatType},()=>{
-			console.log("flatType",this.state.flatType);
-		})
+		this.setState({flatType : this.state.flatType})
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.flatType = this.state.flatType;
-		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
-		console.log("here searchData",searchData);
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -517,7 +533,6 @@ class SearchResults extends Component {
 	}
 	
 	handleConstruction(){
-		console.log("selected constriction = ",this.refs.constructionType.value);
 		this.setState({constructionType : this.refs.constructionType.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -526,11 +541,9 @@ class SearchResults extends Component {
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
-		console.log("here searchData",searchData);
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -552,8 +565,6 @@ class SearchResults extends Component {
 			}
 			this.setState({
 				propertySubTypeList : propertySubTypeList,
-			},()=>{
-				console.log("propertySubTypeList=>",this.state.propertySubTypeList);
 			});
 		}else{
 			checkedPropSubType = event.target.getAttribute('value');
@@ -567,40 +578,33 @@ class SearchResults extends Component {
 			}
 			this.setState({
 				propertySubTypeList : propertySubTypeList,
-			},()=>{
-			// 	const data = this.state.propertySubTypeList;
-			// 	let found = data.find(element => element.checked === true);
-			// 	console.log("found",found);
-			// 	if(found && found.length > 0){
-			// 		this.setState({
-			// 			checkPropValue : true
-			// 		})
-			// 	}
-			// 	else{
-			// 		this.setState({
-			// 			checkPropValue : false
-			// 		})
-			// 	}
 			});
 		}
 
-
+		var found = this.state.propertySubTypeList.find((element)=>{return element.checked === true}); 
+		if(found && found.checked === true){
+			this.setState({checkPropValue:true})
+		}else{
+			this.setState({checkPropValue:false})
+		}
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		var propertySubType = [];
 		for (var i = this.state.propertySubTypeList.length - 1; i >= 0; i--) {
-			propertySubType[i] = this.state.propertySubTypeList[i].name;
+			if(this.state.propertySubTypeList[i].checked === true){
+				var pSubType = this.state.propertySubTypeList[i].name;
+				if(pSubType){
+					propertySubType.push(pSubType);
+				}
+			}
 		}
 		formValues.propertySubType = propertySubType;
-		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 		localStorage.removeItem("searchData");
 		localStorage.setItem("searchData",searchData);
-		console.log("here searchData",searchData);
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				console.log("here result =",searchResults.data);
 				this.setState({ inputData : searchResults.data });
 			})
 	        .catch((error) =>{
@@ -660,10 +664,10 @@ class SearchResults extends Component {
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
-							      		{this.state.propertyType === "Commercial" && this.state.propertyTypeBoolean === true?
+							      	{
 										<div className="col-lg-12">
 										  	<div className="col-lg-12">
-												<h5>Commercial</h5>
+												<h5>{this.state.propertyType}</h5>
 												{
 													this.state.propertySubTypeList.map((data,index)=>{
 														return(
@@ -677,71 +681,22 @@ class SearchResults extends Component {
 												}
 											</div>
 										</div>
-										:
-							      		this.state.propertyType === "Residential" && this.state.propertyTypeBoolean === true?
-										<div className="col-lg-12">
-										  	<div className="col-lg-12">
-												<h5>Residential</h5>
-												{
-													this.state.propertySubTypeList.map((data,index)=>{
-														return(
-															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
-																<input type="checkbox" name ="propertySubType" ref="propertySubType" checked={data.checked} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
-																<span className="checkBoxBlock"></span>
-															</div>
-														)
-													})
-
-												}
-											</div>
-										</div>
-										:
-										this.state.propertyType === "Commercial"?
-										<div className="col-lg-12">
-										  	<div className="col-lg-12">
-												<h5>Commercial</h5>
-												{
-													this.state.propertyList2.map((data,index)=>{
-														return(
-															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
-																<input type="checkbox" name ="propertySubType" ref="propertySubType" value={data.name} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
-																<span className="checkBoxBlock"></span>
-															</div>
-														)
-													})
-
-												}
-											</div>
-										</div>
-										:
-										<div className="col-lg-12">
-										 	<div className="col-lg-12">
-												<h5>Residential</h5>
-												{
-													this.state.propertyList1.map((data,index)=>{
-														return(
-															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
-																<input type="checkbox" name ="propertySubType" ref="propertySubType" value={data.name} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
-																<span className="checkBoxBlock"></span>
-															</div>
-														)
-													})
-
-												}
-											</div>
-										</div>
-										}
+									}
 								    </ul>
 								</div>
 							</div>
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
-						       		<span className="badge badge-secondary badgeP"><i className="fa fa-check"></i></span> 
+						       		{this.state.checkBudgetValue === true ? 
+						       			<span className="badge badge-secondary badgeP">
+						       			<i className="fa fa-check"></i></span> 
+						       		: null
+						       		}
 							  	 	<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Budget
 								   		<b className="caret pull-right"></b>
 								   	</button>
 								    <ul className="dropdown-menu scrollable-menu col-lg-12 pad mt36">
-									{this.state.transactionType === "Sell" &&  this.state.budgetBoolean === true?
+									{
 									    this.state.budgetList.map((budget,index)=>{
 								    		return(
 												<span key={index} className="col-lg-12 checkbg inputStyledbtn">
@@ -750,36 +705,7 @@ class SearchResults extends Component {
 								    			</span>
 								    			);
 									    	})
-									    :
-									    this.state.transactionType === "Rent" &&  this.state.budgetBoolean === true?
-									    this.state.budgetList.map((budget,index)=>{
-								    		return(
-												<span className="col-lg-12 inputStyledbtn">
-								    				<input type="radio" value={budget.value} id={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
-													<span className="radioBoxBlock"></span>
-								    			</span>
-								    			);
-								    		})
-									    :
-									    this.state.transactionType === "Sell" ?
-									    this.state.budgetList1.map((budget,index)=>{
-								    		return(
-												<span key={index} className="col-lg-12 inputStyledbtn">
-								    				<input type="radio" value={budget.value} id={budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
-													<span className="radioBoxBlock"></span>
-								    			</span>
-								    			);
-								    		})
-									    :
-								      	this.state.budgetList2.map((budget,index)=>{
-							    			return(
-												<span className="col-lg-12 inputStyledbtn">
-								    				<input type="radio" value={budget.value} id={budget.value} key={index} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
-													<span className="radioBoxBlock"></span>
-								    			</span>
-							    				);
-							    			})
-								    	}
+								    }
 								    </ul>
 								</div>
 							</div>

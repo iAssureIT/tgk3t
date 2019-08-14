@@ -62,7 +62,7 @@ class SearchProperty extends Component {
 				{name:'MultiStory Apartment'},
 				{name:'Residential House'},
 				{name:'Studio Apartment'},
-				{name:'Villa / Bunglow'},
+				{name:'Villa'},
 				{name:'Penthouse'}
 			],
 
@@ -88,11 +88,9 @@ class SearchProperty extends Component {
 		}
 
 		const formValues = {
-			// transactionType : this.props.propertyType == "Commercial" ? transactionType : this.props.transactionType,
 			transactionType : this.props.propertyType === "Commercial" ? transactionType : "Sell",
 			location        : this.state.location,
-			budget 			: [this.state.budget],
-			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
+			budget 			: this.state.budget,
 			propertyType   	: this.props.propertyType === "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
 			areaMin 		: 0,
@@ -147,16 +145,11 @@ class SearchProperty extends Component {
 
 		const formValues = {
 			transactionType : this.props.propertyType === "Commercial" ? transactionType : this.props.transactionType,
-			// transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
 			location        : this.state.location,
-			budget 			: [this.state.budget],
-			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
+			budget 			: this.state.budget,
 			propertyType   	: this.props.propertyType === "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
-			// areaMin 		: 0,
-			// areaMax 		: 0,
 			floor			: "",
-			// constructionType: "",
 			furnishedStatus : "",
 			flatType 		: "",
 			propertyAge 	: "",
@@ -182,7 +175,7 @@ class SearchProperty extends Component {
 			transactionType : this.props.propertyType === "Commercial" ? transactionType : this.props.transactionType,
 			// transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
 			location        : this.state.location,
-			budget 			: [this.state.budget],
+			budget 			: this.state.budget,
 			// propertyType   	: this.props.propertyType == "Commercial" ? propertyType : this.props.propertyType,
 			propertyType   	: this.props.propertyType === "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
@@ -202,14 +195,12 @@ class SearchProperty extends Component {
 	propertySubType(event){
 	  if(event.target.checked){
 		  this.state.propertySubType.push(event.target.getAttribute('value'));
-		  console.log("propertySubType",this.state.propertySubType);
 	  }else{
 		  for (var i = this.state.propertySubType.length - 1; i >= 0; i--) {
 				if(this.state.propertySubType[i] === event.target.getAttribute('value')){
 					this.state.propertySubType.splice(i,1)
 				}
 			}
-	  		console.log("propertySubType",this.state.propertySubType);
 	  }
 
 	}
