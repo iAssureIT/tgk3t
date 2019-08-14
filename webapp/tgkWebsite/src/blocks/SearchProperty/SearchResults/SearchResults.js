@@ -593,6 +593,7 @@ class SearchResults extends Component {
 			this.setState({checkPropValue:false})
 		}
 
+
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		var propertySubType = [];
 		for (var i = this.state.propertySubTypeList.length - 1; i >= 0; i--) {
