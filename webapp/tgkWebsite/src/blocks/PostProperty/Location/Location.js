@@ -26,6 +26,29 @@ class Location extends Component {
 				"societyName"		: "",
 				"pincode"			: "",
 			};
+
+			if(this.props.updateStatus === true){
+
+	        	axios
+					.get('/api/properties/'+this.props.prop_id)
+					.then( (response) =>{
+						console.log("get property = ",response);
+
+						this.setState({
+								stateCode 		: response.data.propertyLocation.stateCode,
+						    	districtName 	: response.data.propertyLocationdistrictName,
+						    	blockName 		: response.data.propertyLocation.blockName,
+						    	cityName 		: response.data.propertyLocation.cityName,
+						    	areaName 		: response.data.propertyLocation.areaName,
+						});
+						
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+
+        	}
+
 		}
 
 	componentDidMount(){
@@ -536,7 +559,9 @@ const mapStateToProps = (state)=>{
 		Financials		: state.Financials,
 		Amenities		: state.Amenities,
 		Availability	: state.Availability,
-		Location	 	: state.Location,		
+		Location	 	: state.Location,
+		prop_id         : state.prop_id,
+		updateStatus    : state.updateStatus,		
 	}
 };
 

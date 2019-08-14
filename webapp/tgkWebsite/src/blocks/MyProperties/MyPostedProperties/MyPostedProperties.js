@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactDOM 			from 'react-dom';
 import axios                from 'axios';
 import { Link } 			from 'react-router-dom';
 import {withRouter} 		from 'react-router-dom';
@@ -26,12 +27,14 @@ import './MyPostedProperties.css';
 			"uid"		   : uid,
 			"myProperties" : [],
 			"userData"     : [],
-			"heartStatus"  : "Express Interest"
+			"heartStatus"  : "Express Interest",
+     		"prop_id"      : "",
+
 		}
 
 	}
 	componentDidMount(){
-    	this.props.showFirstForm();  //for dispatch
+    	// this.props.showFirstForm();  //for dispatch
 
 		$(".modal-backdrop").remove();
 	     axios
@@ -82,7 +85,9 @@ import './MyPostedProperties.css';
 	}
 
 	removeBackdrop(){
-		$(".modal-backdrop").remove();    
+		$(".modal-backdrop").remove();
+		// $("#BasicInfo").remove();
+		window.location.reload();  
 	}
 
 	goProfile(event){
@@ -91,6 +96,31 @@ import './MyPostedProperties.css';
 		// this.props.history.push("/PropertyProfile/"+id);
   //  			window.location.reload();
 	}
+
+	login(event){
+	    const originPage = "post" ;
+	    const uid = localStorage.getItem("uid");
+	    const prop_id  = event.target.id;
+	    console.log("property id here",prop_id);
+	    if(uid && prop_id){
+	      this.props.already_loggedIn(originPage,uid,prop_id);
+	    }else{
+	      this.props.login_mobileNum(originPage);
+	    }
+  	}
+
+  	editProperty(event){
+	    const uid = localStorage.getItem("uid");
+	    const prop_id  = event.currentTarget.id;
+	    const originPage = "myPostedProperties" ;
+	    this.props.editPropertyProfile(uid,prop_id);
+		let mountNode = ReactDOM.findDOMNode(this.refs.BasicInfo);
+		console.log("mountNode = ",mountNode);
+    	// let unmount = ReactDOM.unmountComponentAtNode(mountNode);	    
+		// console.log("unmount = ",unmount);
+  	}
+
+
 
 	render() {
 		let header;
@@ -233,13 +263,16 @@ import './MyPostedProperties.css';
 												</div>
 											</div>
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
-												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
+												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
 												</div>
-												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
+												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													Possession by : <span className="propertySubText2">{myProperty.propertyDetails ? myProperty.propertyDetails.availableFrom : "-"}</span>
 												</div>
-												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
+												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+													<button className="col-lg-8 pull-right btn btn-primary" id={myProperty._id} data-toggle="modal" data-target="#postPropertyModal" onClick={this.editProperty.bind(this)} > Edit Property</button> 
+												</div>
+												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 pull-right">				
 		                                      		<Link to={"/PropertyProfile/"+myProperty._id} target="_blank">
 														<button className="btn pull-right btnDetails">Details &nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>
 													</Link>
@@ -262,9 +295,9 @@ import './MyPostedProperties.css';
 
 		            <div className="modal-content">
 		              <div className="modal-header">
-		                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
+		                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
 		                <h4 className="modal-title">
-		                  <b> {header} </b>
+		                  <b style={{paddingLeft:"28px"}}> {header} </b>
 		                </h4>
 		              </div>
 
@@ -312,12 +345,14 @@ const mapStateToProps = (state)=>{
 };
 const mapDispatchToProps = (dispatch)=>{
   return {
-    showFirstForm  : ()         => dispatch({type: "SHOW_FIRST_FORM"}),
-
     setFormTitle   : (formTitle)=> dispatch({
                                               type      : "SET_FORM_TITLE",
                                               formTitle : formTitle,
                                             }),
+    login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
+    already_loggedIn : (originPage,uid,prop_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, prop_id:prop_id}),
+
+    editPropertyProfile : (uid,prop_id,updateStatus)=>dispatch({type: "EDIT_PROP_PROFILE", uid:uid, prop_id:prop_id, updateStatus: true}),
   }
 };
 

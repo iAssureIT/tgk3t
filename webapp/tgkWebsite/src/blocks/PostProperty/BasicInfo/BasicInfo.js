@@ -19,81 +19,54 @@ class BasicInfo extends Component{
 				// user_id 		 : localStorage.getItem("user_id"),
 				fullPropTtype    : "",
 				prop_id          : "",
-				updatestatus     : false,
 			};
 			this.radioChange = this.radioChange.bind(this);
+
+        	console.log("this.props.updateStatus = ",this.props.updateStatus);
+
+        	if(this.props.updateStatus === true){
+
+	        	axios
+					.get('/api/properties/'+this.props.prop_id)
+					.then( (res) =>{
+						console.log("get property = ",res);
+
+						this.setState({
+									propertyHolder  : res.data.propertyHolder,
+					        		transactionType : res.data.transactionType,
+									propertyType 	: res.data.propertyType,
+									propertySubType : res.data.propertySubType,
+									floor 			: res.data.floor,
+									totalfloor 		: res.data.totalFloor,
+									fullPropTtype 	: res.data.propertyType+'-'+res.data.propertySubType,
+								});
+
+						if(res.data.propertyHolder === "Owner"){
+							$('.sellerType1').addClass('highlight').siblings().removeClass('highlight'); 	
+						}
+						if(res.data.propertyHolder === "Care Taker"){
+							$('.sellerType2').addClass('highlight').siblings().removeClass('highlight'); 
+						}
+						if(res.data.propertyHolder === "Broker"){
+							$('.sellerType3').addClass('highlight').siblings().removeClass('highlight'); 	
+						}
+
+						
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+
+        	}
+
+
+
 		}
 
 		componentDidMount(){			
 
         	var message	= localStorage.getItem("message");
         	
-        	console.log("prop id ", this.props.prop_id);
-        	var prop_id = this.props.prop_id ? this.props.prop_id : null;
-		        if(prop_id !== null)
-		        { console.log("prop_id",prop_id);
-		        	this.setState({
-		        		updatestatus : true,
-		        	},()=>{
-        				console.log("here var updatestatus",this.state.updatestatus);
-
-		        	})
-		        }
-		        else{
-		        	this.setState({
-		        		updatestatus : false,
-		        	})
-		        }
-        	axios
-				.get('/api/properties/'+prop_id)
-				.then( (res) =>{
-					console.log("resposnse here===================>",res);
-
-					this.setState({
-								propertyHolder  : res.data.propertyHolder,
-				        		transactionType : res.data.transactionType,
-								propertyType 	: res.data.propertyType,
-								propertySubType : res.data.propertySubType,
-								// fullPropTtype   : 
-							});
-
-					this.refs.floor.value = res.data.floor;
-					this.refs.totalfloor.value = res.data.totalFloor;
-					
-					var fullProp = this.state.propertyType+ '-' + this.state.propertySubType;
-					// console.log("here full type", fullProp);
-
-					this.setState({
-
-						fullPropTtype : fullProp,
-					});
-					// console.log("here propertyHolder",this.state.propertyHolder);	
-					// console.log("here transactionType",this.state.transactionType);	
-					// console.log("here propertyType",this.state.propertyType);	
-					// console.log("here propertySubType",this.state.propertySubType);	
-					// console.log("here this.refs.floor.value ",this.refs.floor.value );	
-					// console.log("here this.refs.totalfloor.value ",this.refs.totalfloor.value );	
-
-					if(this.state.propertyHolder === "owner")
-					{
-						  $('.sellerType1').addClass('highlight').siblings().removeClass('highlight'); 	
-					}
-					if(this.state.propertyHolder === "careTaker")
-					{
-						$('.sellerType2').addClass('highlight').siblings().removeClass('highlight'); 
-					}
-					if(this.state.propertyHolder === "broker")
-					{
-						$('.sellerType3').addClass('highlight').siblings().removeClass('highlight'); 	
-					}
-
-					
-				})
-				.catch((error) =>{
-					console.log("error = ", error);
-					// alert("Something Went wrong")
-				});
-
 			if(message === "NEW-USER-CREATED"){
 				swal("Welcome!","You are now logged in!","success");
 			}			
@@ -122,16 +95,14 @@ class BasicInfo extends Component{
 		}
 
 		insertProperty(event){
-			event.preventDefault();
-			
-			console.log("submit updatestatus",this.state.updatestatus);
+			event.preventDefault();			
 			const formValues = {
 				"propertyHolder" 	: this.state.propertyHolder,
         		"transactionType"	: this.state.transactionType,
 				"propertyType"  	: this.state.propertyType,
 				"propertySubType"	: this.state.propertySubType,
-				"floor"         	: this.refs.floor.value,
-				"totalFloor"    	: this.refs.totalfloor.value,
+				"floor"         	: this.state.floor,
+				"totalFloor"    	: this.state.totalfloor,
 				"listing"       	: false,
 				"status"			: "WIP",
 				"uid" 				: localStorage.getItem("uid"),
@@ -140,27 +111,21 @@ class BasicInfo extends Component{
 			};
 			console.log("BasicInfo===",formValues);
 			if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && this.refs.floor.value!=="" && this.refs.totalfloor.value!=="" ){
-				if(this.state.updatestatus=== true)
-				{
-					console.log("update axios");
-
+				if(this.props.updateStatus === true){
 					axios
 					.patch('/api/properties/patch/properties',formValues)
 					.then( (res) =>{
 						console.log(res.data);
 						if(res.status === 200){
-							// swal("Good job!", "Property inserted successfully!", "success");
 							localStorage.setItem('propertyId',res.data.property_id)
 							console.log("BasicInfo res = ",res);
 							this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
 							this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
 						}else{
-							// alert(" Please Fill all fields")
 						}
 					})
 					.catch((error) =>{
 						console.log("error = ", error);
-						// alert("Something Went wrong")
 					});
 
 				}else{
@@ -216,7 +181,6 @@ class BasicInfo extends Component{
 			    });
 			
 				    $('#radio-example1 ').click(function(){
-
 				        $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
 				    });
 				    $('#radio-example2').click(function(){
@@ -252,14 +216,17 @@ class BasicInfo extends Component{
 	totalFloor(){
 		const floor      = parseInt(this.refs.floor.value);
 		const totalfloor = parseInt(this.refs.totalfloor.value);
-
-		// if(floor > totalfloor || floor != totalfloor){
-		// 	swal("Floor should not be greater than Total Floors", "", "warning");
-		// }
-
 		if(floor > totalfloor){
 			swal("Floor should not be greater than Total Floors", "", "warning");
 		}
+
+		this.setState({totalfloor : totalfloor});
+
+	}
+
+	floorChange(event){
+		var floor = event.currentTarget.value;
+		this.setState({floor : floor});
 	}
 
 	render() {
@@ -281,9 +248,8 @@ class BasicInfo extends Component{
 						      		 value="Owner" 
 						      		 className="FrRadio" 
 						      		 id="radio-example1"
-						      		 checked={this.state.propertyHolder === "owner"}
+						      		 checked={this.state.propertyHolder === "Owner"}
 	               					 onChange={this.radioChange} />
-
 					  			<i className=" logo1"><img src="/images/owner.png" alt="" /></i>
 						    </label>
 					    </div>
@@ -294,7 +260,7 @@ class BasicInfo extends Component{
 						      		 value="Care Taker" 
 						      		 className="FrRadio" 
 						      		 id="radio-example2"
-						      		 checked={this.state.propertyHolder === "careTaker"}
+						      		 checked={this.state.propertyHolder === "Care Taker"}
 	               					 onChange={this.radioChange}/>
 
 					  			<i className=" logo1"><img src="/images/careTaker.png" alt="" /></i>
@@ -307,7 +273,7 @@ class BasicInfo extends Component{
 						      		 value="Broker" 
 						      		 className="FrRadio" 
 						      		 id="radio-example3"
-						      		 checked={this.state.propertyHolder === "broker"}
+						      		 checked={this.state.propertyHolder === "Broker"}
 	               					 onChange={this.radioChange} 
 						      		 />
 					  			<i className=" logo1"><img src="/images/broker.png" alt="" /></i>
@@ -381,10 +347,7 @@ class BasicInfo extends Component{
 			      	<div className="input-group-addon inputIcon">
                      	<i className=" iconClr"><img src="/images/floor.png" alt="" /></i>
                     </div>
-			  		<select className="custom-select form-control Fl60"  ref="floor" placeholder="Floor" id='select'>
-				    	<option value="" className="hidden">Floor</option>
-				    	<option value="" className="hidden">Ground Floor</option>
-					</select>
+			  		<select className="custom-select form-control Fl60"  ref="floor" id='select' value={this.state.floor} onChange={this.floorChange.bind(this)}>  </select> 
 				</div>
 			  </div>
 			</div>
@@ -396,7 +359,7 @@ class BasicInfo extends Component{
 				      	<div className="input-group-addon inputIcon">
 	                     <i className="iconClr"><img src="/images/floor.png" alt="" /></i>
 	                    </div>
-					  	<select className="custom-select form-control 1-60"  ref="totalfloor" onBlur={this.totalFloor.bind(this)} >
+					  	<select className="custom-select form-control 1-60"  ref="totalfloor" onChange={this.totalFloor.bind(this)} value={this.state.totalfloor} >
 					    	<option value="" className="hidden">Total Floors</option>
 						</select>
 					</div>
@@ -442,6 +405,7 @@ const mapStateToProps = (state)=>{
 	Amenities		: state.Amenities,
 	Availability	: state.Availability,
 	Location	 	: state.Location,
+	updateStatus    : state.updateStatus,
   }
 };
 

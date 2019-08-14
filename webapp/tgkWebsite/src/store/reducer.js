@@ -24,6 +24,7 @@ const initialState = {
 	propertyType    : "",
 	availableMobile : "",
 	prop_id 		: "",
+	updateStatus 	: false,
 }
 
 const reducer = (state = initialState,action) => {
@@ -280,6 +281,14 @@ const reducer = (state = initialState,action) => {
 	}
 	if(action.type === "AVAILABLE_MOBILE"){
 		newState.availableMobile         = action.availableMobile;
+	}
+
+	if(action.type === "EDIT_PROP_PROFILE"){
+		newState.uid   	   = action.uid;
+		newState.prop_id   = action.prop_id;
+		newState.updateStatus = true;
+		newState.BasicInfo 	  = true;
+
 	}
 
 	return newState;
