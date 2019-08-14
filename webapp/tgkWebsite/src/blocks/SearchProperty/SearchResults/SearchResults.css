@@ -39,9 +39,9 @@
 	background-color: #0C4890;
 }*/
 
-.topRightTriangle{
+/*.topRightTriangle{
 	left: 90.5% !important;
-}
+}*/
 .searchResults{
 	background-color: #EEEEEE;
 	height: 2500px;
@@ -198,6 +198,7 @@
     height: auto;
     max-height: 250px;
     overflow-x: hidden;
+    width : 180px;
 }
 
 

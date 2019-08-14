@@ -512,7 +512,11 @@ class SearchResults extends Component {
 		if(event.target.checked){
 			this.state.flatType.push(event.target.getAttribute('value'));
 		}else{
-			this.state.flatType.pop(event.target.getAttribute('value'));
+			for (var i = this.state.flatType.length - 1; i >= 0; i--) {
+				if(this.state.flatType[i] === event.target.getAttribute('value')){
+					this.state.flatType.splice(i,1)
+				}
+			}
 		}
 
 		this.setState({flatType : this.state.flatType})
@@ -526,6 +530,7 @@ class SearchResults extends Component {
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data });
+				console.log("result",searchResults.data);
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);

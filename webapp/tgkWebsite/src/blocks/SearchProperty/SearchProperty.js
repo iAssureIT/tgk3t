@@ -301,7 +301,7 @@ class SearchProperty extends Component {
 
 						<div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 propertyType noPad property">
 							  	<div className="dropdown" id="dropdown">
-								    <button className="dropdown-toggle btn col-lg-12" type="button" data-toggle="dropdown">Property Type
+								    <button className="dropdown-toggle btn divWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt39">
 							      		{this.props.propertyType === "Commercial" ?
@@ -345,7 +345,7 @@ class SearchProperty extends Component {
 						
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
-							  	 	<button className="btn dropdown-toggle  col-lg-12" type="button" data-toggle="dropdown">Budget
+							  	 	<button className="btn dropdown-toggle divWhite col-lg-12" type="button" data-toggle="dropdown">Budget
 								   		<span className="caret"></span>
 								   	</button>
 								    <ul className="dropdown-menu col-lg-12 noPad mt39 scrollable-menu">
