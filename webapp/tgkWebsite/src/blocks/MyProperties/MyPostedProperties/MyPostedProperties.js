@@ -158,7 +158,7 @@ import './MyPostedProperties.css';
 												<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 propertySubText1">
 													{myProperty.propertyType === "Residential" ? 
 														 <span>
-														 {myProperty.propertyDetails.bedrooms} 														  BHK  &nbsp;&nbsp;
+														 {myProperty.propertyDetails.bedrooms ? myProperty.propertyDetails.bedrooms : "-"} 														  BHK  &nbsp;&nbsp;
 														 </span>
 													:
 													null
