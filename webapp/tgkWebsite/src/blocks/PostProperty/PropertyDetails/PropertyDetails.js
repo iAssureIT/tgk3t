@@ -148,8 +148,8 @@ import './PropertyDetails.css';
 							<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
 						             name=""  
-						             value="yes"
-						      		 checked={this.state.personal === "yes"}
+						             value="Yes"
+						      		 checked={this.state.personal === "Yes"}
 				   					 onChange={this.radioChange1}    
 
 						      		/>
@@ -159,8 +159,8 @@ import './PropertyDetails.css';
 						    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
 						             name=""  
-						             value="no"
-						             checked={this.state.personal === "no"}
+						             value="No"
+						             checked={this.state.personal === "No"}
 				   					 onChange={this.radioChange1}  
 						      		/>
 						        <span className="mb5">No</span> 
@@ -172,8 +172,8 @@ import './PropertyDetails.css';
 							<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
 						             name=""  
-						             value="yes" 
-						      		 checked={this.state.pantry === "yes"}
+						             value="Yes" 
+						      		 checked={this.state.pantry === "Yes"}
 				   					 onChange={this.radioChange2}
 						      		/>
 						        <span className="mb5">Yes</span> 
@@ -182,8 +182,8 @@ import './PropertyDetails.css';
 						    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
 						             name=""  
-						             value="no" 
-						      		 checked={this.state.pantry === "no"}
+						             value="No" 
+						      		 checked={this.state.pantry === "No"}
 				   					 onChange={this.radioChange2}
 						      		/>
 						        <span className="mb5">No</span> 

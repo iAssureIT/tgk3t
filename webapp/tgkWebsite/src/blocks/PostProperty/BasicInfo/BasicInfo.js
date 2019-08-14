@@ -31,9 +31,12 @@ class BasicInfo extends Component{
         	console.log("prop id ", this.props.prop_id);
         	var prop_id = this.props.prop_id ? this.props.prop_id : null;
 		        if(prop_id !== null)
-		        {
+		        { console.log("prop_id",prop_id);
 		        	this.setState({
 		        		updatestatus : true,
+		        	},()=>{
+        				console.log("here var updatestatus",this.state.updatestatus);
+
 		        	})
 		        }
 		        else{
@@ -41,7 +44,6 @@ class BasicInfo extends Component{
 		        		updatestatus : false,
 		        	})
 		        }
-        	// console.log("here var updatestatus",this.state.updatestatus);
         	axios
 				.get('/api/properties/'+prop_id)
 				.then( (res) =>{
@@ -59,7 +61,7 @@ class BasicInfo extends Component{
 					this.refs.totalfloor.value = res.data.totalFloor;
 					
 					var fullProp = this.state.propertyType+ '-' + this.state.propertySubType;
-					console.log("here full type", fullProp);
+					// console.log("here full type", fullProp);
 
 					this.setState({
 
@@ -67,8 +69,8 @@ class BasicInfo extends Component{
 					});
 					// console.log("here propertyHolder",this.state.propertyHolder);	
 					// console.log("here transactionType",this.state.transactionType);	
-					console.log("here propertyType",this.state.propertyType);	
-					console.log("here propertySubType",this.state.propertySubType);	
+					// console.log("here propertyType",this.state.propertyType);	
+					// console.log("here propertySubType",this.state.propertySubType);	
 					// console.log("here this.refs.floor.value ",this.refs.floor.value );	
 					// console.log("here this.refs.totalfloor.value ",this.refs.totalfloor.value );	
 
@@ -133,6 +135,7 @@ class BasicInfo extends Component{
 				"listing"       	: false,
 				"status"			: "WIP",
 				"uid" 				: localStorage.getItem("uid"),
+				"property_id"		: this.props.prop_id
 
 			};
 			console.log("BasicInfo===",formValues);
@@ -142,7 +145,7 @@ class BasicInfo extends Component{
 					console.log("update axios");
 
 					axios
-					.patch('/api/properties',formValues)
+					.patch('/api/properties/patch/properties',formValues)
 					.then( (res) =>{
 						console.log(res.data);
 						if(res.status === 200){

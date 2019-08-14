@@ -48,7 +48,7 @@ class PropertyProfile extends Component{
       "profileId"         : profileId,
       "amenities"         : [],
       "propertyImages"    : [],
-      "propertyVideos"    : [],
+      "propertyVideo"     : [],
       "propertyFeatures"  : [],
       "features"          : [],
       "areaInSqFeet"      : [],
@@ -59,6 +59,8 @@ class PropertyProfile extends Component{
       "transactionType"   : "",  
       "propertyType"      : "",  
       "prop_id"           : "",
+      "floor"             : "",
+      "totalFloor"        : "",
     }
   }
 
@@ -97,13 +99,15 @@ class PropertyProfile extends Component{
           propertyFeatures    : postsdata.propertyDetails,
           amenities           : postsdata.Amenities,
           propertyImages      : postsdata.gallery.Images,
-          propertyVideos      : postsdata.video,
+          propertyVideo       : [postsdata.gallery.video],
           pricing             : postsdata.financial,
           propertyLocation    : postsdata.propertyLocation,
           transactionType     : postsdata.transactionType,
-          propertyType        : postsdata.propertyType   
+          propertyType        : postsdata.propertyType,  
+          floor               : postsdata.floor,         
+          totalFloor          : postsdata.totalFloor          
         });
-        console.log("postsdata.propertyDetails",res.data);
+        // console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch();
@@ -112,7 +116,7 @@ class PropertyProfile extends Component{
   }
 
   displayImages(){
-    console.log("here img link",this.state.propertyImages);
+    // console.log("here img link",this.state.propertyImages);
     var imageArray=[];
     if(this.state.propertyImages.length >=3)
     {
@@ -134,13 +138,10 @@ class PropertyProfile extends Component{
           }
         }
       }
-      
-
-    
-  
     return imageArray;
   }
   displayVideo(){
+    // console.log("this.state.propertyVideo",this.state.propertyVideo);
     return this.state.propertyVideo;
   }
 
@@ -264,14 +265,15 @@ class PropertyProfile extends Component{
                             :
                                   <div>
                                       <img className="item" src="/images/loading_img.jpg" />
+                                      <img className="item" src="/images/loading_img.jpg" />
                                   </div>  
                           }
-                          {this.state.propertyVideo ?
-                            this.displayVideo().map((propertyVideos,index)=>{
+                          {this.state.propertyVideo && this.state.propertyVideo.length > 0?
+                            this.state.propertyVideo.map((propertyVideo,index)=>{
                             return(
                                   <div key={index}  >
                                       <video width="385" height="300" controls>
-                                          <source src={propertyVideos} type="video/mp4" />
+                                          <source src={propertyVideo} type="video/mp4" />
                                       </video>
                                   </div>                    
                               )
@@ -333,12 +335,14 @@ class PropertyProfile extends Component{
                                       </b>
                                   }
                                   <li className="col-lg-6 noPad">Age of Property </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
+                                  <li className="col-lg-6 noPad">Available From  </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.availableFrom   ? <b>{this.state.propertyFeatures.availableFrom}   </b> : "-"}</span>
                                 </ul>
                                 <ul className="col-lg-6 col-md-6 col-sm-12 col-xs-12 bolder">   
                                   <li className="col-lg-6 noPad">Facing          </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
                                   <li className="col-lg-6 noPad">Super Area      </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></span>
                                   <li className="col-lg-6 noPad">Built up Area   </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></span>
-                                  <li className="col-lg-6 noPad">Available From  </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.availableFrom   ? <b>{this.state.propertyFeatures.availableFrom}   </b> : "-"}</span>
+                                  <li className="col-lg-6 noPad">Floor           </li> <span className="col-lg-6 noPad"> : {this.state.floor}</span>
+                                  <li className="col-lg-6 noPad">Total Floor     </li> <span className="col-lg-6 noPad"> : {this.state.totalFloor}</span>
                                 </ul>
                               </div>
                             </div>
