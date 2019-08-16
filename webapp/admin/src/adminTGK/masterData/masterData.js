@@ -163,13 +163,35 @@ class masterData extends Component {
 
   		}
 
-  		handleChange(event){
+  	handleChange(event){
 	  const target = event.target;
 	  const name   = target.name;
 	  this.setState({
 	  	[name]: event.target.value,
 	  });
 	}
+
+	 getData(event){
+      event.preventDefault();
+      var id = event.target.id;
+      console.log("here id",id);
+
+       axios.get('/api/masteramenities/'+ id)
+        .then( (res)=>{
+          console.log("here data_______________",res.data);
+          this.setState({
+            amenityname: res.data[0].amenity,
+           
+          });
+          
+        })
+        .catch((error)=>{
+          console.log("error = ",error);
+          // alert("Something went wrong! Please check Get URL.");
+        });
+
+
+    }
 
     render() {
     	 // $('.subjectRowError').css({'display':'none'});
@@ -204,7 +226,7 @@ class masterData extends Component {
 													<tr className="ReverseData">
 														<td className="textAlignLeft">{roleData.amenity}</td>		
 														<td className="roleTextCenter pointerCls"> 						
-															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title=" Edit" data-target={`#${roleData._id}-edit`} title="Edit" ></i>
+															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" id={roleData._id} onClick={this.getData.bind(this)} title=" Edit" data-target={`#${roleData._id}-edit`} title="Edit" ></i>
 															&nbsp;&nbsp;
 															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Delete" data-toggle="modal" title="Delete" data-target={`#${roleData._id}-rm`} ></i>
 														</td>

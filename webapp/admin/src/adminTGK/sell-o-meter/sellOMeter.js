@@ -22,8 +22,6 @@ class sellOMeter extends Component {
 				index : "",
 				propertyClass : "",
 
-
-
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -153,6 +151,10 @@ class sellOMeter extends Component {
 					 index 			  : "",     
 			         });
 		         
+			        		    $('.modal').remove();
+								$('.modal-backdrop').remove();
+								$('body').removeClass( "modal-open" );
+								 window.location.reload();
 
 		          	axios
 					.get('/api/sellometers/list')
@@ -165,10 +167,7 @@ class sellOMeter extends Component {
 								allPosts : postsdata,
 							});
 
-								$('.modal').remove();
-								$('.modal-backdrop').remove();
-								$('body').removeClass( "modal-open" );
-								 window.location.reload();
+								
 						}
 					)
 					.catch((error)=>{
@@ -202,6 +201,30 @@ class sellOMeter extends Component {
 		  }
 
 
+		getData(event){
+		      event.preventDefault();
+		      var id = event.target.id;
+		      console.log("here id",id);
+
+		       axios.get('/api/sellometers/'+ id)
+		        .then( (res)=>{
+		          console.log("here data_______________",res.data);
+		          this.setState({
+		  				city 			: res.data[0].city,
+						area 			: res.data[0].area,
+						subarea 		: res.data[0].subArea,
+						society 		: res.data[0].socity,
+						index 			: res.data[0].index,
+						propertyClass 	: res.data[0].propertyClass,
+		  			});
+				          
+		        })
+		        .catch((error)=>{
+		          console.log("error = ",error);
+		          // alert("Something went wrong! Please check Get URL.");
+		        });
+		}	  
+
     render() {
 
     var cityName = this.state.city;
@@ -209,7 +232,7 @@ class sellOMeter extends Component {
     var subareaName = this.state.subarea;
     var societyName = this.state.society;
     var propclassName = this.state.propertyClass;   
-    console.log("cityName",cityName); 
+    // console.log("cityName",cityName); 
 
     if(cityName != null &&  areaName != null && subareaName != null && societyName != null)
     {
@@ -253,7 +276,7 @@ class sellOMeter extends Component {
 												</thead>
 												<tbody>
 												{this.state.allPosts.map( (Data, index)=>{
-													console.log('Data',Data);
+													// console.log('Data',Data);
 												   return( 
 													<tr>
 														
@@ -264,7 +287,7 @@ class sellOMeter extends Component {
 														<td className="textAlignLeft">{Data.index}</td>
 														<td className="textAlignLeft">{Data.propertyClass}</td>	
 														<td className="roleTextCenter pointerCls"> 						
-															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Delete" data-target={`#${Data._id}-edit`} title="Edit" ></i>
+															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" id={Data._id} onClick={this.getData.bind(this)} title="Delete" data-target={`#${Data._id}-edit`} title="Edit" ></i>
 															&nbsp;&nbsp;
 															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${Data._id}-rm`} ></i>
 														</td>

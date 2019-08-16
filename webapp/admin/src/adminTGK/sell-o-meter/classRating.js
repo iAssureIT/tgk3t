@@ -170,13 +170,35 @@ class classRating extends Component {
         
       }
 
-      handleChange=(event)=>{
-    const target = event.target;
-    const name   = target.name;
-    this.setState({
-      [name]: event.target.value,
-    });
-  }
+    handleChange=(event)=>{
+      const target = event.target;
+      const name   = target.name;
+      this.setState({
+        [name]: event.target.value,
+      });
+    }
+
+    getData(event){
+      event.preventDefault();
+      var id = event.target.id;
+      console.log("here id",id);
+
+       axios.get('/api/mastersellometers/'+ id)
+        .then( (res)=>{
+          console.log("here data_______________",res.data);
+          this.setState({
+            propclass: res.data[0].class,
+            earning  : res.data[0].earnings,
+          });
+          
+        })
+        .catch((error)=>{
+          console.log("error = ",error);
+          // alert("Something went wrong! Please check Get URL.");
+        });
+
+
+    }
 
     render() {
         return (
@@ -212,12 +234,12 @@ class classRating extends Component {
                             <td className="textAlignLeft">{Data.class}</td>
                             <td className="textAlignLeft">{Data.earnings}</td> 
                             <td className="roleTextCenter pointerCls">             
-                              <i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Edit" data-target={`#${Data._id}-edit`} title="Edit Department Name" ></i>
+                              <i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Edit" id={Data._id} onClick={this.getData.bind(this)} data-target={`#${Data._id}-edit`} title="Edit" ></i>
                               &nbsp;&nbsp;
                               <i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Delete" data-toggle="modal" title="Delete" data-target={`#${Data._id}-rm`} ></i>
                             </td>
 
-                            <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${Data._id}-rm`}  role="dialog">
+                                  <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${Data._id}-rm`}  role="dialog">
                                         <div className=" modal-dialog adminModal adminModal-dialog">
                                              <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
                                                     <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -292,33 +314,7 @@ class classRating extends Component {
                                    </div>
 
 
-                            <div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
-                              <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
-                                <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
-                                  <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                    <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Data</h4>
-                                    <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
-                                                  <button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
-                                              </div>
-                                  </div>
-                                  <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
-                                  <form className="editroles">
-                                    <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
-                                      <label className="textAlignLeft">Property class Name</label>
-                                      <input type="text" ref="roleName" className="form-control rolesField" required/>
-                                    </div>
-                                    <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                      <div className="form-group col-lg-4 col-lg-offset-8 col-md-4 col-md-offset-8 col-xs-12 col-sm-12">
-                                        <label>&nbsp;</label>
-                                          <button type="button" id="" className="btn adminFinish-btn" data-dismiss="modal">Edit Data</button>
-                                      </div>
-                                    </div>
-                                  </form>
-                                  </div>
-                                </div>
-
-                              </div>
-                            </div>
+                          
 
                           </tr>
                           )
