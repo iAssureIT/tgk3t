@@ -72,7 +72,7 @@ class HomePageProperties extends Component {
                                 <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
-                                      RESIDENTIAL TOWER
+                                      {property.propertySubType}
                                     </div>
                                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
                                       FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
@@ -82,9 +82,9 @@ class HomePageProperties extends Component {
                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                     {
                                       property.transactionType === "Sell" ?
-                                      property.financial.totalPrice 
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
                                       :
-                                      property.financial.monthlyRent
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
@@ -124,9 +124,9 @@ class HomePageProperties extends Component {
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                         {
                                           property.transactionType === "Sell" ?
-                                          property.financial.totalPrice 
+                                          property.financial.expectedRate + " /Sq.ft." 
                                           :
-                                          property.financial.monthlyRent
+                                          property.financial.depositAmount+" Deposit"
                                         }
                                     </div>    
                                     <div className="pull-right noPad mt10">
@@ -142,7 +142,7 @@ class HomePageProperties extends Component {
                               <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
-                                    RESIDENTIAL TOWER
+                                    {property.propertySubType}
                                   </div>
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
                                     FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
@@ -150,11 +150,11 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                    {
+                                     {
                                       property.transactionType === "Sell" ?
-                                      property.financial.totalPrice 
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
                                       :
-                                      property.financial.monthlyRent
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
@@ -191,9 +191,9 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {property.transactionType === "Sell" ?
-                                      property.financial.totalPrice 
+                                      property.financial.expectedRate + " /Sq.ft." 
                                       :
-                                      property.financial.monthlyRent
+                                      property.financial.depositAmount+" Deposit "
                                     }
                                   </div>
                                   <div className="pull-right noPad mt10">
@@ -211,7 +211,7 @@ class HomePageProperties extends Component {
                               <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
-                                    RESIDENTIAL TOWER
+                                    {property.propertySubType}
                                   </div>
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
                                     FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
@@ -219,11 +219,11 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                    {
+                                     {
                                       property.transactionType === "Sell" ?
-                                      property.financial.totalPrice 
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
                                       :
-                                      property.financial.monthlyRent
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
@@ -263,9 +263,9 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {property.transactionType === "Sell" ?
-                                      property.financial.totalPrice 
+                                      property.financial.expectedRate+ " /Sq.ft."  
                                       :
-                                      property.financial.monthlyRent
+                                      property.financial.depositAmount+" Deposit "
                                     }
                                   </div>
                                 </div>
@@ -277,7 +277,7 @@ class HomePageProperties extends Component {
                                   <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
-                                        RESIDENTIAL TOWER
+                                        {property.propertySubType}
                                       </div>
                                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
                                         FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
@@ -285,11 +285,11 @@ class HomePageProperties extends Component {
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                        {
+                                         {
                                           property.transactionType === "Sell" ?
-                                          property.financial.totalPrice 
+                                          <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
                                           :
-                                          property.financial.monthlyRent
+                                          <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                         }
                                       </div>
                                       <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
@@ -330,9 +330,9 @@ class HomePageProperties extends Component {
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                         {
                                           property.transactionType === "Sell" ?
-                                          property.financial.totalPrice 
+                                          property.financial.expectedRate + " /Sq.ft." 
                                           :
-                                          property.financial.monthlyRent
+                                          property.financial.depositAmount+" Deposit "
                                         }
                                       </div>
                                     </div>
@@ -346,7 +346,7 @@ class HomePageProperties extends Component {
                               <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
-                                    RESIDENTIAL TOWER
+                                    {property.propertySubType}
                                   </div>
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
                                     FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
@@ -356,9 +356,9 @@ class HomePageProperties extends Component {
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                     {
                                       property.transactionType === "Sell" ?
-                                      property.financial.totalPrice 
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
                                       :
-                                      property.financial.monthlyRent
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
@@ -396,9 +396,9 @@ class HomePageProperties extends Component {
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {
                                       property.transactionType === "Sell" ?
-                                      property.financial.totalPrice 
+                                      property.financial.expectedRate+ " /Sq.ft."  
                                       :
-                                      property.financial.monthlyRent
+                                      property.financial.depositAmount+" Deposit "
                                     }
                                   </div> 
                                   <div className="pull-right noPad mt10">

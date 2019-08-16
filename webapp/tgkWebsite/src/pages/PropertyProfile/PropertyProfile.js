@@ -401,26 +401,26 @@ class PropertyProfile extends Component{
                                           {this.state.pricing && this.state.pricing.expectedRate ?
                                             <b>
                                               <li className="col-lg-3 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
+                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
                                             </b>
                                           : 
                                           <b>
                                               <li className="col-lg-3 noPad">Monthly Rent    </li> 
-                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.monthlyRent}</b></span>
+                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
                                             </b>
                                           }
                                           {this.state.pricing && this.state.pricing.totalPrice ?
                                             <b>
                                               <li className="col-lg-3 noPad">Total Price    </li> 
-                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.totalPrice}</b></span>
+                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.totalPrice}</b></span>
                                             </b>
                                           : 
                                           <b>
-                                              <li className="col-lg-3 noPad">Deposit Amount    </li> 
-                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.depositAmount}</b></span>
+                                              <li className="col-lg-3 noPad">Deposit Amount    </li>
+                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
                                             </b>
                                           }
-                                          <li className="col-lg-3 noPad">Maintainance Charges</li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
+                                          <li className="col-lg-3 noPad">Maintainance Charges</li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
                                           <li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                         </ul>
                                     </div>

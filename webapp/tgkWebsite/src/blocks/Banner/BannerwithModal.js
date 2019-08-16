@@ -120,7 +120,7 @@ class BannerwithModal extends Component {
 	          this.setState({
 	          	inputData : res.data,
 	          },()=>{
-	          	// this.props.inputData(this.state.inputData);
+	          	this.props.inputData(this.state.inputData);
 	          	// console.log("inputData",this.state.inputData);
 	          })
 
