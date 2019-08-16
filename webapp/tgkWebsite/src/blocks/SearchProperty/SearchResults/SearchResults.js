@@ -833,7 +833,7 @@ class SearchResults extends Component {
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 mt36">
 										<span className="col-lg-12 inputStyledbtn">
-											<input type="radio" name="furnishedStatus" ref="" className="" id="fullFurnished" value="Full furnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; 
+											<input type="radio" name="furnishedStatus" ref="" className="" id="fullFurnished" value="Fully furnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; 
 											<label htmlFor="fullFurnished">Fully Furnished<br /></label>
 											<span className="radioBoxBlock"></span>
 										</span>
