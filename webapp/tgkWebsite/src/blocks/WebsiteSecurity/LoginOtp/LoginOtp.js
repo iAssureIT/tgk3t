@@ -35,7 +35,7 @@ class LoginOtp extends Component {
 				}else{
 					if(this.props.originPage === "header"){
 						this.props.loginMe(this.props.tempuid);
-						this.props.history.push("/");
+						// this.props.history.push("/");
 						window.location.reload();
 					}
 					else{

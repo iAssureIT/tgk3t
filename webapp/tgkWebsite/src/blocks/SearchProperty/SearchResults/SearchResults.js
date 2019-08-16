@@ -43,6 +43,7 @@ class SearchResults extends Component {
 
 	componentDidMount() {
 		var data = JSON.parse(localStorage.getItem('searchData'));
+		console.log("data",data);
 		if(data)
 		{
 			this.setState({
@@ -116,6 +117,7 @@ class SearchResults extends Component {
 			.post("/api/search/properties/", data)
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data });
+				console.log("searchResults",searchResults)
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -190,7 +192,7 @@ class SearchResults extends Component {
 			],
 
 			propertyList1 : [
-				{name:'MultiStory Apartment', checked:false},
+				{name:'MultiStorey Apartment', checked:false},
 				{name:'Residential House', checked:false},
 				{name:'Studio Apartment', checked:false},
 				{name:'Villa', checked:false},
@@ -652,7 +654,7 @@ class SearchResults extends Component {
 									    		: ""
 									    	}								
 										</datalist>
-								  		<div className="input-group-addon inputIcon">
+								  		<div className="input-group-addon inputIcon" onChange={this.handleLocation.bind(this)}>
 					                     	<i className="fa fa-search"></i>
 					                    </div>
 								  	</div>
@@ -753,7 +755,7 @@ class SearchResults extends Component {
 								    <ul className="dropdown-menu col-lg-12 mt36">
 										<span className="col-lg-12 inputStyledbtn">
 											<input type="radio" name="furnishedStatus" ref="" className="" id="fullFurnished" value="Full furnished" onChange={this.handleFurnish.bind(this)}/>&nbsp; 
-											<label htmlFor="fullFurnished">Full furnished<br /></label>
+											<label htmlFor="fullFurnished">Fully Furnished<br /></label>
 											<span className="radioBoxBlock"></span>
 										</span>
 										<span className="col-lg-12 inputStyledbtn">
@@ -886,7 +888,7 @@ class SearchResults extends Component {
 				
 				<div className="col-lg-12 col-md-10 col-xs-12 col-sm-12 noPad">
 				{
-					this.state.inputData.length>0 ? 
+					this.state.inputData && this.state.inputData.length>0 ? 
 						this.state.inputData.map( (property,index)=>{ 
 							return(	<div className={"x-"+index} key={index}> <PropBox myProperty={property}/> </div>  );
 						})

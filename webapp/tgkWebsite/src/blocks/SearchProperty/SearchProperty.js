@@ -59,21 +59,21 @@ class SearchProperty extends Component {
 				{value: 100000, option: "Upto 1 Lac"},
 			],
 			propertyList1 : [
-				{name:'MultiStory Apartment'},
-				{name:'Residential House'},
-				{name:'Studio Apartment'},
-				{name:'Villa'},
-				{name:'Penthouse'}
+				{name:'MultiStorey Apartment', checked:false},
+				{name:'Residential House', checked:false},
+				{name:'Studio Apartment', checked:false},
+				{name:'Villa', checked:false},
+				{name:'Penthouse', checked:false}
 			],
 
 			propertyList2 : [
-				{name:'Office in IT Park/SEZ'},
-				{name:'Commercial Office Space'},
-				{name:'Commercial Showroom'},
-				{name:'Commercial Shop'},
-				{name:'Industrial Building'},
-				{name:'Warehouse/Godown'}
-			]
+				{name:'Office in IT Park/SEZ', checked:false},
+				{name:'Commercial Office Space', checked:false},
+				{name:'Commercial Showroom', checked:false},
+				{name:'Commercial Shop', checked:false},
+				{name:'Industrial Building', checked:false},
+				{name:'Warehouse/Godown', checked:false}
+			],
 		})
 
 

@@ -101,7 +101,8 @@ class PropertyProfile extends Component{
           transactionType     : postsdata.transactionType,
           propertyType        : postsdata.propertyType,  
           floor               : postsdata.floor,         
-          totalFloor          : postsdata.totalFloor          
+          totalFloor          : postsdata.totalFloor ,
+          propertySubType     : postsdata.propertySubType         
         });
         // console.log("postsdata.propertyDetails",res.data);
       }
@@ -194,7 +195,7 @@ class PropertyProfile extends Component{
                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
                             </video>
                             :
-                            <img src="/images/loading_img.jpg" className="col-lg-12 noPad"/>
+                            <img src="/images/videoDummy.jpg" className="col-lg-12 noPad"/>
                           }
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty" >
@@ -251,7 +252,7 @@ class PropertyProfile extends Component{
                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
                             </video>
                             :
-                            null
+                            <img src="/images/videoDummy.jpg" className="col-lg-12 noPad"/>
                           }
                       </OwlCarousel>  
                     </div>
@@ -286,35 +287,36 @@ class PropertyProfile extends Component{
                               </div>
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <ul className="col-lg-6 col-md-6 col-sm-12 col-xs-12 bolder">   
-                                  <li className="col-lg-6 noPad">Furnished Status</li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> : "-"}</span>
+                                  <li className="col-lg-5 noPad">Property Type</li> <span className="col-lg-7 noPad"> : {this.state.propertySubType && this.state.propertySubType ? <b>{this.state.propertySubType} </b> : "-"}</span>
+                                  <li className="col-lg-5 noPad">Furnished Status</li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> : "-"}</span>
                                   {this.state.propertyType === "Commercial" ?
                                       <b>
-                                        <li className="col-lg-6 noPad">Washrooms    </li> 
-                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.washrooms : "-"}</b></span>
-                                        <li className="col-lg-6 noPad">Personal WC </li> 
-                                        <span className="col-lg-6 noPad"> : <b>{ this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.personal : "-"}</b></span>
-                                        <li className="col-lg-6 noPad">Pantry  </li> 
-                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.pantry ? this.state.propertyFeatures.pantry : "-"}</b></span>
+                                        <li className="col-lg-5 noPad">Washrooms    </li> 
+                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.washrooms : "-"}</b></span>
+                                        <li className="col-lg-5 noPad">Personal WC </li> 
+                                        <span className="col-lg-7 noPad"> : <b>{ this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.personal : "-"}</b></span>
+                                        <li className="col-lg-5 noPad">Pantry  </li> 
+                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.pantry ? this.state.propertyFeatures.pantry : "-"}</b></span>
                                       </b>
                                     : 
                                     <b>
-                                        <li className="col-lg-6 noPad">Bedrooms    </li> 
-                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bedrooms ? this.state.propertyFeatures.bedrooms : "-"}</b></span>
-                                        <li className="col-lg-6 noPad">Bathrooms    </li> 
-                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bathrooms ? this.state.propertyFeatures.bathrooms : "-"}</b></span>
-                                        <li className="col-lg-6 noPad">Balconies    </li> 
-                                        <span className="col-lg-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.balconies ? this.state.propertyFeatures.balconies : "-"}</b></span>
+                                        <li className="col-lg-5 noPad">Bedrooms    </li> 
+                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bedrooms ? this.state.propertyFeatures.bedrooms : "-"}</b></span>
+                                        <li className="col-lg-5 noPad">Bathrooms    </li> 
+                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bathrooms ? this.state.propertyFeatures.bathrooms : "-"}</b></span>
+                                        <li className="col-lg-5 noPad">Balconies    </li> 
+                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.balconies ? this.state.propertyFeatures.balconies : "-"}</b></span>
                                       </b>
                                   }
-                                  <li className="col-lg-6 noPad">Age of Property </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Available From  </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.availableFrom   ? <b>{this.state.propertyFeatures.availableFrom}   </b> : "-"}</span>
+                                  <li className="col-lg-5 noPad">Available From  </li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.availableFrom   ? <b>{this.state.pricing.availableFrom}   </b> : "-"}</span>
                                 </ul>
                                 <ul className="col-lg-6 col-md-6 col-sm-12 col-xs-12 bolder">   
-                                  <li className="col-lg-6 noPad">Facing          </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Super Area      </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></span>
-                                  <li className="col-lg-6 noPad">Built up Area   </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></span>
-                                  <li className="col-lg-6 noPad">Floor           </li> <span className="col-lg-6 noPad"> : {this.state.floor}</span>
-                                  <li className="col-lg-6 noPad">Total Floor     </li> <span className="col-lg-6 noPad"> : {this.state.totalFloor}</span>
+                                  <li className="col-lg-5 noPad">Facing          </li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
+                                  <li className="col-lg-5 noPad">Super Area      </li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></span>
+                                  <li className="col-lg-5 noPad">Built up Area   </li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></span>
+                                  <li className="col-lg-5 noPad">Floor           </li> <span className="col-lg-7 noPad"> : {this.state.floor ? <b>{this.state.floor}</b> : "-"}</span>
+                                  <li className="col-lg-5 noPad">Total Floor     </li> <span className="col-lg-7 noPad"> : {this.state.totalFloor ? <b>{this.state.totalFloor}</b> : "-"}</span>
+                                  <li className="col-lg-5 noPad">Age of Property </li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
                                 </ul>
                               </div>
                             </div>
@@ -346,15 +348,12 @@ class PropertyProfile extends Component{
                                             return(
                                                  <div key={index} className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                                                    <div className="row">
-                                                      <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 centreDetailContainer  ">
-                                                        <input type="checkbox" defaultChecked={true} />
-                                                        <span className="centreDetailCheck"></span>
+                                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 inputStyledbtn  ">
+                                                        <input type="checkbox" defaultChecked={true} /><b>{amenity}</b>
+                                                        <span className="checkBoxBlock"></span>
                                                       </div>
                                                     </div>
-                                                    <div className="col-lg-11 col-md-11 col-sm-11 col-xs-11 checkText  ">    
-                                                        {amenity}        
-                                                    </div>
-                                              </div>
+                                                </div>
                                               );
                                           })
                                         :
@@ -378,8 +377,8 @@ class PropertyProfile extends Component{
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                      <div className="row">
                                        <ul  className="bolder">
-                                          <li className="col-lg-4 noPad">Include Charges</li> 
-                                          <span className="col-lg-8 noPad"> : 
+                                          <li className="col-lg-3 noPad">Include Charges</li> 
+                                          <span className="col-lg-9 noPad"> : 
                                           {this.state.pricing && this.state.pricing.includeCharges     ? 
                                             <b>{
                                             this.state.pricing.includeCharges.map((includeCharges,index)=>{
@@ -401,28 +400,28 @@ class PropertyProfile extends Component{
                                           </span>
                                           {this.state.pricing && this.state.pricing.expectedRate ?
                                             <b>
-                                              <li className="col-lg-4 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.expectedRate}</b></span>
+                                              <li className="col-lg-3 noPad">Expected Rate    </li> 
+                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.expectedRate}</b></span>
                                             </b>
                                           : 
                                           <b>
-                                              <li className="col-lg-4 noPad">Monthly Rent    </li> 
-                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.monthlyRent}</b></span>
+                                              <li className="col-lg-3 noPad">Monthly Rent    </li> 
+                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.monthlyRent}</b></span>
                                             </b>
                                           }
                                           {this.state.pricing && this.state.pricing.totalPrice ?
                                             <b>
-                                              <li className="col-lg-4 noPad">Total Price    </li> 
-                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.totalPrice}</b></span>
+                                              <li className="col-lg-3 noPad">Total Price    </li> 
+                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.totalPrice}</b></span>
                                             </b>
                                           : 
                                           <b>
-                                              <li className="col-lg-4 noPad">Deposit Amount    </li> 
-                                              <span className="col-lg-8 noPad"> : <b>{this.state.pricing.depositAmount}</b></span>
+                                              <li className="col-lg-3 noPad">Deposit Amount    </li> 
+                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.depositAmount}</b></span>
                                             </b>
                                           }
-                                          <li className="col-lg-4 noPad">Maintainance Charges</li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
-                                          <li className="col-lg-4 noPad">Maintainance Per    </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                          <li className="col-lg-3 noPad">Maintainance Charges</li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
+                                          <li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                         </ul>
                                     </div>
                                   </div>
@@ -446,10 +445,10 @@ class PropertyProfile extends Component{
                           <label className="row">Location</label>
                         </div>
                     <br/>
-                        { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
+                    { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                       <div className="row">
-                        <div className="mapouter"><div className="gmap_canvas"><iframe width="1200" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
+                        <div className="mapouter"><div className="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
                       </div>
                     </div>
                  
