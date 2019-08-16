@@ -93,8 +93,6 @@ class SearchProperty extends Component {
 			budget 			: this.state.budget,
 			propertyType   	: this.props.propertyType === "Commercial" ? propertyType : "Residential",
 			propertySubType : this.state.propertySubType,
-			areaMin 		: 0,
-			areaMax 		: 0,
 			floor			: "",
 		}
 		var searchData = JSON.stringify(formValues);

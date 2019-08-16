@@ -105,7 +105,7 @@ class SearchResults extends Component {
 					checkPropValue      : true,
 				})
 			}
-			if(data.budget!==""){
+			if(data.budget && data.budget.length > 0 && data.budget!==""){
 				this.setState({
 					checkBudgetValue    : true,
 				})
@@ -305,10 +305,11 @@ class SearchResults extends Component {
 
 			localStorage.removeItem("searchData");
 			localStorage.setItem("searchData",searchData);
-
+			console.log("formValues",formValues);
 		  	axios
 				.post("/api/search/properties/", formValues)
 				.then((searchResults) => {
+					console.log("searchResults",searchResults);
 					this.setState({ inputData : searchResults.data });
 				})
 		        .catch((error) =>{
@@ -380,26 +381,26 @@ class SearchResults extends Component {
 	        });	
 	}
 
-	handleArea(){
-		var formValues = JSON.parse(localStorage.getItem("searchData"));
-		formValues.areaMin = this.refs.areaMin.value;
-		formValues.areaMax = this.refs.areaMax.value;
+	// handleArea(){
+	// 	var formValues = JSON.parse(localStorage.getItem("searchData"));
+	// 	formValues.areaMin = this.refs.areaMin.value;
+	// 	formValues.areaMax = this.refs.areaMax.value;
 
-		var searchData = JSON.stringify(formValues);
-		localStorage.removeItem("searchData");
-		localStorage.setItem("searchData",searchData);
+	// 	var searchData = JSON.stringify(formValues);
+	// 	localStorage.removeItem("searchData");
+	// 	localStorage.setItem("searchData",searchData);
 
-	  	axios
-			.post("/api/search/properties/", formValues)
-			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
-				this.refs.areaMin.value = "";
-				this.refs.areaMax.value = "";
-			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
-	}
+	//   	axios
+	// 		.post("/api/search/properties/", formValues)
+	// 		.then((searchResults) => {
+	// 			this.setState({ inputData : searchResults.data });
+	// 			this.refs.areaMin.value = "";
+	// 			this.refs.areaMax.value = "";
+	// 		})
+	//         .catch((error) =>{
+	//          	console.log("error = ", error);
+	//         });	
+	// }
 
 	handleBudget(event){
 		// var budget = [];
@@ -420,6 +421,7 @@ class SearchResults extends Component {
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
 		formValues.budget = event.currentTarget.value;
+		console.log("formValues",formValues);
 		var searchData = JSON.stringify(formValues);
 
 		localStorage.removeItem("searchData");
@@ -621,6 +623,83 @@ class SearchResults extends Component {
 
 	}
 
+	reset(event){
+		event.preventDefault();
+		// var searchData ={
+		// 	availability: "",
+		// 	budget: "",
+		// 	flatType: "",
+		// 	floor: "",
+		// 	furnishedStatus: "",
+		// 	location: "",
+		// 	propertyAge: "",
+		// 	propertySubType: [],
+		// 	propertyType: "",
+		// 	transactionType: "",
+		// }
+		// localStorage.setItem("searchData",searchData);
+		this.setState({
+			inputData  				: "",
+			propertyTransactionType	: "Residential-Sell",
+			budget          		: [],
+			propertySubType 		: [],
+			propertyType            : "",
+			transactionType         : "",
+			location        		: "",
+			constructionType		: [],
+			floor 					: "",
+			flatType                : [],
+			furnish                	: "",
+			propertyAge             : "",
+			availability            : "",
+			checkPropValue			: false,
+			checkBudgetValue		: false,
+			propertyTransList		: [],
+			locSearchResults		: "",   
+		})
+		var propertySubType = [];
+		this.state.propertySubTypeList.map((item,index)=>{
+			item.checked = false;
+			propertySubType.push(item);
+		})
+		this.setState({propertySubTypeList:propertySubType});
+
+		var budget = [];
+		this.state.budgetList.map((item,index)=>{
+			item.checked = false;
+			budget.push(item);
+		})
+		this.setState({budgetList:budget});
+
+  		$("input[type='checkbox']:checked").prop("checked", false);
+  		$("input[type='radio']:checked").prop("checked", false);
+
+		var formValues = JSON.parse(localStorage.getItem("searchData"));
+		console.log("formValues",formValues);
+  		formValues.propertyType = "Residential";
+  		formValues.transactionType = "Sell";
+  		formValues.availability = "";
+  		formValues.flatType = [];
+  		formValues.floor = "";
+  		formValues.furnishedStatus = "";
+  		formValues.propertySubType = [];
+  		formValues.budget = [];
+
+
+		var searchData = JSON.stringify(formValues);
+		localStorage.removeItem("searchData");
+		localStorage.setItem("searchData",searchData);
+		axios
+		.post("/api/search/properties/", formValues)
+		.then((searchResults) => {
+			this.setState({ inputData : searchResults.data });
+			console.log("searchResults",searchResults)
+		})
+        .catch((error) =>{
+         	console.log("error = ", error);
+        });
+	}
+
 	render() {
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
@@ -654,7 +733,7 @@ class SearchResults extends Component {
 									    		: ""
 									    	}								
 										</datalist>
-								  		<div className="input-group-addon inputIcon" onChange={this.handleLocation.bind(this)}>
+								  		<div className="input-group-addon searchIcon" onChange={this.handleLocation.bind(this)}>
 					                     	<i className="fa fa-search"></i>
 					                    </div>
 								  	</div>
@@ -817,7 +896,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad property">
+							{/*<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.MISC ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -839,7 +918,7 @@ class SearchResults extends Component {
 								    	}
 								    </ul>
 								</div>
-							</div>
+							</div>*/}
 							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.availability ? 
@@ -856,6 +935,9 @@ class SearchResults extends Component {
 										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="afterAMonth" ref="" className="" value="31" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="afterAMonth">After a month</label><br /><span className="radioBoxBlock"></span></span>
 								    </ul>
 								</div>
+							</div>
+							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad" onClick={this.reset.bind(this)}>
+							  	<button className="btn bgWhite col-lg-12"><span className="glyphicon glyphicon-repeat"></span></button>
 							</div>
 							{/*<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 areaBtn noPad property">
 							  	<div className="dropdown">

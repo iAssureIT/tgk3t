@@ -323,4 +323,13 @@
   font-size: 12px !important;
 }	
 
+.searchIcon{
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.bgGold{
+  background-color: #F1A94B;
+  color: #fff;
+}
 /*--------------------------------------------*/

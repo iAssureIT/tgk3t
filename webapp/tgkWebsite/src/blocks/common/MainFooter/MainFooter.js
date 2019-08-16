@@ -89,7 +89,7 @@ export default class MainFooter extends Component{
         .post('/send-email',formValues1)
         .then((res)=>{
                    if(res.status === 200){
-                    swal("Mail Sent successfully")
+                    swal("Thank you for contacting us. We will get back to you shortly.")
                     }
                 })
                 .catch((error)=>{
@@ -157,38 +157,38 @@ export default class MainFooter extends Component{
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="col-lg-6 col-md-10 col-sm-10 col-xs-10 footerContactUs" >
                   <div className="row" >
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  mt20" >
-                    <div className="row">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
-                        <input type="text" className="form-control" placeholder="Name" name="name"  ref="name" data-text="clientName" onChange={this.handleChange} />
-                      </div>
-                      {this.state.formerrors.clientName &&(
-                                  <span className="text-danger">{formerrors.clientName}</span> 
-                                )}
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                        <input type="email" className="form-control" placeholder="Email" name="email"  ref="email" onChange={this.handleChange} data-text="clientEmail" />
-                      </div>
-                      {this.state.formerrors.clientEmail &&(
-                                  <span className="text-danger">{formerrors.clientEmail}</span> 
-                                )}
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                        <input type="number" className="form-control" data-text="clientMobile" name="mobile"  onChange={this.handleChange} placeholder="Phone"  ref="mobileNumber"  min="0"/>
-                      </div>
-                      {this.state.formerrors.clientMobile &&(
-                                  <span className="text-danger">{formerrors.clientMobile}</span> 
-                                )}
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 textColor">
-                        <textarea rows="5" cols="71"  placeholder="  Message" ref="message"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 " >
-                    <div className="col-lg-9 col-lg-offset-3 col-md-12 col-sm-12 col-xs-12">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  mt20" >
                       <div className="row">
-                       <button className="col-lg-3  col-md-12 col-sm-12 col-xs-12 sendButton btn  pull-right" onClick={this.sendNotification.bind(this)}>SEND</button>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
+                          <input type="text" className="form-control" placeholder="Name" name="name"  ref="name" data-text="clientName" onChange={this.handleChange} />
+                        </div>
+                        {this.state.formerrors.clientName &&(
+                                    <span className="text-danger">{formerrors.clientName}</span> 
+                                  )}
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
+                          <input type="email" className="form-control" placeholder="Email" name="email"  ref="email" onChange={this.handleChange} data-text="clientEmail" />
+                        </div>
+                        {this.state.formerrors.clientEmail &&(
+                                    <span className="text-danger">{formerrors.clientEmail}</span> 
+                                  )}
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
+                          <input type="number" className="form-control" data-text="clientMobile" name="mobile"  onChange={this.handleChange} placeholder="Phone"  ref="mobileNumber"  min="0"/>
+                        </div>
+                        {this.state.formerrors.clientMobile &&(
+                                    <span className="text-danger">{formerrors.clientMobile}</span> 
+                                  )}
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 textColor">
+                          <div class="form-group">
+                            <textarea class="form-control" id="exampleTextarea" rows="5" placeholder="Message" ref="message"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                        <div className="row">
+                          <button className="col-lg-3  col-md-12 col-sm-12 col-xs-12 sendButton btn  pull-right" onClick={this.sendNotification.bind(this)}>SEND</button>
+                        </div>
                       </div>
                     </div>
-                  </div>
                   </div>                       
                 </div>
                 <div className="col-lg-6 col-md-10 col-sm-10 col-xs-10 footerContactUs" >
@@ -197,24 +197,25 @@ export default class MainFooter extends Component{
                       <div className="col-lg-2 col-md-10 col-sm-10 col-xs-10 footerImgContainer" >
                         <img alt=""  src="/images/Logo.png" />
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails mt40" >
-                        <i className="fa fa-mobile fontMobile" aria-hidden="true"></i>&nbsp;   Phone 1 : +91 9952 040 040
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails mt40">
+                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 1 </span><span className="col-lg-9 noPad">: +91 9952 040 040</span>
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails" >
-                        <i className="fa fa-mobile fontMobile" aria-hidden="true"></i>&nbsp;   Phone 2 : +91 7776 040 040
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails">
+                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 7776 040 040</span>
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails" >
-                        <i className="fa fa-envelope"></i>&nbsp; Email&nbsp; &nbsp;   : customercare@thegoldenkey.co.jp<br/><p className="col-lg-6 col-lg-offset-2" style={{paddingLeft:"7px"}}>sales@thegoldenkey.co.jp</p>
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails">
+                         <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad">: customercare@thegoldenkey.co.jp</span><br/>
+                         <span className="col-lg-6 col-lg-offset-3 noPad">&nbsp; /sales@thegoldenkey.co.jp</span>
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails1" >
-                        <i className="fa fa-globe" aria-hidden="true"></i>&nbsp;  Website  : www.tgk.com
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails1 mt10">
+                        <span className="col-lg-3 noPad"><i className="fa fa-globe globe col-lg-1" aria-hidden="true"></i>&nbsp;  Website</span><span className="col-lg-9 noPad">  : www.tgk.com</span>
                       </div>
-                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails noPad" >
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt5">
-                            <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13 ">
+                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails" >
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+                            <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13">
                               <div className="row">
                                 <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
-                                <a href="https://www.facebook.com/">  <i className="fa fa-facebook-f"></i></a>
+                                  <a href="https://www.facebook.com/">  <i className="fa fa-facebook-f"></i></a>
                                 </div>
                               </div>
                             </div>

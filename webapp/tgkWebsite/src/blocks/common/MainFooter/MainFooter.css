@@ -12,7 +12,7 @@
 
 
 .footerContactDetails{
-	margin-top: 50px;
+	margin-top: 58px;
 }
 
 
@@ -43,4 +43,25 @@
 }
 .textColor{
     color: #555;
+}
+
+
+.footerScocial
+{ 
+    height: 30px;
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 0 !important;
+    background-color: #fff;
+    padding-top: 2px !important;
+    border: 1px solid #aaa;
+    text-align: center;
+    font-size: 17px;
+    color: #2a3b93;
+    margin-bottom: 20px;
+}
+
+.fa-globe:before {
+    content: "\f0ac";
+    font-size: 18px;
 }
