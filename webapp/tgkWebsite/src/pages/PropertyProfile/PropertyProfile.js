@@ -315,7 +315,7 @@ class PropertyProfile extends Component{
                                   <li className="col-lg-5 noPad">Super Area      </li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></span>
                                   <li className="col-lg-5 noPad">Built up Area   </li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></span>
                                   <li className="col-lg-5 noPad">Floor           </li> <span className="col-lg-7 noPad"> : {this.state.floor ? <b>{this.state.floor}</b> : "-"}</span>
-                                  <li className="col-lg-5 noPad">Total Floor     </li> <span className="col-lg-7 noPad"> : {this.state.totalFloor ? <b>{this.state.totalFloor}</b> : "-"}</span>
+                                  <li className="col-lg-5 noPad">Total Floors     </li> <span className="col-lg-7 noPad"> : {this.state.totalFloor ? <b>{this.state.totalFloor}</b> : "-"}</span>
                                   <li className="col-lg-5 noPad">Age of Property </li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
                                 </ul>
                               </div>
@@ -401,7 +401,7 @@ class PropertyProfile extends Component{
                                           {this.state.pricing && this.state.pricing.expectedRate ?
                                             <b>
                                               <li className="col-lg-3 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.expectedRate}</b></span>
+                                              <span className="col-lg-9 noPad"> : <b>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
                                             </b>
                                           : 
                                           <b>

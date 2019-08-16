@@ -16,26 +16,36 @@ export default class PropBox extends React.Component {
 					<div className="row pull-right topRightTriangle" id="triangle-topright"> 
 					</div>	
 					<div className="row">
-						<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">															
-						<img alt=""  className="propertyImgDiv" src={this.props.myProperty.gallery.Images[0]} />
+						<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">
+						{
+							this.props.myProperty && this.props.myProperty.gallery && this.props.myProperty.gallery.Images && this.props.myProperty.gallery.Images.length > 0 ?
+							<img alt=""  className="propertyImgDiv" src={this.props.myProperty.gallery.Images[0]} />
+							:
+							<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
+						}															
 					</div>
 					<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
 							<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 propertySubText1">				
 								<i className="fa fa-inr"></i>&nbsp;
 								<span>
-									{this.props.myProperty.financial && this.props.myProperty.financial.totalPrice ? this.props.myProperty.financial.totalPrice : "-"}
+									{this.props.myProperty && this.props.myProperty.financial && this.props.myProperty.transactionType == "Sell" ?
+										this.props.myProperty.financial && this.props.myProperty.financial.totalPrice? this.props.myProperty.financial.totalPrice : "-"
+									:
+										this.props.myProperty.financial && this.props.myProperty.financial.monthlyRent ? this.props.myProperty.financial.monthlyRent : "-"
+									}
 								</span>
 							</div>
 
 								<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 propertySubText1">				
 									{
-										this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.bedrooms ? this.props.myProperty.propertyDetails.bedrooms 
-										: 
-										"-"
+										this.props.myProperty.propertyType === "Residential" ? 
+											 <span>
+											 {this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.bedrooms ? this.props.myProperty.propertyDetails.bedrooms : "-"} BHK  &nbsp;&nbsp;
+											 </span>
+										:
+										null
 									}
-									&nbsp;BHK
-									&nbsp;
 									<i className="fa fa-map-marker text-warning"/>
 									&nbsp;
 									{this.props.myProperty.propertyLocation  &&  this.props.myProperty.propertyLocation.city && this.props.myProperty.propertyLocation.society
@@ -62,18 +72,36 @@ export default class PropBox extends React.Component {
 							</div>
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
 								<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-									<img alt=""  src="/images/Icons/bed.png" className="imgIcon"/>&nbsp;
+								{
+									this.props.myProperty.propertyType ==="Residential" ?
 									<span className="propertySubText1">
-										{this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.bedrooms ? this.props.myProperty.propertyDetails.bedrooms : "-"}
+									<img alt=""  src="/images/Icons/bed.png" className="imgIcon"/>&nbsp;
+										{this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.bedrooms }
+										<br/><p style={{fontWeight:"100"}}>Bedrooms</p>
 									</span>
-									<br/> Beds
+									:
+									<span className="propertySubText1">
+									<img alt=""  src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
+									{this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.washrooms}
+									<br/><p style={{fontWeight:"100"}}>Washrooms</p>
+									</span>
+								}
 								</div>
 								<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-									<img alt=""  src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
-									<span className="propertySubText1">
-										{this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.bathrooms ? this.props.myProperty.propertyDetails.bathrooms : "-"}
-									</span>
-									<br/>Baths
+									{
+										this.props.myProperty.propertyType ==="Residential" ?
+										<span className="propertySubText1">
+										<img alt=""  src="/images/Icons/bath.png" className="imgIcon"/>&nbsp;
+											{this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.bathrooms }
+											<br/><p style={{fontWeight:"100"}}>Bathrooms</p>
+										</span>
+										:
+										<span className="propertySubText1">
+										<img alt=""  src="/images/Icons/coffee.png" className="imgIcon" style={{width:"27px"}}/>&nbsp;
+										{this.props.myProperty.propertyDetails && this.props.myProperty.propertyDetails.pantry}
+										<br/><p style={{fontWeight:"100"}}>Pantry</p>
+										</span>
+									}
 								</div>
 								<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 									<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;

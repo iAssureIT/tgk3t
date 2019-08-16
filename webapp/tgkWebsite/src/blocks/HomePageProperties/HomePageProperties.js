@@ -80,7 +80,12 @@ class HomePageProperties extends Component {
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                      <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    {
+                                      property.transactionType === "Sell" ?
+                                      property.financial.totalPrice 
+                                      :
+                                      property.financial.monthlyRent
+                                    }
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
                                       <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
@@ -88,7 +93,9 @@ class HomePageProperties extends Component {
                                   </div>
                                   <div className="row">
                                     <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                       <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                       {
+                                        <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                      }
                                     </div>
                                   </div> 
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -114,9 +121,15 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
-                                      <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
+                                        <i className="fa fa-inr pr8" aria-hidden="true"></i>
+                                        {
+                                          property.transactionType === "Sell" ?
+                                          property.financial.totalPrice 
+                                          :
+                                          property.financial.monthlyRent
+                                        }
+                                    </div>    
+                                    <div className="pull-right noPad mt10">
                                       <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i> {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                     </div>
                                   </div>
@@ -137,7 +150,12 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    {
+                                      property.transactionType === "Sell" ?
+                                      property.financial.totalPrice 
+                                      :
+                                      property.financial.monthlyRent
+                                    }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
                                     <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
@@ -145,7 +163,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -171,10 +189,15 @@ class HomePageProperties extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
-                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>
+                                    {property.transactionType === "Sell" ?
+                                      property.financial.totalPrice 
+                                      :
+                                      property.financial.monthlyRent
+                                    }
                                   </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                    <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                  <div className="pull-right noPad mt10">
+                                    <i className="fa fa-shopping-bag  pr8 pull-right" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -196,7 +219,12 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    {
+                                      property.transactionType === "Sell" ?
+                                      property.financial.totalPrice 
+                                      :
+                                      property.financial.monthlyRent
+                                    }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
                                     <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
@@ -204,7 +232,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -232,8 +260,13 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                   </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                    <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
+                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>
+                                    {property.transactionType === "Sell" ?
+                                      property.financial.totalPrice 
+                                      :
+                                      property.financial.monthlyRent
+                                    }
                                   </div>
                                 </div>
                               </div>
@@ -252,7 +285,12 @@ class HomePageProperties extends Component {
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                        <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                        {
+                                          property.transactionType === "Sell" ?
+                                          property.financial.totalPrice 
+                                          :
+                                          property.financial.monthlyRent
+                                        }
                                       </div>
                                       <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
                                         <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
@@ -260,7 +298,7 @@ class HomePageProperties extends Component {
                                     </div>
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -288,8 +326,14 @@ class HomePageProperties extends Component {
                                       <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
                                       </div>
-                                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
-                                        <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                      <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
+                                        <i className="fa fa-inr pr8" aria-hidden="true"></i>
+                                        {
+                                          property.transactionType === "Sell" ?
+                                          property.financial.totalPrice 
+                                          :
+                                          property.financial.monthlyRent
+                                        }
                                       </div>
                                     </div>
                                   </div>
@@ -310,7 +354,12 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
+                                    {
+                                      property.transactionType === "Sell" ?
+                                      property.financial.totalPrice 
+                                      :
+                                      property.financial.monthlyRent
+                                    }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
                                     <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
@@ -318,7 +367,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : null} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -344,9 +393,15 @@ class HomePageProperties extends Component {
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
-                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>{property.financial.totalPrice}
-                                  </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 pull-right noPad mt10">
+                                    <i className="fa fa-inr pr8" aria-hidden="true"></i>
+                                    {
+                                      property.transactionType === "Sell" ?
+                                      property.financial.totalPrice 
+                                      :
+                                      property.financial.monthlyRent
+                                    }
+                                  </div> 
+                                  <div className="pull-right noPad mt10">
                                    <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>

@@ -131,9 +131,11 @@ import './MyInterestedProperties.css';
 							<div className="row pull-right" id="triangle-topright">				</div>	
 								<div className="row">
 									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
-									{myProperty.gallery && myProperty.gallery.Images && myProperty.gallery.Images.length >0 ?		
+									{
+										myProperty && myProperty.gallery && myProperty.gallery.Images && myProperty.gallery.Images.length > 0 ?
 										<img alt=""  className="propertyImgDiv" src={myProperty.gallery.Images[0]} />
-									 : null
+										:
+										<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
 									}
 								</div>
 								<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
@@ -224,7 +226,7 @@ import './MyInterestedProperties.css';
 												</div>
 												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
-													<span className="propertySubText1">{myProperty.floor? myProperty.floor :"-"}  /  {myProperty.floor? myProperty.totalFloor :"-"}</span><br/>Floor / Total Floor
+													<span className="propertySubText1">{myProperty.floor? myProperty.floor :"-"}  /  {myProperty.floor? myProperty.totalFloor :"-"}</span><br/>Floor / Total Floors
 												</div>
 												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;
