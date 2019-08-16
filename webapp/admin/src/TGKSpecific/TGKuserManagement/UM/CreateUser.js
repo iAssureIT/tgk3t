@@ -113,7 +113,7 @@ class CreateUser extends Component {
                                     "startRange"        : this.state.startRange,
                                     "limitRange"        : this.state.limitRange, 
                             }
-                      axios.post('/api/users/userslist', data)
+                      axios.post('/api/users/post/userslist', data)
                       .then( (res)=>{      
                         // console.log("herer",res);
                         var tableData = res.data.map((a, i)=>{
@@ -164,7 +164,7 @@ class CreateUser extends Component {
         }
 
         if(this.state.firstname!="" && this.state.lastname !="" && this.state.signupEmail && this.state.mobNumber && this.state.role != "--select--"){
-           axios.post('/api/users', formValues)
+           axios.post('/api/users/post', formValues)
                 .then( (res)=>{
                     swal("User added successfully", "", "success");
                     this.refs.firstname.value = '';

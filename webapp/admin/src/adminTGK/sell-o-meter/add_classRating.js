@@ -43,39 +43,45 @@ export default class add_sellometer extends Component {
       }
       
       console.log("formValues ", formValues);
+    if(this.refs.propertyClass.value!="" && this.refs.earning.value!="" )
+    {
+       axios.post('/api/mastersellometers/', formValues)
+        .then( (res)=>{
+            console.log("submit ");
+            swal("Property Class added successfully", "", "success");
+            this.refs.propertyClass.value = '';  
+            this.refs.earning.value = '';  
 
-    axios.post('/api/mastersellometers/', formValues)
-      .then( (res)=>{
-          console.log("submit ");
-          swal("Property Class added successfully", "", "success");
-          this.refs.propertyClass.value = '';  
-          this.refs.earning.value = '';  
+             axios
+              .get('/api/mastersellometers/list')
+              .then(
+                (res)=>{
+                  console.log('res', res);
+                  const postsdata = res.data;
+                  console.log('postsdata',postsdata);
+                  this.setState({
+                    allPosts : postsdata,
+                  });
+                   this.props.selectedData(this.state.allPosts);
+                }
+              )
+              .catch((error)=>{
 
-           axios
-            .get('/api/mastersellometers/list')
-            .then(
-              (res)=>{
-                console.log('res', res);
-                const postsdata = res.data;
-                console.log('postsdata',postsdata);
-                this.setState({
-                  allPosts : postsdata,
-                });
-                 this.props.selectedData(this.state.allPosts);
-              }
-            )
-            .catch((error)=>{
-
-              console.log("error = ",error);
-              // alert("Something went wrong! Please check Get URL.");
-               });       
-      
-                
-      })
-      .catch((error)=>{
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-      });
+                console.log("error = ",error);
+                // alert("Something went wrong! Please check Get URL.");
+                 });       
+        
+                  
+        })
+        .catch((error)=>{
+          console.log("error = ",error);
+          // alert("Something went wrong! Please check Get URL.");
+        }); 
+      }else{
+        swal("Please enter mandatory fields", "", "warning");
+        
+      }
+    
   
 
     }
@@ -93,7 +99,7 @@ export default class add_sellometer extends Component {
 
                <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-8">
                     <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
-      							<label>Property Class </label>
+      							<label>Property Class <span className="astrick">*</span> </label>
 
                     <select className="stateselection col-lg-6 col-md-6 col-xs-12 col-sm-8 form-control" title="Please select class" id="propertyClass" ref="propertyClass" name="propertyClass" onChange={this.handleChange} required>
                                    <option value="">-Select-</option>
@@ -108,7 +114,7 @@ export default class add_sellometer extends Component {
       						</div>
 
                    <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
-                        <label>Earning % </label>
+                        <label>Earning %  <span className="astrick">*</span></label>
                         <input type="text" placeholder="Enter Earning %" className="rolesField form-control  inputText tmsUserAccForm" value={this.state.earning} ref="earning"  name="earning" id="earning" onChange={this.handleChange}/>
                    </div>
 

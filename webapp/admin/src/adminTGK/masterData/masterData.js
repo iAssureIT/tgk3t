@@ -6,6 +6,7 @@ import 'bootstrap/js/modal.js';
 import swal                     	from 'sweetalert';
 import Add_data 					   from './add_data.js';
 /*import Add_dataTable 				   from './add_dataTable.js';*/
+import $ from "jquery";
 
 class masterData extends Component {
     
@@ -18,9 +19,12 @@ class masterData extends Component {
 		}
 
 		  this.handleChange = this.handleChange.bind(this);
+		   // $('.subjectRowError').css({'display':'none'});
     }
 
     componentDidMount(){
+
+    	   $('.subjectRowError').css({'display':'none'});
 
 		axios
 			.get('/api/masteramenities/list')
@@ -111,36 +115,51 @@ class masterData extends Component {
 
 		      console.log("formValues",formValues);
 		      
-		    axios.put('/api/masteramenities/'+id, formValues)
-		      .then( (res)=>{
-		          console.log("submit ",res);
-		          swal("Amenities Updated successfully", "", "success");
-		          this.state.amenityname = '';    
+		      if(this.state.amenityname != "")
+		      {
+		      		   $('.subjectRowError').css({'display':'none'});
+
+		      		 axios.put('/api/masteramenities/'+id, formValues)
+				      .then( (res)=>{
+				          console.log("submit ",res);
+				          swal("Amenities Updated successfully", "", "success");
+				          this.state.amenityname = '';    
 
 
-		          axios
-				.get('/api/masteramenities/list')
-				.then(
-					(res)=>{
-						console.log('res', res);
-						const postsdata = res.data;
-						console.log('postsdata',postsdata);
-						this.setState({
-							allPosts : postsdata,
-						});
-					}
-				)
-				.catch((error)=>{
+				          axios
+						.get('/api/masteramenities/list')
+						.then(
+							(res)=>{
+								console.log('res', res);
+								const postsdata = res.data;
+								console.log('postsdata',postsdata);
+								this.setState({
+									allPosts : postsdata,
+								});
 
-					console.log("error = ",error);
-					// alert("Something went wrong! Please check Get URL.");
-					 });			
-				     
-		      })
-		      .catch((error)=>{
-		        console.log("error = ",error);
-		        // alert("Something went wrong! Please check Get URL.");
-		      });  
+								$('.modal').remove();
+								$('.modal-backdrop').remove();
+								$('body').removeClass( "modal-open" );
+								 window.location.reload();
+							}
+						)
+						.catch((error)=>{
+
+							console.log("error = ",error);
+							// alert("Something went wrong! Please check Get URL.");
+							 });			
+						     
+				      })
+				      .catch((error)=>{
+				        console.log("error = ",error);
+				        // alert("Something went wrong! Please check Get URL.");
+				      });  
+
+		      }else{
+		      		   $('.subjectRowError').removeClass('hidden');
+		      		    // swal("Please enter Name", "", "warning");
+		      }
+		   
 
   		}
 
@@ -153,6 +172,7 @@ class masterData extends Component {
 	}
 
     render() {
+    	 // $('.subjectRowError').css({'display':'none'});
         return (
             <div> 
 
@@ -174,17 +194,17 @@ class masterData extends Component {
 												<thead className="tempTableHeader">
 													<tr className="">
 														<th className="umDynamicHeader srpadd textAlignCenter"> Amenities </th>
-														<th className="umDynamicHeader srpadd textAlignCenter"> Action </th>
+														<th className="umDynamicHeader srpadd textAlignCenter"> Actions </th>
 													</tr>
 												</thead>
 												<tbody>
 												{this.state.allPosts.map( (roleData, index)=>{
 													// console.log('roleData',roleData);
 												   return( 
-													<tr>
+													<tr className="ReverseData">
 														<td className="textAlignLeft">{roleData.amenity}</td>		
 														<td className="roleTextCenter pointerCls"> 						
-															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title=" Edit" data-target={`#${roleData._id}-edit`} title="Edit Department Name" ></i>
+															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title=" Edit" data-target={`#${roleData._id}-edit`} title="Edit" ></i>
 															&nbsp;&nbsp;
 															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Delete" data-toggle="modal" title="Delete" data-target={`#${roleData._id}-rm`} ></i>
 														</td>
@@ -231,9 +251,10 @@ class masterData extends Component {
 															      		</div>
 										                              <div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										                              
-										                              <label className="textAlignLeft">Amenities Name</label>
+										                              <label className="textAlignLeft">Enter Amenities</label>
 																			<input type="text" ref="amenityname" name="amenityname" id="amenityname" value={this.state.amenityname} onChange={this.handleChange} className="form-control rolesField" required/>
-																		
+																			<span className="text-danger subjectRowError hidden">Please enter Name</span> 
+                                      
 
 										                              </div>
 										                              
@@ -242,7 +263,7 @@ class masterData extends Component {
 										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
 										                                   </div>
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-										                                        <button id={roleData._id} onClick={this.editRole.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">SUBMIT</button>
+										                                        <button id={roleData._id} onClick={this.editRole.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1">SUBMIT</button>
 										                                   </div>
 										                              </div>
 										                         </div>

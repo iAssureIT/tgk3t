@@ -40,7 +40,7 @@ componentDidMount(){
 
                 <ul className="list-unstyled components">
                     <li className="active">
-                    <a href="#">
+                    <a href="/dashboard">
                             <i className="glyphicon glyphicon-briefcase"></i>
                             Dashboard
                      </a>

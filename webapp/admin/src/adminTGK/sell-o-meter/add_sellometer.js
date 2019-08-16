@@ -47,48 +47,53 @@ export default class add_sellometer extends Component {
       }
       
       console.log("formValues ", formValues);
-    axios.post('/api/sellometers/', formValues)
-      .then( (res)=>{
-          console.log("submit ");
-          swal("Data added successfully", "", "success");
-          this.state.city = '';
-          this.refs.area.value = '';        
-          this.refs.subarea.value = '';        
-          this.refs.society.value = '';        
-          this.refs.propertyClass.value = '';
+    if(this.refs.city.value!=""&&this.refs.area.value!=""&&this.refs.subarea.value!=""&&this.refs.society.value!=""&&this.refs.propertyClass.value!=""&& this.state.index!="")
+    {
 
 
-          this.state.area = "";
-          this.state.subarea = "";
-          this.state.society = "";
-          this.state.propertyClass = "";
-          this.state.index ='';      
+        axios.post('/api/sellometers/', formValues)
+          .then( (res)=>{
+              console.log("submit ");
+              swal("Data added successfully", "", "success");
+              this.state.city = '';
+              this.refs.area.value = '';        
+              this.refs.subarea.value = '';        
+              this.refs.society.value = '';        
+              this.refs.propertyClass.value = '';
 
-          axios
-          .get('/api/sellometers/list')
-          .then(
-            (res)=>{
-              console.log('res', res);
-              const postsdata = res.data;
-              console.log('postsdata of list ++++++++++++++++++++++++++++++++++',postsdata);
-              this.setState({
-                allPosts : postsdata,
-              });
-               this.props.selectedData(this.state.allPosts);
-            }
-          )
+
+              this.state.area = "";
+              this.state.subarea = "";
+              this.state.society = "";
+              this.state.propertyClass = "";
+              this.state.index ='';      
+
+              axios
+              .get('/api/sellometers/list')
+              .then(
+                (res)=>{
+                  console.log('res', res);
+                  const postsdata = res.data;
+                  console.log('postsdata of list ++++++++++++++++++++++++++++++++++',postsdata);
+                  this.setState({
+                    allPosts : postsdata,
+                  });
+                   this.props.selectedData(this.state.allPosts);
+                }
+              )
+              .catch((error)=>{
+
+                console.log("error = ",error);
+                // alert("Something went wrong! Please check Get URL.");
+                 });    
+          })
           .catch((error)=>{
-
             console.log("error = ",error);
             // alert("Something went wrong! Please check Get URL.");
-             });    
-
-      })
-      .catch((error)=>{
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-      });
-  
+          });
+      }else{
+        swal("Please enter mandatory fields", "", "warning");
+      }
 
     }
 
@@ -119,33 +124,33 @@ export default class add_sellometer extends Component {
        			<div>
 					<form id="addroles" className="paddingLeftz noLRPad " >
 						<div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-8">
-							<label className="">Enter Data </label><span className="astrick">*</span> <br/>
+							<label className="">Enter Data </label><br/>
 							{/*<span className="blocking-span leftmar">*/}
                  <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                     <label className="control-label statelabel locationlabel" >City Name</label>
-                      <input type="text" placeholder="City" className="rolesField form-control  inputText tmsUserAccForm" value={this.state.city} ref="city"  name="city" id="city" onChange={this.handleChange}/>   
+                     <label className="control-label statelabel locationlabel" >City Name <span className="astrick">*</span> </label>
+                      <input type="text" placeholder="Enter City" className="rolesField form-control  inputText tmsUserAccForm" value={this.state.city} ref="city"  name="city" id="city" onChange={this.handleChange}/>   
                   </div>
 
                    <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                      <label className="control-label statelabel locationlabel" >Area Name</label> 
-                      <input type="text" placeholder="Area" className="rolesField form-control  inputText tmsUserAccForm" ref="area"  name="area" id="area" onChange={this.handleChange}/>
+                      <label className="control-label statelabel locationlabel" >Area Name <span className="astrick">*</span> </label> 
+                      <input type="text" placeholder="Enter Area" className="rolesField form-control  inputText tmsUserAccForm" ref="area"  name="area" id="area" onChange={this.handleChange}/>
                   </div>
 
                    <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                       <label className="control-label statelabel locationlabel" >Subarea Name</label> 
-                       <input type="text" placeholder="Sub area" className="rolesField form-control  inputText tmsUserAccForm" ref="subarea"  name="subarea" id="subarea" onChange={this.handleChange}/>
+                       <label className="control-label statelabel locationlabel" >Subarea Name <span className="astrick">*</span> </label> 
+                       <input type="text" placeholder="Enter Sub area" className="rolesField form-control  inputText tmsUserAccForm" ref="subarea"  name="subarea" id="subarea" onChange={this.handleChange}/>
                   </div>
 
                    <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
-                       <label className="control-label statelabel locationlabel" >Society Name</label> 
-                       <input type="text" placeholder="Society" className="rolesField form-control  inputText tmsUserAccForm" ref="society"  name="society" id="society" onChange={this.handleChange}/>
+                       <label className="control-label statelabel locationlabel" >Society Name <span className="astrick">*</span> </label> 
+                       <input type="text" placeholder="Enter Society" className="rolesField form-control  inputText tmsUserAccForm" ref="society"  name="society" id="society" onChange={this.handleChange}/>
                   </div>
 
               </div>
 
                <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-8">
                     <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
-      							<label>Property Class </label>
+      							<label>Property Class <span className="astrick">*</span>  </label>
 
                     <select className="stateselection col-lg-6 col-md-6 col-xs-12 col-sm-8 form-control" title="Please select class" id="propertyClass" ref="propertyClass" name="propertyClass" onChange={this.handleChange} required>
                                    <option value="">-Select-</option>
@@ -154,7 +159,7 @@ export default class add_sellometer extends Component {
                                    <option value="C"> C </option>
                                    <option value="D"> D </option>
                                    <option value="E"> E </option>
-                                   <option value="F"> F </option>
+                                 {/*  <option value="F"> F </option>*/}
                                    </select>
                  {/*   </span>*/}
       						</div>
@@ -163,7 +168,7 @@ export default class add_sellometer extends Component {
 
               <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-8">
                    <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
-                        <label>Property Index </label>
+                        <label>Property Index <span className="astrick">*</span> </label>
                         <input type="text" placeholder="index" className="rolesField form-control  inputText tmsUserAccForm" value={this.state.index} ref="index"  name="index" id="index" onChange={this.handleChange}/>
                    </div>
                   <div className="form-group mar30 col-lg-6 col-md-6 col-xs-12 col-sm-8">

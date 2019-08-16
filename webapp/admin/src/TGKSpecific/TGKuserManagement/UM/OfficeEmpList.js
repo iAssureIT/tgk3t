@@ -67,7 +67,7 @@ class OfficeEmpList extends Component {
 		}
 		 if(selectOffice && selectOffice.length != 0) {
 					axios
-				      .post('/api/users/officesearchValue',formValues)
+				      .post('/api/users/post/officesearchValue',formValues)
 				      .then(
 				        (res)=>{
 				          console.log('res', res);
@@ -170,9 +170,9 @@ class OfficeEmpList extends Component {
 													
 												   		return( 
 																<tr>
-																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.fullName : "-" }</td>	
-																	<td className="textAlignLeft">{ roleData.profile ? roleData.profile.mobileNumber : "-" }</td>	
-																	<td className="textAlignLeft">{roleData.profile ? roleData.profile.emailId : "-" }</td>	
+																	<td className="textAlignLeft">{roleData.profile && roleData.profile.fullName ? roleData.profile.fullName : "-" }</td>	
+																	<td className="textAlignLeft">{ roleData.profile && roleData.profile.mobileNumber ? roleData.profile.mobileNumber : "-" }</td>	
+																	<td className="textAlignLeft">{roleData.profile && roleData.profile.emailId  ? roleData.profile.emailId : "-" }</td>	
 																	<td className="textAlignLeft">{ roleData.roles[0] ? roleData.roles[0] : "-" }</td>		
 																
 																

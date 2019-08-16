@@ -384,7 +384,7 @@ class IAssureTableUM extends Component {
 		}
 		 if(searchText && searchText.length != 0) {
 					axios
-				      .post('/api/users/searchValue',formValues)
+				      .post('/api/users/post/searchValue',formValues)
 				      .then(
 				        (res)=>{
 				          console.log('res', res);
@@ -394,8 +394,8 @@ class IAssureTableUM extends Component {
 								return {
 									_id 			: a._id ? a._id : '-' ,
 									fullName        : a.profile.fullName ? a.profile.fullName : '-',
-					                emailId    		: a.emails[0].address ? a.emails[0].address : '-',
-					                mobileNumber       : a.profile.mobileNumber ? a.profile.mobileNumber :'-', 
+					                emailId    		: a.profile.emailId ? a.profile.emailId : '-',
+					                mobileNumber    : a.profile.mobileNumber ? a.profile.mobileNumber :'-', 
 					                status        	: a.profile.status ? a.profile.status : '-',	
 					                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
 								}
@@ -586,7 +586,7 @@ class IAssureTableUM extends Component {
 		var id = event.target.id;
 		// console.log("id",id);
 		const token = '';
-		const url = '/api/users/'+id ;
+		const url = '/api/users/delete/one/'+id ;
 		const headers = {
 			    "Authorization" : token,
 			    "Content-Type" 	: "application/json",
@@ -606,7 +606,7 @@ class IAssureTableUM extends Component {
 						"startRange"        : this.state.startRange,
 			            "limitRange"        : this.state.limitRange, 
 					}
-					axios.post('/api/users/userslist', data)
+					axios.post('/api/users/post/userslist', data)
 					.then( (res)=>{      
 						// console.log("herer",res);
 						var tableData = res.data.map((a, i)=>{
@@ -659,7 +659,7 @@ class IAssureTableUM extends Component {
 			{
 				if(password==conPassword){
 					if(password.length >= 6){
-						axios.put('/api/users/resetpwd/'+ newID, formValues)
+						axios.put('/api/users/put/one/resetpwd/'+ newID, formValues)
 					      .then( (res)=>{
 					      	console.log("response-------------",res);
 					  		  swal("Password has been changed successfully!!","", "success");

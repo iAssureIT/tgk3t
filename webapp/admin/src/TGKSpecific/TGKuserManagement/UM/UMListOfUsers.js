@@ -28,7 +28,7 @@ class UMListOfUsers extends Component {
                 mobileNumber    : 'Mobile Number', 
                 status        	: 'Status',
                 roles        	: 'Role',
-                actions        	: 'Action',
+                actions        	: 'Actions',
             },
             "startRange"        : 0,
             "limitRange"        : 10, 
@@ -71,7 +71,7 @@ class UMListOfUsers extends Component {
 			"startRange"        : this.state.startRange,
             "limitRange"        : this.state.limitRange, 
 		}
-		axios.post('/api/users/userslist', data)
+		axios.post('/api/users/post/userslist', data)
 		.then( (res)=>{      
 			console.log("herer=========================>>>>>>>>>>",res.data);
 			// var tableData = res.data.map((a, i)=>{
@@ -114,7 +114,7 @@ class UMListOfUsers extends Component {
 			"startRange"        : startRange,
             "limitRange"        : limitRange, 
 		}    
-       axios.post('/api/users/userslist', data)
+       axios.post('/api/users/post/userslist', data)
         .then( (res)=>{  
         	var tableData = res.data.map((a, i)=>{
 				return {
@@ -180,7 +180,7 @@ class UMListOfUsers extends Component {
 				  	}
 				  	// console.log("selected i",selectedId);
 				  	 axios
-				      .post('/api/users/statusaction',formValues)
+				      .post('/api/users/post/statusaction',formValues)
 				      .then(
 				        (res)=>{
 				          // console.log('res', res);
@@ -199,7 +199,7 @@ class UMListOfUsers extends Component {
 											"startRange"        : this.state.startRange,
 								            "limitRange"        : this.state.limitRange, 
 										}
-										axios.post('/api/users/userslist', data)
+										axios.post('/api/users/post/userslist', data)
 										.then( (res)=>{      
 											// console.log("herer",res);
 											var tableData = res.data.map((a, i)=>{
@@ -253,7 +253,7 @@ class UMListOfUsers extends Component {
 				  	// console.log("selected i",selectedId);
 
 				  	 axios
-				      .post('/api/users/statusaction',formValues)
+				      .post('/api/users/post/statusaction',formValues)
 				      .then(
 				        (res)=>{
 				          // console.log('res', res);
@@ -269,7 +269,7 @@ class UMListOfUsers extends Component {
 											"startRange"        : this.state.startRange,
 								            "limitRange"        : this.state.limitRange, 
 										}
-										axios.post('/api/users/userslist', data)
+										axios.post('/api/users/post/userslist', data)
 										.then( (res)=>{      
 											// console.log("herer",res);
 											var tableData = res.data.map((a, i)=>{
@@ -328,7 +328,7 @@ class UMListOfUsers extends Component {
 				  	// console.log("selected i",selectedId);
 
 				  	 axios
-				      .post('/api/users/roleadd/',formValues)
+				      .post('/api/users/post/roleadd/',formValues)
 				      .then(
 				        (res)=>{
 				          console.log('res----------------', res);
@@ -348,7 +348,7 @@ class UMListOfUsers extends Component {
 											"startRange"        : this.state.startRange,
 								            "limitRange"        : this.state.limitRange, 
 										}
-										axios.post('/api/users/userslist', data)
+										axios.post('/api/users/post/userslist', data)
 										.then( (res)=>{      
 											// console.log("herer",res);
 											var tableData = res.data.map((a, i)=>{
@@ -403,7 +403,7 @@ class UMListOfUsers extends Component {
 				  	}
 			
 				  	 axios
-				      .post('/api/users/roledelete/',formValues)
+				      .post('/api/users/post/roledelete/',formValues)
 				      .then(
 				        (res)=>{
 				          // console.log('res', res);
@@ -415,7 +415,7 @@ class UMListOfUsers extends Component {
 											"startRange"        : this.state.startRange,
 								            "limitRange"        : this.state.limitRange, 
 										}
-										axios.post('/api/users/userslist', data)
+										axios.post('/api/users/post/userslist', data)
 										.then( (res)=>{      
 											// console.log("herer",res);
 											var tableData = res.data.map((a, i)=>{
@@ -481,7 +481,7 @@ class UMListOfUsers extends Component {
 								"startRange"        : this.state.startRange,
 					            "limitRange"        : this.state.limitRange, 
 							}
-							axios.post('/api/users/userslist', data)
+							axios.post('/api/users/post/userslist', data)
 							.then( (res)=>{      
 								// console.log("herer",res);
 								// swal("Success! Showing "+selectedValue,"","success");
@@ -511,7 +511,7 @@ class UMListOfUsers extends Component {
 					}else{
 
 						 axios
-					      .post('/api/users/searchValue',formValues)
+					      .post('/api/users/post/searchValue',formValues)
 					      .then(
 					        (res)=>{
 					          // console.log('res', res);
@@ -546,7 +546,7 @@ class UMListOfUsers extends Component {
 
 			var selectedValue        = this.refs.blockActive.value;
 				var keywordSelectedValue = selectedValue.split('$')[0];
-				// console.log("selectedValue status",selectedValue);			
+				console.log("selectedValue status",selectedValue);			
 				// console.log("keywordSelectedValue status",keywordSelectedValue);
 					var formValues ={
 						searchText : selectedValue,
@@ -559,7 +559,7 @@ class UMListOfUsers extends Component {
 								"startRange"        : this.state.startRange,
 					            "limitRange"        : this.state.limitRange, 
 							}
-							axios.post('/api/users/userslist', data)
+							axios.post('/api/users/post/userslist', data)
 							.then( (res)=>{      
 								// console.log("herer",res);
 								// swal("Success! Showing "+selectedValue,"","success");
@@ -590,17 +590,17 @@ class UMListOfUsers extends Component {
 					}else{
 
 						 axios
-				      .post('/api/users/searchValue',formValues)
+				      .post('/api/users/post/searchValue',formValues)
 				      .then(
 				        (res)=>{
-				          // console.log('res', res);
+				          console.log('res', res);
 				          // swal("Success! only "+selectedValue+" users are shown in the list", "","success");
 				          var data = res.data.data;
 				          var tableData = data.map((a, i)=>{
 								return {
 										_id 			: a._id ? a._id : '-' ,
 										fullName        : a.profile.fullName ? a.profile.fullName : '-',
-						                emailId    		: a.emails[0].address ? a.emails[0].address : '-',
+						                emailId    		: a.profile.emailId ? a.profile.emailId : '-',
 						                mobileNumber    : a.profile.mobileNumber ? a.profile.mobileNumber : '-', 
 						                status        	: a.profile.status ? a.profile.status : "-",	
 						                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
@@ -612,7 +612,8 @@ class UMListOfUsers extends Component {
 				            },()=>{
 				            })
 				        }).catch((error)=>{ 
-				        	swal("Sorry there are no "+selectedValue+"users", "","error");
+				        	console.log("error",error);
+				        	// swal("Sorry there are no "+selectedValue +" users", "","error");
 				      });
 					}
 
@@ -637,7 +638,7 @@ class UMListOfUsers extends Component {
 					  	
 					  	// console.log("selected i",selectedId);
 					  	const token = '';
-					  	const url = '/api/users/'+selectedId ;
+					  	const url = '/api/users/delete/one/'+selectedId ;
 						const headers = {
 							    "Authorization" : token,
 							    "Content-Type" 	: "application/json",
@@ -659,7 +660,7 @@ class UMListOfUsers extends Component {
 												"startRange"        : this.state.startRange,
 									            "limitRange"        : this.state.limitRange, 
 											}
-											axios.post('/api/users/userslist', data)
+											axios.post('/api/users/post/userslist', data)
 											.then( (res)=>{      
 												// console.log("herer",res);
 												var tableData = res.data.map((a, i)=>{

@@ -38,7 +38,7 @@ class Login extends Component {
         console.log("auth value",auth);
 
     axios
-      .post('/api/users/login',auth)
+      .post('/api/users/post/login',auth)
       .then((response)=> {
         console.log("-------userData------>>",response);
         // this.setState({

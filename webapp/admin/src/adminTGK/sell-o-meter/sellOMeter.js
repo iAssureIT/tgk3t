@@ -4,7 +4,7 @@ import axios 						   from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
 import swal                       from 'sweetalert';
-
+import $ from "jquery";
 import Add_sellOMeter 					   from './add_sellometer.js';
 /*import Add_dataTable 				   from './add_dataTable.js';*/
 
@@ -108,6 +108,18 @@ class sellOMeter extends Component {
 				});
   		}
 
+  		ClearData(event){
+  			this.setState({
+  				city : "",
+				area : "",
+				subarea : "",
+				society : "",
+				index : "",
+				propertyClass : "",
+  			});
+
+  		}
+
   		editData(event){
 
   			event.preventDefault();
@@ -124,23 +136,25 @@ class sellOMeter extends Component {
 		      }
 
 		      console.log("formValues",formValues);
-		      
-		    axios.put('/api/sellometers/'+id, formValues)
-		      .then( (res)=>{
-		          console.log("submit ",res);
-		          swal("Sell-O-Meter Data Updated successfully", "", "success");
-		         
-		         this.setState({
-		         city             : "",
-			     area 			  : "",
-				 subarea 		  : "",
-				 society 		  : "",
-				 propertyClass 	  : "",
-				 index 			  : "",     
-		         });
+		 	  if( this.state.city!= "" && this.state.area!="" && this.state.subarea!="" && this.state.propertyClass!="" && this.state.index!="" )
+		 	  {
+		 	  	axios
+		 	  	.put('/api/sellometers/'+id, formValues)
+			    .then( (res)=>{
+			          console.log("submit ",res);
+			          swal("Sell-O-Meter Data Updated successfully", "", "success");
+			         
+			         this.setState({
+			         city             : "",
+				     area 			  : "",
+					 subarea 		  : "",
+					 society 		  : "",
+					 propertyClass 	  : "",
+					 index 			  : "",     
+			         });
 		         
 
-		          axios
+		          	axios
 					.get('/api/sellometers/list')
 					.then(
 						(res)=>{
@@ -150,6 +164,11 @@ class sellOMeter extends Component {
 							this.setState({
 								allPosts : postsdata,
 							});
+
+								$('.modal').remove();
+								$('.modal-backdrop').remove();
+								$('body').removeClass( "modal-open" );
+								 window.location.reload();
 						}
 					)
 					.catch((error)=>{
@@ -159,11 +178,17 @@ class sellOMeter extends Component {
 						 });		
 
 
-		      })
-		      .catch((error)=>{
-		        console.log("error = ",error);
-		        // alert("Something went wrong! Please check Get URL.");
-		      });  
+			      })
+			      .catch((error)=>{
+			        console.log("error = ",error);
+			        // alert("Something went wrong! Please check Get URL.");
+			      });
+
+		 	  }else{
+		 	  	swal("Please enter mandatory fields", "", "warning");
+          // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+		 	  }     
+		      
   		}
 
 
@@ -223,7 +248,7 @@ class sellOMeter extends Component {
 														<th className="umDynamicHeader srpadd textAlignCenter">  Society </th>
 														<th className="umDynamicHeader srpadd textAlignCenter">  Index </th>
 														<th className="umDynamicHeader srpadd textAlignCenter">  Class </th>
-														<th className="umDynamicHeader srpadd textAlignCenter"> Action </th>
+														<th className="umDynamicHeader srpadd textAlignCenter"> Actions </th>
 													</tr>
 												</thead>
 												<tbody>
@@ -239,7 +264,7 @@ class sellOMeter extends Component {
 														<td className="textAlignLeft">{Data.index}</td>
 														<td className="textAlignLeft">{Data.propertyClass}</td>	
 														<td className="roleTextCenter pointerCls"> 						
-															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Delete" data-target={`#${Data._id}-edit`} title="Edit Department Name" ></i>
+															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Delete" data-target={`#${Data._id}-edit`} title="Edit" ></i>
 															&nbsp;&nbsp;
 															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Edit Department Name" data-toggle="modal" title="Delete" data-target={`#${Data._id}-rm`} ></i>
 														</td>
@@ -287,30 +312,30 @@ class sellOMeter extends Component {
 															      		<div className="modal-body  col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												                              <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												                              		<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-													                              		<label className="textAlignLeft"> City name</label>
-																						<input type="text" ref="city" name="city" id="city" value={this.state.city} onChange={this.handleChange} className="form-control rolesField" required/>
+													                              		<label className="textAlignLeft"> City name <span className="astrick">*</span></label>
+																						<input type="text" ref="city" placeholder="Enter City" name="city" id="city" value={this.state.city} onChange={this.handleChange} className="form-control rolesField" required/>
 																					</div>
 																					<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-													                              		<label className="textAlignLeft"> Area name</label>
-																						<input type="text" ref="area" name="area" id="area" value={this.state.area} onChange={this.handleChange} className="form-control rolesField" required/>
+													                              		<label className="textAlignLeft"> Area name <span className="astrick">*</span></label>
+																						<input type="text" ref="area" placeholder="Enter Area" name="area" id="area" value={this.state.area} onChange={this.handleChange} className="form-control rolesField" required/>
 																					</div>
 												                              </div>
 
 												                               <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												                              		<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-													                              		<label className="textAlignLeft"> Sub Area name</label>
-																						<input type="text" ref="subarea" name="subarea" id="subarea" value={this.state.subarea} onChange={this.handleChange} className="form-control rolesField" required/>
+													                              		<label className="textAlignLeft"> Sub Area name <span className="astrick">*</span></label>
+																						<input type="text" ref="subarea" placeholder="Enter Sub area" name="subarea" id="subarea" value={this.state.subarea} onChange={this.handleChange} className="form-control rolesField" required/>
 																					</div>
 																					<div className="form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-													                              		<label className="textAlignLeft"> Society name</label>
-																						<input type="text" ref="society" name="society" id="society" value={this.state.society} onChange={this.handleChange} className="form-control rolesField" required/>
+													                              		<label className="textAlignLeft"> Society name <span className="astrick">*</span></label>
+																						<input type="text" ref="society" placeholder="Enter society" name="society" id="society" value={this.state.society} onChange={this.handleChange} className="form-control rolesField" required/>
 																					</div>
 												                              </div>
 
 
 												                              <div className="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												                              		  <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
-																	      					<label>Property Class </label>
+																	      					<label>Property Class <span className="astrick">*</span></label>
 
 																	                    	<select className="stateselection col-lg-6 col-md-6 col-xs-12 col-sm-8 form-control" title="Please select class" id="propertyClass" ref="propertyClass" name="propertyClass" value={this.state.propertyClass} onChange={this.handleChange} required>
 																	                                   <option value="">-Select-</option>
@@ -324,7 +349,7 @@ class sellOMeter extends Component {
 																	                 
 																	      				</div>
 																	      				<div className=" form-group col-lg-6 col-md-6 col-sm-6 col-xs-6">
-													                              			<label className="textAlignLeft"> Index code</label>
+													                              			<label className="textAlignLeft"> Index code <span className="astrick">*</span></label>
 																							<input type="text" ref="index" name="index" id="index" value={this.state.index} onChange={this.handleChange} className="form-control rolesField" required/>
 																						</div>
 												                              </div>
@@ -332,10 +357,10 @@ class sellOMeter extends Component {
 										                              
 										                              <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-										                                        <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
+										                                        <button type="button" onClick={this.ClearData.bind(this)} className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
 										                                   </div>
 										                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-										                                        <button id={Data._id} onClick={this.editData.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">SUBMIT</button>
+										                                        <button id={Data._id} onClick={this.editData.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1">SUBMIT</button>
 										                                   </div>
 										                              </div>
 										                         </div>

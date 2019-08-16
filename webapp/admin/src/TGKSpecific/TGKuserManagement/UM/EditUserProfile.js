@@ -36,7 +36,9 @@ class EditUserProfile extends Component{
           "officeLocation"  : this.refs.office.value,
 		}
 		console.log("formvalues",formvalues);
-				axios.patch('/api/users/'+userid, formvalues)
+		if(this.refs.firstName.value!= "" && this.refs.lastName.value != "" && this.state.mobNumber!= "" && this.state.role!= "" )
+		{
+			axios.patch('/api/users/patch/one/'+userid, formvalues)
 				.then((response)=> {		
 					swal("User updated successfully","", "success");		
 					 this.props.history.push('/umlistofusers');	
@@ -47,7 +49,7 @@ class EditUserProfile extends Component{
 							"startRange"        : this.state.startRange,
 				            "limitRange"        : this.state.limitRange, 
 						}
-						axios.post('/api/users/userslist', data)
+						axios.post('/api/users/post/userslist', data)
 						.then( (res)=>{      
 							console.log("here  list response==============",res);
 							var tableData = res.data.map((a, i)=>{
@@ -76,6 +78,12 @@ class EditUserProfile extends Component{
 				.catch(function (error) {
 					console.log('error============',error);
 				});
+
+		}else{
+			swal("Please enter mandatory fields", "", "warning");
+          console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+		}
+				
 	}
 
 	
@@ -94,7 +102,7 @@ class EditUserProfile extends Component{
 		console.log("here edit view");
 		var userid = this.state.UserId;
 		console.log("userid-----------------------------------------",userid);
-		 axios.get('/api/users/'+ userid)
+		 axios.get('/api/users/get/one/'+ userid)
 	      .then( (res)=>{
 	        console.log("here data_______________",res.data);
 	        var FName = res.data.profile.fullName.split(' ');
@@ -103,15 +111,21 @@ class EditUserProfile extends Component{
 	        var Email = res.data.profile.emailId ? res.data.profile.emailId : null;
 	        var Mnob  = res.data.profile.mobileNumber ? res.data.profile.mobileNumber : null;
 
-	        console.log("Mnob", Mnob);
-	        // console.log("L name", LastName);
+	        var loc = res.data.officeLocation ? res.data.officeLocation  : null;
+	        var Assignedrole = res.data.roles ? res.data.roles : null;
 
+	        
+
+	        console.log("loc", loc);
+	        // console.log("L name", LastName);
+	      this.refs.office.value    = loc;
 	      this.refs.firstName.value = FirstName;
 	      this.refs.lastName.value = LastName;
 	     /* this.refs.fullname.value = FName */
 		  this.refs.username.value = Email;
 		  this.setState({
 		  	mobNumber : Mnob,
+		  	role      : Assignedrole,
 		  });
 		  
 
@@ -119,7 +133,7 @@ class EditUserProfile extends Component{
 	      })
 	      .catch((error)=>{
 	        console.log("error = ",error);
-	        alert("Something went wrong! Please check Get URL.");
+	        // alert("Something went wrong! Please check Get URL.");
 	      });
 
 // for office data 
@@ -220,7 +234,7 @@ class EditUserProfile extends Component{
 														</div>	
 
 														  <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 btmmargin inputContent">
-                                                           <label className="formLable col-lg-12 col-md-12 padd0 btmmargin">Role <label className="requiredsign"></label></label>
+                                                           <label className="formLable col-lg-12 col-md-12 padd0 btmmargin">Role <label className="requiredsign">*</label></label>
                                                               <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
                                                              	
                                                                <select className="form-control" value={this.state.role} onChange={this.handleChange} ref ="role" id="role" name="role" data-text="role">

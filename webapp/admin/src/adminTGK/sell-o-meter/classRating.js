@@ -4,7 +4,7 @@ import axios               from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
 import swal                       from 'sweetalert';
-
+import $ from "jquery";
 import Add_classRating              from './add_classRating.js';
 /*import Add_dataTable           from './add_dataTable.js';*/
 
@@ -102,6 +102,14 @@ class classRating extends Component {
         });
       }
 
+      ClearData(event){
+        this.setState({
+          propclass : "",
+          earning : "",
+        });
+
+      }
+
       editData(event){
 
         event.preventDefault();
@@ -113,7 +121,8 @@ class classRating extends Component {
           "earnings"   : this.state.earning,
           }
           console.log("formValues",formValues);
-          
+      if(this.state.propclass!=""&& this.state.earning!="")
+      {
         axios.put('/api/mastersellometers/'+id, formValues)
           .then( (res)=>{
               console.log("submit ");
@@ -136,6 +145,11 @@ class classRating extends Component {
                     this.setState({
                       allPosts : postsdata,
                     });
+
+                    $('.modal').remove();
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass( "modal-open" );
+                     window.location.reload();
                   }
                 )
                 .catch((error)=>{
@@ -148,7 +162,12 @@ class classRating extends Component {
                     .catch((error)=>{
                       console.log("error = ",error);
                       // alert("Something went wrong! Please check Get URL.");
-                    });  
+                    });   
+        }else{
+        swal("Please enter mandatory fields", "", "warning");
+
+        }    
+        
       }
 
       handleChange=(event)=>{
@@ -182,7 +201,7 @@ class classRating extends Component {
                           <tr className="">
                             <th className="umDynamicHeader srpadd textAlignCenter">  Class Rating </th>
                             <th className="umDynamicHeader srpadd textAlignCenter">  Earning </th>
-                            <th className="umDynamicHeader srpadd textAlignCenter">  Action </th>
+                            <th className="umDynamicHeader srpadd textAlignCenter">  Actions </th>
                           </tr>
                         </thead>
                         <tbody>
@@ -240,7 +259,7 @@ class classRating extends Component {
                                         </div>
                                                   <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                      <div className="modal-body adminModal-body col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                        <label className="textAlignLeft"> Property class</label>
+                                                        <label className="textAlignLeft"> Property class <span className="astrick">*</span></label>
                                                        {/* <input type="text" ref="propclass" className="form-control rolesField" required/>*/}
                                                          <select className="stateselection col-lg-6 col-md-6 col-xs-12 col-sm-8 form-control" title="Please select class" id="propclass" ref="propclass" name="propclass" value={this.state.propclass} onChange={this.handleChange} required>
                                                              <option value="">-Select-</option>
@@ -254,7 +273,7 @@ class classRating extends Component {
 
                                                     </div>
                                                     <div className="modal-body adminModal-body col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                        <label className="textAlignLeft">  Earning</label>
+                                                        <label className="textAlignLeft">  Earning <span className="astrick">*</span></label>
                                                         <input type="text" ref="earning" name="earning" id="earning" value={this.state.earning} onChange={this.handleChange} className="form-control rolesField" required/>
                                                     </div>
 
@@ -262,10 +281,10 @@ class classRating extends Component {
                                                   
                                                   <div className="modal-footer adminModal-footer col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <button type="button" className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
+                                                            <button type="button" onClick={this.ClearData.bind(this)} className="btn adminCancel-btn col-lg-4 col-lg-offset-1 col-md-4 col-md-offset-1 col-sm-8 col-sm-offset-1 col-xs-10 col-xs-offset-1" data-dismiss="modal">CANCEL</button>
                                                        </div>
                                                        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                                                            <button id={Data._id} onClick={this.editData.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" data-dismiss="modal">SUBMIT</button>
+                                                            <button id={Data._id} onClick={this.editData.bind(this)} type="button" className="btn examDelete-btn col-lg-4 col-lg-offset-7 col-md-4 col-md-offset-7 col-sm-8 col-sm-offset-3 col-xs-10 col-xs-offset-1" >SUBMIT</button>
                                                        </div>
                                                   </div>
                                              </div>
