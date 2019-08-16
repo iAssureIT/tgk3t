@@ -443,7 +443,7 @@ class CompanyInformation extends Component{
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12 noPadding">
                     <h4 className="basicinfotxt"><i className="fa fa-info-circle fonticons" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Basic Info</h4>
                   </div>
-                  {<div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  {/*<div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
                    
                     <div className="col-lg-6 col-lg-offset-6 col-md-6 col-sm-12 col-xs-12 csImageWrapper">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 outerPhotoWrapper">
@@ -462,12 +462,10 @@ class CompanyInformation extends Component{
                             }
                           </div>
 
-                            {/*<img className="col-lg-12 col-md-12 col-sm-12 ClientImgWrap1 displayLogoOne" src={this.CompanyImage()?this.CompanyImage() :"/images/preloader.gif"}/>*/}
                             
-                        
                       </div>
                     </div>
-                  </div>}
+                  </div>*/}
                 </div>
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp">
                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12">
