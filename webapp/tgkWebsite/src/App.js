@@ -10,6 +10,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import './lib/router.js';
 
 
+// axios.defaults.baseURL = 'http://localhost:5016/';
 axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 
 // axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';

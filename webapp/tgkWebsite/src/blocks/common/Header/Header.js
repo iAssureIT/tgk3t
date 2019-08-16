@@ -42,7 +42,7 @@ class Header extends Component {
 				<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 pull-right headerMenu ">
 					<nav className="navbar">
 					    <ul className="nav navbar-nav">
-					    	 <li><Link to="/AboutUs">ABOUT US</Link></li>
+					    	 <li className="dropdown"><Link to="/AboutUs">ABOUT US</Link></li>
 					   
 					      {localStorage.getItem("uid") ? (
 					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>

@@ -178,8 +178,8 @@ export default class MainFooter extends Component{
                                     <span className="text-danger">{formerrors.clientMobile}</span> 
                                   )}
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 textColor">
-                          <div class="form-group">
-                            <textarea class="form-control" id="exampleTextarea" rows="5" placeholder="Message" ref="message"></textarea>
+                          <div className="form-group">
+                            <textarea className="form-control" id="exampleTextarea" rows="5" placeholder="Message" ref="message"></textarea>
                           </div>
                         </div>
                       </div>

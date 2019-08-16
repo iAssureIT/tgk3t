@@ -18,7 +18,7 @@ class SearchResults extends Component {
 			propertyList2			: [],
 			inputData  				: "",
 			propertyTransactionType	: "Residential-Sell",
-			budget          		: [],
+			budget          		: "",
 			propertySubType 		: [],
 			propertyType            : "",
 			transactionType         : "",
@@ -48,7 +48,7 @@ class SearchResults extends Component {
 		{
 			this.setState({
 				location				: data.location,
-				budget 					: [data.budget],
+				budget 					: parseInt(data.budget),
 				propertySubType			: data.propertySubType,
 				propertyTransactionType	: data.propertyType+"-"+data.transactionType,
 				propertyType            : data.propertyType,
@@ -78,26 +78,24 @@ class SearchResults extends Component {
 						propertySubTypeList : propertySubTypeList,
 					});
 
-					var budget = [];
+					var budgetL = [];
 					if(data.transactionType === "Sell"){
-						budget = this.state.budgetList1;
+						budgetL = this.state.budgetList1;
 					}else{
-						budget = this.state.budgetList2;
+						budgetL = this.state.budgetList2;
 					}
 
-					var budgetList = budget.map((item,index)=>{
-						var budgetPresent = this.state.budget.find((obj)=>{
-							return item.value === parseInt(obj)
-						});
-						var newObj = Object.assign({},item);
-						if(budgetPresent){
-							newObj.checked = true
+					for(var i=0; i<budgetL.length; i++){
+						if(budgetL[i].value === this.state.budget){
+							budgetL[i].checked = true;
 						}else{
-							newObj.checked = false
+							budgetL[i].checked = false;
 						}
-						return newObj;
-					})
-					this.setState({budgetList:budgetList});
+					}
+					if(i >= budgetL.length){
+						// console.log("budgetList = ",budgetL);
+						this.setState({budgetList:budgetL});
+					}
 				})
 
 			if(data.propertySubType && data.propertySubType.length > 0){
@@ -223,6 +221,7 @@ class SearchResults extends Component {
                 $(this).toggleClass('open');
                 $('b', this).toggleClass("caret caret-up");                
             });
+
 	}
 
 	propertyType(event){
@@ -279,7 +278,7 @@ class SearchResults extends Component {
 			this.setState({
 				budgetList : budget,
 			},()=>{
-				var budgetList = [];
+				var budgetList = "";
 				for (var i = this.state.budgetList.length - 1; i >= 0; i--) {
 					if(this.state.budgetList[i].checked === true){
 						var budgetValue = this.state.budgetList[i].name;
@@ -787,7 +786,7 @@ class SearchResults extends Component {
 									    this.state.budgetList.map((budget,index)=>{
 								    		return(
 												<span key={index} className="col-lg-12 checkbg inputStyledbtn">
-								    				<input type="radio" value={budget.value} id={budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+								    				<input type="radio" value={budget.value} id={"id-"+budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={"id"+budget.value}>{budget.option}</label>
 													<span className="radioBoxBlock"></span>
 								    			</span>
 								    			);
@@ -936,9 +935,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad" onClick={this.reset.bind(this)}>
-							  	<button className="btn bgWhite col-lg-12"><span className="glyphicon glyphicon-repeat"></span></button>
-							</div>
+							  	<button className="btn bgWhite col-lg-1" title="Reset" ><span className="glyphicon glyphicon-repeat"></span></button>
 							{/*<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 areaBtn noPad property">
 							  	<div className="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Area
