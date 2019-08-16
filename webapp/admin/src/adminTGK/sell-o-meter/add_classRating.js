@@ -115,7 +115,7 @@ export default class add_sellometer extends Component {
 
                    <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
                         <label>Earning %  <span className="astrick">*</span></label>
-                        <input type="text" placeholder="Enter Earning %" className="rolesField form-control  inputText tmsUserAccForm" value={this.state.earning} ref="earning"  name="earning" id="earning" onChange={this.handleChange}/>
+                        <input type="text" placeholder="Enter Earning %" className="rolesField form-control  inputText " value={this.state.earning} ref="earning"  name="earning" id="earning" onChange={this.handleChange}/>
                    </div>
 
 

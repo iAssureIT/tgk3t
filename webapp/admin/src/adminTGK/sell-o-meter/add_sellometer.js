@@ -128,22 +128,22 @@ export default class add_sellometer extends Component {
 							{/*<span className="blocking-span leftmar">*/}
                  <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
                      <label className="control-label statelabel locationlabel" >City Name <span className="astrick">*</span> </label>
-                      <input type="text" placeholder="Enter City" className="rolesField form-control  inputText tmsUserAccForm" value={this.state.city} ref="city"  name="city" id="city" onChange={this.handleChange}/>   
+                      <input type="text" placeholder="Enter City" className="rolesField form-control  inputText " value={this.state.city} ref="city"  name="city" id="city" onChange={this.handleChange}/>   
                   </div>
 
                    <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
                       <label className="control-label statelabel locationlabel" >Area Name <span className="astrick">*</span> </label> 
-                      <input type="text" placeholder="Enter Area" className="rolesField form-control  inputText tmsUserAccForm" ref="area"  name="area" id="area" onChange={this.handleChange}/>
+                      <input type="text" placeholder="Enter Area" className="rolesField form-control  inputText " ref="area"  name="area" id="area" onChange={this.handleChange}/>
                   </div>
 
                    <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
                        <label className="control-label statelabel locationlabel" >Subarea Name <span className="astrick">*</span> </label> 
-                       <input type="text" placeholder="Enter Sub area" className="rolesField form-control  inputText tmsUserAccForm" ref="subarea"  name="subarea" id="subarea" onChange={this.handleChange}/>
+                       <input type="text" placeholder="Enter Sub area" className="rolesField form-control  inputText " ref="subarea"  name="subarea" id="subarea" onChange={this.handleChange}/>
                   </div>
 
                    <div className="form-group  col-lg-3 col-md-6 col-sm-12 col-xs-12">
                        <label className="control-label statelabel locationlabel" >Society Name <span className="astrick">*</span> </label> 
-                       <input type="text" placeholder="Enter Society" className="rolesField form-control  inputText tmsUserAccForm" ref="society"  name="society" id="society" onChange={this.handleChange}/>
+                       <input type="text" placeholder="Enter Society" className="rolesField form-control  inputText " ref="society"  name="society" id="society" onChange={this.handleChange}/>
                   </div>
 
               </div>
@@ -169,7 +169,7 @@ export default class add_sellometer extends Component {
               <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-8">
                    <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
                         <label>Property Index <span className="astrick">*</span> </label>
-                        <input type="text" placeholder="index" className="rolesField form-control  inputText tmsUserAccForm" value={this.state.index} ref="index"  name="index" id="index" onChange={this.handleChange}/>
+                        <input type="text" placeholder="index" className="rolesField form-control  inputText " value={this.state.index} ref="index"  name="index" id="index" onChange={this.handleChange}/>
                    </div>
                   <div className="form-group mar30 col-lg-6 col-md-6 col-xs-12 col-sm-8">
                      <button onClick={this.createData.bind(this)} className="btn btn-primary pull-right">&nbsp; &nbsp;Submit&nbsp; &nbsp;</button>
