@@ -22,7 +22,7 @@ class add_data extends Component {
     axios.post('/api/masteramenities', formValues)
       .then( (res)=>{
           console.log("submit ");
-          swal("Amenities added successfully", "", "success");
+          swal("Amenity added successfully", "", "success");
           this.refs.Amenities.value = '';       
 
           axios

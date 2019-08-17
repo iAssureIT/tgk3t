@@ -669,14 +669,18 @@ class IAssureTableUM extends Component {
 					  		  var modal = document.getElementById(modalid);
 					  		  modal.style.display = "none";
 	             			  $('.modal-backdrop').remove();
+                    		  window.location.reload();
+
 					      })
 					      .catch((error)=>{
 					        console.log("error = ",error);
-					        swal("Sorry! Something went wrong","", "error");
+					        swal("Sorry! Password could not be reset,please try again!","", "error");
 					        var modalid="RestpwdModal-"+id;
 					  		var modal = document.getElementById(modalid);
 					        modal.style.display = "none";
 	                        $('.modal-backdrop').remove();
+                    		window.location.reload();
+
 
 					      });
 					}else{

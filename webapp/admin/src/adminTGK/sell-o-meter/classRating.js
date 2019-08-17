@@ -232,7 +232,7 @@ class classRating extends Component {
                            return( 
                           <tr>
                             <td className="textAlignLeft">{Data.class}</td>
-                            <td className="textAlignLeft">{Data.earnings}</td> 
+                            <td className="textAlignLeft">{Data.earnings}%</td> 
                             <td className="roleTextCenter pointerCls">             
                               <i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" title="Edit" id={Data._id} onClick={this.getData.bind(this)} data-target={`#${Data._id}-edit`} title="Edit" ></i>
                               &nbsp;&nbsp;
@@ -295,8 +295,8 @@ class classRating extends Component {
 
                                                     </div>
                                                     <div className="modal-body adminModal-body col-lg-6 col-md-6 col-sm-6 col-xs-6">
-                                                        <label className="textAlignLeft">  Earning <span className="astrick">*</span></label>
-                                                        <input type="text" ref="earning" name="earning" id="earning" value={this.state.earning} onChange={this.handleChange} className="form-control rolesField" required/>
+                                                        <label className="textAlignLeft">  Earning %<span className="astrick">*</span></label>
+                                                        <input type="number" ref="earning" name="earning" id="earning" value={this.state.earning} onChange={this.handleChange} className="form-control rolesField" required/>
                                                     </div>
 
                                                   </div>

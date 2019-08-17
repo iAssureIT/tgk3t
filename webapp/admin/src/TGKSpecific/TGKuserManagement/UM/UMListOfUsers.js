@@ -514,17 +514,17 @@ class UMListOfUsers extends Component {
 					      .post('/api/users/post/searchValue',formValues)
 					      .then(
 					        (res)=>{
-					          // console.log('res', res);
+					          console.log('res', res);
 					          // swal("Success! Showing only "+selectedValue,"","success");
 					          var data = res.data.data;
 					          var tableData = data.map((a, i)=>{
 									return {
 										_id 			: a._id ? a._id : '-' ,
 										fullName        : a.profile.fullName ? a.profile.fullName : '-',
-						                emailId    		: a.emails[0].address ? a.emails[0].address : '-',
+						                emailId    		: a.profile.emailId ? a.profile.emailId : '-',
 						                mobileNumber    : a.profile.mobileNumber ? a.profile.mobileNumber : '-', 
 						                status        	: a.profile.status ? a.profile.status : "-",	
-						                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
+						               roles 			: a.roles.length >0 ? ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " ") : '-',
 										 checked        : false,
 									}
 								})
@@ -533,6 +533,7 @@ class UMListOfUsers extends Component {
 					            },()=>{
 					            }) 
 					        }).catch((error)=>{ 
+					        	console.log(error);
 					            swal("Sorry there is no data of "+selectedValue,"","error");
 					      });
 
@@ -603,7 +604,7 @@ class UMListOfUsers extends Component {
 						                emailId    		: a.profile.emailId ? a.profile.emailId : '-',
 						                mobileNumber    : a.profile.mobileNumber ? a.profile.mobileNumber : '-', 
 						                status        	: a.profile.status ? a.profile.status : "-",	
-						                roles 			: ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " "),
+						                roles 			: a.roles.length >0 ? ((a.roles.map((b, i)=>{return '<p>'+b+'</p>'})).toString()).replace(/,/g, " ") : '-',
 										 checked        : false,
 								}
 							})

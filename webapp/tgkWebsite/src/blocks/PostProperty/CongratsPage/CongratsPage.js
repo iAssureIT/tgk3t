@@ -2,8 +2,11 @@ import React, { Component }   			from 'react';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 						from 'react-redux';
 import axios 							from 'axios';
+import styled, { keyframes, css} from 'styled-components';
+// import { keyFrameExampleOne } from './KeyFrames';
 
 import './CongratsPage.css';
+
 
  class CongratsPage extends Component {
 
@@ -13,6 +16,8 @@ import './CongratsPage.css';
 				
 				percentage : ""
 			};
+
+
 		}
 
 
@@ -76,13 +81,30 @@ import './CongratsPage.css';
 
 		console.log("data",data);
 		console.log("per",per);
+
+		// console.log("here prop of showMeter",this.props.showMeter);
+
+		// const needleMove = keyframes`
+		//   from {
+		//     transform: rotate(0deg);
+		//   }
+		//   to {
+		//     transform: rotate(90deg);
+		//   }
+		//   `;
+
+		//  const needleRotation = {
+		 
+		//   animation: "${"+needleMove+"} 5s linear infinite"
+		  
+		//   };
+
+		
 		const needleRotation = {
 		    transform: "rotate("+per+"deg)",
 		    transformOrigin: "90% 55%",
 		    transition : "transform 3s",
 		}
-
-
 
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -110,7 +132,8 @@ import './CongratsPage.css';
 const mapStateToProps = (state)=>{
 	return {
 		property_id  : state.property_id,
-		uid			 : state.uid
+		uid			 : state.uid,
+		showMeter    : state.showMeter
 
 	}
 };

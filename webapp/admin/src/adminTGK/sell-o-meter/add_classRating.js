@@ -50,7 +50,9 @@ export default class add_sellometer extends Component {
             console.log("submit ");
             swal("Property Class added successfully", "", "success");
             this.refs.propertyClass.value = '';  
-            this.refs.earning.value = '';  
+            this.setState({
+              earning : "",
+            });
 
              axios
               .get('/api/mastersellometers/list')
@@ -108,14 +110,14 @@ export default class add_sellometer extends Component {
                                    <option value="C"> C </option>
                                    <option value="D"> D </option>
                                    <option value="E"> E </option>
-                                   <option value="F"> F </option>
+                                  {/* <option value="F"> F </option>*/}
                                    </select>
                 
       						</div>
 
                    <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
                         <label>Earning %  <span className="astrick">*</span></label>
-                        <input type="text" placeholder="Enter Earning %" className="rolesField form-control  inputText " value={this.state.earning} ref="earning"  name="earning" id="earning" onChange={this.handleChange}/>
+                        <input type="number" placeholder="Enter Earning %" className="rolesField form-control  inputText " value={this.state.earning} ref="earning"  name="earning" id="earning" onChange={this.handleChange}/>
                    </div>
 
 

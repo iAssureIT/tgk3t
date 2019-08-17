@@ -28,7 +28,7 @@ class CompanyLocation extends Component{
     super(props);
     this.state = {
       EditLocId             : props.locId ? props.locId : "", 
-      companyLocation       : "Head Office",
+      companyLocation       : "",
       Emailid               : "",
       companycontact        : "", 
       companyaltcontact     : "",
@@ -221,7 +221,8 @@ class CompanyLocation extends Component{
    // var companyId : 5;
 
 
-      
+     
+      console.log("this.state.companyLocation",this.state.companyLocation);
 
 
     var companyLocationFormValue ={
@@ -441,7 +442,7 @@ class CompanyLocation extends Component{
             companyArea             :"",
             pincodeArea             :"",
             areaName                :"",
-            submitVal               : false,
+            submitVal               : true,
           });
 
 
@@ -470,7 +471,7 @@ class CompanyLocation extends Component{
                       
                         this.setState({
                           allLoc : locationArray,
-                          submitVal               : false,
+                          submitVal               : true,
                         });
                       //   console.log("locationArray", locationArray);
                       // console.log("this.state.allLoc+++++++++++++++++",this.state.allLoc);
@@ -521,7 +522,7 @@ class CompanyLocation extends Component{
             companyArea             :"",
             pincodeArea             :"",
             areaName                :"",
-            submitVal               : false,
+            submitVal               : true,
           });
            $('.subjectRow').css({'display':'none'});
 
@@ -550,6 +551,7 @@ class CompanyLocation extends Component{
                       
                         this.setState({
                           allLoc : locationArray,
+                          submitVal : true,
                         });
                       //   console.log("locationArray", locationArray);
                       // console.log("this.state.allLoc+++++++++++++++++",this.state.allLoc);
@@ -763,7 +765,7 @@ selectType(event){
                             <label className="control-label statelabel locationlabel" >Company Location</label><span className="astrick">*</span>
                            
                               <select className="form-control" value={this.state.companyLocation} onChange={this.selectType.bind(this)} ref ="companyLocation" id="companyLocation" name="companyLocation" data-text="companylocation">
-                                                    <option  disabled> --select-- </option>
+                                                    <option value="" disabled  selected="selected" > --select-- </option>
                                                     <option value="Head Office" > Head Office </option>
                                                     <option value="Sales Agent Office" > Sales Agent Office </option>
                                                     <option value="Field Agent Office" > Field Agent Office </option>
@@ -1055,7 +1057,7 @@ selectType(event){
                   {/* <button className="col-lg-2 col-md-2 col-sm-12 col-xs-12 btn btnSubmit pull-right" id="btnCheck" onClick={this.submitCompanyLocation.bind(this)}>Submit</button> */}
 
                   <button className="col-lg-2 col-md-2 col-sm-12 col-xs-12 btn btnSubmit pull-right" id="btnCheck" onClick={this.submitCompanyLocation.bind(this)} >
-                    {this.state.submitVal
+                    {this.state.submitVal == true
                       ?
                         "Submit"
                       : 

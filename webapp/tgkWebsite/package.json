@@ -28,6 +28,7 @@
     "react-validation": "^3.0.7",
     "redux": "^4.0.4",
     "simple-react-validator": "^1.2.0",
+    "styled-components": "^4.3.2",
     "sweetalert": "^2.1.2",
     "sweetalert2": "^8.12.1",
     "validator": "^11.0.0"

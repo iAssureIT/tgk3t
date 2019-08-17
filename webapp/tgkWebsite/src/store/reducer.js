@@ -25,6 +25,7 @@ const initialState = {
 	availableMobile : "",
 	prop_id 		: "",
 	updateStatus 	: false,
+	showMeter 		: false,
 }
 
 const reducer = (state = initialState,action) => {
@@ -162,16 +163,18 @@ const reducer = (state = initialState,action) => {
 		newState.ImageUpload        = false;
 		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
+		newState.showMeter 			= true;
+
 	}
 	if(action.type === "SHOW_FIRST_FORM"){
 
-		newState.BasicInfo 	        = true;
+		newState.BasicInfo 	        = false;
 		newState.PropertyDetails   	= false;
 		newState.Financials   	    = false;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;
-		newState.CongratsPage       = false;
+		newState.CongratsPage       = true;
 		newState.ImageUpload        = false;
 		newState.uid 		        = action.uid;
 	}

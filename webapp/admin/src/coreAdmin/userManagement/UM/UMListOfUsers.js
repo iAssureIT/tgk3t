@@ -52,7 +52,7 @@ class UMListOfUsers extends Component {
 			"startRange"        : this.state.startRange,
             "limitRange"        : this.state.limitRange, 
 		}
-		axios.post('/api/users/userslist', data)
+		axios.post('/api/users/post/userslist', data)
 		.then( (res)=>{      
 			console.log("herer",res);
 			var tableData = res.data.map((a, i)=>{
@@ -80,7 +80,7 @@ class UMListOfUsers extends Component {
 			"startRange"        : startRange,
             "limitRange"        : limitRange, 
 		}    
-       axios.post('/api/users/userslist', data)
+       axios.post('/api/users/post/userslist', data)
         .then( (res)=>{  
           	this.setState({
               completeDataCount : res.data.length,
