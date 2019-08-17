@@ -61,6 +61,7 @@ class PropertyProfile extends Component{
       "prop_id"           : "",
       "floor"             : "",
       "totalFloor"        : "",
+      convertTotalPrice   : "",
     }
   }
 
@@ -103,16 +104,39 @@ class PropertyProfile extends Component{
           floor               : postsdata.floor,         
           totalFloor          : postsdata.totalFloor ,
           propertySubType     : postsdata.propertySubType         
+        },()=>{
+
         });
         // console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch();
 
-     $(this).find('input[type="checkbox"]').is(':checked')
+     $(this).find('input[type="checkbox"]').is(':checked');
+    
+
   }
 
+  
+  convertNumberToRupees(totalPrice) 
+  {
+    return Math.abs(Number(totalPrice)) >= 1.0e+7
+
+    ? Math.abs(Number(totalPrice)) / 1.0e+7 + " Cr"
+
+    : Math.abs(Number(totalPrice)) >= 1.0e+5
+
+    ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
+
+    : Math.abs(Number(totalPrice));
+  }
+
+
+
   render() {
+   
+
+
     let header;
       if (this.props.BasicInfo) {
         header = "Let's Provide details of your property for sell";
@@ -412,7 +436,7 @@ class PropertyProfile extends Component{
                                           {this.state.pricing && this.state.pricing.totalPrice ?
                                             <b>
                                               <li className="col-lg-3 noPad">Total Price    </li> 
-                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.totalPrice}</b></span>
+                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
                                             </b>
                                           : 
                                           <b>
@@ -448,10 +472,9 @@ class PropertyProfile extends Component{
                     { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                       <div className="row">
-                        <div className="mapouter"><div className="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=university%20of%20san%20francisco&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
+                        <div className="mapouter"><div className="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Magarpatta&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
                       </div>
-                    </div>
-                 
+                    </div>              
                     </div>
                   </div>
                 </div>

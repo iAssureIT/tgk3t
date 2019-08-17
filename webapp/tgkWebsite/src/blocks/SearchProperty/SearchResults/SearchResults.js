@@ -636,7 +636,6 @@ class SearchResults extends Component {
 			propertySubType 		: [],
 			propertyType            : "",
 			transactionType         : "",
-			location        		: "",
 			constructionType		: [],
 			floor 					: "",
 			flatType                : [],
@@ -779,7 +778,7 @@ class SearchResults extends Component {
 									    this.state.budgetList.map((budget,index)=>{
 								    		return(
 												<span key={index} className="col-lg-12 checkbg inputStyledbtn">
-								    				<input type="radio" value={budget.value} id={"id-"+budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={"id"+budget.value}>{budget.option}</label>
+								    				<input type="radio" value={budget.value} id={"id-"+budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={"id-"+budget.value}>{budget.option}</label>
 													<span className="radioBoxBlock"></span>
 								    			</span>
 								    			);

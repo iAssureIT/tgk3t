@@ -120,7 +120,18 @@ import './MyPostedProperties.css';
 		// console.log("unmount = ",unmount);
   	}
 
+  	 convertNumberToRupees(totalPrice) 
+    {
+      return Math.abs(Number(totalPrice)) >= 1.0e+7
 
+      ? Math.abs(Number(totalPrice)) / 1.0e+7 + " Cr"
+
+      : Math.abs(Number(totalPrice)) >= 1.0e+5
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
+
+      : Math.abs(Number(totalPrice));
+    }
 
 	render() {
 		let header;
@@ -178,7 +189,7 @@ import './MyPostedProperties.css';
 												<i className="fa fa-inr"></i>&nbsp;
 												{myProperty.financial && myProperty.financial.totalPrice ?
 													<span>
-													{myProperty.financial.totalPrice}
+													{this.convertNumberToRupees(myProperty.financial.totalPrice)}
 													</span>
 												:
 												myProperty.financial && myProperty.financial.monthlyRent ?

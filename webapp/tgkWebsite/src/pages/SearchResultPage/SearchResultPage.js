@@ -17,8 +17,9 @@ import './SearchResultPage.css';
 				<div className="noPad headerDiv">
 					<Header />
 				</div>	
-
-				<SearchResults />
+				<div className="searchResultsDiv">
+					<SearchResults />
+				</div>
 
 			    <MainFooter />
 			</div>

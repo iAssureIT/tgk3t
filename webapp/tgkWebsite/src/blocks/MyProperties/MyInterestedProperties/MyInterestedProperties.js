@@ -94,6 +94,19 @@ import './MyInterestedProperties.css';
   //  			window.location.reload();
 	}
 
+	 convertNumberToRupees(totalPrice) 
+    {
+      return Math.abs(Number(totalPrice)) >= 1.0e+7
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+7 + " Cr"
+
+      : Math.abs(Number(totalPrice)) >= 1.0e+5
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
+
+      : Math.abs(Number(totalPrice));
+    }
+
 	render() {
 		let header;
 	  
@@ -144,7 +157,7 @@ import './MyInterestedProperties.css';
 											<i className="fa fa-inr"></i>&nbsp;
 											{myProperty.financial && myProperty.financial.totalPrice ?
 												<span>
-												{myProperty.financial.totalPrice}
+												{this.convertNumberToRupees(myProperty.financial.totalPrice)}
 												</span>
 											:
 											myProperty.financial && myProperty.financial.monthlyRent ?
@@ -252,7 +265,7 @@ import './MyInterestedProperties.css';
 							)
 						})
 					:
-					<div className="col-lg-12 text-center"><h5>Posted properties will be shown here. To post a new property, click on <b>Post New Property</b></h5></div>
+					<div className="col-lg-12 text-center"><h5>Your Interested Properties will be shown here.</h5></div>
 				}
 
 

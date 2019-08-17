@@ -5,12 +5,29 @@ export default class PropBox extends React.Component {
 	
 	constructor(props) {
 		super(props);
-		this.state = { isLoading: true }
+		this.state = {
+		 isLoading: true,
+		 convertTotalPrice :"", 
+		}
 	}
 
 	componentDidMount() {
     	this.setState({isLoading: false})
+
 	}
+
+	convertNumberToRupees(totalPrice) 
+	  {
+	    return Math.abs(Number(totalPrice)) >= 1.0e+7
+
+	    ? Math.abs(Number(totalPrice)) / 1.0e+7 + " Cr"
+
+	    : Math.abs(Number(totalPrice)) >= 1.0e+5
+
+	    ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
+
+	    : Math.abs(Number(totalPrice));
+	  }
 	render() {
 		console.log("myproperty = ", this.props.myProperty);
 
@@ -34,7 +51,7 @@ export default class PropBox extends React.Component {
 								<i className="fa fa-inr"></i>&nbsp;
 								<span>
 									{this.props.myProperty && this.props.myProperty.financial && this.props.myProperty.transactionType == "Sell" ?
-										this.props.myProperty.financial && this.props.myProperty.financial.totalPrice? this.props.myProperty.financial.totalPrice : "-"
+										this.props.myProperty.financial && this.props.myProperty.financial.totalPrice? this.convertNumberToRupees(this.props.myProperty.financial.totalPrice) : "-"
 									:
 										this.props.myProperty.financial && this.props.myProperty.financial.monthlyRent ? this.props.myProperty.financial.monthlyRent : "-"
 									}

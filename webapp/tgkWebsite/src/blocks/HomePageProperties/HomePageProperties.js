@@ -12,6 +12,7 @@ class HomePageProperties extends Component {
 		super(props);
 		this.state = {
 			propertiesData:[],
+      convertTotalPrice :"", 
 		}
 	}
 
@@ -66,10 +67,20 @@ class HomePageProperties extends Component {
         }); 
 
       }
-
-
-
   }
+
+  convertNumberToRupees(totalPrice) 
+    {
+      return Math.abs(Number(totalPrice)) >= 1.0e+7
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+7 + " Cr"
+
+      : Math.abs(Number(totalPrice)) >= 1.0e+5
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
+
+      : Math.abs(Number(totalPrice));
+    }
 
   render() {
 		var count = this.state.propertiesData.length;
@@ -108,7 +119,7 @@ class HomePageProperties extends Component {
                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                     {
                                       property.transactionType === "Sell" ?
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                       :
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
@@ -179,7 +190,7 @@ class HomePageProperties extends Component {
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                      {
                                       property.transactionType === "Sell" ?
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                       :
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
@@ -249,7 +260,7 @@ class HomePageProperties extends Component {
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                      {
                                       property.transactionType === "Sell" ?
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                       :
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
@@ -316,7 +327,7 @@ class HomePageProperties extends Component {
                                        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                          {
                                           property.transactionType === "Sell" ?
-                                          <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
+                                          <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                           :
                                           <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                         }
@@ -385,7 +396,7 @@ class HomePageProperties extends Component {
                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
                                     {
                                       property.transactionType === "Sell" ?
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.totalPrice}</i>
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                       :
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }

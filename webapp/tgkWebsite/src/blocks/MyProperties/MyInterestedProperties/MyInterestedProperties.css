@@ -1,6 +1,6 @@
 .propertyBox{
 	border: 1px solid #ddd;
-	height: 170px; 
+	min-height: 170px; 
 	margin-top: 20px;
 	padding: 10px;
 	padding-left: 2%;
