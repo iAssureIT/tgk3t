@@ -117,6 +117,21 @@
     cursor: pointer;
 }
 
+.interestBtnT{
+    z-index: 2;
+    position: absolute;
+    top: 149px;
+    left: 56%;
+    height: 36px;
+    width: 40%;
+    background-color: #F5AD3E;
+    border-radius: 4px;
+    text-align: center;
+    color: #fff;
+    padding-top: 9px;
+    cursor: pointer;
+}
+
 .dotDiv{
     background-color: #000;
     border-radius: 50%;

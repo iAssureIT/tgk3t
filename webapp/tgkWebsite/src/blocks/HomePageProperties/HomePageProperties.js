@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import moment               from 'moment'
+import $                    from "jquery";
 import { Link }             from 'react-router-dom';
 import {withRouter}         from 'react-router-dom';
 import axios                from 'axios';
@@ -25,24 +26,49 @@ class HomePageProperties extends Component {
   }
   
   interestBtn(event){
+    var id = event.currentTarget.id;
+
+    event.preventDefault();
     console.log("uid=>",localStorage.getItem('uid'),"propid=>",event.currentTarget.id)
     var formValues ={
       property_id : event.currentTarget.id,
       buyer_id    : localStorage.getItem('uid'),
     }
     console.log("formValues",formValues);
-     axios
-      .post('http://qatgk3tapi.iassureit.com/api/interestedProperties/',formValues)
-      .then(
-        (res)=>{
-          console.log(res);
-         console.log("interestBtn",res); 
+      $("#"+id).toggleClass("interestBtnT");
 
-        }
-      )
-      .catch((error) =>{
-              console.log("error = ", error);
-      }); 
+      if($("#"+id).hasClass("interestBtnT")){
+        $("#"+id).children('.intText').text('Interest Shown');
+
+         axios
+          .post('http://qatgk3tapi.iassureit.com/api/interestedProperties/',formValues)
+          .then(
+            (res)=>{
+             console.log("interestBtn = ",res); 
+            }
+          )
+          .catch((error) =>{
+                  console.log("error = ", error);
+          }); 
+
+    }else{
+        $("#"+id).children('.intText').text('Express Interest');
+
+       axios
+        .delete('http://qatgk3tapi.iassureit.com/api/interestedProperties/'+event.currentTarget.id)
+        .then(
+          (res)=>{
+           console.log("deleted ",res); 
+          }
+        )
+        .catch((error) =>{
+                console.log("error = ", error);
+        }); 
+
+      }
+
+
+
   }
 
   render() {
@@ -88,7 +114,8 @@ class HomePageProperties extends Component {
                                     }
                                     </div>
                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                      <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
+                                      <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                      <span className="intText"> Express Interest </span>
                                     </div>
                                   </div>
                                   <div className="row">
@@ -158,7 +185,8 @@ class HomePageProperties extends Component {
                                     }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
+                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                    <span className="intText"> Express Interest </span>
                                   </div>
                                 </div>
                                 <div className="row">
@@ -227,7 +255,8 @@ class HomePageProperties extends Component {
                                     }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
+                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                    <span className="intText"> Express Interest </span>
                                   </div>
                                 </div>
                                 <div className="row">
@@ -293,7 +322,8 @@ class HomePageProperties extends Component {
                                         }
                                       </div>
                                       <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                        <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
+                                        <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                        <span className="intText"> Express Interest </span>
                                       </div>
                                     </div>
                                     <div className="row">
@@ -361,7 +391,8 @@ class HomePageProperties extends Component {
                                     }
                                   </div>
                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>Express Interest
+                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                    <span className="intText"> Express Interest </span>
                                   </div>
                                 </div>
                                 <div className="row">

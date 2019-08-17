@@ -238,7 +238,7 @@ import './MyInterestedProperties.css';
 													Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
 												</div>
 												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
-													Possession by : <span className="propertySubText2">{myProperty.propertyDetails ? myProperty.propertyDetails.availableFrom : "-"}</span>
+													Possession by : <span className="propertySubText2">{myProperty.financial ? myProperty.financial.availableFrom : "-"}</span>
 												</div>
 												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
 		                                      		<Link to={"/PropertyProfile/"+myProperty._id} target="_blank">

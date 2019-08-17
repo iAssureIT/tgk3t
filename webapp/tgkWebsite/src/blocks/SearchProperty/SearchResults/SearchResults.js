@@ -4,6 +4,8 @@ import $ 						from "jquery";
 import {withRouter, Link} 		from 'react-router-dom';
 import { connect } 				from 'react-redux';
 import PropBox 					from './propBox.js';
+import Loader 					from 'react-loader-spinner'
+
 import './SearchResults.css';
 
 class SearchResults extends Component {
@@ -36,6 +38,7 @@ class SearchResults extends Component {
 			availability            : "",
 			checkPropValue			: false,
 			checkBudgetValue		: false,
+			isLoading				: true,
 			propertyTransList		: [],
 			locSearchResults		: "",
 		}
@@ -114,7 +117,7 @@ class SearchResults extends Component {
   		axios
 			.post("/api/search/properties/", data)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data, isLoading:false });
 				console.log("searchResults",searchResults)
 			})
 	        .catch((error) =>{
@@ -238,6 +241,7 @@ class SearchResults extends Component {
 			propertyTransactionType : event.target.value,
 			propertyTypeBoolean 	:false,
 			budgetBoolean			:false,
+			isLoading				:true
 		},()=>{
 			var formValues = JSON.parse(localStorage.getItem("searchData"));
 			var propertySubType = [];
@@ -309,7 +313,7 @@ class SearchResults extends Component {
 				.post("/api/search/properties/", formValues)
 				.then((searchResults) => {
 					console.log("searchResults",searchResults);
-					this.setState({ inputData : searchResults.data });
+					this.setState({ inputData : searchResults.data, isLoading:false });
 				})
 		        .catch((error) =>{
 		         	console.log("error = ", error);
@@ -319,7 +323,8 @@ class SearchResults extends Component {
 
 	handleLocation(event){
 		this.setState({
-			location : event.target.value
+			location : event.target.value,
+			isLoading: true,
 		},()=>{
 			if(this.state.location.length>=3)
 			{
@@ -373,7 +378,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -403,6 +408,7 @@ class SearchResults extends Component {
 
 	handleBudget(event){
 		// var budget = [];
+		this.setState({isLoading:true});
 		this.state.budgetList.map((item,index)=>{
 			if(item.value == parseInt(event.currentTarget.value)){	
 				item.checked = true
@@ -410,7 +416,6 @@ class SearchResults extends Component {
 				item.checked = false				
 			}
 		})
-
 		var found = this.state.budgetList.find((element)=>{return element.checked === true}); 
 		if(found && found.checked === true){
 			this.setState({checkBudgetValue:true})
@@ -429,7 +434,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -437,6 +442,7 @@ class SearchResults extends Component {
 	}
 
 	handleFurnish(event){
+		this.setState({isLoading:true});
 		this.setState({furnish : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -448,7 +454,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -456,6 +462,7 @@ class SearchResults extends Component {
 	}
 
 	handleAge(event){
+		this.setState({isLoading:true});
 		this.setState({propertyAge : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -467,7 +474,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -475,6 +482,7 @@ class SearchResults extends Component {
 	}
 
 	handleAvailability(event){
+		this.setState({isLoading:true});
 		this.setState({availability : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -485,7 +493,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -493,6 +501,7 @@ class SearchResults extends Component {
 	}
 
 	handleFloor(event){
+		this.setState({isLoading:true});
 		this.setState({floor : event.target.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -504,7 +513,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -512,6 +521,7 @@ class SearchResults extends Component {
 	}
 
 	handleBHK(event){
+		this.setState({isLoading:true});
 		if(event.target.checked){
 			this.state.flatType.push(event.target.getAttribute('value'));
 		}else{
@@ -532,7 +542,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 				console.log("result",searchResults.data);
 			})
 	        .catch((error) =>{
@@ -541,6 +551,7 @@ class SearchResults extends Component {
 	}
 	
 	handleConstruction(){
+		this.setState({isLoading:true});
 		this.setState({constructionType : this.refs.constructionType.value});
 
 		var formValues = JSON.parse(localStorage.getItem("searchData"));
@@ -552,7 +563,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -560,6 +571,7 @@ class SearchResults extends Component {
 	}
 
 	handlePropSubType(event){
+		this.setState({isLoading:true});
 		var checkedPropSubType=[];
 		if(event.target.checked){
 			checkedPropSubType = event.target.getAttribute('value');
@@ -614,7 +626,7 @@ class SearchResults extends Component {
 	  	axios
 			.post("/api/search/properties/", formValues)
 			.then((searchResults) => {
-				this.setState({ inputData : searchResults.data });
+				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
 	        .catch((error) =>{
 	         	console.log("error = ", error);
@@ -654,7 +666,8 @@ class SearchResults extends Component {
 			checkPropValue			: false,
 			checkBudgetValue		: false,
 			propertyTransList		: [],
-			locSearchResults		: "",   
+			locSearchResults		: "", 
+			isLoading				:false  
 		})
 		var propertySubType = [];
 		this.state.propertySubTypeList.map((item,index)=>{
@@ -706,7 +719,7 @@ class SearchResults extends Component {
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 searchDiv">
 						{/*---------------Search Bar-------------------*/}
 						<div className="col-lg-4 col-md-12 col-xs-12 col-sm-12 searchBar">
-							<div className="col-lg-2 col-md-1 col-xs-12 col-sm-12 noPad">
+							<div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 noPad">
 							  	<div className="dropdown">
 									<select className="custom-select form-control"  ref="propertyTransactionType" placeholder="" id='select' name="propertyTransactionType" value={this.state.propertyTransactionType} onChange={this.handlePropTranType.bind(this)}>
 							    		<optgroup label="Residential">
@@ -720,7 +733,7 @@ class SearchResults extends Component {
 									</select>
 								</div>
 							</div>
-							<div className="col-lg-10 col-md-2 col-xs-12 col-sm-12 noPad">
+							<div className="col-lg-9 col-md-9 col-xs-12 col-sm-12 noPad">
 								<div className="form-group"  id="" >
 								    <div className="input-group inputBox-main " id="">
 								    	<input type="text" className="form-control" list="locationSearches" ref="location" name="location" value={this.state.location} placeholder="Enter Location..." onChange={this.handleLocation.bind(this)}/>
@@ -935,7 +948,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							  	<button className="btn bgWhite col-lg-1" title="Reset" ><span className="glyphicon glyphicon-repeat"></span></button>
+							  	<button className="btn bgWhite col-lg-1" title="Reset" onClick={this.reset.bind(this)}><span className="glyphicon glyphicon-repeat"></span></button>
 							{/*<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 areaBtn noPad property">
 							  	<div className="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Area
@@ -978,6 +991,15 @@ class SearchResults extends Component {
 							Please change the search filters and try again. 
 						</p>
 					</div>
+					// :
+					// <div className="col-lg-12 mt10 text-center">
+					// <Loader
+				 //         type="Oval"
+				 //         color="#F5AD3E"
+				 //         height="100"
+				 //         width="100"
+				 //      />
+				 //    </div>  
 				}
 				</div>
 			</div>

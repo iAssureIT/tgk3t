@@ -161,22 +161,24 @@ export default class MainFooter extends Component{
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
                           <input type="text" className="form-control" placeholder="Name" name="name"  ref="name" data-text="clientName" onChange={this.handleChange} />
+                          {this.state.formerrors.clientName &&(
+                            <span className="text-danger">{formerrors.clientName}</span> 
+                          )}
                         </div>
-                        {this.state.formerrors.clientName &&(
-                                    <span className="text-danger">{formerrors.clientName}</span> 
-                                  )}
+                        
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
                           <input type="email" className="form-control" placeholder="Email" name="email"  ref="email" onChange={this.handleChange} data-text="clientEmail" />
+                          {this.state.formerrors.clientEmail &&(
+                              <span className="text-danger">{formerrors.clientEmail}</span> 
+                          )}
                         </div>
-                        {this.state.formerrors.clientEmail &&(
-                                    <span className="text-danger">{formerrors.clientEmail}</span> 
-                                  )}
+                        
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
                           <input type="number" className="form-control" data-text="clientMobile" name="mobile"  onChange={this.handleChange} placeholder="Phone"  ref="mobileNumber"  min="0"/>
+                          {this.state.formerrors.clientMobile &&(
+                            <span className="text-danger">{formerrors.clientMobile}</span> 
+                          )}
                         </div>
-                        {this.state.formerrors.clientMobile &&(
-                                    <span className="text-danger">{formerrors.clientMobile}</span> 
-                                  )}
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 textColor">
                           <div className="form-group">
                             <textarea className="form-control" id="exampleTextarea" rows="5" placeholder="Message" ref="message"></textarea>

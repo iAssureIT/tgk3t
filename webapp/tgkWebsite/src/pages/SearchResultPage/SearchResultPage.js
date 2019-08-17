@@ -1,7 +1,7 @@
 import React , { Component }	from 'react';
 
 import Header 					from "../../blocks/common/Header/Header.js";
-// import MainFooter  				from '../../blocks/common/MainFooter/MainFooter.js';
+import MainFooter  				from '../../blocks/common/MainFooter/MainFooter.js';
 import SearchResults            from "../../blocks/SearchProperty/SearchResults/SearchResults.js"
 
 import './SearchResultPage.css';
@@ -20,7 +20,7 @@ import './SearchResultPage.css';
 
 				<SearchResults />
 
-			    {/*<MainFooter />*/}
+			    <MainFooter />
 			</div>
 		);
 	}

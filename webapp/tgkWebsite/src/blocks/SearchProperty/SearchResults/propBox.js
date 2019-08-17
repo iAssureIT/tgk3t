@@ -1,12 +1,16 @@
-import React from 'react';
+import React 					from 'react';
 import {withRouter, Link} 		from 'react-router-dom';
 
 export default class PropBox extends React.Component {
 	
 	constructor(props) {
 		super(props);
+		this.state = { isLoading: true }
 	}
 
+	componentDidMount() {
+    	this.setState({isLoading: false})
+	}
 	render() {
 		console.log("myproperty = ", this.props.myProperty);
 
