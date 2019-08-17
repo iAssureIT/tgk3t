@@ -385,26 +385,6 @@ class SearchResults extends Component {
 	        });	
 	}
 
-	// handleArea(){
-	// 	var formValues = JSON.parse(localStorage.getItem("searchData"));
-	// 	formValues.areaMin = this.refs.areaMin.value;
-	// 	formValues.areaMax = this.refs.areaMax.value;
-
-	// 	var searchData = JSON.stringify(formValues);
-	// 	localStorage.removeItem("searchData");
-	// 	localStorage.setItem("searchData",searchData);
-
-	//   	axios
-	// 		.post("/api/search/properties/", formValues)
-	// 		.then((searchResults) => {
-	// 			this.setState({ inputData : searchResults.data });
-	// 			this.refs.areaMin.value = "";
-	// 			this.refs.areaMax.value = "";
-	// 		})
-	//         .catch((error) =>{
-	//          	console.log("error = ", error);
-	//         });	
-	// }
 
 	handleBudget(event){
 		// var budget = [];
@@ -704,7 +684,7 @@ class SearchResults extends Component {
 		axios
 		.post("/api/search/properties/", formValues)
 		.then((searchResults) => {
-			this.setState({ inputData : searchResults.data });
+			this.setState({ inputData : searchResults.data,isLoading:false });
 			console.log("searchResults",searchResults)
 		})
         .catch((error) =>{
@@ -979,7 +959,7 @@ class SearchResults extends Component {
 			{/*-------------------Results------------------------*/}
 				
 				<div className="col-lg-12 col-md-10 col-xs-12 col-sm-12 noPad">
-				{
+				{this.state.isLoading === false ?
 					this.state.inputData && this.state.inputData.length>0 ? 
 						this.state.inputData.map( (property,index)=>{ 
 							return(	<div className={"x-"+index} key={index}> <PropBox myProperty={property}/> </div>  );
@@ -991,15 +971,15 @@ class SearchResults extends Component {
 							Please change the search filters and try again. 
 						</p>
 					</div>
-					// :
-					// <div className="col-lg-12 mt10 text-center">
-					// <Loader
-				 //         type="Oval"
-				 //         color="#F5AD3E"
-				 //         height="100"
-				 //         width="100"
-				 //      />
-				 //    </div>  
+					:
+					<div className="col-lg-12 mt10 text-center">
+					<Loader
+				         type="Oval"
+				         color="#F5AD3E"
+				         height="100"
+				         width="100"
+				      />
+				    </div>  
 				}
 				</div>
 			</div>

@@ -15,7 +15,7 @@ class SearchProperty extends Component {
 			propertyList1			: [],
 			propertyList2			: [],
 			transactionType 		: "Commercial-Sell",
-			budget          		: "",
+			budget          		: 0,
 			propertySubType 		: [],
 			propertySubTypeArray	: [],
 			location        		: "",
