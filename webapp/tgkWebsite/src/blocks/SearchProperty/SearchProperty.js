@@ -170,7 +170,7 @@ class SearchProperty extends Component {
 		}
 
 		const formValues = {
-			transactionType : this.props.propertyType === "Commercial" ? transactionType : this.props.transactionType,
+			transactionType : this.props.propertyType === "Commercial" ? transactionType : this.props.transactionType ? this.props.transactionType : "Sell",
 			// transactionType : this.props.propertyType == "Commercial" ? transactionType : "Sell",
 			location        : this.state.location,
 			budget 			: this.state.budget,
@@ -185,6 +185,7 @@ class SearchProperty extends Component {
 			flatType 		: "",
 			propertyAge 	: "",
 			availability    : "",
+			uid				: localStorage.getItem('uid')
 		}
 		var searchData = JSON.stringify(formValues);
 		localStorage.setItem("searchData",searchData);

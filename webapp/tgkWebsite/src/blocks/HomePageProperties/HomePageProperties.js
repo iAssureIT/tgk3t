@@ -4,6 +4,12 @@ import $                    from "jquery";
 import { Link }             from 'react-router-dom';
 import {withRouter}         from 'react-router-dom';
 import axios                from 'axios';
+import { connect }        from 'react-redux';
+
+import LoginMobNum              from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+import LoginOtp                 from '../WebsiteSecurity/LoginOtp/LoginOtp.js';
+import WebSignupForm            from '../WebsiteSecurity/WebSignup/WebSignupForm.js';
+
 
 import "./HomePageProperties.css";
 
@@ -11,63 +17,114 @@ class HomePageProperties extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			propertiesData:[],
-      convertTotalPrice :"", 
+			propertiesData  : [],
+      propertyType    : "",
+      transactionType : "",
 		}
 	}
 
    componentWillReceiveProps(nextProps){
     if(nextProps && nextProps.inputData){
+
       this.setState({
-        propertiesData : nextProps.inputData,
+        propertiesData  : nextProps.inputData,
+        propertyType    : nextProps.inputData && nextProps.inputData.length > 0 ?  nextProps.inputData[0].propertyType : "",
+        transactionType : nextProps.inputData && nextProps.inputData.length > 0 ? nextProps.inputData[0].transactionType: "",
+        isInterested    : nextProps.inputData && nextProps.inputData.length > 0 ? nextProps.inputData[0].isInterested: "",
+
       },()=>{
         console.log("propertiesData",this.state.propertiesData);
       })
     }
   }
+
+  removeBackdrop(){
+    $(".modal-backdrop").remove();    
+  }
+
   
   interestBtn(event){
+    event.preventDefault();
     var id = event.currentTarget.id;
 
-    event.preventDefault();
     console.log("uid=>",localStorage.getItem('uid'),"propid=>",event.currentTarget.id)
     var formValues ={
       property_id : event.currentTarget.id,
       buyer_id    : localStorage.getItem('uid'),
     }
     console.log("formValues",formValues);
-      $("#"+id).toggleClass("interestBtnT");
 
-      if($("#"+id).hasClass("interestBtnT")){
-        $("#"+id).children('.intText').text('Interest Shown');
-
+      if($("#"+id).hasClass("interestExpress")){
          axios
           .post('http://qatgk3tapi.iassureit.com/api/interestedProperties/',formValues)
-          .then(
-            (res)=>{
+          .then(res=>{
              console.log("interestBtn = ",res); 
-            }
-          )
-          .catch((error) =>{
+             //After Express Interest, again get all properties
+              var rangeValues = {
+                propertyType    : this.state.propertyType,
+                transactionType : this.state.transactionType,
+                startRange      : 0,
+                limitRange      : 6,
+                uid : localStorage.getItem("uid")
+              }
+
+              console.log("rangeValues = ", rangeValues);
+              axios
+                .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',rangeValues)
+                .then(resultData =>{
+                  console.log("resultData",resultData);
+                    this.setState({
+                      propertiesData  : resultData.data,
+                    })
+                })
+                .catch(error=>{
                   console.log("error = ", error);
+                });
+          })
+          .catch((error) =>{
+            console.log("error = ", error);
           }); 
 
     }else{
-        $("#"+id).children('.intText').text('Express Interest');
-
-       axios
-        .delete('http://qatgk3tapi.iassureit.com/api/interestedProperties/'+event.currentTarget.id)
+      var deleteValues = {
+          "property_id": event.currentTarget.id,
+          "buyer_id": localStorage.getItem('uid')
+        }
+      console.log("deleteValues",deleteValues);
+      axios
+        .delete('http://qatgk3tapi.iassureit.com/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
         .then(
           (res)=>{
-           console.log("deleted ",res); 
+              console.log("deleted ",res); 
+              var rangeValues = {
+                propertyType    : this.state.propertyType,
+                transactionType : this.state.transactionType,
+                startRange      : 0,
+                limitRange      : 6,
+                uid : localStorage.getItem("uid")
+              }
+
+              console.log("rangeValues = ", rangeValues);
+              axios
+                .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',rangeValues)
+                .then(resultData =>{
+                  console.log("resultData",resultData);
+                    this.setState({
+                      propertiesData  : resultData.data,
+                    })
+                })
+                .catch(error=>{
+                  console.log("error = ", error);
+                });
           }
         )
         .catch((error) =>{
                 console.log("error = ", error);
         }); 
-
-      }
+    }
   }
+
+
 
   convertNumberToRupees(totalPrice) 
     {
@@ -82,9 +139,33 @@ class HomePageProperties extends Component {
       : Math.abs(Number(totalPrice));
     }
 
+  login(){
+    const originPage = "header" ; //This is to stop after signup... otherwise it continues to next form Basic info.
+
+    const uid = localStorage.getItem("uid");
+
+    if(uid){
+      this.props.already_loggedIn(originPage,uid);
+    }else{
+      this.props.login_mobileNum(originPage);
+    }
+  }
+
+
+
   render() {
 		var count = this.state.propertiesData.length;
 		var mod =count % 3;
+
+    let header;
+    if(this.props.LoginMobNum){
+      header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+    }else if(this.props.LoginOtp){
+      header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+    }else if(this.props.WebSignupForm){
+      header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+    }
+
 		return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -117,17 +198,35 @@ class HomePageProperties extends Component {
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-                                    {
-                                      property.transactionType === "Sell" ?
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
-                                      :
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
-                                    }
-                                    </div>
-                                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                      <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
-                                      <span className="intText"> Express Interest </span>
-                                    </div>
+
+                                      {
+                                        property.transactionType === "Sell" ?
+                                        <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
+                                        :
+                                        <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
+                                      }
+                                      </div>
+                                      {
+                                        localStorage.getItem("uid") 
+                                        ?
+                                          property.isInterested
+                                          ? 
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Interest Shown </span>
+                                            </div>
+                                          :
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Express Interest </span>
+                                            </div>                                        
+                                        :
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal" >
+                                            <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                            <span className="intText"> Express Interest </span>
+                                          </div>
+                                      }
+
                                   </div>
                                   <div className="row">
                                     <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
@@ -195,11 +294,27 @@ class HomePageProperties extends Component {
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
                                   </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
-                                    <span className="intText"> Express Interest </span>
+                                      {
+                                        localStorage.getItem("uid") 
+                                        ?
+                                          property.isInterested
+                                          ? 
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Interest Shown </span>
+                                            </div>
+                                          :
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Express Interest </span>
+                                            </div>                                        
+                                        :
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal" >
+                                            <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                            <span className="intText"> Express Interest </span>
+                                          </div>
+                                      }
                                   </div>
-                                </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
                                      <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
@@ -265,10 +380,27 @@ class HomePageProperties extends Component {
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
                                   </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
-                                    <span className="intText"> Express Interest </span>
-                                  </div>
+                                      {
+                                        localStorage.getItem("uid") 
+                                        ?
+                                          property.isInterested
+                                          ? 
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Interest Shown </span>
+                                            </div>
+                                          :
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Express Interest </span>
+                                            </div>                                        
+                                        :
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal" >
+                                            <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                            <span className="intText"> Express Interest </span>
+                                          </div>
+                                      }
+
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
@@ -332,10 +464,27 @@ class HomePageProperties extends Component {
                                           <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                         }
                                       </div>
-                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                        <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
-                                        <span className="intText"> Express Interest </span>
-                                      </div>
+                                      {
+                                        localStorage.getItem("uid") 
+                                        ?
+                                          property.isInterested
+                                          ? 
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Interest Shown </span>
+                                            </div>
+                                          :
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Express Interest </span>
+                                            </div>                                        
+                                        :
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal" >
+                                            <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                            <span className="intText"> Express Interest </span>
+                                          </div>
+                                      }
+
                                     </div>
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
@@ -401,10 +550,27 @@ class HomePageProperties extends Component {
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
                                     }
                                   </div>
-                                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestBtn" id={property._id} onClick={this.interestBtn.bind(this)}>
-                                    <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
-                                    <span className="intText"> Express Interest </span>
-                                  </div>
+                                    {
+                                        localStorage.getItem("uid") 
+                                        ?
+                                          property.isInterested
+                                          ? 
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Interest Shown </span>
+                                            </div>
+                                          :
+                                            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.interestBtn.bind(this)}>
+                                              <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                              <span className="intText"> Express Interest </span>
+                                            </div>                                        
+                                        :
+                                          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestExpress" id={property._id} onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal" >
+                                            <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+                                            <span className="intText"> Express Interest </span>
+                                          </div>
+                                      }
+
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
@@ -458,8 +624,64 @@ class HomePageProperties extends Component {
       			</div>
           </div>
         </div>
+	
+
+        {/*=== Modal starts here ===*/}
+        <div>
+          <div id="loginModal" className="modal fade" role="dialog">
+            <div className="modal-dialog modal-lg">
+
+              <div className="modal-content "style={{marginTop:"52px"}}>
+                <div className="modal-header">
+                  <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
+                  <h4 className="modal-title">
+                    <b style={{paddingLeft:"28px"}}> {header} </b>
+                  </h4>
+                </div>
+
+                <div className="modal-body col-lg-12">
+                  { this.props.LoginMobNum  ? <LoginMobNum />     : null }
+                  { this.props.LoginOtp     ? <LoginOtp />      : null }
+                  { this.props.WebSignupForm  ? <WebSignupForm />   : null }
+                </div>
+                <div className="modal-footer">
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+
       </div>
-		);
-	}
+
+    );//return
+
+  }//render
+
+
 }
-export default withRouter(HomePageProperties);
+
+
+const mapStateToProps = (state)=>{
+  // console.log("state",state)
+  return {
+    LoginMobNum     : state.LoginMobNum,
+    LoginOtp        : state.LoginOtp,
+    WebSignupForm   : state.WebSignupForm,
+  }
+};
+
+
+const mapDispatchToProps = (dispatch)=>{
+  return {
+      login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
+      already_loggedIn : (originPage,uid)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid}),
+
+  }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HomePageProperties));
+

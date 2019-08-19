@@ -49,29 +49,32 @@ class BannerwithModal extends Component {
 	}
 
 	componentDidMount() {
-		var formValues = {
-			startRange:0,
-			limitRange:6,
-		}
-		this.setState({
-			propertyType 	: "Residential",
-			transactionType : "Sell",
-		},()=>{
-			 axios
-	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
-	        .then( (res) =>{
-	          this.setState({
-	          	inputData : res.data,
-	          },()=>{
-	          	this.props.inputData(this.state.inputData);
-	          	// console.log("inputData",this.state.inputData);
-	          })
 
-	        })
-	        .catch((error) =>{
-	          console.log("error = ", error);
-	        });	
-		});
+          var formValues = {
+            propertyType    : "Residential",
+            transactionType : "Sell",
+            startRange      : 0,
+            limitRange      : 6,
+            uid : localStorage.getItem("uid")
+          }
+
+         console.log("formValues = ", formValues);
+         axios
+            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+            .then(resultData =>{
+              	console.log("resultData",resultData);
+		        this.setState({
+		          	inputData : resultData.data,
+		        },()=>{
+		          	this.props.inputData(this.state.inputData);
+		        })
+            })
+            .catch(error=>{
+              console.log("error = ", error);
+            });
+
+
+
 
 		this.props.setFormTitle("Owners earn upto 50% brokerage by selling/renting with us so let's get started");
 
@@ -79,56 +82,62 @@ class BannerwithModal extends Component {
 
 	getPropertyDetails(event,){
 		event.preventDefault();
-		var formValues = {
-			startRange:0,
-			limitRange:6,
-		}
+
 		this.setState({
 			propertyType : $(event.target).attr('property-type'),
 			transactionType : $(event.target).attr('transaction-type'),
-		},()=>{
-			 axios
-	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
-	        .then( (res) =>{
-	          this.setState({
-	          	inputData : res.data,
-	          },()=>{
-	          	this.props.inputData(this.state.inputData);
-	          	// console.log("inputData",this.state.inputData);
-	          })
-
-	        })
-	        .catch((error) =>{
-	          console.log("error = ", error);
-	        });
 		})
+
+		var formValues = {
+			propertyType : $(event.target).attr('property-type'),
+			transactionType : $(event.target).attr('transaction-type'),
+			startRange:0,
+			limitRange:6,
+			uid : localStorage.getItem("uid")
+		}
+
+		  axios
+            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+            .then(resultData =>{
+              	console.log("resultData",resultData);
+		        this.setState({
+		          	inputData : resultData.data,
+		        },()=>{
+		          	this.props.inputData(this.state.inputData);
+		        })
+            })
+            .catch(error=>{
+              console.log("error = ", error);
+            });
 	}
 
 	inputData(inputData){
-		var formValues = {
-			startRange:0,
-			limitRange:6,
-		}
-		console.log("inputData",inputData)
 		this.setState({
 			propertyType    : inputData.propertyType,
 			transactionType : inputData.transactionType,
-		},()=>{
-			axios
-	        .post('http://qatgk3tapi.iassureit.com/api/properties/listofproperty/'+this.state.propertyType+'/'+this.state.transactionType,formValues)
-	        .then( (res) =>{
-	          this.setState({
-	          	inputData : res.data,
-	          },()=>{
-	          	this.props.inputData(this.state.inputData);
-	          	// console.log("inputData",this.state.inputData);
-	          })
-
-	        })
-	        .catch((error) =>{
-	          console.log("error = ", error);
-	        });
 		})
+
+		var formValues = {
+			startRange:0,
+			limitRange:6,
+			propertyType    : inputData.propertyType,
+			transactionType : inputData.transactionType,
+			uid : localStorage.getItem("uid")
+		}
+
+		 axios
+        .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+        .then(resultData =>{
+          	console.log("resultData",resultData);
+	        this.setState({
+	          	inputData : resultData.data,
+	        },()=>{
+	          	this.props.inputData(this.state.inputData);
+	        })
+        })
+        .catch(error=>{
+          console.log("error = ", error);
+        });
 	}
 
 	render() {

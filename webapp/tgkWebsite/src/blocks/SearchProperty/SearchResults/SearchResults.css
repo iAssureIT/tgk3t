@@ -333,3 +333,33 @@
   color: #fff;
 }
 /*--------------------------------------------*/
+
+.resInterestShown{
+    z-index: 2;
+    position: absolute;
+    top: 17px;
+    left: 11%;
+    height: 30px;
+    background-color: #ffa51f;
+    border-radius: 4px;
+    text-align: center;
+    color: #3944BC;
+    padding-top: 6px;
+    cursor: pointer;
+    width: 14%;
+}
+
+.resInterestExpress{
+    z-index: 2;
+    position: absolute;
+    top: 17px;
+    left: 11%;
+    height: 30px;
+    background-color: #F5AD3E;
+    border-radius: 4px;
+    text-align: center;
+    color: #fff;
+    padding-top: 6px;
+    cursor: pointer;
+    width: 14%;
+}

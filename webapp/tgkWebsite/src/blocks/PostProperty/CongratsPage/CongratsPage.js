@@ -2,7 +2,7 @@ import React, { Component }   			from 'react';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 						from 'react-redux';
 import axios 							from 'axios';
-import styled, { keyframes, css} from 'styled-components';
+// import styled, { keyframes, css} from 'styled-components';
 // import { keyFrameExampleOne } from './KeyFrames';
 
 import './CongratsPage.css';

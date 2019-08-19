@@ -102,14 +102,14 @@
     padding-top: 9px;
 }
 
-.interestBtn {
+.interestShown{
     z-index: 2;
     position: absolute;
     top: 149px;
     left: 56%;
     height: 36px;
     width: 40%;
-    background-color: #fff;
+    background-color: #ffa51f;
     border-radius: 4px;
     text-align: center;
     color: #3944BC;
@@ -117,7 +117,7 @@
     cursor: pointer;
 }
 
-.interestBtnT{
+.interestExpress{
     z-index: 2;
     position: absolute;
     top: 149px;

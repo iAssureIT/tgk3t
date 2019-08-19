@@ -3,7 +3,7 @@ import axios 					from 'axios';
 import $ 						from "jquery";
 import {withRouter, Link} 		from 'react-router-dom';
 import { connect } 				from 'react-redux';
-import PropBox 					from './propBox.js';
+import PropBox 					from './PropBox.js';
 import Loader 					from 'react-loader-spinner'
 
 import './SearchResults.css';
@@ -960,9 +960,7 @@ class SearchResults extends Component {
 				<div className="col-lg-12 col-md-10 col-xs-12 col-sm-12 noPad">
 				{this.state.isLoading === false ?
 					this.state.inputData && this.state.inputData.length>0 ? 
-						this.state.inputData.map( (property,index)=>{ 
-							return(	<div className={"x-"+index} key={index}> <PropBox myProperty={property}/> </div>  );
-						})
+						<PropBox searchResult={this.state.inputData}/>				
 					:
 					<div className="boxmsg col-lg-8 col-lg-offset-2">
 						<p> 
