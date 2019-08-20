@@ -163,21 +163,19 @@ const reducer = (state = initialState,action) => {
 		newState.ImageUpload        = false;
 		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
-		newState.showMeter 			= true;
-
 	}
-	if(action.type === "SHOW_FIRST_FORM"){
+	// if(action.type === "SHOW_FIRST_FORM"){
 
-		newState.BasicInfo 	        = false;
-		newState.PropertyDetails   	= false;
-		newState.Financials   	    = false;
-		newState.Amenities   	    = false;
-		newState.Availability   	= false;
-		newState.Location           = false;
-		newState.CongratsPage       = true;
-		newState.ImageUpload        = false;
-		newState.uid 		        = action.uid;
-	}
+	// 	newState.BasicInfo 	        = false;
+	// 	newState.PropertyDetails   	= false;
+	// 	newState.Financials   	    = false;
+	// 	newState.Amenities   	    = false;
+	// 	newState.Availability   	= false;
+	// 	newState.Location           = false;
+	// 	newState.CongratsPage       = true;
+	// 	newState.ImageUpload        = false;
+	// 	newState.uid 		        = action.uid;
+	// }
 	if(action.type === "BACK_TO_BASIC_INFO"){
 		newState.BasicInfo 	      = true;
 		newState.PropertyDetails  = false;

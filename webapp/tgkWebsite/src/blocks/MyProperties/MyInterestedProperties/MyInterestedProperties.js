@@ -31,7 +31,6 @@ import './MyInterestedProperties.css';
 
 	}
 	componentDidMount(){
-    	this.props.showFirstForm();  //for dispatch
     	console.log("this.state.uid",this.state.uid)
 		$(".modal-backdrop").remove();
 	     axios
@@ -107,6 +106,16 @@ import './MyInterestedProperties.css';
       : Math.abs(Number(totalPrice));
     }
 
+    postNewProperty(event){
+    	const originPage = "post" ;
+		const uid = localStorage.getItem("uid");
+		if(uid){
+			this.props.already_loggedIn(originPage,uid);
+		}else{
+			this.props.login_mobileNum(originPage);
+		}
+    }
+
 	render() {
 		let header;
 	  
@@ -130,7 +139,7 @@ import './MyInterestedProperties.css';
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPostProp noPad">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 newPost">
 				 	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
-                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal"> Post New Property </button> 
+                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postNewProperty.bind(this)}> Post New Property </button> 
                 	</div>
                 </div>	
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -326,7 +335,8 @@ const mapStateToProps = (state)=>{
 };
 const mapDispatchToProps = (dispatch)=>{
   return {
-    showFirstForm  : ()         => dispatch({type: "SHOW_FIRST_FORM"}),
+     login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
+    already_loggedIn : (originPage,uid)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid}),
 
     setFormTitle   : (formTitle)=> dispatch({
                                               type      : "SET_FORM_TITLE",

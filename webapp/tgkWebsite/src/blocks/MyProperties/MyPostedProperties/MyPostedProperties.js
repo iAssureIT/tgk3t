@@ -14,6 +14,9 @@ import Financials           from '../../PostProperty/Financials/Financials.js';
 import Availability         from '../../PostProperty/Availability/Availability.js';
 import CongratsPage         from '../../PostProperty/CongratsPage/CongratsPage.js';
 import ImageUpload          from '../../PostProperty/ImageUpload/ImageUpload.js';
+import LoginMobNum          from '../../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+import LoginOtp             from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
+import WebSignupForm        from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
 
 import './MyPostedProperties.css';
 
@@ -86,8 +89,7 @@ import './MyPostedProperties.css';
 
 	removeBackdrop(){
 		$(".modal-backdrop").remove();
-		// $("#BasicInfo").remove();
-		window.location.reload();  
+		// $("#BasicInfo").remove();  
 	}
 
 	goProfile(event){
@@ -97,17 +99,6 @@ import './MyPostedProperties.css';
   //  			window.location.reload();
 	}
 
-	login(event){
-	    const originPage = "post" ;
-	    const uid = localStorage.getItem("uid");
-	    const prop_id  = event.target.id;
-	    console.log("property id here",prop_id);
-	    if(uid && prop_id){
-	      this.props.already_loggedIn(originPage,uid,prop_id);
-	    }else{
-	      this.props.login_mobileNum(originPage);
-	    }
-  	}
 
   	editProperty(event){
 	    const uid = localStorage.getItem("uid");
@@ -133,7 +124,18 @@ import './MyPostedProperties.css';
       : Math.abs(Number(totalPrice));
     }
 
+    postNewProperty(event){
+    	const originPage = "post" ;
+		const uid = localStorage.getItem("uid");
+		if(uid){
+			this.props.already_loggedIn(originPage,uid);
+		}else{
+			this.props.login_mobileNum(originPage);
+		}
+    }
+
 	render() {
+		console.log("this.props.LoginMobNum",this.props.LoginMobNum)
 		let header;
 	  
 	    if (this.props.BasicInfo) {
@@ -156,7 +158,7 @@ import './MyPostedProperties.css';
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPostProp noPad">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 newPost">
 				 	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
-                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal"> Post New Property </button> 
+                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postNewProperty.bind(this)}> Post New Property </button> 
                 	</div>
                 </div>	
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -316,7 +318,9 @@ import './MyPostedProperties.css';
 		              </div>
 
 		              <div className="modal-body postPropertyModalBody col-lg-12">
-
+		            { this.props.LoginMobNum  	 ? <LoginMobNum />      : null }
+                  	{ this.props.LoginOtp     	 ? <LoginOtp />         : null }
+                  	{ this.props.WebSignupForm   ? <WebSignupForm />    : null }
 		            { this.props.BasicInfo       ? <BasicInfo />        : null }
 		            { this.props.PropertyDetails ? <PropertyDetails />  : null }
 		            { this.props.Financials      ? <Financials />       : null }
@@ -344,6 +348,9 @@ import './MyPostedProperties.css';
 
 const mapStateToProps = (state)=>{
   return {
+  	LoginMobNum 	: state.LoginMobNum,
+	LoginOtp 		: state.LoginOtp,
+	WebSignupForm 	: state.WebSignupForm,
     BasicInfo        : state.BasicInfo,
     PropertyDetails  : state.PropertyDetails,
     Financials       : state.Financials,
@@ -364,7 +371,7 @@ const mapDispatchToProps = (dispatch)=>{
                                               formTitle : formTitle,
                                             }),
     login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
-    already_loggedIn : (originPage,uid,prop_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, prop_id:prop_id}),
+    already_loggedIn : (originPage,uid)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid}),
 
     editPropertyProfile : (uid,prop_id,updateStatus)=>dispatch({type: "EDIT_PROP_PROFILE", uid:uid, prop_id:prop_id, updateStatus: true}),
   }

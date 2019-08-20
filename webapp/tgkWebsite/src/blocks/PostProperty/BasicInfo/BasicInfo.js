@@ -230,6 +230,7 @@ class BasicInfo extends Component{
 	}
 
 	render() {
+		console.log("CongratsPage",this.props.congratsPage)
     return (
     	<div >
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -406,6 +407,7 @@ const mapStateToProps = (state)=>{
 	Availability	: state.Availability,
 	Location	 	: state.Location,
 	updateStatus    : state.updateStatus,
+	congratsPage	: state.CongratsPage,
   }
 };
 

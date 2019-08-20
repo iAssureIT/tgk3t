@@ -2,7 +2,7 @@ import React, { Component }   			from 'react';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import { connect } 						from 'react-redux';
 import axios 							from 'axios';
-// import styled, { keyframes, css} from 'styled-components';
+import styled, { keyframes, css} from 'styled-components';
 // import { keyFrameExampleOne } from './KeyFrames';
 
 import './CongratsPage.css';
@@ -13,8 +13,9 @@ import './CongratsPage.css';
  	constructor(props){
 			super(props);
 			this.state = {
-				
-				percentage : ""
+				percentage : "",
+				per        : "",
+
 			};
 
 
@@ -40,6 +41,39 @@ import './CongratsPage.css';
 
 					this.setState({
 						percentage : cash_per
+					},()=>{
+						var data =  this.state.percentage;
+						var per = 0;
+						if(data <=10)
+						{
+							per = 18;
+						}
+						if(data <=20)
+						{
+							per = 18+18;
+						}
+						if(data <=30)
+						{
+							per = 18+18+18;
+						}
+						if(data <=40)
+						{
+							per = 18+18+18+18;
+						}
+						if(data <=50)
+						{
+							per = 18+18+18+18+18;
+						}
+
+						console.log("data",data);
+						console.log("per",per);
+
+						// console.log("here prop of showMeter",this.props.showMeter);
+						if(this.props.congratsPage === true){
+							this.setState({per:per})
+						}
+
+						console.log("this.props.congratsPage",this.props.congratsPage);
 					});
 					
 				})
@@ -47,6 +81,9 @@ import './CongratsPage.css';
 					console.log("error = ", error);
 					// alert("Something Went wrong")
 				});
+
+
+
 
 	}
 
@@ -56,56 +93,6 @@ import './CongratsPage.css';
  	}
 
 	render() {
-		var data =  this.state.percentage;
-		var per = 0;
-		if(data <=10)
-		{
-			per = 18;
-		}
-		if(data <=20)
-		{
-			per = 18+18;
-		}
-		if(data <=30)
-		{
-			per = 18+18+18;
-		}
-		if(data <=40)
-		{
-			per = 18+18+18+18;
-		}
-		if(data <=50)
-		{
-			per = 18+18+18+18+18;
-		}
-
-		console.log("data",data);
-		console.log("per",per);
-
-		// console.log("here prop of showMeter",this.props.showMeter);
-
-		// const needleMove = keyframes`
-		//   from {
-		//     transform: rotate(0deg);
-		//   }
-		//   to {
-		//     transform: rotate(90deg);
-		//   }
-		//   `;
-
-		//  const needleRotation = {
-		 
-		//   animation: "${"+needleMove+"} 5s linear infinite"
-		  
-		//   };
-
-		
-		const needleRotation = {
-		    transform: "rotate("+per+"deg)",
-		    transformOrigin: "90% 55%",
-		    transition : "transform 3s",
-		}
-
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -117,7 +104,12 @@ import './CongratsPage.css';
 				<p className="col-lg-12 CP3">and qualifies for a <b className="fontColor">{this.state.percentage!="" ? this.state.percentage+"%" : null}</b> brokerage to be paid by us on successful deal through us </p>
 				<div className="col-lg-12 CP4">
 					<img src="images/meter.png" />
-					<img src="images/needle1.png" className="needle" style={needleRotation} />
+					{this.props.congratsPage === true?
+						<img src="images/needle1.png" className="needle" style={{transform: "rotate("+this.state.per+"deg)",transformOrigin: "90% 55%",transition : "transform 3s",transitionDelay: "1s"}} />
+						:
+						null
+						
+					}
 
 					<b className="col-lg-12 CP5">Sell-O-Meter</b>
 				</div>
@@ -133,7 +125,8 @@ const mapStateToProps = (state)=>{
 	return {
 		property_id  : state.property_id,
 		uid			 : state.uid,
-		showMeter    : state.showMeter
+		showMeter    : state.showMeter,
+		congratsPage : state.CongratsPage
 
 	}
 };
