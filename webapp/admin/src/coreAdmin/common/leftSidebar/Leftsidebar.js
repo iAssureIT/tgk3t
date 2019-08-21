@@ -75,6 +75,14 @@ componentDidMount(){
                             <li><a href="#">Report 2</a></li>
                             <li><a href="#">Report 3</a></li>
                         </ul>
+                        <a href="/propertyList">
+                            <i className="glyphicon glyphicon-th-list"></i>
+                            Property List
+                        </a>
+                        <a href="/listedProperties">
+                            <i className="glyphicon glyphicon-th-list"></i>
+                            Listed Properties
+                        </a>
                         
                     </li>
                    {/* <li>

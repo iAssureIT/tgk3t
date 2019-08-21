@@ -65,6 +65,7 @@ class HomePageProperties extends Component {
                 transactionType : this.state.transactionType,
                 startRange      : 0,
                 limitRange      : 6,
+                listing         :true,
                 uid : localStorage.getItem("uid")
               }
 
@@ -101,6 +102,7 @@ class HomePageProperties extends Component {
                 transactionType : this.state.transactionType,
                 startRange      : 0,
                 limitRange      : 6,
+                listing         :true,
                 uid : localStorage.getItem("uid")
               }
 
@@ -186,7 +188,7 @@ class HomePageProperties extends Component {
                       if(mod === 2){
                         if(count === index+2){
                           return(
-                              <div  key={index}   className="mt10 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                              <div  key={index}   className="mt10 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                 <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
@@ -275,7 +277,7 @@ class HomePageProperties extends Component {
                             );
                           }else{
                           return(
-                            <div key={index}  className="mt10 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div key={index}  className="mt10 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                               <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
@@ -361,7 +363,7 @@ class HomePageProperties extends Component {
                         }else if(mod === 1){
                           if(count === index+1){
                             return(
-                            <div key={index}  className="mt10 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div key={index}  className="mt10 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                               <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
@@ -445,7 +447,7 @@ class HomePageProperties extends Component {
                             </div>
                             );
                           }else{
-                          return(<div  key={index}  className="mt10 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                          return(<div  key={index}  className="mt10 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                                   <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
@@ -531,7 +533,7 @@ class HomePageProperties extends Component {
                         }
                         }else{
                         return(
-                          <div key={index}  className="mt10 col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                          <div key={index}  className="mt10 col-lg-4 col-md-4 col-sm-12 col-xs-12">
                               <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >

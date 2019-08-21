@@ -40,8 +40,9 @@ import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 import MasterData from '../../adminTGK/masterData/masterData.js';
 import SellOMeter from '../../adminTGK/sell-o-meter/sellOMeter.js';
 import ClassRating from '../../adminTGK/sell-o-meter/classRating.js';
-
-
+import PropertyList from '../../adminTGK/PropertyList/PropertyList.js';
+import ListedProperties from '../../adminTGK/ListedProperties/ListedProperties.js';
+import PropertyProfile from '../../adminTGK/PropertyProfile/PropertyProfile.js';
 
 
  class Layout extends Component{
@@ -158,6 +159,9 @@ componentDidMount(){
                                 <Route path="/masterdata" component={MasterData} exact />
                                 <Route path="/sellometer" component={SellOMeter} exact />
                                 <Route path="/classrating" component={ClassRating} exact />
+                                <Route path="/propertyList" component={PropertyList} exact />
+                                <Route path="/listedProperties" component={ListedProperties} exact />
+                                <Route path="/propertyProfile/:id" component={PropertyProfile} exact />
 
                                 
 

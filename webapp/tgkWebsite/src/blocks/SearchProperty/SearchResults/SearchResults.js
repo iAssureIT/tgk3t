@@ -45,6 +45,7 @@ class SearchResults extends Component {
 	}
 
 	componentDidMount() {
+		window.scrollTo(0, 0);
 		var data = JSON.parse(localStorage.getItem('searchData'));
 		console.log("data",data);
 		if(data)
@@ -969,7 +970,7 @@ class SearchResults extends Component {
 						</p>
 					</div>
 					:
-					<div className="col-lg-12 mt10 text-center">
+					<div className="col-lg-12 searchLoader text-center">
 					<Loader
 				         type="Oval"
 				         color="#F5AD3E"

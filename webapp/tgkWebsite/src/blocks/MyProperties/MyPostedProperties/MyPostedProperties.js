@@ -216,7 +216,7 @@ import './MyPostedProperties.css';
 												&nbsp;
 												{myProperty.propertyLocation  &&  myProperty.propertyLocation.city && myProperty.propertyLocation.society
 													? 
-													myProperty.propertyLocation.society +", "+myProperty.propertyLocation.city/*this.state.propertyCity*/ 
+													myProperty.propertyLocation.society +", "+myProperty.propertyLocation.subArea +", "+myProperty.propertyLocation.city/*this.state.propertyCity*/ 
 													:
 													 "-"
 												}

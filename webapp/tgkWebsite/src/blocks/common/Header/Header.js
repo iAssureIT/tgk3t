@@ -36,7 +36,7 @@ class Header extends Component {
 
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad  ">
-				<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-lg-offset-5">
+				<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-lg-offset-5 col-md-offset-5 col-sm-offset-5 col-xs-offset-5">
 					<a href="/"><img alt=""  src="/images/Logo.png" className="hImg pull-right"/></a>
 				</div>
 				<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 pull-right headerMenu ">

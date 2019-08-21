@@ -363,3 +363,7 @@
     cursor: pointer;
     width: 14%;
 }
+
+.searchLoader{
+  margin-top: 170px;
+}

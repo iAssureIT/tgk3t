@@ -191,7 +191,7 @@ class PropBox extends React.Component {
 										&nbsp;
 										{result.propertyLocation  &&  result.propertyLocation.city && result.propertyLocation.society
 											? 
-											result.propertyLocation.society +", "+result.propertyLocation.city 
+											result.propertyLocation.society +", "+result.propertyLocation.subArea +", "+result.propertyLocation.city 
 											:
 											 "-"
 										}

@@ -279,12 +279,12 @@ class SearchProperty extends Component {
 									</div>
 								</div>
 							</div>
-							<div className="col-lg-4 col-md-4 col-xs-12 col-sm-12 noPad">
+							<div className="col-lg-4 col-md-4 col-xs-4 col-sm-4 noPad">
 								<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch" onChange={this.handleLocation.bind(this)} />								
 							</div>
 						</div>
 						:
-						<div className="col-lg-6 col-md-6 col-xs-12 col-sm-12 noPad">
+						<div className="col-lg-6 col-md-6 col-xs-6 col-sm-6 noPad">
 							<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch" onChange={this.handleLocation.bind(this)} />
 						</div>
 						}
@@ -298,7 +298,7 @@ class SearchProperty extends Component {
 					    	}								
 						</datalist>
 
-						<div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 propertyType noPad property">
+						<div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 propertyType noPad property">
 							  	<div className="dropdown" id="dropdown">
 								    <button className="dropdown-toggle btn divWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
@@ -327,7 +327,7 @@ class SearchProperty extends Component {
 												{
 													this.state.propertyList1.map((data,index)=>{
 														return(
-															<span key={index} className="col-lg-6 noPad inputStyledbtn">
+															<span key={index} className="col-lg-6 col-md-6 col-xs-6 col-sm-6 noPad inputStyledbtn">
 																<input type="checkBox" value={data.name} id={data.name} onChange={this.propertySubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
 																<span className="checkBoxBlock"></span>
 															</span>
@@ -342,16 +342,16 @@ class SearchProperty extends Component {
 								</div>
 							</div>
 						
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
+							<div className="col-lg-2 col-md-2 col-xs-2 col-sm-2 noPad property">
 							  	<div className="dropdown">
-							  	 	<button className="btn dropdown-toggle divWhite col-lg-12" type="button" data-toggle="dropdown">Budget
+							  	 	<button className="btn dropdown-toggle divWhite col-lg-12 col-md-12 col-xs-12 col-sm-12" type="button" data-toggle="dropdown">Budget
 								   		<span className="caret"></span>
 								   	</button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt39 scrollable-menu">
+								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad mt39 scrollable-menu">
 									{this.props.transactionType === "Sell"|| (this.props.propertyType === "Commercial" && this.state.transactionType === "Commercial-Sell")?
 									    this.state.budgetList1.map((budget,index)=>{
 								    		return(
-												<span  key={index} className="col-lg-12 inputStyledbtn">
+												<span  key={index} className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputStyledbtn">
 								    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
 								    				<span className="radioBoxBlock"></span>
 								    			</span>
@@ -360,7 +360,7 @@ class SearchProperty extends Component {
 									    :
 									    this.state.budgetList2.map((budget,index)=>{
 								    		return(
-													<span className="col-lg-12 inputStyledbtn" key={index}>
+													<span className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputStyledbtn" key={index}>
 									    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
 									    				<span className="radioBoxBlock"></span>
 									    			</span>
@@ -371,9 +371,9 @@ class SearchProperty extends Component {
 								</div>
 							</div>
 
-							<div className="col-lg-1 sImg noPad">
+							<div className="col-lg-1 col-md-1 col-xs-1 col-sm-1 sImg noPad">
 									<Link to={"/SearchResults"} onClick={this.searchResultbtn.bind(this)}>	
-										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 tgkImg" />
+										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 tgkImg" />
 									</Link>
 							</div>
 						</div>

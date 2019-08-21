@@ -1,6 +1,4 @@
-.divContainer{
-    margin-bottom: 50px;
-}
+
 .personServices{
     font-family: 'Roboto', sans-serif;
     margin-top: -42px;
@@ -11,6 +9,7 @@
     font-size: 11px;
     line-height: 20px;
     text-align: center;
+    margin-bottom: 70px;
 }
 .personServices i{
     color: #678afa;

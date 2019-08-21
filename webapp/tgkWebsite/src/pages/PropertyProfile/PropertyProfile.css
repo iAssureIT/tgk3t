@@ -10,6 +10,9 @@
 .mt40{
   margin-top: 40px;
 }
+.mt150{
+  margin-top: 150px;
+}
 .propertyName{
 	height: 100px;
 }
@@ -24,12 +27,15 @@
   height: 200px;
 }
 .backButton{
-  height: 45px;
-  margin-top: 28px;
-  padding: 0px;
-  padding-left: 12px;
-  padding-top: 12px;
-  background-color: #eaeaea;
+    height: 45px;
+    margin-top: 28px;
+    padding: 0px;
+    padding-left: 22%;
+    padding-top: 12px;
+    background-color: #eaeaea;
+}
+.descriptionWrap{
+  overflow-wrap: break-word;
 }
 .backButton img{
 	height: 15px;
@@ -54,7 +60,7 @@
    font-family: 'Roboto', sans-serif;
     background-color: #00f;
     height: 22px;
-    margin-left: 12px;
+    /*margin-left: 12px;*/
     font-weight: 600;
     /*margin-top: 2px;*/
     /*padding: 5px;*/
@@ -351,7 +357,7 @@
   }
   .header{
     background-color:#2a3b93;
-    height:70px;
+    height:40px;
   }
   .mt10{
     margin-top: 10px !important;
@@ -366,7 +372,7 @@
 }
 
 .footerContent{
-  padding-top: 65px;
+  padding-top: 40px;
 }
 .footerImgContainer img{
   height: 100px;

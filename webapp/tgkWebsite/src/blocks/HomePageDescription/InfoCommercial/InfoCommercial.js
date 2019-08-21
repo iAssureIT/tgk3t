@@ -7,9 +7,9 @@ export default class InfoCommercial extends Component {
 
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt150">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 divContainer">
-					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
 
@@ -21,7 +21,7 @@ export default class InfoCommercial extends Component {
 							</div>
 						</div>
 					</div>
-					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
+					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
 								<img alt=""  src="images/16.png" />
@@ -34,7 +34,7 @@ export default class InfoCommercial extends Component {
 							</div>
 						</div>
 					</div>
-					<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
+					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
 								<img alt=""  src="images/17.png" />

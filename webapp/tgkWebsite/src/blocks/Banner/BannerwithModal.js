@@ -55,6 +55,7 @@ class BannerwithModal extends Component {
             transactionType : "Sell",
             startRange      : 0,
             limitRange      : 6,
+            listing         :true,
             uid : localStorage.getItem("uid")
           }
 
@@ -93,6 +94,7 @@ class BannerwithModal extends Component {
 			transactionType : $(event.target).attr('transaction-type'),
 			startRange:0,
 			limitRange:6,
+			listing:true,
 			uid : localStorage.getItem("uid")
 		}
 
@@ -122,6 +124,7 @@ class BannerwithModal extends Component {
 			limitRange:6,
 			propertyType    : inputData.propertyType,
 			transactionType : inputData.transactionType,
+			listing:true,
 			uid : localStorage.getItem("uid")
 		}
 
@@ -169,20 +172,20 @@ class BannerwithModal extends Component {
 		   
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 banner">
-				<div className="col-lg-12  ">
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
 				</div>
-				<div className="col-lg-6 col-lg-offset-3 mt-10">
-					<div className=" col-lg-12 noPad">
+				<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 mt-10">
+					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
 					  <ul className="nav nav-pills textC" role="tablist">
-					    <li className="nav-item col-lg-4 active">
+					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-4 active">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
 					    </li>
-					    <li className="nav-item col-lg-4">
+					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-4">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
 					    </li>
-					    <li className="nav-item col-lg-4">
+					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-4">
 					      <a className="nav-link active btn-bg" property-type="Commercial" transaction-type="Sell"  data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
 					  </ul>
@@ -191,16 +194,16 @@ class BannerwithModal extends Component {
 				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
 					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType} inputData={this.inputData.bind(this)}/>
 				</div>
-				<div className="col-lg-8 col-lg-offset-2 mt-64">
-					<div className="col-lg-6 br2">
-						<span className="col-lg-12 postDetails">Welcome Owners</span>
+				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 mt-64">
+					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 br2">
+						<span className="col-lg-12 col-md-12 col-sm-12 col-xs-12 postDetails">Welcome Owners</span>
 						<br/>
 						<button className="postBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><span> Post & Earn</span></button>
 						<br/>
-						<span className="col-lg-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
+						<span className="col-lg-12 col-md-12 col-sm-12 col-xs-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
 						</span>
 					</div>
-					<div className="col-lg-6 prText">
+					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 prText">
 						<span className="postDetails ">For our Buyers / Tenants</span><br/>
 						<p className="postDetails1"><b>Best properties, amazing services</b>
 						<br/><b>And up-to 50% discount on brokerage</b>
