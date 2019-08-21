@@ -117,7 +117,6 @@ class PropBox extends React.Component {
 	    }
 	}
 
-
 	render() {
 		let header;
 	    if(this.props.LoginMobNum){
@@ -171,7 +170,9 @@ class PropBox extends React.Component {
 									<i className="fa fa-inr"></i>&nbsp;
 									<span>
 										{result && result.financial && result.transactionType == "Sell" ?
+
 											result.financial && result.financial.totalPrice? this.convertNumberToRupees(result.financial.totalPrice) : "-"
+
 										:
 											result.financial && result.financial.monthlyRent ? result.financial.monthlyRent : "-"
 										}
@@ -191,7 +192,9 @@ class PropBox extends React.Component {
 										&nbsp;
 										{result.propertyLocation  &&  result.propertyLocation.city && result.propertyLocation.society
 											? 
+
 											result.propertyLocation.society +", "+result.propertyLocation.subArea +", "+result.propertyLocation.city 
+
 											:
 											 "-"
 										}

@@ -128,6 +128,7 @@ class HomePageProperties extends Component {
 
 
 
+
   convertNumberToRupees(totalPrice) 
     {
       return Math.abs(Number(totalPrice)) >= 1.0e+7
@@ -143,17 +144,13 @@ class HomePageProperties extends Component {
 
   login(){
     const originPage = "header" ; //This is to stop after signup... otherwise it continues to next form Basic info.
-
     const uid = localStorage.getItem("uid");
-
     if(uid){
       this.props.already_loggedIn(originPage,uid);
     }else{
       this.props.login_mobileNum(originPage);
     }
   }
-
-
 
   render() {
 		var count = this.state.propertiesData.length;
@@ -200,7 +197,6 @@ class HomePageProperties extends Component {
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
                                      <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
-
                                       {
                                         property.transactionType === "Sell" ?
                                         <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
