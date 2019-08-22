@@ -37,7 +37,7 @@
 
 /*--------------------------background colors of admin page -----------*/
 
-.headerbackgroundcolor
+/*.headerbackgroundcolor
 {
     background-color: #3c8dbc;
   }
@@ -59,10 +59,10 @@
   background-color: #eee;
   height:au;
 }
-
-.emptyclass{
+*/
+/*.emptyclass{
   height: 100px;
-}
+}*/
 .noPad{
   padding-left: 0px !important;
   padding-right: 0px !important 

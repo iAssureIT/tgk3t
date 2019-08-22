@@ -155,12 +155,12 @@ class propBox extends React.Component {
 	                            </div>
 	                          :
 	                            <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 resInterestExpress" id={result._id} onClick={this.interestBtn.bind(this)}>
-	                              <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+	                              <i className="fa fa-heart-o "  aria-hidden="true" ></i>
 	                              <span className="intText"> Express Interest </span>
 	                            </div>                                        
 	                        :
 	                          <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 resInterestExpress" id={result._id} onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal" >
-	                            <i className="fa fa-heart-o pr8"  aria-hidden="true" ></i>
+	                            <i className="fa fa-heart-o "  aria-hidden="true" ></i>
 	                            <span className="intText"> Express Interest </span>
 	                          </div>
 	                      }

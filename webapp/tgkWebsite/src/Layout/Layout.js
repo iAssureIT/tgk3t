@@ -16,7 +16,7 @@ import 'font-awesome/css/font-awesome.min.css';
 
   render(){
        return(
-        <div>
+        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
           <Router>
             <Switch>
 

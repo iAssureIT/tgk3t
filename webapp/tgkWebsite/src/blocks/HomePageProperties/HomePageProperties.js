@@ -4,11 +4,11 @@ import $                    from "jquery";
 import { Link }             from 'react-router-dom';
 import {withRouter}         from 'react-router-dom';
 import axios                from 'axios';
-import { connect }        from 'react-redux';
+import { connect }          from 'react-redux';
 
-import LoginMobNum              from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
-import LoginOtp                 from '../WebsiteSecurity/LoginOtp/LoginOtp.js';
-import WebSignupForm            from '../WebsiteSecurity/WebSignup/WebSignupForm.js';
+import LoginMobNum          from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+import LoginOtp             from '../WebsiteSecurity/LoginOtp/LoginOtp.js';
+import WebSignupForm        from '../WebsiteSecurity/WebSignup/WebSignupForm.js';
 
 
 import "./HomePageProperties.css";
