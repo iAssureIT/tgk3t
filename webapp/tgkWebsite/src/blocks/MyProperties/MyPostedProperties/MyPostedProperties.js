@@ -102,9 +102,10 @@ import './MyPostedProperties.css';
 
   	editProperty(event){
 	    const uid = localStorage.getItem("uid");
-	    const prop_id  = event.currentTarget.id;
+	    const property_id  = event.target.id;
+	    console.log("in my posted prop_id",property_id);
 	    const originPage = "myPostedProperties" ;
-	    this.props.editPropertyProfile(uid,prop_id);
+	    this.props.editPropertyProfile(uid,property_id);
 		let mountNode = ReactDOM.findDOMNode(this.refs.BasicInfo);
 		console.log("mountNode = ",mountNode);
     	// let unmount = ReactDOM.unmountComponentAtNode(mountNode);	    
@@ -373,7 +374,7 @@ const mapDispatchToProps = (dispatch)=>{
     login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
     already_loggedIn : (originPage,uid)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid}),
 
-    editPropertyProfile : (uid,prop_id,updateStatus)=>dispatch({type: "EDIT_PROP_PROFILE", uid:uid, prop_id:prop_id, updateStatus: true}),
+    editPropertyProfile : (uid,property_id,updateStatus)=>dispatch({type: "EDIT_PROP_PROFILE", uid:uid, property_id:property_id, updateStatus: true}),
   }
 };
 

@@ -39,6 +39,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				},
 
 				updateOperation   : false,
+				prevAvailable     : "",
 
 			};
    			
@@ -57,9 +58,11 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 								contactPerson 				: response.data.avalibilityPlanVisit.contactPerson,
 								available 					: response.data.avalibilityPlanVisit.available,
 								updateOperation 			: true,
+								prevAvailable 				: response.data.avalibilityPlanVisit.available,
 
 						 
 						},()=>{
+							console.log("here available in comp did mount",this.state.available);
 							});
 
 					})
@@ -78,19 +81,20 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				var ov = this.state.originalValues;
 				console.log("this.state.available",this.state.available);
 				console.log("ov.available",ov.available);
+				console.log("prevAvailable",this.state.prevAvailable);
 				console.log("this.state.contactPersonMobile",this.state.contactPersonMobile);
 				console.log("ov.contactPersonMobile",ov.contactPersonMobile);
 				console.log("this.state.contactPerson",this.state.contactPerson);
 				console.log("ov.contactPerson",ov.contactPerson);
 				
-				if(this.state.contactPersonMobile === ov.contactPersonMobile && this.state.contactPerson === ov.contactPerson
-				&& this.state.available === ov.available){
-							console.log("same data");
-							this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
+				// if(this.state.contactPersonMobile === ov.contactPersonMobile && this.state.contactPerson === ov.contactPerson
+				// && this.state.available === ov.available){
+				// 			console.log("same data");
+				// 			this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
 
-				}else{
+				// }else{
 
-					console.log("diff data");
+				// 	console.log("diff data");
 					const formValues = {
 					"contactPersonMobile" : this.state.contactPersonMobile,
 	        		"contactPerson"       : this.state.contactPerson,
@@ -120,7 +124,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					}
 					
 
-				}
+				
 
 
 			}else{

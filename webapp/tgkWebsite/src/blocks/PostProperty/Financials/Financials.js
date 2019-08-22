@@ -27,6 +27,7 @@ class Financials extends Component{
                         ],
       prevCharges     : "",
       maintenancePer  : "month",
+      maintenanceCharges : "0",
 
 
       };
@@ -174,6 +175,8 @@ updateUser(event){
 
             console.log("includeChargesDataList true",includeChargesDataList);
             console.log("this.state.availableFrom",this.state.availableFrom);
+
+            console.log("maintenanceCharges",this.state.maintenanceCharges);
 
         const formValues = {
         "expectedRate"        : this.state.expectedRate.replace(/,/g, ''),

@@ -53,6 +53,26 @@ import './Amenities.css';
 			console.log("all amenities for admin",this.state.allAmenities);
 			if(this.props.updateStatus === true){
 
+				axios
+				.get('/api/masteramenities/list')
+				.then(
+					(res)=>{
+						console.log('res postdata', res);
+						const postsdata = res.data;
+						console.log('postsdata',postsdata);
+						this.setState({
+							allAmenities : postsdata,
+						});
+					}
+				)
+				.catch((error)=>{
+
+					console.log("error = ",error);
+					alert("Something went wrong! Please check Get URL.");
+					 });	
+
+			// -----------------------------------------------------------------------------------
+
 	        	axios
 					.get('/api/properties/'+this.props.property_id)
 					.then( (response) =>{
@@ -71,20 +91,24 @@ import './Amenities.css';
 						var allAmenitiesData = this.state.allAmenities;
 							console.log("here allAmenitiesData", allAmenitiesData);
 						var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
+							console.log("item",item.amenity);
 							var propPresent = this.state.prevAmenities.find((obj)=>{
-								return item.amenity === obj
-							})
+							console.log("obj",obj);
+								return item.amenity === obj;
 							console.log("here propPresent ", propPresent);
+
+							})
 							var newObj = Object.assign({},item);
 							if(propPresent){
 								newObj.checked = true
 							}else{
 								newObj.checked = false
 							}
+							console.log("newObj",newObj);
 							return newObj;
 
 						})
-
+						console.log("allAmenitiesDataList",allAmenitiesDataList);
 						this.setState({
 								allAmenities : allAmenitiesDataList,
 							},()=>{

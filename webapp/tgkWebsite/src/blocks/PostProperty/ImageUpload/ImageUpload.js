@@ -38,12 +38,12 @@ var imgTitleArray = [];
 	        	axios
 					.get('/api/properties/'+this.props.property_id)
 					.then( (response) =>{
-						console.log("response= ",response);
+						console.log("response in img= ",response);
 						
 						this.setState({
 								originalValues      : response.data.gallery,
 								imgArrayWSaws 		: response.data.gallery.Images,
-								singleVideo 	    : response.data.gallery.video,
+								singleVideo 	    : response.data.gallery.video ? response.data.gallery.video : "" ,
 								updateOperation     : true,
 								
 						},()=>{

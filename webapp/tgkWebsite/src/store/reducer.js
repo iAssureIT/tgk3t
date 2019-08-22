@@ -319,7 +319,7 @@ const reducer = (state = initialState,action) => {
 
 	if(action.type === "EDIT_PROP_PROFILE"){
 		newState.uid   	   = action.uid;
-		newState.prop_id   = action.prop_id;
+		newState.property_id   = action.property_id;
 		newState.updateStatus = true;
 		newState.BasicInfo 	  = true;
 
