@@ -169,7 +169,7 @@ class PropertyProfile extends Component{
                       {console.log("this.state.propertyVideo",this.state.propertyVideo)}
                           {
                             this.state.propertyVideo ?
-                            <video width="100%" height="100%" controls>
+                            <video width="100%" height="100%" className="video" controls>
                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
                             </video>
                             :
@@ -178,14 +178,14 @@ class PropertyProfile extends Component{
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty" >
                           {this.state.propertyImages[0] ?
-                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[0]} />
+                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[0].imgPath} />
                             :
                             <img src="/images/loading_img.jpg" className="col-lg-12 noPad"/>
                           }
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
                             {this.state.propertyImages[1] ?
-                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[1]} />
+                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[1].imgPath} />
                             :
                             <img src="/images/loading_img.jpg" className="col-lg-12 noPad" />
                           }
@@ -215,7 +215,7 @@ class PropertyProfile extends Component{
                             return(
 
                                   <div key={index}  >
-                                      <img className="item" src={propertyImages} />
+                                      <img className="item" src={propertyImages.imgPath} />
                                   </div>                    
                               )
                             })

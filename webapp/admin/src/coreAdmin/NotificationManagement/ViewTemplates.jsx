@@ -526,10 +526,14 @@ class ViewTemplates extends Component{
 												 	<label className=" label-category">Template Name <span className="astrick">*</span></label>     						
 											       	<select name="templateName" id="templateName" value={this.state.templateName} onChange={this.handleChange} className="form-control templateType " required>
 													  <option value="Not Selected">--Select Template Name--</option>
-													  <option value="User New Registration">User New Registration</option>
-													  <option value="Admin New Registration">Admin New Registration</option>
-													  <option value="User Blocked">User Blocked</option>
-													  <option value="User Activated">User Activated</option>
+													  <option value="Admin - New Registration"> 	Admin - New Registration		</option>
+													  <option value="Admin - User Blocked">			Admin - User Blocked			</option>
+													  <option value="Admin - User Activated">		Admin - User Activated			</option>
+													  <option value="Admin - User Express Interest">Admin - User Express Interest	</option>
+													  <option value="Admin - New Property Posted">	Admin - New Property Posted		</option>
+													  <option value="User - New Registration">		User - New Registration			</option>
+													  <option value="User - Express Interest">		User - Express Interest			</option>
+													  <option value="User - New Property Posted">	User - New Property Posted		</option>
 													</select>
 												</div>	
 											</div>

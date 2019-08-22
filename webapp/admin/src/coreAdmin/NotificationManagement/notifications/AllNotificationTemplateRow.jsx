@@ -64,8 +64,8 @@ class AllNotificationTemplateRow extends Component{
 
 	render() {
 		var text= this.props.notificationtemplateValues.content ? this.props.notificationtemplateValues.content : 'abc';
-		var regex = new RegExp(/(<([^>]+)>)/ig);
-		text = text.replace(regex,'');
+		// var regex = new RegExp(/(<([^>]+)>)/ig);
+		// text = text.replace(regex,'');
 		if(this.props.notificationtemplateValues.content){			
 	        return (
 	       		<div className="contentBox col-lg-12">

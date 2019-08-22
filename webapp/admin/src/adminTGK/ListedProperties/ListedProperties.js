@@ -124,6 +124,10 @@ class ListedProperties extends Component {
 
         ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
 
+        : Math.abs(Number(totalPrice)) >= 1.0e+3
+
+        ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+
         : Math.abs(Number(totalPrice));
     }
 
@@ -288,7 +292,7 @@ class ListedProperties extends Component {
                                     <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">
                                     {
                                         result && result.gallery && result.gallery.Images && result.gallery.Images.length > 0 ?
-                                        <img alt=""  className="propertyImgDiv" src={result.gallery.Images[0]} />
+                                        <img alt=""  className="propertyImgDiv" src={result.gallery.Images[0].imgPath} />
                                         :
                                         <img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
                                     }                                                           
@@ -301,7 +305,7 @@ class ListedProperties extends Component {
                                                 {result && result.financial && result.transactionType == "Sell" ?
                                                     result.financial && result.financial.totalPrice? this.convertNumberToRupees(result.financial.totalPrice) : "-"
                                                 :
-                                                    result.financial && result.financial.monthlyRent ? result.financial.monthlyRent : "-"
+                                                    result.financial && result.financial.monthlyRent ? this.convertNumberToRupees(result.financial.monthlyRent) : "-"
                                                 }
                                             </span>
                                         </div>

@@ -463,3 +463,7 @@
     box-shadow: none !important;
     border-radius: 5px;
 }
+
+.video{
+  background-color: #EFEFEF;
+}

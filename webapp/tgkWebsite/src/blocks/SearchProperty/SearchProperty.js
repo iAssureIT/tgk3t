@@ -265,7 +265,7 @@ class SearchProperty extends Component {
 
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
-				<form>
+				<form onClick={this.searchResultbtn.bind(this)}>
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 searchProperty noPad">
 						{this.props.propertyType === "Commercial" ?
 						<div>

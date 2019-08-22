@@ -143,7 +143,7 @@ class propBox extends React.Component {
 							<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">
 							{
 								result && result.gallery && result.gallery.Images && result.gallery.Images.length > 0 ?
-								<img alt=""  className="propertyImgDiv" src={result.gallery.Images[0]} />
+								<img alt=""  className="propertyImgDiv" src={result.gallery.Images[0].imgPath} />
 								:
 								<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
 							}															
