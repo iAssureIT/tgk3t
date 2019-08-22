@@ -3,7 +3,7 @@ import axios 					from 'axios';
 import $ 						from "jquery";
 import {withRouter, Link} 		from 'react-router-dom';
 import { connect } 				from 'react-redux';
-import PropBox 					from './PropBox.js';
+import PropBox 					from './propBox.js';
 import Loader 					from 'react-loader-spinner'
 
 import './SearchResults.css';

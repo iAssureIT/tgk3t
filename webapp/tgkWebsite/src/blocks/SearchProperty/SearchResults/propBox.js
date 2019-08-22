@@ -8,7 +8,7 @@ import LoginMobNum              from '../../WebsiteSecurity/LoginMobNum/LoginMob
 import LoginOtp                 from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
 import WebSignupForm            from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
 
-class PropBox extends React.Component {
+class propBox extends React.Component {
 	
 	constructor(props) {
 		super(props);
@@ -329,5 +329,5 @@ const mapDispatchToProps = (dispatch)=>{
 };
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(PropBox));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(propBox));
 
