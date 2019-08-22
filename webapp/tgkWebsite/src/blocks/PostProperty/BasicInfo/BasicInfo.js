@@ -26,8 +26,8 @@ class BasicInfo extends Component{
 			};
 			this.radioChange = this.radioChange.bind(this);
 
-        	console.log("this.props.updateStatus = ",this.props.updateStatus);
-        	console.log("this.props.property_id = ",this.props.property_id);
+        	console.log("this.props.updateStatus inbasicinfo= ",this.props.updateStatus);
+        	console.log("this.props.property_id in basicinfo= ",this.props.property_id);
 
         	if(this.props.updateStatus === true){
 
@@ -91,6 +91,7 @@ class BasicInfo extends Component{
 		    });
 		    
 		     var $select = $(".Fl60");
+		     	$select.append($('<option></option>').val("").html("Floor"))
 		        $select.append($('<option></option>').val(-1).html("Basement"))
 		        $select.append($('<option></option>').val(0).html("Ground"))
 

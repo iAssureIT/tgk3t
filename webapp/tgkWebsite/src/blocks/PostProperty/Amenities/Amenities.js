@@ -25,9 +25,141 @@ import './Amenities.css';
 			};
 
 
+			if(this.props.updateStatus === true){
+
+				axios
+				.get('/api/masteramenities/list')
+				.then(
+					(res)=>{
+						console.log('res postdata', res);
+						const postsdata = res.data;
+						console.log('postsdata',postsdata);
+						this.setState({
+							allAmenities : postsdata,
+						},()=>{
+							console.log("here allAmenities by admin in update status true",this.state.allAmenities);
+							axios
+						.get('/api/properties/'+this.props.property_id)
+						.then( (response) =>{
+							console.log("response.data.Amenities= ",response);
+
+							this.setState({
+									originalValues 		: response.data,
+									prevAmenities 		: response.data.Amenities,
+									updateOperation     : true,
+
+							 
+							},()=>{
+								console.log("here prevAmenities", this.state.prevAmenities);
+								});
+
+							var allAmenitiesData = this.state.allAmenities;
+								console.log("here allAmenitiesData", allAmenitiesData);
+							var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
+								console.log("item",item.amenity);
+								var propPresent = this.state.prevAmenities.find((obj)=>{
+								console.log("obj",obj);
+									return item.amenity === obj;
+								console.log("here propPresent ", propPresent);
+
+								})
+								var newObj = Object.assign({},item);
+								if(propPresent){
+									newObj.checked = true
+								}else{
+									newObj.checked = false
+								}
+								console.log("newObj",newObj);
+								return newObj;
+
+							})
+							// console.log("allAmenitiesDataList after data match",allAmenitiesDataList);
+							this.setState({
+									allAmenities : allAmenitiesDataList,
+								},()=>{
+									console.log("here allAmenities in didmount after match result",this.state.allAmenities);
+
+								});
+
+
+						})
+						.catch((error) =>{
+							console.log("error = ", error);
+						});
+
+
+
+							// ------------------------------
+						});
+					}
+				)
+				.catch((error)=>{
+
+					console.log("error = ",error);
+					alert("Something went wrong! Please check Get URL.");
+					 });	
+
+			// -----------------------------------------------------------------------------------
+
+	    //     	axios
+					// .get('/api/properties/'+this.props.property_id)
+					// .then( (response) =>{
+					// 	console.log("response.data.Amenities= ",response);
+
+					// 	this.setState({
+					// 			originalValues 		: response.data,
+					// 			prevAmenities 		: response.data.Amenities,
+					// 			updateOperation     : true,
+
+						 
+					// 	},()=>{
+					// 		console.log("here prevAmenities", this.state.prevAmenities);
+					// 		});
+
+					// 	var allAmenitiesData = this.state.allAmenities;
+					// 		console.log("here allAmenitiesData", allAmenitiesData);
+					// 	var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
+					// 		console.log("item",item.amenity);
+					// 		var propPresent = this.state.prevAmenities.find((obj)=>{
+					// 		console.log("obj",obj);
+					// 			return item.amenity === obj;
+					// 		console.log("here propPresent ", propPresent);
+
+					// 		})
+					// 		var newObj = Object.assign({},item);
+					// 		if(propPresent){
+					// 			newObj.checked = true
+					// 		}else{
+					// 			newObj.checked = false
+					// 		}
+					// 		console.log("newObj",newObj);
+					// 		return newObj;
+
+					// 	})
+					// 	// console.log("allAmenitiesDataList after data match",allAmenitiesDataList);
+					// 	this.setState({
+					// 			allAmenities : allAmenitiesDataList,
+					// 		},()=>{
+					// 			console.log("here allAmenities in didmount after match result",this.state.allAmenities);
+
+					// 		});
+
+
+					// })
+					// .catch((error) =>{
+					// 	console.log("error = ", error);
+					// });
+
+        	}
+
+
+
 		}
 
 	componentDidMount(){
+
+		console.log("update status in did mount",this.props.updateStatus);
+		if(this.props.updateStatus === false){
 		axios
 			.get('/api/masteramenities/list')
 			.then(
@@ -51,79 +183,8 @@ import './Amenities.css';
 			console.log("this.props.updateStatus",this.props.updateStatus);
 			console.log("this.props.property_id",this.props.property_id);
 			console.log("all amenities for admin",this.state.allAmenities);
-			if(this.props.updateStatus === true){
-
-				axios
-				.get('/api/masteramenities/list')
-				.then(
-					(res)=>{
-						console.log('res postdata', res);
-						const postsdata = res.data;
-						console.log('postsdata',postsdata);
-						this.setState({
-							allAmenities : postsdata,
-						});
-					}
-				)
-				.catch((error)=>{
-
-					console.log("error = ",error);
-					alert("Something went wrong! Please check Get URL.");
-					 });	
-
-			// -----------------------------------------------------------------------------------
-
-	        	axios
-					.get('/api/properties/'+this.props.property_id)
-					.then( (response) =>{
-						console.log("response.data.Amenities= ",response);
-
-						this.setState({
-								originalValues 		: response.data,
-								prevAmenities 		: response.data.Amenities,
-								updateOperation     : true,
-
-						 
-						},()=>{
-							console.log("here prevAmenities", this.state.prevAmenities);
-							});
-
-						var allAmenitiesData = this.state.allAmenities;
-							console.log("here allAmenitiesData", allAmenitiesData);
-						var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
-							console.log("item",item.amenity);
-							var propPresent = this.state.prevAmenities.find((obj)=>{
-							console.log("obj",obj);
-								return item.amenity === obj;
-							console.log("here propPresent ", propPresent);
-
-							})
-							var newObj = Object.assign({},item);
-							if(propPresent){
-								newObj.checked = true
-							}else{
-								newObj.checked = false
-							}
-							console.log("newObj",newObj);
-							return newObj;
-
-						})
-						console.log("allAmenitiesDataList",allAmenitiesDataList);
-						this.setState({
-								allAmenities : allAmenitiesDataList,
-							},()=>{
-								console.log("here allAmenities in didmount after match result",this.state.allAmenities);
-
-							});
-
-
-					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
-
-        	}
 			
+			}
 
 	}
 
@@ -326,10 +387,10 @@ import './Amenities.css';
 		  	 	</div>
 
 		  	 	<div className = "container-fluid padd0 ">
-		  	 		{console.log("here amenity",this.state.allAmenities)}
+		  	 		{console.log("here amenity in map",this.state.allAmenities)}
 		  	 		{this.state.allAmenities && this.state.allAmenities.length > 0 ?
 		  	 			this.state.allAmenities.map((data,index)=>{
-		  	 				console.log("data",data);
+		  	 				// console.log("data",data);
 		  	 				return(
 		  	 						<div className="col-lg-6 FF4I1 sideBorder" key={index}>
 		  	 							
@@ -339,6 +400,7 @@ import './Amenities.css';
 										      		 id={index}
 										      		 name="userCheckbox"
 										      		 onChange={this.totalInclude.bind(this)} 
+										      		 data-index={data.checked}
 										      		 checked={data.checked}
 										      		 />
 											 <span className="checkmark pull-left"></span>

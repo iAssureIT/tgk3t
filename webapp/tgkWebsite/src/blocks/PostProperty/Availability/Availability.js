@@ -50,9 +50,10 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 	        	axios
 					.get('/api/properties/'+this.props.property_id)
 					.then( (response) =>{
-						console.log("response= ",response);
+						console.log("response in availability= ",response);
 						
 						this.setState({
+
 								originalValues 				: response.data.avalibilityPlanVisit,
 								contactPersonMobile 		: response.data.avalibilityPlanVisit.contactPersonMobile,
 								contactPerson 				: response.data.avalibilityPlanVisit.contactPerson,
@@ -73,6 +74,26 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
         	}
 
 		}
+
+		componentDidMount(){	
+
+			console.log("user id in availability",this.props.uid);
+
+			axios
+					.get('/api/users/get/one/'+this.props.property_id)
+					.then( (response) =>{
+						console.log("response of user in availability= ",response);
+						// this.setState({
+						// 	contactPersonMobile : 
+						// });
+
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+
+
+		}		
 		insertAvailability(event){
 			event.preventDefault();
 

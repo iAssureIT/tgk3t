@@ -290,12 +290,12 @@ var imgTitleArray = [];
 		{
 			console.log("update fun");
 				var ov = this.state.originalValues;
-				if(this.state.imgArrayWSaws === ov.Images && this.state.singleVideo === ov.video )
-				{
-					console.log("same data");
-					this.props.redirectToCongratsPage(localStorage.getItem("uid"),localStorage.getItem("propertyId"));
+				// if(this.state.imgArrayWSaws === ov.Images && this.state.singleVideo === ov.video )
+				// {
+				// 	console.log("same data");
+				// 	this.props.redirectToCongratsPage(localStorage.getItem("uid"),localStorage.getItem("propertyId"));
 
-				}else{
+				// }else{
 					console.log("diff data");
 					const formValues = {
 
@@ -322,7 +322,7 @@ var imgTitleArray = [];
 						.catch((error) =>{
 							console.log("error = ", error);
 						});	
-				}
+				// }
 
 		}else{
 			console.log("sub fun");

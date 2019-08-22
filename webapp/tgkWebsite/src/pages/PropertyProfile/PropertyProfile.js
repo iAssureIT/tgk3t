@@ -73,6 +73,7 @@ class PropertyProfile extends Component{
     const originPage = "post" ;
     const uid = localStorage.getItem("uid");
     const prop_id  = this.state.prop_id;
+    console.log("prop_id",prop_id);
     console.log("property id here",this.state.prop_id);
     if(uid && prop_id){
       this.props.already_loggedIn(originPage,uid,prop_id);
