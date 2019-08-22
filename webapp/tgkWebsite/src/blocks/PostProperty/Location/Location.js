@@ -13,6 +13,7 @@ class Location extends Component {
 			super(props);
 			
 			this.state = {
+				originalValues      : '',
 				"selected"  		: "",
 				"listofStates"		: "",
 				"listofBlocks"		: "",
@@ -25,23 +26,106 @@ class Location extends Component {
 				"societyList"		: "",
 				"societyName"		: "",
 				"pincode"			: "",
+				"updateOperation"   : false,
 			};
 
+			this.handleChange = this.handleChange.bind(this);
+
+			console.log("property_id",this.props.property_id);
 			if(this.props.updateStatus === true){
 
 	        	axios
-					.get('/api/properties/'+this.props.prop_id)
+					.get('/api/properties/'+this.props.property_id)
 					.then( (response) =>{
-						console.log("get property = ",response);
+						console.log("get property in location = ",response);
 
 						this.setState({
-								stateCode 		: response.data.propertyLocation.stateCode,
-						    	districtName 	: response.data.propertyLocationdistrictName,
-						    	blockName 		: response.data.propertyLocation.blockName,
-						    	cityName 		: response.data.propertyLocation.cityName,
-						    	areaName 		: response.data.propertyLocation.areaName,
+								originalValues  : response.data.propertyLocation,
+								stateCode 		: response.data.propertyLocation.state,
+						    	districtName 	: response.data.propertyLocation.district,
+						    	blockName 		: response.data.propertyLocation.block,
+						    	cityName 		: response.data.propertyLocation.city,
+						    	areaName 		: response.data.propertyLocation.area,
+						    	subAreaName 	: response.data.propertyLocation.subArea,
+								societyName     : response.data.propertyLocation.society,
+								address 	    : response.data.propertyLocation.address,
+								landmark		: response.data.propertyLocation.landmark,
+								pincode 	 	: response.data.propertyLocation.pincode,
+								updateOperation : true,
+
+						},()=>{
+							console.log("cityName",this.state.cityName);
+							console.log("areaName",this.state.areaName);
+							console.log("subAreaName",this.state.subAreaName);
+
+							        //==================================================================
+							        // 			Get Cities
+							        //==================================================================
+
+								    axios({
+								      	method: 'get',
+								      	url: 'http://locationapi.iassureit.com/api/cities/get/citiesByState/IN/'+response.data.propertyLocation.state,
+								    }).then((response1)=> {
+								        this.setState({
+								         	listofCities : response1.data,
+								        })
+
+							        //==================================================================
+							        // 			Get Areas
+							        //==================================================================
+
+									var url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+response.data.propertyLocation.state+'/'+response.data.propertyLocation.district+'/'+response.data.propertyLocation.block+'/'+response.data.propertyLocation.city+'/' ;
+								    axios({
+								      method: 'get',
+								      url: url,
+								    }).then((response2)=> {
+								        this.setState({
+								          listofAreas : response2.data
+							        	})
+
+							        //==================================================================
+							        // 			Get SubAreas
+							        //==================================================================
+									var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+response.data.propertyLocation.state+'/'+response.data.propertyLocation.district+'/'+response.data.propertyLocation.block+'/'+response.data.propertyLocation.city+'/'+response.data.propertyLocation.area+'/' ;
+
+									axios({
+									  method: 'get',
+									  url: url,
+									}).then((response3)=> {
+									    this.setState({
+									      subAreaList : response3.data
+									    })
+									}).catch(function (error) {
+									  console.log('error', error);
+									});
+
+
+							    }).catch(function (error) {
+							      console.log('error', error);
+							    });
+
+
+
+						    }).catch(function (error) {
+						      	console.log('error', error);
+						    });							
 						});
-						
+
+						if(this.state.cityName != null &&  this.state.areaName != null && this.state.subAreaName != null && this.state.societyName != null)
+					    {
+					       var first  = this.state.cityName.toUpperCase().slice(0,2);
+					       var second = this.state.areaName.toUpperCase().slice(0,2);
+					       var third  = this.state.subAreaName.toUpperCase().slice(0,2);
+					       var forth  = this.state.societyName.toUpperCase().slice(0,2);
+
+					       var indexData = first+second+third+forth;
+
+					       this.setState({
+					       	index : indexData,
+					       });
+					      
+					    }
+
 					})
 					.catch((error) =>{
 						console.log("error = ", error);
@@ -65,45 +149,110 @@ class Location extends Component {
 	}
 	insertLocation(event){
 			event.preventDefault();	
-			const formValues = {
-				"countryCode" 		: "IN",
-				"stateCode" 		: this.state.stateCode,
-				"districtName" 		: this.state.districtName,
-				"blockName" 		: this.state.blockName,
-				"cityName" 			: this.state.cityName,
-				"areaName" 			: this.state.areaName,
-				"subAreaName"		: this.state.subareaName,
-				"societyName"	    : this.state.societyName,
-				"address" 	        : this.refs.housebuilding.value,
-				"landmark" 			: this.refs.landmark.value,
-				"pincode" 			: this.state.pincode,
-				"property_id" 		: localStorage.getItem("propertyId"),
-				"index"				: this.state.index,
-				"uid" 				: localStorage.getItem("uid"),				
-			};
-			console.log("location formValues = ",formValues);
 
-				localStorage.setItem("index",this.state.index);
-				if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" && this.refs.housebuilding.value!="" ){
-					axios
-					.patch('/api/properties/patch/propertyLocation',formValues)
-					.then( (res) =>{
-						if(res.status === 200){
-							this.props.redirectToPropertyDetails(this.props.uid);
-						}
-					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+			if(this.state.updateOperation === true){
+				console.log("update fun");
+				var ov = this.state.originalValues;
+
+				if(this.state.stateCode === ov.state && this.state.districtName === ov.district && this.state.blockName === ov.block &&
+					this.state.cityName === ov.city && this.state.areaName === ov.area && this.state.subAreaName === ov.subArea &&
+					this.state.societyName === ov.society && this.state.address === ov.address && this.state.landmark === ov.landmark &&
+					this.state.pincode === ov.pincode)
+				{
+						console.log("same data");
+						console.log("this.props.property_id",this.props.property_id);
+						this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
+						
 				}else{
-					swal("Please enter mandatory fields", "", "warning");
-	      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+						console.log("diff data");
+
+						const formValues = {
+						"countryCode" 		: "IN",
+						"stateCode" 		: this.state.stateCode,
+						"districtName" 		: this.state.districtName,
+						"blockName" 		: this.state.blockName,
+						"cityName" 			: this.state.cityName,
+						"areaName" 			: this.state.areaName,
+						"subAreaName"		: this.state.subAreaName,
+						"societyName"	    : this.state.societyName,
+						"address" 	        : this.state.address,
+						"landmark" 			: this.state.landmark,
+						"pincode" 			: this.state.pincode,
+						"property_id" 		: localStorage.getItem("propertyId"),
+						"index"				: this.state.index,
+						"uid" 				: localStorage.getItem("uid"),				
+					};
+					console.log("location formValues = ",formValues);
+
+						localStorage.setItem("index",this.state.index);
+						if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" && this.refs.housebuilding.value!="" ){
+							axios
+							.patch('/api/properties/patch/propertyLocation',formValues)
+							.then( (res) =>{
+								if(res.status === 200){
+									this.props.redirectToPropertyDetails(this.props.uid,this.props.prop_id);
+								}
+							})
+							.catch((error) =>{
+								console.log("error = ", error);
+							});
+						}else{
+							swal("Please enter mandatory fields", "", "warning");
+			      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+						}
+
 				}
+
+			}else{
+						console.log("submit fun");
+
+					const formValues = {
+					"countryCode" 		: "IN",
+					"stateCode" 		: this.state.stateCode,
+					"districtName" 		: this.state.districtName,
+					"blockName" 		: this.state.blockName,
+					"cityName" 			: this.state.cityName,
+					"areaName" 			: this.state.areaName,
+					"subAreaName"		: this.state.subAreaName,
+					"societyName"	    : this.state.societyName,
+					"address" 	        : this.state.address,
+					"landmark" 			: this.state.landmark,
+					"pincode" 			: this.state.pincode,
+					"property_id" 		: localStorage.getItem("propertyId"),
+					"index"				: this.state.index,
+					"uid" 				: localStorage.getItem("uid"),				
+				};
+				console.log("location formValues = ",formValues);
+
+					localStorage.setItem("index",this.state.index);
+					if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" && this.refs.housebuilding.value!="" ){
+						axios
+						.patch('/api/properties/patch/propertyLocation',formValues)
+						.then( (res) =>{
+							if(res.status === 200){
+								this.props.redirectToPropertyDetails(this.props.uid,this.props.prop_id);
+							}
+						})
+						.catch((error) =>{
+							console.log("error = ", error);
+						});
+					}else{
+						swal("Please enter mandatory fields", "", "warning");
+		      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+					}
+			}
+			
 			
 		}
 
 	backToBasicInfo(){
 		this.props.backToBasicInfo();
+		console.log("this.props.uid",this.props.uid);
+		console.log("this.props.prop_id",this.props.prop_id);
+		console.log("localStorage.getItem(propertyId)",localStorage.getItem("propertyId"));
+
+		this.props.backToBasicInfo(this.props.uid,localStorage.getItem("propertyId"));
+						
 	}
 
 
@@ -159,6 +308,17 @@ class Location extends Component {
 	selectArea(event){
 		event.preventDefault();
 		var areaName = event.currentTarget.value;
+
+		 const target = event.target.value;
+        const name   = event.target.name;
+        // console.log('target',name, target);
+          this.setState({ 
+	      [name]:target
+	    },()=>{
+	    	console.log('this name in area', name);
+	    	console.log('this target in area', target);
+
+	    })
 
 		if(this.state.listofAreas.length > 0){
 			var index = this.state.listofAreas.findIndex( x => x.areaName === areaName);
@@ -357,6 +517,18 @@ class Location extends Component {
 	}
 
 
+	handleChange(event){
+        const target = event.target.value;
+        const name   = event.target.name;
+        // console.log('target',name, target);
+          this.setState({ 
+	      [name]:target
+	    },()=>{
+	    	// console.log('this name', name);
+	    	// console.log('this target', target);
+
+	    })
+	}
 
 
 	render() {
@@ -447,7 +619,7 @@ class Location extends Component {
 								<span className="astrick">*</span>
 
 							    <div className=" " id="">
-								    <select className="custom-select form-control" value={this.state.areaName} name="village" onChange={this.selectArea.bind(this)} name="area" ref="area" placeholder="select" id="selectArea">
+								    <select className="custom-select form-control" value={this.state.areaName} name="areaName" onChange={this.selectArea.bind(this)} name="area" ref="area" placeholder="select" id="selectArea">
 								    	<option value="">-- Area --</option>
 								    	{
 	                                    this.state.listofAreas && this.state.listofAreas.length > 0 ? 
@@ -470,7 +642,7 @@ class Location extends Component {
 								<span className="astrick">*</span>
 
 							    <div className=" " id="">
-								    <input type="text" list="subAreaList" className="form-control" ref="subArea" name="subArea" placeholder="Enter Subarea" onBlur={this.handleSubarea.bind(this)}/>
+								    <input type="text" list="subAreaList" className="form-control" value={this.state.subAreaName} ref="subArea" name="subAreaName" placeholder="Enter Subarea" onChange={this.handleChange.bind(this)} onBlur={this.handleSubarea.bind(this)}/>
 								    <datalist id="subAreaList">
 								    	{this.state.subAreaList.length>0 ? 
 								    		this.state.subAreaList.map( (subArea,index)=>{
@@ -493,7 +665,7 @@ class Location extends Component {
 							      	<div className="input-group-addon inputIcon">
 					                 <i className="fa fa-building iconClr"></i>
 				                    </div>
-								    <input type="text" list="societyList" className="form-control" ref="society"  name="society" placeholder="Enter Society" onBlur={this.handleSociety.bind(this)}/>
+								    <input type="text" list="societyList" className="form-control" ref="society" value={this.state.societyName} name="societyName" placeholder="Enter Society" onChange={this.handleChange.bind(this)}  onBlur={this.handleSociety.bind(this)}/>
 								    <datalist id="societyList">
 								    	{this.state.societyList.length>0 ? 
 								    		this.state.societyList.map( (society,index)=>{
@@ -515,7 +687,7 @@ class Location extends Component {
 					                <i className="fa fa-building iconClr"></i>
 				                    </div>
 							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-							    <input type="text" className="form-control" ref="housebuilding"  placeholder="Enter House Address"/>
+							    <input type="text" className="form-control" ref="housebuilding" name="address" value={this.state.address} onChange={this.handleChange.bind(this)} placeholder="Enter House Address"/>
 							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 							  	</div>
 							  </div>
@@ -529,7 +701,7 @@ class Location extends Component {
 					                <i className="fa fa-building iconClr"></i>
 				                    </div>
 							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-							    <input type="text" className="form-control" ref="landmark"  placeholder="Landmark "/>
+							    <input type="text" className="form-control" name="landmark" ref="landmark" value={this.state.landmark}  onChange={this.handleChange.bind(this)} placeholder="Landmark "/>
 							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 							  	</div>
 							  </div>
@@ -537,9 +709,12 @@ class Location extends Component {
 				    </div>
 				</div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40 ">
-				  	{/*<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
-				       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToBasicInfo.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
-				  	</div>*/}
+				  	{
+				  		<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+				          <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToBasicInfo.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
+				  	    </div>
+				  	   
+				  	}
 				  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
 				       <button className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.insertLocation.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 				  	</div>
@@ -560,7 +735,7 @@ const mapStateToProps = (state)=>{
 		Amenities		: state.Amenities,
 		Availability	: state.Availability,
 		Location	 	: state.Location,
-		prop_id         : state.prop_id,
+		// prop_id         : state.prop_id,
 		updateStatus    : state.updateStatus,		
 	}
 };
@@ -568,10 +743,15 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToPropertyDetails   : (uid)=> dispatch({type: "REDIRECT_TO_PROPERTY",
-														uid:uid
+		redirectToPropertyDetails   : (uid,property_id)=> dispatch({type: "REDIRECT_TO_PROPERTY",
+														uid:uid,
+														property_id : property_id
 									}),
-		backToBasicInfo  			: ()=> dispatch({type: "BACK_TO_BASIC_INFO"}),
+		backToBasicInfo  			: (uid,property_id)=> dispatch({type: "BACK_TO_BASIC_INFO",
+														uid:uid,
+														property_id : property_id
+														
+									}),
 	}
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Location));

@@ -12,26 +12,32 @@ class BasicInfo extends Component{
 		constructor(props){
 			super(props);
 			this.state = {
+				originalValues   : '',
 				transactionType  : "Sell",
 				propertyHolder   : "",
 				propertType 	 : "",
 				propertySubType  : "",
 				// user_id 		 : localStorage.getItem("user_id"),
 				fullPropTtype    : "",
-				prop_id          : "",
+				property_id      : "",
+				updateOperation  : false,
+				propertyCode     : "",
+
 			};
 			this.radioChange = this.radioChange.bind(this);
 
         	console.log("this.props.updateStatus = ",this.props.updateStatus);
+        	console.log("this.props.property_id = ",this.props.property_id);
 
         	if(this.props.updateStatus === true){
 
 	        	axios
-					.get('/api/properties/'+this.props.prop_id)
+					.get('/api/properties/'+this.props.property_id)
 					.then( (res) =>{
 						console.log("get property = ",res);
-
+						console.log("get property code = ",res.data.propertyCode);
 						this.setState({
+									originalValues  : res.data,
 									propertyHolder  : res.data.propertyHolder,
 					        		transactionType : res.data.transactionType,
 									propertyType 	: res.data.propertyType,
@@ -39,6 +45,9 @@ class BasicInfo extends Component{
 									floor 			: res.data.floor,
 									totalfloor 		: res.data.totalFloor,
 									fullPropTtype 	: res.data.propertyType+'-'+res.data.propertySubType,
+									updateOperation : true,
+									propertyCode	: res.data.propertyCode
+
 								});
 
 						if(res.data.propertyHolder === "Owner"){
@@ -106,38 +115,61 @@ class BasicInfo extends Component{
 				"listing"       	: false,
 				"status"			: "WIP",
 				"uid" 				: localStorage.getItem("uid"),
-				"property_id"		: this.props.prop_id
+				"property_id"		: this.props.property_id
 
 			};
+
 			console.log("BasicInfo===",formValues);
 			if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && this.refs.floor.value!=="" && this.refs.totalfloor.value!=="" ){
-				if(this.props.updateStatus === true){
-					axios
-					.patch('/api/properties/patch/properties',formValues)
-					.then( (res) =>{
-						console.log(res.data);
-						if(res.status === 200){
-							localStorage.setItem('propertyId',res.data.property_id)
-							console.log("BasicInfo res = ",res);
-							this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
-							this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
-						}else{
-						}
-					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+				if(this.state.updateOperation === true){
+					console.log("update fun");
+					var ov = this.state.originalValues;
+					if(this.state.propertyHolder === ov.propertyHolder && this.state.transactionType === ov.transactionType
+						&& this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType 
+						&& this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor)
+					{
+						console.log("same data");
+						
+					localStorage.setItem('propertyId',this.props.property_id)
+					
+					this.props.redirectToLocation(this.state.propertyCode, this.props.property_id,this.props.uid);						
+					this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
+						
+
+					}else{
+
+						console.log("diff data");
+						axios
+						.patch('/api/properties/patch/properties',formValues)
+						.then( (res) =>{
+							console.log("here updated data",res);
+							if(res.status === 200){
+								localStorage.setItem('propertyId',this.props.property_id);
+								this.props.redirectToLocation(this.state.propertyCode, this.props.property_id,this.props.uid);						
+								this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
+							}else{
+							}
+						})
+						.catch((error) =>{
+							console.log("error = ", error);
+						});
+
+					}
+					
 
 				}else{
-
+					console.log("submit data");
 					axios
 					.post('/api/properties',formValues)
 					.then( (res) =>{
 						console.log(res.data);
 						if(res.status === 200){
 							// swal("Good job!", "Property inserted successfully!", "success");
+							console.log("here prop id",res.data.property_id);
 							localStorage.setItem('propertyId',res.data.property_id)
 							console.log("BasicInfo res = ",res);
+							console.log("propertyCode",res.data.propertyCode);
+							// this.props.prop_id = res.data.property_id;
 							this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
 							this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
 						}else{
@@ -399,7 +431,7 @@ const mapStateToProps = (state)=>{
 	console.log("bState===",state);
   return {
     uid             : state.uid,
-    prop_id         : state.prop_id,
+    property_id     : state.property_id,
 	BasicInfo		: state.BasicInfo,
 	PropertyDetails	: state.PropertyDetails,
 	Financials		: state.Financials,
@@ -413,7 +445,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToLocation  : (propertyCode, property_id,uid,prop_id)=> dispatch({type    : "REDIRECT_TO_LOCATION",
+		redirectToLocation  : (propertyCode, property_id,uid)=> dispatch({type    : "REDIRECT_TO_LOCATION",
 																		   propertyCode	: propertyCode,
 																		   property_id	: property_id,
 																		   uid          : uid,

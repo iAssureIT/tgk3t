@@ -86,6 +86,8 @@ const reducer = (state = initialState,action) => {
 		newState.propertyCode   	= action.propertyCode;
 		newState.property_id    	= action.property_id;
 		newState.uid 				= action.uid;
+		newState.updateStatus 		= true;
+
 
 	}
 	if(action.type === "REDIRECT_TO_PROPERTY"){
@@ -99,6 +101,8 @@ const reducer = (state = initialState,action) => {
 		newState.ImageUpload        = false;
 		newState.property_id 	    = action.property_id;
 		newState.uid 				= action.uid;
+		newState.updateStatus 		= true;
+
 	}
 	if(action.type === "REDIRECT_TO_AMENITIES"){
 		newState.BasicInfo 	        = false;
@@ -109,8 +113,10 @@ const reducer = (state = initialState,action) => {
 		newState.Location           = false;
 		newState.CongratsPage       = false;
 		newState.ImageUpload        = false;
-		newState.property_id 	 = action.property_id;
-		newState.uid 			 = action.uid;
+		newState.property_id 	 	= action.property_id;
+		newState.uid 			 	= action.uid;
+		newState.updateStatus 		= true;
+
 
 	}
 	if(action.type === "REDIRECT_TO_FINANCIAL"){
@@ -124,6 +130,8 @@ const reducer = (state = initialState,action) => {
 		newState.ImageUpload        = false;
 		newState.property_id    = action.property_id;
 		newState.uid 			= action.uid;
+		newState.updateStatus 		= true;
+
 
 	}
 	if(action.type === "REDIRECT_TO_AVAILABILITY"){
@@ -137,6 +145,8 @@ const reducer = (state = initialState,action) => {
 		newState.ImageUpload        = false;
 		newState.property_id        = action.property_id;
 		newState.uid 				= action.uid;
+		newState.updateStatus 		= true;
+
 
 	}
 	if(action.type === "REDIRECT_TO_IMG_UPLOAD"){
@@ -150,6 +160,8 @@ const reducer = (state = initialState,action) => {
 		newState.ImageUpload        = true;
 		newState.property_id       = action.property_id;
 		newState.uid 			   = action.uid;
+		newState.updateStatus 		= true;
+
 
 	}
 	if(action.type === "REDIRECT_TO_CONGRATS_PAGE"){
@@ -184,6 +196,10 @@ const reducer = (state = initialState,action) => {
 		newState.Availability     = false;
 		newState.Location         = false;
 		newState.ImageUpload 	  = false;
+		newState.property_id 	  = action.property_id;
+		newState.uid 			  = action.uid;
+		newState.updateStatus 	  = true;
+
 	}
 	if(action.type === "BACK_TO_LOCATION"){
 		newState.BasicInfo 	    	= false;
@@ -193,6 +209,9 @@ const reducer = (state = initialState,action) => {
 		newState.Availability   	= false;
 		newState.Location   		= true;
 		newState.ImageUpload 	    = false;
+		newState.property_id 	  	= action.property_id;
+		newState.uid 			  	= action.uid;
+		newState.updateStatus 	  	= true;
 	}
 	if(action.type === "BACK_TO_PROPERTY_DETAILS"){
 		newState.BasicInfo 	    	= false;
@@ -202,6 +221,9 @@ const reducer = (state = initialState,action) => {
 		newState.Availability   	= false;
 		newState.Location   		= false;
 		newState.ImageUpload 	    = false;
+		newState.property_id 	  	= action.property_id;
+		newState.uid 			  	= action.uid;
+		newState.updateStatus 	  	= true;
 	}
 	if(action.type === "BACK_TO_AMENITIES"){
 		newState.BasicInfo 	    	= false;
@@ -211,6 +233,9 @@ const reducer = (state = initialState,action) => {
 		newState.Availability   	= false;
 		newState.Location   		= false;
 		newState.ImageUpload 	    = false;
+		newState.property_id 	  	= action.property_id;
+		newState.uid 			  	= action.uid;
+		newState.updateStatus 	  	= true;
 	}
 	if(action.type === "BACK_TO_FINANCIALS"){
 		newState.BasicInfo 	    	= false;
@@ -220,6 +245,9 @@ const reducer = (state = initialState,action) => {
 		newState.Availability   	= false;
 		newState.Location   		= false;
 		newState.ImageUpload 	    = false;
+		newState.property_id 	  	= action.property_id;
+		newState.uid 			  	= action.uid;
+		newState.updateStatus 	  	= true;
 	}
 	if(action.type === "BACK_TO_AVAILABILITY"){
 		newState.BasicInfo 	    	= false;
@@ -229,6 +257,9 @@ const reducer = (state = initialState,action) => {
 		newState.Availability   	= true;
 		newState.Location   		= false;
 		newState.ImageUpload 	    = false;
+		newState.property_id 	  	= action.property_id;
+		newState.uid 			  	= action.uid;
+		newState.updateStatus 	  	= true;
 	}
 
 	if(action.type === "SET_FORM_TITLE"){
@@ -248,7 +279,7 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "ALREADY_LOGGEDIN"){
 		newState.originPage  		= action.originPage;
 		newState.uid  				= action.uid;
-		newState.prop_id  			= action.prop_id;
+		newState.property_id  		= action.property_id;
 		newState.LoginMobNum 		= false;
 		newState.LoginOtp    		= false;
 		newState.WebSignupForm  	= false;
@@ -260,6 +291,8 @@ const reducer = (state = initialState,action) => {
 		newState.Location           = false;
 		newState.CongratsPage       = false;
 		newState.ImageUpload        = false;
+		newState.updateStatus 		= true;
+		
 	}
 
 	if(action.type === "LOGIN_ME"){

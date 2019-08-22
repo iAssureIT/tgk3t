@@ -60,6 +60,23 @@
 /*.hr_border1{
   margin-bottom: 30px !important;
 }*/
+.padd0{
+  padding: 0px;
+}
+.borderClass{
+  border:1px solid #666;
+}
+.upperbox{
+   font-size: 16px;
+   padding: 3px;
+}
+.sideBorder{
+  border-left: 1px solid #666;
+  border-right: 1px solid #666;
+}
+.borderBtm{
+  border-bottom: 1px solid #666;
+}
 .FF4I{
   
   border-right: 1px solid #000;
@@ -70,10 +87,10 @@
   padding: 5px;
 }
 .FF4I1{
-  border: 1px solid #000;
+ /* border: 1px solid #000;*/
   text-align: center;
   font-size: 16px;
-  height: 320px;
+ /* height: 320px;*/
 }
 .left{
   padding-left: 5px;

@@ -69,6 +69,7 @@ class SearchResults extends Component {
 						var propPresent = this.state.propertySubType.find((obj)=>{
 							return item.name === obj
 						})
+						console.log("here propPresent ",propPresent);
 						var newObj = Object.assign({},item);
 						if(propPresent){
 							newObj.checked = true
@@ -80,6 +81,9 @@ class SearchResults extends Component {
 
 					this.setState({
 						propertySubTypeList : propertySubTypeList,
+					},()=>{
+						console.log("here propertySubTypeList in didmount",this.state.propertySubTypeList);
+
 					});
 
 					var budgetL = [];
@@ -566,6 +570,8 @@ class SearchResults extends Component {
 			}
 			this.setState({
 				propertySubTypeList : propertySubTypeList,
+			},()=>{
+				console.log("here propertySubTypeList in function check ", this.state.propertySubTypeList);
 			});
 		}else{
 			checkedPropSubType = event.target.getAttribute('value');
@@ -579,6 +585,9 @@ class SearchResults extends Component {
 			}
 			this.setState({
 				propertySubTypeList : propertySubTypeList,
+			},()=>{
+				console.log("here propertySubTypeList in function uncheck ", this.state.propertySubTypeList);
+
 			});
 		}
 

@@ -28,6 +28,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		constructor(props){
 			super(props);
 			this.state = {
+				originalValues      : '',
 				contactPersonMobile :"",
 				contactPerson       : "Someone",
 				available           :[],
@@ -36,39 +37,125 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					clientMobile : " ",
 				
 				},
+
+				updateOperation   : false,
+
 			};
    			
+   			console.log("this.props.updateStatus",this.props.updateStatus);
+			console.log("this.props.property_id",this.props.property_id);
+			if(this.props.updateStatus === true){
+
+	        	axios
+					.get('/api/properties/'+this.props.property_id)
+					.then( (response) =>{
+						console.log("response= ",response);
+						
+						this.setState({
+								originalValues 				: response.data.avalibilityPlanVisit,
+								contactPersonMobile 		: response.data.avalibilityPlanVisit.contactPersonMobile,
+								contactPerson 				: response.data.avalibilityPlanVisit.contactPerson,
+								available 					: response.data.avalibilityPlanVisit.available,
+								updateOperation 			: true,
+
+						 
+						},()=>{
+							});
+
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+
+        	}
 
 		}
 		insertAvailability(event){
 			event.preventDefault();
-			const formValues = {
+
+			if(this.state.updateOperation === true){
+				console.log("update fun");
+				var ov = this.state.originalValues;
+				console.log("this.state.available",this.state.available);
+				console.log("ov.available",ov.available);
+				console.log("this.state.contactPersonMobile",this.state.contactPersonMobile);
+				console.log("ov.contactPersonMobile",ov.contactPersonMobile);
+				console.log("this.state.contactPerson",this.state.contactPerson);
+				console.log("ov.contactPerson",ov.contactPerson);
+				
+				if(this.state.contactPersonMobile === ov.contactPersonMobile && this.state.contactPerson === ov.contactPerson
+				&& this.state.available === ov.available){
+							console.log("same data");
+							this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
+
+				}else{
+
+					console.log("diff data");
+					const formValues = {
+					"contactPersonMobile" : this.state.contactPersonMobile,
+	        		"contactPerson"       : this.state.contactPerson,
+					"property_id" 		  : localStorage.getItem("propertyId"),
+					"uid" 				  : localStorage.getItem("uid"),
+					"available"			  : this.state.available
+					};
+					console.log("Availability req = ",formValues);
+				    if(this.state.available!==""){
+				    		
+						axios
+						.patch('/api/properties/patch/availabilityPlan',formValues)
+						.then( (res) =>{
+							console.log("availabilityPlan",res);
+							if(res.status === 200){
+								/*swal("wow","great job done!","success");*/
+								this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
+
+							}
+						})
+						.catch((error) =>{
+							console.log("error = ", error);
+						});
+					}else{
+						swal("Please enter mandatory fields", "", "warning");
+			        	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+					}
+					
+
+				}
+
+
+			}else{
+				console.log("insert fun");
+
+				const formValues = {
 				"contactPersonMobile" : this.state.contactPersonMobile,
         		"contactPerson"       : this.state.contactPerson,
 				"property_id" 		  : localStorage.getItem("propertyId"),
 				"uid" 				  : localStorage.getItem("uid"),
 				"available"			  : this.state.available
-			};
-			console.log("Availability req = ",formValues);
-		    if(this.state.available!==""){
-		    		
-				axios
-				.patch('/api/properties/patch/availabilityPlan',formValues)
-				.then( (res) =>{
-					console.log("availabilityPlan",res);
-					if(res.status === 200){
-						/*swal("wow","great job done!","success");*/
-						this.props.redirectToImageUpload(this.props.uid);
+				};
+				console.log("Availability req = ",formValues);
+			    if(this.state.available!==""){
+			    		
+					axios
+					.patch('/api/properties/patch/availabilityPlan',formValues)
+					.then( (res) =>{
+						console.log("availabilityPlan",res);
+						if(res.status === 200){
+							/*swal("wow","great job done!","success");*/
+							this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
 
-					}
-				})
-				.catch((error) =>{
-					console.log("error = ", error);
-				});
-			}else{
-				swal("Please enter mandatory fields", "", "warning");
-	        	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+						}
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+				}else{
+					swal("Please enter mandatory fields", "", "warning");
+		        	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				}
+
 			}
+			
 		    
 			
 		}
@@ -90,7 +177,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
       }
 
       backToFinancials(){
-		this.props.backToFinancials();
+		// this.props.backToFinancials();
+		this.props.backToFinancials(this.props.uid,localStorage.getItem("propertyId"));
+
 	}
 	handleAvailability(event){
 		event.preventDefault();
@@ -193,7 +282,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		}
 
 	render() {
-		const availableMobile = localStorage.getItem("availableMobile");
+		const availableMobile = localStorage.getItem("availableMobile")!= null ? localStorage.getItem("availableMobile") : "";
    			console.log("availableMobile",availableMobile);
    	    const {formerrors} = this.state;
 
@@ -359,9 +448,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			</div>
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
-		  	{/*<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+		  	{<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
 		       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23" onClick={this.backToFinancials.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
-		  	</div>*/}
+		  	</div>}
 		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
 		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23"  onClick={this.insertAvailability.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 		  	</div>
@@ -380,17 +469,21 @@ const mapStateToProps = (state)=>{
 		property_id     : state.property_id,
 		uid			    : state.uid,
 		availableMobile : state.availableMobile,
+		updateStatus    : state.updateStatus,		
 
 
 	}
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		backToFinancials  	        : ()=> dispatch({type: "BACK_TO_FINANCIALS"
+		backToFinancials  	        : (uid,property_id)=> dispatch({type: "BACK_TO_FINANCIALS",
+																	uid:  uid,
+																	property_id:property_id
 														
 	}),
-		redirectToImageUpload       : (uid)=> dispatch({type: "REDIRECT_TO_IMG_UPLOAD",
-														uid:  uid
+		redirectToImageUpload       : (uid,property_id)=> dispatch({type: "REDIRECT_TO_IMG_UPLOAD",
+														uid:  uid,
+														property_id:property_id
 	}),
 
 

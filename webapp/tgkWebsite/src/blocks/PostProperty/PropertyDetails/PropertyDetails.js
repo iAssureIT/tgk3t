@@ -12,56 +12,146 @@ import './PropertyDetails.css';
 		constructor(props){
 			super(props);
 			this.state = {
+				originalValues    : '',
 				furnishedStatus   : '',
 				personal 		  : '',
 				bedrooms 		  : '',
 				balconies 		  : '',
 				bathrooms 		  : '',
 				pantry 			  : '',
-				washrooms    	  : ''
+				washrooms    	  : '',
+				updateOperation   : false,
 			};
 			this.radioChange  = this.radioChange.bind(this);
 			this.radioChange1 = this.radioChange1.bind(this);
 			this.radioChange2 = this.radioChange2.bind(this);
+
+			// console.log("this.props.updateStatus",this.props.updateStatus);
+			// console.log("this.props.property_id",this.props.property_id);
+			if(this.props.updateStatus === true){
+
+	        	axios
+					.get('/api/properties/'+this.props.property_id)
+					.then( (response) =>{
+						console.log("get property in property = ",response);
+
+						this.setState({
+								originalValues  : response.data.propertyDetails,
+								bedrooms 		: response.data.propertyDetails.bedrooms,
+						    	balconies 		: response.data.propertyDetails.balconies,
+						    	washrooms 		: response.data.propertyDetails.washrooms,
+						    	furnishedstatus : response.data.propertyDetails.furnishedStatus,
+						    	personal 		: response.data.propertyDetails.personal,
+						    	pantry 			: response.data.propertyDetails.pantry,
+								bathrooms     	: response.data.propertyDetails.bathrooms,
+								ageofproperty 	: response.data.propertyDetails.ageofProperty,
+								facing 			: response.data.propertyDetails.facing,
+								superArea 		: response.data.propertyDetails.superArea,
+								builtupArea 	: response.data.propertyDetails.builtupArea,
+								updateOperation : true,
+
+							});
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+
+        	}
 		}
 
 		updateUser(event){
 			event.preventDefault();
-			const formValues = {
-				"bedrooms" 			: this.state.bedrooms,
-				"balconies" 		: this.state.balconies,
-				"washrooms" 		: this.state.washrooms,
-				"furnishedStatus"   : this.state.furnishedstatus,
-				"personal"		    : this.state.personal,
-				"pantry"		    : this.state.pantry,
-				"bathrooms" 		: this.state.bathrooms,
-				"ageofProperty" 	: this.refs.ageofproperty.value,
-				"facing" 			: this.refs.facing.value,
-				"superArea" 		: this.refs.superArea.value,
-				"builtupArea" 		: this.refs.builtupArea.value,
-				"property_id" 		: localStorage.getItem("propertyId"),
-				"uid" 				: localStorage.getItem("uid"),
 
-			};
-			console.log("PropertyDetails req = ",formValues);
-			if( this.state.furnishedstatus!="" &&  this.refs.builtupArea.value!="" )
-			{
-				axios
-				.patch('/api/properties/patch/propertyDetails',formValues)
-				.then( (res) =>{
-					console.log(res);
-					if(res.status === 200){
-						console.log("PropertyDetails Res = ",res);
-						this.props.redirectToAmenities(this.props.uid);
-					}
-				})
-				.catch((error) =>{
-					console.log("error = ", error);
-				});
+			if(this.state.updateOperation === true){
+				console.log("update fun");
+				var ov = this.state.originalValues;
+				if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
+					this.state.furnishedstatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
+					 this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing 
+					 && this.state.superArea === ov.superArea && this.state.builtupArea === ov.builtupArea)
+				{
+						console.log("same data");
+						this.props.redirectToAmenities(this.props.uid,this.props.property_id);
+				}else{
+
+					console.log("diff data");
+					const formValues = {
+					"bedrooms" 			: this.state.bedrooms,
+					"balconies" 		: this.state.balconies,
+					"washrooms" 		: this.state.washrooms,
+					"furnishedStatus"   : this.state.furnishedstatus,
+					"personal"		    : this.state.personal,
+					"pantry"		    : this.state.pantry,
+					"bathrooms" 		: this.state.bathrooms,
+					"ageofProperty" 	: this.state.ageofproperty,
+					"facing" 			: this.state.facing,
+					"superArea" 		: this.state.superArea,
+					"builtupArea" 		: this.state.builtupArea,
+					"property_id" 		: localStorage.getItem("propertyId"),
+					"uid" 				: localStorage.getItem("uid"),
+				};
+				console.log("PropertyDetails req = ",formValues);
+				if( this.state.furnishedstatus!="" &&  this.refs.builtupArea.value!="" ){
+					axios
+					.patch('/api/properties/patch/propertyDetails',formValues)
+					.then( (res) =>{
+						console.log(res);
+						if(res.status === 200){
+							console.log("PropertyDetails Res = ",res);
+							this.props.redirectToAmenities(this.props.uid,this.props.property_id);
+						}
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+				}else{
+					swal("Please enter mandatory fields", "", "warning");
+	              	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				}
+
+
+				}
 			}else{
-				swal("Please enter mandatory fields", "", "warning");
-              	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				console.log("submit fun");
+
+					const formValues = {
+					"bedrooms" 			: this.state.bedrooms,
+					"balconies" 		: this.state.balconies,
+					"washrooms" 		: this.state.washrooms,
+					"furnishedStatus"   : this.state.furnishedstatus,
+					"personal"		    : this.state.personal,
+					"pantry"		    : this.state.pantry,
+					"bathrooms" 		: this.state.bathrooms,
+					"ageofProperty" 	: this.state.ageofproperty,
+					"facing" 			: this.state.facing,
+					"superArea" 		: this.state.superArea,
+					"builtupArea" 		: this.state.builtupArea,
+					"property_id" 		: localStorage.getItem("propertyId"),
+					"uid" 				: localStorage.getItem("uid"),
+				};
+				console.log("PropertyDetails req = ",formValues);
+				if( this.state.furnishedstatus!="" &&  this.refs.builtupArea.value!="" ){
+					axios
+					.patch('/api/properties/patch/propertyDetails',formValues)
+					.then( (res) =>{
+						console.log(res);
+						if(res.status === 200){
+							console.log("PropertyDetails Res = ",res);
+							this.props.redirectToAmenities(this.props.uid,this.props.property_id);
+						}
+					})
+					.catch((error) =>{
+						console.log("error = ", error);
+					});
+				}else{
+					swal("Please enter mandatory fields", "", "warning");
+	              	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				}
+
+
 			}
+
+			
 			
 		}
 
@@ -83,7 +173,10 @@ import './PropertyDetails.css';
 		 }
 
 		backToLocation(){
-			this.props.backToLocation();
+			// this.props.backToLocation();
+			this.props.backToLocation(this.props.uid,localStorage.getItem("propertyId"));
+
+
 		}
 
 		builtArea(){
@@ -301,7 +394,7 @@ import './PropertyDetails.css';
 								      	<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-building iconClr"></i>
 					                    </div>
-										<select className="custom-select form-control "  ref="ageofproperty" placeholder="select" >
+										<select className="custom-select form-control " name="ageofproperty" ref="ageofproperty" placeholder="select" value={this.state.ageofproperty} onChange={this.handleChange.bind(this)} >
 									    	<option value="" className="hidden">--Property Age--</option>
 									    	<option value="Under Construction">Under Construction</option>
 									    	<option value="New">New(Less than a year)</option>
@@ -320,7 +413,7 @@ import './PropertyDetails.css';
 								      	<div className="input-group-addon inputIcon">
 					                     <i className="fa fa-building iconClr"></i>
 					                    </div>
-										<select className="custom-select form-control "  ref="facing" placeholder="select" >
+										<select className="custom-select form-control " name="facing" ref="facing" value={this.state.facing} placeholder="select" onChange={this.handleChange.bind(this)} >
 									    	<option value="" className="hidden">--Select property facing--</option>
 									    	<option value="East" >    East</option>
 									    	<option value="West" >    West</option>
@@ -343,7 +436,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-building iconClr"></i>
 				                    </div>
-						    			<input type="number" className="form-control" ref="superArea" placeholder="Super Area" min="0" max="20000" id="first" />	
+						    			<input type="number" className="form-control" name="superArea" value={this.state.superArea} ref="superArea" placeholder="Super Area" min="0" max="20000" id="first" onChange={this.handleChange.bind(this)}/>	
 						  			<div className="input-group-addon inputIcon">
 				                     Sq ft
 				                    </div>
@@ -358,7 +451,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-building iconClr"></i>
 				                    </div>
-							    	<input type="number" className="form-control" ref="builtupArea" name="" placeholder="Built Up Area" min="0" max="20000" id="second" onBlur={this.builtArea.bind(this)}/>
+							    	<input type="number" className="form-control" ref="builtupArea" name="builtupArea" value={this.state.builtupArea}  onChange={this.handleChange.bind(this)} placeholder="Built Up Area" min="0" max="20000" id="second" onBlur={this.builtArea.bind(this)}/>
 							  		<div className="input-group-addon inputIcon">
 				                     Sq ft
 				                    </div>
@@ -368,9 +461,12 @@ import './PropertyDetails.css';
 				 	</div>
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
 					  	
-					  	{/*<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
-					       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 " onClick={this.backToLocation.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
-					  	</div>*/}
+					  	{
+					  		<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+					       		<button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 " onClick={this.backToLocation.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
+					  		</div>
+					  	
+					  	}
 					  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right ">
 					       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 					  	</div>
@@ -388,14 +484,20 @@ const mapStateToProps = (state)=>{
 		uid			    : state.uid,
 		propertyType	: state.propertyType,
 		transactionType	: state.transactionType,
+		updateStatus    : state.updateStatus,		
+
 	}
 };
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		redirectToAmenities : (uid)=> dispatch({type: "REDIRECT_TO_AMENITIES",
-											 uid:  uid	
+		redirectToAmenities : (uid,property_id)=> dispatch({type: "REDIRECT_TO_AMENITIES",
+											 uid:  uid,
+											 property_id : property_id	
 								}),
-		backToLocation  	: ()=> dispatch({type: "BACK_TO_LOCATION"}),
+		backToLocation  	: (uid,property_id)=> dispatch({type: "BACK_TO_LOCATION",
+											 uid:  uid,
+											 property_id : property_id	
+								}),
 	}
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(PropertyDetails));

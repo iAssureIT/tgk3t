@@ -1,7 +1,10 @@
 .asterisk1{
   color: #f00;
 }
-
+.marTopBtm{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 /*add this class next to form-control*/
 .inputBox{
   font-family:'Montserrat',sans-serif;

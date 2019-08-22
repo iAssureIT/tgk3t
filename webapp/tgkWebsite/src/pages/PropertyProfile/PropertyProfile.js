@@ -63,7 +63,9 @@ class PropertyProfile extends Component{
       "prop_id"           : "",
       "floor"             : "",
       "totalFloor"        : "",
-      convertTotalPrice   : "",
+      "convertTotalPrice" : "",
+      "ownerId"           : "",
+
     }
   }
 
@@ -91,7 +93,7 @@ class PropertyProfile extends Component{
     .get('http://qatgk3tapi.iassureit.com/api/properties/'+this.state.profileId)
     .then(
       (res)=>{
-        console.log(res);
+        console.log("resposnse",res);
         const postsdata = res.data;
         this.setState({
           prop_id             : postsdata._id,
@@ -103,7 +105,8 @@ class PropertyProfile extends Component{
           propertyLocation    : postsdata.propertyLocation,
           transactionType     : postsdata.transactionType,
           propertyType        : postsdata.propertyType,  
-          floor               : postsdata.floor,         
+          floor               : postsdata.floor, 
+          ownerId             : postsdata.owner_id,        
           totalFloor          : postsdata.totalFloor ,
           propertySubType     : postsdata.propertySubType         
         },()=>{
@@ -200,9 +203,14 @@ class PropertyProfile extends Component{
                             </div>
                         </div>
                       </div>
+
+                     { localStorage.getItem("uid") === this.state.ownerId ?
                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
                         <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Edit Property </button> 
                       </div>
+                      :
+                      null
+                      }
                     </div>
                   </div>
                 </div>
@@ -223,14 +231,14 @@ class PropertyProfile extends Component{
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty" >
                           {this.state.propertyImages[0] ?
-                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[0]} />
+                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[0].imgPath} />
                             :
                             <img src="/images/loading_img.jpg" className="col-lg-12 noPad"/>
                           }
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
                             {this.state.propertyImages[1] ?
-                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[1]} />
+                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[1].imgPath} />
                             :
                             <img src="/images/loading_img.jpg" className="col-lg-12 noPad" />
                           }
@@ -260,7 +268,7 @@ class PropertyProfile extends Component{
                             return(
 
                                   <div key={index}  >
-                                      <img className="item" src={propertyImages} />
+                                      <img className="item" src={propertyImages.imgPath} />
                                   </div>                    
                               )
                             })
@@ -543,7 +551,7 @@ const mapDispatchToProps = (dispatch)=>{
                           formTitle : formTitle,
                         }),
     login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
-    already_loggedIn : (originPage,uid,prop_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, prop_id:prop_id}),
+    already_loggedIn : (originPage,uid,property_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, property_id:property_id}),
 
   }
 };
