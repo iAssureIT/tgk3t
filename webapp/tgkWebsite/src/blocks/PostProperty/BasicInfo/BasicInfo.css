@@ -173,6 +173,15 @@
 .ownerLeft{
   padding-left:1%; 
 }
+#radio-example1{
+  cursor: pointer;
+}
+#radio-example2{
+  cursor: pointer;
+}
+#radio-example3{
+  cursor: pointer;
+}
  
 /*******************************************************************************************************
 /*************************************************************************************
@@ -398,6 +407,7 @@
   flex: 0 0 120px;
   font-weight: 800;
   border-radius: 60px;
+  cursor: pointer;
 }
 .can-toggle.demo-rebrand-2 label .can-toggle__switch:before {
   font-size: 13px;

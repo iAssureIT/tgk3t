@@ -6,6 +6,9 @@
 .mt10{
 	margin-top: 10px;
 }
+.ml17{
+    margin-left: 17px;
+}
 
 .mt30{
 	margin-top: 30px;
@@ -153,8 +156,11 @@
     cursor: pointer;
     text-align: center;
 }
-
-
+.fontHP{
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif !important;
+}
 
 
 

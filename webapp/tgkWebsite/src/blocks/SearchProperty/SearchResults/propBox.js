@@ -33,6 +33,10 @@ class propBox extends React.Component {
 
 	    ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
 
+	    : Math.abs(Number(totalPrice)) >= 1.0e+3
+
+	    ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+
 	    : Math.abs(Number(totalPrice));
 	  }
 
@@ -174,7 +178,7 @@ class propBox extends React.Component {
 											result.financial && result.financial.totalPrice? this.convertNumberToRupees(result.financial.totalPrice) : "-"
 
 										:
-											result.financial && result.financial.monthlyRent ? result.financial.monthlyRent : "-"
+											result.financial && result.financial.monthlyRent ? this.convertNumberToRupees(result.financial.monthlyRent) : "-"
 										}
 									</span>
 								</div>

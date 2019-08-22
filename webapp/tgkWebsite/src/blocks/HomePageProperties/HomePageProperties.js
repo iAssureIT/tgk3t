@@ -139,8 +139,13 @@ class HomePageProperties extends Component {
 
       ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
 
+      : Math.abs(Number(totalPrice)) >= 1.0e+3
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+
       : Math.abs(Number(totalPrice));
     }
+    
 
   login(){
     const originPage = "header" ; //This is to stop after signup... otherwise it continues to next form Basic info.
@@ -174,7 +179,7 @@ class HomePageProperties extends Component {
       				  <h3 className="textC"> <b>
                 {
                   this.state.propertiesData && this.state.propertiesData.length > 0 ?
-                  "Properties For "+this.state.propertiesData[0].transactionType
+                  this.state.propertiesData[0].transactionType === "Sell" ? "Properties For Sale" : "Properties For Rent"
                   :
                   null
 
@@ -192,16 +197,16 @@ class HomePageProperties extends Component {
                                       {property.propertySubType}
                                     </div>
                                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
-                                      FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
+                                      FOR {property.transactionType === "Sell" ? "SALE" : "RENT" }
                                     </div>
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
-                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
+                                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad fontHP" id="priceDisplay">
                                       {
                                         property.transactionType === "Sell" ?
                                         <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                         :
-                                        <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
+                                        <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.monthlyRent)}</i>
                                       }
                                       </div>
                                       {
@@ -229,7 +234,7 @@ class HomePageProperties extends Component {
                                   <div className="row">
                                     <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
                                        {
-                                        <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                        <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0].imgPath : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       }
                                     </div>
                                   </div> 
@@ -280,16 +285,16 @@ class HomePageProperties extends Component {
                                     {property.propertySubType}
                                   </div>
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
-                                    FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
+                                    FOR {property.transactionType === "Sell" ? "SALE" : "RENT" }
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
-                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
+                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad fontHP" id="priceDisplay">
                                      {
                                       property.transactionType === "Sell" ?
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                       :
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.monthlyRent)}</i>
                                     }
                                   </div>
                                       {
@@ -315,7 +320,7 @@ class HomePageProperties extends Component {
                                   </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0].imgPath : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -333,7 +338,7 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                       <Link to={"/PropertyProfile/"+property._id} target="_blank">
-                                        <button type="button" className="btn-primary btn mt30"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                        <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                       </Link>                                    
                                     </div>
                                   </div>
@@ -366,16 +371,16 @@ class HomePageProperties extends Component {
                                     {property.propertySubType}
                                   </div>
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
-                                    FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
+                                    FOR {property.transactionType === "Sell" ? "SALE" : "RENT" }
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
-                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
+                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad fontHP" id="priceDisplay">
                                      {
                                       property.transactionType === "Sell" ?
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                       :
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.monthlyRent)}</i>
                                     }
                                   </div>
                                       {
@@ -402,7 +407,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0].imgPath : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -420,7 +425,7 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                       <Link to={"/PropertyProfile/"+property._id} target="_blank">
-                                        <button type="button" className="btn-primary btn mt30"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                        <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                       </Link>                                    
                                     </div>
                                   </div>
@@ -450,16 +455,16 @@ class HomePageProperties extends Component {
                                         {property.propertySubType}
                                       </div>
                                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
-                                        FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
+                                        FOR {property.transactionType === "Sell" ? "SALE" : "RENT" }
                                       </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
-                                       <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
+                                       <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad fontHP" id="priceDisplay">
                                          {
                                           property.transactionType === "Sell" ?
                                           <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                           :
-                                          <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
+                                          <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.monthlyRent)}</i>
                                         }
                                       </div>
                                       {
@@ -486,7 +491,7 @@ class HomePageProperties extends Component {
                                     </div>
                                     <div className="row">
                                       <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                         <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                         <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0].imgPath : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                       </div>
                                     </div> 
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -504,7 +509,7 @@ class HomePageProperties extends Component {
                                       <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                         <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                           <Link to={"/PropertyProfile/"+property._id} target="_blank">
-                                            <button type="button" className="btn-primary btn mt30"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                            <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                           </Link>                                        
                                         </div>
                                       </div>
@@ -536,16 +541,16 @@ class HomePageProperties extends Component {
                                     {property.propertySubType}
                                   </div>
                                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info2" >
-                                    FOR {property.transactionType === "Sell" ? "SELL" : "RENT" }
+                                    FOR {property.transactionType === "Sell" ? "SALE" : "RENT" }
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info"> 
-                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad" id="priceDisplay">
+                                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad fontHP" id="priceDisplay">
                                     {
                                       property.transactionType === "Sell" ?
                                       <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.totalPrice)}</i>
                                       :
-                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{property.financial.monthlyRent}</i>
+                                      <i className="fa fa-inr pr8" aria-hidden="true">&nbsp;{this.convertNumberToRupees(property.financial.monthlyRent)}</i>
                                     }
                                   </div>
                                     {
@@ -572,7 +577,7 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="row">
                                   <div id=" bgImg" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad imgZoom" >
-                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0] : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
+                                     <img alt=""  src={property.gallery.Images && property.gallery.Images.length > 0 ? property.gallery.Images[0].imgPath : "/images/loading_img.jpg"} className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad imgSize zoom" />
                                   </div>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt10 row">
@@ -590,13 +595,13 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                       <Link to={"/PropertyProfile/"+property._id} target="_blank">
-                                        <button type="button" className="btn-primary btn mt30"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                        <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
                                       </Link>                                    
                                     </div>
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {

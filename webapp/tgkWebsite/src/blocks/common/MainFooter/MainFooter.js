@@ -149,14 +149,12 @@ export default class MainFooter extends Component{
     return (
       <div className="container-fluid">
         <div className="row">
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerDiv" >
-            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad footerContent" >
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerDiv noPad footerContent" >
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerContactUs" >
                 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center header">Contact Us</label>              
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 footerContactUs" >
-                  <div className="row" >
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  mt20" >
                       <div className="row">
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
@@ -191,7 +189,6 @@ export default class MainFooter extends Component{
                         </div>
                       </div>
                     </div>
-                  </div>                       
                 </div>
                 <div className="col-lg-6 col-md-10 col-sm-10 col-xs-10 footerContactUs" >
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 ml20 " >
@@ -255,7 +252,6 @@ export default class MainFooter extends Component{
                     </div>
                   </div>
                 </div>  
-              </div>
             </div>
             <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 bottomDivFooter" >
               <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 " >

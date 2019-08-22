@@ -1,8 +1,8 @@
-import React, { Component }   from 'react';
-import { Link }       from 'react-router-dom';
+import React, { Component }             from 'react';
+import { Link }                         from 'react-router-dom';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
-import axios                  from 'axios';
-import $                      from "jquery";
+import axios                            from 'axios';
+import $                                from "jquery";
 
 import "./PopularPlace.css";
 
@@ -61,73 +61,128 @@ class PopularPlaces extends Component{
 
   }
 
+//   render() {
+//     return (
+//       this.state.subAreaList.length > 0 ?
+//       <div className="container-fluid">
+//         <div className="row">
+//           <div className="formWrapper"> 
+//              <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad" >
+//               <div className="row">
+//                    <div className="col-lg-6 col-lg-offset-5 col-md-8 col-sm-8 col-xs-8 mlDotp">
+//                       <span className="dotDiv"> </span><span className="mainDiv"></span><span className="dotDivRight"> </span>
+//                     </div>
+//                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+//                   <div className="row">
+//                     <div className="headText col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Properties In Most Popular Places</div>
+//                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 imgContainer pune Sm">
+//                       <div className="row">
+//                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[0]._id} onClick={this.getSubAreaName.bind(this)}>                     
+//                           <h4>{this.state.subAreaList[0]._id}</h4>
+//                           <h4>{this.state.subAreaList[0].count} Properties</h4>
+//                         </div>
+//                       </div>
+//                     </div>
+//                     <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+//                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai marginRight pull-right Bg">
+//                          <div className="row">
+//                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1]._id} onClick={this.getSubAreaName.bind(this)}>
+//                           <h4>{this.state.subAreaList[1]._id}</h4>
+//                           <h4>{this.state.subAreaList[1].count} Properties</h4>
+//                         </div>
+//                       </div> 
+//                     </div>
+//                     </div>
+//                   </div>
+//                   </div>
+//                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mT30 noPad">
+//                   <div className="row">
+//                     <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 minusLeftM">
+//                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  imgContainer aurangabad Bg">
+//                        <div className="row">
+//                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[2]._id} onClick={this.getSubAreaName.bind(this)}>
+//                             <h4>{this.state.subAreaList[2]._id}</h4>
+//                             <h4>{this.state.subAreaList[2].count} Properties</h4>
+//                           </div>
+//                         </div> 
+//                       </div>
+//                     </div>
+//                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
+//                         <div className="row">
+//                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik marginRight pull-right Sm">
+//                             <div className="row">
+//                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3]._id} onClick={this.getSubAreaName.bind(this)}>
+//                                 <h4>{this.state.subAreaList[3]._id}</h4>
+//                                 <h4>{this.state.subAreaList[3].count} Properties</h4>
+//                               </div>
+//                             </div> 
+//                           </div>
+//                         </div>           
+//                       </div>
+//                     </div>
+//                   </div>
+//                  </div> 
+//               </div>
+//             </div>
+//         </div>
+//         <div className="row">
+//           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 hrLineD"></div>
+//         </div>
+//       </div>
+//       :
+//       null
+//     );
+//   }
+// }
   render() {
     return (
       this.state.subAreaList.length > 0 ?
       <div className="container-fluid">
-        <div className="row">
-          <div className="formWrapper"> 
              <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad" >
-              <div className="row">
-                   <div className="col-lg-6 col-lg-offset-5 col-md-8 col-sm-8 col-xs-8 mlDotp">
-                      <span className="dotDiv"> </span><span className="mainDiv"></span><span className="dotDivRight"> </span>
-                    </div>
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                  <div className="row">
                     <div className="headText col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Properties In Most Popular Places</div>
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 imgContainer pune Sm">
-                      <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[0]._id} onClick={this.getSubAreaName.bind(this)}>                     
-                          <h4>{this.state.subAreaList[0]._id}</h4>
-                          <h4>{this.state.subAreaList[0].count} Properties</h4>
+                      <div className="">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[0]?this.state.subAreaList[0]._id:null} onClick={this.getSubAreaName.bind(this)}>                     
+                          <h4>{this.state.subAreaList[0]?this.state.subAreaList[0]._id:null}</h4>
+                          <h4>{this.state.subAreaList[0]?this.state.subAreaList[0].count:null} Properties</h4>
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 row  ">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai marginRight pull-right Bg">
-                         <div className="row">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1]._id} onClick={this.getSubAreaName.bind(this)}>
-                          <h4>{this.state.subAreaList[1]._id}</h4>
-                          <h4>{this.state.subAreaList[1].count} Properties</h4>
+                         <div className="">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
+                          <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
+                          <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} Properties</h4>
                         </div>
                       </div> 
                     </div>
                     </div>
-                  </div>
-                  </div>
                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mT30 noPad">
-                  <div className="row">
-                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 minusLeftM">
+                    <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  imgContainer aurangabad Bg">
-                       <div className="row">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[2]._id} onClick={this.getSubAreaName.bind(this)}>
-                            <h4>{this.state.subAreaList[2]._id}</h4>
-                            <h4>{this.state.subAreaList[2].count} Properties</h4>
+                       <div className="">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[2] ? this.state.subAreaList[2]._id:null} onClick={this.getSubAreaName.bind(this)}>
+                            <h4>{this.state.subAreaList[2] ? this.state.subAreaList[2]._id:null}</h4>
+                            <h4>{this.state.subAreaList[2] ? this.state.subAreaList[2].count:null} Properties</h4>
                           </div>
                         </div> 
                       </div>
                     </div>
                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
-                        <div className="row">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik marginRight pull-right Sm">
-                            <div className="row">
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3]._id} onClick={this.getSubAreaName.bind(this)}>
-                                <h4>{this.state.subAreaList[3]._id}</h4>
-                                <h4>{this.state.subAreaList[3].count} Properties</h4>
+                        <div className="">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik  pull-right Sm">
+                            <div className="">
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
+                                <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3]._id : null}</h4>
+                                <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} Properties</h4>
                               </div>
                             </div> 
                           </div>
                         </div>           
                       </div>
-                    </div>
                   </div>
-                 </div> 
               </div>
-            </div>
-        </div>
-        <div className="row">
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 hrLineD"></div>
-        </div>
       </div>
       :
       null

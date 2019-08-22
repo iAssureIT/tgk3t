@@ -25,6 +25,9 @@
 .back_btn:hover{
   color: #666;
 }
+.actionDiv{
+  cursor: pointer;
+}
 
 /**********************/
 /*input icon*/
@@ -287,6 +290,7 @@
   flex: 0 0 140px;
   font-weight: 800;
   border-radius: 60px;
+  cursor: pointer;
 }
 .can-toggle1.demo-rebrand-2 label .can-toggle1__switch:before {
   font-size: 13px;

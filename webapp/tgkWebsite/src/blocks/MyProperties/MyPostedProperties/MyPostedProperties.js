@@ -122,6 +122,10 @@ import './MyPostedProperties.css';
 
       ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
 
+      : Math.abs(Number(totalPrice)) >= 1.0e+3
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+
       : Math.abs(Number(totalPrice));
     }
 
@@ -197,7 +201,7 @@ import './MyPostedProperties.css';
 												:
 												myProperty.financial && myProperty.financial.monthlyRent ?
 												<span>
-													{myProperty.financial.monthlyRent}
+													{this.convertNumberToRupees(myProperty.financial.monthlyRent)}
 												</span>
 												:
 												"-"

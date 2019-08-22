@@ -7,6 +7,7 @@ import $	from 'jquery';
 
 import './Financials.css';
 
+
 class Financials extends Component{
 
   constructor(props){
@@ -26,7 +27,7 @@ class Financials extends Component{
                           {name:"Club House",checked: false},
                         ],
       prevCharges     : "",
-      maintenancePer  : "month",
+      maintenancePer  : "Month",
       maintenanceCharges : "0",
 
 
@@ -574,6 +575,7 @@ return (
   </div>
 );
 }
+
 }
 const mapStateToProps = (state)=>{
   return {
