@@ -381,8 +381,8 @@ import './Amenities.css';
 		  	 	</div>
 		  	 </div>*/}
 		  	 <div className="col-lg-12  col-md-10 col-sm-12 col-xs-12 mt40 borderClass padd0">
-		  	 	<div className="col-lg-12  borderBtm padd0">
-		  	 		<span className="col-lg-6 upperbox pull-left"><b>All Amenities</b></span>
+		  	 	<div className="col-lg-12  borderBtm padd0 AmeniCenter">
+		  	 		<b>All Amenities</b>
 		  	 		{/*<div className="col-lg-6 FF4I"><b>External</b></div>*/}
 		  	 	</div>
 
@@ -405,7 +405,7 @@ import './Amenities.css';
 										      		 />
 											 <span className="checkmark pull-left"></span>
 											 <span className="Ameni1"><i className="fa fa-flag" aria-hidden="true"></i></span>
-											 <span >  {data.amenity} </span>
+											 <span className="AmeniName">  {data.amenity} </span>
 									
 										</label>
 		  	 						</div>

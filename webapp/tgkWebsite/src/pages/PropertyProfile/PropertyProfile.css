@@ -28,22 +28,20 @@
 }
 .backButton{
     height: 45px;
-    margin-top: 28px;
+    margin-top: 18px;
     padding: 0px;
     padding-left: 22%;
     padding-top: 12px;
-    background-color: #eaeaea;
+    /*background-color: #eaeaea;*/
 }
 .descriptionWrap{
   overflow-wrap: break-word;
 }
 .backButton img{
-	height: 15px;
-	filter: invert(71%);
+	height: 36px;
+	/*filter: invert(71%);*/
 }
-.backButton:hover{
-	cursor: pointer;
-}
+
 .addressOfProperty{
   font-family: 'Roboto', sans-serif;
 	margin-top: 28px;
@@ -69,9 +67,9 @@
     font-size: 17px;
     color: #fff;
 }
-.forSaleButton:hover{
+/*.forSaleButton:hover{
 	cursor: pointer;
-}
+}*/
 .height2000{
     height: 2110px;
 

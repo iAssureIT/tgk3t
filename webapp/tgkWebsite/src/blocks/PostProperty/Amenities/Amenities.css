@@ -88,7 +88,7 @@
 }
 .FF4I1{
  /* border: 1px solid #000;*/
-  text-align: center;
+  /*text-align: center;*/
   font-size: 16px;
  /* height: 320px;*/
 }
@@ -236,7 +236,17 @@
 
 .Ameni1{
     position: relative;
-    right: 6px;
+    left: 117px;
+}
+.AmeniName{
+    position: relative;
+    left: 129px;
+    font-weight: 100;
+    font-size: 16px;
+}
+.AmeniCenter{
+  text-align: center;
+  font-size: 21px;
 }
 .Ameni2{
     position: relative;

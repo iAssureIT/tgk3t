@@ -150,6 +150,18 @@ $('#depositAmount').keyup(function(event) {
   });
 });
 
+$('#maintenanceCharges').keyup(function(event) {
+  // skip for arrow keys
+  if(event.which >= 37 && event.which <= 40) return;
+  // format number
+  $(this).val(function(index, value) {
+    return value
+    .replace(/\D/g, "")
+    .replace(/\B(?=(\d{3})+(?!\d))/g,",")
+    ;
+  });
+});
+
 var today = new Date().toISOString().split('T')[0];
     document.getElementsByName("availableFrom")[0].setAttribute('min', today);
 }
@@ -194,6 +206,7 @@ updateUser(event){
 
         };
 
+        console.log("Financials formValues",formValues);
          axios
         .patch('/api/properties/patch/financials',formValues)
         .then( (res) =>{
@@ -440,7 +453,7 @@ return (
           {this.state.includeCharges && this.state.includeCharges.length > 0 ?
             this.state.includeCharges.map((data,index)=>{
               return (
-                    <div className="col-lg-6 marTopBtm">
+                    <div className="col-lg-6 marTopBtm" key={index}>
                       
                       <label className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
                       <input type="checkbox"
@@ -515,7 +528,7 @@ return (
                                      <i className="fa fa-rupee iconClr"></i>
                                     </div>
                       {/*<span className="asterisk">*</span>*/}
-                      <input type="number" className="form-control" ref="maintenanceCharges" name="maintenanceCharges" value={this.state.maintenanceCharges} onChange={this.handleChange.bind(this)} id="" placeholder="Maintenance Charge" min="0" defaultValue="0"/>
+                      <input type="" className="form-control" ref="maintenanceCharges" name="maintenanceCharges" value={this.state.maintenanceCharges} onChange={this.handleChange.bind(this)} id="maintenanceCharges" placeholder="Maintenance Charge" min="0" />
                     </div>
                   </div>
                 </div>

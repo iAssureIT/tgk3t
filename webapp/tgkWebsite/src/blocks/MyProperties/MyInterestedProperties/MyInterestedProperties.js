@@ -159,7 +159,7 @@ import './MyInterestedProperties.css';
 									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
 									{
 										myProperty && myProperty.gallery && myProperty.gallery.Images && myProperty.gallery.Images.length > 0 ?
-										<img alt=""  className="propertyImgDiv" src={myProperty.gallery.Images[0]} />
+										<img alt=""  className="propertyImgDiv" src={myProperty.gallery.Images[0].imgPath} />
 										:
 										<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
 									}

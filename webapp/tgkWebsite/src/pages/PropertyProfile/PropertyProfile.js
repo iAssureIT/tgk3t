@@ -184,7 +184,7 @@ class PropertyProfile extends Component{
                     <div className="row">
                       <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
                         <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 backButton">
-                          <img src="/images/back.png"/>
+                          <img src="/images/profilePic.png"/>
                         </div>
                       </div>
                       <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 row" >

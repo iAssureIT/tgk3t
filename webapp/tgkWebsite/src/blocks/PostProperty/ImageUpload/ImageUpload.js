@@ -4,6 +4,8 @@ import { connect } 				from 'react-redux';
 import { withRouter}            from 'react-router-dom';
 import swal 					from 'sweetalert';
 import S3FileUpload 			from 'react-s3';
+import Loader 					from 'react-loader-spinner'
+import $ 						from 'jquery';
 /**/
 // import "bootstrap/dist/css/bootstrap.min.css";
 import './ImageUpload.css';
@@ -26,7 +28,9 @@ var imgTitleArray = [];
 			"imgArrayWSaws" 	: [],
 			"singleVideo" 		: "",
 			"updateOperation"   : false,
+			isLoading			: true,
 			originalValues      : '',
+			tempLoader 			: false,
 
 
 		}
@@ -145,8 +149,8 @@ var imgTitleArray = [];
 
     if(index){
       swal({
-            title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this information!",
+            title: "Are you sure you want to delete this image?",
+            text: "Once deleted, you will not be able to recover this.",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -170,6 +174,12 @@ var imgTitleArray = [];
   uploadSingleVideo(event){
    event.preventDefault();
     var index = event.target.getAttribute('id');
+    console.log("index",index);
+   
+    	this.setState({
+    		tempLoader : true,
+    	});
+   
     console.log("index--------------->",index);
     let self = this;
     if (event.currentTarget.files && event.currentTarget.files[0]) {
@@ -188,8 +198,18 @@ var imgTitleArray = [];
                 .then((Data)=>{
                   console.log("Data = ",Data);
                   this.setState({
-                    singleVideo : Data.location
+                    singleVideo : Data.location,
+                    isLoading	: false,
+                  },()=>{
+                  	// $(".tempL").remove();
+                  	this.setState({
+                  		tempLoader : false
+                  	})	
+                  	// console.log("inside singleVideo",this.state.singleVideo);
                   })
+                  	// console.log("outside singleVideo",this.state.singleVideo);
+
+                 
                   this.deleteSingleLogo(index)
                 })
                 .catch((error)=>{
@@ -198,8 +218,8 @@ var imgTitleArray = [];
                 })
             }else{
               swal({
-                    title: "Are you sure?",
-                    text: "Once replaced, you will not be able to recover this video!",
+                    title: "Are you sure you want to delete this video?",
+                    text: "Once replaced, you will not be able to recover this.",
                     icon: "warning",
                     buttons: true,
                     dangerMode: true,
@@ -277,8 +297,8 @@ var imgTitleArray = [];
   
 
 	uploadData(event){
-		console.log("imgArrayWSaws",this.state.imgArrayWSaws);
-		console.log("singleVideo",this.state.singleVideo);
+		// console.log("imgArrayWSaws",this.state.imgArrayWSaws);
+		// console.log("singleVideo",this.state.singleVideo);
 
 		
 		// var imageTitleArray = this.state.imageTitleArray;
@@ -288,12 +308,15 @@ var imgTitleArray = [];
 
 		if(this.state.updateOperation === true)
 		{
-			console.log("update fun");
+			// console.log("update fun");
 				var ov = this.state.originalValues;
+
 				// if(this.state.imgArrayWSaws === ov.Images && this.state.singleVideo === ov.video )
 				// {
 				// 	console.log("same data");
 				// 	this.props.redirectToCongratsPage(localStorage.getItem("uid"),localStorage.getItem("propertyId"));
+
+				
 
 				// }else{
 					console.log("diff data");
@@ -307,7 +330,7 @@ var imgTitleArray = [];
 
 					}
 				
-					console.log("formValues = ",formValues);
+					// console.log("formValues = ",formValues);
 					
 						axios
 						.patch('/api/properties/patch/gallery',formValues)
@@ -325,7 +348,7 @@ var imgTitleArray = [];
 				// }
 
 		}else{
-			console.log("sub fun");
+			// console.log("sub fun");
 
 			const formValues = {
 
@@ -555,6 +578,7 @@ var imgTitleArray = [];
 	// }
 
 	render() {
+		console.log("singleVideo=>",this.state.singleVideo);
 		// console.log("imageTitleArray",this.state.imageTitleArray);
 		// console.log("imageArray",this.state.imageArray);
 		return (
@@ -588,13 +612,13 @@ var imgTitleArray = [];
                   :
                     this.state.imgArrayWSaws.map((data,index)=>{
                       return(
-                              <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row" key={index}>
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                              <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row" style={{paddingTop:"16px"}} key={index}>
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row " >
                                   <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12">Property Image {index+1}</h5>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                   <div className="" key={index}>
-                                    <label id={index} className="pull-right custFaTimes" title="Delet image" data-id={data.imgPath} onClick={this.deleteimageWS.bind(this)}>X</label>
+                                    <label id={index} className="pull-right custFaTimes" title="Delete Image" data-id={data.imgPath} onClick={this.deleteimageWS.bind(this)}>X</label>
                                     <img className="img-responsive" src={data.imgPath}/>
                                   </div>
                                 </div>
@@ -604,8 +628,8 @@ var imgTitleArray = [];
                   }
                   {this.state.imgArrayWSaws== null?
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row padTopC">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                        <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12">Please Upload Images:</h5>
+                      <div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 row ">
+                        <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Please Upload Images:</h5>
                       </div> 
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                         <div className="clr_k ">
@@ -616,15 +640,15 @@ var imgTitleArray = [];
                            <b className="text_k11"></b>
                            <span className="under_ln">Choose Property Images</span>
                           </div>      
-                          <input  type="file" title="Click to attach file" multiple name="userPic" onChange={this.uploadPropertyImage.bind(this)} ref="propertyImg"  className="form-control click_input" id="upload-file2" />
+                          <input  type="file" title="Click to attach file"  name="userPic" onChange={this.uploadPropertyImage.bind(this)} ref="propertyImg"  className="form-control click_input" id="upload-file2" />
                         </div> 
                       </div>
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgdetails">(max size: 1 Mb, Format: JPEG, jpg, png)</div>
                     </div>
                   :
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row padTopC">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                        <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12">Please Upload Images:</h5>
+                      <div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 row ">
+                        <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Please Upload Images:</h5>
                       </div> 
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                         <div className="clr_k" style={{height:"120px"}}>
@@ -633,9 +657,9 @@ var imgTitleArray = [];
                           </div>
                           <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-10 below_text">
                            <b className="text_k11"></b>
-                           <span className="text-center under_ln">Choose another image</span>
+                           <span className="text-center under_ln">Choose Your Image</span>
                           </div>      
-                          <input  type="file" title="Click to attach file" multiple name="userPic" onChange={this.uploadPropertyImage.bind(this)} ref="propertyImg"  className="form-control click_input" id="upload-file2" />
+                          <input  type="file" title="Click to attach file"  name="userPic" onChange={this.uploadPropertyImage.bind(this)} ref="propertyImg"  className="form-control click_input" id="upload-file2" />
                         </div> 
                       </div>
                     </div>
@@ -645,7 +669,7 @@ var imgTitleArray = [];
             {/*--------------------------------------------------------------*/}
 						
              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp marBtm">
-                  {this.state.singleVideo==""?
+                  {this.state.singleVideo===""?
                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row padTopC">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                         <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12">Please Upload Video:</h5>
@@ -664,21 +688,64 @@ var imgTitleArray = [];
                       </div>
                       {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgdetails">(max size: 1 Mb, Format: mp4, avi, ogv)</div>
                     */}</div>
-                    :null}
-                  {this.state.singleVideo==""?
-                    null
+                    :
+                    null}
+
+                    {this.state.tempLoader === true ?
+                    	<div>
+                    	<Loader
+					         type="Oval"
+					         color="#F5AD3E"
+					         height="100"
+					         width="100"
+					         id="tempL"
+					         className="tempL"
+					         					      />
+
+					         {/* <img src="/images/videoloader.gif" alt="loader" className="tempL"/>*/}
+
+
+					     </div>
+					      :
+					      null
+                    	
+                    }
+
+                   {/*this.state.singleVideo!=="" ?
+
+                   $("div").remove("#tempL")
+
+                   :
+                   null
+
+                   */} 
+                   
+                  {this.state.singleVideo==="" ?
+                    
+                     null
+
                   :
+
+
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 padTopC">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                         <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12 row">Please Upload Video:</h5>
                       </div>
                       <div className="containerC">
-                        <label id="logoImage" className="pull-right custFaTimes1" title="Delet video" onClick={this.deleteSingleVideoDirect.bind(this)}>X</label>
+                        <label id="logoImage" className="pull-right custFaTimes1" title="Delete Video" onClick={this.deleteSingleVideoDirect.bind(this)}>X</label>
                        {/* <img src={this.state.singleVideo} alt="Avatar" className="imageC"/>*/}
-                       <video width="100%" height="100%" controls>
-                       			{console.log("here video link of map",this.state.singleVideo)}
-                                <source src={this.state.singleVideo} type="video/mp4" className="col-lg-12 noPad"/>
-                        </video>
+                       {	console.log("this.state.singleVideo -----------------",this.state.singleVideo) }
+
+	                   {   
+	                       	<video width="100%" height="100%" controls>
+	                       			{console.log("here video link of map",this.state.singleVideo)}
+	                                <source src={this.state.singleVideo} type="video/mp4" className="col-lg-12 noPad"/>
+	                        </video>
+
+	                        
+	                        
+	                        
+                    	}
                         <div className="middleC">
                           <div className="textCA">
                             <input type="file" title="Click to change the photo" multiple name="userPic" id={this.state.singleVideo} onChange={this.uploadSingleVideo.bind(this)} ref="propertyVideo" className="form-control click_input" />

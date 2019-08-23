@@ -259,7 +259,7 @@ class HomePageProperties extends Component {
                                     </div>
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
-                                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                                     <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                         {
@@ -344,7 +344,7 @@ class HomePageProperties extends Component {
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {property.transactionType === "Sell" ?
@@ -354,7 +354,7 @@ class HomePageProperties extends Component {
                                     }
                                   </div>
                                   <div className="pull-right noPad mt10">
-                                    <i className="fa fa-shopping-bag  pr8 pull-right" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                    <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -431,7 +431,7 @@ class HomePageProperties extends Component {
                                   </div>
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                                   <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {property.transactionType === "Sell" ?
@@ -441,7 +441,7 @@ class HomePageProperties extends Component {
                                     }
                                   </div>
                                   <div className="pull-right noPad mt10">
-                                    <i className="fa fa-shopping-bag  pr8 pull-right" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                    <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -515,7 +515,7 @@ class HomePageProperties extends Component {
                                       </div>
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                                         <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 noPad mt10">
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                         {property.transactionType === "Sell" ?
@@ -525,7 +525,7 @@ class HomePageProperties extends Component {
                                         }
                                       </div>
                                       <div className="pull-right noPad mt10">
-                                        <i className="fa fa-shopping-bag  pr8 pull-right" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                        <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                       </div>
                                     </div>
                                   </div>
