@@ -19,7 +19,8 @@ class SearchProperty extends Component {
 			propertySubType 		: [],
 			propertySubTypeArray	: [],
 			location        		: "",
-			locSearchResults 		: ""
+			locSearchResults 		: "",
+			transactionTypeDefault  : "Sell"
 		}
 		this.handleSearch = this.handleSearch.bind(this);
 	}
@@ -262,7 +263,6 @@ class SearchProperty extends Component {
 
 	}
 	render() {
-
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
 				<form onClick={this.searchResultbtn.bind(this)}>
@@ -348,7 +348,16 @@ class SearchProperty extends Component {
 								   		<span className="caret"></span>
 								   	</button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad mt39 scrollable-menu">
-									{this.props.transactionType === "Sell"|| (this.props.propertyType === "Commercial" && this.state.transactionType === "Commercial-Sell")?
+									{this.props.transactionType === "Rent" || (this.props.propertyType === "Commercial" && this.state.transactionType === "Commercial-Rent")?
+								     this.state.budgetList2.map((budget,index)=>{
+							    		return(
+												<span className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputStyledbtn" key={index}>
+								    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+								    				<span className="radioBoxBlock"></span>
+								    			</span>
+							    			);
+							    		})
+								     	:
 									    this.state.budgetList1.map((budget,index)=>{
 								    		return(
 												<span  key={index} className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputStyledbtn">
@@ -357,15 +366,6 @@ class SearchProperty extends Component {
 								    			</span>
 								    			);
 									    	})
-									    :
-									    this.state.budgetList2.map((budget,index)=>{
-								    		return(
-													<span className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputStyledbtn" key={index}>
-									    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
-									    				<span className="radioBoxBlock"></span>
-									    			</span>
-								    			);
-								    		})
 								    	}
 								    </ul>
 								</div>
