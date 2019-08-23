@@ -61,7 +61,7 @@ class BannerwithModal extends Component {
 
          console.log("formValues = ", formValues);
          axios
-            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+            .post('/api/properties/post/list',formValues)
             .then(resultData =>{
               	console.log("resultData",resultData);
 		        this.setState({
@@ -99,7 +99,7 @@ class BannerwithModal extends Component {
 		}
 
 		  axios
-            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+            .post('/api/properties/post/list',formValues)
             .then(resultData =>{
               	console.log("resultData",resultData);
 		        this.setState({
@@ -129,7 +129,7 @@ class BannerwithModal extends Component {
 		}
 
 		 axios
-        .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+        .post('/api/properties/post/list',formValues)
         .then(resultData =>{
           	console.log("resultData",resultData);
 	        this.setState({

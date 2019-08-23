@@ -63,12 +63,12 @@ class propBox extends React.Component {
 
 		if($("#"+id).hasClass("resInterestExpress")){
 		 axios
-		  .post('http://qatgk3tapi.iassureit.com/api/interestedProperties/',formValues)
+		  .post('/api/interestedProperties/',formValues)
 		  .then(res=>{
 		     //After Express Interest, again get all properties
 
 		      axios
-		        .post('http://qatgk3tapi.iassureit.com/api/search/properties/',searchData)
+		        .post('/api/search/properties/',searchData)
 		        .then(resultData =>{
 		            this.setState({
 		              searchResult  : resultData.data,
@@ -88,11 +88,11 @@ class propBox extends React.Component {
 	        property_id : event.currentTarget.id
 	      }
 	      axios
-	        .delete('http://qatgk3tapi.iassureit.com/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
+	        .delete('/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
 	        .then(
 	          (res)=>{	              
 	              axios
-	                .post('http://qatgk3tapi.iassureit.com/api/search/properties/',searchData)
+	                .post('/api/search/properties/',searchData)
 	                .then(resultData =>{
 	                    this.setState({
 	                      searchResult  : resultData.data,

@@ -34,7 +34,7 @@ import './MyInterestedProperties.css';
     	console.log("this.state.uid",this.state.uid)
 		$(".modal-backdrop").remove();
 	     axios
-	    .get('http://qatgk3tapi.iassureit.com/api/interestedProperties/list/'+this.state.uid)
+	    .get('/api/interestedProperties/list/'+this.state.uid)
 	    .then(
 	      (res)=>{
 	        console.log(res);

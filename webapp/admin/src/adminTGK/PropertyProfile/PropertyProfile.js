@@ -71,7 +71,7 @@ class PropertyProfile extends Component{
   }
   componentDidMount() {
   axios
-    .get('http://qatgk3tapi.iassureit.com/api/properties/'+this.state.profileId)
+    .get('/api/properties/'+this.state.profileId)
     .then(
       (res)=>{
         console.log(res);

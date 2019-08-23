@@ -56,7 +56,7 @@ class HomePageProperties extends Component {
 
       if($("#"+id).hasClass("interestExpress")){
          axios
-          .post('http://qatgk3tapi.iassureit.com/api/interestedProperties/',formValues)
+          .post('/api/interestedProperties/',formValues)
           .then(res=>{
              console.log("interestBtn = ",res); 
              //After Express Interest, again get all properties
@@ -71,7 +71,7 @@ class HomePageProperties extends Component {
 
               console.log("rangeValues = ", rangeValues);
               axios
-                .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',rangeValues)
+                .post('/api/properties/post/list',rangeValues)
                 .then(resultData =>{
                   console.log("resultData",resultData);
                     this.setState({
@@ -93,7 +93,7 @@ class HomePageProperties extends Component {
         }
       console.log("deleteValues",deleteValues);
       axios
-        .delete('http://qatgk3tapi.iassureit.com/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
+        .delete('/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
         .then(
           (res)=>{
               console.log("deleted ",res); 
@@ -108,7 +108,7 @@ class HomePageProperties extends Component {
 
               console.log("rangeValues = ", rangeValues);
               axios
-                .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',rangeValues)
+                .post('/api/properties/post/list',rangeValues)
                 .then(resultData =>{
                   console.log("resultData",resultData);
                     this.setState({

@@ -33,7 +33,7 @@ class ListedProperties extends Component {
 
          console.log("formValues = ", formValues);
          axios
-            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+            .post('/api/properties/post/list',formValues)
             .then(resultData =>{
                 console.log("resultData",resultData);
                 this.setState({
@@ -74,7 +74,7 @@ class ListedProperties extends Component {
             console.log("formValues",formValues)
 
           axios
-            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+            .post('/api/properties/post/list',formValues)
             .then(resultData =>{
                 console.log("resultData",resultData);
                 this.setState({
@@ -101,7 +101,7 @@ class ListedProperties extends Component {
         }
             console.log("formValues",formValues)
           axios
-            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+            .post('/api/properties/post/list',formValues)
             .then(resultData =>{
                 console.log("resultData",resultData);
                 this.setState({
@@ -157,11 +157,11 @@ class ListedProperties extends Component {
         .then(isConfirm =>{
           if(isConfirm) {
             axios
-            .delete('http://qatgk3tapi.iassureit.com/api/properties/'+id)
+            .delete('/api/properties/'+id)
             .then(res =>{
                  if(res){
                     axios
-                    .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+                    .post('/api/properties/post/list',formValues)
                     .then(resultData =>{
                         console.log("resultData",resultData);
                         if(resultData.data){
@@ -219,10 +219,10 @@ class ListedProperties extends Component {
           if(isConfirm) {  
 
                   axios
-                    .patch('http://qatgk3tapi.iassureit.com/api/properties/patch/updateListing',listedData)
+                    .patch('/api/properties/patch/updateListing',listedData)
                     .then(resultData =>{
                         axios
-                            .post('http://qatgk3tapi.iassureit.com/api/properties/post/list',formValues)
+                            .post('/api/properties/post/list',formValues)
                             .then(resultData =>{
                                 console.log("resultData",resultData);
                                 if(resultData.data){

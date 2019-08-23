@@ -41,7 +41,7 @@ import './MyPostedProperties.css';
 
 		$(".modal-backdrop").remove();
 	     axios
-	    .get('http://qatgk3tapi.iassureit.com/api/properties/mypropertylist/'+this.state.uid)
+	    .get('/api/properties/mypropertylist/'+this.state.uid)
 	    .then(
 	      (res)=>{
 	        console.log(res);

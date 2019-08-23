@@ -371,9 +371,11 @@ class SearchProperty extends Component {
 								</div>
 							</div>
 
-							<div className="col-lg-1 col-md-1 col-xs-1 col-sm-1 sImg noPad">
-									<Link to={"/SearchResults"} onClick={this.searchResultbtn.bind(this)}>	
-										<img alt=""  src="/images/TGK-key.png" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 tgkImg" />
+							<div className="col-lg-1 col-md-1 col-xs-1 col-sm-1  noPad">
+									<Link to={"/SearchResults"}>	
+										<button className="btn sImg" onClick={this.searchResultbtn.bind(this)}>
+											<img alt=""  src="/images/TGK-key.png" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 tgkImg" />
+										</button>
 									</Link>
 							</div>
 						</div>

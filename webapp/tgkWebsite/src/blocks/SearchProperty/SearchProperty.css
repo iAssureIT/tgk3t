@@ -102,3 +102,7 @@
 .divWhite{
     background-color: #fff;
 }
+
+.searchProperty .btn{
+    padding: 0px !important
+}
