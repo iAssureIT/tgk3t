@@ -337,15 +337,11 @@ class CreateUser extends Component {
                                                                         <option hidden> --Select-- </option>
                                                                         <option value="Head Office">  Head Office </option>
                                                                         <option value="Sales Agent Office"> Sales Agent Office </option>
-                                                                           { this.state.office != null ?
+                                                                           {this.state.office && this.state.office.length > 0?
                                                                           this.state.office[0].map( (locData, index)=>{
-                                                                          // console.log('locData',locData);
                                                                            return( 
-
                                                                                  <option key={index} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
-
-
-                                                                                   )}
+                                                                              )}
                                                                            )
                                                                           :
                                                                           null

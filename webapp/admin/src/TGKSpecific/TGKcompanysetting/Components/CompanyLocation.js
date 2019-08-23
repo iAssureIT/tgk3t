@@ -1090,7 +1090,7 @@ selectType(event){
                           </tr>
                         </thead>
                         <tbody>
-                        { this.state.allLoc != null ?
+                        { this.state.allLoc && this.state.allLoc.length > 0?
                           this.state.allLoc[0].map( (locData, index)=>{
                           /*console.log('locData of 0 here',locData);*/
                            return( 

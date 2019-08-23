@@ -11,7 +11,8 @@ import './lib/router.js';
 
 
 // axios.defaults.baseURL = 'http://localhost:5016/';
-axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+// axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+axios.defaults.baseURL = 'http://uatapi.lyvo.in/';
 
 // axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';

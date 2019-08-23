@@ -6,7 +6,6 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import InputMask  from 'react-input-mask';
 
-import "../../../API";
 
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);

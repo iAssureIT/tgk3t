@@ -6,7 +6,7 @@ import axios from 'axios';
 import swal from 'sweetalert';
 import InputMask  from 'react-input-mask';
 import S3FileUpload from 'react-s3';
-import "../../../API";
+
 
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
