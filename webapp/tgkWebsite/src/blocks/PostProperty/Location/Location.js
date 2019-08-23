@@ -165,7 +165,8 @@ class Location extends Component {
 						
 				}else{
 						console.log("diff data");
-
+						console.log("this.props.property_id",this.props.property_id);
+						console.log("localhost", localStorage.getItem("propertyId"));
 						const formValues = {
 						"countryCode" 		: "IN",
 						"stateCode" 		: this.state.stateCode,
@@ -181,7 +182,7 @@ class Location extends Component {
 						"property_id" 		: localStorage.getItem("propertyId"),
 						"index"				: this.state.index,
 						"uid" 				: localStorage.getItem("uid"),				
-					};
+					}; localStorage.getItem("propertyId")
 					console.log("location formValues = ",formValues);
 
 						localStorage.setItem("index",this.state.index);
@@ -190,7 +191,8 @@ class Location extends Component {
 							.patch('/api/properties/patch/propertyLocation',formValues)
 							.then( (res) =>{
 								if(res.status === 200){
-									this.props.redirectToPropertyDetails(this.props.uid,this.props.prop_id);
+									console.log("location res",res);
+									this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 								}
 							})
 							.catch((error) =>{
@@ -230,7 +232,7 @@ class Location extends Component {
 						.patch('/api/properties/patch/propertyLocation',formValues)
 						.then( (res) =>{
 							if(res.status === 200){
-								this.props.redirectToPropertyDetails(this.props.uid,this.props.prop_id);
+								this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 							}
 						})
 						.catch((error) =>{
@@ -248,7 +250,7 @@ class Location extends Component {
 	backToBasicInfo(){
 		this.props.backToBasicInfo();
 		console.log("this.props.uid",this.props.uid);
-		console.log("this.props.prop_id",this.props.prop_id);
+		// console.log("this.props.prop_id",this.props.prop_id);
 		console.log("localStorage.getItem(propertyId)",localStorage.getItem("propertyId"));
 
 		this.props.backToBasicInfo(this.props.uid,localStorage.getItem("propertyId"));

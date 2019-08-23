@@ -26,8 +26,8 @@ import './PropertyDetails.css';
 			this.radioChange1 = this.radioChange1.bind(this);
 			this.radioChange2 = this.radioChange2.bind(this);
 
-			// console.log("this.props.updateStatus",this.props.updateStatus);
-			// console.log("this.props.property_id",this.props.property_id);
+			console.log("this.props.updateStatus",this.props.updateStatus);
+			console.log("this.props.property_id",this.props.property_id);
 			if(this.props.updateStatus === true){
 
 	        	axios

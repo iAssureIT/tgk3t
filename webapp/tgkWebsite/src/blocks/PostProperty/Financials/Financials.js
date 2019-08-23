@@ -266,17 +266,80 @@ updateUser(event){
 
             }else{
               console.log("diff data");
-                console.log("this.state.maintenancePer",this.state.maintenancePer);
-                console.log("this.state.availableFrom",this.state.availableFrom);
+                // console.log("this.state.expectedRate",this.state.expectedRate);
+                console.log("this.state.expectedRate",this.state.expectedRate);
+                var expectedRate        = "";
+                var totalPrice          = "";
+                var monthlyRent         = "";
+                var depositAmount       = "";
+                var maintenanceCharges  = "";
+
+                if(this.state.totalPrice && this.state.totalPrice!="" && this.state.totalPrice!==null)
+                {
+                  if(this.state.totalPrice!==ov.totalPrice &&this.state.totalPrice.indexOf(',') !== -1){
+                   totalPrice = this.state.totalPrice.replace(/,/g, '');
+                  }else{
+                   totalPrice = this.state.totalPrice;
+                  }
+                }else{
+                   totalPrice = this.state.totalPrice;
+                }
+                // --------------
+                if(this.state.expectedRate && this.state.expectedRate!="" && this.state.expectedRate!==null ){
+                  if(this.state.expectedRate!== ov.expectedRate && this.state.expectedRate.indexOf(',')!== -1){
+                   expectedRate = this.state.expectedRate.replace(/,/g, '');
+                  }else{
+                   expectedRate = this.state.expectedRate;
+                  }
+                }else{
+                   expectedRate = this.state.expectedRate;
+                }
+
+                // ---------------------
+                if(this.state.monthlyRent && this.state.monthlyRent!=="" && this.state.monthlyRent!==null){
+                  if( this.state.monthlyRent!== ov.monthlyRent &&this.state.monthlyRent.indexOf(',') !== -1){
+                     monthlyRent = this.state.monthlyRent.replace(/,/g, '');
+                  }else{
+                    monthlyRent = this.state.monthlyRent;
+                  }
+                }else{
+                    monthlyRent = this.state.monthlyRent;
+                }
+
+                // -----------------------
+                 if(this.state.depositAmount && this.state.depositAmount!= "" && this.state.depositAmount!== null){
+                  if(this.state.depositAmount!== ov.depositAmount &&this.state.depositAmount.indexOf(',') !== -1){
+                    depositAmount = this.state.depositAmount.replace(/,/g, '');
+                  }else{
+                    depositAmount = this.state.depositAmount;
+                  }
+                 }else{
+                    depositAmount = this.state.depositAmount;
+                 }
+
+
+                // ----------------------
+                if(this.state.maintenanceCharges && this.state.maintenanceCharges!="" && this.state.maintenanceCharges!== null)
+                {
+                   if(this.state.maintenanceCharges!== ov.maintenanceCharges &&this.state.maintenanceCharges.indexOf(',') !== -1){
+                   maintenanceCharges = this.state.maintenanceCharges.replace(/,/g, '');
+                  }else{
+                   maintenanceCharges = this.state.maintenanceCharges;
+                  }
+                }else{
+                   maintenanceCharges = this.state.maintenanceCharges;
+                }
+
+                // ---------------------------------
                 const updateFormValues = {
-                "expectedRate"        : this.state.expectedRate,
-                "totalPrice"          : this.state.totalPrice,
-                "monthlyRent"         : this.state.monthlyRent,
-                "depositAmount"       : this.state.depositAmount,
+                "expectedRate"        : expectedRate ,
+                "totalPrice"          : totalPrice,
+                "monthlyRent"         : monthlyRent ,
+                "depositAmount"       : depositAmount ,
                 "availableFrom"       : this.state.availableFrom,
                 "description"         : this.state.description,
                 "includeCharges"      : includeChargesDataList,
-                "maintenanceCharges"  : this.state.maintenanceCharges,
+                "maintenanceCharges"  : maintenanceCharges,
                 "maintenancePer"      : this.state.maintenancePer,
                 "property_id"         : localStorage.getItem("propertyId"),
                 "uid"                 : localStorage.getItem("uid"),

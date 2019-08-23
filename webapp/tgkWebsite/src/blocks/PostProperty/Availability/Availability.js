@@ -40,9 +40,12 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 				updateOperation   : false,
 				prevAvailable     : "",
+				userMobile 		  : "",
 
 			};
    			
+   			console.log("in contructor contactPerson",this.state.contactPerson);
+
    			console.log("this.props.updateStatus",this.props.updateStatus);
 			console.log("this.props.property_id",this.props.property_id);
 			if(this.props.updateStatus === true){
@@ -55,15 +58,15 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						this.setState({
 
 								originalValues 				: response.data.avalibilityPlanVisit,
-								contactPersonMobile 		: response.data.avalibilityPlanVisit.contactPersonMobile,
-								contactPerson 				: response.data.avalibilityPlanVisit.contactPerson,
+								contactPersonMobile 		: response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : "",
+								contactPerson 				: response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "Someone" ,
 								available 					: response.data.avalibilityPlanVisit.available,
 								updateOperation 			: true,
 								prevAvailable 				: response.data.avalibilityPlanVisit.available,
 
 						 
 						},()=>{
-							console.log("here available in comp did mount",this.state.available);
+							console.log("here available in comp did mount",this.state.contactPerson);
 							});
 
 					})
@@ -79,13 +82,13 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 			console.log("user id in availability",this.props.uid);
 
-			axios
-					.get('/api/users/get/one/'+this.props.property_id)
+					axios
+					.get('/api/users/get/one/'+this.props.uid)
 					.then( (response) =>{
 						console.log("response of user in availability= ",response);
-						// this.setState({
-						// 	contactPersonMobile : 
-						// });
+						this.setState({
+							userMobile : response.data.mobileNumber,
+						});
 
 					})
 					.catch((error) =>{
@@ -100,24 +103,23 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			if(this.state.updateOperation === true){
 				console.log("update fun");
 				var ov = this.state.originalValues;
-				console.log("this.state.available",this.state.available);
-				console.log("ov.available",ov.available);
-				console.log("prevAvailable",this.state.prevAvailable);
+
 				console.log("this.state.contactPersonMobile",this.state.contactPersonMobile);
-				console.log("ov.contactPersonMobile",ov.contactPersonMobile);
+				console.log("this.state.userMobile",this.state.userMobile);
 				console.log("this.state.contactPerson",this.state.contactPerson);
-				console.log("ov.contactPerson",ov.contactPerson);
-				
-				// if(this.state.contactPersonMobile === ov.contactPersonMobile && this.state.contactPerson === ov.contactPerson
-				// && this.state.available === ov.available){
-				// 			console.log("same data");
-				// 			this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
 
-				// }else{
+				var mobNo = "";
+				if(this.state.contactPerson === "Myself"){
+					mobNo = this.state.userMobile;
+				}else{
+					mobNo = this.state.contactPersonMobile;
+				}
+			
+				console.log("mob no",mobNo);
 
-				// 	console.log("diff data");
+					console.log("diff data");
 					const formValues = {
-					"contactPersonMobile" : this.state.contactPersonMobile,
+					"contactPersonMobile" : mobNo,
 	        		"contactPerson"       : this.state.contactPerson,
 					"property_id" 		  : localStorage.getItem("propertyId"),
 					"uid" 				  : localStorage.getItem("uid"),
@@ -129,7 +131,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						axios
 						.patch('/api/properties/patch/availabilityPlan',formValues)
 						.then( (res) =>{
-							console.log("availabilityPlan",res);
+							console.log("availabilityPlan----------------",res);
 							if(res.status === 200){
 								/*swal("wow","great job done!","success");*/
 								this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
@@ -150,9 +152,21 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 			}else{
 				console.log("insert fun");
+				console.log("this.state.contactPersonMobile",this.state.contactPersonMobile);
+				console.log("this.state.userMobile",this.state.userMobile);
+				console.log("this.state.contactPerson",this.state.contactPerson);
+
+				var mobNo = "";
+				if(this.state.contactPerson === "Myself"){
+					mobNo = this.state.userMobile;
+				}else{
+					mobNo = this.state.contactPersonMobile;
+				}
+				console.log("mob no",mobNo);
+				
 
 				const formValues = {
-				"contactPersonMobile" : this.state.contactPersonMobile,
+				"contactPersonMobile" : mobNo,
         		"contactPerson"       : this.state.contactPerson,
 				"property_id" 		  : localStorage.getItem("propertyId"),
 				"uid" 				  : localStorage.getItem("uid"),
@@ -168,7 +182,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						if(res.status === 200){
 							/*swal("wow","great job done!","success");*/
 							this.props.redirectToImageUpload(this.props.uid,this.props.property_id);
-
+							console.log("response",res);
 						}
 					})
 					.catch((error) =>{
@@ -185,7 +199,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			
 		}
 		selectType(event){
-          if(this.state.contactPerson === "Someone")
+          if(this.state.contactPerson === "Someone" )
             {
               this.setState(
               {
@@ -199,6 +213,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
               }); 
             
           }
+          console.log("contactPerson onchange",this.state.contactPerson);
       }
 
       backToFinancials(){
@@ -359,6 +374,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			            </div>
 				  	</div>
 				  </div>
+				  {console.log("this.state.contactPerson in render",this.state.contactPerson)}
+					{console.log("here mob no value for someone",this.state.contactPersonMobile)}
 				  {this.state.contactPerson === "Someone" ? 
 				  	 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >
@@ -382,7 +399,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-mobile iconClr"></i>
 		                    </div>
-					    		<input type="number"  name="contactPersonMobile" value={availableMobile} className="form-control" ref="" min="0" placeholder="Phone Number" disabled/>
+					    		<input type="number"  name="contactPersonMobile" value={this.state.userMobile} className="form-control" ref="" min="0" placeholder="Phone Number" disabled/>
 					  		</div>
 					  </div>
 				  </div>
