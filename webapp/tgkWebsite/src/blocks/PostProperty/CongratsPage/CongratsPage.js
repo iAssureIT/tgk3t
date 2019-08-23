@@ -103,9 +103,9 @@ import './CongratsPage.css';
 				<p className="col-lg-12 CP2">Your Property is <b className="fontColor">FAST SELLING HOT POTATO</b></p>
 				<p className="col-lg-12 CP3">and qualifies for a <b className="fontColor">{this.state.percentage!="" ? this.state.percentage+"%" : null}</b> brokerage to be paid by us on successful deal through us </p>
 				<div className="col-lg-12 CP4">
-					<img src="images/meter.png" />
+					<img src="/images/meter.png" />
 					{this.props.congratsPage === true?
-						<img src="images/needle1.png" className="needle" style={{transform: "rotate("+this.state.per+"deg)",transformOrigin: "90% 55%",transition : "transform 3s",transitionDelay: "1s"}} />
+						<img src="/images/needle1.png" className="needle" style={{transform: "rotate("+this.state.per+"deg)",transformOrigin: "90% 55%",transition : "transform 3s",transitionDelay: "1s"}} />
 						:
 						null
 						
