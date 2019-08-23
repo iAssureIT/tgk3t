@@ -27,13 +27,13 @@ class PropertyList extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      : 0,
-            limitRange      : 50,
+            limitRange      : 100,
             listing:false
           }
 
          console.log("formValues = ", formValues);
          axios
-            .post('/api/properties/post/list',formValues)
+            .post('/api/properties/admin/post/list',formValues)
             .then(resultData =>{
                 console.log("resultData",resultData);
                 this.setState({
@@ -68,13 +68,13 @@ class PropertyList extends Component {
             propertyType : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange:0,
-            limitRange:50,
+            limitRange:100,
             listing:false
         }
             console.log("formValues",formValues)
 
           axios
-            .post('/api/properties/post/list',formValues)
+            .post('/api/properties/admin/post/list',formValues)
             .then(resultData =>{
                 console.log("resultData",resultData);
                 this.setState({
@@ -96,12 +96,12 @@ class PropertyList extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      :0,
-            limitRange      :50,
+            limitRange      :100,
             listing:false
         }
             console.log("formValues",formValues)
           axios
-            .post('/api/properties/post/list',formValues)
+            .post('/api/properties/admin/post/list',formValues)
             .then(resultData =>{
                 console.log("resultData",resultData);
                 this.setState({
@@ -139,7 +139,7 @@ class PropertyList extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      :0,
-            limitRange      :50,
+            limitRange      :100,
             listing:false
 
         }
@@ -161,7 +161,7 @@ class PropertyList extends Component {
             .then(res =>{
                  if(res){
                     axios
-                    .post('/api/properties/post/list',formValues)
+                    .post('/api/properties/admin/post/list',formValues)
                     .then(resultData =>{
                         console.log("resultData",resultData);
                         if(resultData.data){
@@ -199,7 +199,7 @@ class PropertyList extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      :0,
-            limitRange      :50,
+            limitRange      :100,
             listing:false
         }
           console.log("listedData",listedData)
@@ -222,7 +222,7 @@ class PropertyList extends Component {
                     .patch('/api/properties/patch/updateListing',listedData)
                     .then(resultData =>{
                         axios
-                            .post('/api/properties/post/list',formValues)
+                            .post('/api/properties/admin/post/list',formValues)
                             .then(resultData =>{
                                 console.log("resultData",resultData);
                                 if(resultData.data){
@@ -281,7 +281,7 @@ class PropertyList extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad listPadding">
                      {this.state.inputData && this.state.inputData.length >0 ?
                         this.state.inputData.map((result,index)=>{
                         return(

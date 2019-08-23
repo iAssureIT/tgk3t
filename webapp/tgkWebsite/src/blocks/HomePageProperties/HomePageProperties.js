@@ -171,11 +171,9 @@ class HomePageProperties extends Component {
     }
 
 		return (
-      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-      			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">      
+        <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad">
+            
       				  <h3 className="textC"> <b>
                 {
                   this.state.propertiesData && this.state.propertiesData.length > 0 ?
@@ -190,9 +188,9 @@ class HomePageProperties extends Component {
                       if(mod === 2){
                         if(count === index+2){
                           return(
-                              <div  key={index}   className="mt10 col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                                <div  className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
-                                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad info">
+                              <div key={index} className="mt10 col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 oneProp">
+                                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 info">
                                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 noPad" id="info1" >
                                       {property.propertySubType}
                                     </div>
@@ -245,11 +243,19 @@ class HomePageProperties extends Component {
                                     <h4><b> {property.propertyLocation ?property.propertyLocation.society:"-"} </b></h4>
                                   </div>
                                   <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                                  {property.propertyType === "Residential" ?
                                     <div className=" col-lg-9 row">
                                       <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
-                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
+                                      
                                     </div>
+                                    :
+                                    <div className=" col-lg-9 row">
+                                      <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                      
+                                    </div>
+                                  }
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                       <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                         <Link to={"/PropertyProfile/"+property._id} target="_blank">
@@ -330,11 +336,19 @@ class HomePageProperties extends Component {
                                   <h4><b> {property.propertyLocation ?property.propertyLocation.society:"-"} </b></h4>
                                 </div>
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                                  <div className=" col-lg-9 row">
-                                    <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
-                                  </div>
+                                  {property.propertyType === "Residential" ?
+                                    <div className=" col-lg-9 row">
+                                      <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                      
+                                    </div>
+                                    :
+                                    <div className=" col-lg-9 row">
+                                      <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                      
+                                    </div>
+                                  }
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                       <Link to={"/PropertyProfile/"+property._id} target="_blank">
@@ -417,11 +431,19 @@ class HomePageProperties extends Component {
                                   <h4><b> {property.propertyLocation ?property.propertyLocation.society:"-"} </b></h4>
                                 </div>
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                                  <div className=" col-lg-9 row">
-                                    <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
-                                  </div>
+                                  {property.propertyType === "Residential" ?
+                                    <div className=" col-lg-9 row">
+                                      <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                      
+                                    </div>
+                                    :
+                                    <div className=" col-lg-9 row">
+                                      <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                      
+                                    </div>
+                                  }
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                       <Link to={"/PropertyProfile/"+property._id} target="_blank">
@@ -501,11 +523,19 @@ class HomePageProperties extends Component {
                                       <h4><b> {property.propertyLocation ?property.propertyLocation.society:"-"} </b></h4>
                                     </div>
                                     <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                                      <div className=" col-lg-9 row">
-                                        <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                        <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
-                                        <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
-                                      </div>
+                                    {property.propertyType === "Residential" ?
+                                        <div className=" col-lg-9 row">
+                                          <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
+                                          <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                          
+                                        </div>
+                                        :
+                                        <div className=" col-lg-9 row">
+                                          <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
+                                          <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                          
+                                        </div>
+                                      }
                                       <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                         <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                           <Link to={"/PropertyProfile/"+property._id} target="_blank">
@@ -587,11 +617,19 @@ class HomePageProperties extends Component {
                                   <h4><b> {property.propertyLocation ?property.propertyLocation.society:"-"} </b></h4>
                                 </div>
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                                  <div className=" col-lg-9 row">
-                                    <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
-                                    <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad mt10"> Ready To Move{/*property.status*/} </div>
-                                  </div>
+                                  {property.propertyType === "Residential" ?
+                                    <div className=" col-lg-9 row">
+                                      <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                      
+                                    </div>
+                                    :
+                                    <div className=" col-lg-9 row">
+                                      <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
+                                      <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
+                                      
+                                    </div>
+                                  }
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
                                       <Link to={"/PropertyProfile/"+property._id} target="_blank">
@@ -623,11 +661,8 @@ class HomePageProperties extends Component {
                   :
                   <div className="col-lg-offset-5"><h1>No Data Available</h1></div>
       					}
-      				</div>
-      			</div>
+
           </div>
-        </div>
-	
 
         {/*=== Modal starts here ===*/}
         <div>

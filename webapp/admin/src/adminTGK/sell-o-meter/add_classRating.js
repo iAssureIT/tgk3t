@@ -47,8 +47,12 @@ export default class add_sellometer extends Component {
     {
        axios.post('/api/mastersellometers/', formValues)
         .then( (res)=>{
-            console.log("submit ");
-            swal("Property Class added successfully", "", "success");
+          if(res){
+            if(res.data === "Master-Sell-O-Meter-Added"){
+              swal("Property Class added successfully", "", "success");
+            }else{
+              swal("This Property Class has already been added.", "", "warning");
+            }
             this.refs.propertyClass.value = '';  
             this.setState({
               earning : "",
@@ -72,8 +76,7 @@ export default class add_sellometer extends Component {
                 console.log("error = ",error);
                 // alert("Something went wrong! Please check Get URL.");
                  });       
-        
-                  
+          }                      
         })
         .catch((error)=>{
           console.log("error = ",error);

@@ -7,8 +7,8 @@ import './lib/router.js';
 import axios from 'axios';
 import $ from 'jquery';
 
-// axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
-axios.defaults.baseURL = 'http://uatapi.lyvo.in/';
+axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+// axios.defaults.baseURL = 'http://uatapi.lyvo.in/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 

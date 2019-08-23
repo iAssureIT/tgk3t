@@ -27,7 +27,7 @@ class ListedProperties extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      : 0,
-            limitRange      : 50,
+            limitRange      : 100,
             listing:true
           }
 
@@ -68,7 +68,7 @@ class ListedProperties extends Component {
             propertyType : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange:0,
-            limitRange:50,
+            limitRange:100,
             listing:true
         }
             console.log("formValues",formValues)
@@ -96,7 +96,7 @@ class ListedProperties extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      :0,
-            limitRange      :50,
+            limitRange      :100,
             listing:true
         }
             console.log("formValues",formValues)
@@ -139,7 +139,7 @@ class ListedProperties extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      :0,
-            limitRange      :50,
+            limitRange      :100,
             listing:true
 
         }
@@ -199,7 +199,7 @@ class ListedProperties extends Component {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
             startRange      :0,
-            limitRange      :50,
+            limitRange      :100,
             listing:true
         }
           console.log("listedData",listedData)
@@ -281,7 +281,7 @@ class ListedProperties extends Component {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+                <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad listPadding">
                      {this.state.inputData && this.state.inputData.length >0 ?
                         this.state.inputData.map((result,index)=>{
                         return(

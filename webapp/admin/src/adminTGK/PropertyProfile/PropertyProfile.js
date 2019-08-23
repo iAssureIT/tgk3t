@@ -257,8 +257,8 @@ class PropertyProfile extends Component{
                             </div>
                           </div>
                         </div>
-                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <label className="row">Key Features</label>
@@ -343,8 +343,8 @@ class PropertyProfile extends Component{
                             </div>
                           </div>
                         </div>
-                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <label className="row">Financials</label>
