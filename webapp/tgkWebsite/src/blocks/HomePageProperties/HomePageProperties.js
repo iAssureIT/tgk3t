@@ -68,8 +68,75 @@ class HomePageProperties extends Component {
                 listing         :true,
                 uid : localStorage.getItem("uid")
               }
+              axios
+                .get('/api/properties/'+id)
+                .then((propertyData) =>{
+                  console.log("propertiesData",propertyData.data);
+                  axios
+                    .get('/api/users/get/one/'+localStorage.getItem("uid"))
+                    .then((userData) =>{
+                          var sendDataToUser = {
+                          "templateName"  : "User - Express Interest",
+                          "toUserId"      : userData.data._id,
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      console.log("sendData",sendDataToUser);
+                      var sendDataToAdmin = {
+                          "templateName"        : "Admin - User Express Interest",
+                          "toUserId"            : "admin",
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "userMobile"        : userData.data.profile.mobileNumber,
+                              "userEmail"         : userData.data.profile.emailId,
+                              "userCity"          : userData.data.profile.city,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      console.log("sendData",sendDataToAdmin);
+                      axios
+                      .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
+                      .then((result) =>{
+                        console.log("SendEmailNotificationToAdmin",result);
+                        axios
+                        .post('/api/masternotifications/post/sendNotification',sendDataToUser)
+                        .then((res) =>{
+                          console.log("SendEmailNotificationToUser",res);           
+                        })
+                        .catch((error) =>{
+                          console.log("error = ", error);
+                        });           
+                      })
+                            
+                })
+                .catch((error) =>{
+                  console.log("error = ", error);
+                });  
+                               
+              })
+              .catch((error) =>{
+                console.log("error = ", error);
+              }); 
+                       
 
-              console.log("rangeValues = ", rangeValues);
               axios
                 .post('/api/properties/post/list',rangeValues)
                 .then(resultData =>{

@@ -35,25 +35,64 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 		}
 
 	submit(event){
-			event.preventDefault();
-			// console.log("abc");
-			const formValues = {
-				"userID" 		: localStorage.getItem("uid"),
-				"fullName" 		: this.state.name,
-				"emailId" 	 	: this.state.email,
-				"city"       	: this.state.city,
-				"mobileNumber"  : this.refs.mobile.value,
-				"countryCode"	: this.refs.countryCode.value,
-				"status"     	: 'Active',
-				"roles"       	: 'Client',
-			};
-			console.log("WebSignupForm==",formValues);
+		event.preventDefault();
+		// console.log("abc");
+		const formValues = {
+			"userID" 		: localStorage.getItem("uid"),
+			"fullName" 		: this.state.name,
+			"emailId" 	 	: this.state.email,
+			"city"       	: this.state.city,
+			"mobileNumber"  : this.refs.mobile.value,
+			"countryCode"	: this.refs.countryCode.value,
+			"status"     	: 'Active',
+			"roles"       	: 'Client',
+		};
+
+	
+		console.log("WebSignupForm==",formValues);
 		if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){
 			if(formValid(this.state.formerrors)){
 			axios
 				.patch('/api/usersotp/signup',formValues)
 				.then( (res) =>{
+					console.log("res",res)
 					if(res.data.message === "USER-UPDATED"){
+						var sendDataToUser = {
+						    "templateName"	: "User - New Registration",
+						    "toUserId"		: formValues.userID,
+						    "variables"		: {
+						    	"userName"		: this.state.name,
+						    	"userMobile"	: this.refs.mobile.value,
+						    }
+						}
+						console.log("sendData",sendDataToUser);
+						var sendDataToAdmin = {
+						    "templateName"	: "Admin - New Registration",
+						    "toUserId"		: "admin",
+						    "variables"		: {
+						    	"userName"		: this.state.name,
+						    	"userMobile"	: this.refs.mobile.value,
+						    	"userEmail" 	: this.state.email,
+								"userCity"		: this.state.city,
+						    }
+						}
+						console.log("sendData",sendDataToAdmin);
+						axios
+						.post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
+						.then((result) =>{
+							console.log("SendEmailNotificationToAdmin",result);
+							axios
+							.post('/api/masternotifications/post/sendNotification',sendDataToUser)
+							.then((res) =>{
+								console.log("SendEmailNotificationToUser",res);						
+							})
+							.catch((error) =>{
+								console.log("error = ", error);
+							});						
+						})
+						.catch((error) =>{
+							console.log("error = ", error);
+						});
 						console.log("BasicInfo res = ",res);
 						if(this.props.originPage === "header")
 						{

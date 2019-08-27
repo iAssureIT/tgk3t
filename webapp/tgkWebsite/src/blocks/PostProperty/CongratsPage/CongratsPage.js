@@ -38,6 +38,73 @@ import './CongratsPage.css';
 					console.log("resposnse here===================>",res);
 					var cash_per = res.data.data.earnings;
 					console.log("here earnings",cash_per);
+					axios
+                .get('/api/properties/'+this.props.property_id)
+                .then((propertyData) =>{
+                  console.log("propertiesData",propertyData.data);
+                  axios
+                    .get('/api/users/get/one/'+localStorage.getItem("uid"))
+                    .then((userData) =>{
+                          var sendDataToUser = {
+                          "templateName"  : "User - New Property Posted",
+                          "toUserId"      : userData.data._id,
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      console.log("sendData",sendDataToUser);
+                      var sendDataToAdmin = {
+                          "templateName"        : "Admin - New Property Posted",
+                          "toUserId"            : "admin",
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "userMobile"        : userData.data.profile.mobileNumber,
+                              "userEmail"         : userData.data.profile.emailId,
+                              "userCity"          : userData.data.profile.city,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      console.log("sendData",sendDataToAdmin);
+                      axios
+                      .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
+                      .then((result) =>{
+                        console.log("SendEmailNotificationToAdmin",result);
+                        axios
+                        .post('/api/masternotifications/post/sendNotification',sendDataToUser)
+                        .then((res) =>{
+                          console.log("SendEmailNotificationToUser",res);           
+                        })
+                        .catch((error) =>{
+                          console.log("error = ", error);
+                        });           
+                      })
+                            
+                })
+                .catch((error) =>{
+                  console.log("error = ", error);
+                });  
+                               
+              })
+              .catch((error) =>{
+                console.log("error = ", error);
+              }); 
 
 					this.setState({
 						percentage : cash_per
