@@ -157,16 +157,16 @@ import './MyInterestedProperties.css';
 							<div className="row pull-right" id="triangle-topright">				</div>	
 								<div className="row">
 									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
-									{
-										myProperty && myProperty.gallery && myProperty.gallery.Images && myProperty.gallery.Images.length > 0 ?
-										<img alt=""  className="propertyImgDiv" src={myProperty.gallery.Images[0].imgPath} />
-										:
-										<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
-									}
-								</div>
+										{
+											myProperty && myProperty.gallery && myProperty.gallery.Images && myProperty.gallery.Images.length > 0 ?
+											<img alt=""  className="propertyImgDiv" src={myProperty.gallery.Images[0].imgPath} />
+											:
+											<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
+										}
+									</div>
 								<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
-										<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 propertySubText1">				
+										<div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 propertySubText1">				
 											<i className="fa fa-inr"></i>&nbsp;
 											{myProperty.financial && myProperty.financial.totalPrice ?
 												<span>
@@ -182,42 +182,42 @@ import './MyInterestedProperties.css';
 											}	
 										</div>
 
-												<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 propertySubText1">
-													{myProperty.propertyType === "Residential" ? 
-														 <span>
-														 {myProperty.propertyDetails && myProperty.propertyDetails.bedrooms ? myProperty.propertyDetails.bedrooms : "-"} 														  BHK  &nbsp;&nbsp;
-														 </span>
-													:
-													null
-												    }				
-													
-													<i className="fa fa-map-marker text-warning"/>
-													&nbsp;
-													{myProperty.propertyLocation  &&  myProperty.propertyLocation.city && myProperty.propertyLocation.society
-														? 
-														myProperty.propertyLocation.society +", "+myProperty.propertyLocation.subArea +", "+myProperty.propertyLocation.city/*this.state.propertyCity*/ 
-														:
-														 "-"
-													}
-												</div>
+										<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 propertySubText1">
+											{myProperty.propertyType === "Residential" ? 
+												 <span>
+												 {myProperty.propertyDetails && myProperty.propertyDetails.bedrooms ? myProperty.propertyDetails.bedrooms : "-"} 														  BHK  &nbsp;&nbsp;
+												 </span>
+											:
+											null
+										    }				
 											
-												<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 noPad pull-right">				
-													{myProperty.transactionType ?
-														myProperty.transactionType ==="Sell" ?
-														<span className="pull-right text-right col-lg-8  noPad transactionLabel">Sale</span>
-														:
-														myProperty.transactionType ==="Rent" ?
-														<span className="pull-right text-right col-lg-8 noPad transactionLabel">{myProperty.transactionType}</span>
-														:
-														null
-													:
-													"-"
-													}
-												</div>	
+											<i className="fa fa-map-marker text-warning"/>
+											&nbsp;
+											{myProperty.propertyLocation  &&  myProperty.propertyLocation.city && myProperty.propertyLocation.society
+												? 
+												myProperty.propertyLocation.society +", "+myProperty.propertyLocation.subArea +", "+myProperty.propertyLocation.city/*this.state.propertyCity*/ 
+												:
+												 "-"
+											}
+										</div>
+									
+										<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 noPad pull-right">				
+											{myProperty.transactionType ?
+												myProperty.transactionType ==="Sell" ?
+												<span className="pull-right text-right col-lg-8  noPad transactionLabel">Sale</span>
+												:
+												myProperty.transactionType ==="Rent" ?
+												<span className="pull-right text-right col-lg-8 noPad transactionLabel">{myProperty.transactionType}</span>
+												:
+												null
+											:
+											"-"
+											}
+										</div>	
 												
 
 											</div>
-											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
+											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
 												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													{
 														myProperty.propertyType ==="Residential" ?

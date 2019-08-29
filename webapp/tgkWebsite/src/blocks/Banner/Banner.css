@@ -159,7 +159,9 @@
 .banner .nav-pills>li+li{
   margin-left: 0% !important
 }
-
+.mb-64{
+  margin-bottom: 64px;
+}
 
 
 

@@ -90,16 +90,28 @@ class LoginMobNum extends Component {
 			} );
 		}
 
+		isNumberKey(event)
+	   {
+
+	   var charCode = (event.which) ? event.which : event.keyCode
+
+	   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
+	   {
+	    event.preventDefault();
+	      return false;
+	    }
+	    else{
+	      return true;
+	    }
+	  }
+
 
 	render() {
 
    	 const {formerrors} = this.state;
 		return (
-				<div >
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" id="xyz">
-					<form id="" className=" ">
-						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						  	<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mt-150">	
+				<form className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row" id="xyz">
+						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-150">	
 							  <div className="form-group">
 							    <label htmlFor="">Please enter your Mobile No</label>
 							    <div className="input-group inputBox-main " id="">
@@ -116,7 +128,7 @@ class LoginMobNum extends Component {
 							  		{this.state.formerrors.clientMobile &&(
 										<span className="text-danger">{this.state.formerrors.clientMobile}</span>
 									)}*/}
-									  <input type="number" data-text="clientMobile" name="mobile" id="mobile" value={this.state.mobile}  ref="mobile" onChange={this.handleChange}  className="form-control " placeholder="Mobile" required />
+									  <input type="text" data-text="clientMobile" name="mobile" id="mobile" value={this.state.mobile}  ref="mobile" onChange={this.handleChange} onKeyDown={this.isNumberKey.bind(this)} min="0" maxLength="10" className="form-control " placeholder="Mobile" required />
 				                        
 							  	</div>
 							  	{this.state.formerrors.clientMobile &&(
@@ -124,7 +136,7 @@ class LoginMobNum extends Component {
 				                        )}
 							  </div>
 						    </div>
-						 <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 boxLayout1">
+						 <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 boxLayout1">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 									<img alt=""  src="images/1.png" className="build_img2"/>
 								</div>
@@ -132,13 +144,10 @@ class LoginMobNum extends Component {
 									We charge tenants/buyers brokerage & share upto 50% with the property owners.
 								</span>
 						 </div>
-						</div>
 						  	<div className=" col-lg-2 pull-right btnNext">
 							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
 						  	</div>
-					</form>
-				</div>
-			</div>
+				</form>
 		);
 	}
 }

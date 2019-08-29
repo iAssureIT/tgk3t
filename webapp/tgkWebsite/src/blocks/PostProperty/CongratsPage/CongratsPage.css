@@ -25,9 +25,11 @@
 	text-align: center;
     font-size: 42px;
     color: #3784db;
-    position: relative;
+    /*position: relative;
     left: 40px;
-    top: 44px;
+    top: 44px;*/
+    padding-top: 39px;
+    padding-left: 0px;
 }
 .CP2{
 	text-align: center;

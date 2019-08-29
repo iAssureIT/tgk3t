@@ -639,6 +639,7 @@ var imgTitleArray = [];
                           <div  className= "col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center below_text">
                            <b className="text_k11"></b>
                            <span className="under_ln">Choose Property Images</span>
+                           <span className="">Accepted formats are .jpg,.gif,.bmp,& .png</span>
                           </div>      
                           <input  type="file" title="Click to attach file"  name="userPic" onChange={this.uploadPropertyImage.bind(this)} ref="propertyImg"  className="form-control click_input" id="upload-file2" />
                         </div> 
@@ -651,13 +652,14 @@ var imgTitleArray = [];
                         <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Please Upload Images:</h5>
                       </div> 
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                        <div className="clr_k" style={{height:"120px"}}>
+                        <div className="clr_k" style={{height:"140px"}}>
                           <div className="col-lg-offset-1 col-lg-2 col-md-12 col-sm-12 col-xs-12 hand_icon1">
                             <img src="/images/Upload-Icon.png"/>
                           </div>
-                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-10 below_text">
+                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-10 below_text noPad">
                            <b className="text_k11"></b>
-                           <span className="text-center under_ln">Choose Your Image</span>
+                           <span className="text-center under_ln col-lg-12 noPad">Choose Image</span>
+                           <div className="format1">Accepted formats: .jpg,.gif,.bmp,& .png <br/>Max size: 4 MB</div>
                           </div>      
                           <input  type="file" title="Click to attach file"  name="userPic" onChange={this.uploadPropertyImage.bind(this)} ref="propertyImg"  className="form-control click_input" id="upload-file2" />
                         </div> 
@@ -675,13 +677,15 @@ var imgTitleArray = [];
                         <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12">Please Upload Video:</h5>
                       </div> 
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                        <div className="clr_k "  style={{height:"120px"}}>
+                        <div className="clr_k "  style={{height:"140px"}}>
                           <div className="col-lg-offset-1 col-lg-2 col-md-12 col-sm-12 col-xs-12 hand_icon2 move_hand_icon">
                             <img src="/images/Upload-Icon.png"/>
                           </div>
-                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-10 below_text">
+                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-10 below_text noPad">
                            <b className="text_k11"></b>
-                           <span className="under_ln">Choose Your Video</span>
+                           <span className="under_ln col-lg-12 noPad">Choose Video</span>
+                           <div className="format2">Accepted formats: .mp4,.avi,.ogv <br/>Max size: 20 MB</div>
+
                           </div>      
                           <input  type="file" title="Click to attach file" multiple name="userPic" onChange={this.uploadSingleVideo.bind(this)} ref="propertyVideo"  className="form-control click_input" id={this.state.singleVideo} />
                         </div> 
@@ -767,10 +771,10 @@ var imgTitleArray = [];
 					</div>
 				</div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt78">
-				  	{<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+				  	{<div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-left">
 				       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToAvailability.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 				  	</div>}
-				  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
+				  	<div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-right">
 				       <button className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.uploadData.bind(this)} >Finish &nbsp; &nbsp; &rArr;</button>
 				  	</div>
 				</div>

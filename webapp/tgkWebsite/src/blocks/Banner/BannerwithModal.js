@@ -179,22 +179,22 @@ class BannerwithModal extends Component {
 				<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 mt-10">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
 					  <ul className="nav nav-pills textC" role="tablist">
-					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-4 active">
+					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-3 active">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
 					    </li>
 					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-4">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Rent" data-toggle="pill" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a>
 					    </li>
-					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-4">
+					    <li className="nav-item col-lg-4 col-md-4 col-sm-5 col-xs-5">
 					      <a className="nav-link active btn-bg" property-type="Commercial" transaction-type="Sell"  data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
 					  </ul>
 				 	</div>
 				</div>
-				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3">
+				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 mb-64">
 					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType} inputData={this.inputData.bind(this)}/>
 				</div>
-				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 mt-64">
+				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 ">
 					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 br2">
 						<span className="col-lg-12 col-md-12 col-sm-12 col-xs-12 postDetails">Welcome Owners</span>
 						<br/>
@@ -226,7 +226,7 @@ class BannerwithModal extends Component {
 					        </h4>
 					      </div>
 
-					      <div className="modal-body col-lg-12">
+					      <div className="modal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								{ this.props.LoginMobNum 	? <LoginMobNum /> 	  : null }
 								{ this.props.LoginOtp 		? <LoginOtp /> 		  : null }
 								{ this.props.WebSignupForm 	? <WebSignupForm />   : null }

@@ -265,18 +265,16 @@ class BasicInfo extends Component{
 	render() {
 		console.log("CongratsPage",this.props.congratsPage)
     return (
-    	<div >
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			<form id="form">
 			  <div className="row"></div>
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row mt30">	
-				<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				  	 	<label>I am</label>
 						<span className="astrick">*</span>
 				  	 </div>
-				  	<div className="col-lg-9 col-md-9 col-sm-9 col-xs-9 crc_mrg_btm"   >
-				    	<div className="col-lg-1 sellerType1"  >
+				  	<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 crc_mrg_btm"   >
+				    	<div className="col-lg-1 col-md-1 col-sm-4 col-xs-4 sellerType1"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="Owner" 
@@ -288,7 +286,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 sellerType2"  >
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-4 col-xs-4 col-xs-offset-2 sellerType2"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="Care Taker" 
@@ -301,7 +299,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 sellerType3"   >
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-4 col-xs-4 col-xs-offset-2 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Broker" 
@@ -314,10 +312,10 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 					</div>
-					  	<div className="col-lg-8 col-md-8 col-sm-8 col-xs-8 mb-40">
-					  			<span className="col-lg-4 ownerLeft "> Owner</span>
-					  			<span className="col-lg-4 noPad"> Care Taker</span>
-					  			<span className="col-lg-4 brokerLeft"> Broker</span>
+					  	<div className="col-lg-8 col-md-8 col-sm-8 col-xs-12 mb-40">
+					  			<span className="col-lg-4 col-xs-4 ownerLeft "> Owner</span>
+					  			<span className="col-lg-4 col-xs-4 noPad"> Caretaker</span>
+					  			<span className="col-lg-4 col-xs-4 brokerLeft"> Broker</span>
 					  	</div>
          		
 					  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -367,15 +365,15 @@ class BasicInfo extends Component{
 						  </div>
 					  	</div>
 
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
 			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
 			  		<b>My Property is on</b>
 					<span className="astrick">*</span>
 
 			  	</div>
 		  </div>
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  row">
-		  	<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12"> 
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
+		  	<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 "> 
 			  <div className="form-group" id="floor">
 		  		<div className="input-group inputBox-main " id="">
 			      	<div className="input-group-addon inputIcon">
@@ -385,6 +383,7 @@ class BasicInfo extends Component{
 				</div>
 			  </div>
 			</div>
+			<div className="col-lg-1 noPad ofText">OF</div>
 
 			<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  <div className="form-group" id="totalfloor">
@@ -403,7 +402,7 @@ class BasicInfo extends Component{
 
 			  	</div>
 				  
-				<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 boxLayout">
+				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 boxLayout">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<img alt=""  src="/images/2.png" className=""/>
 					</div>
@@ -413,14 +412,12 @@ class BasicInfo extends Component{
 				  
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	
-		  	<div className="form-group col-lg-3	col-md-2 col-sm-4 col-xs-4 pull-right mt40">
-		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-4 col-xs-4" onClick={this.insertProperty.bind(this)} >Save & Next &rArr;</button>
+		  	<div className="form-group col-lg-3	col-md-2 col-sm-12 col-xs-12` pull-right mt40">
+		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-12 col-xs-12" onClick={this.insertProperty.bind(this)} >Save & Next &rArr;</button>
 		  	</div>
 		  </div>
 		  
-		</form>
 		</div>
-    </div> 
 		);
 	}
 	

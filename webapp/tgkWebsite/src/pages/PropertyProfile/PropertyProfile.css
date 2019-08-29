@@ -13,6 +13,9 @@
 .mt150{
   margin-top: 150px;
 }
+.pl3{
+  padding-left: 3%;
+}
 .propertyName{
 	height: 100px;
 }
@@ -385,7 +388,7 @@
 
 .bottomDivFooter{
     background-color: #1c2c66;
-    height: 50px;
+    height: auto;
     padding-top: 15px;
     color: #fff;
 }
@@ -447,4 +450,25 @@
 .postPropertyModalBody{
   min-height: 500px;
 }
+.blogleftarrow{
+    font-size: 60px !important;
+    position: absolute;
+    left: 13px;
+    top: 97px;
+    color: #d5c5b5;
+    z-index: 2;
+}
+.blogrightarrow{
+    position: absolute;
+    top: 97px;
+    font-size: 60px !important;
+    right: 13px;
+    color: #d5c5b5;
+    z-index: 2;
 
+}
+.counter{
+    text-align: center;
+    margin-top: -23px;
+    font-size: 17px;
+}

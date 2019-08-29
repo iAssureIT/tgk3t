@@ -1,26 +1,26 @@
-.propertyBox{
+/*.propertyBox{
 	border: 1px solid #ddd;
 	min-height: 170px; 
 	margin-top: 20px;
 	padding: 10px;
 	padding-left: 2%;
 	padding-right: 2%;
-}
+}*/
 
-.propertyImgDiv{
+/*.propertyImgDiv{
 	height: 150px;
 	border: 1px solid #ddd;
 	width: 100%;
-}
+}*/
 
-.myPropertiesInternal{
+/*.myPropertiesInternal{
 	height:42px;
-}
+}*/
 
-.headerDiv{
+/*.headerDiv{
 	background-color: #044890 !important;
 	height: 100px;
-}
+}*/
 
 .propertyHaedText{
 	font-weight: bold;
@@ -67,7 +67,7 @@
 	text-align: center;
 }
 
-#triangle-topright {
+/*#triangle-topright {
     position: absolute;
     width: 0;
     height: 0;
@@ -75,9 +75,9 @@
     border-left: 100px solid transparent;
     left: 92%;
     top: 0px;
-}
+}*/
 
-.transactionLabel{
+/*.transactionLabel{
 	position: absolute;
 	color: #fff;
 	margin-top: 0px;
@@ -86,7 +86,7 @@
 	font-weight: bold;
 	transform: rotate(45deg);
 }
-
+*/
 .myInterProp{
 	min-height: 500px;
 }

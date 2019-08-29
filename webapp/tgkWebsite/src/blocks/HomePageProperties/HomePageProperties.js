@@ -325,9 +325,13 @@ class HomePageProperties extends Component {
                                   }
                                     <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                       <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
+                                         {localStorage.getItem('uid') ?
                                         <Link to={"/PropertyProfile/"+property._id} target="_blank">
-                                          <button type="button" className="btn-primary btn mt30"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                                        </Link>                                        
+                                        <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      </Link>
+                                      :
+                                      <button type="button" className="btn-primary btn mt30 ml17" onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal">Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      }                                       
                                       </div>
                                     </div>
                                   </div>
@@ -418,9 +422,13 @@ class HomePageProperties extends Component {
                                   }
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
-                                      <Link to={"/PropertyProfile/"+property._id} target="_blank">
+                                      {localStorage.getItem('uid') ?
+                                        <Link to={"/PropertyProfile/"+property._id} target="_blank">
                                         <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                                      </Link>                                    
+                                      </Link>
+                                      :
+                                      <button type="button" className="btn-primary btn mt30 ml17" onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal">Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      }                                    
                                     </div>
                                   </div>
                                 </div>
@@ -513,9 +521,13 @@ class HomePageProperties extends Component {
                                   }
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
-                                      <Link to={"/PropertyProfile/"+property._id} target="_blank">
+                                       {localStorage.getItem('uid') ?
+                                        <Link to={"/PropertyProfile/"+property._id} target="_blank">
                                         <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                                      </Link>                                    
+                                      </Link>
+                                      :
+                                      <button type="button" className="btn-primary btn mt30 ml17" onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal">Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      }                                  
                                     </div>
                                   </div>
                                 </div>
@@ -605,9 +617,13 @@ class HomePageProperties extends Component {
                                       }
                                       <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                         <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
-                                          <Link to={"/PropertyProfile/"+property._id} target="_blank">
-                                            <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                                          </Link>                                        
+                                           {localStorage.getItem('uid') ?
+                                        <Link to={"/PropertyProfile/"+property._id} target="_blank">
+                                        <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      </Link>
+                                      :
+                                      <button type="button" className="btn-primary btn mt30 ml17" onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal">Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      }                                       
                                         </div>
                                       </div>
                                     </div>
@@ -699,9 +715,13 @@ class HomePageProperties extends Component {
                                   }
                                   <div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 ">
                                     <div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 col-lg-offset-1 col-md-offset-1">
-                                      <Link to={"/PropertyProfile/"+property._id} target="_blank">
+                                       {localStorage.getItem('uid') ?
+                                        <Link to={"/PropertyProfile/"+property._id} target="_blank">
                                         <button type="button" className="btn-primary btn mt30 ml17"  >Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
-                                      </Link>                                    
+                                      </Link>
+                                      :
+                                      <button type="button" className="btn-primary btn mt30 ml17" onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal">Details <i className="fa fa-angle-double-right" aria-hidden="true"></i></button>
+                                      }                                    
                                     </div>
                                   </div>
                                 </div>

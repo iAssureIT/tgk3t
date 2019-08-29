@@ -51,6 +51,20 @@ class LoginOtp extends Component {
 		}
 		
 	}
+	isNumberKey(event)
+	   {
+
+	   var charCode = (event.which) ? event.which : event.keyCode
+
+	   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
+	   {
+	    event.preventDefault();
+	      return false;
+	    }
+	    else{
+	      return true;
+	    }
+	  }
 
 	render() {
 		// console.log("originPage",this.props.originPage)
@@ -71,7 +85,7 @@ class LoginOtp extends Component {
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-building iconClr"></i>
 				                    </div>
-							    	<input type="number" className="form-control" ref="otp"  id="" placeholder="Verification Code" data-text="user_mobile"/>
+							    	<input type="text" className="form-control" ref="otp"  id="" onKeyDown={this.isNumberKey.bind(this)} min="0" maxLength="4" placeholder="Verification Code" data-text="user_mobile"/>
 							  	</div>
 							  </div>
 						    </div>

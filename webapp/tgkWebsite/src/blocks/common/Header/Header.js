@@ -36,16 +36,16 @@ class Header extends Component {
 
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad  ">
-				<div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-lg-offset-5 col-md-offset-5 col-sm-offset-5 col-xs-offset-5">
+				<div className="col-lg-7 col-md-7 col-sm-8 col-xs-8 noPad pull-left ">
 					<a href="/"><img alt=""  src="/images/Logo.png" className="hImg pull-right"/></a>
 				</div>
-				<div className="col-lg-3 col-md-3 col-sm-3 col-xs-3 pull-right headerMenu ">
-					<nav className="navbar">
-					    <ul className="nav navbar-nav">
-					    	 <li className="dropdown"><Link to="/AboutUs">ABOUT US</Link></li>
+				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right headerMenu ">
+					<nav className="navbar  col-lg-12 col-xs-12">
+					    <ul className="nav navbar-nav customNav col-lg-12">
+					    	 <li className=" col-xs-6"><Link to="/AboutUs">ABOUT US</Link></li>
 					   
 					      {localStorage.getItem("uid") ? (
-					      	<li className="dropdown"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
+					      	<li className="dropdown col-xs-6"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
 						          <li><Link to="/MyPostedProperties">My Listings</Link></li>
 						          <li><Link to="/MyInterestedProperties">My Interests</Link></li>

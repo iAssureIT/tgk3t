@@ -264,7 +264,7 @@ class SearchProperty extends Component {
 	}
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12">
+			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
 				<form onClick={this.searchResultbtn.bind(this)}>
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 searchProperty noPad">
 						{this.props.propertyType === "Commercial" ?
@@ -280,12 +280,12 @@ class SearchProperty extends Component {
 								</div>
 							</div>
 							<div className="col-lg-4 col-md-4 col-xs-4 col-sm-4 noPad">
-								<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch" onChange={this.handleLocation.bind(this)} />								
+								<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch col-xs-10" onChange={this.handleLocation.bind(this)} />								
 							</div>
 						</div>
 						:
-						<div className="col-lg-6 col-md-6 col-xs-6 col-sm-6 noPad">
-							<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch" onChange={this.handleLocation.bind(this)} />
+						<div className="col-lg-6 col-md-6 col-xs-4 col-sm-4 noPad">
+							<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch col-xs-10" onChange={this.handleLocation.bind(this)} />
 						</div>
 						}
 
@@ -298,7 +298,7 @@ class SearchProperty extends Component {
 					    	}								
 						</datalist>
 
-						<div className="col-lg-3 col-md-3 col-xs-3 col-sm-3 propertyType noPad property">
+						<div className="col-lg-3 col-md-3 col-xs-4 col-sm-4 propertyType noPad property">
 							  	<div className="dropdown" id="dropdown">
 								    <button className="dropdown-toggle btn divWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
@@ -342,7 +342,7 @@ class SearchProperty extends Component {
 								</div>
 							</div>
 						
-							<div className="col-lg-2 col-md-2 col-xs-2 col-sm-2 noPad property">
+							<div className="col-lg-2 col-md-2 col-xs-3 col-sm-3 noPad property">
 							  	<div className="dropdown">
 							  	 	<button className="btn dropdown-toggle divWhite col-lg-12 col-md-12 col-xs-12 col-sm-12" type="button" data-toggle="dropdown">Budget
 								   		<span className="caret"></span>

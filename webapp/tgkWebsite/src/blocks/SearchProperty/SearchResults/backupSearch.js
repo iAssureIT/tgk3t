@@ -182,11 +182,11 @@ class SearchResults extends Component {
 
 			propertyAgeList : [
 				{value: "Under Construction",	option: "Under Construction"},
-				{value: "New", 	option: "Newly Built"	},
-				{value: "<4", 	option: "Less than 4 Years"	},
-				{value: "4-8", 	option: "4 - 8 Years"	},
-				{value: "8-12",  option: "8 - 12 Years" },
-				{value: ">12",	option: "Above 12 Years"	},
+				{value: "New", 	option: "New"	},
+				{value: "1-2", 	option: "1 - 2 Years"	},
+				{value: "2-5", 	option: "2 - 5 Years"	},
+				{value: "5-8",  option: "5 - 8 Years" },
+				{value: ">8",	option: "> 8 Years"	},
 			],
 
 			MISCList : [

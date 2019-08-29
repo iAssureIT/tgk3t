@@ -186,7 +186,7 @@ class Location extends Component {
 					console.log("location formValues = ",formValues);
 
 						localStorage.setItem("index",this.state.index);
-						if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!=""  ){
+						if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" && this.refs.housebuilding.value!="" ){
 							axios
 							.patch('/api/properties/patch/propertyLocation',formValues)
 							.then( (res) =>{
@@ -227,7 +227,7 @@ class Location extends Component {
 				console.log("location formValues = ",formValues);
 
 					localStorage.setItem("index",this.state.index);
-					if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" ){
+					if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" && this.refs.housebuilding.value!="" ){
 						axios
 						.patch('/api/properties/patch/propertyLocation',formValues)
 						.then( (res) =>{
@@ -550,74 +550,71 @@ class Location extends Component {
 	       // console.log("index here", this.state.index);
 	    }
 
-		return (
-			<form>
-				<div className="col-lg-12">
-					<div className="col-lg-4 noPad pt28">
-					    	<span className="col-lg-12 locSpan">Pincode </span>
-					    	<div className="col-lg-12">
-								    <div className="input-group inputBox-main " id="">
-								      	<div className="input-group-addon inputIcon">
-						                <i className="fa fa-building iconClr"></i>
-					                    </div>
-								    <input type="text" value={this.state.pincode} className="form-control" ref="pincode"  placeholder="Enter Pincode" onChange={this.pincodeChange.bind(this)} onBlur={this.handlePincode.bind(this)}/>
-								  	</div>
-							</div>
-					</div>
-					<div className=" col-lg-1">
-						<div className="vl"></div>
-						<span className="">OR</span>
-						<div className="vl"></div>
-					</div>
-					<div className="col-lg-7 noPad">
-						<div className="col-lg-12 noPad">
-							<div className="col-lg-6">
-								    <div className="form-group" id="">
-								    	<span htmlFor="">State</span>
-										<span className="astrick">*</span>
-								  		<div className=" " id="">
-										  	<select className="custom-select form-control"   ref="state" placeholder="select" id="selectState" value={this.state.stateCode}  onChange={this.selectState.bind(this)}>
-										    	<option value="">-- State --</option>
-										    	{
-			                                    this.state.listofStates ?
-			                                    this.state.listofStates.map((data, index)=>{
-			                                      return(
-			                                        <option key={index} value={data.stateCode}> {data.stateName} </option> 
-			                                      );
-			                                    })
-			                                    :
-			                                    null
-			                                  }
-											</select>
-										</div>
-								  </div>
-							</div>
-							<div className="col-lg-6">
-								<div className="form-group" id="">
-							    	<span htmlFor="">City</span>
-									<span className="astrick">*</span>
-
-							  		<div className=" " id="">
-									  	<select className="custom-select form-control " value={this.state.districtName+'-'+this.state.blockName+'-'+this.state.cityName} name="city" ref="city" placeholder="select"  id="selectCity" onChange={this.selectCity.bind(this)} >
-									    	<option value="">-- City --</option>
-									    	{
-		                                    this.state.listofCities.length > 0 ? 
-		                                    this.state.listofCities.map((data, index)=>{
-		                                      return(
-		                                        <option key={index} value={data.districtName+'-'+data.blockName+'-'+data.cityName}> {data.cityName}</option>                                        
-		                                      );
-		                                    })
-		                                    :
-		                                    <option disabled>Select State first</option>
-		                                  }     
-										</select>
-									</div>
-					 	 		</div>
-							</div>
+			return (
+				<div  className="col-lg-12 col-md-12 col-sm-12 mt40">
+				    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+				    	<span className="locSpan col-lg-2 col-lg-offset-2 col-xs-12 col-sm-12 ">Pincode </span>
+				    	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 form-group">
+							    <div className="input-group inputBox-main " id="">
+							      	<div className="input-group-addon inputIcon">
+					                <i className="fa fa-building iconClr"></i>
+				                    </div>
+							    <input type="text" value={this.state.pincode} className="form-control" ref="pincode"  placeholder="Enter Pincode" onChange={this.pincodeChange.bind(this)} onBlur={this.handlePincode.bind(this)}/>
+							  	</div>
 						</div>
-						<div className="col-lg-12 noPad">
-							<div className="col-lg-6">
-								<div className="form-group" id="">
+				    </div>
+				    <div className="orSeparatorLine col-lg-8 col-lg-offset-2 col-xs-12 col-sm-12"> 
+				    	<div className="wordContainer col-lg-1 col-lg-offset-5 col-xs-12 col-sm-12"> 
+				    		OR 
+						</div>    			    		
+				    </div>    
+				<div id="location">    
+					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm">	
+					    <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						    <div className="form-group" id="">
+						    	<span htmlFor="">State</span>
+								<span className="astrick">*</span>
+						  		<div className=" " id="">
+								  	<select className="custom-select form-control"   ref="state" placeholder="select" id="selectState" value={this.state.stateCode}  onChange={this.selectState.bind(this)}>
+								    	<option value="">-- State --</option>
+								    	{
+	                                    this.state.listofStates ?
+	                                    this.state.listofStates.map((data, index)=>{
+	                                      return(
+	                                        <option key={index} value={data.stateCode}> {data.stateName} </option> 
+	                                      );
+	                                    })
+	                                    :
+	                                    null
+	                                  }
+									</select>
+								</div>
+						  </div>
+					    </div>
+					    <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+						    <div className="form-group" id="">
+						    	<span htmlFor="">City</span>
+								<span className="astrick">*</span>
+
+						  		<div className=" " id="">
+								  	<select className="custom-select form-control " value={this.state.districtName+'-'+this.state.blockName+'-'+this.state.cityName} name="city" ref="city" placeholder="select"  id="selectCity" onChange={this.selectCity.bind(this)} >
+								    	<option value="">-- City --</option>
+								    	{
+	                                    this.state.listofCities.length > 0 ? 
+	                                    this.state.listofCities.map((data, index)=>{
+	                                      return(
+	                                        <option key={index} value={data.districtName+'-'+data.blockName+'-'+data.cityName}> {data.cityName}</option>                                        
+	                                      );
+	                                    })
+	                                    :
+	                                    <option disabled>Select State first</option>
+	                                  }     
+									</select>
+								</div>
+						  </div>
+					    </div>
+						<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+							<div className="form-group" id="">
 							    <span htmlFor="">Area/Suburb </span>
 								<span className="astrick">*</span>
 
@@ -638,78 +635,78 @@ class Location extends Component {
 									</select>
 								</div>
 							  </div>
-							</div>
-							<div className="col-lg-6">
-								<div className="form-group" id="">
-								    <span htmlFor="">Sub-Area</span>
-									<span className="astrick">*</span>
+						</div>
+					    <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+							<div className="form-group" id="">
+							    <span htmlFor="">Sub-Area</span>
+								<span className="astrick">*</span>
 
-								    <div className=" " id="">
-									    <input type="text" list="subAreaList" className="form-control" value={this.state.subAreaName} ref="subArea" name="subAreaName" placeholder="Enter Subarea" onChange={this.handleChange.bind(this)} onBlur={this.handleSubarea.bind(this)}/>
-									    <datalist id="subAreaList">
-									    	{this.state.subAreaList.length>0 ? 
-									    		this.state.subAreaList.map( (subArea,index)=>{
-										    		return(<option value={subArea.subareaName} key={index} />)
-									    		})
-									    		: ""
-									    	}
-									    </datalist>
-									</div>
+							    <div className=" " id="">
+								    <input type="text" list="subAreaList" className="form-control" value={this.state.subAreaName} ref="subArea" name="subAreaName" placeholder="Enter Subarea" onChange={this.handleChange.bind(this)} onBlur={this.handleSubarea.bind(this)}/>
+								    <datalist id="subAreaList">
+								    	{this.state.subAreaList.length>0 ? 
+								    		this.state.subAreaList.map( (subArea,index)=>{
+									    		return(<option value={subArea.subareaName} key={index} />)
+								    		})
+								    		: ""
+								    	}
+								    </datalist>
 								</div>
 							</div>
+					    </div>
+				    </div>
+				    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mrgBtm" >
+				  		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						  	<div className="form-group"  id="" >
+							    <span htmlFor="">Society</span>
+								<span className="astrick">*</span>
+
+							    <div className="input-group  " id="">
+							      	<div className="input-group-addon inputIcon">
+					                 <i className="fa fa-building iconClr"></i>
+				                    </div>
+								    <input type="text" list="societyList" className="form-control" ref="society" value={this.state.societyName} name="societyName" placeholder="Enter Society" onChange={this.handleChange.bind(this)}  onBlur={this.handleSociety.bind(this)}/>
+								    <datalist id="societyList">
+								    	{this.state.societyList.length>0 ? 
+								    		this.state.societyList.map( (society,index)=>{
+									    		return(<option value={society.societyName} key={index} />)
+								    		})
+								    		: ""
+								    	}
+								    </datalist>
+							  	</div>
+					        </div>
 						</div>
-					</div>
-				</div>
-			    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20" >
-			  		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-					  	<div className="form-group"  id="" >
-						    <span htmlFor="">Society</span>
-							<span className="astrick">*</span>
+						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							  <div className="form-group"  id="" >
+								    <span htmlFor="">House/Building Number</span>
+									<span className="astrick">*</span>
 
-						    <div className="input-group  " id="">
-						      	<div className="input-group-addon inputIcon">
-				                 <i className="fa fa-building iconClr"></i>
-			                    </div>
-							    <input type="text" list="societyList" className="form-control" ref="society" value={this.state.societyName} name="societyName" placeholder="Enter Society" onChange={this.handleChange.bind(this)}  onBlur={this.handleSociety.bind(this)}/>
-							    <datalist id="societyList">
-							    	{this.state.societyList.length>0 ? 
-							    		this.state.societyList.map( (society,index)=>{
-								    		return(<option value={society.societyName} key={index} />)
-							    		})
-							    		: ""
-							    	}
-							    </datalist>
-						  	</div>
-				        </div>
-					</div>
-					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						  <div className="form-group"  id="" >
-							    <span htmlFor="">House/Building Number</span>
-								
-						    <div className="input-group  " id="">
-						      	<div className="input-group-addon inputIcon">
-				                <i className="fa fa-building iconClr"></i>
-			                    </div>
-						    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-						    <input type="text" className="form-control" ref="housebuilding" name="address" value={this.state.address} onChange={this.handleChange.bind(this)} placeholder="Enter House Address"/>
-						    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
-						  	</div>
-						  </div>
-					</div>
-					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						  <div className="form-group"  id="" >
-							    <span htmlFor="">Landmark</span>
+							    <div className="input-group  " id="">
+							      	<div className="input-group-addon inputIcon">
+					                <i className="fa fa-building iconClr"></i>
+				                    </div>
+							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
+							    <input type="text" className="form-control" ref="housebuilding" name="address" value={this.state.address} onChange={this.handleChange.bind(this)} placeholder="Enter House Address"/>
+							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+							  	</div>
+							  </div>
+						</div>
+						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							  <div className="form-group"  id="" >
+								    <span htmlFor="">Landmark</span>
 
-						    <div className="input-group  " id="">
-						      	<div className="input-group-addon inputIcon">
-				                <i className="fa fa-building iconClr"></i>
-			                    </div>
-						    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-						    <input type="text" className="form-control" name="landmark" ref="landmark" value={this.state.landmark}  onChange={this.handleChange.bind(this)} placeholder="Landmark "/>
-						    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
-						  	</div>
-						  </div>
-					</div>
+							    <div className="input-group  " id="">
+							      	<div className="input-group-addon inputIcon">
+					                <i className="fa fa-building iconClr"></i>
+				                    </div>
+							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
+							    <input type="text" className="form-control" name="landmark" ref="landmark" value={this.state.landmark}  onChange={this.handleChange.bind(this)} placeholder="Landmark "/>
+							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+							  	</div>
+							  </div>
+						</div>
+				    </div>
 				</div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40 ">
 				  	{
@@ -722,7 +719,7 @@ class Location extends Component {
 				       <button className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.insertLocation.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 				  	</div>
 				</div>
-			</form>
+			</div>
 		);
 	}
 }

@@ -381,10 +381,9 @@ import './Amenities.css';
 		  	 	</div>
 		  	 </div>*/}
 		  	 <div className="col-lg-12  col-md-10 col-sm-12 col-xs-12 mt40 borderClass padd0">
-		  	 	<div className="col-lg-12  borderBtm padd0 AmeniCenter">
+		  	 	{/*<div className="col-lg-12  borderBtm padd0 AmeniCenter">
 		  	 		<b>All Amenities</b>
-		  	 		{/*<div className="col-lg-6 FF4I"><b>External</b></div>*/}
-		  	 	</div>
+		  	 	</div>*/}
 
 		  	 	<div className = "container-fluid padd0 ">
 		  	 		{console.log("here amenity in map",this.state.allAmenities)}
@@ -418,12 +417,12 @@ import './Amenities.css';
 		  	</div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	{
-		  		<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+		  		<div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-left">
 		      		 <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23" onClick={this.backToPropertyDetails.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 		  		</div>
 		  		
 		  	}
-		  	<div className="form-group mgbt col-lg-3 col-md-3 col-sm-4 col-xs-4 pull-right ">
+		  	<div className="form-group mgbt col-lg-3 col-md-3 col-sm-6 col-xs-6 pull-right ">
 		       <button type="submit "  className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mb20 mt23"  onClick={this.updateUser.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 		  	</div>
 		  </div>

@@ -172,8 +172,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				"uid" 				  : localStorage.getItem("uid"),
 				"available"			  : this.state.available
 				};
-				console.log("Availability req = ",formValues);
-			    if(this.state.available!==""){
+				console.log("Availability req = ",this.state.available);
+			    if(this.state.available.length!==0){
 			    		
 					axios
 					.patch('/api/properties/patch/availabilityPlan',formValues)
@@ -320,6 +320,20 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				[name]:value
 			} );
 		}
+		 isNumberKey(event)
+		   {
+
+		   var charCode = (event.which) ? event.which : event.keyCode
+
+		   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
+		   {
+		    event.preventDefault();
+		      return false;
+		    }
+		    else{
+		      return true;
+		    }
+		  }
 
 	render() {
 		console.log("this.state.contactPerson",this.state.contactPerson);
@@ -355,12 +369,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
            <div className="col-lg-12  col-md-12 col-sm-12 col-xs-12">
 			<form id="form">
 			  <div className="row"></div>
-			   {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<label className="col-lg-6">Who will show?</label>
-			  	 	<label className="col-lg-6">Phone Number<span className="astrick">*</span></label>
-			  	 </div>
-			  </div>*/}
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  	<div className="form-group" id="">
@@ -368,7 +376,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					 	<div className="can-toggle1 genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox"/>
 				              <label className="formLable" htmlFor="d">
-				             	 <div className="can-toggle1__switch" data-checked="Myself"  data-unchecked="Someone" ></div>
+				             	 <div className="can-toggle1__switch" data-checked="Myself"  data-unchecked="Someone Else" ></div>
 				                <div className="can-toggle1__label-text"></div>
 				              </label>
 			            </div>
@@ -384,7 +392,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-mobile iconClr"></i>
 		                    </div>
-					    		<input type="number" data-text="clientMobile" name="contactPersonMobile" value={this.state.contactPersonMobile} onChange={this.handleChange.bind(this)} className="form-control" ref="contactPersonMobile" min="0" placeholder="Phone Number" />
+					    		<input type="text" data-text="clientMobile" name="contactPersonMobile" value={this.state.contactPersonMobile} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} className="form-control" ref="contactPersonMobile" min="0" maxLength="10" placeholder="Phone Number" />
 					  		</div>
 					  		{this.state.formerrors.clientMobile &&(
 		                          <span className="text-danger">{formerrors.clientMobile}</span> 
@@ -412,7 +420,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			  	 </div>
 			  </div>
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">	
-		    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">	
+		    	<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12">	
 		    		<label className=""> Availability <span className="astrick">*</span></label>
 					  <select className="custom-select form-control " ref="availability" placeholder="select" name="availableDay" >
 				    	<option value="">-- Select --</option>
@@ -430,10 +438,10 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				</div>
 
 
-				<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row">
 	    			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> From Time<span className="astrick">*</span> </label>
 
-					<div className="col-lg-7 col-md-8 col-sm-8 col-xs-8"  id="" >
+					<div className="col-lg-7 col-md-8 col-sm-7 col-xs-7"  id="" >
 					    <div className="input-group">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
@@ -441,7 +449,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						    <input type="time" name="timeFrom" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>
 					  	</div>
 					</div>
-				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
+				  	<div className="col-lg-5 col-md-4 col-sm-5 col-xs-5"  id="" >
 					    <div className="input-group" id="">
 						    <select className="form-control col-lg-12" ref="timeFromAMPM" defaultValue="AM">
 						    	<option > AM </option>
@@ -451,10 +459,10 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			  		</div>
 				</div>
 
-				<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row">
 	    			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> To Time <span className="astrick">*</span></label>
 
-					<div className="col-lg-7 col-md-8 col-sm-8 col-xs-8"  id="" >
+					<div className="col-lg-7 col-md-8 col-sm-7 col-xs-7"  id="" >
 					    <div className="input-group inputBox-main ">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
@@ -462,7 +470,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						    <input type="time" className="form-control col-lg-12" name="timeTo" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>
 					  	</div>
 					</div>
-				  	<div className="col-lg-5 col-md-4 col-sm-4 col-xs-4"  id="" >
+				  	<div className="col-lg-5 col-md-4 col-sm-5 col-xs-5"  id="" >
 					    <div className="input-group" id="">
 						    <select className="form-control col-lg-12" ref="timeToAMPM" defaultValue="PM">
 						    	<option > AM </option>
@@ -470,14 +478,18 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						    </select>
 					  	</div>
 			  		</div>
-			  	</div> 
+			  	</div>
+			  	<div className="col-lg-1 col-md-2 col-sm-12 col-xs-12 ">
+			    	<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12">.</label>				  
+					<button className="btn btn-primary" onClick={this.handleAvailability.bind(this)}>Add Slot +</button>					  	
+				</div> 
 		  	</div>
-		  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 pull-right">
+		  	 {/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			  	 <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 pull-right">
 			    	<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"></label>				  
 					<button className="btn btn-primary" onClick={this.handleAvailability.bind(this)}>Add Slot +</button>					  	
 				</div>
-			</div>	
+			</div>	*/}
 
 		   	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23">	
 		  	 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -486,16 +498,17 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				    columns={columns}
 				    className={"-striped -highlight"}
 				    minRows={3}
+				    showPagination={false}
 				  />
 			  	 	
 				</div>
 			</div>
 
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20">
-		  	{<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+		  	{<div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-left">
 		       <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23" onClick={this.backToFinancials.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 		  	</div>}
-		  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
+		  	<div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-right">
 		       <button type="submit" className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12 mt23"  onClick={this.insertAvailability.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 		  	</div>
 		  </div>

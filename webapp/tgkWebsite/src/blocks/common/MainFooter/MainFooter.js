@@ -144,6 +144,21 @@ export default class MainFooter extends Component{
                 this.refs.mobileNumber.value = "";
                 this.refs.message.value = "";
   }
+   isNumberKey(event)
+   {
+
+   var charCode = (event.which) ? event.which : event.keyCode
+
+   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
+   {
+    event.preventDefault();
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
   render() {
     const {formerrors} = this.state;
     return (
@@ -172,7 +187,7 @@ export default class MainFooter extends Component{
                         </div>
                         
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 " >
-                          <input type="number" className="form-control" data-text="clientMobile" name="mobile"  onChange={this.handleChange} placeholder="Phone"  ref="mobileNumber"  min="0"/>
+                          <input type="text" className="form-control" data-text="clientMobile" name="mobile"  onChange={this.handleChange} onKeyDown={this.isNumberKey.bind(this)} placeholder="Phone"  ref="mobileNumber"  min="0" maxLength="10"/>
                           {this.state.formerrors.clientMobile &&(
                             <span className="text-danger">{formerrors.clientMobile}</span> 
                           )}
@@ -190,56 +205,54 @@ export default class MainFooter extends Component{
                       </div>
                     </div>
                 </div>
-                <div className="col-lg-6 col-md-10 col-sm-10 col-xs-10 footerContactUs" >
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 ml20 " >
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  " >
-                      <div className="col-lg-2 col-md-10 col-sm-10 col-xs-10 footerImgContainer" >
+                <div className="col-lg-6 col-md-10 col-sm-12 col-xs-12 footerContactUs mt20 ml20" >
+                      <div className="col-lg-2 col-md-10 col-sm-4 col-xs-4  col-xs-offset-2 footerImgContainer" >
                         <img alt=""  src="/images/Logo.png" />
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails mt40">
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails mt40">
                         <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 1 </span><span className="col-lg-9 noPad">: +91 9952 040 040</span>
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails">
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
                         <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 7776 040 040</span>
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails">
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
                          <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad">: customercare@thegoldenkey.co.jp</span><br/>
                          <span className="col-lg-6 col-lg-offset-3 noPad">&nbsp; /sales@thegoldenkey.co.jp</span>
                       </div>
-                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails1 mt10">
+                      <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails1 mt10">
                         <span className="col-lg-3 noPad"><i className="fa fa-globe globe col-lg-1" aria-hidden="true"></i>&nbsp;  Website</span><span className="col-lg-9 noPad">  : www.tgk.com</span>
                       </div>
-                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 footerContactDetails" >
+                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 footerContactDetails" >
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                            <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13">
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mr13">
                               <div className="row">
                                 <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
                                   <a href="https://www.facebook.com/">  <i className="fa fa-facebook-f"></i></a>
                                 </div>
                               </div>
                             </div>
-                            <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13">
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xs-offset-1 mr13">
                              <div className="row">
                                 <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
                                   <a href="https://twitter.com/login?lang=en"><i className="fa fa-twitter" aria-hidden="true"></i></a>
                                 </div>
                               </div>
                             </div> 
-                            <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13">
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xs-offset-1 mr13">
                               <div className="row">
                                 <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
                                   <a href="https://www.linkedin.com/uas/login"><i className="fa fa-linkedin"></i></a>
                                 </div>
                               </div>
                             </div>
-                            <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 mr13 ">
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xs-offset-1 mr13 ">
                               <div className="row">
                                 <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
                                   <a href="https://www.instagram.com/?hl=en"><i className="fa fa-instagram"></i></a>
                                 </div>
                               </div>
                             </div>
-                            <div className="col-lg-1 col-md-3 col-sm-12 col-xs-12 ">
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xs-offset-1 ">
                               <div className="row">
                                 <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
                                   <a href="https://www.youtube.com/"><i className="fa fa-youtube"></i></a>
@@ -248,17 +261,15 @@ export default class MainFooter extends Component{
                             </div>
                           </div>
                         </div>
-                      </div>                       
-                    </div>
                   </div>
                 </div>  
             </div>
-            <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 bottomDivFooter" >
-              <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 " >
-                <div className="col-lg-6 col-md-10 col-sm-10 col-xs-10 " >
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottomDivFooter" >
+              <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 " >
+                <div className="col-lg-6 col-md-10 col-sm-6 col-xs-6 " >
                   <label>Copyright <i className="fa fa-copyright"></i> 2019 THE GOLDEN KEY. All rights reserved.</label>
                 </div>
-                 <div className="col-lg-6 col-md-10 col-sm-10 col-xs-10 rightDiv" >
+                 <div className="col-lg-6 col-md-10 col-sm-6 col-xs-6 rightDiv" >
                   <label className="pull-right">Site Map</label>
                   <label className="pull-right">Terms of Use</label>
                   <label className="pull-right">Privacy Policy</label>

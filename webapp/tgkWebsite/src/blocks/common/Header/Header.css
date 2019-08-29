@@ -1,6 +1,6 @@
 .nav>li>a:hover {
     text-decoration: none;
-    background-color: #795050;
+    /*background-color: #795050;*/
 }
 .navbar-nav>li>a {
     padding-top: 15px;
@@ -17,7 +17,7 @@
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #fff;
+    /*background: #fff;*/
 }
 .navText{
 	background-color: transparent !important;
@@ -35,5 +35,9 @@ ul ul a {
     /*padding-left: 65px;*/
     font-size: 15px;
     font-family: Roboto;
+    text-align: center;
 
+}
+.customNav>li>a:focus, .customNav>li>a:hover{
+ background-color: #8f90ce !important;
 }

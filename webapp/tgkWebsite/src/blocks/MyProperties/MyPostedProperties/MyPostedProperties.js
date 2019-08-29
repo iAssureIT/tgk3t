@@ -161,7 +161,7 @@ import './MyPostedProperties.css';
 
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPostProp noPad">
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 newPost">
+				<div className="col-lg-12 col-md-12 col-sm-9 col-xs-9 newPost">
 				 	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
                       <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postNewProperty.bind(this)}> Post New Property </button> 
                 	</div>
@@ -173,10 +173,9 @@ import './MyPostedProperties.css';
 					this.state.myProperties.map((myProperty,index)=>{
 						// console.log("here details",myProperty);
 					return(
-						<div key={index} id={myProperty._id} onClick={this.goProfile.bind(this)} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
+						<div key={index} id={myProperty._id} onClick={this.goProfile.bind(this)} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-xs-10 propertyBox ">			
 							<div className="row pull-right" id="triangle-topright">				</div>	
-								<div className="row">
-									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
+									<div className="col-lg-3 col-md-3 col-sm-10 col-xs-10 noPad">				
 										{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-right ">
 											<h5 className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-right intrestBtn">
 												<i  className="fa fa-heart-o heartBtn" onClick={this.heartClick.bind(this)}></i>&nbsp;<span>{this.state.heartStatus}</span>
@@ -192,7 +191,7 @@ import './MyPostedProperties.css';
 									</div>
 									<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
-											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 propertySubText1">				
+											<div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 propertySubText1">				
 												<i className="fa fa-inr"></i>&nbsp;
 												{myProperty.financial && myProperty.financial.totalPrice ?
 													<span>
@@ -208,7 +207,7 @@ import './MyPostedProperties.css';
 												}	
 											</div>
 
-											<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 propertySubText1">
+											<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 propertySubText1">
 												{myProperty.propertyType === "Residential" ? 
 													 <span>
 													 { myProperty.propertyDetails && myProperty.propertyDetails.bedrooms ? myProperty.propertyDetails.bedrooms : "-"} BHK  &nbsp;&nbsp;
@@ -241,7 +240,7 @@ import './MyPostedProperties.css';
 												}
 											</div>	
 										</div>
-										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
+										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
 											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 												{
 													myProperty.propertyType ==="Residential" ?
@@ -300,7 +299,6 @@ import './MyPostedProperties.css';
 											</div>
 										</div>
 											</div>
-										</div>
 									</div>
 							)
 						})

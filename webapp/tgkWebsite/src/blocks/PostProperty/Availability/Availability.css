@@ -173,7 +173,7 @@
   border-radius: 4px;
 }
 .can-toggle1 label .can-toggle1__switch:before {
-  left: 67px;
+  left: 98px;
   font-size: 12px;
   line-height: 36px;
   width: 67px;
@@ -278,32 +278,34 @@
 }
 
 .can-toggle1.demo-rebrand-2 input[type="checkbox"]:checked ~ label .can-toggle1__switch:after {
-  -webkit-transform: translate3d(69PX, 0, 0);
-          transform: translate3d(69PX, 0, 0);
+  -webkit-transform: translate3d(116PX, 0, 0);
+          transform: translate3d(116PX, 0, 0);
 }
 
 .can-toggle1.demo-rebrand-2 label {
   font-size: 13px;
 }
 .can-toggle1.demo-rebrand-2 label .can-toggle1__switch {
-  height: 30px;
-  flex: 0 0 140px;
-  font-weight: 800;
-  border-radius: 60px;
-  cursor: pointer;
+    height: 37px;
+    flex: 0 0 236px;
+    font-weight: bold;
+    border-radius: 71px;
+    cursor: pointer;
 }
 .can-toggle1.demo-rebrand-2 label .can-toggle1__switch:before {
-  font-size: 13px;
-  line-height: 28px;
-  width: 50px;
+  font-size: 14px;
+  line-height: 36px;
+  width: 132px;
   padding: 0 12px;
 }
 .can-toggle1.demo-rebrand-2 label .can-toggle1__switch:after {
-  top: 2px;
-  left: 2px;
-  border-radius: 30px;
-  line-height: 25px;
-  font-size: 13px;
+    top: 8px;
+    left: 7px;
+    border-radius: 30px;
+    line-height: 23px;
+    font-size: 14px;
+    width: 101px;
+    margin-right: 6px;
 }
 
 

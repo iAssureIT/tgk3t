@@ -1,10 +1,10 @@
 .BoxSize1 {
-    height: 750px;
+    height: auto;
     background-image: url(/images/TGK_Post.png);
 }
 
 .About1{
-	height: 600px;
+	height: auto;
     color: #555;
     background-color: #fff;
     margin-top: 30px;

@@ -1,6 +1,6 @@
 .propertyBox{
 	border: 1px solid #ddd;
-	height: 170px; 
+	height: auto; 
 	margin-top: 20px;
 	padding: 10px;
 	padding-left: 2%;
@@ -14,7 +14,9 @@
 }
 
 .myPropertiesInternal{
-	height:42px;
+	/*height:42px;*/
+	height: auto;
+	/*margin-bottom: 15px;*/
 }
 
 .headerDiv{
@@ -82,7 +84,7 @@
 	color: #fff;
 	margin-top: 0px;
 	font-size: 20px;
-	margin-left: 42%;
+	margin-left: 50%;
 	font-weight: bold;
 	transform: rotate(45deg);
 }

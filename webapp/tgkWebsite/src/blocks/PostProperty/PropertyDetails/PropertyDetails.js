@@ -203,6 +203,20 @@ import './PropertyDetails.css';
 				[name]       : target
 			});
 		 }
+		 isNumberKey(event)
+		   {
+
+		   var charCode = (event.which) ? event.which : event.keyCode
+
+		   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
+		   {
+		    event.preventDefault();
+		      return false;
+		    }
+		    else{
+		      return true;
+		    }
+		  }
 		
 
 	render() {
@@ -348,9 +362,9 @@ import './PropertyDetails.css';
 					  		<span className="astrick">*</span>
 					  	</div>
 				    </div>
-					<div className="col-lg-10 col-md-10 col-sm-10 col-xs-10 pl29">	
+					<div className="col-lg-10 col-md-10 col-sm-10 col-xs-12 pl29">	
 							 
-						<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+						<label className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12 ">
 					        <input type="radio"
 					             name="optradio"  
 					             value="Fully furnished" 
@@ -360,7 +374,7 @@ import './PropertyDetails.css';
 					      <span className="mb5">Fully furnished</span> 
 
 					    </label>
-					    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
+					    <label className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12">
 					      	<input type="radio" 
 					      		 name="optradio" 
 					      		 value="Semi furnished" 
@@ -370,7 +384,7 @@ import './PropertyDetails.css';
 					  	 	<span className="mb5">Semi furnished</span>  
 
 					    </label>
-					    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3">
+					    <label className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12">
 					      	<input type="radio"
 					      		 name="optradio" 
 					      		 value="Unfurnished" 
@@ -397,11 +411,11 @@ import './PropertyDetails.css';
 										<select className="custom-select form-control " name="ageofproperty" ref="ageofproperty" placeholder="select" value={this.state.ageofproperty} onChange={this.handleChange.bind(this)} >
 									    	<option value="" className="hidden">--Property Age--</option>
 									    	<option value="Under Construction">Under Construction</option>
-									    	<option value="New">New(Less than a year)</option>
-									    	<option value="1-2">1-2 Years</option>
-									    	<option value="2-5">2-5 Years</option>
-									    	<option value="5-8">5-8 Years</option>
-									    	<option value=">8"> >8 Years</option>
+									    	<option value="New">Newly Built</option>
+									    	<option value="<4">Less than 4 Years</option>
+									    	<option value="4-8">4-8 Years</option>
+									    	<option value="8-12">8-12 Years</option>
+									    	<option value=">12"> Above 12 Years</option>
 										</select>
 									</div>				  
 								</div>
@@ -423,6 +437,7 @@ import './PropertyDetails.css';
 									    	<option value="Northwest">Northwest</option>
 									    	<option value="Southeast">Southeast</option>
 									    	<option value="Southwest">Southwest</option>
+									    	<option value="Don't Know">Don't Know</option>
 										</select>
 									</div>				  
 								</div>
@@ -436,7 +451,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-building iconClr"></i>
 				                    </div>
-						    			<input type="number" className="form-control" name="superArea" value={this.state.superArea} ref="superArea" placeholder="Super Area" min="0" max="20000" id="first" onChange={this.handleChange.bind(this)}/>	
+						    			<input type="text" className="form-control" name="superArea" value={this.state.superArea} ref="superArea" placeholder="Super Area" min="0" id="first" onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} />	
 						  			<div className="input-group-addon inputIcon">
 				                     Sq ft
 				                    </div>
@@ -451,7 +466,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-building iconClr"></i>
 				                    </div>
-							    	<input type="number" className="form-control" ref="builtupArea" name="builtupArea" value={this.state.builtupArea}  onChange={this.handleChange.bind(this)} placeholder="Built Up Area" min="0" max="20000" id="second" onBlur={this.builtArea.bind(this)}/>
+							    	<input type="text" className="form-control" ref="builtupArea" name="builtupArea" value={this.state.builtupArea}  onChange={this.handleChange.bind(this)} placeholder="Built Up Area" min="0" max="20000" id="second" onKeyDown={this.isNumberKey.bind(this)} onBlur={this.builtArea.bind(this)}/>
 							  		<div className="input-group-addon inputIcon">
 				                     Sq ft
 				                    </div>
@@ -462,12 +477,12 @@ import './PropertyDetails.css';
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
 					  	
 					  	{
-					  		<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+					  		<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-6 pull-left">
 					       		<button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12 " onClick={this.backToLocation.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
 					  		</div>
 					  	
 					  	}
-					  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right ">
+					  	<div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-6 pull-right ">
 					       <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)}>Save & Next &nbsp; &nbsp; &rArr;</button>
 					  	</div>
 					</div>

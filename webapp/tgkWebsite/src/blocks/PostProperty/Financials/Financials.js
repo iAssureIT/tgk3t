@@ -1,9 +1,9 @@
 import React , { Component }	from 'react';
-import axios from 'axios';
-import { withRouter}    from 'react-router-dom';
-import { connect } from 'react-redux';
-import swal from 'sweetalert';
-import $	from 'jquery';
+import axios                  from 'axios';
+import { withRouter}          from 'react-router-dom';
+import { connect }            from 'react-redux';
+import swal                   from 'sweetalert';
+import $	                    from 'jquery';
 
 import './Financials.css';
 
@@ -40,7 +40,7 @@ class Financials extends Component{
            axios
           .get('/api/properties/'+this.props.property_id)
           .then( (response) =>{
-           console.log("response= ",response);
+           console.log("response.data.financial.maintenancePer ",response.data.financial.maintenancePer);
 
            this.setState({
                originalValues: response.data.financial,
@@ -53,7 +53,7 @@ class Financials extends Component{
                availableFrom  : response.data.financial.availableFrom ,
                description   :   response.data.financial.description ,
                maintenanceCharges : response.data.financial.maintenanceCharges,
-               maintenancePer     : response.data.financial.maintenancePer,
+               maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
           
 
            },()=>{
@@ -440,6 +440,21 @@ totalInclude(event){
    
     }
 
+    isNumberKey(event)
+   {
+
+   var charCode = (event.which) ? event.which : event.keyCode
+
+   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
+   {
+    event.preventDefault();
+      return false;
+    }
+    else{
+      return true;
+    }
+  }
+
 
 render() {
 
@@ -450,25 +465,25 @@ return (
         {
         this.props.transactionType == "Rent" ?
         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
               <span>Monthly Rent</span>
               <div className="form-group" id="">
                   <div className="input-group inputBox-main " id="">
                     <div className="input-group-addon inputIcon">
                                    <i className="fa fa-rupee iconClr"></i>
                                   </div>
-              <input type="" className="form-control" ref="monthlyRent" name="monthlyRent" value={this.state.monthlyRent} onChange={this.handleChange.bind(this)} id="monthlyRent" placeholder="Monthly Rent" min="0"/>
+              <input type="text" className="form-control" ref="monthlyRent" name="monthlyRent" value={this.state.monthlyRent} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="monthlyRent" placeholder="Monthly Rent" min="0"/>
                    </div>
               </div>
           </div>
-          <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+          <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
             <span>Deposit Amount</span>
             <div className="form-group" id="">
                 <div className="input-group inputBox-main " id="">
                   <div className="input-group-addon inputIcon">
                                  <i className="fa fa-rupee iconClr"></i>
                                 </div>
-            <input type="" className="form-control" ref="depositAmount" name="depositAmount" value={this.state.depositAmount} onChange={this.handleChange.bind(this)}   id="depositAmount" placeholder="Deposit Amount" min="0"/>
+            <input type="text" className="form-control" ref="depositAmount" name="depositAmount" value={this.state.depositAmount} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)}  id="depositAmount" placeholder="Deposit Amount" min="0"/>
                  </div>
             </div>
 
@@ -476,21 +491,21 @@ return (
       </div>
       :
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <span>Expected Rate</span>
           <div className="form-group" id="expectedrate">
               <div className="input-group inputBox-main " id="">
                 <div className="input-group-addon inputIcon">
                                <i className="fa fa-rupee iconClr"></i>
                               </div>
-                     <input type="" className="form-control" ref="expectedrate" name="expectedRate" value={this.state.expectedRate} onChange={this.handleChange.bind(this)} id="expRate" placeholder="Expected Rate" min="0"/>
+                     <input type="text" className="form-control" ref="expectedrate" name="expectedRate" value={this.state.expectedRate} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="expRate" placeholder="Expected Rate" min="0"/>
                <div className="input-group-addon inputIcon">
                                /Sq ft
                               </div>
               </div>
           </div>
         </div>
-        <div className="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+        <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         <span>Total Ask</span>
           <span className="asterisk1">*</span>
           <div className="form-group" id="">
@@ -498,7 +513,7 @@ return (
                 <div className="input-group-addon inputIcon">
                                <i className="fa fa-rupee iconClr"></i>
                               </div>
-                 <input type="" className="form-control" ref="totalprice" name="totalPrice" value={this.state.totalPrice} onChange={this.handleChange.bind(this)} id="totalAsk" placeholder="Total Ask" min="0" />
+                 <input type="text" className="form-control" ref="totalprice" name="totalPrice" value={this.state.totalPrice} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="totalAsk" placeholder="Total Ask" min="0"  />
                </div>
           </div>
 
@@ -574,37 +589,30 @@ return (
 
           </label>*/}
         </div>
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <span>Maintenance</span>
-           
-            </div>
-            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-            <span>Per</span>
-          </div>
-      </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className="form-group" id="">
+                  <span>Maintenance</span>
                   <div className="input-group inputBox-main " id="">
                                    <div className="input-group-addon inputIcon">
                                      <i className="fa fa-rupee iconClr"></i>
                                     </div>
                       {/*<span className="asterisk">*</span>*/}
-                      <input type="" className="form-control" ref="maintenanceCharges" name="maintenanceCharges" value={this.state.maintenanceCharges} onChange={this.handleChange.bind(this)} id="maintenanceCharges" placeholder="Maintenance Charge" min="0" />
+                      <input type="" className="form-control" ref="maintenanceCharges" name="maintenanceCharges" value={this.state.maintenanceCharges} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="maintenanceCharges" placeholder="Maintenance Charge" min="0" />
                     </div>
                   </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div className="form-group"  id="" >
+                     <span>Per</span>
                     <div className="input-group inputBox-main " id="">
                       <div className="input-group-addon inputIcon">
                                      <i className="fa fa-building iconClr"></i>
                                     </div>
                                     <select className="custom-select form-control " name="maintenancePer" ref="maintenancePer" value={this.state.maintenancePer} onChange={this.handleChange.bind(this)} placeholder="select" >
                                         <option className="hidden" disabled>--Select--</option>
-                                        <option value="month">Month</option>
-                                        <option value="year">Year</option>
+                                        <option value="Month">Month</option>
+                                        <option value="Year">Year</option>
                                     </select>
                   </div>
                 </div>
@@ -618,7 +626,6 @@ return (
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30">
               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className="form-group margBtm_5" id="date">
-                  <span htmlFor="exampleFormControlInput1">Date</span>
                   <div className="input-group inputBox-main " id="">
                     <div className="input-group-addon inputIcon">
                                 <i className="fa fa-building iconClr"></i>
@@ -638,12 +645,12 @@ return (
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           {
-            <div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-left">
+            <div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-left">
                <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToAmenities.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
             </div>
              
            }
-            <div className="form-group col-lg-3	col-md-3 col-sm-4 col-xs-4 pull-right">
+            <div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-right">
                  <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)} >Save & Next  &nbsp; &nbsp; &rArr;</button>
             </div>
           </div>
