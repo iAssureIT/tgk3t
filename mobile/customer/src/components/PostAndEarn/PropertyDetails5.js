@@ -16,23 +16,12 @@ import { Button,Icon, SearchBar } from 'react-native-elements';
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-import CheckBox from 'react-native-check-box'
 
 import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from "react-native-datepicker";
-import {
-  Table,
-  TableWrapper,
-  Row,
-  Rows,
-  Col,
-  Cols,
-  Cell
-} from "react-native-table-component";
-import SwitchToggle from 'react-native-switch-toggle';
 
 const window = Dimensions.get('window');
 
@@ -40,48 +29,33 @@ export default class PropertyDetails5 extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
-      mobile : '',
+      superArea : '',
       builtArea : '',
       expectedRate : '',
       totalAsk : '',
-      activeIndex : 0,
+      totalAskIndex : 0,
       availableFromDate : '',
+      description:'',
       dropdownData:[
       {
-        value: 'EveryDay'
+        value: 'Monthly'
       },
       {
-        value: 'Sunday'
-      }],
-      toggle : false,
-      toggleText:'I'
+        value: 'Yearly'
+      }]
     };
   }
 
-  setActive=(index)=>{
-    this.setState({activeIndex:index});
-  }
-
-  onToggle=()=>{
-    let {toggle} = this.state;
-    if(toggle){
-      this.setState({toggleText:'I'})
-    }else{
-      this.setState({toggleText:'Someone else'})
-    }
-    this.setState({toggle:!this.state.toggle});
+  onSelect=(index,value)=>{
+    this.setState({
+      totalAskIndex: index,
+    });
   }
 
   render(){
-
+    
     const { navigation } = this.props;
-    let {activeIndex} = this.state;
-    let weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    let tableData = [
-      {availability:'Weekend', time: '5pm - 7pm'},
-      {availability:'Mon, Wed', time: '11pm - 1pm'},
-      {availability:'EveryDay', time: '8pm - 10pm'},
-    ];
+    let {activeTab} = this.state;
 
     return (
       <React.Fragment>
@@ -91,80 +65,195 @@ export default class PropertyDetails5 extends ValidationComponent{
           <View style={styles.formWrapper}>
             <View>
               <Text style={styles.heading}>
-                Please tell us your availability to plan visit
+                My Apartment size and Financial Details
               </Text>
             </View>
 
             <View style={styles.divider}></View>
 
-            <Text style={[styles.heading2,styles.marginBottom5]}>Who will show?</Text>
-            <View style={styles.marginBottom15}>
-              <SwitchToggle
-                switchOn={this.state.toggle}
-                onPress={()=>this.onToggle()}
-                circleColorOn={colors.button}
-                circleColorOff={colors.primary}
-                buttonText={this.state.toggleText}
-                containerStyle={{
-                  width: 140,
-                  height: 38,
-                  borderRadius: 20,
-                  backgroundColor: '#fff',
-                  padding: 0,
-                  borderWidth:1,
-                  borderColor:'#ccc',
-                  padding:2
-                }}
-                circleStyle={{
-                  width: 100,
-                  height: 34,
-                  borderRadius: 20,
-                  justifyContent:'center',
-                  alignItems:'center',
-                }}
-                buttonTextStyle={{
-                  color:'#fff',
-                  fontFamily:'Roboto-Regular',
-                  fontSize: 13
-                }}
-              />
-            </View>
-            
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+      {/*      <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
-                <Icon name="mobile" type="entypo" size={16}  color="#aaa" style={{}}/>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
-              <View style={styles.inputTextWrapper}>
+              <View style={styles.inputTextWrapper2}>
                 <TextField
-                  label                 = "Phone Number"
-                  onChangeText          = {mobile => {this.setState({mobile})}}
+                  label                 = "Super Area"
+                  onChangeText          = {superArea => {this.setState({superArea})}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}
                   inputContainerPadding = {0}
                   labelHeight           = {15}
                   labelFontSize         = {sizes.label}
-                  titleFontSize         = {sizes.title}
+                  titleFontSize         = {15}
                   baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.mobile}
+                  textColor             = {'#333'}
+                  value                 = {this.state.superArea}
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
                   style                 = {styles.textStyle}
                   labelTextStyle        = {styles.textLabel}
                   keyboardType          = "numeric"
+                  maxLength             = {10}
+                />
+              </View>
+              <View style={styles.inputRightWrapper}>
+                <Text style={styles.inputText}>Sq ft</Text>
+              </View>
+            </View>
+
+            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper2}>
+                <TextField
+                  label                 = "Built Area"
+                  onChangeText          = {builtArea => {this.setState({builtArea})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.builtArea}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "numeric"
+                  maxLength             = {10}
+                />
+              </View>
+              <View style={styles.inputRightWrapper}>
+                <Text style={styles.inputText}>Sq ft</Text>
+              </View>
+            </View>*/}
+
+            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper2}>
+                <TextField
+                  label                 = "Expected Rate"
+                  onChangeText          = {expectedRate => {this.setState({expectedRate})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.expectedRate}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "numeric"
+                  maxLength             = {10}
+                />
+              </View>
+              <View style={styles.inputRightWrapper}>
+                <Text style={styles.inputText}>Sq ft</Text>
+              </View>
+            </View>
+
+            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Total Ask"
+                  onChangeText          = {totalAsk => {this.setState({totalAsk})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.totalAsk}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "numeric"
+                  maxLength             = {10}
                 />
               </View>
             </View>
 
-            <Text style={[styles.heading2,styles.marginBottom15]}>Visiting Schedule (Add as many as you like)</Text>
+            <Text style={[styles.heading2,styles.marginBottom15]}>My Total ask includes</Text>
+            <View style={[styles.marginBottom25]}>
+              <RadioGroup
+                size={20}
+                color={colors.grey}
+                thickness={2}
+                selectedIndex = {this.state.totalAskIndex}
+                onSelect = {(index, value) => this.onSelect(index, value)}
+              >
+                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'carPark'} >
+                  <Text style={styles.inputText}>Car Park</Text>
+                </RadioButton>
+         
+                <RadioButton style={{paddingHorizontal:0}} value={'oneTimeMaintenance'}>
+                  <Text style={styles.inputText}>One Time Maintenance</Text>
+                </RadioButton>
+         
+                <RadioButton style={{paddingHorizontal:0}} value={'stampDuty&Registration'}>
+                  <Text style={styles.inputText}>Stamp Duty & Registration</Text>
+                </RadioButton>
+
+                <RadioButton style={{paddingHorizontal:0,paddingBottom:0}} value={'clubhouse'}>
+                  <Text style={styles.inputText}>Clubhouse</Text>
+                </RadioButton>
+              </RadioGroup>
+            </View>
+
             <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
-                <Icon name="calendar" type="font-awesome" size={18}  color="#aaa" style={{}}/>
+                <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Maintenance Charge"
+                  onChangeText          = {maintenanceCharge => {this.setState({maintenanceCharge})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.maintenanceCharge}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "default"
+                  maxLength             = {10}
+                />
+              </View>
+            </View>  
+
+            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="home" type="feather" size={18}  color="#aaa" style={{}}/>
               </View>
               <View style={styles.inputTextWrapper}>
                 <Dropdown
-                  label               = 'Availability'
+                  label               = 'Per'
                   containerStyle      = {styles.ddContainer}
                   dropdownOffset      = {{top:0, left: 0}}
                   itemTextStyle       = {styles.ddItemText}
@@ -178,152 +267,89 @@ export default class PropertyDetails5 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelText}
                   style               = {styles.ddStyle}
                   data                = {this.state.dropdownData}
-                  value               = {this.state.availability}
-                  onChangeText        = {availability => {this.setState({availability});}}
+                  value               = {this.state.maintenanceChargePer}
+                  onChangeText        = {maintenanceChargePer => {this.setState({maintenanceChargePer});}}
                 />
-              </View>
-            </View>
-            
-            <View style={[{width:'100%',flexDirection:'row',justifyContent:'space-between'},styles.marginBottom25]}>
-              <View style={[styles.inputWrapper2]}>
-                <View style={styles.inputImgWrapper2}>
-                  <Icon name="calendar" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper2}>
-                  <DatePicker
-                    style={{
-                      flex:1,
-                      width: "100%",
-                      marginRight:5,
-                    }}
-                    date={this.state.fromDate}
-                    mode="date"
-                    placeholder="From"
-                    format="DD/MM/YYYY"
-                   
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateInput: {
-                        borderWidth: 0,
-                        alignItems:'flex-start',
-                        fontFamily:'Montserrat-Regular',
-                        paddingLeft:5
-                      },
-                      dateTouchBody:{
-                        fontFamily:'Montserrat-Regular'
-                      },
-                      dateText:{
-                        fontFamily:'Montserrat-Regular'
-                      },
-                      placeholderText:{
-                        fontFamily:'Montserrat-Regular'
-                      }
-                    }}
-                    onDateChange={fromDate => {this.setState({ fromDate})}}
-                    showIcon = {false}
-                    minDate = {new Date()}
-                  />
-                </View>
-              </View>
-
-              <View style={[styles.inputWrapper2]}>
-                <View style={styles.inputImgWrapper2}>
-                  <Icon name="calendar" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper2}>
-                  <DatePicker
-                    style={{
-                      flex:1,
-                      width: "100%",
-                      marginRight:5,
-                    }}
-                    date={this.state.startTime}
-                    mode="date"
-                    placeholder="Start Time"
-                    format="DD/MM/YYYY"
-                   
-                    confirmBtnText="Confirm"
-                    cancelBtnText="Cancel"
-                    customStyles={{
-                      dateInput: {
-                        borderWidth: 0,
-                        alignItems:'flex-start',
-                        fontFamily:'Montserrat-Regular',
-                        paddingLeft:5
-                      },
-                      dateTouchBody:{
-                        fontFamily:'Montserrat-Regular'
-                      },
-                      dateText:{
-                        fontFamily:'Montserrat-Regular'
-                      },
-                      placeholderText:{
-                        fontFamily:'Montserrat-Regular'
-                      }
-                    }}
-                    onDateChange={startTime => {this.setState({ startTime})}}
-                    showIcon = {false}
-                    minDate = {new Date()}
-                  />
-                </View>
               </View>
             </View> 
 
-            <View style={[{width:'40%'},styles.marginBottom15]}>
-              <Button
-                titleStyle      = {styles.buttonSmallText}
-                title           = "Add Slot"
-                buttonStyle     = {styles.buttonSmall}
-                containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-                iconRight
-                icon = {<Icon
-                  name="plus" 
-                  type="material-community"
-                  size={20}
-                  color={colors.black}
-                />}
-              />
-            </View> 
-
-            <View style={[styles.marginBottom25,styles.weekWrap]}>
-            {weekDays.map((data,index)=>(
-              <TouchableOpacity 
-                onPress={()=>this.setActive(index)}
-                key={index} 
-                style={[(index==activeIndex?styles.activeWeekView:styles.weekView),(index==0?styles.borderRadiusLeft2:(index==6)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
-              >
-                <Text style={styles.tabText}>{data}</Text>
-              </TouchableOpacity>
-            ))
-            }
+            <Text style={[styles.heading2,styles.marginBottom15]}>My Apartment is available from</Text>
+            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="calendar" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <DatePicker
+                  style={{
+                    flex:1,
+                    width: "100%",
+                    marginRight:5,
+                  }}
+                  date={this.state.availableFromDate}
+                  mode="date"
+                  placeholder="dd/mm/yyyy"
+                  format="DD/MM/YYYY"
+                 
+                  confirmBtnText="Confirm"
+                  cancelBtnText="Cancel"
+                  customStyles={{
+                    dateInput: {
+                      borderWidth: 0,
+                      alignItems:'flex-start',
+                      fontFamily:'Montserrat-Regular',
+                      paddingLeft:5
+                    },
+                    dateTouchBody:{
+                      fontFamily:'Montserrat-Regular'
+                    },
+                    dateText:{
+                      fontFamily:'Montserrat-Regular'
+                    },
+                    placeholderText:{
+                      fontFamily:'Montserrat-Regular'
+                    }
+                  }}
+                  onDateChange={availableFromDate => {this.setState({ availableFromDate});}}
+                  showIcon = {false}
+                  minDate = {new Date()}
+                />
+              </View>
             </View>
 
-            <View style={[styles.marginBottom25,{width:'100%'}]}>
-              <Table borderStyle={{borderColor:'transparent'}} style={{ alignContent: "center"}}>
-                <Row
-                  data={["Availability","Time","Action"]}
-                  style={styles.tableHead}
-                  textStyle={styles.tableHeadText}
+            <Text style={[styles.heading2,styles.marginBottom15]}>Description</Text>
+            <View style={[styles.descriptionView,styles.marginBottom15]}>
+              {/*<Text style={styles.inputText}>
+                My property is a semi furnished 3 BHK flat in a
+                centrally located society, with excellent access
+                to city center and all key points such as Airport,
+                Railway Station and Bus Stop. It comes with
+                24x7 water supply, uninterrupted electricity and
+                excellent security.
+              </Text>*/}
+               <TextInput
+                  label                 = "Description"
+                  onChangeText          = {description => {this.setState({description})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.description}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "default"
+                  multiline             ={true}
                 />
-                {tableData.map((data,index)=>(
-                  <Row
-                    key={index}
-                    data={[data.availability,data.time,
-                      <TouchableOpacity>
-                        <Icon name="trash-can-outline" type="material-community" size={18} color="#dc3545" style={{fontWeight:'600'}}/>
-                      </TouchableOpacity>
-                    ]}
-                    style={[styles.tableRow, index%2 && {backgroundColor: '#f1f1f1'}]}
-                    textStyle={styles.tableText}
-                  />
-                ))
-                }
-              </Table>
             </View>
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertySuccess')}
+              onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}
@@ -336,8 +362,6 @@ export default class PropertyDetails5 extends ValidationComponent{
                 color="white"
               />}
             />
-
-            
 
           </View>
         </ScrollView>

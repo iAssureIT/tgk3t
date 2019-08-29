@@ -79,6 +79,17 @@ export default StyleSheet.create({
     flexDirection:'row',
     borderRadius: 3,
   },
+  inputWrapper3:{
+    width:'100%',
+    borderColor: colors.black,
+    borderWidth:1,
+    flexDirection:'row',
+    borderRadius: 3,
+    height:40,
+    padding:'5%',
+    paddingHorizontal:2,
+    fontSize:20,
+  },
   inputImgWrapper : {
     width:'12%',
     justifyContent:'center',
@@ -294,7 +305,7 @@ export default StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     paddingHorizontal:2,
-    paddingVertical:10
+    paddingVertical:10,
   },
   tableHeadText:{
     fontSize: 14,
@@ -307,12 +318,22 @@ export default StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     paddingHorizontal:2,
-    paddingVertical:10
+    paddingVertical:10,
   },
   tableText:{
     fontSize: 13,
     fontFamily: 'Roboto-Regular',
     textAlign:'center',
-    color: colors.black
+    color: colors.black,
+  },
+  timeSelect:{
+    paddingHorizontal:10,
+  },
+  needle:{
+    position: 'absolute',
+    right: '30%',
+    bottom: 80,
   }
+
 });
+

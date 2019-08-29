@@ -12,7 +12,7 @@ export default StyleSheet.create({
   },
   bgImage: {
     width:'100%',
-    height:null,
+    height:window.height,
   },
   headingText:{
     fontSize: 28,

@@ -11,6 +11,8 @@ export default StyleSheet.create({
     width: window.width,
     alignItems: 'center',
   },
+
+
   formWrapper: {
     width:'100%',
     backgroundColor:colors.white,
@@ -211,5 +213,10 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius:4
-  },
+  }, 
+  horizontalScroll:{
+    width:'100%'
+  }
 });
+
+

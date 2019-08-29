@@ -69,7 +69,11 @@ export default class PropertySuccess extends ValidationComponent{
 
           <View style={[styles.alignCenter,styles.marginBottom15]}>
             <Image 
-              source={require('../../images/sellometer.png') }
+              source={require('../../images/meter.png') }
+            />
+             <Image 
+              source={require('../../images/needle1.png')}
+              style={[styles.needle,{transform: [{ rotate: '90deg'}],transformOrigin: "90% 55%",transition : "transform 3s",transitionDelay: "1s"}]}
             />
             <Text style={styles.heading}>Sell-O-Meter</Text>
           </View>
