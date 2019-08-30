@@ -15,7 +15,7 @@ class BasicInfo extends Component{
 				originalValues   : '',
 				transactionType  : "Sell",
 				propertyHolder   : "",
-				propertType 	 : "",
+				propertyType 	 : "",
 				propertySubType  : "",
 				// user_id 		 : localStorage.getItem("user_id"),
 				fullPropTtype    : "",

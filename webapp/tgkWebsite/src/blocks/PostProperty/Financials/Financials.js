@@ -522,12 +522,16 @@ return (
         }
 
 
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-           <label>My Total Ask includes</label>
-          </div>
-        </div>
-        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
+        
+        {
+          this.props.transactionType == "Rent" && this.props.propertyType == "Commercial" ?
+          null
+          :
+
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+             <label>My Total Ask includes</label>
+            </div>
           {this.state.includeCharges && this.state.includeCharges.length > 0 ?
             this.state.includeCharges.map((data,index)=>{
               return (
@@ -589,6 +593,8 @@ return (
 
           </label>*/}
         </div>
+        }
+        
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className="form-group" id="">
@@ -662,9 +668,10 @@ return (
 }
 const mapStateToProps = (state)=>{
   return {
-          property_id : state.property_id,
-          uid	: state.uid,
-          transactionType	: state.transactionType,
+          property_id     : state.property_id,
+          uid	            : state.uid,
+          transactionType : state.transactionType,
+          propertyType	  : state.propertyType,
           updateStatus    : state.updateStatus,   
 
   }
