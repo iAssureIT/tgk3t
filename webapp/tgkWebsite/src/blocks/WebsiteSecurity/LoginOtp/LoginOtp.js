@@ -77,7 +77,11 @@ class LoginOtp extends Component {
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
 						  		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 headline">
-						  			Welcome back {this.props.fullName}
+						  		{this.props.fullName && this.props.fullName!==null &&this.props.fullName!=="" ?
+						  			<span>Welcome back {this.props.fullName}</span>
+						  		:
+						  		   "Welcome"
+						  		}
 						  		</div>	
 							  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-10 headline">
 									We have sent you an OTP for verification, please enter your OTP to continue
