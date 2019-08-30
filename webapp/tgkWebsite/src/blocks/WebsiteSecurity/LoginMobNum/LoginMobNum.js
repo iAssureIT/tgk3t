@@ -49,7 +49,8 @@ class LoginMobNum extends Component {
 												response.data.user_id,
 												this.state.mobile,
 												response.data.otp,
-												response.data.message
+												response.data.message,
+												response.data.fullName
 											);
 						// this.props.availableMobile(this.state.mobile);
 							localStorage.setItem('availableMobile',this.state.mobile)
@@ -162,12 +163,13 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
 	return {
-		mobileEntered 	: (uid, mobile, OTP, mobFoundMsg)=> dispatch({
+		mobileEntered 	: (uid, mobile, OTP, mobFoundMsg,fullName)=> dispatch({
 									type: "MOBILE_ENTERED",
 									uid: uid, 
 									mobile: mobile, 
 									OTP: OTP, 	
-									mobFoundMsg: mobFoundMsg
+									mobFoundMsg: mobFoundMsg,
+									fullName: fullName
 								}),
 		// availableMobile : (availableMobile)=>dispatch({
 		// 								type: "AVAILABLE_MOBILE",

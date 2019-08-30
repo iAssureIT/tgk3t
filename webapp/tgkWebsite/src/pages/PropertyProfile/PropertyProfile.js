@@ -282,6 +282,7 @@ class PropertyProfile extends Component{
                             return(
 
                                   <div key={index}  >
+                                      <div className="waterMark">Lyvo</div>
                                       <img className="item" src={propertyImages.imgPath} />
                                   </div>                    
                               )
@@ -325,7 +326,7 @@ class PropertyProfile extends Component{
                     </div>
                     <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row"> 
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <label className="row">Key Features</label>
                           </div>
@@ -418,8 +419,35 @@ class PropertyProfile extends Component{
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                      <div className="row">
                                        <ul  className="bolder">
-                                          <li className="col-lg-3 noPad">Include Charges</li> 
-                                          <span className="col-lg-9 noPad"> : 
+                                          {this.state.pricing && this.state.pricing.totalPrice ?
+                                            <b>
+                                              <li className="col-lg-5 noPad">Total Ask    </li> 
+                                              <span className="col-lg-7 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
+                                            </b>
+                                          : 
+                                          <b>
+                                              <li className="col-lg-5 noPad">Deposit Amount    </li>
+                                              <span className="col-lg-7 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+                                            </b>
+                                          }
+
+                                          {this.state.pricing && this.state.pricing.expectedRate ?
+                                            <b>
+                                              <li className="col-lg-5 noPad">Expected Rate    </li> 
+                                              <span className="col-lg-7 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
+                                            </b>
+                                          : 
+                                          <b>
+                                              <li className="col-lg-5 noPad">Monthly Rent    </li> 
+                                              <span className="col-lg-7 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+                                            </b>
+                                          }
+                                          {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?
+                                          null
+                                          :
+                                            <div>
+                                          <li className="col-lg-5 noPad">Charges Included in Total Ask </li> 
+                                          <span className="col-lg-7 noPad"> : 
                                           {this.state.pricing && this.state.pricing.includeCharges     ? 
                                             <b>{
                                             this.state.pricing.includeCharges.map((includeCharges,index)=>{
@@ -429,8 +457,6 @@ class PropertyProfile extends Component{
                                                 if(index >= (this.state.pricing.includeCharges.length-1) ){
                                                   comma = "";
                                                 }
-
-                                              console.log("comma = ",comma);
                                                 return(
                                                     <b key={i++}>
                                                         {" "+includeCharges+comma}
@@ -439,29 +465,11 @@ class PropertyProfile extends Component{
                                                 })
                                           }  </b> : "-"}
                                           </span>
-                                          {this.state.pricing && this.state.pricing.expectedRate ?
-                                            <b>
-                                              <li className="col-lg-3 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
-                                            </b>
-                                          : 
-                                          <b>
-                                              <li className="col-lg-3 noPad">Monthly Rent    </li> 
-                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
-                                            </b>
+                                          </div>
                                           }
-                                          {this.state.pricing && this.state.pricing.totalPrice ?
-                                            <b>
-                                              <li className="col-lg-3 noPad">Total Ask    </li> 
-                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
-                                            </b>
-                                          : 
-                                          <b>
-                                              <li className="col-lg-3 noPad">Deposit Amount    </li>
-                                              <span className="col-lg-9 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
-                                            </b>
-                                          }
-                                          <li className="col-lg-3 noPad">Maintainance Charges</li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : "-"}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                          
+                                          
+                                          <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : "-"}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                           {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
                                         </ul>
                                     </div>

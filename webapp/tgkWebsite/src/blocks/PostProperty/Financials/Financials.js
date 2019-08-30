@@ -454,6 +454,33 @@ totalInclude(event){
       return true;
     }
   }
+  checkValue1(){
+    var expRate = parseInt(this.state.expectedRate.replace(/,/g, ''));
+    var total = parseInt(999999999);
+    // console.log("expRate",expRate);
+    // console.log("total",total);
+    if (expRate > total){
+        // swal("Sorry, Amount should not exceed 99 Cr ", "", "warning");
+        swal("Sorry !", "Amount should not exceed 99 Cr");
+        this.setState({
+          expectedRate:""
+        });
+    }
+  }
+  checkValue2(){
+      var totalAsk = parseInt(this.state.totalPrice.replace(/,/g, ''));
+      var total = parseInt(999999999);
+      
+      if (totalAsk > total){
+        // swal("Sorry, Amount should not exceed 99 Cr", "", "warning");
+        swal("Sorry !", "Amount should not exceed 99 Cr");
+
+
+        this.setState({
+          totalPrice:""
+        });
+      };
+    }
 
 
 render() {
@@ -495,13 +522,13 @@ return (
           <span>Expected Rate</span>
           <div className="form-group" id="expectedrate">
               <div className="input-group inputBox-main " id="">
-                <div className="input-group-addon inputIcon">
-                               <i className="fa fa-rupee iconClr"></i>
-                              </div>
-                     <input type="text" className="form-control" ref="expectedrate" name="expectedRate" value={this.state.expectedRate} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="expRate" placeholder="Expected Rate" min="0"/>
-               <div className="input-group-addon inputIcon">
-                               /Sq ft
-                              </div>
+                  <div className="input-group-addon inputIcon">
+                   <i className="fa fa-rupee iconClr"></i>
+                  </div>
+                  <input type="text" className="form-control" ref="expectedrate" name="expectedRate" value={this.state.expectedRate} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} onBlur={this.checkValue1.bind(this)} id="expRate" placeholder="Expected Rate" min="0"/>
+                 <div className="input-group-addon inputIcon">
+                 /Sq ft
+                </div>
               </div>
           </div>
         </div>
@@ -511,10 +538,10 @@ return (
           <div className="form-group" id="">
               <div className="input-group inputBox-main " id="">
                 <div className="input-group-addon inputIcon">
-                               <i className="fa fa-rupee iconClr"></i>
-                              </div>
-                 <input type="text" className="form-control" ref="totalprice" name="totalPrice" value={this.state.totalPrice} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="totalAsk" placeholder="Total Ask" min="0"  />
-               </div>
+                 <i className="fa fa-rupee iconClr"></i>
+                </div>
+                <input type="text" className="form-control" ref="totalprice" name="totalPrice" value={this.state.totalPrice} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} onBlur={this.checkValue2.bind(this)} id="totalAsk" placeholder="Total Ask" min="0"  />
+              </div>
           </div>
 
         </div>

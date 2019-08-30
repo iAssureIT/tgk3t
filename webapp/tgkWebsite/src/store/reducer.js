@@ -24,6 +24,7 @@ const initialState = {
 	propertyType    : "",
 	availableMobile : "",
 	prop_id 		: "",
+	fullName 		: "",
 	updateStatus 	: false,
 	showMeter 		: false,
 }
@@ -39,6 +40,7 @@ const reducer = (state = initialState,action) => {
 		newState.mobile 		= action.mobile;
 		newState.OTP 			= action.OTP;
 		newState.mobFoundMsg 	= action.mobFoundMsg;
+		newState.fullName 		= action.fullName;
 	}
 
 	if(action.type === "REDIRECT_TO_SIGN_UP"){

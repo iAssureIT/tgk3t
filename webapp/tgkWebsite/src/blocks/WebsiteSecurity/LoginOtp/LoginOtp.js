@@ -67,7 +67,7 @@ class LoginOtp extends Component {
 	  }
 
 	render() {
-		// console.log("originPage",this.props.originPage)
+		 // console.log("originPage",this.props)
 		return (
 			<div>
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -75,19 +75,22 @@ class LoginOtp extends Component {
 						<div className="hr_border row"></div>
 						
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">	
-						  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-50 headline">
-								We have sent you an OTP for verification, please enter your OTP to continue
-							</div>
-							  <div className="form-group mt-150">
-							    <label htmlFor="">Kindly Enter Your Verification Code </label>
-							    <div className="input-group inputBox-main " id="">
-							      	<div className="input-group-addon inputIcon">
-				                     	<i className="fa fa-building iconClr"></i>
-				                    </div>
-							    	<input type="text" className="form-control" ref="otp"  id="" onKeyDown={this.isNumberKey.bind(this)} min="0" maxLength="4" placeholder="Verification Code" data-text="user_mobile"/>
-							  	</div>
-							  </div>
+						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+						  		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 headline">
+						  			Welcome back {this.props.fullName}
+						  		</div>	
+							  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-10 headline">
+									We have sent you an OTP for verification, please enter your OTP to continue
+								</div>
+								<div className="form-group mt-150">
+								    <label htmlFor="">Kindly Enter Your Verification Code </label>
+								    <div className="input-group inputBox-main " id="">
+								      	<div className="input-group-addon inputIcon">
+					                     	<i className="fa fa-building iconClr"></i>
+					                    </div>
+								    	<input type="text" className="form-control" ref="otp"  id="" onKeyDown={this.isNumberKey.bind(this)} min="0" maxLength="4" placeholder="Verification Code" data-text="user_mobile"/>
+								  	</div>
+								</div>
 						    </div>
 						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
@@ -115,6 +118,7 @@ const mapStateToProps = (state)=>{
 		message 	: state.mobFoundMsg,
 		tempuid  	: state.tempuid,
 		originPage  : state.originPage,
+		fullName  	: state.fullName,
 	}
 };
 
