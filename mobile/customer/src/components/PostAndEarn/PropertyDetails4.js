@@ -10,6 +10,7 @@ import {
   Image,TextInput,
   Alert
 } from 'react-native';
+import axios          from 'axios';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
 
@@ -43,6 +44,10 @@ export default class PropertyDetails4 extends ValidationComponent{
       {
         value: 'Yearly'
       }],
+      defaultIcon:'flag',
+      iconType: 'material-community',
+      allAmenities:[],
+      isChecked: true,
       internalAmenities: [
         {
           value: 'Gas Pipeline',
@@ -79,7 +84,7 @@ export default class PropertyDetails4 extends ValidationComponent{
           checked: false,
           iconName: 'water-pump',
           iconType: 'material-community',
-          options:[
+          /*options:[
             {
               value: '24x7',
               checked: false
@@ -90,7 +95,7 @@ export default class PropertyDetails4 extends ValidationComponent{
               value: 'Borewell',
               checked: false
             },
-          ]
+          ]*/
         }
       ],
       externalAmenities: [
@@ -140,12 +145,83 @@ export default class PropertyDetails4 extends ValidationComponent{
     });
   }
 
-  handleOnClickInternal = (index)=>{
-    let {internalAmenities} = this.state;
-    let checked = !internalAmenities[index].checked;
-    internalAmenities[index].checked = checked;
-    this.setState({internalAmenities});
+  componentDidMount(){
+    axios
+      .get('http://qatgk3tapi.iassureit.com/api/masteramenities/list')
+      .then(
+        (res)=>{
+          console.log('res postdata', res);
+          const postsdata = res.data;
+          // console.log('postsdata',postsdata);
+          this.setState({
+            allAmenities : postsdata,
+          },()=>{
+            // console.log("data from admin side",this.state.allAmenities);
+            var allAmenitiesDataList = this.state.allAmenities.map((item,index)=>{
+
+              var newObj = Object.assign({},item);
+                if(item.amenity){
+                  newObj.checked = false
+                }else{
+                  newObj.checked = true
+                }
+                // console.log("newObj",newObj);
+                return newObj;
+
+            });
+
+            this.setState({
+              allAmenities:allAmenitiesDataList,
+            });
+          });
+        }
+      )
+      .catch((error)=>{
+
+        console.log("error = ",error);
+        alert("Something went wrong! Please check Get URL.");
+         });  
+      
   }
+
+  handleOnClickInternal = (index)=>{
+    console.log("index",index);
+    var alldata = this.state.allAmenities;
+    var status = alldata[index].checked;
+    if(status===true){
+      alldata[index].checked = false;
+    }else{
+      alldata[index].checked = true;
+    }
+
+    this.setState({
+      allAmenities: alldata,
+    },()=>{
+      console.log("here new data of amenities",this.state.allAmenities);
+    });
+    // var data = index.target.getAttribute('isChecked');
+    console.log("current data status",status);
+    // let {internalAmenities} = this.state;
+    // let checked = !internalAmenities[index].checked;
+    // internalAmenities[index].checked = checked;
+    // this.setState({internalAmenities});
+  }
+
+ /* handleOnClickInternal = (index)=>{
+      let isChecked = !this.state.isChecked;
+
+    this.setState({ isChecked }, ()=>{
+      if(isChecked){
+        this.setState({
+          isCheckedError: []
+        });
+      }else{
+        this.setState({
+          isCheckedError: ["Please accept the terms & conditions."]
+        });
+      }
+    });
+  }  */
 
   handleOnClickInternalOption = (index,optionIndex)=>{
     let {internalAmenities} = this.state;
@@ -182,11 +258,11 @@ export default class PropertyDetails4 extends ValidationComponent{
 
             <View style={styles.divider}></View>
 
-            <Text style={[styles.heading3,styles.marginBottom5]}>Select the amenities available</Text>
+            <Text style={[styles.heading3,styles.marginBottom5]}>All Amenities </Text>
             
-            <Text style={[styles.heading2,styles.marginBottom15]}>Internal</Text>
-            <View style={{}}>
-              {this.state.internalAmenities.map((data,index)=>(
+            <View style={[styles.marginBottom15]}>
+              {this.state.allAmenities && this.state.allAmenities.length >0 ?
+                this.state.allAmenities.map((data,index)=>(
                 <React.Fragment key={index}>
                   <CheckBox
                     key={index}
@@ -198,17 +274,17 @@ export default class PropertyDetails4 extends ValidationComponent{
                     rightTextView = {
                       <View style={{flexDirection:'row',flex:1}}>
                         <Icon
-                          name={data.iconName} 
-                          type={data.iconType}
+                          name={this.state.defaultIcon} 
+                          type={this.state.iconType}
                           size={18}
                           color= {colors.button}
                           containerStyle = {{marginHorizontal:10}}
                         />
-                        <Text style={styles.inputText}>{data.value}</Text>
+                        <Text style={styles.inputText}>{data.amenity}</Text>
                       </View>
                     }
                   />
-                  {data.options
+                  {/*data.options
                   ? 
                     <View style={{paddingLeft:30}}>
                       {data.options.map((optionData,optionIndex)=>(
@@ -229,16 +305,19 @@ export default class PropertyDetails4 extends ValidationComponent{
                       
                     </View>
                   :
-                    null
+                    null*/
                   }
                 </React.Fragment>  
               ))
+
+                :
+                null
               }
             </View>
 
-            <View style={styles.dividerInside}></View>
+            {/*<View style={styles.dividerInside}></View>*/}
 
-            <Text style={[styles.heading2,styles.marginBottom15]}>External</Text>
+           {/* <Text style={[styles.heading2,styles.marginBottom15]}>External</Text>
             <View style={styles.marginBottom15}>
               {this.state.externalAmenities.map((data,index)=>(
                 <React.Fragment key={index}>
@@ -265,7 +344,7 @@ export default class PropertyDetails4 extends ValidationComponent{
                 </React.Fragment>  
               ))
               }
-            </View>            
+            </View>           */} 
 
             <Button
               onPress         = {()=>this.props.navigation.navigate('PropertyDetails5')}

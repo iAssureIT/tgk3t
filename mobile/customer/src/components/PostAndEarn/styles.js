@@ -39,6 +39,7 @@ export default StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Roboto-Regular',
     color:colors.black,
+    // backgroundColor:"#000",
   },
   heading4: {
     fontSize: 15,
@@ -114,6 +115,10 @@ export default StyleSheet.create({
     width:'75%',
     justifyContent:'center'
   },
+  inputTextWrapperFull : {
+    width:'100%',
+    justifyContent:'center'
+  },
   inputRightWrapper:{
     width:'13%',
     justifyContent:'center',
@@ -121,6 +126,19 @@ export default StyleSheet.create({
     borderLeftWidth:1,
     borderColor: colors.black,
     marginVertical:5,
+  },
+  inputTextWrapperM : {
+    width:'55%',
+    justifyContent:'center'
+  },
+  inputRightWrapper1:{
+    width:'33%',
+    // justifyContent:'center',
+    // alignItems:'center',
+    borderLeftWidth:1,
+    borderColor: colors.black,
+    marginVertical:5,
+    // marginRight:5,
   },
   textContainer:{
     height:40,
@@ -158,6 +176,9 @@ export default StyleSheet.create({
   },
   marginBottom25:{
     marginBottom: 25
+  },
+  marginBottom20:{
+    marginBottom: 20
   },
   marginBottom15:{
     marginBottom: 15
@@ -260,6 +281,10 @@ export default StyleSheet.create({
     height: 40,
     paddingLeft:4
   },
+  ddContainerSM:{
+    backgroundColor:'transparent',
+    height: 20,
+  },
   ddItemText:{
     fontFamily:"Roboto-Regular"
   },
@@ -273,6 +298,14 @@ export default StyleSheet.create({
     fontFamily:"Roboto-Regular",
     fontSize:15,
     paddingHorizontal:2
+  },
+  ddLabelTextFull:{
+    backgroundColor:'#fff',
+    // top:0,
+    // left:5,
+    fontFamily:"Roboto-Regular",
+    fontSize:15,
+    // paddingHorizontal:2
   },
   ddStyle:{
     fontFamily:"Roboto-Regular"
@@ -333,7 +366,43 @@ export default StyleSheet.create({
     position: 'absolute',
     right: '30%',
     bottom: 80,
-  }
+  },
+  ddcontainer: {  
+         flex: 1,  
+         alignItems: 'center',  
+         justifyContent: 'center',  
+     },  
+  ddtextStyle:{  
+        margin: 24,  
+        fontSize: 25,  
+        fontWeight: 'bold',  
+        textAlign: 'center',  
+    },  
+  ddpickerStyle:{  
+        height: 150,  
+        width: "100%",  
+        color: '#344953',  
+        justifyContent: 'center',  
+    },
+  backClr:{
+    backgroundColor: "#f00",
+  },
+  ddborder:{
+    borderColor: "#ccc",
+  },
+  backClr:{
+     backgroundColor:"#f00",
+  },
+  customStylesHere: {
+    // fontWeight: "bold",
+    padding: 10,
+    color: "#000",
+    // backgroundColor :"#f00",
+ },
+ dropHeight:{
+  height:40,
+ },
+
 
 });
 

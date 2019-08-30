@@ -6,7 +6,7 @@ import { Link }					from 'react-router-dom';
 import { Route , withRouter}    from 'react-router-dom';
 import { connect } 				from 'react-redux';
 import Availability 			from '../Availability/Availability.js';
-import Financials 				from '../Financials/Financials.js';
+import Financials 					from '../Financials/Financials.js';
 
 import './Amenities.css';
 

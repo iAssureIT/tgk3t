@@ -1,5 +1,5 @@
 import {createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
-
+import AuthLoadingScreen from '../layouts/AuthLoading/AuthLoadingScreen.js' 
 import Home from '../components/Home/Home.js';
 import SideMenu from '../layouts/SideMenu/SideMenu.js';
 import SignUp from '../components/PostAndEarn/SignUp.js';
@@ -113,11 +113,11 @@ const drawer = createDrawerNavigator({
 // export default HomeStack;
 export default createAppContainer(createSwitchNavigator(
   {
-    // AuthLoading: AuthLoadingScreen,
+    AuthLoading: AuthLoadingScreen,
     App: drawer,
     // Auth: AuthStack,
   },
-  // {
-  //   initialRouteName: 'AuthLoading',
-  // }
+  {
+    initialRouteName: 'AuthLoading',
+  }
 ));

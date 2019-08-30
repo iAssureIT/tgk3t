@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,TextInput,
-  Alert
+  Alert,
+  Picker
 } from 'react-native';
+ import { Dropdown } from 'react-native-material-dropdown';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
 
@@ -29,9 +31,27 @@ export default class PropertyDetails1 extends ValidationComponent{
     this.state={
       activeTab : 'owner',
       propertyType : '',
+      fullPropertyType : 'Select Property Type',
       propertyLocation : '',
       toggle : false,
-      toggleText:'Sell'
+      toggleText:'Sell',
+      propertyTypeList : [{label: 'ALL RESIDENTIAL',       value: '',                                   disabled : true}, 
+                         {label: 'Studio Apartment',       value: 'Residential-Studio Apartment',       disabled : false},
+                         {label: 'Residential House',      value: 'Residential-Residential House',      disabled : false},
+                         {label: 'MultiStorey Apartment',  value: 'Residential-MultiStorey Apartment',  disabled : false},
+                         {label: 'Villa',                  value: 'Residential-Villa',                  disabled : false},
+                         {label: 'Penthouse',              value: 'Residential-Penthouse',              disabled : false},
+                         {label: 'ALL COMMERCIAL ',        value: '',                                   disabled : true},
+                         {label: 'Commercial Office Space',value: 'Commercial-Commercial Office Space', disabled : false},
+                         {label: 'Office in IT Park/SEZ',  value: 'Commercial-Office in IT Park/SEZ',   disabled : false},
+                         {label: 'Commercial Shop',        value: 'Commercial-Commercial Shop',         disabled : false},
+                         {label: 'Commercial Showroom',    value: 'Commercial-Commercial Showroom',     disabled : false},
+                         {label: 'Warehouse/Godown',       value: 'Commercial-Warehouse/Godown',        disabled : false},
+                         {label: 'Industrial Building',    value: 'Commercial-Industrial Building',     disabled : false}],
+      floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      floor: 'Basement',
+      totalFloor:'Total Floors',
     };
   }
 
@@ -50,7 +70,7 @@ export default class PropertyDetails1 extends ValidationComponent{
   }
 
   render(){
-    
+   
     const { navigation } = this.props;
     let {activeTab} = this.state;
     // console.log("this.props.navigation = ",this.props.navigation);
@@ -69,43 +89,43 @@ export default class PropertyDetails1 extends ValidationComponent{
             <View style={styles.divider}></View>
 
             <View style={[styles.alignCenter,styles.marginBottom15]}>
-              <Image 
+              <Image
                 source={require('../../images/property.png') }
               />
             </View>
 
             <Text style={styles.heading2}>I am</Text>
             <View style={[styles.tabWrap,styles.marginBottom15]}>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress = {()=>this.setActive('owner')}
                 style={[(activeTab=="owner"?styles.activeTabView:styles.tabView),styles.tabBorder,styles.borderRadiusLeft]}
               >
                   <Icon
-                    name="man" 
+                    name="man"
                     type="entypo"
                     size={16}
                     color="white"
                   />
                   <Text style={styles.tabText}>Owner</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress = {()=>this.setActive('careTaker')}
                 style={[(activeTab=="careTaker"?styles.activeTabView:styles.tabView),styles.tabBorder]}
               >
                 <Icon
-                  name="home-account" 
+                  name="home-account"
                   type="material-community"
                   size={18}
                   color="white"
                 />
                 <Text style={styles.tabText}>Care Taker</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
+              <TouchableOpacity
                 onPress = {()=>this.setActive('builder')}
                 style={[(activeTab=="builder"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
               >
                 <Icon
-                  name="home-city" 
+                  name="home-city"
                   type="material-community"
                   size={16}
                   color="white"
@@ -115,7 +135,7 @@ export default class PropertyDetails1 extends ValidationComponent{
             </View>
 
             <Text style={styles.heading2}>I would like to</Text>
-            <View style={[{width:'100%'}]}>
+            <View style={[styles.marginBottom15,{width:'100%'}]}>
               <SwitchToggle
                 switchOn={this.state.toggle}
                 onPress={()=>this.onToggle()}
@@ -147,59 +167,145 @@ export default class PropertyDetails1 extends ValidationComponent{
               />
             </View>
 
-            <Text style={[styles.heading2,styles.marginBottom5]}>Property Details</Text>
-            <Text style={[styles.heading3,styles.marginBottom5]}>My property type is</Text>
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <TextField
-                  label                 = "Multistorey Apartment"
-                  onChangeText          = {propertyType => {this.setState({propertyType})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {10}
-                  baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.propertyType}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {styles.textStyle}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "default"
-                />
-              </View>
-            </View>
+            
+            <Text style={[styles.heading2,styles.marginBottom5]}>Property Type</Text>
+          {/*     <Dropdown
+                  style={[styles.inputWrapper]}
+                  label             ='Select Property Type'
+                  data              ={this.state.propertyTypeList}
+                  onChangeText      = {fullPropertyType => {this.setState({fullPropertyType})}}         
+               />*/}
 
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="map-marker-outline" type="material-community" size={20}  color="#aaa" style={{}}/>
+
+                 <View style={[styles.inputWrapper,styles.marginBottom15]}>
+                    <View style={styles.inputTextWrapperFull}>
+                      <Dropdown
+                        // label               = 'Property Type'
+                        containerStyle      = {styles.ddContainer}
+                        dropdownOffset      = {{top:0, left: 0}}
+                        itemTextStyle       = {styles.ddItemText}
+                        inputContainerStyle = {styles.ddInputContainer}
+                        labelHeight         = {10}
+                        tintColor           = {colors.button}
+                        labelFontSize       = {sizes.label}
+                        fontSize            = {15}
+                        baseColor           = {'#666'}
+                        textColor           = {'#333'}
+                        labelTextStyle      = {styles.ddLabelTextFull}
+                        style               = {styles.ddStyle}
+                        data                = {this.state.propertyTypeList}
+                        value               = {this.state.fullPropertyType}
+                        onChangeText        = {fullPropertyType => {this.setState({fullPropertyType});}}
+                      />
+                    </View>
+                </View>
+            
+            <Text style={[styles.heading2,styles.marginBottom5]}>My Property is on</Text>
+          {/* <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+              <View style={[styles.inputWrapper2]}>
+                <View style={styles.inputImgWrapper2}>
+                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                </View>
+                <View style={styles.inputTextWrapper2}>
+                <Picker 
+                    selectedValue={this.state.floor}
+                    onValueChange={ (floor) => ( this.setState({floor}) ) } 
+                    >
+                 {  this.state.floor && this.state.floor.length >0 ?
+                    this.state.floor.map((data,index)=>{
+                      return(
+                        <Picker.Item key={index} label={data.label} value={data.value} />
+                      )
+                    })
+                    :
+                    null
+                  }
+                
+                </Picker>
+                </View>
               </View>
-              <View style={styles.inputTextWrapper}>
-                <TextField
-                  label                 = "My Property is located in"
-                  onChangeText          = {propertyLocation => {this.setState({propertyLocation})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {10}
-                  baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.propertyLocation}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {styles.textStyle}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "default"
+              <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+              </View>
+              <View style={[styles.inpast_matches_circlesputWrapper2]}>
+                <View style={styles.inputImgWrapper2}>
+                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                </View>
+                <View style={styles.inputTextWrapper2}>
+            
+                   <Picker   
+                        selectedValue={this.state.totalFloor}
+                        onValueChange={ (totalFloor) => ( this.setState({totalFloor}) ) } 
+
+                    >  
+                    { this.state.totalFloor && this.state.totalFloor.length >0 ?
+                      this.state.totalFloor.map((data,index)=>{
+                      return(
+                         <Picker.Item key={index} label={data.label} value={data.value}/>  
+                        );
+                      })
+                      :
+                      null
+                    }
+                   
+                </Picker>  
+                </View>
+              </View>
+            </View>           */}
+
+             <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+              <View style={[styles.inputWrapper2,{height:40}]}>
+                <View style={styles.inputImgWrapper2}>
+                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                </View>
+                <View style={styles.inputTextWrapper2}>
+                 <Dropdown
+                  
+                  containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
+                  dropdownOffset      = {{top:0, left: 0}}
+                  itemTextStyle       = {styles.ddItemText}
+                  inputContainerStyle = {styles.ddInputContainer}
+                  labelHeight         = {10}
+                  tintColor           = {colors.button}
+                  labelFontSize       = {sizes.label}
+                  fontSize            = {15}
+                  baseColor           = {'#666'}
+                  textColor           = {'#333'}
+                  labelTextStyle      = {styles.ddLabelTextFull}
+                  style               = {styles.ddStyle}
+                  data                = {this.state.floorData}
+                  value               = {this.state.floor}
+                  onChangeText        = {floor => {this.setState({floor});}}
                 />
+                </View>
+              </View>
+              <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+              {/*  <Text style={styles.heading3}>of</Text>*/}
+              </View>
+                <View style={[styles.inputWrapper2,{height:40}]}>
+              
+                <View style={styles.inputImgWrapper2}>
+                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                </View>
+                <View style={[styles.inputTextWrapper2]}>
+                  <Dropdown
+                  
+                  containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
+                  dropdownOffset      = {{top:0, left: 0}}
+                  itemTextStyle       = {styles.ddItemText}
+                  inputContainerStyle = {styles.ddInputContainer}
+                  labelHeight         = {10}
+                  tintColor           = {colors.button}
+                  labelFontSize       = {sizes.label}
+                  fontSize            = {15}
+                  baseColor           = {'#666'}
+                  textColor           = {'#333'}
+                  labelTextStyle      = {styles.ddLabelTextFull}
+                  style               = {styles.ddStyle}
+                  data                = {this.state.totalFloorData}
+                  value               = {this.state.totalFloor}
+                  onChangeText        = {totalFloor => {this.setState({totalFloor});}}
+                  />
+                </View>
               </View>
             </View>
 
@@ -211,7 +317,7 @@ export default class PropertyDetails1 extends ValidationComponent{
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
               iconRight
               icon = {<Icon
-                name="chevrons-right" 
+                name="chevrons-right"
                 type="feather"
                 size={22}
                 color="white"
@@ -220,10 +326,9 @@ export default class PropertyDetails1 extends ValidationComponent{
 
           </View>
         </ScrollView>
-      
+     
       </React.Fragment>
     );
-    
+   
   }
 }
-

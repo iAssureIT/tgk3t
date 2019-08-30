@@ -36,7 +36,10 @@ export default class SignUp extends ValidationComponent{
   handleShowPassword = ()=>{
     this.setState({showPassword:!this.state.showPassword});
   }
-
+  goTo(){
+    console.log('goooooo')
+    this.props.navigation.navigate('PropertyDetails1');
+  }
   render(){
     
     const { navigation } = this.props;
@@ -184,6 +187,8 @@ export default class SignUp extends ValidationComponent{
             </View>
 
             <Button
+              
+              // onPress         = {this.goTo.bind(this)}
               onPress         = {()=>this.props.navigation.navigate('PropertyDetails1')}
               titleStyle      = {styles.buttonText}
               title           = "Post & Earn"
@@ -191,10 +196,10 @@ export default class SignUp extends ValidationComponent{
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
               iconRight
               icon = {<Icon
-                name="chevrons-right" 
-                type="feather"
-                size={22}
-                color="white"
+              name="chevrons-right" 
+              type="feather"
+              size={22}
+              color="white"
               />}
             />
 
