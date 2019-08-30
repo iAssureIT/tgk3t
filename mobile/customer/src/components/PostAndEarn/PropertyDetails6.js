@@ -435,3 +435,5 @@ export default class PropertyDetails6 extends ValidationComponent{
   }
 }
 
+
+

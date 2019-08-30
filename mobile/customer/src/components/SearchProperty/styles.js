@@ -140,9 +140,26 @@ export default StyleSheet.create({
     justifyContent:'center',
     backgroundColor: colors.button,
   },
+  tabViewAuto:{
+    flexDirection: 'row',
+    width:'auto',
+    paddingVertical: 10,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: colors.button,
+  },
   activeTabView:{
     flexDirection: 'row',
     width:'33.33%',
+    paddingVertical: 10,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: colors.primary,
+    elevation: 6,
+  },
+  activeTabViewAuto:{
+    flexDirection: 'row',
+    width:'auto',
     paddingVertical: 10,
     alignItems:'center',
     justifyContent:'center',
@@ -173,7 +190,8 @@ export default StyleSheet.create({
     fontSize: 12,
     color: colors.white,
     fontFamily: 'Roboto-Regular',
-    marginLeft: 5
+    marginLeft: 5,
+    textAlign:'center',
   },
   tabView2:{
     width:'16.66%',
@@ -181,12 +199,64 @@ export default StyleSheet.create({
     paddingHorizontal: 5,
     paddingVertical:15
   },
+  tabViewFloor:{
+    width:'20%',
+    backgroundColor: colors.button,
+    paddingHorizontal: 5,
+    paddingVertical:15,
+    textAlign:'center',
+  },
+   tabViewAge:{
+    width:'auto',
+    backgroundColor: colors.button,
+    paddingHorizontal: 5,
+    paddingVertical:15,
+    textAlign:'center',
+    marginLeft:3,
+    marginRight:3,
+    borderRadius:4,
+  },
+  tabViewAvl:{
+    width:'25%',
+    backgroundColor: colors.button,
+    paddingHorizontal: 5,
+    paddingVertical:15,
+    textAlign:'center',
+  },
   activeTabView2:{
     width:'16.66%',
     backgroundColor: colors.primary,
     paddingHorizontal: 5,
     paddingVertical:15,
-    elevation: 4
+    elevation: 4,
+  },
+  activeTabViewFloor:{
+    width:'20%',
+    backgroundColor: colors.primary,
+    paddingHorizontal: 5,
+    paddingVertical:10,
+    elevation: 4,
+    textAlign:'center',
+   
+  },
+  activeTabViewAge:{
+    width:'auto',
+    backgroundColor: colors.primary,
+    paddingHorizontal: 5,
+    paddingVertical:15,
+    elevation: 4,
+    textAlign:'center',
+    marginLeft:3,
+    marginRight:3,
+    borderRadius:4
+  },
+  activeTabViewAvl:{
+    width:'25%',
+    backgroundColor: colors.primary,
+    paddingHorizontal: 5,
+    paddingVertical:15,
+    elevation: 4,
+    textAlign:'center',
   },
   buttonSubmitContainer:{
     width:'100%',
@@ -216,6 +286,10 @@ export default StyleSheet.create({
   }, 
   horizontalScroll:{
     width:'100%'
+  },
+  paddLeft5:{
+    paddingLeft:6,
+    paddingRight:6,
   }
 });
 

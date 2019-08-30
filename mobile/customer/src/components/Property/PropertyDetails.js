@@ -333,7 +333,7 @@ export default class PropertyDetails extends ValidationComponent{
              <View style={[styles.divider,styles.marginBottom15]}></View>
 
             <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Location</Text>
-            <MapView
+           {/* <MapView
               ref={map => this.map = map}
               provider={PROVIDER_GOOGLE}
               initialRegion={this.state.region}
@@ -347,7 +347,7 @@ export default class PropertyDetails extends ValidationComponent{
                 }}
               >
               </MapView.Marker>
-            </MapView>
+            </MapView>*/}
 
             <View style={[styles.divider,styles.marginBottom15]}></View>
 

@@ -29,8 +29,11 @@ export default class SearchProperty extends ValidationComponent{
       searchText            : '',
       activeBtn             : 'buy',
       includeNearby         : false,
-      activePropType        : 'flat',
+      activePropType        : 'MultiStorey Apartment',
       activeRoomIndex       : 0,
+      activeFloorIndex      : 0,
+      activeAgeIndex        : 0,
+      activeAvailabeIndex   : 0,
       activeFurnishedStatus : 'Fully Furnished',
       value:0,
     };
@@ -56,6 +59,18 @@ export default class SearchProperty extends ValidationComponent{
     this.setState({activeRoomIndex:index});
   }
 
+  setActiveFloor = (index)=>{
+    this.setState({activeFloorIndex:index});
+  }
+
+
+  setActiveAge = (index)=>{
+    this.setState({activeAgeIndex:index});
+  }
+
+  setActiveAvailable = (index)=>{
+    this.setState({activeAvailabeIndex:index});
+  }
   setActiveFurnish = (status)=>{
     this.setState({activeFurnishedStatus:status});
   }
@@ -63,8 +78,11 @@ export default class SearchProperty extends ValidationComponent{
   render(){
     
     const { navigation } = this.props;
-    let {activeBtn,activePropType,activeRoomIndex,activeFurnishedStatus} = this.state;
+    let {activeBtn,activePropType,activeRoomIndex,activeFloorIndex,activeAgeIndex,activeAvailabeIndex,activeFurnishedStatus} = this.state;
     let rooms = ["1 RK","1 BHK","2 BHK","3 BHK","4 BHK","4+BHK"];
+    let floors = ["Basement","Ground","1-5","5-10","> 10"];
+    let ages = ["Under Construction"," New ","1-2 Years","2-5 Years","5-10 Years","> 8 Years"];
+    let available = ["Immediate","2 Weeks","2-4 Weeks","After a month"];
 
     // console.log("this.props.navigation = ",this.props.navigation);
     return (
@@ -184,56 +202,77 @@ export default class SearchProperty extends ValidationComponent{
                 }
               />
             </View>
-            <Text style={[styles.heading,styles.marginBottom5]}>Property Type</Text>
+            <Text style={[styles.heading,styles.marginBottom5]}>Property Type : Residential</Text>
               <View style={[styles.tabWrap,styles.marginBottom25]}>
-                <ScrollView horizontal={true} contentContainerStyle={[styles.horizontalScroll]} >
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('flat')}
-                    style={[(activePropType=="flat"?styles.activeTabView:styles.tabView),styles.tabBorder,styles.borderRadiusLeft]}
+               <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
+                 <TouchableOpacity 
+                    onPress = {()=>this.setActive('MultiStorey Apartment')}
+                    style={[(activePropType=="MultiStorey Apartment"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusLeft2]}
                   >
                       <Icon
                         name="building-o" 
                         type="font-awesome"
                         size={12}
                         color="white"
+                        style={[{paddingLeft:10}]}
+
                       />
-                      <Text style={styles.tabText}>Flat</Text>
+                      <Text style={styles.tabText}> MultiStorey Apartment </Text>
                   </TouchableOpacity>
                   <TouchableOpacity 
-                    onPress = {()=>this.setActive('house')}
-                    style={[(activePropType=="house"?styles.activeTabView:styles.tabView),styles.tabBorder]}
+                    onPress = {()=>this.setActive('Residential House')}
+                    style={[(activePropType=="Residential House"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
                   >
                     <Icon
                       name="home" 
                       type="material-community"
                       size={18}
                       color="white"
+                      style={[{paddingLeft:10}]}
+
                     />
-                    <Text style={styles.tabText}>House/Villa</Text>
+                    <Text style={styles.tabText}> Residential House </Text>
                   </TouchableOpacity>
                   <TouchableOpacity 
-                    onPress = {()=>this.setActive('multistoreyApt')}
-                    style={[(activePropType=="multistoreyApt"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
+                    onPress = {()=>this.setActive('Studio Apartment')}
+                    style={[(activePropType=="Studio Apartment"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
                   >
                     <Icon
                       name="office-building" 
                       type="material-community"
                       size={16}
                       color="white"
+                      style={[{paddingLeft:10}]}
                     />
-                    <Text style={styles.tabText}>Multistorey Apt.</Text>
+                    <Text style={styles.tabText}> Studio Apartment </Text>
                   </TouchableOpacity>
                   <TouchableOpacity 
-                    onPress = {()=>this.setActive('multistoreyApt')}
-                    style={[(activePropType=="multistoreyApt"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
+                    onPress = {()=>this.setActive('Villa')}
+                    style={[(activePropType=="Villa"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
+                  >
+                    <Icon
+                      name="house-variant-outline" 
+                      type="material-community"
+                      size={16}
+                      color="white"
+                      style={[{paddingLeft:10}]}
+
+                    />
+                    <Text style={styles.tabText}> Villa </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress = {()=>this.setActive('Penthouse')}
+                    style={[(activePropType=="Penthouse"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusRight2]}
                   >
                     <Icon
                       name="office-building" 
                       type="material-community"
                       size={16}
                       color="white"
+                      style={[{paddingLeft:10}]}
+
                     />
-                    <Text style={styles.tabText}>Multistorey Apt.</Text>
+                    <Text style={styles.tabText}> Penthouse </Text>
                   </TouchableOpacity>
 
                 </ScrollView>
@@ -328,6 +367,52 @@ export default class SearchProperty extends ValidationComponent{
                 <Text style={styles.tabText}>Unfunished</Text>
               </TouchableOpacity>
             </View>
+
+            <Text style={[styles.heading,styles.marginBottom5]}>Floors</Text>
+            <View style={[styles.tabWrap,styles.marginBottom25]}>
+            {floors.map((data,index)=>(
+              <TouchableOpacity 
+                onPress={()=>this.setActiveFloor(index)}
+                key={index} 
+                style={[(index==activeFloorIndex?styles.activeTabViewFloor:styles.tabViewFloor),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
+              >
+                <Text style={styles.tabText}>{data}</Text>
+              </TouchableOpacity>
+            ))
+            }
+            
+            </View>
+
+            <Text style={[styles.heading,styles.marginBottom5]}>Age</Text>
+            <View style={[styles.tabWrap,styles.marginBottom25]}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
+            {ages.map((data,index)=>(
+              <TouchableOpacity 
+                onPress={()=>this.setActiveAge(index)}
+                key={index} 
+                style={[(index==activeAgeIndex?styles.activeTabViewAge:styles.tabViewAge),(index<6)?styles.tabBorder:null]}
+              >
+                <Text style={styles.tabText}>{data}</Text>
+              </TouchableOpacity>
+            ))
+            }
+            </ScrollView>
+            </View>
+
+             <Text style={[styles.heading,styles.marginBottom5]}>Availability</Text>
+              <View style={[styles.tabWrap,styles.marginBottom25]}>
+              {available.map((data,index)=>(
+                <TouchableOpacity 
+                  onPress={()=>this.setActiveAvailable(index)}
+                  key={index} 
+                  style={[(index==activeAvailabeIndex?styles.activeTabViewAvl:styles.tabViewAvl),(index==0?styles.borderRadiusLeft2:(index==3)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
+                >
+                  <Text style={styles.tabText}>{data}</Text>
+                </TouchableOpacity>
+              ))
+              }
+              
+              </View>
 
             <Button
               onPress         = {()=>this.props.navigation.navigate('PropertyList')}
