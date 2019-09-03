@@ -31,7 +31,7 @@ export default class PropertyDetails4 extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
-      superArea : '',
+      /*superArea : '',
       builtArea : '',
       expectedRate : '',
       totalAsk : '',
@@ -43,99 +43,12 @@ export default class PropertyDetails4 extends ValidationComponent{
       },
       {
         value: 'Yearly'
-      }],
+      }],*/
       defaultIcon:'flag',
       iconType: 'material-community',
       allAmenities:[],
       isChecked: true,
-      internalAmenities: [
-        {
-          value: 'Gas Pipeline',
-          checked: false,
-          iconName: 'pipe',
-          iconType: 'material-community' 
-        },{
-          value: 'Internet Services',
-          checked: false,
-          iconName: 'wifi',
-          iconType: 'feather'
-        },{
-          value: 'Lift',
-          checked: false,
-          iconName: 'elevator',
-          iconType: 'foundation'
-        },{
-          value: 'Air Conditioner',
-          checked: false,
-          iconName: 'air-conditioner',
-          iconType: 'material-community'
-        },{
-          value: 'Intercom',
-          checked: false,
-          iconName: 'user-check',
-          iconType: 'feather'
-        },{
-          value: 'Power Backup',
-          checked: false,
-          iconName: 'battery-alert',
-          iconType: 'material-community'
-        },{
-          value: 'Water Supply',
-          checked: false,
-          iconName: 'water-pump',
-          iconType: 'material-community',
-          /*options:[
-            {
-              value: '24x7',
-              checked: false
-            },{
-              value: 'Corporation',
-              checked: false
-            },{
-              value: 'Borewell',
-              checked: false
-            },
-          ]*/
-        }
-      ],
-      externalAmenities: [
-        {
-          value: 'Club House',
-          checked: false,
-          iconName: 'cards-playing-outline',
-          iconType: 'material-community' 
-        },{
-          value: 'Shopping Center',
-          checked: false,
-          iconName: 'shopping',
-          iconType: 'material-community'
-        },{
-          value: 'Sewage Treatment Plant',
-          checked: false,
-          iconName: 'building',
-          iconType: 'font-awesome'
-        },{
-          value: 'Swimming Pool',
-          checked: false,
-          iconName: 'swim',
-          iconType: 'material-community'
-        },{
-          value: 'Children\'s Play Area',
-          checked: false,
-          iconName: 'child',
-          iconType: 'font-awesome'
-        },{
-          value: 'Internal Gym',
-          checked: false,
-          iconName: 'run',
-          iconType: 'material-community'
-        },{
-          value: 'Park',
-          checked: false,
-          iconName: 'trees',
-          iconType: 'foundation',
-        }
-      ],
+      
     };
   }
 
@@ -207,21 +120,7 @@ export default class PropertyDetails4 extends ValidationComponent{
     // this.setState({internalAmenities});
   }
 
- /* handleOnClickInternal = (index)=>{
-      let isChecked = !this.state.isChecked;
-
-    this.setState({ isChecked }, ()=>{
-      if(isChecked){
-        this.setState({
-          isCheckedError: []
-        });
-      }else{
-        this.setState({
-          isCheckedError: ["Please accept the terms & conditions."]
-        });
-      }
-    });
-  }  */
+ 
 
   handleOnClickInternalOption = (index,optionIndex)=>{
     let {internalAmenities} = this.state;
@@ -284,29 +183,7 @@ export default class PropertyDetails4 extends ValidationComponent{
                       </View>
                     }
                   />
-                  {/*data.options
-                  ? 
-                    <View style={{paddingLeft:30}}>
-                      {data.options.map((optionData,optionIndex)=>(
-                        <CheckBox
-                          key={optionIndex}
-                          style={{marginBottom:10}}
-                          onClick={() => this.handleOnClickInternalOption(index,optionIndex)}
-                          isChecked={optionData.checked}
-                          rightTextStyle={{marginLeft:0}}
-                          checkBoxColor= {colors.grey}
-                          rightTextView = {
-                          <View style={{flex:1}}>
-                            <Text style={[styles.inputText,{marginLeft:10}]}>{optionData.value}</Text>
-                          </View>}
-                        />  
-                      ))
-                      }
-                      
-                    </View>
-                  :
-                    null*/
-                  }
+                
                 </React.Fragment>  
               ))
 
@@ -314,37 +191,6 @@ export default class PropertyDetails4 extends ValidationComponent{
                 null
               }
             </View>
-
-            {/*<View style={styles.dividerInside}></View>*/}
-
-           {/* <Text style={[styles.heading2,styles.marginBottom15]}>External</Text>
-            <View style={styles.marginBottom15}>
-              {this.state.externalAmenities.map((data,index)=>(
-                <React.Fragment key={index}>
-                  <CheckBox
-                    key={index}
-                    style={{marginBottom:10}}
-                    onClick={() => this.handleOnClickExternal(index)}
-                    isChecked={data.checked}
-                    rightTextStyle={{marginLeft:0}}
-                    checkBoxColor= {colors.grey}
-                    rightTextView = {
-                      <View style={{flexDirection:'row',flex:1}}>
-                        <Icon
-                          name={data.iconName} 
-                          type={data.iconType}
-                          size={18}
-                          color= {colors.button}
-                          containerStyle = {{marginHorizontal:10}}
-                        />
-                        <Text style={styles.inputText}>{data.value}</Text>
-                      </View>
-                    }
-                  />
-                </React.Fragment>  
-              ))
-              }
-            </View>           */} 
 
             <Button
               onPress         = {()=>this.props.navigation.navigate('PropertyDetails5')}

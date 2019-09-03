@@ -176,7 +176,7 @@ export default class Home extends ValidationComponent{
             <View style={[styles.alignCenter]}>
               <Text style={[styles.heading2,{marginBottom:10}]}>Welcome Owners</Text>
                 <Button
-                  onPress         = {()=>this.props.navigation.navigate('SignUp')}
+                  onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
                   titleStyle      = {styles.buttonText2}
                   title           = "Post & Earn"
                   buttonStyle     = {styles.button2}

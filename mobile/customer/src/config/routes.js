@@ -12,11 +12,12 @@ import PropertyDetails6 from '../components/PostAndEarn/PropertyDetails6.js';
 import PropertyDetails7 from '../components/PostAndEarn/PropertyDetails7.js';
 import PropertySuccess from '../components/PostAndEarn/PropertySuccess.js';
 import SearchProperty from '../components/SearchProperty/SearchProperty.js';
-import PropertyList from '../components/Property/PropertyList.js'
-import PropertyDetails from '../components/Property/PropertyDetails.js'
+import PropertyList from '../components/Property/PropertyList.js';
+import PropertyDetails from '../components/Property/PropertyDetails.js';
 // import MyPostedProperties from '../components/MyPostedProperties/MyPostedProperties.js'
-import MyPostedProperties from '../components/MyPostedProperties/MyPostedProperties.js'
-import MyInterestedProperties from '../components/MyInterestedProperties/MyInterestedProperties.js'
+import MyPostedProperties from '../components/MyPostedProperties/MyPostedProperties.js';
+import MyInterestedProperties from '../components/MyInterestedProperties/MyInterestedProperties.js';
+import MobileScreen from '../components/PostAndEarn/MobileScreen.js';
 
 const HomeStack = createStackNavigator({
 
@@ -108,6 +109,7 @@ const HomeStack = createStackNavigator({
     }
   },
 
+<<<<<<< Updated upstream
   MyPostedProperties:{
     screen: MyPostedProperties,
     navigationOptions: {
@@ -116,6 +118,10 @@ const HomeStack = createStackNavigator({
   },
   MyInterestedProperties:{
     screen: MyInterestedProperties,
+=======
+   MobileScreen:{
+    screen: MobileScreen,
+>>>>>>> Stashed changes
     navigationOptions: {
       header: null
     }

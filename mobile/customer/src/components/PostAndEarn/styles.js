@@ -99,6 +99,11 @@ export default StyleSheet.create({
     borderColor: colors.black,
     marginVertical:5,
   },
+  borderRight:{
+      borderRightWidth:1,
+    borderColor: colors.black,
+    marginVertical:5,
+  },
   inputImgWrapper2:{
     width:'25%',
     justifyContent:'center',
@@ -139,6 +144,9 @@ export default StyleSheet.create({
     borderColor: colors.black,
     marginVertical:5,
     // marginRight:5,
+  },
+  inputRightWrapperNoBorder:{
+    width:'23%',
   },
   textContainer:{
     height:40,

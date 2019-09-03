@@ -169,13 +169,6 @@ export default class PropertyDetails1 extends ValidationComponent{
 
             
             <Text style={[styles.heading2,styles.marginBottom5]}>Property Type</Text>
-          {/*     <Dropdown
-                  style={[styles.inputWrapper]}
-                  label             ='Select Property Type'
-                  data              ={this.state.propertyTypeList}
-                  onChangeText      = {fullPropertyType => {this.setState({fullPropertyType})}}         
-               />*/}
-
 
                  <View style={[styles.inputWrapper,styles.marginBottom15]}>
                     <View style={styles.inputTextWrapperFull}>
@@ -201,57 +194,6 @@ export default class PropertyDetails1 extends ValidationComponent{
                 </View>
             
             <Text style={[styles.heading2,styles.marginBottom5]}>My Property is on</Text>
-          {/* <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
-              <View style={[styles.inputWrapper2]}>
-                <View style={styles.inputImgWrapper2}>
-                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper2}>
-                <Picker 
-                    selectedValue={this.state.floor}
-                    onValueChange={ (floor) => ( this.setState({floor}) ) } 
-                    >
-                 {  this.state.floor && this.state.floor.length >0 ?
-                    this.state.floor.map((data,index)=>{
-                      return(
-                        <Picker.Item key={index} label={data.label} value={data.value} />
-                      )
-                    })
-                    :
-                    null
-                  }
-                
-                </Picker>
-                </View>
-              </View>
-              <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-              </View>
-              <View style={[styles.inpast_matches_circlesputWrapper2]}>
-                <View style={styles.inputImgWrapper2}>
-                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper2}>
-            
-                   <Picker   
-                        selectedValue={this.state.totalFloor}
-                        onValueChange={ (totalFloor) => ( this.setState({totalFloor}) ) } 
-
-                    >  
-                    { this.state.totalFloor && this.state.totalFloor.length >0 ?
-                      this.state.totalFloor.map((data,index)=>{
-                      return(
-                         <Picker.Item key={index} label={data.label} value={data.value}/>  
-                        );
-                      })
-                      :
-                      null
-                    }
-                   
-                </Picker>  
-                </View>
-              </View>
-            </View>           */}
-
              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
               <View style={[styles.inputWrapper2,{height:40}]}>
                 <View style={styles.inputImgWrapper2}>
