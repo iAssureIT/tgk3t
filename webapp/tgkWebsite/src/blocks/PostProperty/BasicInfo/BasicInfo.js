@@ -325,23 +325,7 @@ class BasicInfo extends Component{
 				   		</div>
 
 
-				   	{/*-------------------------------------*/}
-
-				   		<div class="container">
-					
-
-
-				   	    <div className="switch switch-yellow">
-					      <input type="radio" className="switch-input" name="view3" value="week3" id="week3" checked/>
-					      <label for="week3" className="switch-label switch-label-off">YES</label>
-					      <input type="radio" className="switch-input" name="view3" value="month3" id="month3"/>
-					      <label for="month3" className="switch-label switch-label-on">NO</label>
-					      <span className="switch-selection"></span>
-					    </div>
-
-					   </div>
-				   {/*----------------------------------------------*/}
-				   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	    		
+				   			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">	    		
 				  	 	<div className="form-group" id="">
 							<div className="can-toggle genderbtn demo-rebrand-2 " value={this.state.transactionType} onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox" />

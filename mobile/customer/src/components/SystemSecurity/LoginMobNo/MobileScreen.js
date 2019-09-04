@@ -11,11 +11,13 @@ import {
   Image,TextInput,
   Alert
 } from 'react-native';
-import styles from './styles.js';
+import axios          from 'axios';
+import {AsyncStorage} from 'react-native';
+import styles from '../../PostAndEarn/styles.js';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import { TextField } from 'react-native-material-textfield';
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import {colors,sizes} from '../../config/styles.js';
+import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
+import {colors,sizes} from '../../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
 
 
@@ -35,8 +37,59 @@ export default class MobileScreen extends ValidationComponent {
 		    };
 	}
 
+	checkUser(){
+		console.log("unitCode",this.state.unitCode);
+		console.log("mobile",this.state.mobile);
+   	    this.props.navigation.navigate('OTPScreen');
+   	    
+        var formValues = {
+        mobileNumber : this.state.mobile,
+        countryCode  : this.state.unitCode
+      };
+      console.log("LoginMobNum==",formValues);
+
+      if(this.state.mobile!=""){
+
+        
+        axios
+          .post('http://qatgk3tapi.iassureit.com/api/usersotp/verify_mobile',formValues)
+          .then((response)=>{
+            console.log("response = ",response.data);
+              if(response.data.message === 'MOBILE-NUMBER-EXISTS')
+              {
+                // AsyncStorage.setItem('message', response.data.message);
+                // AsyncStorage.setItem('user_id', response.data.user_id);
+                console.log("here otp from response",response.data.otp);
+                // AsyncStorage.setItem('originalotp', response.data.otp);
+            
+              AsyncStorage.multiSet([
+                ['message',response.data.message],
+                ['user_id',response.data.user_id],
+                ['originalotp',response.data.otp],
+              ])              
+
+                this.props.navigation.navigate('OTPScreen');
+          
+              }else{
+                this.props.navigation.navigate('OTPScreen');
+                console.log("new mob no");
+              }
+
+            })
+          .catch(function(error){
+            console.log("here can't access the url");
+            console.log(error);
+          })
+        
+        }else{
+          // swal("Please enter Mobile Number", "", "warning");
+                console.log("enter value");
+                console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+        }
+	}
+
 	render() {
-		 const { navigation } = this.props;
+		const { navigation } = this.props;
     	let {activeBtn} = this.state;
 
 		return (
@@ -56,14 +109,11 @@ export default class MobileScreen extends ValidationComponent {
 
             <View style={styles.alignCenter}>
               <Image 
-                source={require('../../images/1.png') }
+                source={require('../../../images/1.png') }
               />
             </View>
 
             <View style={{marginTop:15,marginBottom:10}}>
-             {/* <Text style={styles.text}>
-                Let us know you to sell or rent your property faster.
-              </Text>*/}
             	<Text style={[styles.heading2,styles.marginBottom5]}>Please enter your Mobile No</Text>
             </View>
 
@@ -92,7 +142,7 @@ export default class MobileScreen extends ValidationComponent {
               </View>
               <View style={styles.inputTextWrapperM}>
                 <TextField
-                  // label                 = "Built Area"
+                  label                 = "Mobile no"
                   onChangeText          = {mobile => {this.setState({mobile})}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}
@@ -118,8 +168,8 @@ export default class MobileScreen extends ValidationComponent {
            
             <Button
               
-              // onPress         = {this.goTo.bind(this)}
-              onPress         = {()=>this.props.navigation.navigate('SignUp')}
+              onPress         = {this.checkUser.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('OTPScreen')}
               titleStyle      = {styles.buttonText}
               title           = "Next"
               buttonStyle     = {styles.button}

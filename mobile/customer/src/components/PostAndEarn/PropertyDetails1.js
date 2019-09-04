@@ -12,7 +12,8 @@ import {
   Picker
 } from 'react-native';
  import { Dropdown } from 'react-native-material-dropdown';
-
+import axios          from 'axios';
+import {AsyncStorage} from 'react-native';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 
 import ValidationComponent from "react-native-form-validator";
@@ -52,6 +53,9 @@ export default class PropertyDetails1 extends ValidationComponent{
       totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
       floor: 'Basement',
       totalFloor:'Total Floors',
+      propertyType : '',
+      propertySubType : '',
+
     };
   }
 
@@ -67,6 +71,45 @@ export default class PropertyDetails1 extends ValidationComponent{
       this.setState({toggleText:'Rent'})
     }
     this.setState({toggle:!this.state.toggle});
+  }
+
+  submitFun(){
+
+    this.props.navigation.navigate('PropertyDetails1');
+    // var all = this.state.fullPropertyType;
+
+    const formValues = {
+        "propertyHolder"  : this.state.propertyHolder,
+        "transactionType" : this.state.toggleText,
+        "propertyType"    : this.state.propertyType,
+        "propertySubType" : this.state.propertySubType,
+        "floor"           : this.state.floor,
+        "totalFloor"      : this.state.totalfloor,
+        "listing"         : false,
+        "status"          : "WIP",
+        // "uid"         : localStorage.getItem("uid"),
+        // "property_id"   : this.props.property_id
+
+      };
+
+  }
+
+  selectProp(value){
+    console.log("here selected value",value);
+
+    var propertyTypeVal = value.split("-");
+    var propertyType = propertyTypeVal[0];
+    var propertySubType = propertyTypeVal[1];
+
+    
+    console.log("propertyType",propertyType);
+    console.log("propertySubType",propertySubType);
+
+    this.setState({
+      fullPropertyType: value,
+      propertyType : propertyType,
+      propertySubType : propertySubType,
+    });
   }
 
   render(){
@@ -188,7 +231,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                         style               = {styles.ddStyle}
                         data                = {this.state.propertyTypeList}
                         value               = {this.state.fullPropertyType}
-                        onChangeText        = {fullPropertyType => {this.setState({fullPropertyType});}}
+                        // onChangeText        = {this.selectProp.bind(this)}
+                        onChangeText={ (fullPropertyType) => this.selectProp(fullPropertyType) } 
+                        // onChangeText        = {fullPropertyType => {this.setState({fullPropertyType});}}
                       />
                     </View>
                 </View>
@@ -252,7 +297,9 @@ export default class PropertyDetails1 extends ValidationComponent{
             </View>
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
+            
+              onPress         = {this.submitFun.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}

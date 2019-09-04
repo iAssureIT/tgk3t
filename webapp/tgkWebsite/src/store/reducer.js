@@ -320,8 +320,8 @@ const reducer = (state = initialState,action) => {
 	}
 
 	if(action.type === "EDIT_PROP_PROFILE"){
-		newState.uid   	   = action.uid;
-		newState.property_id   = action.property_id;
+		newState.uid   	      = action.uid;
+		newState.property_id  = action.property_id;
 		newState.updateStatus = true;
 		newState.BasicInfo 	  = true;
 
