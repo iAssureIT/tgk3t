@@ -108,7 +108,7 @@ export default class PropertyList extends ValidationComponent{
             
             <View style={[styles.btnWrapper,styles.marginBottom20]}>
               <Button
-                onPress         = {()=>this.props.navigation.navigate('PropertySuccess')}
+                onPress         = {()=>this.props.navigation.navigate('SearchProperty')}
                 titleStyle      = {styles.buttonText}
                 title           = "Sort"
                 buttonStyle     = {styles.button}
@@ -122,7 +122,7 @@ export default class PropertyList extends ValidationComponent{
                 />}
               />
               <Button
-                onPress         = {()=>this.props.navigation.navigate('PropertySuccess')}
+                onPress         = {()=>this.props.navigation.navigate('SearchProperty')}
                 titleStyle      = {styles.buttonText}
                 title           = "Budget"
                 buttonStyle     = {styles.button}

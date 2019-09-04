@@ -44,7 +44,14 @@ export default class SearchProperty extends ValidationComponent{
   }
 
   handleOption = (option)=>{
-    this.setState({activeBtn:option});
+    this.setState({
+      activeBtn:option
+    },()=>{
+      if(this.state.activeBtn === "commertial")
+      {
+        this.setState({activePropType:"Office in IT Park/SEZ"});
+      }
+    });
   }
 
   handleIncludeNearby = ()=>{
@@ -202,7 +209,8 @@ export default class SearchProperty extends ValidationComponent{
                 }
               />
             </View>
-            <Text style={[styles.heading,styles.marginBottom5]}>Property Type : Residential</Text>
+            <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn!=='commertial'? "Residential" : "Commercial"}</Text>
+            {this.state.activeBtn!=='commertial'?
               <View style={[styles.tabWrap,styles.marginBottom25]}>
                <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
                  <TouchableOpacity 
@@ -277,7 +285,96 @@ export default class SearchProperty extends ValidationComponent{
 
                 </ScrollView>
               </View>
+              :
+              <View style={[styles.tabWrap,styles.marginBottom25]}>
+               <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
+                 <TouchableOpacity 
+                    onPress = {()=>this.setActive('Office in IT Park/SEZ')}
+                    style={[(activePropType=="Office in IT Park/SEZ"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusLeft2]}
+                  >
+                      <Icon
+                        name="building-o" 
+                        type="font-awesome"
+                        size={12}
+                        color="white"
+                        style={[{paddingLeft:10}]}
 
+                      />
+                      <Text style={styles.tabText}> Office in IT Park/SEZ </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress = {()=>this.setActive('Commercial Office Space')}
+                    style={[(activePropType=="Commercial Office Space"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
+                  >
+                    <Icon
+                      name="home" 
+                      type="material-community"
+                      size={18}
+                      color="white"
+                      style={[{paddingLeft:10}]}
+
+                    />
+                    <Text style={styles.tabText}> Commercial Office Space </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress = {()=>this.setActive('Commercial Showroom')}
+                    style={[(activePropType=="Commercial Showroom"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
+                  >
+                    <Icon
+                      name="office-building" 
+                      type="material-community"
+                      size={16}
+                      color="white"
+                      style={[{paddingLeft:10}]}
+                    />
+                    <Text style={styles.tabText}> Commercial Showroom </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress = {()=>this.setActive('Commercial Shop')}
+                    style={[(activePropType=="Commercial Shop"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
+                  >
+                    <Icon
+                      name="house-variant-outline" 
+                      type="material-community"
+                      size={16}
+                      color="white"
+                      style={[{paddingLeft:10}]}
+
+                    />
+                    <Text style={styles.tabText}> Commercial Shop </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress = {()=>this.setActive('Industrial Building')}
+                    style={[(activePropType=="Industrial Building"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusRight2]}
+                  >
+                    <Icon
+                      name="office-building" 
+                      type="material-community"
+                      size={16}
+                      color="white"
+                      style={[{paddingLeft:10}]}
+
+                    />
+                    <Text style={styles.tabText}> Industrial Building </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity 
+                    onPress = {()=>this.setActive('Warehouse/Godown')}
+                    style={[(activePropType=="Warehouse/Godown"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusRight2]}
+                  >
+                    <Icon
+                      name="office-building" 
+                      type="material-community"
+                      size={16}
+                      color="white"
+                      style={[{paddingLeft:10}]}
+
+                    />
+                    <Text style={styles.tabText}> Warehouse/Godown </Text>
+                  </TouchableOpacity>
+
+                </ScrollView>
+              </View>
+            }
             <Text style={[styles.heading,styles.marginBottom5]}>Bedroom</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
             {rooms.map((data,index)=>(
