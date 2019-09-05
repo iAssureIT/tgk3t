@@ -151,12 +151,31 @@ class PropertyProfile extends Component{
    counter(event) {
    var element   = event.target;         // DOM element, in this example .owl-carousel
     var items     = event.item.count;     // Number of items
-    var item      = event.item.index + 1;     // Position of the current item
-  
+    console.log("here index og pic",event.item.index);
+    console.log("here count og pic",event.item.count);
+
+    var item      = event.item.index ;     // Position of the current item
+    
+    if(event.item.index === 3)
+    {
+      item = 1;
+    }
+    if(item === items)
+    {
+      item = 2;
+    }
+    if(item > items){
+      item = item - 2;
+    }
+
   // it loop is true then reset counter from 1
-  if(item > items) {
-    item = item - items
-  }
+  // if(item > items) {
+  //   item = item - items;
+  // }
+  // if(items === items)
+  // {
+  //   item = 1;
+  // }
   $('#counter').html("Media "+item+" of "+items)
 }
 

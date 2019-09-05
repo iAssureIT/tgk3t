@@ -27,6 +27,7 @@ class PopularPlaces extends Component{
              axios
               .get('/api/properties/get/locationWiseListCount/')
               .then( (res) =>{
+                console.log("here polular result",res);
                 if(res.status === 200){
                   console.log("data=>",res.data);
                   this.setState({

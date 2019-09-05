@@ -23,6 +23,7 @@ class Header extends Component {
 	}
 
 	logout(){
+		localStorage.removeItem("token");
 		localStorage.removeItem("uid");
 		this.props.logoutMe();
 		window.location.reload();
