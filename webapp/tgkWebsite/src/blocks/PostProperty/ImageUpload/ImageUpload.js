@@ -647,13 +647,13 @@ var imgTitleArray = [];
 
 
 
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp noPad">
                   {this.state.imgArrayWSaws==null?
                     null
                   :
                     this.state.imgArrayWSaws.map((data,index)=>{
                       return(
-                              <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row" style={{paddingTop:"16px"}} key={index}>
+                              <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12" style={{paddingTop:"16px"}} key={index}>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row " >
                                   <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12">Property Image {index+1}</h5>
                                 </div> 

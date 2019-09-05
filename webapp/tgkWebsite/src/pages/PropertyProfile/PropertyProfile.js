@@ -27,7 +27,7 @@ import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 
-
+var itemCount = 2; 
 
 const OwlCarousel = Loadable({
    
@@ -66,7 +66,8 @@ class PropertyProfile extends Component{
       "totalFloor"        : "",
       "convertTotalPrice" : "",
       "ownerId"           : "",
-
+      "countno"           : 2,
+      "callfun"           : 0,
     }
   }
 
@@ -149,34 +150,41 @@ class PropertyProfile extends Component{
   }
 
    counter(event) {
+    event.preventDefault();
    var element   = event.target;         // DOM element, in this example .owl-carousel
     var items     = event.item.count;     // Number of items
     console.log("here index og pic",event.item.index);
     console.log("here count og pic",event.item.count);
 
-    var item      = event.item.index ;     // Position of the current item
+    // console.log("previndex",previndex);    // Position of the current item
+    // console.log("this.state.countno",this.state.countno);
+    if(itemCount < items){
+      var item1 = itemCount+1; 
+      itemCount = item1;
+    }else{
+      var item1=1;
+      itemCount = item1;
+    }
     
-    if(event.item.index === 3)
-    {
-      item = 1;
-    }
-    if(item === items)
-    {
-      item = 2;
-    }
-    if(item > items){
-      item = item - 2;
-    }
+    
 
+      $('#counter').html("Media "+item1+" of "+items)
+
+    // if(item<=items) 
+    // {
+    
+
+    //   item = item + 1 ;
+    //   this.setState({
+    //     countno : item,
+    //   })
+    // }
   // it loop is true then reset counter from 1
   // if(item > items) {
   //   item = item - items;
   // }
-  // if(items === items)
-  // {
-  //   item = 1;
-  // }
-  $('#counter').html("Media "+item+" of "+items)
+  // console.log("item display",element);
+  
 }
 
   render() {
