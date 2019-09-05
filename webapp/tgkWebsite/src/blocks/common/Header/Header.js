@@ -32,6 +32,15 @@ class Header extends Component {
 
 	render() {
 		// console.log("this.props.uid",this.props.uid);
+		let header;
+
+		   if(this.props.LoginMobNum){
+		     header = "Enter Your Mobile Number to Login." 
+		   }else if(this.props.LoginOtp){
+		     header = "Please verify your mobile number." 
+		   }else if(this.props.WebSignupForm){
+		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+		   }
 		
 		console.log("uid = ",localStorage.getItem("uid") );
 
@@ -74,7 +83,7 @@ class Header extends Component {
 						        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
 						        <h4 className="modal-title">
 						        	{/*<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>*/}
-						        	<b> Enter Your Mobile Number to Login </b>
+						        	<b style={{paddingLeft:"28px"}}> {header} </b>
 						        </h4>
 						      </div>
 						      <div className="modal-body col-lg-12">

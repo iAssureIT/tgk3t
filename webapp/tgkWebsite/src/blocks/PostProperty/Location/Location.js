@@ -230,7 +230,8 @@ class Location extends Component {
 					console.log("location formValues = ",formValues);
 
 						localStorage.setItem("index",this.state.index);
-						if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!=""  ){
+						if(this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subareaName!=="" && this.state.societyName!==""  ){
+							if(formValid(this.state.formerrors)){
 							axios
 							.patch('/api/properties/patch/propertyLocation',formValues)
 							.then( (res) =>{
@@ -247,6 +248,11 @@ class Location extends Component {
 		                             this.props.history.push("/");
 		                        }
 		                    });
+		                    }else{
+								swal("Please enter mandatory fields", "", "warning");
+				      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				      			this.setState({pincode:""})
+							}
 						}else{
 							swal("Please enter mandatory fields", "", "warning");
 			      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -277,7 +283,7 @@ class Location extends Component {
 
 					localStorage.setItem("index",this.state.index);
 					if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" ){
-						if(formValid(this.state.formerrors)){
+					if(formValid(this.state.formerrors)){
 						axios
 						.patch('/api/properties/patch/propertyLocation',formValues)
 						.then( (res) =>{
@@ -295,11 +301,18 @@ class Location extends Component {
 	                        }
 	                    });
 
+
 					}else{
 						swal("Please enter mandatory fields", "", "warning");
 		      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+				      	this.setState({pincode:""})
+						}
 					}
-			}
+					else{
+							swal("Please enter mandatory fields", "", "warning");
+			      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+						}
+
 			
 			
 		}

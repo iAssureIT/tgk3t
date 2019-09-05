@@ -167,7 +167,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					"available"			  : this.state.available
 					};
 					console.log("Availability req = ",formValues);
-				    if(this.state.available!==""){
+				    if(this.state.available.length!==0){
 				    		
 						axios
 						.patch('/api/properties/patch/availabilityPlan',formValues)

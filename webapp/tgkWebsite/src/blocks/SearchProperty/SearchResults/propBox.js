@@ -229,9 +229,9 @@ class propBox extends React.Component {
 	render() {
 		let header;
 	    if(this.props.LoginMobNum){
-	      header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+	      header = "Enter Your Mobile Number to Login." 
 	    }else if(this.props.LoginOtp){
-	      header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+	      header = "Please verify your mobile number." 
 	    }else if(this.props.WebSignupForm){
 	      header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
 	    }
@@ -373,10 +373,15 @@ class propBox extends React.Component {
 										Possession by : <span className="propertySubText2">{result.financial ? result.financial.availableFrom : "-"}</span>
 									</div>
 									<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
+	                              		{localStorage.getItem('uid') ?
 	                              		<Link to={"/PropertyProfile/"+result._id} target="_blank">
 											<button className="btn pull-right btnDetails">Details &nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>
 										</Link>
+										:
+										<button className="btn pull-right btnDetails" onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal">Details &nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>
+									}
 									</div>
+
 								</div>
 							</div>
 						</div>

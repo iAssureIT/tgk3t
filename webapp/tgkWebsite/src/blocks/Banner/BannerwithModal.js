@@ -180,7 +180,7 @@ class BannerwithModal extends Component {
 		     header = "Please Upload Images and a Video of your property"; 
 		   }
 		   else if(this.props.LoginMobNum){
-		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+		     header = "Enter Your Mobile Number to Login." 
 		   }else if(this.props.LoginOtp){
 		     header = "Please verify your mobile number." 
 		   }else if(this.props.WebSignupForm){
