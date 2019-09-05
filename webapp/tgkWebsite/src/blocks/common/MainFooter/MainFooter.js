@@ -284,6 +284,7 @@ class MainFooter extends Component{
                   <label>Copyright <i className="fa fa-copyright"></i> 2019 THE GOLDEN KEY. All rights reserved.</label>
                 </div>
                  <div className="col-lg-6 col-md-10 col-sm-6 col-xs-6 rightDiv" >
+                 <label className="pull-right">Version 2.1</label>
                   <label className="pull-right">Site Map</label>
                   <label className="pull-right">Terms of Use</label>
                   <label className="pull-right">Privacy Policy</label>
