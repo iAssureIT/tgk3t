@@ -4,6 +4,7 @@ import $ 						from "jquery";
 import {withRouter} 		    from 'react-router-dom';
 import { connect } 				from 'react-redux';
 // import OwlCarousel             from 'react-owl-carousel';
+import swal                     from 'sweetalert';
 
 import LoginMobNum              from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
 import LoginOtp                 from '../WebsiteSecurity/LoginOtp/LoginOtp.js';
@@ -19,7 +20,6 @@ import Location                 from '../PostProperty/Location/Location.js';
 import CongratsPage             from '../PostProperty/CongratsPage/CongratsPage.js';
 import ImageUpload              from '../PostProperty/ImageUpload/ImageUpload.js';
 import SearchProperty           from '../SearchProperty/SearchProperty.js';
-
 
 import './Banner.css';
 
@@ -50,6 +50,9 @@ class BannerwithModal extends Component {
 
 	componentDidMount() {
 
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
           var formValues = {
             propertyType    : "Residential",
             transactionType : "Sell",
@@ -70,8 +73,13 @@ class BannerwithModal extends Component {
 		          	this.props.inputData(this.state.inputData);
 		        })
             })
-            .catch(error=>{
-              console.log("error = ", error);
+            .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
             });
 
 
@@ -108,8 +116,13 @@ class BannerwithModal extends Component {
 		          	this.props.inputData(this.state.inputData);
 		        })
             })
-            .catch(error=>{
-              console.log("error = ", error);
+            .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
             });
 	}
 
@@ -138,8 +151,13 @@ class BannerwithModal extends Component {
 	          	this.props.inputData(this.state.inputData);
 	        })
         })
-        .catch(error=>{
-          console.log("error = ", error);
+        .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
         });
 	}
 
@@ -155,7 +173,7 @@ class BannerwithModal extends Component {
 		   }else if(this.props.Amenities){
 		     header = "My property has following Amenities"; 
 		   }else if(this.props.Financials){
-		     header = "Financial details for my property"; 
+		     header = "Please provide financial details of your property"; 
 		   }else if(this.props.Availability){
 		     header = "Please tell us your availability to plan visit"; 
 		   }else if(this.props.ImageUpload){

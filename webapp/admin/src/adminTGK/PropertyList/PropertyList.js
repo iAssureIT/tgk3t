@@ -22,7 +22,8 @@ class PropertyList extends Component {
 		}
     }
 
-        componentDidMount() {
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
           var formValues = {
             propertyType    : this.state.propertyType,
             transactionType : this.state.transactionType,
@@ -40,9 +41,14 @@ class PropertyList extends Component {
                     inputData : resultData.data,
                 })
             })
-            .catch(error=>{
-              console.log("error = ", error);
-            });
+            .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
 
         $(".dropdown").hover(            
         function() {
@@ -81,9 +87,15 @@ class PropertyList extends Component {
                     inputData : resultData.data,
                 })
             })
-            .catch(error=>{
-              console.log("error = ", error);
-            });  
+            .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
+
         }) 
          
     }
@@ -108,9 +120,15 @@ class PropertyList extends Component {
                     inputData : resultData.data,
                 })
             })
-            .catch(error=>{
-              console.log("error = ", error);
-            });  
+            .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
+
         })    
     }
 
@@ -175,14 +193,25 @@ class PropertyList extends Component {
                             }) 
                         }
                     })
-                    .catch(error=>{
-                      console.log("error = ", error);
-                    });
+                    .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                    });             
                  }
             })
-            .catch(error=>{
-              console.log("error = ", error);
-            });  
+            .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
+
             
           }else{
                 swal("Cancelled", "Record is safe!", "error");
@@ -236,13 +265,23 @@ class PropertyList extends Component {
                                     }) 
                                 }
                             })
-                            .catch(error=>{
-                              console.log("error = ", error);
-                            });
+                            .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/login");
+                                }
+                            });             
                     })
-                    .catch(error=>{
-                      console.log("error = ", error);
-                    });  
+                    .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                    });             
                 }else{
                 swal("Cancelled", "Property not listed!", "error");
           }

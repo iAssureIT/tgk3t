@@ -16,6 +16,10 @@ export default class AllSMSTemplateRow extends Component{
       	this.smsGetData    = this.smsGetData.bind(this);
     }
 
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
     editSMSModal(event){
 		event.preventDefault();
 		var id = event.target.id;
@@ -29,10 +33,14 @@ export default class AllSMSTemplateRow extends Component{
 				'templateName'		: response.data.templateName,
 				'content'			: response.data.content,
 			});
-		}).catch((error)=> {
-		    // handle error
-		    console.log(error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    
 	}
 
 	deleteTemplate(event){
@@ -49,10 +57,14 @@ export default class AllSMSTemplateRow extends Component{
 	    	this.props.deleteData("SMS",id);
     		}
     		
-		}).catch((error)=> {
-		    // handle error
-		    console.log(error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    
 	}
 
 	smsGetData =(id)=>{

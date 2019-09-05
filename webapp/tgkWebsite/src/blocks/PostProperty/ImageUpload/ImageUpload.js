@@ -54,15 +54,23 @@ var imgTitleArray = [];
 							});
 
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
         	}
 
 	}
 	
 	componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
     axios
       .get('/api/projectSettings/get/one/S3')
       .then((response)=>{
@@ -80,9 +88,14 @@ var imgTitleArray = [];
           config : config
         })
       })
-      .catch(function(error){
-        console.log(error);
-      })
+     .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+        });
 
   }
 
@@ -114,9 +127,13 @@ var imgTitleArray = [];
                   })
               })
               .catch((error)=>{
-                console.log("formErrors");
-                console.log(error);
-              })
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                });
 
             var objTitle={   
               fileInfo :file
@@ -212,10 +229,14 @@ var imgTitleArray = [];
                  
                   this.deleteSingleLogo(index)
                 })
-                .catch((error)=>{
-                  console.log("formErrors");
-                  console.log(error);
-                })
+               .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    })
             }else{
               swal({
                     title: "Are you sure you want to delete this video?",
@@ -236,9 +257,13 @@ var imgTitleArray = [];
                             this.deleteSingleLogo(index)
                           })
                           .catch((error)=>{
-                            console.log("formErrors");
-                            console.log(error);
-                          })
+		                        console.log("error = ",error);
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/");
+		                        }
+		                    })
                       } else {
                       swal("Your information is safe!");
                     }
@@ -265,9 +290,14 @@ var imgTitleArray = [];
             console.log("Deletedddd...",response)
             swal("Image deleted successfully");
           })
-          .catch((err) => {
-            console.error("Not-Deletedddd...",err)
-          })
+         .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+            })
       }
   }
   
@@ -342,9 +372,14 @@ var imgTitleArray = [];
 							}
 
 						})
-						.catch((error) =>{
-							console.log("error = ", error);
-						});	
+						.catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/");
+	                        }
+	                    })
 				// }
 
 		}else{
@@ -372,9 +407,14 @@ var imgTitleArray = [];
 					}
 
 				})
-				.catch((error) =>{
-					console.log("error = ", error);
-				});	
+				.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    })
 
 
 			}

@@ -4,7 +4,7 @@ import HomePageFooter         from '../../blocks/Profile/HomePageFooter.js';
 // import RequestForm            from '../../blocks/RequestForm/RequestForm.js';
 import { connect }            from 'react-redux';
 import $                      from "jquery";
-
+import {withRouter}         from 'react-router-dom';
 
 import LoginMobNum            from '../../blocks/WebsiteSecurity/LoginMobNum/LoginMobNum.js';
 import LoginOtp               from '../../blocks/WebsiteSecurity/LoginOtp/LoginOtp.js';
@@ -20,6 +20,7 @@ import CongratsPage           from '../../blocks/PostProperty/CongratsPage/Congr
 import ImageUpload            from '../../blocks/PostProperty/ImageUpload/ImageUpload.js';
 import Loadable               from 'react-loadable';
 import Header                 from "../../blocks/common/Header/Header.js";
+import swal                     from 'sweetalert';
 
 import "./PropertyProfile.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
@@ -90,6 +91,9 @@ class PropertyProfile extends Component{
    
   }
   componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
   axios
     .get('/api/properties/'+this.state.profileId)
     .then(
@@ -116,7 +120,14 @@ class PropertyProfile extends Component{
         // console.log("postsdata.propertyDetails",res.data);
       }
     )
-    .catch();
+    .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+                            });
 
      $(this).find('input[type="checkbox"]').is(':checked');
     
@@ -573,4 +584,4 @@ const mapDispatchToProps = (dispatch)=>{
   }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(PropertyProfile);
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(PropertyProfile));

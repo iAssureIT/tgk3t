@@ -96,10 +96,14 @@ class SignUp extends Component {
 			                // this.props.history.push("/confirm-otp");
 			                this.props.history.push("/login");
 			            })
-			            .catch(function (error) {
-			                console.log(error);
-        					swal("Unable to submit data ",error);
-			            })
+			            .catch((error)=>{
+				                console.log("error = ",error);
+				                if(error.message === "Request failed with status code 401")
+				                {
+				                     swal("Your session is expired! Please login again.","", "error");
+				                     this.props.history.push("/login");
+				                }
+				            })	           
                 	)
                 :
 	                (
@@ -184,6 +188,7 @@ class SignUp extends Component {
         $(".modalbg").css("display","none");
     }
     componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
     }
 

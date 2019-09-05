@@ -1,9 +1,10 @@
 import React , { Component }	from 'react';
+import {withRouter}         from 'react-router-dom';
 
 // import "bootstrap/dist/css/bootstrap.min.css";
 import './InfoCommercial.css';
 /*var formValues=[];*/
-export default class InfoCommercial extends Component {
+ class InfoCommercial extends Component {
 
 	render() {
 		return (
@@ -63,3 +64,4 @@ export default class InfoCommercial extends Component {
 		);
 	}
 }
+  export default withRouter(InfoCommercial);

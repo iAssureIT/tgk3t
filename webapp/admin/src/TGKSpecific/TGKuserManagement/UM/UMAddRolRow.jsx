@@ -22,6 +22,10 @@ class UMAddRolRow extends Component {
         super(props);
     }
 
+  //   componentDidMount(){
+  //     axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  // }
+  
     render() {
     	var name = this.props.roleDataVales;
     	// console.log("herer role namessssssssssssssssssss",name);

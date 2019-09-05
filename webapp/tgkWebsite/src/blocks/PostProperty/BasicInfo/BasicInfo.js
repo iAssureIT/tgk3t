@@ -62,9 +62,14 @@ class BasicInfo extends Component{
 
 						
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
         	}
 
@@ -72,7 +77,10 @@ class BasicInfo extends Component{
 
 		}
 
-		componentDidMount(){			
+		componentDidMount(){	
+		console.log("here basic info");		
+ 
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
         	var message	= localStorage.getItem("message");
         	
@@ -151,9 +159,14 @@ class BasicInfo extends Component{
 							}else{
 							}
 						})
-						.catch((error) =>{
-							console.log("error = ", error);
-						});
+						.catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/");
+	                        }
+	                    });
 
 					}
 					
@@ -177,10 +190,14 @@ class BasicInfo extends Component{
 							// alert(" Please Fill all fields")
 						}
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-						// alert("Something Went wrong")
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
 				}
 			}else{

@@ -18,6 +18,10 @@ class AllNotificationTemplateRow extends Component{
     
     }
     
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
 	editNotificationModal(event){
 		event.preventDefault();
 		var id = event.target.id;
@@ -31,10 +35,14 @@ class AllNotificationTemplateRow extends Component{
 				'templateName'		: response.data.templateName,
 				'content'			: response.data.content,
 			});
-		}).catch((error)=> {
-		    // handle error
-		    console.log(error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    
 	}
 
 	deleteTemplate(event){
@@ -52,10 +60,14 @@ class AllNotificationTemplateRow extends Component{
     		}
 
 
-		}).catch((error)=> {
-		    // handle error
-		    console.log(error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    
 	}
 
 	notiGetData =(id)=>{

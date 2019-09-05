@@ -5,7 +5,7 @@ import { Link } 			from 'react-router-dom';
 import {withRouter} 		from 'react-router-dom';
 import { connect }          from 'react-redux';
 import $                    from "jquery";
-
+import swal                     from 'sweetalert';
 import BasicInfo            from '../../PostProperty/BasicInfo/BasicInfo.js';
 import Location             from '../../PostProperty/Location/Location.js';
 import PropertyDetails      from '../../PostProperty/PropertyDetails/PropertyDetails.js';
@@ -38,6 +38,8 @@ import './MyPostedProperties.css';
 	}
 	componentDidMount(){
     	// this.props.showFirstForm();  //for dispatch
+  
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
 		$(".modal-backdrop").remove();
 	     axios
@@ -57,7 +59,15 @@ import './MyPostedProperties.css';
 
 	      }
 	    )
-	    .catch();
+	    .catch((error)=>{
+                        console.log("error = ",error.message);
+                        // if(error.message === "Request failed with status code 401")
+                        // {
+                        //      swal("Your session is expired! Please login again.","", "error");
+                        //      this.props.history.push("/");
+                        //      // $(".modal-backdrop").open();
+                        // }
+                    })
 	}
 
 	heartClick(event){
@@ -380,4 +390,4 @@ const mapDispatchToProps = (dispatch)=>{
   }
 };
 
-export default connect(mapStateToProps,mapDispatchToProps)(MyPostedProperties);
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(MyPostedProperties));

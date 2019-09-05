@@ -44,6 +44,10 @@ class UsereditModal extends Component{
 	  });
 	}
 
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+
 	// componentDidMount(){
 
 		// if ( !$("#adminSide").length>0 && !$('body').hasClass('adminSide')) {
@@ -144,9 +148,14 @@ class UsereditModal extends Component{
 					
 					console.log('response --==',response);
 				})
-				.catch(function (error) {
-				console.log('error============',error);
-				})
+				.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      			 })    
 				.finally(function () {
 				// always executed
 				});

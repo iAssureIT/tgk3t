@@ -45,6 +45,9 @@ class SearchResults extends Component {
 	}
 
 	componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 		window.scrollTo(0, 0);
 		var data = JSON.parse(localStorage.getItem('searchData'));
 		console.log("data",data);
@@ -125,9 +128,14 @@ class SearchResults extends Component {
 				this.setState({ inputData : searchResults.data, isLoading:false });
 				console.log("searchResults",searchResults)
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	        .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+			 });	
 
 
 		this.setState({
@@ -320,9 +328,14 @@ class SearchResults extends Component {
 					console.log("searchResults",searchResults);
 					this.setState({ inputData : searchResults.data, isLoading:false });
 				})
-		        .catch((error) =>{
-		         	console.log("error = ", error);
-		        });	
+		       .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				 });
 		})
 	}
 
@@ -367,9 +380,14 @@ class SearchResults extends Component {
 						locSearchResults : citiesAreassubAreas,
 					});					
 				})
-		        .catch((error) =>{
-		         	console.log("error = ", error);
-		        });	
+		        .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				});
 			}
 		});
 
@@ -385,9 +403,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	       .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+			});
 	}
 
 
@@ -421,9 +444,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	        .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+			});
 	}
 
 	handleFurnish(event){
@@ -441,9 +469,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	       .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				            });
 	}
 
 	handleAge(event){
@@ -461,9 +494,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	        .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				            });
 	}
 
 	handleAvailability(event){
@@ -480,9 +518,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	       .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				            });
 	}
 
 	handleFloor(event){
@@ -500,9 +543,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	       .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				            });
 	}
 
 	handleBHK(event){
@@ -530,9 +578,14 @@ class SearchResults extends Component {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 				console.log("result",searchResults.data);
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	       .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				             });
 	}
 	
 	handleConstruction(){
@@ -550,9 +603,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	        .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				            });
 	}
 
 	handlePropSubType(event){
@@ -618,9 +676,14 @@ class SearchResults extends Component {
 			.then((searchResults) => {
 				this.setState({ inputData : searchResults.data,isLoading:false });
 			})
-	        .catch((error) =>{
-	         	console.log("error = ", error);
-	        });	
+	       .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				                    });
 
 	}
 
@@ -696,9 +759,14 @@ class SearchResults extends Component {
 			this.setState({ inputData : searchResults.data,isLoading:false });
 			console.log("searchResults",searchResults)
 		})
-        .catch((error) =>{
-         	console.log("error = ", error);
-        });
+        .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				                    });
 	}
 
 	render() {

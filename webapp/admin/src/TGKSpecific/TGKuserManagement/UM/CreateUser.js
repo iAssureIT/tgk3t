@@ -87,6 +87,8 @@ class CreateUser extends Component {
 
     componentDidMount() {
 
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
       axios
       .get('/api/tgkSpecificcompanysettings/list')
       .then(
@@ -134,18 +136,24 @@ class CreateUser extends Component {
                             })
                       })
                       .catch((error)=>{
-                        console.log("error = ",error);
-                        // alert("Something went wrong! Please check Get URL.");
-                      });
-
-
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/login");
+                          }
+                      });             
         }
       )
       .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+      });             
 
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-         });  
     }  
 
     createUser(event){
@@ -185,16 +193,19 @@ class CreateUser extends Component {
                     // this.props.history.push("/umlistofusers");       
                     window.location.reload();
                 })
-              .catch((error)=>{
-                console.log("error = ",error);
-                this.setState({show: false})
-              });
+                .catch((error)=>{
+                    console.log("error = ",error);
+                    this.setState({show: false})
+                    if(error.message === "Request failed with status code 401")
+                    {
+                         swal("Your session is expired! Please login again.","", "error");
+                         this.props.history.push("/login");
+                    }
+                });             
         }else{
           swal("Please enter mandatory fields", "", "warning");
           console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
-
-
     }
 
     render() {

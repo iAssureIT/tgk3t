@@ -15,6 +15,11 @@ import './SignUp.css';
         // }
       }
     }
+
+  //   componentDidMount(){
+  //     axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  // }
+  
     confirmOTP(event){
       console.log('confirm otp');
       event.preventDefault();

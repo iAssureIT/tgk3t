@@ -83,9 +83,14 @@ import './Amenities.css';
 
 
 						})
-						.catch((error) =>{
-							console.log("error = ", error);
-						});
+						.catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/");
+	                        }
+	                    })
 
 
 
@@ -94,10 +99,13 @@ import './Amenities.css';
 					}
 				)
 				.catch((error)=>{
-
-					console.log("error = ",error);
-					alert("Something went wrong! Please check Get URL.");
-					 });	
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });	
 
 			// -----------------------------------------------------------------------------------
 
@@ -158,6 +166,9 @@ import './Amenities.css';
 
 	componentDidMount(){
 
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
+
 		console.log("update status in did mount",this.props.updateStatus);
 		if(this.props.updateStatus === false){
 		axios
@@ -173,10 +184,13 @@ import './Amenities.css';
 				}
 			)
 			.catch((error)=>{
-
-				console.log("error = ",error);
-				alert("Something went wrong! Please check Get URL.");
-				 });	
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+            });
 
 // //////////////////////////////////////////////////////
 
@@ -263,9 +277,14 @@ import './Amenities.css';
 										this.props.redirectToFinancialDetails(this.props.uid,this.props.property_id);
 									}
 								})
-								.catch((error) =>{
-									console.log("error = ", error);
-								});
+								.catch((error)=>{
+			                        console.log("error = ",error);
+			                        if(error.message === "Request failed with status code 401")
+			                        {
+			                             swal("Your session is expired! Please login again.","", "error");
+			                             this.props.history.push("/");
+			                        }
+			                    })
 							}else{
 								swal("Please select atleast one amenity", "", "warning");
 				                console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -306,9 +325,14 @@ import './Amenities.css';
 							this.props.redirectToFinancialDetails(this.props.uid,this.props.property_id);
 						}
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    })
 				}else{
 					swal("Please select atleast one amenity", "", "warning");
 	                console.error("FORM INVALID - DISPLAY ERROR MESSAGE");

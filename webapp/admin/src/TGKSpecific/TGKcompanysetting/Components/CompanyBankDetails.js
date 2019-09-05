@@ -51,8 +51,8 @@ class CompanyBankDetails extends Component{
     this.handleChange = this.handleChange.bind(this);
        
       }
- componentDidMount(){
-   
+  componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
   }
   submitBankDetail(event){
     event.preventDefault();
@@ -102,12 +102,14 @@ class CompanyBankDetails extends Component{
         console.log("this is response===>>>",response);
         swal("Good job!", "Bank Details Added Successfully!", "success")
       })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        swal("", "Bank Details Added Successfully!!", "Danger")
-  
-      })
+      .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       })
       .finally(function () {
         // always executed
       });

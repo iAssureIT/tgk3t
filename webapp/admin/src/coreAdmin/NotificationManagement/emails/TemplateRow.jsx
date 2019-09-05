@@ -8,6 +8,10 @@ export default class TemplateRow extends Component{
 			emailTemplates : []
 		}
 	}
+
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  	}
 	getTemplate(event){
 		event.preventDefault();
 		$('.defaultMsg').css({'display':'none'});

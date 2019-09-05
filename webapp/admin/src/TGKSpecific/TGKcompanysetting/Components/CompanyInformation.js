@@ -67,6 +67,9 @@ class CompanyInformation extends Component{
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
   var companyId = 1;
     axios.get('/api/tgkSpecificcompanysettings/'+ companyId)
     .then( (res)=>{      
@@ -90,9 +93,14 @@ class CompanyInformation extends Component{
       console.log("this.this.state.companyName",this.state.companyName)
     })
     .catch((error)=>{
-      console.log("error = ",error);
-      // alert("Something went wrong! Please check Get URL.");
-    });
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+    });             
+
   
   }
  
@@ -161,9 +169,15 @@ class CompanyInformation extends Component{
               config : config
               })
                      })
-                     .catch(function(error){
-                        console.log(error);
-                     })
+                     .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/login");
+                          }
+                      });             
+
 
      //  })
      //  .catch((error)=>{
@@ -285,15 +299,16 @@ class CompanyInformation extends Component{
           
 
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          swal("Sorry!", "Company Information submition failed!", "error")
+        .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+        });             
 
-        })
-        .finally(function () {
-          // always executed
-        });
+        
     }else{
       // upate function
 
@@ -328,18 +343,26 @@ class CompanyInformation extends Component{
                           
                         })
                         .catch((error)=>{
-                          console.log("error = ",error);
-                          // alert("Something went wrong! Please check Get URL.");
-                        });
+                            console.log("error = ",error);
+                            if(error.message === "Request failed with status code 401")
+                            {
+                                 swal("Your session is expired! Please login again.","", "error");
+                                 this.props.history.push("/login");
+                            }
+                        });             
+
 
           
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-          swal("", "Company Information updation failed!", "Danger")
+        .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+         });             
 
-        });
     }
   }else{
     swal("Please enter mandatory fields", "", "warning");

@@ -1,5 +1,6 @@
 import React , { Component }from 'react';
 import axios                from 'axios';
+import {withRouter}         from 'react-router-dom';
 
 import './RentReceipt.css';
 
@@ -16,6 +17,9 @@ class RentReceipt extends Component{
 			};
 		}
 
+	    componentDidMount(){
+		      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+		  }
 
 		createUser6(event){
 			event.preventDefault();
@@ -54,9 +58,13 @@ class RentReceipt extends Component{
 						
 					}
 				})
-				.catch((error) =>{
-					console.log("error = ", error);
-					alert("Something Went wrong")
+				.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
 				});
 		}
 
@@ -228,4 +236,4 @@ class RentReceipt extends Component{
 
 }
 
-export default RentReceipt;
+export default withRouter(RentReceipt);

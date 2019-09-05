@@ -3,6 +3,7 @@ import axios 					from 'axios';
 import $ 						from "jquery";
 import {withRouter, Link} 		    from 'react-router-dom';
 import { connect } 				from 'react-redux';
+import swal                     from 'sweetalert';
 
 import './SearchProperty.css';
 
@@ -25,6 +26,9 @@ class SearchProperty extends Component {
 		this.handleSearch = this.handleSearch.bind(this);
 	}
 	componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 		localStorage.removeItem('searchData');
 		this.setState({			
 			budgetList1 : [
@@ -254,9 +258,14 @@ class SearchProperty extends Component {
 
 					}
 				})
-		        .catch((error) =>{
-		         	console.log("error = ", error);
-		        });	
+		        .catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				                });
 			}
 		})
 		

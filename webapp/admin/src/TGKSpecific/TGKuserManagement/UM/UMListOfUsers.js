@@ -67,6 +67,9 @@ class UMListOfUsers extends Component {
     }
 
 	componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 		var data = {
 			"startRange"        : this.state.startRange,
             "limitRange"        : this.state.limitRange, 
@@ -104,9 +107,13 @@ class UMListOfUsers extends Component {
 	        })
 		})
 		.catch((error)=>{
-			// console.log("error = ",error);
-			// alert("Something went wrong! Please check Get URL.");
-		});
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	    });  
 		// this.getData(this.state.startRange, this.state.limitRange)
 	}
 	getData(startRange, limitRange){    
@@ -135,9 +142,13 @@ class UMListOfUsers extends Component {
             })
         })
 	    .catch((error)=>{
-	      // console.log("error = ",error);
-	      alert("Something went wrong! Please check Get URL.");
-	    }); 
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	    });  
     }
     getSearchText(searchText, startRange, limitRange){
         // console.log(searchText, startRange, limitRange);
@@ -221,16 +232,24 @@ class UMListOfUsers extends Component {
 									        })
 										})
 										.catch((error)=>{
-											// console.log("error = ",error);
-											// alert("Something went wrong! Please check Get URL.");
-										});
+					                        console.log("error = ",error);
+					                        if(error.message === "Request failed with status code 401")
+					                        {
+					                             swal("Your session is expired! Please login again.","", "error");
+					                             this.props.history.push("/login");
+					                        }
+					      				 });  
 
 
 
-				        }).catch((error)=>{ 
-
-				        // console.log("error = ",error);
-				      });
+				        }).catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 
 				   }  
 
@@ -291,15 +310,23 @@ class UMListOfUsers extends Component {
 									        })
 										})
 										.catch((error)=>{
-											// console.log("error = ",error);
-											// alert("Something went wrong! Please check Get URL.");
-										});
+					                        console.log("error = ",error);
+					                        if(error.message === "Request failed with status code 401")
+					                        {
+					                             swal("Your session is expired! Please login again.","", "error");
+					                             this.props.history.push("/login");
+					                        }
+					      				 });  
 
 
-				        }).catch((error)=>{ 
-
-				        // console.log("error = ",error);
-				      });
+				        }).catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 
 				   }  
 
@@ -370,17 +397,25 @@ class UMListOfUsers extends Component {
 									        })
 										})
 										.catch((error)=>{
-											// console.log("error = ",error);
-											// alert("Something went wrong! Please check Get URL.");
-										});
+					                        console.log("error = ",error);
+					                        if(error.message === "Request failed with status code 401")
+					                        {
+					                             swal("Your session is expired! Please login again.","", "error");
+					                             this.props.history.push("/login");
+					                        }
+					      				 });  
 
 				          }
 				          
 										
-				        }).catch((error)=>{ 
-
-				        // console.log("error = ",error);
-				      });
+				        }).catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 
 				   }  
 
@@ -437,14 +472,22 @@ class UMListOfUsers extends Component {
 									        })
 										})
 										.catch((error)=>{
-											// console.log("error = ",error);
-											// alert("Something went wrong! Please check Get URL.");
-										});
+					                        console.log("error = ",error);
+					                        if(error.message === "Request failed with status code 401")
+					                        {
+					                             swal("Your session is expired! Please login again.","", "error");
+					                             this.props.history.push("/login");
+					                        }
+					      				 });  
 										
-				        }).catch((error)=>{ 
-
-				        // console.log("error = ",error);
-				      });
+				        }).catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 
 				   }  
 
@@ -504,9 +547,13 @@ class UMListOfUsers extends Component {
 						        })
 							})
 							.catch((error)=>{
-								// console.log("error = ",error);
-								// alert("Something went wrong! Please check Get URL.");
-							});
+		                        console.log("error = ",error);
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/login");
+		                        }
+		      				 });  
 
 					}else{
 
@@ -532,10 +579,14 @@ class UMListOfUsers extends Component {
 					              tableData 		: tableData,          
 					            },()=>{
 					            }) 
-					        }).catch((error)=>{ 
-					        	console.log(error);
-					            swal("Sorry there is no data of "+selectedValue,"","error");
-					      });
+					        }).catch((error)=>{
+			                        console.log("error = ",error);
+			                        if(error.message === "Request failed with status code 401")
+			                        {
+			                             swal("Your session is expired! Please login again.","", "error");
+			                             this.props.history.push("/login");
+			                        }
+	      				 		});  
 
 					}
 
@@ -583,9 +634,13 @@ class UMListOfUsers extends Component {
 						        })
 							})
 							.catch((error)=>{
-								// console.log("error = ",error);
-								// alert("Something went wrong! Please check Get URL.");
-							});
+		                        console.log("error = ",error);
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/login");
+		                        }
+		      				 });  
 
 
 					}else{
@@ -612,10 +667,14 @@ class UMListOfUsers extends Component {
 				              tableData 		: tableData,          
 				            },()=>{
 				            })
-				        }).catch((error)=>{ 
-				        	console.log("error",error);
-				        	// swal("Sorry there are no "+selectedValue +" users", "","error");
-				      });
+				        }).catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 					}
 
 				    
@@ -683,14 +742,23 @@ class UMListOfUsers extends Component {
 										        })
 											})
 											.catch((error)=>{
-												// console.log("error = ",error);
-												// alert("Something went wrong! Please check Get URL.");
-											});
+						                        console.log("error = ",error);
+						                        if(error.message === "Request failed with status code 401")
+						                        {
+						                             swal("Your session is expired! Please login again.","", "error");
+						                             this.props.history.push("/login");
+						                        }
+						      				 });  
 
 
-						}).catch((error)=> {
-						    // console.log(error);
-						});
+						}).catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 
 
 					   }  

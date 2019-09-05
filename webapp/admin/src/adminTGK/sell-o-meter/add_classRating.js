@@ -35,6 +35,10 @@ export default class add_sellometer extends Component {
           }*/
   }
 
+  componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
     createData(event){
     event.preventDefault();
     const formValues = {
@@ -71,29 +75,29 @@ export default class add_sellometer extends Component {
                    this.props.selectedData(this.state.allPosts);
                 }
               )
-              .catch((error)=>{
-
+                .catch((error)=>{
                 console.log("error = ",error);
-                // alert("Something went wrong! Please check Get URL.");
-                 });       
-          }                      
-        })
-        .catch((error)=>{
-          console.log("error = ",error);
-          // alert("Something went wrong! Please check Get URL.");
-        }); 
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+                      
+             
+                })
+              } 
+        }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+           });    
       }else{
-        swal("Please enter mandatory fields", "", "warning");
-        
+        swal("Please enter mandatory fields", "", "warning"); 
       }
-    
-  
-
     }
-
-
-
-	
 
 	render(){
     
@@ -101,7 +105,6 @@ export default class add_sellometer extends Component {
        			<div>
 					<form id="addroles" className="paddingLeftz noLRPad " >
 						
-
                <div className="form-group col-lg-12 col-md-12 col-xs-12 col-sm-8">
                     <div className="form-group col-lg-6 col-md-6 col-xs-12 col-sm-8">
       							<label>Property Class <span className="astrick">*</span> </label>

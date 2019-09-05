@@ -73,6 +73,9 @@ class ViewTemplates extends Component{
 
 
 	componentDidMount() {	
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 	    $("html,body").scrollTop(0);	
 	   this.getData();
 	    /*$.validator.addMethod("regxsubject", function(value, element, arg){          
@@ -185,9 +188,14 @@ class ViewTemplates extends Component{
 		    	smsTemplatesList 			: smsTemplatesList
 		    });
 		    
-		}).catch(function (error) {
-		    
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+          });
 	}
 	AllsmsTemplates(){
 		const id = this.state.currentSMSId;
@@ -380,19 +388,26 @@ class ViewTemplates extends Component{
 									    	console.log("here sub", this.state.subject);
 									    	console.log("here content", this.state.content);
 									    });   
-									}).catch(function (error) {
-									    
-
-									});
+									}).catch((error)=>{
+						                        console.log("error = ",error);
+						                        if(error.message === "Request failed with status code 401")
+						                        {
+						                             swal("Your session is expired! Please login again.","", "error");
+						                             this.props.history.push("/login");
+						                        }
+						              });
 									
 									$('#createNotifyModal').hide();
 									$('.modal-backdrop').remove();
 								})
-								.catch(function (error) {
-									
-
-								// console.log(error);
-								})
+								.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/login");
+				                        }
+				            	  });
 						}else
 						{
 						    swal("Please enter mandatory fields", "", "warning");

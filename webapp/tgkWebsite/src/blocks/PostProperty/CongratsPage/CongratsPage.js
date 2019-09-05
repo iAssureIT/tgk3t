@@ -4,9 +4,9 @@ import { connect } 						from 'react-redux';
 import axios 							from 'axios';
 import styled, { keyframes, css} from 'styled-components';
 // import { keyFrameExampleOne } from './KeyFrames';
+import swal                     from 'sweetalert';
 
 import './CongratsPage.css';
-
 
  class CongratsPage extends Component {
 
@@ -17,13 +17,11 @@ import './CongratsPage.css';
 				per        : "",
 
 			};
-
-
 		}
-
-
  	componentDidMount(){
-		
+		 
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 		var prop_index = localStorage.getItem("index");
 		console.log("here prop_index", prop_index);
 		var formvalues = {
@@ -91,20 +89,35 @@ import './CongratsPage.css';
                         .then((res) =>{
                           console.log("SendEmailNotificationToUser",res);           
                         })
-                        .catch((error) =>{
-                          console.log("error = ", error);
-                        });           
+                        .catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/");
+	                        }
+	                    });          
                       })
                             
                 })
-                .catch((error) =>{
-                  console.log("error = ", error);
-                });  
+	             .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });  
                                
               })
-              .catch((error) =>{
-                console.log("error = ", error);
-              }); 
+             .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
 					this.setState({
 						percentage : cash_per
@@ -144,10 +157,14 @@ import './CongratsPage.css';
 					});
 					
 				})
-				.catch((error) =>{
-					console.log("error = ", error);
-					// alert("Something Went wrong")
-				});
+				.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                });
 
 
 

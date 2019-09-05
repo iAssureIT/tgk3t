@@ -40,13 +40,13 @@ class Financials extends Component{
            axios
           .get('/api/properties/'+this.props.property_id)
           .then( (response) =>{
-           console.log("response.data.financial.maintenancePer ",response.data.financial.maintenancePer);
+           console.log("response.data.financial.maintenancePer ",response.data);
 
            this.setState({
                originalValues: response.data.financial,
                expectedRate  : response.data.financial.expectedRate,
-               totalPrice    : response.data.financial.totalPrice,
-               monthlyRent   : response.data.financial.monthlyRent,
+               totalPrice    : response.data.financial.totalPrice ? response.data.financial.totalPrice : null,
+               monthlyRent   : response.data.financial.monthlyRent ? response.data.financial.monthlyRent : null,
                depositAmount : response.data.financial.depositAmount,
                prevCharges   : response.data.financial.includeCharges,
                updateOperation : true,
@@ -92,8 +92,13 @@ class Financials extends Component{
            // this.refs.maintenancePer.value = response.data.financial.maintenancePer;
 
           })
-          .catch((error) =>{
-           console.log("error = ", error);
+          .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
           });
 
           }
@@ -101,6 +106,8 @@ class Financials extends Component{
 
 }
 componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
 $('#totalAsk').keyup(function(event) {
   // skip for arrow keys
@@ -168,12 +175,13 @@ var today = new Date().toISOString().split('T')[0];
 
 updateUser(event){
   event.preventDefault();
+
   console.log("this.state.expectedRate",this.state.expectedRate);
    
   // console.log("Financials req = ",formValues);
   console.log("updateOperation",this.state.updateOperation);
 
-  if( this.state.totalPrice!="" || this.state.monthlyRent!="" ){
+  if( this.state.totalPrice!="" && this.state.totalPrice!== null || this.state.monthlyRent!=""&& this.state.monthlyRent!==null ){
 
     if(this.state.updateOperation!=true)
     {
@@ -242,20 +250,8 @@ updateUser(event){
               eq = false;
                console.log("equal not",eq);
             }else{
-              
-              for (var i = 0; i < includeChargesDataList.length; i++)
-              { 
-                      if (includeChargesDataList[i] != ov.includeCharges[i]){
-                  eq = false;
-                      }else{
-                  eq = true;  
-                      }
-                 }
-                  console.log("equal yes but same",eq); 
-            }
 
-            console.log("outside eq",eq);
-             
+
             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
               this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
               this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
@@ -361,13 +357,14 @@ updateUser(event){
                   }); 
             }
       }
-    
+    }
   }else{
                 swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
   }
 
 }
+
 
 totalInclude(event){
 
@@ -386,7 +383,7 @@ totalInclude(event){
       this.setState({
         includeCharges : includeCharges,
       },()=>{
-        console.log("here includeCharges in function check ", this.state.includeCharges);
+        // console.log("here includeCharges in function check ", this.state.includeCharges);
       });
 
         
@@ -404,7 +401,7 @@ totalInclude(event){
         this.setState({
           includeCharges : includeCharges,
         },()=>{
-          console.log("here includeCharges in function uncheck ", this.state.includeCharges);
+          // console.log("here includeCharges in function uncheck ", this.state.includeCharges);
 
         });
 
@@ -433,6 +430,7 @@ totalInclude(event){
       var target = event.target.value;
       const name   = event.target.name;
       // console.log(name + "=" +target);
+
     
       if(name === "availableFrom"){
         console.log("Value=>",event.target.value);
@@ -447,6 +445,7 @@ totalInclude(event){
       }else{
         target = event.target.value;
       }
+
       this.setState({
       [name]       : target
       });

@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
 import IAssureTableUM from '../../IAssureTableUM/IAssureTable.jsx';
+import swal from 'sweetalert';
 
 class UMListOfUsers extends Component {
 	constructor(props){
@@ -48,6 +49,9 @@ class UMListOfUsers extends Component {
     }
 
 	componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 		var data = {
 			"startRange"        : this.state.startRange,
             "limitRange"        : this.state.limitRange, 
@@ -71,9 +75,13 @@ class UMListOfUsers extends Component {
 	        })
 		})
 		.catch((error)=>{
-			console.log("error = ",error);
-			// alert("Something went wrong! Please check Get URL.");
-		});
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       		});    
 	}
 	getData(startRange, limitRange){    
 		var data = {
@@ -89,9 +97,13 @@ class UMListOfUsers extends Component {
             })
         })
 	    .catch((error)=>{
-	      console.log("error = ",error);
-	      alert("Something went wrong! Please check Get URL.");
-	    }); 
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       });    
     }
     getSearchText(searchText, startRange, limitRange){
         console.log(searchText, startRange, limitRange);

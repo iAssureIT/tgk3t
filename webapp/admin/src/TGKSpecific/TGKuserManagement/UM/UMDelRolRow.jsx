@@ -21,7 +21,10 @@ class UMDelRolRow extends Component {
     constructor(props) {
         super(props);
     }
-
+  //   componentDidMount(){
+  //     axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  // }
+  
     render() {
         return (
             <option  value={`remove$${this.props.roleDataVales}`} name="userListDDOption">Remove {this.props.roleDataVales} Role to Selected </option>

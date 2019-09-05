@@ -28,6 +28,7 @@ class sellOMeter extends Component {
     }
 
     componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
 		axios
 			.get('/api/sellometers/list')
@@ -42,10 +43,13 @@ class sellOMeter extends Component {
 				}
 			)
 			.catch((error)=>{
-
-				console.log("error = ",error);
-				// alert("Something went wrong! Please check Get URL.");
-				 });				
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    		
 
 	}
 
@@ -94,16 +98,23 @@ class sellOMeter extends Component {
 						}
 					)
 					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              		});    		
 
-						console.log("error = ",error);
-						// alert("Something went wrong! Please check Get URL.");
-						 });		
 
-
-				}).catch((error)=> {
-				    // handle error
-				    console.log(error);
-				});
+				}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              		});    
   		}
 
   		ClearData(event){
@@ -171,17 +182,24 @@ class sellOMeter extends Component {
 						}
 					)
 					.catch((error)=>{
-
-						console.log("error = ",error);
-						// alert("Something went wrong! Please check Get URL.");
-						 });		
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              		});    	
 
 
 			      })
 			      .catch((error)=>{
-			        console.log("error = ",error);
-			        // alert("Something went wrong! Please check Get URL.");
-			      });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              		});    
 
 		 	  }else{
 		 	  	swal("Please enter mandatory fields", "", "warning");
@@ -220,9 +238,13 @@ class sellOMeter extends Component {
 				          
 		        })
 		        .catch((error)=>{
-		          console.log("error = ",error);
-		          // alert("Something went wrong! Please check Get URL.");
-		        });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              		});    
 		}	  
 
     render() {

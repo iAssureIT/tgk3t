@@ -19,6 +19,10 @@ export default class add_sellometer extends Component {
        this.handleChange = this.handleChange.bind(this);
     }
 
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+     }
+
     handleChange(event){
         const target = event.target.value;
         const name   = event.target.name;
@@ -82,15 +86,22 @@ export default class add_sellometer extends Component {
                 }
               )
               .catch((error)=>{
-
-                console.log("error = ",error);
-                // alert("Something went wrong! Please check Get URL.");
-                 });    
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    
           })
           .catch((error)=>{
-            console.log("error = ",error);
-            // alert("Something went wrong! Please check Get URL.");
-          });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+           });    
       }else{
         swal("Please enter mandatory fields", "", "warning");
       }

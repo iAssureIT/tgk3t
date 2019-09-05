@@ -37,9 +37,14 @@ class EditUserProfile extends Component{
 					 this.props.history.push('/umlistofusers');	
 					console.log('response --==',response);
 				})
-				.catch(function (error) {
-					console.log('error============',error);
-				});
+				.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       			});    
 	}
 
 	handleChange(event){
@@ -49,6 +54,10 @@ class EditUserProfile extends Component{
 	}
 	
 	componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
+
 		console.log("here edit view");
 		var userid = this.state.UserId;
 		console.log("userid-----------------------------------------",userid);
@@ -73,9 +82,13 @@ class EditUserProfile extends Component{
 		 
 	      })
 	      .catch((error)=>{
-	        console.log("error = ",error);
-	        alert("Something went wrong! Please check Get URL.");
-	      });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       		});    
 	}
   	
 	render(){      

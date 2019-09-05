@@ -9,6 +9,11 @@ export default class SMSTemplateRow extends Component{
 			smsTemplates : []
 		}
 	}
+
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
 	getsmsTemplate(event){
 		event.preventDefault();
 		$('.defaultSMS').css({'display':'none'});

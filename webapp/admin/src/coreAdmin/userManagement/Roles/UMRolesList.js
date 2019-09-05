@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
+import swal from 'sweetalert';
 
 
 export default class UMRolesList extends Component {
@@ -22,6 +23,10 @@ export default class UMRolesList extends Component {
 	}
 
 	componentDidMount(){
+
+		
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 
 		axios
 			.get('/api/roles/list')
@@ -36,10 +41,13 @@ export default class UMRolesList extends Component {
 				}
 			)
 			.catch((error)=>{
-
-				console.log("error = ",error);
-				// alert("Something went wrong! Please check Get URL.");
-				 });				
+				                console.log("error = ",error);
+				                if(error.message === "Request failed with status code 401")
+				                {
+				                     swal("Your session is expired! Please login again.","", "error");
+				                     this.props.history.push("/login");
+				                }
+			});    			
 
 	}
   		getdata(data){
@@ -74,10 +82,14 @@ export default class UMRolesList extends Component {
 			    	console.log('delete response',response);
 			    	// swal("Role deleted successfully","", "success");
 
-				}).catch((error)=> {
-				    // handle error
-				    console.log(error);
-				});
+				}).catch((error)=>{
+				                console.log("error = ",error);
+				                if(error.message === "Request failed with status code 401")
+				                {
+				                     swal("Your session is expired! Please login again.","", "error");
+				                     this.props.history.push("/login");
+				                }
+				    });    
   		}
 
   		editRole(event){

@@ -19,7 +19,9 @@ class CreateUser extends Component {
   }
 
 
-    componentDidMount() {}  
+   componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
 
     createUser(event){
     event.preventDefault();
@@ -54,15 +56,16 @@ class CreateUser extends Component {
        
       })
       .catch((error)=>{
-        console.log("error = ",error);
-        alert("Something went wrong! Please check Get URL.");
+                        console.log("error = ",error);
+                         this.setState({show: false})
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      });    
 
-        // if(event.target.id === "signUpUser") {
-        this.setState({show: false})
-        console.log("close modal");
-      // }
-
-      });
+      
     
       /*console.log("event.target.id",event.target.id);
        if(event.target.id === "signUpUser") {

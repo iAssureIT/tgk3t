@@ -3,7 +3,7 @@ import { Link }                         from 'react-router-dom';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import axios                            from 'axios';
 import $                                from "jquery";
-
+import swal                     from 'sweetalert';
 import "./PopularPlace.css";
 
 class PopularPlaces extends Component{
@@ -18,7 +18,11 @@ class PopularPlaces extends Component{
   componentWillReceiveProps(nextProps){
    
   }
+ 
+
   componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
              axios
               .get('/api/properties/get/locationWiseListCount/')
@@ -31,9 +35,14 @@ class PopularPlaces extends Component{
                  
                 }
               })
-              .catch((error) =>{
-                console.log("error = ", error);
-              });
+              .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+                });
   }
 
   getSubAreaName(event){

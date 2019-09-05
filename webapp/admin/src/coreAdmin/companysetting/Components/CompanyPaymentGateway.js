@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { render }           from 'react-dom';
 import $ from "jquery";
+import axios from 'axios';
 
 // import swal from 'sweetalert';
 
@@ -24,7 +25,9 @@ class CompanyPaymentGateway extends Component{
   }
   componentDidMount() {
   
-    
+  
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  
   
   }
 

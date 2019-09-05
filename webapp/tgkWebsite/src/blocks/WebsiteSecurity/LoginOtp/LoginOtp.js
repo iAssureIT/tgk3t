@@ -1,9 +1,9 @@
 import React, { Component }     from 'react';
 import swal                     from 'sweetalert';
 import $ 						from "jquery";
-
 import {withRouter}    			from 'react-router-dom';
 import { connect } 				from 'react-redux';
+import axios 					from 'axios';
 
 
 import '../LoginOtp/LoginOtp.css';
@@ -14,6 +14,14 @@ class LoginOtp extends Component {
 			this.state = {
 			};			
 		}
+
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
+      console.log("here otp");
+  	}
+
+
 
 	removeBackdrop(){
  		$(".modal-backdrop").remove();		
@@ -29,13 +37,14 @@ class LoginOtp extends Component {
 		if(userOTP!==""){
 			if(parseInt(userOTP) === parseInt(this.props.OTP)){
 				localStorage.setItem("uid",this.props.tempuid);
+				console.log("here msg",this.props.message);
 				if(this.props.message === "NEW-USER-CREATED"){
 					this.props.redirectToSignUp(this.props.tempuid);
 
 				}else{
 					if(this.props.originPage === "header"){
 						this.props.loginMe(this.props.tempuid);
-						// this.props.history.push("/");
+						this.props.history.push("/");
 						window.location.reload();
 					}
 					else{

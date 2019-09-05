@@ -109,20 +109,35 @@ class Location extends Component {
 									    this.setState({
 									      subAreaList : response3.data
 									    })
-									}).catch(function (error) {
-									  console.log('error', error);
-									});
+									}).catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				                    });
 
 
-							    }).catch(function (error) {
-							      console.log('error', error);
-							    });
+							    }).catch((error)=>{
+			                        console.log("error = ",error);
+			                        if(error.message === "Request failed with status code 401")
+			                        {
+			                             swal("Your session is expired! Please login again.","", "error");
+			                             this.props.history.push("/");
+			                        }
+			                    });
 
 
 
-						    }).catch(function (error) {
-						      	console.log('error', error);
-						    });							
+						    }).catch((error)=>{
+		                        console.log("error = ",error);
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/");
+		                        }
+		                    });							
 						});
 
 						if(this.state.cityName != null &&  this.state.areaName != null && this.state.subAreaName != null && this.state.societyName != null)
@@ -141,15 +156,23 @@ class Location extends Component {
 					    }
 
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
         	}
 
 		}
 
 	componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 	    axios({
 	    	method: 'get',
 	    	url: 'http://locationapi.iassureit.com/api/states/get/list/IN',
@@ -157,9 +180,14 @@ class Location extends Component {
 	        this.setState({
 	        	listofStates : response.data
 	        })
-	    }).catch(function (error) {
-	    	console.log('error', error);
-	    });
+	    }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 	}
 	insertLocation(event){
 			event.preventDefault();	
@@ -177,7 +205,8 @@ class Location extends Component {
 						console.log("this.props.property_id",this.props.property_id);
 						this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 						
-				}else{
+				}else
+				{
 						console.log("diff data");
 						console.log("this.props.property_id",this.props.property_id);
 						console.log("localhost", localStorage.getItem("propertyId"));
@@ -196,7 +225,8 @@ class Location extends Component {
 						"property_id" 		: localStorage.getItem("propertyId"),
 						"index"				: this.state.index,
 						"uid" 				: localStorage.getItem("uid"),				
-					}; localStorage.getItem("propertyId")
+					}; 
+					localStorage.getItem("propertyId")
 					console.log("location formValues = ",formValues);
 
 						localStorage.setItem("index",this.state.index);
@@ -209,9 +239,14 @@ class Location extends Component {
 									this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 								}
 							})
-							.catch((error) =>{
-								console.log("error = ", error);
-							});
+							.catch((error)=>{
+		                        console.log("error = ",error);
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/");
+		                        }
+		                    });
 						}else{
 							swal("Please enter mandatory fields", "", "warning");
 			      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -250,13 +285,16 @@ class Location extends Component {
 								this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 							}
 						})
-						.catch((error) =>{
-							console.log("error = ", error);
-						});
-						  }else{
-					    swal("Please enter mandatory fields", "", "warning");
-					    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
-					  }
+
+						.catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/");
+	                        }
+	                    });
+
 					}else{
 						swal("Please enter mandatory fields", "", "warning");
 		      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -265,6 +303,8 @@ class Location extends Component {
 			
 			
 		}
+	}
+
 
 	backToBasicInfo(){
 		this.props.backToBasicInfo();
@@ -291,9 +331,14 @@ class Location extends Component {
 	        this.setState({
 	         	listofCities : response.data,
 	        })
-	    }).catch(function (error) {
-	      	console.log('error', error);
-	    });
+	    }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+            });
 
 	}
 
@@ -320,9 +365,14 @@ class Location extends Component {
 	        this.setState({
 	          listofAreas : response.data
 	        })
-	    }).catch(function (error) {
-	      console.log('error', error);
-	    });
+	    }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+             });
 
 	}
 	  
@@ -360,9 +410,14 @@ class Location extends Component {
 		    this.setState({
 		      subAreaList : response.data
 		    })
-		}).catch(function (error) {
-		  console.log('error', error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+            });
 
 	}
 
@@ -398,9 +453,14 @@ class Location extends Component {
 			    .post(url, formValues)
 			    .then((response)=> {
 			    	console.log("subareas submitted = ",response);
-			    }).catch(function (error) {
-			      console.log('error', error);
-			    });
+			    }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
 		}else{
 			url = 'http://locationapi.iassureit.com/api/societies/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/'+valSubAreaName+'/' ;
@@ -413,9 +473,14 @@ class Location extends Component {
 		        this.setState({
 		          societyList : response.data,
 		        })
-		    }).catch(function (error) {
-		      console.log('error', error);
-		    });			
+		    }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                });		
 		}
 
 
@@ -454,9 +519,14 @@ class Location extends Component {
 			    .post(url, formValues)
 			    .then((response)=> {
 			    	console.log("societies submitted = ",response);
-			    }).catch(function (error) {
-			      console.log('error', error);
-			    });
+			    }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 		}
 	}
 	// pincodeChange(event){
@@ -498,9 +568,14 @@ class Location extends Component {
 				        this.setState({
 				         	listofCities : response.data,
 				        })
-				    }).catch(function (error) {
-				      	console.log('error', error);
-				    });
+				    }).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
 
 			    	//========== Get Area List  =====================
@@ -512,10 +587,14 @@ class Location extends Component {
 				        this.setState({
 				          listofAreas : response.data
 				        })
-				    }).catch(function (error) {
-				      console.log('error', error);
-				    });
-
+				    }).catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				         });
 
 			    	//========== Get SubArea List  =====================
 					url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/' ;
@@ -526,15 +605,25 @@ class Location extends Component {
 					    this.setState({
 					    	subAreaList : response.data
 					    })
-					}).catch(function (error) {
-					  console.log('error during subAreaList', error);
-					});
+					}).catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				        });
 
 			    });
 			}
-		}).catch(function (error) {
-		  console.log('error during pincode', error);
-		});
+		}).catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+			});
 	}
 
 

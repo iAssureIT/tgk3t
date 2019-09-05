@@ -44,11 +44,10 @@ class CompanyTaxDetails extends Component{
 
     
   }
-  componentDidMount() {
-  
-    
-  
+  componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
   }
+  
   submitCompanyInformation(event){
     event.preventDefault();
    
@@ -83,12 +82,14 @@ class CompanyTaxDetails extends Component{
         
          }   
       })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-        swal("", "Tax Information Added Successfully!!", "Danger")
-  
-      })
+      .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       })
       .finally(function () {
         // always executed
       });

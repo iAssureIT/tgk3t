@@ -70,14 +70,23 @@ class EditUserProfile extends Component{
 					        })
 						})
 						.catch((error)=>{
-							console.log("error = ",error);
-							// alert("Something went wrong! Please check Get URL.");
-						});
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 
 				})
-				.catch(function (error) {
-					console.log('error============',error);
-				});
+				.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      			});  
 
 		}else{
 			swal("Please enter mandatory fields", "", "warning");
@@ -99,6 +108,9 @@ class EditUserProfile extends Component{
 	}
 	
 	componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 		console.log("here edit view");
 		var userid = this.state.UserId;
 		console.log("userid-----------------------------------------",userid);
@@ -132,9 +144,13 @@ class EditUserProfile extends Component{
 		 
 	      })
 	      .catch((error)=>{
-	        console.log("error = ",error);
-	        // alert("Something went wrong! Please check Get URL.");
-	      });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      	  });  
 
 // for office data 
 	       axios
@@ -161,11 +177,14 @@ class EditUserProfile extends Component{
 	        
 	        }
 	      )
-	      .catch((error)=>{
-
-	        console.log("error = ",error);
-	        // alert("Something went wrong! Please check Get URL.");
-	         });  
+	     .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      	 });  
 
 	}
   	

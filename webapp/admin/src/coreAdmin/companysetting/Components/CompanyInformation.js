@@ -64,6 +64,9 @@ class CompanyInformation extends Component{
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
   var companyId = 2;
     /*axios.get('/api/companysettings/'+ companyId)
     .then( (res)=>{      
@@ -224,12 +227,14 @@ class CompanyInformation extends Component{
       
 
     })
-    .catch(function (error) {
-      // handle error
-      console.log(error);
-      swal("", "Company Information submition failed!", "Danger")
-
-    })
+    .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      })
     .finally(function () {
       // always executed
     });

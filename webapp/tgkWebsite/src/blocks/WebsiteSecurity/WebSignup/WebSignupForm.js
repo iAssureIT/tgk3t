@@ -34,6 +34,9 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			};
 		}
 
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  	}
 	submit(event){
 		event.preventDefault();
 		// console.log("abc");
@@ -86,13 +89,23 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 							.then((res) =>{
 								console.log("SendEmailNotificationToUser",res);						
 							})
-							.catch((error) =>{
-								console.log("error = ", error);
-							});						
+							.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				            });					
 						})
-						.catch((error) =>{
-							console.log("error = ", error);
-						});
+						.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				                    });
 						console.log("BasicInfo res = ",res);
 						if(this.props.originPage === "header")
 						{
@@ -103,10 +116,14 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 						}
 					}
 				})
-				.catch((error) =>{
-					console.log("error = ", error);
-					swal("Sorry!!", "User not found.", "error");
-				});
+				.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				                    });
 			}
 		}else{
 			swal("Please enter mandatory fields", "", "warning");

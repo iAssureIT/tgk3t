@@ -4,6 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
+import swal from 'sweetalert';
 
 
 export default class CompanyLocationList extends Component {
@@ -16,6 +17,10 @@ export default class CompanyLocationList extends Component {
 	}
 
 	componentDidMount(){
+
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 
 		axios
 			.get('/api/companysettings/list')
@@ -30,10 +35,13 @@ export default class CompanyLocationList extends Component {
 				}
 			)
 			.catch((error)=>{
-
-				console.log("error = ",error);
-				// alert("Something went wrong! Please check Get URL.");
-				 });				
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    			
 
 	}
   		getdata(data){

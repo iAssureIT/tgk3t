@@ -27,6 +27,11 @@ class EmailTemplateRow extends Component{
     		// this.call();
     	}
     }
+
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
 	deleteEmailTemplate(event){
 		event.preventDefault();
 		var id = event.target.id;
@@ -63,10 +68,14 @@ class EmailTemplateRow extends Component{
 	    	this.props.deleteData("Email",id);
     		}
 
-		}).catch((error)=> {
-		    // handle error
-		    console.log(error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+            });    
 
 
 	}

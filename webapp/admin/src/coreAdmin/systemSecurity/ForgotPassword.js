@@ -20,6 +20,7 @@ class ForgotPassword extends Component {
       }
     }
     componentDidMount(){
+      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
       var x = this.props.match.params;
       console.log('x',x);
     }

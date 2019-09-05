@@ -1,6 +1,7 @@
 import React, { Component }   from 'react';
 import axios                  from 'axios';
 import swal                   from 'sweetalert';
+import {withRouter}         from 'react-router-dom';
 
 import "./MainFooter.css";
 
@@ -17,7 +18,7 @@ const clientnameRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const emailRegex = RegExp (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 
 
-export default class MainFooter extends Component{
+class MainFooter extends Component{
 
   constructor(props){
       super(props);
@@ -34,6 +35,11 @@ export default class MainFooter extends Component{
       };
         this.handleChange = this.handleChange.bind(this);
     }
+
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+    }
+
     handleChange(event){
       event.preventDefault();
       const datatype = event.target.getAttribute('data-text');
@@ -93,9 +99,13 @@ export default class MainFooter extends Component{
                     }
                 })
                 .catch((error)=>{
-                  console.log("error = ", error);
-                  // alert("Something Went wrong")
-                });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    })
               }else{
                 swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -130,9 +140,13 @@ export default class MainFooter extends Component{
                   }
                 })
                 .catch((error)=>{
-                  console.log("error = ", error);
-                  // alert("Something Went wrong")
-                });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    })
               }else{
                 swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -281,3 +295,5 @@ export default class MainFooter extends Component{
       );
     }
   }
+
+  export default withRouter(MainFooter);

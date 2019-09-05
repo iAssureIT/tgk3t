@@ -46,6 +46,10 @@ class EditNotificationModal extends Component{
 	  });
 	}
 
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+
 	// componentDidMount(){
 
 		// if ( !$("#adminSide").length>0 && !$('body').hasClass('adminSide')) {
@@ -167,16 +171,20 @@ class EditNotificationModal extends Component{
 				    $('.modal-backdrop').remove();
                    
 				})
-				.catch((error)=> {
-					
-					swal(" Sorry! Template can't update successfully","", "error");
-					this.setState({
-						shown : false,
-					});
-					$('#editNotifyModal-'+this.props.emailNot).hide();
-				    $('.modal-backdrop').remove();
-				console.log('error============',error);
-				})
+				.catch((error)=>{
+                        console.log("error = ",error);
+                        this.setState({
+							shown : false,
+						});
+						$('#editNotifyModal-'+this.props.emailNot).hide();
+					    $('.modal-backdrop').remove();
+
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                });    
 			}
 		}else{
 			this.setState({

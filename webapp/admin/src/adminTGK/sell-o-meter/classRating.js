@@ -24,7 +24,8 @@ class classRating extends Component {
     }
 
     componentDidMount(){
-
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+     
     axios
       .get('/api/mastersellometers/list')
       .then(
@@ -37,12 +38,14 @@ class classRating extends Component {
           });
         }
       )
-      .catch((error)=>{
-
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-         });        
-
+     .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    
   }
 
   selectedData(data){
@@ -90,16 +93,25 @@ class classRating extends Component {
               }
             )
             .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
 
-              console.log("error = ",error);
-              // alert("Something went wrong! Please check Get URL.");
-               });       
 
+        })
+                .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
 
-        }).catch((error)=> {
-            // handle error
-            console.log(error);
-        });
       }
 
       ClearData(event){
@@ -153,16 +165,25 @@ class classRating extends Component {
                   }
                 )
                 .catch((error)=>{
-
-                  console.log("error = ",error);
-                  // alert("Something went wrong! Please check Get URL.");
-                   });             
+                console.log("error = ",error);
+                    if(error.message === "Request failed with status code 401")
+                    {
+                         swal("Your session is expired! Please login again.","", "error");
+                         this.props.history.push("/login");
+                    }
+                });             
+            
                               
                     })
-                    .catch((error)=>{
+                      .catch((error)=>{
                       console.log("error = ",error);
-                      // alert("Something went wrong! Please check Get URL.");
-                    });   
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/login");
+                          }
+                      });             
+  
         }else{
         swal("Please enter mandatory fields", "", "warning");
 
@@ -193,9 +214,13 @@ class classRating extends Component {
           
         })
         .catch((error)=>{
-          console.log("error = ",error);
-          // alert("Something went wrong! Please check Get URL.");
-        });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+          });    
 
 
     }

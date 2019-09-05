@@ -1,7 +1,7 @@
 import React, { Component }   from 'react';
 import axios                  from 'axios';
 import $                      from "jquery";
-
+import swal                            from 'sweetalert';
 import Loadable               from 'react-loadable';
 
 import "./PropertyProfile.css";
@@ -70,6 +70,9 @@ class PropertyProfile extends Component{
    
   }
   componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  
   axios
     .get('/api/properties/'+this.state.profileId)
     .then(
@@ -95,7 +98,14 @@ class PropertyProfile extends Component{
         // console.log("postsdata.propertyDetails",res.data);
       }
     )
-    .catch();
+    .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                    });    
 
      $(this).find('input[type="checkbox"]').is(':checked');
     

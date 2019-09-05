@@ -12,6 +12,10 @@ class add_data extends Component {
           }
     }
 
+  componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+
      createData(event){
     event.preventDefault();
     const formValues = {
@@ -40,16 +44,23 @@ class add_data extends Component {
             }
           )
           .catch((error)=>{
-
-            console.log("error = ",error);
-            // alert("Something went wrong! Please check Get URL.");
-             });      
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+           });        
           
       })
-      .catch((error)=>{
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-      });  
+     .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      });     
     }
 
 

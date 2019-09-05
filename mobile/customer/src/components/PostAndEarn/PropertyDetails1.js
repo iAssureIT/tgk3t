@@ -75,7 +75,6 @@ export default class PropertyDetails1 extends ValidationComponent{
 
   submitFun(){
 
-    this.props.navigation.navigate('PropertyDetails1');
     // var all = this.state.fullPropertyType;
 
     const formValues = {
@@ -91,6 +90,9 @@ export default class PropertyDetails1 extends ValidationComponent{
         // "property_id"   : this.props.property_id
 
       };
+
+      console.log("formValues",formValues);
+      this.props.navigation.navigate('PropertyDetails2');
 
   }
 

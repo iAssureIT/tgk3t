@@ -43,6 +43,9 @@ class IAssureTableUM extends Component {
 		this.handleChange = this.handleChange.bind(this);
 	}
 	componentDidMount() {
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
       $("html,body").scrollTop(0); 
       // this.paginationFunction();
       // this.palindrome('Moam');
@@ -404,9 +407,14 @@ class IAssureTableUM extends Component {
 				              tableData 		: tableData,          
 				            },()=>{
 				            })
-				        }).catch((error)=>{ 
-				        	// swal("No results found","","error");
-				      });
+				        }).catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+       					});    
 			}else{
 
 				console.log("there is no value");
@@ -628,14 +636,23 @@ class IAssureTableUM extends Component {
 				        })
 					})
 					.catch((error)=>{
-						console.log("error = ",error);
-						// alert("Something went wrong! Please check Get URL.");
-					});
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      				 });    
 		
 
-		}).catch((error)=> {
-		    console.log(error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       		});    
     }
 
     changepassword(event){
@@ -673,16 +690,19 @@ class IAssureTableUM extends Component {
 
 					      })
 					      .catch((error)=>{
-					        console.log("error = ",error);
-					        swal("Sorry! Password could not be reset,please try again!","", "error");
-					        var modalid="RestpwdModal-"+id;
-					  		var modal = document.getElementById(modalid);
-					        modal.style.display = "none";
-	                        $('.modal-backdrop').remove();
-                    		window.location.reload();
+		                        console.log("error = ",error);
+		                         var modalid="RestpwdModal-"+id;
+						  		var modal = document.getElementById(modalid);
+						        modal.style.display = "none";
+		                        $('.modal-backdrop').remove();
+	                    		window.location.reload();
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/login");
+		                        }
+      						});    
 
-
-					      });
 					}else{
 						swal("Password should be at least 6 characters long","","error");				
 					}

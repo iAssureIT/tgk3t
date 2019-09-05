@@ -29,6 +29,10 @@ class LoginMobNum extends Component {
     		this.handleChange = this.handleChange.bind(this);
 		}
 
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  	}
+
 		handleNumber(event){
 			
 			event.preventDefault();
@@ -44,22 +48,33 @@ class LoginMobNum extends Component {
 				axios
 					.post('/api/usersotp/verify_mobile',formValues)
 					.then((response)=>{
-						console.log("response = ",response.data);
-						this.props.mobileEntered( 
-												response.data.user_id,
-												this.state.mobile,
-												response.data.otp,
-												response.data.message,
-												response.data.fullName
-											);
-						// this.props.availableMobile(this.state.mobile);
-							localStorage.setItem('availableMobile',this.state.mobile)
+						console.log("response in mobile = ",response.data);
+        				axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
+						localStorage.setItem('token',response.data.token)
 
+        				if(axios.defaults.headers.common.Authorization)
+        				{
+							this.props.mobileEntered( 
+													response.data.user_id,
+													this.state.mobile,
+													response.data.otp,
+													response.data.message,
+													response.data.fullName,
+													response.data.token
+												);
+							// this.props.availableMobile(this.state.mobile);
+								localStorage.setItem('availableMobile',this.state.mobile)
+						}
+						else{
+						 swal("Sorry!", "try again", "error");
+
+						}
 						// swal("Congrats!", "Your account created successfully! \n Please Verify Your Mobile Number!", "success");
 					})
-					.catch(function(error){
-						console.log(error);
-					})
+					.catch((error)=>{
+				                        console.log("error = ",error);
+				                       
+				                    });
 				}
 				}else{
 					swal("Please enter Mobile Number", "", "warning");

@@ -175,6 +175,9 @@ class CompanyLocation extends Component{
   }
    
   componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
     $('.subjectRow').css({'display':'none'});
     
     $('.subjectRowError').css({'display':'none'});
@@ -208,11 +211,15 @@ class CompanyLocation extends Component{
 
         }
       )
-      .catch((error)=>{
-
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-         });        
+       .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+      });             
+     
 
   }
   submitCompanyLocation=(event)=>{
@@ -332,15 +339,25 @@ class CompanyLocation extends Component{
                           }
                         )
                         .catch((error)=>{
-                          console.log("error = ",error);
-                          // alert("Something went wrong! Please check Get URL.");
-                           });        
+                              console.log("error = ",error);
+                              if(error.message === "Request failed with status code 401")
+                              {
+                                   swal("Your session is expired! Please login again.","", "error");
+                                   this.props.history.push("/login");
+                              }
+                          });             
+      
 
                     })
-                    .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                    })
+                    .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/login");
+                          }
+                      });             
+
           
 
       // here close of if head & sale
@@ -375,7 +392,7 @@ class CompanyLocation extends Component{
                   areaName                :"",
                 });
                         // here for table
-                          axios
+                        axios
                         .get('/api/tgkSpecificcompanysettings/list')
                         .then(
                           (res)=>{
@@ -399,14 +416,24 @@ class CompanyLocation extends Component{
                           }
                         )
                         .catch((error)=>{
+                            console.log("error = ",error);
+                            if(error.message === "Request failed with status code 401")
+                            {
+                                 swal("Your session is expired! Please login again.","", "error");
+                                 this.props.history.push("/login");
+                            }
+                        });             
+      
+                    })
+                     .catch((error)=>{
                           console.log("error = ",error);
-                          // alert("Something went wrong! Please check Get URL.");
-                           });        
-                    })
-                    .catch(function (error) {
-                      // handle error
-                      console.log(error);
-                    })
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/login");
+                          }
+                      });             
+
             }
         console.log("pincode covererd",this.state.pincodeArea);
                 
@@ -479,16 +506,25 @@ class CompanyLocation extends Component{
                       }
                     )
                     .catch((error)=>{
-
-                      console.log("error = ",error);
-                      // alert("Something went wrong! Please check Get URL.");
-                       });        
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                    });             
+     
 
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
+        .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
+
 
         }else if(this.state.companyLocation  === 'Field Agent Office'){
             
@@ -559,17 +595,25 @@ class CompanyLocation extends Component{
                       }
                     )
                     .catch((error)=>{
-
-                      console.log("error = ",error);
-                      // alert("Something went wrong! Please check Get URL.");
-                       });        
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                    });             
+       
 
         })
-        .catch(function (error) {
-          // handle error
-          console.log("updated already",error);
+        .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+            });             
 
-        })
 
              
           }
@@ -653,10 +697,14 @@ selectType(event){
           }
 
         })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
+        .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+        })            
         .finally(function () {
           // always executed
         });
@@ -719,18 +767,26 @@ selectType(event){
                 }
               )
               .catch((error)=>{
-
-                console.log("error = ",error);
-                // alert("Something went wrong! Please check Get URL.");
-                 });        
+                    console.log("error = ",error);
+                    if(error.message === "Request failed with status code 401")
+                    {
+                         swal("Your session is expired! Please login again.","", "error");
+                         this.props.history.push("/login");
+                    }
+                });             
+    
 
 
           
-        }).catch(function (error) {
-          // handle error
-          console.log(error);
-         
         })
+        .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                     swal("Your session is expired! Please login again.","", "error");
+                     this.props.history.push("/login");
+                }
+        })             
         .finally(function () {
           // always executed
         });

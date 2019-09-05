@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import $ from "jquery";
+import axios from 'axios';
 
 // Section: 1 - SystemSecurity ******************************************************
 import Login            from '../systemSecurity/Login.js';
@@ -55,6 +56,9 @@ import PropertyProfile from '../../adminTGK/PropertyProfile/PropertyProfile.js';
   }
    
 componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
     $(document).ready(function () {
        $('#sidebarCollapse').on('click', function () {
            $('#sidebar').toggleClass('active');

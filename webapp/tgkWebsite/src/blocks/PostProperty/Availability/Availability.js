@@ -85,15 +85,22 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 							});
 
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
         	}
 
 		}
 
 		componentDidMount(){	
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
 			console.log("user id in availability",this.props.uid);
 
@@ -106,9 +113,14 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						});
 
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
 
 		}
@@ -167,9 +179,14 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 							}
 						})
-						.catch((error) =>{
-							console.log("error = ", error);
-						});
+						.catch((error)=>{
+		                        console.log("error = ",error);
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/");
+		                        }
+		                });
 					}else{
 						swal("Please enter mandatory fields", "", "warning");
 			        	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -214,9 +231,14 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 							console.log("response",res);
 						}
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 				}else{
 					swal("Please enter mandatory fields", "", "warning");
 		        	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");

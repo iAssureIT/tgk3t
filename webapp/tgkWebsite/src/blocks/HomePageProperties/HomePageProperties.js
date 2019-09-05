@@ -9,6 +9,7 @@ import { connect }          from 'react-redux';
 import LoginMobNum          from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
 import LoginOtp             from '../WebsiteSecurity/LoginOtp/LoginOtp.js';
 import WebSignupForm        from '../WebsiteSecurity/WebSignup/WebSignupForm.js';
+import swal                     from 'sweetalert';
 
 
 import "./HomePageProperties.css";
@@ -23,6 +24,10 @@ class HomePageProperties extends Component {
 		}
 	}
 
+     componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
    componentWillReceiveProps(nextProps){
     if(nextProps && nextProps.inputData){
 
@@ -121,20 +126,35 @@ class HomePageProperties extends Component {
                         .then((res) =>{
                           console.log("SendEmailNotificationToUser",res);           
                         })
-                        .catch((error) =>{
-                          console.log("error = ", error);
-                        });           
+                        .catch((error)=>{
+                            console.log("error = ",error);
+                            if(error.message === "Request failed with status code 401")
+                            {
+                                 swal("Your session is expired! Please login again.","", "error");
+                                 this.props.history.push("/");
+                            }
+                        })          
                       })
                             
                 })
-                .catch((error) =>{
-                  console.log("error = ", error);
-                });  
+               .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    })
                                
               })
-              .catch((error) =>{
-                console.log("error = ", error);
-              }); 
+              .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+              })
                        
 
               axios
@@ -145,13 +165,23 @@ class HomePageProperties extends Component {
                       propertiesData  : resultData.data,
                     })
                 })
-                .catch(error=>{
-                  console.log("error = ", error);
+               .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
                 });
           })
-          .catch((error) =>{
-            console.log("error = ", error);
-          }); 
+         .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+          });
 
     }else{
       var deleteValues = {
@@ -182,14 +212,24 @@ class HomePageProperties extends Component {
                       propertiesData  : resultData.data,
                     })
                 })
-                .catch(error=>{
-                  console.log("error = ", error);
-                });
+                .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
           }
         )
-        .catch((error) =>{
-                console.log("error = ", error);
-        }); 
+       .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+        });
     }
   }
 

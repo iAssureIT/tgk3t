@@ -28,6 +28,9 @@ class OfficeEmpList extends Component {
 
    componentDidMount() {
 
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
       axios
       .get('/api/tgkSpecificcompanysettings/list')
       .then(
@@ -48,10 +51,13 @@ class OfficeEmpList extends Component {
         }
       )
       .catch((error)=>{
-
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-         });  
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+      	});  
     }  
 
 	selectOffice(event){
@@ -81,16 +87,17 @@ class OfficeEmpList extends Component {
 
 				          // swal("Search successfull by "+searchText+ "","success");
 				          
-				        }).catch((error)=>{ 
-				        	console.log(error);
-				        	this.setState({
-				            alldata : null,
-				          });
-
-				          console.log("alldata-------------------------------------",this.state.alldata);
-
-				        	// swal("Sorry there is no data of "+searchText+ "","error");
-				      });
+				        }).catch((error)=>{
+	                        console.log("error = ",error);
+	                        this.setState({
+					            alldata : null,
+					          });
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+	      				 });  
 	}
 
 	}  		

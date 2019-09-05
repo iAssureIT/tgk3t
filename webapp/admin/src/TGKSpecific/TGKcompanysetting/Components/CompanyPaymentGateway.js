@@ -22,11 +22,10 @@ class CompanyPaymentGateway extends Component{
 
     
   }
-  componentDidMount() {
-  
-    
-  
-  }
+
+  // componentDidMount(){
+  //     axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  // }
 
   handleChange(event){
     const target = event.target;

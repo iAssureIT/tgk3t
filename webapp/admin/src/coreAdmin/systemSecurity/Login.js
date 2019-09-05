@@ -25,7 +25,7 @@ class Login extends Component {
         }
   }
   componentDidMount(){
-    
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
   }
   userlogin(event){
     event.preventDefault();
@@ -44,7 +44,7 @@ class Login extends Component {
         // this.setState({
         //   token : response.data.token
         // });
-
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
         localStorage.setItem("token",response.data.token);
         localStorage.setItem("admin_ID",response.data.user_ID);
         // localStorage.setItem("admin_email",response.data.email);
@@ -52,23 +52,31 @@ class Login extends Component {
 
         console.log("localStorage =",localStorage);
         // browserHistory.replace('/');
-        this.props.history.push("/");
-        window.location.reload();
-        // direct.setState({loggedIn:response.data.token})
-        if(localStorage==null){
-          swal("Invalid Email or Password","Please Enter valid email and password","warning");
-        }else{
-          this.setState({
-              loggedIn  :   true
-          })
-        }
+        if(axios.defaults.headers.common.Authorization)
+          {
+            this.props.history.push("/");
+            window.location.reload();
+            // direct.setState({loggedIn:response.data.token})
+            if(localStorage==null){
+              swal("Invalid Email or Password","Please Enter valid email and password","warning");
+            }else{
+              this.setState({
+                  loggedIn  :   true
+              })
+            }
+          }
       })
-      .catch(function (error) {
-          console.log(error);
-        if(localStorage!==null){
-          swal("Invalid Email or Password","Please Enter valid email and password","warning");
-        }
-      });
+      .catch((error)=>{
+                        console.log("error = ",error);
+                        if(localStorage!==null){
+                          swal("Invalid Email or Password","Please Enter valid email and password","warning");
+                        }
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });
   }
   showSignPass(){
       $('.showPwd').toggleClass('showPwd1');

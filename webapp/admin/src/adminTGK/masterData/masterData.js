@@ -23,8 +23,9 @@ class masterData extends Component {
     }
 
     componentDidMount(){
-
-    	   $('.subjectRowError').css({'display':'none'});
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+      
+   	  $('.subjectRowError').css({'display':'none'});
 
 		axios
 			.get('/api/masteramenities/list')
@@ -33,16 +34,23 @@ class masterData extends Component {
 					console.log('res', res);
 					const postsdata = res.data;
 					console.log('postsdata',postsdata);
+
+					
+					
 					this.setState({
 						allPosts : postsdata,
 					});
 				}
 			)
 			.catch((error)=>{
-
 				console.log("error = ",error);
-				// alert("Something went wrong! Please check Get URL.");
-				 });				
+				if(error.message === "Request failed with status code 401")
+				{
+           			 swal("Your session is expired! Please login again.","", "error");
+					 this.props.history.push("/login");
+
+				}
+			});				
 
 	}
 
@@ -56,6 +64,8 @@ class masterData extends Component {
 	
 
   		deleteAmenity(event){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
   			event.preventDefault();
 			var id = event.target.id;
 			console.log("id",id);
@@ -90,15 +100,23 @@ class masterData extends Component {
 						}
 					)
 					.catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                    });    			
 
-						console.log("error = ",error);
-						// alert("Something went wrong! Please check Get URL.");
-						 });			
 
-
-				}).catch((error)=> {			    // handle error
-				    console.log(error);
-				});
+				}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+                });    
   		}
 
   		editRole(event){
@@ -144,16 +162,23 @@ class masterData extends Component {
 							}
 						)
 						.catch((error)=>{
-
-							console.log("error = ",error);
-							// alert("Something went wrong! Please check Get URL.");
-							 });			
+		                        console.log("error = ",error);
+		                        if(error.message === "Request failed with status code 401")
+		                        {
+		                             swal("Your session is expired! Please login again.","", "error");
+		                             this.props.history.push("/login");
+		                        }
+		                  });    		
 						     
 				      })
 				      .catch((error)=>{
-				        console.log("error = ",error);
-				        // alert("Something went wrong! Please check Get URL.");
-				      });  
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
+                    	});    
 
 		      }else{
 		      		   $('.subjectRowError').removeClass('hidden');
@@ -186,9 +211,13 @@ class masterData extends Component {
           
         })
         .catch((error)=>{
-          console.log("error = ",error);
-          // alert("Something went wrong! Please check Get URL.");
-        });
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+        });    
 
 
     }

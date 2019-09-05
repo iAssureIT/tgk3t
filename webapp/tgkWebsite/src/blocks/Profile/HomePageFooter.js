@@ -1,4 +1,5 @@
 import React, { Component }   from 'react';
+import axios                            from 'axios';
 
 import "./HomePageFooter.css";
 
@@ -17,9 +18,7 @@ class HomePageFooter extends Component{
   componentWillReceiveProps(nextProps){
    
   }
-  componentDidMount() {
-   
-  }
+
 
   render() {
      

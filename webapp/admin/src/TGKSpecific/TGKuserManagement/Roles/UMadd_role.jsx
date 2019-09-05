@@ -6,6 +6,10 @@ import { render } from 'react-dom';
 
 export default class UMadd_role extends Component {
 
+// componentDidMount(){
+//       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+//   }
+  
 	editRole(event){/*
 	  event.preventDefault();
       var roleId    = event.target.id;

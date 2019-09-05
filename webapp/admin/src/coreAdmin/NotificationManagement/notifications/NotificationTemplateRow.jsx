@@ -9,6 +9,11 @@ export default class NotificationTemplateRow extends Component{
 			notificationTemplates : []
 		}
 	}
+
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
 	getnotifTemplate(event){
 		// console.log('getnotifTemplate');
 		event.preventDefault();

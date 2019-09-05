@@ -52,12 +52,21 @@ import './PropertyDetails.css';
 
 							});
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				    });
 
         	}
 		}
+
+		componentDidMount(){
+		      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+		  }
 
 		updateUser(event){
 			event.preventDefault();
@@ -101,9 +110,14 @@ import './PropertyDetails.css';
 							this.props.redirectToAmenities(this.props.uid,this.props.property_id);
 						}
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				     });
 				}else{
 					swal("Please enter mandatory fields", "", "warning");
 	              	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -140,9 +154,14 @@ import './PropertyDetails.css';
 							this.props.redirectToAmenities(this.props.uid,this.props.property_id);
 						}
 					})
-					.catch((error) =>{
-						console.log("error = ", error);
-					});
+					.catch((error)=>{
+				                        console.log("error = ",error);
+				                        if(error.message === "Request failed with status code 401")
+				                        {
+				                             swal("Your session is expired! Please login again.","", "error");
+				                             this.props.history.push("/");
+				                        }
+				       });
 				}else{
 					swal("Please enter mandatory fields", "", "warning");
 	              	console.error("FORM INVALID - DISPLAY ERROR MESSAGE");

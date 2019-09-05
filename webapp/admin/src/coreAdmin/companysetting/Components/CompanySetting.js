@@ -8,6 +8,7 @@ import CompanyBankDetails           from  '../Components/CompanyBankDetails.js';
 import CompanyTaxDetails            from  '../Components/CompanyTaxDetails.js';
 import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.js';
 // import AddPropertyType           from  '/imports/admin/companySetting/Add_Property_subproperty/AddPropertyType.jsx';
+import axios from 'axios';
 
  class CompanySetting extends Component{
     constructor(props) {
@@ -24,7 +25,9 @@ import CompanyPaymentGateway        from  '../Components/CompanyPaymentGateway.j
 
 	}
   componentDidMount() {
-   
+ 
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 
   }
 

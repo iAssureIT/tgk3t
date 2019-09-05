@@ -9,6 +9,11 @@ import axios from 'axios';
 
 export default class UMaddRoles extends Component {
 
+
+  componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
+  
     createRole(event){
     event.preventDefault();
     const formValues = {
@@ -21,10 +26,14 @@ export default class UMaddRoles extends Component {
           swal("Role added successfully", "", "success");
           this.refs.role.value = '';        
       })
-      .catch((error)=>{
-        console.log("error = ",error);
-        // alert("Something went wrong! Please check Get URL.");
-      });
+     .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+       });    
   
 
     }

@@ -16,7 +16,9 @@ export default class UMeditRoles extends TrackerReact(Component) {
 	// 		}
 	// 	}
 	// }
-
+	componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  }
 	editRole(event){
 	  event.preventDefault();
       // var roleId    = $("input[name=Namerole]").attr("id");

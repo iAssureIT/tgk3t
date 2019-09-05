@@ -39,7 +39,10 @@ class IAssureTable extends Component {
 		this.deleteExam = this.deleteExam.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 	}
-	componentDidMount() {
+	componentDidMount(){
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
       $("html,body").scrollTop(0); 
       // this.paginationFunction();
       // this.palindrome('Moam');
@@ -538,9 +541,14 @@ class IAssureTable extends Component {
 	    	// console.log('delete response',response);
 	    	swal("User deleted successfully","", "success");
 
-		}).catch((error)=> {
-		    console.log(error);
-		});
+		}).catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });    
     }
 
     changepassword(event){
@@ -584,14 +592,18 @@ class IAssureTable extends Component {
 				        });
 				      })
 				      .catch((error)=>{
-				        console.log("error = ",error);
-				        alert("We are sorry but something went Wrong.","","error");
+	                        console.log("error = ",error);
+	                         this.setState({
+						        	show :false,
+						        });
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+	                             this.props.history.push("/login");
+	                        }
 
-				        this.setState({
-				        	show :false,
-				        });
+             			 });    
 
-				      });
 				}else{
 					swal("Password should be at least 6 characters long","","error");				
 				}
