@@ -7,6 +7,10 @@ import $	                    from 'jquery';
 
 import './Financials.css';
 
+import DatePicker from "react-datepicker";
+ 
+import "react-datepicker/dist/react-datepicker.css";
+
 
 class Financials extends Component{
 
@@ -29,8 +33,8 @@ class Financials extends Component{
       prevCharges     : "",
       maintenancePer  : "Month",
       maintenanceCharges : "0",
-      dateFormat      : ""
-
+      availableFrom: "",
+      startDate : new Date(),
       };
 
       console.log("this.props.updateStatus",this.props.updateStatus);
@@ -40,7 +44,11 @@ class Financials extends Component{
            axios
           .get('/api/properties/'+this.props.property_id)
           .then( (response) =>{
-           console.log("response.data.financial.maintenancePer ",response.data);
+
+           console.log("response.data.financial.maintenancePer ",response.data.financial.maintenancePer);
+          var date = response.data.financial.availableFrom.split("-")
+          var availableFrom = new Date(date[2], date[1] - 1, date[0])
+          console.log("availableFrom",availableFrom)
 
            this.setState({
                originalValues: response.data.financial,
@@ -50,7 +58,7 @@ class Financials extends Component{
                depositAmount : response.data.financial.depositAmount,
                prevCharges   : response.data.financial.includeCharges,
                updateOperation : true,
-               availableFrom  : response.data.financial.availableFrom ,
+               startDate     : availableFrom,
                description   :   response.data.financial.description ,
                maintenanceCharges : response.data.financial.maintenanceCharges,
                maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
@@ -169,8 +177,8 @@ $('#maintenanceCharges').keyup(function(event) {
   });
 });
 
-var today = new Date().toISOString().split('T')[0];
-    document.getElementsByName("availableFrom")[0].setAttribute('min', today);
+// var today = new Date().toISOString().split('T')[0];
+//     document.getElementsByName("availableFrom")[0].setAttribute('min', today);
 }
 
 updateUser(event){
@@ -204,7 +212,7 @@ updateUser(event){
         "totalPrice"          : this.state.totalPrice.replace(/,/g, ''),
         "monthlyRent"         : this.state.monthlyRent.replace(/,/g, ''),
         "depositAmount"       : this.state.depositAmount.replace(/,/g, ''),
-        "availableFrom"       : this.state.dateFormat,
+        "availableFrom"       : this.state.availableFrom,
         "description"         : this.state.description,
         "includeCharges"      : includeChargesDataList,
         "maintenanceCharges"  : this.state.maintenanceCharges.replace(/,/g, ''),
@@ -332,7 +340,7 @@ updateUser(event){
                 "totalPrice"          : totalPrice,
                 "monthlyRent"         : monthlyRent ,
                 "depositAmount"       : depositAmount ,
-                "availableFrom"       : this.state.dateFormat,
+                "availableFrom"       : this.state.availableFrom,
                 "description"         : this.state.description,
                 "includeCharges"      : includeChargesDataList,
                 "maintenanceCharges"  : maintenanceCharges,
@@ -427,29 +435,27 @@ totalInclude(event){
      //  "monthlyRent": monthlyRent,
      //  "totalAsk": totalAsk
    //  });
-      var target = event.target.value;
+      const target = event.target.value;
       const name   = event.target.name;
-      // console.log(name + "=" +target);
-
-    
-      if(name === "availableFrom"){
-        console.log("Value=>",event.target.value);
-        var txtdt = (event.target.value).replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, (match,y,m,d)=> { 
-          return d+'-'+ m + '-' + y;
-        });
-        this.setState({
-          dateFormat : txtdt,
-        },()=>{
-          console.log("123",this.state.dateFormat);
-        })
-      }else{
-        target = event.target.value;
-      }
 
       this.setState({
       [name]       : target
       });
+
+   
     }
+
+    handleDate = date => {
+      var newDate = new Date(date),
+      mnth = ("0" + (newDate.getMonth() + 1)).slice(-2),
+      day = ("0" + newDate.getDate()).slice(-2);
+      var availableFrom = [day, mnth, newDate.getFullYear()].join("-");
+      this.setState({
+        availableFrom: availableFrom,
+        startDate    : date
+      });
+    };
+
 
     isNumberKey(event)
    {
@@ -674,7 +680,18 @@ return (
                     <div className="input-group-addon inputIcon">
                         <i className="fa fa-building iconClr"></i>
                     </div>
-                    <input type="date" className="form-control" name="availableFrom" ref="availableFrom" value={this.state.availableFrom} onChange={this.handleChange.bind(this)} id="" min="1900-01-01" max="2100-12-31"/>
+                    {/*<input type="date" className="form-control" name="availableFrom" ref="availableFrom" value={this.state.availableFrom} onChange={this.handleChange.bind(this)} id="" min="1900-01-01" max="2100-12-31"/>*/}
+                   <DatePicker
+                      selected={this.state.startDate}
+                      onChange={this.handleDate}
+                      dateFormat="dd-MM-yyyy"
+                      className="form-control col-lg-12"
+                      minDate={(new Date())}
+                      name="availableFrom"
+                      ref="availableFrom"
+                      // value={this.state.availableFrom}
+                      max="2100-12-31"
+                    />
                   </div>
                 </div>
             </div>
