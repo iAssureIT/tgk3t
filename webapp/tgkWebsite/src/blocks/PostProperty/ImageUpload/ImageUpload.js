@@ -273,6 +273,7 @@ var imgTitleArray = [];
             swal("File not uploaded","Something went wrong","error");  
           }     
         }else{ 
+          this.setState({tempLoader:false})
           swal("Format is incorrect","Only Upload video format (mp4,avi,ogv)","warning");   
         }
       }

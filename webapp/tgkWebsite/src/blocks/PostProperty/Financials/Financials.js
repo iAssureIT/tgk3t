@@ -1,9 +1,9 @@
-import React , { Component }	from 'react';
+import React , { Component }  from 'react';
 import axios                  from 'axios';
 import { withRouter}          from 'react-router-dom';
 import { connect }            from 'react-redux';
 import swal                   from 'sweetalert';
-import $	                    from 'jquery';
+import $                      from 'jquery';
 
 import './Financials.css';
 
@@ -19,7 +19,7 @@ class Financials extends Component{
       this.state = {
       // includecharges  : [],
       originalValues  : '',
-      monthlyRent	    : '',
+      monthlyRent     : '',
       depositAmount   : '',
       expectedRate    : '',
       totalPrice      : '',
@@ -44,17 +44,22 @@ class Financials extends Component{
            axios
           .get('/api/properties/'+this.props.property_id)
           .then( (response) =>{
+           console.log("response.data.financial.maintenancePer ",response.data.financial.expectedRate);
 
-           console.log("response.data.financial.maintenancePer ",response.data.financial.maintenancePer);
-          var date = response.data.financial.availableFrom.split("-")
-          var availableFrom = new Date(date[2], date[1] - 1, date[0])
-          console.log("availableFrom",availableFrom)
+            var availableFrom = new Date();
+            if(response.data.financial.availableFrom!=="" & response.data.financial.availableFrom!==null && response.data.financial.availableFrom!==undefined){
+              var date = response.data.financial.availableFrom.split("-")
+              console.log('date',date);
+                availableFrom = new Date(date[2], date[1] - 1, date[0])
+            }
+            
+
 
            this.setState({
                originalValues: response.data.financial,
                expectedRate  : response.data.financial.expectedRate,
-               totalPrice    : response.data.financial.totalPrice ? response.data.financial.totalPrice : null,
-               monthlyRent   : response.data.financial.monthlyRent ? response.data.financial.monthlyRent : null,
+               totalPrice    : response.data.financial.totalPrice,
+               monthlyRent   : response.data.financial.monthlyRent,
                depositAmount : response.data.financial.depositAmount,
                prevCharges   : response.data.financial.includeCharges,
                updateOperation : true,
@@ -100,13 +105,8 @@ class Financials extends Component{
            // this.refs.maintenancePer.value = response.data.financial.maintenancePer;
 
           })
-          .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
-                        }
+          .catch((error) =>{
+           console.log("error = ", error);
           });
 
           }
@@ -114,8 +114,6 @@ class Financials extends Component{
 
 }
 componentDidMount(){
-
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
 $('#totalAsk').keyup(function(event) {
   // skip for arrow keys
@@ -183,13 +181,12 @@ $('#maintenanceCharges').keyup(function(event) {
 
 updateUser(event){
   event.preventDefault();
-
   console.log("this.state.expectedRate",this.state.expectedRate);
    
   // console.log("Financials req = ",formValues);
   console.log("updateOperation",this.state.updateOperation);
 
-  if( this.state.totalPrice!="" && this.state.totalPrice!== null || this.state.monthlyRent!=""&& this.state.monthlyRent!==null ){
+  if( this.state.totalPrice!="" || this.state.monthlyRent!="" ){
 
     if(this.state.updateOperation!=true)
     {
@@ -258,8 +255,20 @@ updateUser(event){
               eq = false;
                console.log("equal not",eq);
             }else{
+              
+              for (var i = 0; i < includeChargesDataList.length; i++)
+              { 
+                      if (includeChargesDataList[i] != ov.includeCharges[i]){
+                  eq = false;
+                      }else{
+                  eq = true;  
+                      }
+                 }
+                  console.log("equal yes but same",eq); 
+            }
 
-
+            console.log("outside eq",eq);
+             
             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
               this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
               this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
@@ -365,14 +374,13 @@ updateUser(event){
                   }); 
             }
       }
-    }
+    
   }else{
                 swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
   }
 
 }
-
 
 totalInclude(event){
 
@@ -391,7 +399,7 @@ totalInclude(event){
       this.setState({
         includeCharges : includeCharges,
       },()=>{
-        // console.log("here includeCharges in function check ", this.state.includeCharges);
+        console.log("here includeCharges in function check ", this.state.includeCharges);
       });
 
         
@@ -409,7 +417,7 @@ totalInclude(event){
         this.setState({
           includeCharges : includeCharges,
         },()=>{
-          // console.log("here includeCharges in function uncheck ", this.state.includeCharges);
+          console.log("here includeCharges in function uncheck ", this.state.includeCharges);
 
         });
 
@@ -437,7 +445,7 @@ totalInclude(event){
    //  });
       const target = event.target.value;
       const name   = event.target.name;
-
+      console.log(name + "=" +target);
       this.setState({
       [name]       : target
       });
@@ -542,6 +550,7 @@ return (
                   <div className="input-group-addon inputIcon">
                    <i className="fa fa-rupee iconClr"></i>
                   </div>
+                  {console.log("here",this.state.expectedRate)}
                   <input type="text" className="form-control" ref="expectedrate" name="expectedRate" value={this.state.expectedRate} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} onBlur={this.checkValue1.bind(this)} id="expRate" placeholder="Expected Rate" min="0"/>
                  <div className="input-group-addon inputIcon">
                  /Sq ft
@@ -706,12 +715,12 @@ return (
           </div>
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           {
-            <div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-left">
+            <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 pull-left">
                <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToAmenities.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
             </div>
              
            }
-            <div className="form-group col-lg-3	col-md-3 col-sm-6 col-xs-6 pull-right">
+            <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 pull-right">
                  <button type="submit " className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.updateUser.bind(this)} >Save & Next  &nbsp; &nbsp; &rArr;</button>
             </div>
           </div>
@@ -724,9 +733,9 @@ return (
 const mapStateToProps = (state)=>{
   return {
           property_id     : state.property_id,
-          uid	            : state.uid,
+          uid             : state.uid,
           transactionType : state.transactionType,
-          propertyType	  : state.propertyType,
+          propertyType    : state.propertyType,
           updateStatus    : state.updateStatus,   
 
   }
@@ -745,4 +754,3 @@ const mapDispatchToProps = (dispatch)=>{
   }
 };
 export default connect(mapStateToProps,mapDispatchToProps)(withRouter(Financials));
-
