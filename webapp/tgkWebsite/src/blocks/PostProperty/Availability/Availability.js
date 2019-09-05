@@ -8,6 +8,19 @@ import {withRouter}    from 'react-router-dom';
 import 'react-table/react-table.css' //import css
 import './Availability.css';
 
+import 'rc-time-picker/assets/index.css';
+
+import ReactDom from 'react-dom';
+
+import moment from 'moment';
+
+import TimePicker from 'rc-time-picker';
+
+const format = 'h:mm a';
+
+const now = moment().hour(0).minute(0);
+
+
 // import 'bootstrap/js/tab.js';
 // import 'bootstrap/js/modal.js';
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -41,6 +54,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				updateOperation   : false,
 				prevAvailable     : "",
 				userMobile 		  : "",
+				fromTime          : "12:00 am",
+				toTime            : "12:00 am",
 
 			};
    			
@@ -96,7 +111,21 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					});
 
 
-		}		
+		}
+
+		fromTime(value){
+           if(value){
+           		this.setState({fromTime:value.format(format)});
+			}
+		}
+
+
+		toTime(value){
+			if(value){
+           		this.setState({toTime:value.format(format)});
+			}
+		}
+
 		insertAvailability(event){
 			event.preventDefault();
 
@@ -226,12 +255,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		const availability = this.state.available;
 
 		const day  = this.refs.availability.value ;
-		const time = this.refs.timeFrom.value + " " + this.refs.timeFromAMPM.value 
-					 + ' - ' + 
-				   this.refs.timeTo.value + " " + this.refs.timeToAMPM.value ;
+		const time = this.state.fromTime + ' - ' + this.state.toTime;
 
-
-		if(day!=="" && time!==""){
+		if(day!=="" && this.state.fromTime!=="" && this.state.toTime!==""){
 			console.log("day",day);
 			console.log("time",time);
 			availability.push({
@@ -242,8 +268,10 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			this.setState({
 				"available" : availability,
 			},()=>{
-				$('input[name=timeFrom').val('');
-				$('input[name=timeTo').val('');
+				this.setState({
+					fromTime:"12:00 am",
+					toTime:"12:00 am"
+				})
 				$('select[name=availableDay').val('');
 			});
 		}else{
@@ -443,20 +471,31 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 					<div className="col-lg-7 col-md-8 col-sm-7 col-xs-7"  id="" >
 					    <div className="input-group">
-					      	<div className="input-group-addon inputIcon">
+					      	{/*<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
-		                    </div>
-						    <input type="time" name="timeFrom" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>
+		                    </div>*/}
+						    {/*<input type="time" name="timeFrom" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>*/}
+							  <TimePicker
+							    showSecond={false}
+							    defaultValue={now}
+							    className="xxx"
+							    onChange={this.fromTime.bind(this)}
+							    format={format}
+							    use12Hours
+							    inputReadOnly
+							    className="timePicHeight"
+							  />
+							
 					  	</div>
 					</div>
-				  	<div className="col-lg-5 col-md-4 col-sm-5 col-xs-5"  id="" >
+				  	{/*<div className="col-lg-5 col-md-4 col-sm-5 col-xs-5"  id="" >
 					    <div className="input-group" id="">
 						    <select className="form-control col-lg-12" ref="timeFromAMPM" defaultValue="AM">
 						    	<option > AM </option>
 						    	<option> PM </option>
 						    </select>
 					  	</div>
-			  		</div>
+			  		</div>*/}
 				</div>
 
 				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row">
@@ -464,20 +503,30 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 					<div className="col-lg-7 col-md-8 col-sm-7 col-xs-7"  id="" >
 					    <div className="input-group inputBox-main ">
-					      	<div className="input-group-addon inputIcon">
+					      	{/*<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-clock-o " aria-hidden="true"></i>
 		                    </div>
-						    <input type="time" className="form-control col-lg-12" name="timeTo" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>
+						    <input type="time" className="form-control col-lg-12" name="timeTo" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>*/}
+					  		<TimePicker
+							    showSecond={false}
+							    defaultValue={now}
+							    className="xxx"
+							    onChange={this.toTime.bind(this)}
+							    format={format}
+							    use12Hours
+							    inputReadOnly
+							    className="timePicHeight"
+							  />
 					  	</div>
 					</div>
-				  	<div className="col-lg-5 col-md-4 col-sm-5 col-xs-5"  id="" >
+				  	{/*<div className="col-lg-5 col-md-4 col-sm-5 col-xs-5"  id="" >
 					    <div className="input-group" id="">
 						    <select className="form-control col-lg-12" ref="timeToAMPM" defaultValue="PM">
 						    	<option > AM </option>
 						    	<option > PM </option>
 						    </select>
 					  	</div>
-			  		</div>
+			  		</div>*/}
 			  	</div>
 			  	<div className="col-lg-1 col-md-2 col-sm-12 col-xs-12 ">
 			    	<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12">.</label>				  

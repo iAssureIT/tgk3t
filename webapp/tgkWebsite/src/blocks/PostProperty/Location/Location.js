@@ -7,6 +7,17 @@ import { withRouter}    		from 'react-router-dom';
 
 import './Location.css';
 
+const formValid = formerrors=>{
+  console.log("formerrors",formerrors);
+  let valid = true;
+  Object.values(formerrors).forEach(val=>{
+  val.length>0 && (valid = false);
+  })
+  return valid;
+  }
+
+const companypincodeRegex = RegExp(/^[1-9][0-9]{5}$/);
+
 class Location extends Component {
 
  	constructor(props){
@@ -27,6 +38,9 @@ class Location extends Component {
 				"societyName"		: "",
 				"pincode"			: "",
 				"updateOperation"   : false,
+				"formerrors" :{
+        			"pincode" : " ",
+      			},
 			};
 
 			this.handleChange = this.handleChange.bind(this);
@@ -228,6 +242,7 @@ class Location extends Component {
 
 					localStorage.setItem("index",this.state.index);
 					if(this.state.stateCode!="" && this.state.cityName!="" && this.state.areaName!="" && this.state.subareaName!="" && this.state.societyName!="" ){
+						if(formValid(this.state.formerrors)){
 						axios
 						.patch('/api/properties/patch/propertyLocation',formValues)
 						.then( (res) =>{
@@ -238,6 +253,10 @@ class Location extends Component {
 						.catch((error) =>{
 							console.log("error = ", error);
 						});
+						  }else{
+					    swal("Please enter mandatory fields", "", "warning");
+					    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+					  }
 					}else{
 						swal("Please enter mandatory fields", "", "warning");
 		      			console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
@@ -440,12 +459,12 @@ class Location extends Component {
 			    });
 		}
 	}
-	pincodeChange(event){
-		var pincode =event.currentTarget.value;
-		this.setState({
-			pincode : pincode,
-		});
-	}
+	// pincodeChange(event){
+	// 	var pincode =event.currentTarget.value;
+	// 	this.setState({
+	// 		pincode : pincode,
+	// 	});
+	// }
 
 	handlePincode(event){
 		event.preventDefault();
@@ -519,18 +538,29 @@ class Location extends Component {
 	}
 
 
-	handleChange(event){
-        const target = event.target.value;
-        const name   = event.target.name;
-        // console.log('target',name, target);
-          this.setState({ 
-	      [name]:target
-	    },()=>{
-	    	// console.log('this name', name);
-	    	// console.log('this target', target);
+	  handleChange(event){
+    // const target = event.target;
+    // const {name , value}   = event.target;
+    const datatype = event.target.getAttribute('data-text');
+    const {name,value} = event.target;
+    let formerrors = this.state.formerrors;
+    
+    console.log("datatype",datatype);
+    switch (datatype){
 
-	    })
-	}
+     case 'pincode' : 
+        formerrors.pincode = companypincodeRegex.test(value)  && value.length>0 ? '' : "Invalid Pincode";
+      break;
+
+      default :
+      break;
+
+    }
+    // this.setState({formerrors,})
+    this.setState({ formerrors,
+      [name]:value
+    } );
+  }
 
 
 	render() {
@@ -560,8 +590,12 @@ class Location extends Component {
 								      	<div className="input-group-addon inputIcon">
 						                <i className="fa fa-building iconClr"></i>
 					                    </div>
-								    <input type="text" value={this.state.pincode} className="form-control" ref="pincode"  placeholder="Enter Pincode" onChange={this.pincodeChange.bind(this)} onBlur={this.handlePincode.bind(this)}/>
+								    <input type="text" data-text="pincode" value={this.state.pincode} name="pincode"  className="form-control" ref="pincode"  placeholder="Enter Pincode" onChange={this.handleChange.bind(this)} onBlur={this.handlePincode.bind(this)}/>
+								     
 								  	</div>
+								  	{this.state.formerrors.pincode &&(
+			                            <span className="text-danger">{this.state.formerrors.pincode}</span> 
+			                          )}
 							</div>
 					</div>
 					<div className=" col-lg-1">

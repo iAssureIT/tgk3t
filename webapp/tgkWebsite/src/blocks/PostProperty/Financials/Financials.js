@@ -29,7 +29,7 @@ class Financials extends Component{
       prevCharges     : "",
       maintenancePer  : "Month",
       maintenanceCharges : "0",
-
+      dateFormat      : ""
 
       };
 
@@ -196,7 +196,7 @@ updateUser(event){
         "totalPrice"          : this.state.totalPrice.replace(/,/g, ''),
         "monthlyRent"         : this.state.monthlyRent.replace(/,/g, ''),
         "depositAmount"       : this.state.depositAmount.replace(/,/g, ''),
-        "availableFrom"       : this.state.availableFrom,
+        "availableFrom"       : this.state.dateFormat,
         "description"         : this.state.description,
         "includeCharges"      : includeChargesDataList,
         "maintenanceCharges"  : this.state.maintenanceCharges.replace(/,/g, ''),
@@ -336,7 +336,7 @@ updateUser(event){
                 "totalPrice"          : totalPrice,
                 "monthlyRent"         : monthlyRent ,
                 "depositAmount"       : depositAmount ,
-                "availableFrom"       : this.state.availableFrom,
+                "availableFrom"       : this.state.dateFormat,
                 "description"         : this.state.description,
                 "includeCharges"      : includeChargesDataList,
                 "maintenanceCharges"  : maintenanceCharges,
@@ -430,14 +430,26 @@ totalInclude(event){
      //  "monthlyRent": monthlyRent,
      //  "totalAsk": totalAsk
    //  });
-      const target = event.target.value;
+      var target = event.target.value;
       const name   = event.target.name;
-      console.log(name + "=" +target);
+      // console.log(name + "=" +target);
+    
+      if(name === "availableFrom"){
+        console.log("Value=>",event.target.value);
+        var txtdt = (event.target.value).replace(/(\d{4})-(\d{1,2})-(\d{1,2})/, (match,y,m,d)=> { 
+          return d+'-'+ m + '-' + y;
+        });
+        this.setState({
+          dateFormat : txtdt,
+        },()=>{
+          console.log("123",this.state.dateFormat);
+        })
+      }else{
+        target = event.target.value;
+      }
       this.setState({
       [name]       : target
       });
-
-   
     }
 
     isNumberKey(event)
@@ -661,8 +673,8 @@ return (
                 <div className="form-group margBtm_5" id="date">
                   <div className="input-group inputBox-main " id="">
                     <div className="input-group-addon inputIcon">
-                                <i className="fa fa-building iconClr"></i>
-                            </div>
+                        <i className="fa fa-building iconClr"></i>
+                    </div>
                     <input type="date" className="form-control" name="availableFrom" ref="availableFrom" value={this.state.availableFrom} onChange={this.handleChange.bind(this)} id="" min="1900-01-01" max="2100-12-31"/>
                   </div>
                 </div>

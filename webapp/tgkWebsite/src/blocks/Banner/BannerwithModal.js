@@ -149,7 +149,7 @@ class BannerwithModal extends Component {
 		   if (this.props.BasicInfo) {
 		      header = "Let's provide details of your property ";
 		   }else if(this.props.Location){
-		     header = "Let's provide details of your property location"; 
+		     header = "Please provide location of your property"; 
 		   }else if(this.props.PropertyDetails){
 		     header = "Let's provide details of your property "; 
 		   }else if(this.props.Amenities){
@@ -164,7 +164,7 @@ class BannerwithModal extends Component {
 		   else if(this.props.LoginMobNum){
 		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
 		   }else if(this.props.LoginOtp){
-		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
+		     header = "Please verify your mobile number." 
 		   }else if(this.props.WebSignupForm){
 		     header = "Owners earn upto 50% brokerage by selling/renting with us. So let’s get started." 
 		   }

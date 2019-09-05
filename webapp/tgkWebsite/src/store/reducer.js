@@ -285,9 +285,9 @@ const reducer = (state = initialState,action) => {
 		newState.LoginMobNum 		= false;
 		newState.LoginOtp    		= false;
 		newState.WebSignupForm  	= false;
-		newState.BasicInfo 			= true;			
+		newState.BasicInfo 			= false;			
 		newState.PropertyDetails   	= false;
-		newState.Financials   	    = false;
+		newState.Financials   	    = true;
 		newState.Amenities   	    = false;
 		newState.Availability   	= false;
 		newState.Location           = false;

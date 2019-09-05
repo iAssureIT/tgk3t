@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   ScrollView,
+  FlatList,
   Text,
   View,
   BackHandler,
@@ -8,8 +9,11 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,TextInput,
+  TouchableWithoutFeedback,
   Alert
 } from 'react-native';
+import axios          from 'axios';
+
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
 
@@ -25,18 +29,89 @@ export default class Home extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
-      searchText: '',
-      activeBtn: 'buy',
+      searchText      : '',
+      activeBtn       : 'buy',
+      location        :'',
+      locSearchResults:''
     };
   }
 
-  searchUpdated=(searchText)=>{
-    this.setState({searchText});
-  }
 
   handleOption = (option)=>{
     this.setState({activeBtn:option});
   }
+
+  handleLocation(value){
+    var location =value;
+    console.log("location",location);
+    this.setState({
+      searchText:value,
+      location : location,
+    },()=>{
+      if(this.state.location.length>=3)
+      {
+      axios({
+            method: 'get',
+            url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
+          })        
+        .then((searchResults) => {
+          if(searchResults.data.length>0){
+            var cities = searchResults.data.map(a=>a.cityName);
+            cities = [...new Set(cities)];
+
+            var areas = searchResults.data.map(a=>a.areaName);
+            areas = [...new Set(areas)];
+
+            var subareaName = searchResults.data.map(a=>a.subareaName);
+            subareaName = [...new Set(subareaName)];
+
+            for(let i=0; i<cities.length; i++) {
+              for(let j=0; j<areas.length; j++) {
+                areas[j] = areas[j] + ', ' + cities[i];
+              }
+            }
+
+            for(let i=0; i<cities.length; i++) {
+              for(let j=0; j<subareaName.length; j++) {
+                subareaName[j] = subareaName[j] + ', ' + cities[i];
+              }
+            }
+
+            var citiesAreas = cities.concat(areas);
+            var citiesAreassubAreas = citiesAreas.concat(subareaName);
+
+
+            this.setState({
+              locSearchResults : citiesAreassubAreas,
+            },()=>{
+              console.log("locSearchResults",this.state.locSearchResults)
+            });         
+
+          }
+        })
+            .catch((error) =>{
+              console.log("error = ", error);
+            }); 
+      }
+    })
+  }
+
+  _selectedItem(item){
+    console.log('item1',item)
+    this.setState({'searchText':item})
+  }
+
+   _renderList = ({ item }) => {
+    console.log("item",item);
+    return (
+     <TouchableWithoutFeedback onPress={(item)=>this._selectedItem(item)}>
+       <View style={styles.container}>
+            <Text style={styles.item} onPress={(item)=>this._selectedItem(item)}>{item}</Text>
+        </View>
+     </TouchableWithoutFeedback>
+    );
+
+}
 
   render(){
     
@@ -149,7 +224,7 @@ export default class Home extends ValidationComponent{
                     inputContainerStyle={styles.searchInputContainer}
                     inputStyle={styles.searchInput}
                     placeholder='Enter Society, Location or Address'
-                    onChangeText = {(text) => this.searchUpdated(text)}
+                    onChangeText = {(searchText) => this.handleLocation(searchText)}
                     value={this.state.searchText}
                   />
                 </View>
@@ -163,6 +238,13 @@ export default class Home extends ValidationComponent{
                     />
                   </View>
                 </TouchableOpacity>
+              </View>
+              <View style={styles.container}>
+                  <FlatList
+                    data={this.state.locSearchResults}
+                    renderItem={this._renderList}
+                    // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                  />
               </View>
             </View>
 

@@ -146,7 +146,7 @@ class PropertyProfile extends Component{
   if(item > items) {
     item = item - items
   }
-  $('#counter').html("Picture "+item+" of "+items)
+  $('#counter').html("Media "+item+" of "+items)
 }
 
   render() {
@@ -231,7 +231,6 @@ class PropertyProfile extends Component{
                     this.state.propertyImages && this.state.propertyImages.length < 2 ?
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
-                      {console.log("this.state.propertyVideo",this.state.propertyVideo)}
                           {
                             this.state.propertyVideo ?
                             <video width="100%" height="100%" controls>
@@ -298,7 +297,7 @@ class PropertyProfile extends Component{
                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
                             </video>
                             :
-                            <img src="/images/videoDummy.jpg" className="col-lg-12 noPad"/>
+                            null
                           }
                       </OwlCarousel>
                           <div id="counter" className="counter"></div> 

@@ -8,7 +8,8 @@ export default StyleSheet.create({
   container:{
     backgroundColor: colors.primary,
     //minHeight:'83%',
-    width: window.width
+    width: window.width,
+    zIndex:0
   },
   bgImage: {
     width:'100%',
@@ -175,5 +176,14 @@ export default StyleSheet.create({
       {rotate: '180deg'}
     ],
     marginLeft:10
-  }
+  },
+   item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+    backgroundColor:'#fff',
+    width:'75%',
+    marginLeft:20,
+    zIndex:1
+  },
 });

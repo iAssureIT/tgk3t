@@ -91,7 +91,7 @@ import './PropertyDetails.css';
 					"uid" 				: localStorage.getItem("uid"),
 				};
 				console.log("PropertyDetails req = ",formValues);
-				if( this.state.furnishedstatus!="" &&  this.refs.builtupArea.value!="" ){
+				if( this.state.furnishedstatus!=="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!=="" ){
 					axios
 					.patch('/api/properties/patch/propertyDetails',formValues)
 					.then( (res) =>{
@@ -130,7 +130,7 @@ import './PropertyDetails.css';
 					"uid" 				: localStorage.getItem("uid"),
 				};
 				console.log("PropertyDetails req = ",formValues);
-				if( this.state.furnishedstatus!="" &&  this.refs.builtupArea.value!="" ){
+				if( this.state.furnishedstatus!="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!="" ){
 					axios
 					.patch('/api/properties/patch/propertyDetails',formValues)
 					.then( (res) =>{
