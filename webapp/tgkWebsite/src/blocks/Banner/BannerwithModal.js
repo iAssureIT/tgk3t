@@ -169,7 +169,7 @@ class BannerwithModal extends Component {
 		   }else if(this.props.Location){
 		     header = "Please provide location of your property"; 
 		   }else if(this.props.PropertyDetails){
-		     header = "Let's provide details of your property "; 
+		     header = "Let's provide details of your property"; 
 		   }else if(this.props.Amenities){
 		     header = "My property has following Amenities"; 
 		   }else if(this.props.Financials){
@@ -238,7 +238,7 @@ class BannerwithModal extends Component {
 
 					    <div className="modal-content "style={{marginTop:"52px"}}>
 					      <div className="modal-header">
-					        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
+					        <button type="button" className="close" title="Close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
 					        <h4 className="modal-title">
 					        	<b style={{paddingLeft:"28px"}}> {header} </b>
 					        </h4>

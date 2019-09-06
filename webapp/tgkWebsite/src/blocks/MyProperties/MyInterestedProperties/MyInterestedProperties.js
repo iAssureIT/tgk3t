@@ -134,7 +134,7 @@ import './MyInterestedProperties.css';
 	    if (this.props.BasicInfo) {
 	    	header = "Let's provide details of your property ";
 	    }else if(this.props.Location){
-	    	header = "Let's provide details of your property location"; 
+	    	header = "Please provide location of your property"; 
 	    }else if(this.props.PropertyDetails){
 	    	header = "Let's provide details of your property"; 
 	    }else if(this.props.Amenities){
@@ -297,7 +297,7 @@ import './MyInterestedProperties.css';
 
 		            <div className="modal-content">
 		              <div className="modal-header">
-		                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
+		                <button type="button" className="close" title="Close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
 		                <h4 className="modal-title">
 		                  <b> {header} </b>
 		                </h4>

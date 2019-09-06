@@ -18,9 +18,6 @@ import TimePicker from 'rc-time-picker';
 
 const format = 'h:mm a';
 
-const now = moment().hour(0).minute(0);
-
-
 // import 'bootstrap/js/tab.js';
 // import 'bootstrap/js/modal.js';
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -56,6 +53,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				userMobile 		  : "",
 				fromTime          : "12:00 am",
 				toTime            : "12:00 am",
+				now               : moment().hour(0).minute(0),
+				now1              : moment().hour(0).minute(0),
 
 			};
    			
@@ -126,15 +125,22 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		}
 
 		fromTime(value){
+			console.log('value',value)
            if(value){
-           		this.setState({fromTime:value.format(format)});
+           		this.setState({
+           			fromTime:value.format(format),
+           			now:value
+           		});
 			}
 		}
 
 
 		toTime(value){
 			if(value){
-           		this.setState({toTime:value.format(format)});
+           		this.setState({
+           			toTime:value.format(format),
+           			now1:value
+           		});
 			}
 		}
 
@@ -291,55 +297,19 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				"available" : availability,
 			},()=>{
 				this.setState({
-					fromTime:"12:00 am",
-					toTime:"12:00 am"
+					fromTime : "12:00 am",
+					toTime   : "12:00 am",
+					now:moment().hour(0).minute(0),
+					now1:moment().hour(0).minute(0),
 				})
 				$('select[name=availableDay').val('');
 			});
 		}else{
-              swal("Please fill up the Time slot", "", "warning");
+              swal("Please fill up all mandatory fields.", "", "warning");
 
 		};	
 	}
 
-	timeFromVal(){
-		var timeFromVal = this.refs.timeFrom.value;
-		var timeFrom 	= timeFromVal.split(":");
-		if(timeFrom[0] > 12){
-			timeFrom[0] = parseInt(timeFrom) - 12; 
-			if(timeFrom[0] < 10){
-				var newtimeFrom = "0" + timeFrom[0] + ":" + timeFrom[1] ;
-			}else{
-				var newtimeFrom = timeFrom[0] + ":" + timeFrom[1] ;
-			}
-			this.refs.timeFrom.value = newtimeFrom;
-			this.refs.timeFromAMPM.value = "PM";
-		}
-	}
-
-	timeToVal(){
-		var timeToVal = this.refs.timeTo.value;
-		var timeFromVal = this.refs.timeFrom.value;
-
-		if(timeToVal<timeFromVal){
-			// alert("To Time should not be less than From Time");
-
-		}else{
-			var timeTo 	= timeToVal.split(":");
-			if(timeTo[0] > 12){
-				timeTo[0] = parseInt(timeTo) - 12; 
-				if(timeTo[0] < 10){
-					var newtimeTo = "0" + timeTo[0] + ":" + timeTo[1] ;
-				}else{
-					var newtimeTo = timeTo[0] + ":" + timeTo[1] ;
-				}
-				this.refs.timeTo.value = newtimeTo;
-				this.refs.timeToAMPM.value = "PM";
-			}
-		}
-
-		
-	}
 	deleteData(row)
 	{
 		console.log('availability',this.state.available)
@@ -350,43 +320,44 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 	}
 
 	handleChange(event){
-			event.preventDefault();
-			const datatype = event.target.getAttribute('data-text');
-		    const {name,value} = event.target;
-		    let formerrors = this.state.formerrors;
-			console.log("datatype",datatype);
-			switch (datatype){
+		event.preventDefault();
+		const datatype = event.target.getAttribute('data-text');
+	    const {name,value} = event.target;
+	    let formerrors = this.state.formerrors;
+		console.log("datatype",datatype);
+		switch (datatype){
 
 
-			case 'clientMobile' : 
-		       formerrors.clientMobile = clientmobileRegex.test(value)? '' : "Please Enter 10 digit Number only";
-		       break;
+		case 'clientMobile' : 
+	       formerrors.clientMobile = clientmobileRegex.test(value)? '' : "Please Enter 10 digit Number only";
+	       break;
 
-			default :
-			break;
+		default :
+		break;
 
-			}
-			this.setState({ formerrors,
-				[name]:value
-			} );
 		}
-		 isNumberKey(event)
-		   {
+		this.setState({ formerrors,
+			[name]:value
+		} );
+	}
+	
+	isNumberKey(event)
+	{
+	   var charCode = (event.which) ? event.which : event.keyCode
 
-		   var charCode = (event.which) ? event.which : event.keyCode
-
-		   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
-		   {
-		    event.preventDefault();
-		      return false;
-		    }
-		    else{
-		      return true;
-		    }
-		  }
+	   if (charCode > 31 && (charCode < 48 || charCode > 57)  && (charCode < 96 || charCode > 105))
+	   {
+	    event.preventDefault();
+	      return false;
+	    }
+	    else{
+	      return true;
+	    }
+	  }
 
 	render() {
 		console.log("this.state.contactPerson",this.state.contactPerson);
+		console.log("allowEmpty",this.state.allowEmpty);
 		console.log("mobile",this.state.contactPersonMobile);
 		const availableMobile = localStorage.getItem("availableMobile")!= null ? localStorage.getItem("availableMobile") : "";
    			console.log("availableMobile",availableMobile);
@@ -499,13 +470,14 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						    {/*<input type="time" name="timeFrom" className="form-control col-lg-12" ref="timeFrom" onBlur={this.timeFromVal.bind(this)}/>*/}
 							  <TimePicker
 							    showSecond={false}
-							    defaultValue={now}
 							    className="xxx"
+							    value={this.state.now}
 							    onChange={this.fromTime.bind(this)}
 							    format={format}
 							    use12Hours
 							    inputReadOnly
 							    className="timePicHeight"
+							    // value={this.state.clearValue=== null ? this.state.clearValue : now}
 							  />
 							
 					  	</div>
@@ -531,7 +503,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						    <input type="time" className="form-control col-lg-12" name="timeTo" ref="timeTo"  onBlur={this.timeToVal.bind(this)}/>*/}
 					  		<TimePicker
 							    showSecond={false}
-							    defaultValue={now}
+							    value={this.state.now1}
 							    className="xxx"
 							    onChange={this.toTime.bind(this)}
 							    format={format}

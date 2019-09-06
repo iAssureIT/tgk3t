@@ -206,7 +206,7 @@ import './PropertyDetails.css';
 
 			if(builtArea >= superArea){
 				swal("Built Up Area should not be greater than Super Area", "", "warning");
-
+				this.setState({builtupArea:""})
 			}
 		}
 		handleChange(event){
@@ -470,7 +470,7 @@ import './PropertyDetails.css';
 							      	<div className="input-group-addon inputIcon">
 				                     	<i className="fa fa-building iconClr"></i>
 				                    </div>
-						    			<input type="text" className="form-control" name="superArea" value={this.state.superArea} ref="superArea" placeholder="Super Area" min="0" id="first" onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} />	
+						    			<input type="text" className="form-control" name="superArea" value={this.state.superArea} ref="superArea" placeholder="Super Area" min="0" id="first" onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} onBlur={this.builtArea.bind(this)}/>	
 						  			<div className="input-group-addon inputIcon">
 				                     Sq ft
 				                    </div>

@@ -80,7 +80,7 @@ class Header extends Component {
 					  	<div className="modal-dialog modal-lg">
 						    <div className="modal-content">
 						      <div className="modal-header">
-						        <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
+						        <button type="button" className="close" title="Close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>&times;</button>
 						        <h4 className="modal-title">
 						        	{/*<b> Owners earn upto 50% brokerage by selling/renting with us so let's get started </b>*/}
 						        	<b style={{paddingLeft:"28px"}}> {header} </b>

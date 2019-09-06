@@ -156,7 +156,7 @@ import './MyPostedProperties.css';
 	    if (this.props.BasicInfo) {
 	    	header = "Let's provide details of your property ";
 	    }else if(this.props.Location){
-	    	header = "Let's provide details of your property location"; 
+	    	header = "Please provide location of your property"; 
 	    }else if(this.props.PropertyDetails){
 	    	header = "Let's provide details of your property"; 
 	    }else if(this.props.Amenities){
@@ -324,7 +324,7 @@ import './MyPostedProperties.css';
 
 		            <div className="modal-content">
 		              <div className="modal-header">
-		                <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
+		                <button type="button" className="close" title="Close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
 		                <h4 className="modal-title">
 		                  <b style={{paddingLeft:"28px"}}> {header} </b>
 		                </h4>

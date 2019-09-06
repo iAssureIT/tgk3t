@@ -35,7 +35,7 @@ var imgTitleArray = [];
 
 		}
 
-		console.log("this.props.updateStatus",this.props.updateStatus);
+		  console.log("this.props.updateStatus",this.props.updateStatus);
 			console.log("this.props.property_id",this.props.property_id);
 			if(this.props.updateStatus === true){
 
@@ -660,7 +660,7 @@ var imgTitleArray = [];
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                   <div className="" key={index}>
                                     <label id={index} className="pull-right custFaTimes" title="Delete Image" data-id={data.imgPath} onClick={this.deleteimageWS.bind(this)}>X</label>
-                                    <img className="img-responsive" src={data.imgPath}/>
+                                    <img className="img-responsive imgHeight" src={data.imgPath}/>
                                   </div>
                                 </div>
                               </div>
@@ -792,10 +792,10 @@ var imgTitleArray = [];
 	                        
                     	}
                         <div className="middleC">
-                          <div className="textCA">
-                            <input type="file" title="Click to change the photo" multiple name="userPic" id={this.state.singleVideo} onChange={this.uploadSingleVideo.bind(this)} ref="propertyVideo" className="form-control click_input" />
+                          {/*<div className="textCA">
+                            <input type="file" multiple name="userPic" id={this.state.singleVideo} onChange={this.uploadSingleVideo.bind(this)} ref="propertyVideo" className="form-control click_input" />
                             <i className="fa fa-camera fa-2x"></i>
-                          </div>
+                          </div>*/}
                         </div>
                       </div>
                      {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgdetails">(max size: 1 Mb, Format: mp4, avi, ogv)</div>

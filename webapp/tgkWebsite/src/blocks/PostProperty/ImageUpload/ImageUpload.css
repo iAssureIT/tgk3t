@@ -48,7 +48,7 @@
 .clr_k{
 height:80px;
 background-color: #f2f2f2;
-font-family:'Montserrat-Regular';
+/*font-family:'Montserrat-Regular';*/
 cursor: pointer;
 border: 2px dotted #ccc;
 }
@@ -84,13 +84,13 @@ width: 100%;
   opacity: 1;
 }
 
-.custFaTimes1{
-  position: absolute;
-  margin-left: 76%;
-  margin-top: 29%;
-  z-index: 1;
-  font-size: 18px;
-  cursor: pointer;
+.custFaTimes1 {
+    position: absolute;
+    margin-left: 86%;
+    margin-top: 23%;
+    z-index: 1;
+    font-size: 18px;
+    cursor: pointer;
 }
 .imageC {
   opacity: 1;
@@ -140,4 +140,8 @@ width: 100%;
 .format2{
   font-size: 13px;
    margin-top: 34px;
+}
+
+.imgHeight{
+  height: 130px !important;
 }

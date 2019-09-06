@@ -458,6 +458,7 @@ const mapStateToProps = (state)=>{
 	updateStatus    : state.updateStatus,
 	congratsPage	: state.CongratsPage,
   }
+  
 };
 
 const mapDispatchToProps = (dispatch)=>{
