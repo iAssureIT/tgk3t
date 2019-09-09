@@ -61,12 +61,13 @@ import './MyPostedProperties.css';
 	    )
 	    .catch((error)=>{
                         console.log("error = ",error.message);
-                        // if(error.message === "Request failed with status code 401")
-                        // {
-                        //      swal("Your session is expired! Please login again.","", "error");
-                        //      this.props.history.push("/");
-                        //      // $(".modal-backdrop").open();
-                        // }
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                             // window.location.reload();
+                             // $(".modal-backdrop").open();
+                        }
                     })
 	}
 

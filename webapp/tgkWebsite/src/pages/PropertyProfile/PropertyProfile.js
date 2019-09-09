@@ -166,8 +166,6 @@ class PropertyProfile extends Component{
       itemCount = item1;
     }
     
-    
-
       $('#counter').html("Media "+item1+" of "+items)
 
     // if(item<=items) 

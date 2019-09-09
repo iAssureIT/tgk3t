@@ -24,7 +24,7 @@ const initialState = {
 	propertyType    : "",
 	availableMobile : "",
 	prop_id 		: "",
-	fullName 		: "",
+	fullName 		: 	"",
 	updateStatus 	: false,
 	showMeter 		: false,
 }

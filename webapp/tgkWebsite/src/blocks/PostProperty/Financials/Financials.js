@@ -34,7 +34,8 @@ class Financials extends Component{
       maintenancePer  : "Month",
       maintenanceCharges : "0",
       availableFrom: "",
-      startDate : new Date(),
+      // startDate : new Date(),
+      startDate : "",
       };
 
       console.log("this.props.updateStatus",this.props.updateStatus);
@@ -597,6 +598,7 @@ return (
                           name="userCheckbox"
                           onChange={this.totalInclude.bind(this)} 
                           checked={data.checked}
+                         
                           />
                       <span className="checkmark1"></span>
                       </label>
@@ -700,6 +702,7 @@ return (
                       ref="availableFrom"
                       // value={this.state.availableFrom}
                       max="2100-12-31"
+                      onKeyDown={e=>e.preventDefault()}
                     />
                   </div>
                 </div>

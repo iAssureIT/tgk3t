@@ -4,6 +4,15 @@
   color: #f00;
 }
 
+.sellerType4{
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 5px 0px 5px 3px #eee;
+    border: none;
+  }
+
 /*add this class next to form-control*/
 .inputBox{
   font-family:'Montserrat',sans-serif;
@@ -15,11 +24,17 @@
 .valid_box{
   height: 60px;
 }
+.mb-30{
+    margin-bottom: 30px;
+}
+
 .inputBox:hover{
   border-left:1px solid #039BE5 !important;
   box-shadow: none !important;
 }
-
+.mt20{
+  margin-top: 20px;
+}
 .title_sz{
 	font-size: 16px;
 }
