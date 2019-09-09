@@ -19,6 +19,8 @@ const formValid = formerrors=>{
 
 const companypincodeRegex = RegExp(/^[1-9][0-9]{5}$/);
 
+
+
 class BasicInfo extends Component{
 
 		constructor(props){
