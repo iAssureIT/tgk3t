@@ -4,11 +4,9 @@ import { withRouter}          from 'react-router-dom';
 import { connect }            from 'react-redux';
 import swal                   from 'sweetalert';
 import $                      from 'jquery';
+import DatePicker             from "react-datepicker";
 
 import './Financials.css';
-
-import DatePicker from "react-datepicker";
- 
 import "react-datepicker/dist/react-datepicker.css";
 
 

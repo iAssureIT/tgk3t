@@ -19,7 +19,6 @@ var imgArray = [];
 var imgTitleArray = [];
 var imgTitleArrayWS = [];
 
-
 const format = 'h:mm a';
 const formValid = formerrors=>{
   // console.log("formerrors",formerrors);
@@ -54,6 +53,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				toTime            : "12:00 am",
 				now               : moment().hour(0).minute(0),
 				now1              : moment().hour(0).minute(0),
+
 				"config"			: '',
 				"imageArray"  		: [],
 				"imageTitleArray" 	: [],
@@ -64,7 +64,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				isLoading			: true,
 				originalValues      : '',
 				tempLoader 			: false,
-
 
 			};
    			
@@ -161,7 +160,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		}
 
 		fromTime(value){
-
+			// console.log('value',value)
            if(value){
            		this.setState({
            			fromTime:value.format(format),
@@ -211,9 +210,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					"video"				: this.state.singleVideo,
 					"status"			: "New"
 					};
-
 					console.log("Availability req 1 = ",formValues);
-
 				    if(this.state.available.length!==0){
 				    		
 						axios
@@ -369,9 +366,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		const datatype = event.target.getAttribute('data-text');
 	    const {name,value} = event.target;
 	    let formerrors = this.state.formerrors;
-
-		console.log("datatype",datatype);
-
+		// console.log("datatype",datatype);
 		switch (datatype){
 
 
@@ -401,13 +396,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 	      return true;
 	    }
 	  }
-<<<<<<< Updated upstream
-
-	render() {
-		console.log("this.state.contactPerson",this.state.contactPerson);
-		console.log("allowEmpty",this.state.allowEmpty);
-		console.log("mobile",this.state.contactPersonMobile);
-=======
 
 	uploadPropertyImage(event){
    event.preventDefault();
@@ -645,7 +633,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		// console.log("this.state.contactPerson",this.state.contactPerson);
 		// console.log("allowEmpty",this.state.allowEmpty);
 		// console.log("mobile",this.state.contactPersonMobile);
->>>>>>> Stashed changes
 		const availableMobile = localStorage.getItem("availableMobile")!= null ? localStorage.getItem("availableMobile") : "";
    			// console.log("availableMobile",availableMobile);
    	    const {formerrors} = this.state;
@@ -760,11 +747,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 							    use12Hours
 							    inputReadOnly
 							    className="timePicHeight"
-<<<<<<< Updated upstream
-							    // value={this.state.clearValue=== null ? this.state.clearValue : now}
-=======
 							    
->>>>>>> Stashed changes
 							  />
 							
 					  	</div>

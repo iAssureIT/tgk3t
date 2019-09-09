@@ -1,4 +1,4 @@
-.contentHolder{
+/*.contentHolder{
     background-color: #fff;
     height:40%;
     border-style: dotted;
@@ -13,7 +13,6 @@
     height: auto !important;
 }
 .uploadImg{
-    /*margin-bottom: 68px;*/
     margin-top: 45px;
 }
 .uploadVideo{
@@ -34,7 +33,6 @@
     top: -11px;
 }
 
-/*new css*/
 
 .custFaTimes{
   position: absolute;
@@ -48,7 +46,6 @@
 .clr_k{
 height:80px;
 background-color: #f2f2f2;
-/*font-family:'Montserrat-Regular';*/
 cursor: pointer;
 border: 2px dotted #ccc;
 }
@@ -127,8 +124,6 @@ width: 100%;
     letter-spacing: 1px;
 }
 .tempL{
-  /*margin-left: -30px;
-  margin-top: 10px;*/
   position: relative;
   left: 0px;
   top: 55px;
@@ -144,4 +139,4 @@ width: 100%;
 
 .imgHeight{
   height: 130px !important;
-}
+}*/
