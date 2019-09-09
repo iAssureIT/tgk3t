@@ -248,7 +248,7 @@ updateUser(event){
             console.log("here result amenity",ov.includeCharges);
 
             // compare chcekbox data
-            var eq ="";
+            var eq =true;
             if(includeChargesDataList.length != ov.includeCharges.length )
             {
               eq = false;
@@ -267,7 +267,8 @@ updateUser(event){
             }
 
             console.log("outside eq",eq);
-             
+
+
             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
               this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
               this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
@@ -424,9 +425,15 @@ totalInclude(event){
       }
 
 }
-  backToAmenities(){
-    // this.props.backToAmenities();
-    this.props.backToAmenities(this.props.uid,localStorage.getItem("propertyId"));
+  // backToAmenities(){
+  //   // this.props.backToAmenities();
+  //   this.props.backToAmenities(this.props.uid,localStorage.getItem("propertyId"));
+
+  // }
+
+  backToPropertyDetails(){
+    // this.props.backToPropertyDetails();
+    this.props.backToPropertyDetails(this.props.uid,localStorage.getItem("propertyId"));
 
   }
 
@@ -717,7 +724,7 @@ return (
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           {
             <div className="form-group col-lg-3 col-md-3 col-sm-6 col-xs-6 pull-left">
-               <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToAmenities.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
+               <button className="btn btn-danger col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.backToPropertyDetails.bind(this)}> &lArr; &nbsp; &nbsp; Back </button>
             </div>
              
            }
@@ -747,10 +754,14 @@ const mapDispatchToProps = (dispatch)=>{
                                                           uid:  uid,
                                                           property_id:property_id
                                                           }),
-    backToAmenities      : (uid,property_id)=> dispatch({type: "BACK_TO_AMENITIES",
-                                                        uid:  uid,
-                                                        property_id:property_id
-                                                        }),
+    // backToAmenities      : (uid,property_id)=> dispatch({type: "BACK_TO_AMENITIES",
+    //                                                     uid:  uid,
+    //                                                     property_id:property_id
+    //                                                     }),
+    backToPropertyDetails       : (uid,property_id)=> dispatch({type: "BACK_TO_PROPERTY_DETAILS",
+                            uid:  uid,
+                            property_id: property_id
+                    }),
 
   }
 };
