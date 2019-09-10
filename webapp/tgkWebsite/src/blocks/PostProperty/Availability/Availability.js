@@ -209,6 +209,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					"propertyImages"	: this.state.imgArrayWSaws,
 					"video"				: this.state.singleVideo,
 					"status"			: "New"
+
 					};
 					console.log("Availability req 1 = ",formValues);
 				    if(this.state.available.length!==0){
