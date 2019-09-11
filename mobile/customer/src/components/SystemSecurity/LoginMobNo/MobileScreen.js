@@ -19,6 +19,7 @@ import { TextField } from 'react-native-material-textfield';
 import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
 import {colors,sizes} from '../../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
+import Modal from "react-native-modal";
 
 
 export default class MobileScreen extends ValidationComponent {
@@ -34,14 +35,14 @@ export default class MobileScreen extends ValidationComponent {
                      { value: '+33'},
                      { value: '+45'}],
 		      unitCode : '+91',
+          openModal: false,
 		    };
 	}
 
 	checkUser(){
 		console.log("unitCode",this.state.unitCode);
 		console.log("mobile",this.state.mobile);
-   	    this.props.navigation.navigate('OTPScreen');
-   	    
+
         var formValues = {
         mobileNumber : this.state.mobile,
         countryCode  : this.state.unitCode
@@ -55,23 +56,19 @@ export default class MobileScreen extends ValidationComponent {
           .post('http://qatgk3tapi.iassureit.com/api/usersotp/verify_mobile',formValues)
           .then((response)=>{
             console.log("response = ",response.data);
+              axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
+            // localStorage.setItem('token',response.data.token)
+            
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
-                // AsyncStorage.setItem('message', response.data.message);
-                // AsyncStorage.setItem('user_id', response.data.user_id);
-                console.log("here otp from response",response.data.otp);
-                // AsyncStorage.setItem('originalotp', response.data.otp);
-            
-              AsyncStorage.multiSet([
-                ['message',response.data.message],
-                ['user_id',response.data.user_id],
-                ['originalotp',response.data.otp],
-              ])              
+               console.log("here otp from response",response.data.otp);
+                this.props.navigation.navigate('SignUp');
 
-                this.props.navigation.navigate('OTPScreen');
+               // this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message});
           
               }else{
-                this.props.navigation.navigate('OTPScreen');
+                this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobile});
+          
                 console.log("new mob no");
               }
 
@@ -82,9 +79,10 @@ export default class MobileScreen extends ValidationComponent {
           })
         
         }else{
+              this.setState({
+                  "openModal": true
+              });
           // swal("Please enter Mobile Number", "", "warning");
-                console.log("enter value");
-                console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
 	}
 
@@ -164,6 +162,32 @@ export default class MobileScreen extends ValidationComponent {
               </View>
               
             </View>
+
+             <Modal isVisible={this.state.openModal} 
+             onBackdropPress={() => this.setState({ openModal: false })}
+             coverScreen={true}
+             hideModalContentWhileAnimating={true}
+             style={{paddingHorizontal:'5%',zIndex:999}}
+             animationOutTiming={500}>
+                <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
+                  <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
+                    <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+                  </View>
+                  <Text style={{fontFamily:'Montserrat-Regular',fontSize:15,textAlign:'center',marginTop:20}}>
+                    Please enter Mobile Number
+                  </Text>
+
+                  <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
+                    <Button
+                      onPress         = {()=>this.setState({openModal:false})}
+                      titleStyle      = {styles.buttonText}
+                      title           = "OK"
+                      buttonStyle     = {styles.buttonSignUp}
+                      containerStyle  = {styles.buttonContainer}
+                    />
+                  </View>
+                </View>
+              </Modal>
 
            
             <Button

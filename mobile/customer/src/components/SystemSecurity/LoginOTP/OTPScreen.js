@@ -18,6 +18,7 @@ import { TextField } from 'react-native-material-textfield';
 import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
 import {colors,sizes} from '../../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
+import Modal from "react-native-modal";
 
 
 export default class MobileScreen extends ValidationComponent {
@@ -29,70 +30,71 @@ export default class MobileScreen extends ValidationComponent {
           otpcode  : '',
           msg      : '',
           originalOTP : '',
+          openModal: false,
+          openModal1: false,
 		    };
 	}
 
   componentDidMount(){
-    AsyncStorage.multiGet(['message','user_id','originalotp'])
-      .then((data)=>{
-        console.log('user',data[0][1])
-             message = data[0][1]
-             user_id = data[1][1]
-             originalotp = data[2][1]
+    var otp = this.props.navigation.getParam('originalotp','No OTP');
+    console.log("otp in otpscreen",otp);
+    var msg = this.props.navigation.getParam('message','No message'); 
+    console.log("message in otpscreen",msg);
+    var mob = this.props.navigation.getParam('mobile','No mobile'); 
+    console.log("mobile in otpscreen",mob);
 
-             console.log("originalotp in otp screen",originalotp);
-               this.setState({
-                 msg         : message,
-                 originalOTP : originalotp,
+    this.setState({
+                 msg         : msg,
+                 originalOTP : otp,
+                 mob         : mob,
                });
+    // AsyncStorage.multiGet(['message','user_id','originalotp'])
+    //   .then((data)=>{
+    //     console.log('user',data[0][1])
+    //          message = data[0][1]
+    //          user_id = data[1][1]
+    //          originalotp = data[2][1]
 
-    })
+    //          console.log("originalotp in otp screen",originalotp);
+    //            
+
+    // })
 
   }
 
   OTPfunction(){
       var userOTP = this.state.otpcode;
-       AsyncStorage.multiGet(['message','user_id','originalotp'])
-      .then((data)=>{
-        console.log('data',data[2][1])
-             message = data[0][1]
-             user_id = data[1][1]
-             originalotp = data[2][1]
-
-            
-              this.setState({
-                 msg         : message,
-                 originalOTP : originalotp,
-              });
-
-    })
-
-     
+ 
        console.log("originalotp in otp screen after click",this.state.originalOTP);
        console.log("msg in otp screen after click",this.state.msg);
 
   if(userOTP!==""){
-      // if(parseInt(userOTP) === parseInt(this.state.originalOTP)){
-                this.props.navigation.navigate('SignUp');
+      if(parseInt(userOTP) === parseInt(this.state.originalOTP)){
+               
         
-        /*if(this.state.msg === "NEW-USER-CREATED"){
-                this.props.navigation.navigate('SignUp');
+        if(this.state.msg === "NEW-USER-CREATED"){
+                this.props.navigation.navigate('SignUp',{mobile:this.state.mob});
                 console.log("signup");
         }else{
 
           if(this.state.msg === "MOBILE-NUMBER-EXISTS")
           {
-              this.props.navigation.navigate('PropertyDetails1');
+              this.props.navigation.navigate('PropertyDetails1',{});
               console.log("already");
           }
-        }*/
-      // }else{
-      //   console.log("Sorry, Your OTP is not Matching! Please try again!!");
-      //   // swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
-      // }
+        }
+      }else{
+        this.setState({
+            openModal: true,
+        });
+        // swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
+      }
     }else{
+       this.setState({
+            openModal1: true,
+        });
       // swal("Please enter OTP", "", "warning");
-          console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+         
     }
   }    
 
@@ -157,6 +159,58 @@ export default class MobileScreen extends ValidationComponent {
                 />
               </View>
             </View>
+
+              <Modal isVisible={this.state.openModal1} 
+             onBackdropPress={() => this.setState({ openModal1: false })}
+             coverScreen={true}
+             hideModalContentWhileAnimating={true}
+             style={{paddingHorizontal:'5%',zIndex:999}}
+             animationOutTiming={500}>
+                <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
+                  <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
+                    <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+                  </View>
+                  <Text style={{fontFamily:'Montserrat-Regular',fontSize:15,textAlign:'center',marginTop:20}}>
+                   Please enter OTP
+                  </Text>
+
+                  <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
+                    <Button
+                      onPress         = {()=>this.setState({openModal1:false})}
+                      titleStyle      = {styles.buttonText}
+                      title           = "OK"
+                      buttonStyle     = {styles.buttonSignUp}
+                      containerStyle  = {styles.buttonContainer}
+                    />
+                  </View>
+                </View>
+              </Modal>
+
+               <Modal isVisible={this.state.openModal} 
+             onBackdropPress={() => this.setState({ openModal: false })}
+             coverScreen={true}
+             hideModalContentWhileAnimating={true}
+             style={{paddingHorizontal:'5%',zIndex:999}}
+             animationOutTiming={500}>
+                <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
+                  <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
+                    <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+                  </View>
+                  <Text style={{fontFamily:'Montserrat-Regular',fontSize:15,textAlign:'center',marginTop:20}}>
+                   Sorry, Your OTP is not Matching,Please try again!
+                  </Text>
+
+                  <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
+                    <Button
+                      onPress         = {()=>this.setState({openModal:false})}
+                      titleStyle      = {styles.buttonText}
+                      title           = "OK"
+                      buttonStyle     = {styles.buttonSignUp}
+                      containerStyle  = {styles.buttonContainer}
+                    />
+                  </View>
+                </View>
+              </Modal>
            
             <Button
               

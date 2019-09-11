@@ -21,6 +21,7 @@ import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
 import styles from '../../PostAndEarn/styles.js';
 import {colors,sizes} from '../../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
+import Modal from "react-native-modal";
 
 const window = Dimensions.get('window');
 
@@ -39,17 +40,24 @@ export default class SignUp extends ValidationComponent{
                      { value: '+33'},
                      { value: '+45'}],
       unitCode : '+91',
+      mobileNo : '',
+      openModal: false,
+
     };
   }
 
   handleShowPassword = ()=>{
     this.setState({showPassword:!this.state.showPassword});
   }
-  goTo(){
-    console.log('goooooo')
-    this.props.navigation.navigate('PropertyDetails1');
-  }
+  
+  componentDidMount(){
+    var mobile = this.props.navigation.getParam('mobile','No mobile');
+    console.log("mobile in sign up screen",mobile);
+    this.setState({
+        mobile : mobile,
+    });
 
+  }
   signupUser(){
 
                 const formValues = {
@@ -57,21 +65,24 @@ export default class SignUp extends ValidationComponent{
                 "fullName"    : this.state.name,
                 "emailId"     : this.state.email,
                 "city"        : this.state.location,
-                "mobileNumber"  : this.state.mobile,
+                "mobileNumber": this.state.mobile,
                 "countryCode" : this.state.unitCode,
                 "status"      : 'Active',
-                "roles"         : 'Client',
+                "roles"       : 'Client',
               };
 
             
               console.log("mobileSignupForm==",formValues);
-              if(this.state.name!=="" && this.state.email!=="" && this.state.location!==""  ){
-                 this.props.navigation.navigate('PropertyDetails1');
+              this.props.navigation.navigate('PropertyDetails1',{});
+
+              // if(this.state.name!=="" && this.state.email!=="" && this.state.location!==""  ){
+              //    // this.props.navigation.navigate('PropertyDetails1');
                 
-                axios
-                  .patch('http://qatgk3tapi.iassureit.com/api/usersotp/signup',formValues)
-                  .then( (res) =>{
-                    console.log("res",res)
+              //   axios
+              //     .patch('http://qatgk3tapi.iassureit.com/api/usersotp/signup',formValues)
+              //     .then( (res) =>{
+              //       console.log("res====================",res)
+
                      // this.props.navigation.navigate('PropertyDetails1');
 
                     // if(res.data.message === "USER-UPDATED"){
@@ -120,20 +131,23 @@ export default class SignUp extends ValidationComponent{
                     //     this.props.redirectToBasicInfo(res.data.user_id);
                     //   }
                     // }
-                  })
-                  .catch((error) =>{
-                    console.log("error = ", error);
-                    swal("Sorry!!", "User not found.", "error");
-                  });
+              //     })
+              //     .catch((error) =>{
+              //       console.log("error = ", error);
+              //       // swal("Sorry!!", "User not found.", "error");
+              //     });
                 
-              }else{
-                console.log("Please enter mandatory fields");
+              // }else{
+              //   this.setState({
+              //     openModal : true,
+              //   });
+                // console.log("Please enter mandatory fields");
                 // swal("Please enter mandatory fields", "", "warning");
-                    console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
+                    // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
               }
 
 
-  }
+  
   render(){
     
     const { navigation } = this.props;
@@ -294,6 +308,33 @@ export default class SignUp extends ValidationComponent{
                 />
               </View>
             </View>
+
+
+               <Modal isVisible={this.state.openModal} 
+             onBackdropPress={() => this.setState({ openModal: false })}
+             coverScreen={true}
+             hideModalContentWhileAnimating={true}
+             style={{paddingHorizontal:'5%',zIndex:999}}
+             animationOutTiming={500}>
+                <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
+                  <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
+                    <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+                  </View>
+                  <Text style={{fontFamily:'Montserrat-Regular',fontSize:15,textAlign:'center',marginTop:20}}>
+                   Please enter mandatory fields
+                  </Text>
+
+                  <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
+                    <Button
+                      onPress         = {()=>this.setState({openModal:false})}
+                      titleStyle      = {styles.buttonText}
+                      title           = "OK"
+                      buttonStyle     = {styles.buttonSignUp}
+                      containerStyle  = {styles.buttonContainer}
+                    />
+                  </View>
+                </View>
+              </Modal>
           {/*above fix code */}
 
             
