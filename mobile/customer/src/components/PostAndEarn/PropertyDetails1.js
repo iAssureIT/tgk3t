@@ -11,17 +11,20 @@ import {
   Alert,
   Picker
 } from 'react-native';
- import { Dropdown } from 'react-native-material-dropdown';
+import Hr from "react-native-hr-component";
+import { Dropdown }   from 'react-native-material-dropdown';
 import axios          from 'axios';
 import {AsyncStorage} from 'react-native';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
+import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 
 import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
+// import { Dropdown } from 'react-native-material-dropdown';
 import SwitchToggle from 'react-native-switch-toggle';
 
 const window = Dimensions.get('window');
@@ -49,13 +52,56 @@ export default class PropertyDetails1 extends ValidationComponent{
                          {label: 'Commercial Showroom',    value: 'Commercial-Commercial Showroom',     disabled : false},
                          {label: 'Warehouse/Godown',       value: 'Commercial-Warehouse/Godown',        disabled : false},
                          {label: 'Industrial Building',    value: 'Commercial-Industrial Building',     disabled : false}],
-      floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
-      totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
-      floor: 'Basement',
-      totalFloor:'Total Floors',
+      // floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      // totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      // floor: 'Basement',
+      // totalFloor:'Total Floors',
       propertyType : '',
       propertySubType : '',
-
+       pincode : '',
+      stateData : [
+                    {
+                      value: 'Maharashtra',
+                    },
+                    {
+                      value: 'Punjab',
+                    },
+                    {
+                      value: 'Delhi',
+                    },
+                    {
+                      value: 'Kerala',
+                    }],
+      cityData : [
+                    {
+                      value: 'Pune City',
+                    },
+                    {
+                      value: 'Pashan',
+                    },
+                    {
+                      value: 'Khanapur',
+                    }],
+      areaData : [
+                    {
+                      value: 'Hadapsar',
+                    },
+                    {
+                      value: 'Kharadi',
+                    }],
+      subAreaData : [
+                    {
+                      value: 'Amanora Township',
+                    },
+                    {
+                      value: 'Bhosale Nagar',
+                    },
+                    {
+                      value: 'Gadital'
+                    }],
+      society : '',
+      house   : '',
+      landmark : '',
     };
   }
 
@@ -82,17 +128,27 @@ export default class PropertyDetails1 extends ValidationComponent{
         "transactionType" : this.state.toggleText,
         "propertyType"    : this.state.propertyType,
         "propertySubType" : this.state.propertySubType,
-        "floor"           : this.state.floor,
-        "totalFloor"      : this.state.totalfloor,
+        // "floor"           : this.state.floor,
+        // "totalFloor"      : this.state.totalfloor,
         "listing"         : false,
         "status"          : "WIP",
+
+        "pincode"         : this.state.pincode,
+        "state"           : this.state.stateName,
+        "city"            : this.state.cityName,
+        "area"            : this.state.areaName,
+        "subarea"         : this.state.subAreaName,
+        "society"         : this.state.society,
+        "house"           : this.state.house,
+        "landmark"        : this.state.landmark,
         // "uid"         : localStorage.getItem("uid"),
         // "property_id"   : this.props.property_id
 
       };
 
-      // console.log("formValues",formValues);
-      this.props.navigation.navigate('PropertyDetails2');
+
+      console.log("formValues",formValues);
+      this.props.navigation.navigate('PropertyDetails3');
 
   }
 
@@ -242,7 +298,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                     </View>
                 </View>
             
-            <Text style={[styles.heading2,styles.marginBottom5]}>My Property is on</Text>
+       {/*     <Text style={[styles.heading2,styles.marginBottom5]}>My Property is on</Text>
              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
               <View style={[styles.inputWrapper2,{height:40}]}>
                 <View style={styles.inputImgWrapper2}>
@@ -270,7 +326,6 @@ export default class PropertyDetails1 extends ValidationComponent{
                 </View>
               </View>
               <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-              {/*  <Text style={styles.heading3}>of</Text>*/}
               </View>
                 <View style={[styles.inputWrapper2,{height:40}]}>
               
@@ -298,7 +353,230 @@ export default class PropertyDetails1 extends ValidationComponent{
                   />
                 </View>
               </View>
+            </View>*/}
+
+            <Text style={[styles.heading2,styles.marginBottom5]}>Pincode</Text>
+            <View style={[styles.inputWrapper]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Enter Pincode"
+                  onChangeText          = {pincode => {this.setState({pincode})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {10}
+                  baseColor             = {'#666'}
+                  textColor             = {'#666'}
+                  value                 = {this.state.pincode}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "default"
+                />
+              </View>
             </View>
+
+             <Hr lineColor="#666" width={1} text="OR" textStyles={styles.customStylesHere} />
+
+          {/*horizontal line*/}
+
+
+              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+                  <View style={[styles.inputWrapper2]}>
+                    <View style={styles.inputTextWrapperFull}>
+                       <Dropdown
+                      label               = 'State'
+                      containerStyle      = {styles.ddContainer}
+                      dropdownOffset      = {{top:0, left: 0}}
+                      itemTextStyle       = {styles.ddItemText}
+                      inputContainerStyle = {styles.ddInputContainer}
+                      labelHeight         = {10}
+                      tintColor           = {colors.button}
+                      labelFontSize       = {sizes.label}
+                      fontSize            = {15}
+                      baseColor           = {'#666'}
+                      textColor           = {'#333'}
+                      labelTextStyle      = {styles.ddLabelText}
+                      style               = {styles.ddStyle}
+                      data                = {this.state.stateData}
+                      value               = {this.state.stateName}
+                      onChangeText        = {stateName => {this.setState({stateName});}}
+                    />
+                    </View>
+                  </View>
+                  <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                   {/* <Text style={styles.heading3}>of</Text>*/}
+                  </View>
+                  <View style={[styles.inputWrapper2]}>
+                    <View style={styles.inputTextWrapperFull}>
+                       <Dropdown
+                      label               = 'City'
+                      containerStyle      = {styles.ddContainer}
+                      dropdownOffset      = {{top:0, left: 0}}
+                      itemTextStyle       = {styles.ddItemText}
+                      inputContainerStyle = {styles.ddInputContainer}
+                      labelHeight         = {10}
+                      tintColor           = {colors.button}
+                      labelFontSize       = {sizes.label}
+                      fontSize            = {15}
+                      baseColor           = {'#666'}
+                      textColor           = {'#333'}
+                      labelTextStyle      = {styles.ddLabelText}
+                      style               = {styles.ddStyle}
+                      data                = {this.state.cityData}
+                      value               = {this.state.cityName}
+                      onChangeText        = {cityName => {this.setState({cityName});}}
+                    />
+                    </View>
+                  </View>
+            </View>
+
+             <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom20]}>
+                  <View style={[styles.inputWrapper2]}>
+                    <View style={styles.inputTextWrapperFull}>
+                       <Dropdown
+                      label               = 'Area/Suburb'
+                      containerStyle      = {styles.ddContainer}
+                      dropdownOffset      = {{top:0, left: 0}}
+                      itemTextStyle       = {styles.ddItemText}
+                      inputContainerStyle = {styles.ddInputContainer}
+                      labelHeight         = {10}
+                      tintColor           = {colors.button}
+                      labelFontSize       = {sizes.label}
+                      fontSize            = {15}
+                      baseColor           = {'#666'}
+                      textColor           = {'#333'}
+                      labelTextStyle      = {styles.ddLabelText}
+                      style               = {styles.ddStyle}
+                      data                = {this.state.areaData}
+                      value               = {this.state.areaName}
+                      onChangeText        = {areaName => {this.setState({areaName});}}
+                    />
+                    </View>
+                  </View>
+                  <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                   {/* <Text style={styles.heading3}>of</Text>*/}
+                  </View>
+                  <View style={[styles.inputWrapper2]}>
+                    <View style={styles.inputTextWrapperFull}>
+                       <Dropdown
+                      label               = 'Sub-Area'
+                      containerStyle      = {styles.ddContainer}
+                      dropdownOffset      = {{top:0, left: 0}}
+                      itemTextStyle       = {styles.ddItemText}
+                      inputContainerStyle = {styles.ddInputContainer}
+                      labelHeight         = {10}
+                      tintColor           = {colors.button}
+                      labelFontSize       = {sizes.label}
+                      fontSize            = {15}
+                      baseColor           = {'#666'}
+                      textColor           = {'#333'}
+                      labelTextStyle      = {styles.ddLabelText}
+                      style               = {styles.ddStyle}
+                      data                = {this.state.subAreaData}
+                      value               = {this.state.subAreaName}
+                      onChangeText        = {subAreaName => {this.setState({subAreaName});}}
+                    />
+                    </View>
+                  </View>
+            </View>
+
+             {/*remaining items*/}
+
+            <Text style={[styles.heading2,styles.marginBottom5]}>Society</Text>
+            <View style={[styles.inputWrapper,styles.marginBottom15]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Enter Society"
+                  onChangeText          = {society => {this.setState({society})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {10}
+                  baseColor             = {'#666'}
+                  textColor             = {'#666'}
+                  value                 = {this.state.society}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "default"
+                />
+              </View>
+            </View>
+
+             <Text style={[styles.heading2,styles.marginBottom5]}>House/Building Number</Text>
+            <View style={[styles.inputWrapper,styles.marginBottom15]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Enter House Address"
+                  onChangeText          = {house => {this.setState({house})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {10}
+                  baseColor             = {'#666'}
+                  textColor             = {'#666'}
+                  value                 = {this.state.house}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "default"
+                />
+              </View>
+            </View>
+
+
+             <Text style={[styles.heading2,styles.marginBottom5]}>Landmark</Text>
+            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Enter landmark"
+                  onChangeText          = {landmark => {this.setState({landmark})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {10}
+                  baseColor             = {'#666'}
+                  textColor             = {'#666'}
+                  value                 = {this.state.landmark}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "default"
+                />
+              </View>
+            </View>
+
+          {/*here end*/}
+
 
             <Button
             

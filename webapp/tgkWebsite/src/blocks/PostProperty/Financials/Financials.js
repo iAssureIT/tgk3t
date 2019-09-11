@@ -106,9 +106,14 @@ class Financials extends Component{
            // this.refs.maintenancePer.value = response.data.financial.maintenancePer;
 
           })
-          .catch((error) =>{
-           console.log("error = ", error);
-          });
+          .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/");
+                          }
+                      })
 
           }
 
@@ -230,9 +235,14 @@ updateUser(event){
           this.props.redirectToAvailability(this.props.uid,this.props.property_id);
           }
         })
-        .catch((error) =>{
-          console.log("error = ", error);
-        }); 
+       .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/");
+                          }
+                      })
       }else{
         console.log("update fun");
         var ov = this.state.originalValues;
@@ -373,9 +383,14 @@ updateUser(event){
                     this.props.redirectToAvailability(this.props.uid,this.props.property_id);
                     }
                   })
-                  .catch((error) =>{
-                    console.log("error = ", error);
-                  }); 
+                  .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/");
+                          }
+                      })
             }
       }
     

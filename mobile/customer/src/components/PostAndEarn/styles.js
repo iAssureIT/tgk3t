@@ -81,6 +81,12 @@ export default StyleSheet.create({
     flexDirection:'row',
     borderRadius: 3,
   },
+  imgbox:{
+     // width:'46%',
+    borderColor: colors.black,
+    borderWidth:1,
+    flex: 0.5,  
+  },
   inputWrapper3:{
     width:'100%',
     borderColor: colors.black,
@@ -422,6 +428,10 @@ export default StyleSheet.create({
   height:40,
  },
 
+ propImage:{
+  height:100,
+  width:'100%',
+ }
 
 });
 

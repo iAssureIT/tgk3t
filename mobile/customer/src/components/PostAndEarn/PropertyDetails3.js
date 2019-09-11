@@ -11,8 +11,9 @@ import {
   Alert,
   Picker
 } from 'react-native';
-
+import axios          from 'axios';
 import { Button,Icon, SearchBar } from 'react-native-elements';
+import CheckBox from 'react-native-check-box'
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -81,6 +82,15 @@ export default class PropertyDetails3 extends ValidationComponent{
                   {label:"Marla", value:"Marla"},
                   {label:"Kanal", value:"Kanal"}],
       unit : 'Sq ft',
+      floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      floor: 'Basement',
+      totalFloor:'Total Floors',
+
+      defaultIcon:'flag',
+      iconType: 'material-community',
+      allAmenities:[],
+      isChecked: true,
      /* expectedRate : '',
       totalAsk : '',
       totalAskIndex : 0,
@@ -103,6 +113,89 @@ export default class PropertyDetails3 extends ValidationComponent{
     });
   }
 
+   componentDidMount(){
+    axios
+      .get('http://qatgk3tapi.iassureit.com/api/masteramenities/list')
+      .then(
+        (res)=>{
+          console.log('res postdata', res);
+          const postsdata = res.data;
+          // console.log('postsdata',postsdata);
+          this.setState({
+            allAmenities : postsdata,
+          },()=>{
+            // console.log("data from admin side",this.state.allAmenities);
+            var allAmenitiesDataList = this.state.allAmenities.map((item,index)=>{
+
+              var newObj = Object.assign({},item);
+                if(item.amenity){
+                  newObj.checked = false
+                }else{
+                  newObj.checked = true
+                }
+                // console.log("newObj",newObj);
+                return newObj;
+
+            });
+
+            this.setState({
+              allAmenities:allAmenitiesDataList,
+            });
+          });
+        }
+      )
+      .catch((error)=>{
+
+        console.log("error = ",error);
+        alert("Something went wrong! Please check Get URL.");
+         });  
+      
+  }
+
+   handleOnClickInternal = (index)=>{
+    console.log("index",index);
+    var alldata = this.state.allAmenities;
+    var status = alldata[index].checked;
+    if(status===true){
+      alldata[index].checked = false;
+    }else{
+      alldata[index].checked = true;
+    }
+
+    this.setState({
+      allAmenities: alldata,
+    },()=>{
+      console.log("here new data of amenities",this.state.allAmenities);
+    });
+    // var data = index.target.getAttribute('isChecked');
+    console.log("current data status",status);
+    // let {internalAmenities} = this.state;
+    // let checked = !internalAmenities[index].checked;
+    // internalAmenities[index].checked = checked;
+    // this.setState({internalAmenities});
+  }
+
+  submitFun(){
+     const formValues = {
+       
+        "floor"           : this.state.floor,
+        "totalFloor"      : this.state.totalfloor,
+        "bedroom"         : this.state.bedroom,
+        "balconies"       : this.state.balconies,
+        "bathroom"        : this.state.bathroom,
+        "yearsOld"        : this.state.yearsOld,
+        "propertyFacing"  : this.state.propertyFacing,
+        "superArea"       : this.state.superArea,
+        "unit"            : this.state.unit,
+        "builtArea"       : this.state.builtArea,
+
+        // "uid"         : localStorage.getItem("uid"),
+        // "property_id"   : this.props.property_id
+
+      };
+      console.log("formValues",formValues);
+      this.props.navigation.navigate('PropertyDetails5');
+  }
   render(){
     
     const { navigation } = this.props;
@@ -121,6 +214,63 @@ export default class PropertyDetails3 extends ValidationComponent{
             </View>
 
             <View style={styles.divider}></View>
+
+              <Text style={[styles.heading2,styles.marginBottom5]}>My Property is on</Text>
+             <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+              <View style={[styles.inputWrapper2,{height:40}]}>
+                <View style={styles.inputImgWrapper2}>
+                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                </View>
+                <View style={styles.inputTextWrapper2}>
+                 <Dropdown
+                  
+                  containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
+                  dropdownOffset      = {{top:0, left: 0}}
+                  itemTextStyle       = {styles.ddItemText}
+                  inputContainerStyle = {styles.ddInputContainer}
+                  labelHeight         = {10}
+                  tintColor           = {colors.button}
+                  labelFontSize       = {sizes.label}
+                  fontSize            = {15}
+                  baseColor           = {'#666'}
+                  textColor           = {'#333'}
+                  labelTextStyle      = {styles.ddLabelTextFull}
+                  style               = {styles.ddStyle}
+                  data                = {this.state.floorData}
+                  value               = {this.state.floor}
+                  onChangeText        = {floor => {this.setState({floor});}}
+                />
+                </View>
+              </View>
+              <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+              </View>
+                <View style={[styles.inputWrapper2,{height:40}]}>
+              
+                <View style={styles.inputImgWrapper2}>
+                  <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                </View>
+                <View style={[styles.inputTextWrapper2]}>
+                  <Dropdown
+                  
+                  containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
+                  dropdownOffset      = {{top:0, left: 0}}
+                  itemTextStyle       = {styles.ddItemText}
+                  inputContainerStyle = {styles.ddInputContainer}
+                  labelHeight         = {10}
+                  tintColor           = {colors.button}
+                  labelFontSize       = {sizes.label}
+                  fontSize            = {15}
+                  baseColor           = {'#666'}
+                  textColor           = {'#333'}
+                  labelTextStyle      = {styles.ddLabelTextFull}
+                  style               = {styles.ddStyle}
+                  data                = {this.state.totalFloorData}
+                  value               = {this.state.totalFloor}
+                  onChangeText        = {totalFloor => {this.setState({totalFloor});}}
+                  />
+                </View>
+              </View>
+            </View>
 
             <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
             <View style={[styles.inputWrapper,styles.marginBottom25]}>
@@ -379,9 +529,54 @@ export default class PropertyDetails3 extends ValidationComponent{
 
             {/*end*/}
 
+             <View>
+              <Text style={styles.heading}>
+                My Apartment has following Amenities
+              </Text>
+            </View>
+
+            <View style={styles.divider}></View>
+
+            <Text style={[styles.heading3,styles.marginBottom5]}>All Amenities </Text>
+            
+            <View style={[styles.marginBottom15]}>
+              {this.state.allAmenities && this.state.allAmenities.length >0 ?
+                this.state.allAmenities.map((data,index)=>(
+                <React.Fragment key={index}>
+                  <CheckBox
+                    key={index}
+                    style={{marginBottom:10}}
+                    onClick={() => this.handleOnClickInternal(index)}
+                    isChecked={data.checked}
+                    rightTextStyle={{marginLeft:0}}
+                    checkBoxColor= {colors.grey}
+                    rightTextView = {
+                      <View style={{flexDirection:'row',flex:1}}>
+                        <Icon
+                          name={this.state.defaultIcon} 
+                          type={this.state.iconType}
+                          size={18}
+                          color= {colors.button}
+                          containerStyle = {{marginHorizontal:10}}
+                        />
+                        <Text style={styles.inputText}>{data.amenity}</Text>
+                      </View>
+                    }
+                  />
+                
+                </React.Fragment>  
+              ))
+
+                :
+                null
+              }
+            </View>
+
+
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertyDetails4')}
+              onPress         = {this.submitFun.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails4')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}

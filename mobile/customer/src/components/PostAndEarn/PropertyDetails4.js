@@ -44,6 +44,42 @@ export default class PropertyDetails4 extends ValidationComponent{
       {
         value: 'Yearly'
       }],*/
+      // if(this.state.mobile!=""){
+
+        
+      //   axios
+      //     .post('http://qatgk3tapi.iassureit.com/api/usersotp/verify_mobile',formValues)
+      //     .then((response)=>{
+      //       console.log("response = ",response.data);
+      //         axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
+      //       // localStorage.setItem('token',response.data.token)
+            
+      //         if(response.data.message === 'MOBILE-NUMBER-EXISTS')
+      //         {
+      //          console.log("here otp from response",response.data.otp);
+      //           this.props.navigation.navigate('SignUp');
+
+      //          // this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message});
+          
+      //         }else{
+      //           this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobile});
+          
+      //           console.log("new mob no");
+      //         }
+
+      //       })
+      //     .catch(function(error){
+      //       console.log("here can't access the url");
+      //       console.log(error);
+      //     })
+        
+      //   }else{
+      //         this.setState({
+      //             "openModal": true
+      //         });
+      //     // swal("Please enter Mobile Number", "", "warning");
+
+      //   }
       defaultIcon:'flag',
       iconType: 'material-community',
       allAmenities:[],

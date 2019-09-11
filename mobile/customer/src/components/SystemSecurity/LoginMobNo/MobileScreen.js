@@ -48,6 +48,8 @@ export default class MobileScreen extends ValidationComponent {
         countryCode  : this.state.unitCode
       };
       console.log("LoginMobNum==",formValues);
+      // this.props.navigation.navigate('PropertyDetails7');
+
 
       if(this.state.mobile!=""){
 
@@ -62,9 +64,9 @@ export default class MobileScreen extends ValidationComponent {
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
                console.log("here otp from response",response.data.otp);
-                this.props.navigation.navigate('SignUp');
+                // this.props.navigation.navigate('SignUp');
 
-               // this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message});
+               this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message});
           
               }else{
                 this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobile});
