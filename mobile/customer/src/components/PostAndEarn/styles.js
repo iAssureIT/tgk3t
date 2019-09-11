@@ -233,6 +233,18 @@ export default StyleSheet.create({
       }
     })
   },
+  buttonContainer1:{
+    width:'40%',
+    ...Platform.select({
+      ios:{
+        justifyContent:'center',
+        marginLeft:95,
+      },
+      android : {
+        alignItems:'center'
+      }
+    })
+  },
   tabWrap:{
     width: '100%',
     flexDirection: 'row',

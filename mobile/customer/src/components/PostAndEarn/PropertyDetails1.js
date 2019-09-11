@@ -91,21 +91,21 @@ export default class PropertyDetails1 extends ValidationComponent{
 
       };
 
-      console.log("formValues",formValues);
+      // console.log("formValues",formValues);
       this.props.navigation.navigate('PropertyDetails2');
 
   }
 
   selectProp(value){
-    console.log("here selected value",value);
+    // console.log("here selected value",value);
 
     var propertyTypeVal = value.split("-");
     var propertyType = propertyTypeVal[0];
     var propertySubType = propertyTypeVal[1];
 
     
-    console.log("propertyType",propertyType);
-    console.log("propertySubType",propertySubType);
+    // console.log("propertyType",propertyType);
+    // console.log("propertySubType",propertySubType);
 
     this.setState({
       fullPropertyType: value,

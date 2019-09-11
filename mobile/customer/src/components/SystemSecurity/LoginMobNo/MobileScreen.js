@@ -184,7 +184,7 @@ export default class MobileScreen extends ValidationComponent {
                       titleStyle      = {styles.buttonText}
                       title           = "OK"
                       buttonStyle     = {styles.buttonSignUp}
-                      containerStyle  = {styles.buttonContainer}
+                      containerStyle  = {styles.buttonContainer1}
                     />
                   </View>
                 </View>

@@ -18,7 +18,9 @@ import { TextField } from 'react-native-material-textfield';
 import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
-import CheckBox from 'react-native-check-box'
+import CheckBox from 'react-native-check-box';
+import { Dropdown } from 'react-native-material-dropdown';
+
 
 const window = Dimensions.get('window');
 
@@ -30,12 +32,45 @@ export default class SearchProperty extends ValidationComponent{
       activeBtn             : 'buy',
       includeNearby         : false,
       activePropType        : 'MultiStorey Apartment',
+      selectBudget          : 'Select Budget',
+      budgetList1 : [
+        {value: 1000000, option: "Upto 10 Lac", checked:false},
+        {value: 2000000, option: "Upto 20 Lac", checked:false},
+        {value: 3000000, option: "Upto 30 Lac", checked:false},
+        {value: 4000000, option: "Upto 40 Lac", checked:false},
+        {value: 5000000, option: "Upto 50 Lac", checked:false},
+        {value: 6000000, option: "Upto 60 Lac", checked:false},
+        {value: 7000000, option: "Upto 70 Lac", checked:false},
+        {value: 8000000, option: "Upto 80 Lac",checked:false},
+        {value: 9000000, option: "Upto 90 Lac",checked:false},
+        {value: 10000000, option: "Upto 1 Cr",checked:false},
+        {value: 20000000, option: "Upto 2 Cr",checked:false},
+        {value: 30000000, option: "Upto 3 Cr",checked:false},
+        {value: 50000000, option: "Upto 5 Cr",checked:false},
+        {value: 100000000, option: "Upto 10 Cr",checked:false},
+      ],
+
+      budgetList2 : [
+        {value: 5000,  option: "Upto 5,000",checked:false},
+        {value: 10000, option: "Upto 10,000",checked:false},
+        {value: 15000, option: "Upto 15,000",checked:false},
+        {value: 20000, option: "Upto 20,000",checked:false},
+        {value: 25000, option: "Upto 25,000",checked:false},
+        {value: 30000, option: "Upto 30,000",checked:false},
+        {value: 40000, option: "Upto 40,000",checked:false},
+        {value: 50000, option: "Upto 50,000",checked:false},
+        {value: 60000, option: "Upto 60,000",checked:false},
+        {value: 70000, option: "Upto 70,000",checked:false},
+        {value: 80000, option: "Upto 80,000",checked:false},
+        {value: 90000, option: "Upto 90,000",checked:false},
+        {value: 100000, option: "Upto 1 Lac",checked:false},
+      ],
       activeRoomIndex       : 0,
       activeFloorIndex      : 0,
       activeAgeIndex        : 0,
       activeAvailabeIndex   : 0,
       activeFurnishedStatus : 'Fully Furnished',
-      value:0,
+      value:"",
     };
   }
 
@@ -50,12 +85,18 @@ export default class SearchProperty extends ValidationComponent{
       if(this.state.activeBtn === "commertial")
       {
         this.setState({activePropType:"Office in IT Park/SEZ"});
+      }else{
+        this.setState({activePropType:'MultiStorey Apartment'});
       }
     });
   }
 
   handleIncludeNearby = ()=>{
     this.setState({includeNearby: !this.state.includeNearby});
+  }
+
+  selectBudget = (name)=>{
+    this.setState({selectBudget:name})
   }
 
   setActive = (name)=>{
@@ -82,14 +123,34 @@ export default class SearchProperty extends ValidationComponent{
     this.setState({activeFurnishedStatus:status});
   }
 
+  convertNumberToRupees(totalPrice) 
+  {
+    console.log("totalPrice",totalPrice);
+    return Math.floor(Number(totalPrice) >= 1.0e+7)
+
+    ? Math.floor(Number(totalPrice) / 1.0e+7) + " Cr"
+
+    : Math.floor(Number(totalPrice) >= 1.0e+5)
+
+    ? Math.floor(Number(totalPrice) / 1.0e+5) + " Lac"
+
+    : Math.floor(Number(totalPrice) >= 1.0e+3)
+
+    ? Math.floor(Number(totalPrice) / 1.0e+3) + " K"
+
+    : Math.floor(Number(totalPrice));
+  }
+
   render(){
     
     const { navigation } = this.props;
-    let {activeBtn,activePropType,activeRoomIndex,activeFloorIndex,activeAgeIndex,activeAvailabeIndex,activeFurnishedStatus} = this.state;
+    let {activeBtn,activePropType,activeRoomIndex,activeFloorIndex,activeAgeIndex,activeAvailabeIndex,activeFurnishedStatus,selectBudget} = this.state;
     let rooms = ["1 RK","1 BHK","2 BHK","3 BHK","4 BHK","4+BHK"];
     let floors = ["Basement","Ground","1-5","5-10","> 10"];
     let ages = ["Under Construction"," New ","1-2 Years","2-5 Years","5-10 Years","> 8 Years"];
     let available = ["Immediate","2 Weeks","2-4 Weeks","After a month"];
+    // var value =this.state.value;
+    var budget=this.convertNumberToRupees(this.state.value)
 
     // console.log("this.props.navigation = ",this.props.navigation);
     return (
@@ -195,7 +256,7 @@ export default class SearchProperty extends ValidationComponent{
               </TouchableOpacity>
             </View>
 
-            <View style={styles.outerView}>
+           {/* <View style={styles.outerView}>
               <CheckBox
                 style={{marginBottom:10}}
                 onClick={() => this.handleIncludeNearby()}
@@ -208,7 +269,7 @@ export default class SearchProperty extends ValidationComponent{
                   </View>
                 }
               />
-            </View>
+            </View>*/}
             <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn!=='commertial'? "Residential" : "Commercial"}</Text>
             {this.state.activeBtn!=='commertial'?
               <View style={[styles.tabWrap,styles.marginBottom25]}>
@@ -389,6 +450,31 @@ export default class SearchProperty extends ValidationComponent{
             </View>
 
             <Text style={[styles.heading,styles.marginBottom5]}>Price Range</Text>
+ {/*             <View style={[styles.inputWrapper,styles.marginBottom15]}>
+                  <View style={styles.inputTextWrapperFull}>
+                    <Dropdown
+                      // label               = 'Property Type'
+                      containerStyle      = {styles.ddContainer}
+                      dropdownOffset      = {{top:0, left: 0}}
+                      itemTextStyle       = {styles.ddItemText}
+                      inputContainerStyle = {styles.ddInputContainer}
+                      labelHeight         = {10}
+                      tintColor           = {colors.button}
+                      labelFontSize       = {sizes.label}
+                      fontSize            = {15}
+                      baseColor           = {'#666'}
+                      textColor           = {'#333'}
+                      labelTextStyle      = {styles.ddLabelTextFull}
+                      style               = {styles.ddStyle}
+                      data                = {this.state.budgetList1}
+                      value               = {this.state.selectBudget}
+                      // onChangeText        = {this.selectProp.bind(this)}
+                      onChangeText={ (selectBudget) => this.selectBudget(selectBudget) } 
+                      // onChangeText        = {fullPropertyType => {this.setState({fullPropertyType});}}
+                    />
+                  </View>
+              </View>*/}
+
             <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
               <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Icon
@@ -398,7 +484,7 @@ export default class SearchProperty extends ValidationComponent{
                   color={colors.grey}
                   containerStyle={{marginRight:5}}
                 />
-                <Text style={styles.inputText}>0 Lacs</Text>
+                <Text style={styles.inputText}>{budget}</Text>
               </View>
               <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Icon
@@ -408,15 +494,16 @@ export default class SearchProperty extends ValidationComponent{
                   color={colors.grey}
                   containerStyle={{marginRight:5}}
                 />
-                <Text style={styles.inputText}>10+ Cr</Text>
+                <Text style={styles.inputText}>100+ Cr</Text>
               </View>
             </View>
             <View style={[{width:'100%'}]}>
               <Slider
                 value={this.state.value}
                 animationType={"spring"}
-                minimumValue={100}
-                maximumValue={1000}
+                minimumValue={1000000}
+                maximumValue={1000000000}
+                step={1}
                 minimumTrackTintColor={colors.golden}
                 thumbStyle={{backgroundColor:'#fff',height:30,width:20,borderWidth:1,borderColor:'#ccc'}}
                 trackStyle={{height:10,borderColor:'#ccc',borderWidth:1}}

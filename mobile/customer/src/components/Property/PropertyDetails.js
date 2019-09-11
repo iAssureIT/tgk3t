@@ -257,10 +257,10 @@ export default class PropertyDetails extends ValidationComponent{
 
             <Text style={[styles.textHeading,styles.marginBottom5]}>Amenities</Text>
 
-            <View style={[{width:'100%',flexDirection:'row',justifyContent:'space-between'},styles.marginBottom15]}>
+            <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
               {Amenities.map((data,index)=>(
 
-                <View key={index} style={{width:'32%',elevation:3,padding:15,borderWidth:0,borderRadius:4,alignItems:'center',justifyContent:'center'}}>
+                <View key={index} style={[{width:'50%',flexDirection:'row',paddingVertical:10},(index%2==0?{}:{paddingLeft:'10%'})]}>
                   <Icon
                     name="crosshairs" 
                     type="font-awesome"
