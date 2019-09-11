@@ -237,6 +237,8 @@ export default class PropertyDetails1 extends ValidationComponent{
                         onChangeText={ (fullPropertyType) => this.selectProp(fullPropertyType) } 
                         // onChangeText        = {fullPropertyType => {this.setState({fullPropertyType});}}
                       />
+
+                      
                     </View>
                 </View>
             
