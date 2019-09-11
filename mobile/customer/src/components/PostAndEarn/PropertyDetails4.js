@@ -11,7 +11,6 @@ import {
   Alert
 } from 'react-native';
 import axios          from 'axios';
-
 import { Button,Icon, SearchBar } from 'react-native-elements';
 
 import ValidationComponent from "react-native-form-validator";
