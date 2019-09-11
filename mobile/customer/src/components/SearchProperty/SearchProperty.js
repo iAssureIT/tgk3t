@@ -259,7 +259,7 @@ export default class SearchProperty extends ValidationComponent{
                     style={[(activePropType=="Villa"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
                   >
                     <Icon
-                      name="house-variant-outline" 
+                      name="home" 
                       type="material-community"
                       size={16}
                       color="white"
@@ -334,7 +334,7 @@ export default class SearchProperty extends ValidationComponent{
                     style={[(activePropType=="Commercial Shop"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
                   >
                     <Icon
-                      name="house-variant-outline" 
+                      name="office-building" 
                       type="material-community"
                       size={16}
                       color="white"
@@ -345,7 +345,7 @@ export default class SearchProperty extends ValidationComponent{
                   </TouchableOpacity>
                   <TouchableOpacity 
                     onPress = {()=>this.setActive('Industrial Building')}
-                    style={[(activePropType=="Industrial Building"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusRight2]}
+                    style={[(activePropType=="Industrial Building"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
                   >
                     <Icon
                       name="office-building" 
@@ -367,7 +367,6 @@ export default class SearchProperty extends ValidationComponent{
                       size={16}
                       color="white"
                       style={[{paddingLeft:10}]}
-
                     />
                     <Text style={styles.tabText}> Warehouse/Godown </Text>
                   </TouchableOpacity>

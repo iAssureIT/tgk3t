@@ -6,7 +6,7 @@ const window = Dimensions.get('window');
 export default StyleSheet.create({
 
   container:{
-    backgroundColor: '#ccc',
+    backgroundColor: '#fff',
     minHeight:'90%',
     width: window.width,
     // justifyContent: 'center',
@@ -17,7 +17,8 @@ export default StyleSheet.create({
     // marginHorizontal:'5%',
     backgroundColor:colors.white,
     padding:'5%',
-    margin:'5%'
+    margin:'5%',
+    height:"90%"
   },
   heading:{
     fontSize: 15,
@@ -226,8 +227,6 @@ export default StyleSheet.create({
     ...Platform.select({
       ios:{
         justifyContent:'center',
-        marginLeft: 40
-
       },
       android : {
         alignItems:'center'

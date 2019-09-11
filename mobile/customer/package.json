@@ -9,6 +9,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "lodash": "^4.17.15",
+    "node_module": "0.0.0",
     "react": "16.8.3",
     "react-native": "^0.60.5",
     "react-native-24h-timepicker": "^1.0.0",

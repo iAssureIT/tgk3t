@@ -22,7 +22,14 @@ export default StyleSheet.create({
   },
   headingView:{
     alignItems: 'center',
-    marginTop: 40,
+    ...Platform.select({
+      ios:{
+         marginTop: 120,
+      },
+      android : {
+         marginTop: 40,
+      }
+    }),
     marginBottom: 10
   },
   heading2:{
@@ -58,8 +65,6 @@ export default StyleSheet.create({
     ...Platform.select({
       ios:{
         justifyContent:'center',
-        marginLeft: 40
-
       },
       android : {
         alignItems:'center'

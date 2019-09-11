@@ -94,7 +94,7 @@ export default class MobileScreen extends ValidationComponent {
             openModal1: true,
         });
       // swal("Please enter OTP", "", "warning");
-         
+
     }
   }    
 

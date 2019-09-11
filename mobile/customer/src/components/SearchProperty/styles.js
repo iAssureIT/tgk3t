@@ -71,7 +71,20 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius:4,
-    elevation: 8
+    elevation: 8,
+    ...Platform.select({
+      ios:{
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+      }
+    })
   },
   searchInputWrapper:{
     width:'100%',
@@ -96,6 +109,19 @@ export default StyleSheet.create({
     padding:0,
     borderTopLeftRadius:4,
     borderBottomLeftRadius:4,
+     ...Platform.select({
+      ios:{
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+      }
+    })
   },
   searchInputContainer:{
     width:'100%',
@@ -263,7 +289,6 @@ export default StyleSheet.create({
     ...Platform.select({
       ios:{
         justifyContent:'center',
-        marginLeft: 40
 
       },
       android : {

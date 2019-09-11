@@ -56,7 +56,6 @@ export default class SignUp extends ValidationComponent{
     this.setState({
         mobile : mobile,
     });
-
   }
   signupUser(){
 
@@ -72,78 +71,10 @@ export default class SignUp extends ValidationComponent{
               };
 
             
+
               console.log("mobileSignupForm==",formValues);
               this.props.navigation.navigate('PropertyDetails1',{});
 
-              // if(this.state.name!=="" && this.state.email!=="" && this.state.location!==""  ){
-              //    // this.props.navigation.navigate('PropertyDetails1');
-                
-              //   axios
-              //     .patch('http://qatgk3tapi.iassureit.com/api/usersotp/signup',formValues)
-              //     .then( (res) =>{
-              //       console.log("res====================",res)
-
-                     // this.props.navigation.navigate('PropertyDetails1');
-
-                    // if(res.data.message === "USER-UPDATED"){
-                    //   var sendDataToUser = {
-                    //       "templateName"  : "User - New Registration",
-                    //       "toUserId"    : formValues.userID,
-                    //       "variables"   : {
-                    //         "userName"    : this.state.name,
-                    //         "userMobile"  : this.refs.mobile.value,
-                    //       }
-                    //   }
-                    //   console.log("sendData",sendDataToUser);
-                    //   var sendDataToAdmin = {
-                    //       "templateName"  : "Admin - New Registration",
-                    //       "toUserId"    : "admin",
-                    //       "variables"   : {
-                    //         "userName"    : this.state.name,
-                    //         "userMobile"  : this.refs.mobile.value,
-                    //         "userEmail"   : this.state.email,
-                    //       "userCity"    : this.state.city,
-                    //       }
-                    //   }
-                    //   console.log("sendData",sendDataToAdmin);
-                    //   axios
-                    //   .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
-                    //   .then((result) =>{
-                    //     console.log("SendEmailNotificationToAdmin",result);
-                    //     axios
-                    //     .post('/api/masternotifications/post/sendNotification',sendDataToUser)
-                    //     .then((res) =>{
-                    //       console.log("SendEmailNotificationToUser",res);           
-                    //     })
-                    //     .catch((error) =>{
-                    //       console.log("error = ", error);
-                    //     });           
-                    //   })
-                    //   .catch((error) =>{
-                    //     console.log("error = ", error);
-                    //   });
-                    //   console.log("BasicInfo res = ",res);
-                    //   if(this.props.originPage === "header")
-                    //   {
-                    //     this.props.history.push("/");
-                    //     window.location.reload();
-                    //   }else{
-                    //     this.props.redirectToBasicInfo(res.data.user_id);
-                    //   }
-                    // }
-              //     })
-              //     .catch((error) =>{
-              //       console.log("error = ", error);
-              //       // swal("Sorry!!", "User not found.", "error");
-              //     });
-                
-              // }else{
-              //   this.setState({
-              //     openModal : true,
-              //   });
-                // console.log("Please enter mandatory fields");
-                // swal("Please enter mandatory fields", "", "warning");
-                    // console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
               }
 
 

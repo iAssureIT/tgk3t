@@ -104,13 +104,10 @@ export default class PropertyDetails extends ValidationComponent{
         content: 'East',
       }];
 
-    let internalAmenities = [
+    let Amenities = [
       {name:'Intercom', iconName:'', iconType:''},
       {name:'Lift', iconName:'', iconType:''},
       {name:'Air Conditioner', iconName:'', iconType:''},
-    ];
-
-    let externalAmenities = [
       {name:'Swimming Pool', iconName:'', iconType:''},
       {name:'Internal Gym', iconName:'', iconType:''},
       {name:'Park', iconName:'', iconType:''},
@@ -259,37 +256,10 @@ export default class PropertyDetails extends ValidationComponent{
             <View style={[styles.divider,styles.marginBottom15]}></View>
 
             <Text style={[styles.textHeading,styles.marginBottom5]}>Amenities</Text>
-            <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Internal</Text>
 
             <View style={[{width:'100%',flexDirection:'row',justifyContent:'space-between'},styles.marginBottom15]}>
-              {internalAmenities.map((data,index)=>(
-                <View key={index} style={{width:'32%',elevation:3,padding:15,borderWidth:0,borderRadius:4,alignItems:'center',justifyContent:'center'}}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <Text style={[styles.textSmall,{textAlign:'center'}]}>{data.name}</Text>
-                </View>  
-              ))
-              }
-            </View>
+              {Amenities.map((data,index)=>(
 
-            <View style={[{width:'32%'},styles.marginBottom15]}>
-              <Button
-                titleStyle      = {styles.buttonText}
-                title           = "Show more"
-                buttonStyle     = {styles.button4}
-                containerStyle  = {[styles.buttonContainer5,styles.marginBottom15]}
-              />
-            </View>
-
-            <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>External</Text>
-
-            <View style={[{width:'100%',flexDirection:'row',justifyContent:'space-between'},styles.marginBottom15]}>
-              {externalAmenities.map((data,index)=>(
                 <View key={index} style={{width:'32%',elevation:3,padding:15,borderWidth:0,borderRadius:4,alignItems:'center',justifyContent:'center'}}>
                   <Icon
                     name="crosshairs" 

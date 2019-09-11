@@ -83,6 +83,7 @@ export default class MobileScreen extends ValidationComponent {
                   "openModal": true
               });
           // swal("Please enter Mobile Number", "", "warning");
+
         }
 	}
 
@@ -173,7 +174,7 @@ export default class MobileScreen extends ValidationComponent {
                   <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
                     <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
                   </View>
-                  <Text style={{fontFamily:'Montserrat-Regular',fontSize:15,textAlign:'center',marginTop:20}}>
+                  <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
                     Please enter Mobile Number
                   </Text>
 
