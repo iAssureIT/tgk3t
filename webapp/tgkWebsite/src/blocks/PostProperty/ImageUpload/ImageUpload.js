@@ -29,6 +29,7 @@ var imgTitleArray = [];
 			isLoading			: true,
 			originalValues      : '',
 			tempLoader 			: false,
+      type : true,
 
 
 		}
@@ -407,11 +408,27 @@ var imgTitleArray = [];
 		this.props.backToAvailability(localStorage.getItem("uid"),localStorage.getItem("propertyId"));
 
 	}
+  handleToggle(event){
+    event.preventDefault();
+    
+    if (this.state.type=true){
+    this.setState = ({
+      type: false
+    })
+}
+else{
+   this.setState = ({
+      type: true
+})
 
+    
+  }
+}
 	
 
 	render() {
-		console.log("singleVideo=>",this.state.singleVideo);
+    console.log("singleVideo=>",this.state.singleVideo);
+		console.log("type=>",this.state.type);
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 				<div className="col-lg-10  col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 backGround">
@@ -562,6 +579,32 @@ var imgTitleArray = [];
 				       <button className="btn nxt_btn col-lg-12 col-md-12 col-sm-12 col-xs-12" onClick={this.uploadData.bind(this)} >Finish &nbsp; &nbsp; &rArr;</button>
 				  	</div>
 				</div>
+
+        <div class="container5">
+        {this.state.type===true ?
+
+         <div class="switch" onChange={this.handleToggle.bind(this)} >
+            <input type="radio" class="switch-input" name="view" value="sell" id="week"  checked />
+            <label for="week" class="switch-label switch-label-off">SELL</label>
+            <input type="radio" class="switch-input" name="view" value="rent" id="month"  />
+            <label for="month" class="switch-label switch-label-on">RENT</label>
+            <span class="switch-selection"></span>
+          </div>
+
+          :
+
+           <div class="switch" onChange={this.handleToggle.bind(this)} >
+            <input type="radio" class="switch-input" name="view" value="sell" id="week"   />
+            <label for="week" class="switch-label switch-label-off">SELL</label>
+            <input type="radio" class="switch-input" name="view" value="rent" id="month" checked  />
+            <label for="month" class="switch-label switch-label-on">RENT</label>
+            <span class="switch-selection" ></span>
+          </div>
+       
+      }
+    
+  </div>
+
 			</div>
 		);
 	}

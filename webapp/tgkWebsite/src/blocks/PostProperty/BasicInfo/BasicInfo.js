@@ -851,13 +851,13 @@ class BasicInfo extends Component{
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  <div className="row"></div>
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row mt30">	
-				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				  	 	<label>I am</label>
 						<span className="astrick">*</span>
 				  	 </div>
-				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm"   >
-				    	<div className="col-lg-1 col-md-1 col-sm-4 col-xs-4 sellerType1"  >
+				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm noPad"   >
+				    	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 sellerType1"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="Owner" 
@@ -869,7 +869,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 col-sm-4 col-xs-4 col-xs-offset-2 sellerType2"  >
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType2"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="Care Taker" 
@@ -882,7 +882,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 col-sm-4 col-xs-4 col-xs-offset-2 sellerType3"   >
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Broker" 
@@ -895,7 +895,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					      <div className="col-lg-1 col-lg-offset-2 col-sm-4 col-xs-4 col-xs-offset-2 sellerType4"   >
+					      <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType4"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Flatmate" 
@@ -909,16 +909,16 @@ class BasicInfo extends Component{
 					    </div>
 
 					</div>
-					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30">
+					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
 					  			<span className="col-lg-3 col-xs-3 ownerLeft "> Owner</span>
 					  			<span className="col-lg-3 col-xs-3 noPad"> Caretaker</span>
-					  			<span className="col-lg-3 col-xs-3 "> Broker</span>
-					  			<span className="col-lg-3 col-xs-3 "> Flatmate</span>
+					  			<span className="col-lg-3 col-xs-3 noPad"> Broker</span>
+					  			<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>
 
 					  	</div>
          		
-         			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30">
-         				<div className="col-lg-4 col-md-6 col-sm-6 col-xs-6 noPad">
+         			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
+         				<div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 noPad">
 
 						 	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
 					   			<label>I would like to</label>
@@ -940,7 +940,7 @@ class BasicInfo extends Component{
 
 						</div>
 
-						<div className="col-lg-8 col-md-6 col-sm-6 col-xs-6 noPad">
+						<div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 noPad">
 
 						
 					   		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
@@ -974,7 +974,7 @@ class BasicInfo extends Component{
 
 					</div>
 
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 ">
+					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad ">
 						<div className="col-lg-4 noPad pt28">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 noPad">
 									 <b>Pincode </b>
@@ -995,13 +995,13 @@ class BasicInfo extends Component{
 								</div>
 						</div>
 
-							<div className=" col-lg-1 col-md-1 col-sm-1 col-xs-1">
+							<div className=" col-lg-1 col-md-1 col-sm-1  col-xs-1 ">
 								<div className="vl"></div>
 									<span className="">OR</span>
 								<div className="vl"></div>
 							</div>
 
-							<div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad">
+							<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
 								<div className="col-lg-12 noPad">
 									<div className="col-lg-6">
 									    <div className="form-group" id="">
@@ -1156,7 +1156,7 @@ class BasicInfo extends Component{
 
 			  </div>
 				  
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row noPad">
 
 
 					 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad" >

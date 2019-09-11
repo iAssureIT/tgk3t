@@ -286,7 +286,7 @@ import './MyPostedProperties.css';
 											</div>
 											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 												<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
-												<span className="propertySubText1">{myProperty.floor? myProperty.floor :"-"}  /  {myProperty.floor? myProperty.totalFloor :"-"}</span><br/>Floor / Total Floors
+												<span className="propertySubText1">{myProperty.propertyDetails.floor? myProperty.propertyDetails.floor :"-"}  /  {myProperty.propertyDetails.floor? myProperty.propertyDetails.totalFloor :"-"}</span><br/>Floor / Total Floors
 											</div>
 											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 												<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;
@@ -294,16 +294,16 @@ import './MyPostedProperties.css';
 											</div>
 										</div>
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">				
 												Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
 											</div>
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
-												Possession by : <span className="propertySubText2">{myProperty.propertyDetails ? myProperty.propertyDetails.availableFrom : "-"}</span>
+											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad ">				
+												Possession by : <span className="propertySubText2">{myProperty.financial ? myProperty.financial.availableFrom : "-"}</span>
 											</div>
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">				
 												<button className="col-lg-8 pull-right btn btn-primary" id={myProperty._id} data-toggle="modal" data-target="#postPropertyModal" onClick={this.editProperty.bind(this)} > Edit Property</button> 
 											</div>
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 pull-right">				
+											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right">				
 	                                      		<Link to={"/PropertyProfile/"+myProperty._id} target="_blank">
 													<button className="btn pull-right btnDetails">Details &nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>
 												</Link>

@@ -775,7 +775,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					</div>
 			  	</div>
 			  	<div className="col-lg-1 col-md-2 col-sm-12 col-xs-12 ">
-			    	<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12">.</label>				  
+			    	<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 dotColor">.</label>				  
 					<button className="btn btn-primary" onClick={this.handleAvailability.bind(this)}>Add Slot +</button>					  	
 				</div> 
 		  	</div>
@@ -794,7 +794,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 			<div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 backGround">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 contentHolder autoHeight">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp noPad">
+                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm compinfotp ">
                   {this.state.imgArrayWSaws==null?
                     null
                   :
@@ -844,9 +844,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                           <div className="col-lg-offset-1 col-lg-2 col-md-12 col-sm-12 col-xs-12 hand_icon1">
                             <img src="/images/Upload-Icon.png"/>
                           </div>
-                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-10 below_text noPad">
+                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-12 col-xs-12 below_text noPad">
                            <b className="text_k11"></b>
-                           <span className="text-center under_ln col-lg-12 noPad">Choose Image</span>
+                           <span className="text-center under_ln col-lg-12 col-xs-12 noPad">Choose Image</span>
                            <div className="format1">Accepted formats: .jpg,.gif,.bmp,& .png <br/>Max size: 4 MB</div>
                           </div>      
                           <input  type="file" title="Click to attach file"  name="userPic" onChange={this.uploadPropertyImage.bind(this)} ref="propertyImg"  className="form-control click_input" id="upload-file2" />
@@ -869,9 +869,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                           <div className="col-lg-offset-1 col-lg-2 col-md-12 col-sm-12 col-xs-12 hand_icon2 move_hand_icon">
                             <img src="/images/Upload-Icon.png"/>
                           </div>
-                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-10 below_text noPad">
+                          <div  className= "col-lg-offset-1 col-lg-10 col-md-10 col-sm-10 col-xs-12 below_text noPad">
                            <b className="text_k11"></b>
-                           <span className="under_ln col-lg-12 noPad">Choose Video</span>
+                           <span className="under_ln col-lg-12 col-xs-12 noPad">Choose Video</span>
                            <div className="format2">Accepted formats: .mp4,.avi,.ogv <br/>Max size: 20 MB</div>
 
                           </div>      

@@ -27,10 +27,23 @@ import './PropertyDetails.css';
 				Amenities     	  : [],
 				allAmenities  	  : "",
 				prevAmenities 	  : "",
+				superAreaUnit 	  : "Sq Ft",
+				builtupAreaUnit 	  : "Sq Ft",
+				furnishedOptions    : [
+                          {name:"Directors Cabin",checked: false},
+                          {name:"Meeting Room",checked: false},
+                          {name:"Reception",checked: false},
+                        ],
+      			prevCharges     : "",
+      			workStation     : "",
+      			furnishPantry	    : "",
+
 			};
 			this.radioChange  = this.radioChange.bind(this);
 			this.radioChange1 = this.radioChange1.bind(this);
 			this.radioChange2 = this.radioChange2.bind(this);
+			this.radioChange3 = this.radioChange3.bind(this);
+			this.radioChange4 = this.radioChange4.bind(this);
 
 			console.log("this.props.updateStatus",this.props.updateStatus);
 			console.log("this.props.property_id",this.props.property_id);
@@ -70,6 +83,11 @@ import './PropertyDetails.css';
 												floor 			: response.data.propertyDetails.floor,
 												totalfloor 		: response.data.propertyDetails.totalFloor,
 												prevAmenities 	: response.data.propertyDetails.Amenities,
+												superAreaUnit 	: response.data.propertyDetails.superAreaUnit,
+												builtupAreaUnit 	: response.data.propertyDetails.builtupAreaUnit,
+												prevCharges 	: response.data.propertyDetails.prevCharges,
+												workStation 	: response.data.propertyDetails.workStation,
+												furnishPantry	 	: response.data.propertyDetails.furnishPantry,
 											});
 
 										// amenities
@@ -101,6 +119,32 @@ import './PropertyDetails.css';
 
 												});
 											// close here
+
+											//furnishedOptions
+											var furnishedOptions = this.state.furnishedOptions;
+						                    console.log("here furnishedOptions", furnishedOptions);
+						                    var furnishedOptionsList = furnishedOptions.map((item,index)=>{
+						                      var propPresent = this.state.prevCharges.find((obj)=>{
+						                        return item.name === obj
+						                      })
+						                      console.log("here propPresent ", propPresent);
+						                      var newObj = Object.assign({},item);
+						                      if(propPresent){
+						                        newObj.checked = true
+						                      }else{
+						                        newObj.checked = false
+						                      }
+						                      return newObj;
+
+						                   })
+
+						                    this.setState({
+						                      furnishedOptions : furnishedOptionsList,
+						                    },()=>{
+						                      console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
+
+						                    });
+						                    //close
 									})
 									.catch((error)=>{
 								                        console.log("error = ",error);
@@ -215,6 +259,17 @@ import './PropertyDetails.css';
 			event.preventDefault();
 
 			if(this.state.updateOperation === true){
+				//var furnishedOptionsData = this.state.furnishedOptions;
+			var furnishedOptionsData = this.state.furnishedOptions;
+        	var furnishedOptionsDataList =[];     
+            furnishedOptionsData.map((item,index)=>{
+              if(item.checked == true)
+              {
+                furnishedOptionsDataList.push(item.name);
+              }
+            })
+            //
+
 				console.log("update fun");
 				var ov = this.state.originalValues;
 
@@ -256,7 +311,7 @@ import './PropertyDetails.css';
 					this.state.furnishedstatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
 					 this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing 
 					 && this.state.superArea === ov.superArea && this.state.builtupArea === ov.builtupArea &&
-					 eq === true && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor)
+					 eq === true && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry )
 				{
 						console.log("same data");
 						this.props.redirectToFinancialDetails(this.props.uid,this.props.property_id);
@@ -277,7 +332,7 @@ import './PropertyDetails.css';
 										console.log("allAmenitiesDataList true",allAmenitiesDataList);
 
 
-					console.log("diff data");
+					// console.log("diff data");
 					const formValues = {
 					"bedrooms" 			: this.state.bedrooms,
 					"balconies" 		: this.state.balconies,
@@ -296,6 +351,12 @@ import './PropertyDetails.css';
 					"Amenities"			: allAmenitiesDataList,
 					"floor"         	: this.state.floor,
 					"totalFloor"    	: this.state.totalfloor,
+					"superAreaUnit"    	: this.state.superAreaUnit,
+					"builtupAreaUnit"    	: this.state.builtupAreaUnit,
+					"workStation"    	: this.state.workStation,
+					"furnishPantry"	    	: this.state.furnishPantry,	
+        			"furnishedOptions"    : furnishedOptionsDataList,
+
 
 					// "property_id" 		: localStorage.getItem("propertyId"),
 					// "uid" 				: localStorage.getItem("uid"),
@@ -340,7 +401,40 @@ import './PropertyDetails.css';
 
 				}
 			}else{
-				console.log("submit fun");
+				// console.log("submit fun");
+				//
+       		    var ov = this.state.originalValues;
+				var furnishedOptionsData = this.state.furnishedOptions;
+        		var furnishedOptionsDataList =[];     
+	            furnishedOptionsData.map((item,index)=>{
+	              if(item.checked == true)
+	              {
+	                furnishedOptionsDataList.push(item.name);
+	              }
+	            })
+
+	            console.log("furnishedOptionsDataList true",furnishedOptionsDataList);
+	            console.log("here result amenity",ov.furnishedOptions);
+
+	            // compare chcekbox data
+	            var eq =true;
+	            if(furnishedOptionsDataList.length != ov.furnishedOptions.length )
+	            {
+	              eq = false;
+	               console.log("equal not",eq);
+	            }else{
+	              
+	              for (var i = 0; i < furnishedOptionsDataList.length; i++)
+	              { 
+	                      if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+	                  eq = false;
+	                      }else{
+	                  eq = true;  
+	                      }
+	                 }
+	                  console.log("equal yes but same",eq); 
+	            }
+            //
 
 				console.log("allAmenities in result",this.state.allAmenities);
 				var allAmenitiesData = this.state.allAmenities;
@@ -374,11 +468,17 @@ import './PropertyDetails.css';
 					"Amenities"			: allAmenitiesDataList,
 					"floor"         	: this.state.floor,
 					"totalFloor"    	: this.state.totalfloor,
+					"superAreaUnit"    	: this.state.superAreaUnit,
+					"builtupAreaUnit"    	: this.state.builtupAreaUnit,
+					"workStation"    	: this.state.workStation,
+					"furnishPantry"	    	: this.state.furnishPantry,	
+                	"furnishedOptions"    : furnishedOptionsDataList,
+
 					// "property_id" 		: localStorage.getItem("propertyId"),
 					// "uid" 				: localStorage.getItem("uid"),
 				};
-				console.log("floor in submin",this.state.floor);
-				console.log("total in submit",this.state.totalfloor);
+				// console.log("floor in submin",this.state.floor);
+				// console.log("total in submit",this.state.totalfloor);
 				console.log("PropertyDetails req = ",formValues);
 				if( this.state.furnishedstatus!="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!="" &&
 				this.state.floor!=="" &&  this.state.totalfloor!=="" ){
@@ -431,6 +531,16 @@ import './PropertyDetails.css';
 		 radioChange2(event) {
 	    	this.setState({
 	      	"pantry": event.currentTarget.value,
+			    });
+		 }
+		 radioChange3(event) {
+	    	this.setState({
+	      	"workStation": event.currentTarget.value,
+			    });
+		 }
+		 radioChange4(event) {
+	    	this.setState({
+	      	"furnishPantry": event.currentTarget.value,
 			    });
 		 }
 
@@ -547,7 +657,50 @@ import './PropertyDetails.css';
 			  // console.log("Amenities1",this.state.Amenities);
 		  }
 
-		}		
+		}
+		totalInclude1(event){
+
+		  console.log("event.target.getAttribute('value')",event.target.getAttribute('value'));
+		      var checkedPropAskType=[];
+		      if(event.target.checked){
+		        checkedPropAskType = event.target.getAttribute('value');
+		      var furnishedOptions=this.state.furnishedOptions;
+		      for(let i=0; i <furnishedOptions.length; i++){
+		        for (let j=0; j < checkedPropAskType.length; j++) {
+		          if(furnishedOptions[i].name === checkedPropAskType){
+		            furnishedOptions[i].checked = true;
+		          }
+		        }
+		      }
+		      this.setState({
+		        furnishedOptions : furnishedOptions,
+		      },()=>{
+		        console.log("here furnishedOptions in function check ", this.state.furnishedOptions);
+		      });
+
+		        
+		      }else{
+
+		        checkedPropAskType = event.target.getAttribute('value');
+		        var furnishedOptions=this.state.furnishedOptions;
+		        for(let i=0; i <furnishedOptions.length; i++){
+		          for (let j=0; j < checkedPropAskType.length; j++){
+		            if(furnishedOptions[i].name === checkedPropAskType){
+		              furnishedOptions[i].checked = false;
+		            }
+		          }
+		        }
+		        this.setState({
+		          furnishedOptions : furnishedOptions,
+		        },()=>{
+		          console.log("here furnishedOptions in function uncheck ", this.state.furnishedOptions);
+
+		        });
+
+		       
+		      }
+
+}		
 
 	render() {
 	   	return (
@@ -726,9 +879,9 @@ import './PropertyDetails.css';
 					  		<span className="astrick">*</span>
 					  	</div>
 				    </div>
-					<div className="col-lg-10 col-md-10 col-sm-10 col-xs-12 pl29">	
+					<div className="col-lg-12 col-md-12 col-sm-10 col-xs-12 pl29">	
 							 
-						<label className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12 ">
+						<label className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12 ">
 					        <input type="radio"
 					             name="optradio"  
 					             value="Fully furnished" 
@@ -738,7 +891,7 @@ import './PropertyDetails.css';
 					      <span className="mb5">Fully furnished</span> 
 
 					    </label>
-					    <label className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12">
+					    <label className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12">
 					      	<input type="radio" 
 					      		 name="optradio" 
 					      		 value="Semi furnished" 
@@ -759,6 +912,108 @@ import './PropertyDetails.css';
 
 					    </label>
 					</div>
+					{
+			          this.state.furnishedstatus === "Fully furnished" || this.state.furnishedstatus === "Semi furnished" ?
+			         
+			          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm mt-10">
+			            
+			          {this.state.furnishedOptions && this.state.furnishedOptions.length > 0 ?
+			            this.state.furnishedOptions.map((data,index)=>{
+			              return (
+			                    <div className="col-lg-4 marTopBtm" key={index}>
+			                      
+			                      <label className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
+			                      <input type="checkbox"
+			                          value={data.name}
+			                          id={index}
+			                          name="userCheckbox"
+			                          onChange={this.totalInclude1.bind(this)} 
+			                          checked={data.checked}
+			                          />
+			                      <span className="checkmark1"></span>
+			                      </label>
+			                    </div>
+
+			                    
+			                );
+			            })
+			            :
+			            null
+			          }
+			          <div className="col-lg-12 col-md-4 col-sm-4 col-xs-4 mt-10">
+								    <span htmlFor="" className="mb7 col-lg-12 row">Work Stations</span>
+									<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								        <input type="radio"
+								             name=""  
+								             value="0" 
+								      		 checked={this.state.workStation === "0"}
+						   					 onChange={this.radioChange3}
+								      		/>
+								        <span className="mb5">0</span> 
+
+								    </label>
+								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								        <input type="radio"
+								             name=""  
+								             value="1" 
+								      		 checked={this.state.workStation === "1"}
+						   					 onChange={this.radioChange3}
+								      		/>
+								        <span className="mb5">1</span> 
+
+								    </label>
+
+								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								        <input type="radio"
+								             name=""  
+								             value="2" 
+								      		 checked={this.state.workStation === "2"}
+						   					 onChange={this.radioChange3}
+								      		/>
+								        <span className="mb5">2</span> 
+
+								    </label>
+								</div>
+
+								<div className="col-lg-12 col-md-4 col-sm-4 col-xs-4 mt-10">
+								    <span htmlFor="" className="mb7 col-lg-12 row">Pantry</span>
+									<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								        <input type="radio"
+								             name=""  
+								             value="Dry" 
+								      		 checked={this.state.furnishPantry === "Dry"}
+						   					 onChange={this.radioChange4}
+								      		/>
+								        <span className="mb5">Dry</span> 
+
+								    </label>
+								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								        <input type="radio"
+								             name=""  
+								             value="Wet" 
+								      		 checked={this.state.furnishPantry === "Wet"}
+						   					 onChange={this.radioChange4}
+								      		/>
+								        <span className="mb5">Wet</span> 
+
+								    </label>
+
+								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								        <input type="radio"
+								             name=""  
+								             value="Not Available" 
+								      		 checked={this.state.furnishPantry === "Not Available"}
+						   					 onChange={this.radioChange4}
+								      		/>
+								        <span className="mb5">Not Available</span> 
+
+								    </label>
+								</div>
+			        </div>
+			        :
+			        null
+        
+					}
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 itIs ">
 					  		<b>It is</b>
@@ -817,7 +1072,17 @@ import './PropertyDetails.css';
 				                    </div>
 						    			<input type="text" className="form-control" name="superArea" value={this.state.superArea} ref="superArea" placeholder="Super Area" min="0" id="first" onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} onBlur={this.builtArea.bind(this)}/>	
 						  			<div className="input-group-addon inputIcon">
-				                     Sq ft
+					                     <select value={this.state.superAreaUnit} name="superAreaUnit" onChange={this.handleChange.bind(this)} >
+					                     	<option value="Sq Ft">Sq Ft</option>
+					                    	<option value="Sq Meter">Sq Meter</option>
+					                    	<option value="Guntha">Guntha</option>
+					                    	<option value="Acre">Acre</option>
+					                    	<option value="Sq Yard">Sq Yard</option>
+					                    	<option value="Bigha">Bigha</option>
+					                    	<option value="Hectare">Hectare</option>
+					                    	<option value="Marla">Marla</option>
+					                    	<option value="Kanal">Kanal</option>
+					                     </select>
 				                    </div>
 						  		</div>
 						  	</div>
@@ -832,7 +1097,17 @@ import './PropertyDetails.css';
 				                    </div>
 							    	<input type="text" className="form-control" ref="builtupArea" name="builtupArea" value={this.state.builtupArea}  onChange={this.handleChange.bind(this)} placeholder="Built Up Area" min="0" max="20000" id="second" onKeyDown={this.isNumberKey.bind(this)} onBlur={this.builtArea.bind(this)}/>
 							  		<div className="input-group-addon inputIcon">
-				                     Sq ft
+				                    	<select value={this.state.builtupAreaUnit} name="builtupAreaUnit" onChange={this.handleChange.bind(this)} >
+					                     	<option value="Sq Ft">Sq Ft</option>
+					                    	<option value="Sq Meter">Sq Meter</option>
+					                    	<option value="Guntha">Guntha</option>
+					                    	<option value="Acre">Acre</option>
+					                    	<option value="Sq Yard">Sq Yard</option>
+					                    	<option value="Bigha">Bigha</option>
+					                    	<option value="Hectare">Hectare</option>
+					                    	<option value="Marla">Marla</option>
+					                    	<option value="Kanal">Kanal</option>
+					                     </select>
 				                    </div>
 							  </div>
 							</div>

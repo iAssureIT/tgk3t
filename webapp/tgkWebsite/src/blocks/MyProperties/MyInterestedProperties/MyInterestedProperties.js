@@ -260,7 +260,7 @@ import './MyInterestedProperties.css';
 												</div>
 												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
-													<span className="propertySubText1">{myProperty.floor? myProperty.floor :"-"}  /  {myProperty.floor? myProperty.totalFloor :"-"}</span><br/>Floor / Total Floors
+													<span className="propertySubText1">{myProperty.propertyDetails.floor? myProperty.propertyDetails.floor :"-"}  /  {myProperty.propertyDetails.floor? myProperty.propertyDetails.totalFloor :"-"}</span><br/>Floor / Total Floors
 												</div>
 												<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 													<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;

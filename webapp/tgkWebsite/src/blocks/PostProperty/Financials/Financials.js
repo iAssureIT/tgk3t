@@ -34,16 +34,17 @@ class Financials extends Component{
       availableFrom: "",
       // startDate : new Date(),
       startDate : "",
+      measurementUnit : "Sq Ft",
       };
 
-      console.log("this.props.updateStatus",this.props.updateStatus);
-      console.log("this.props.property_id",this.props.property_id);
+      // console.log("this.props.updateStatus",this.props.updateStatus);
+      // console.log("this.props.property_id",this.props.property_id);
       if(this.props.updateStatus === true){
 
            axios
           .get('/api/properties/'+this.props.property_id)
           .then( (response) =>{
-           console.log("response.data.financial.maintenancePer ",response.data.financial.expectedRate);
+           // console.log("response.data.financial.maintenancePer ",response.data.financial.expectedRate);
 
             var availableFrom = new Date();
             if(response.data.financial.availableFrom!=="" & response.data.financial.availableFrom!==null && response.data.financial.availableFrom!==undefined){
@@ -55,24 +56,25 @@ class Financials extends Component{
 
 
            this.setState({
-               originalValues: response.data.financial,
-               expectedRate  : response.data.financial.expectedRate,
-               totalPrice    : response.data.financial.totalPrice,
-               monthlyRent   : response.data.financial.monthlyRent,
-               depositAmount : response.data.financial.depositAmount,
-               prevCharges   : response.data.financial.includeCharges,
-               updateOperation : true,
-               startDate     : availableFrom,
-               description   :   response.data.financial.description ,
+               originalValues     : response.data.financial,
+               expectedRate       : response.data.financial.expectedRate,
+               totalPrice         : response.data.financial.totalPrice,
+               monthlyRent        : response.data.financial.monthlyRent,
+               depositAmount      : response.data.financial.depositAmount,
+               prevCharges        : response.data.financial.includeCharges,
+               updateOperation    : true,
+               startDate          : availableFrom,
+               description        : response.data.financial.description ,
                maintenanceCharges : response.data.financial.maintenanceCharges,
                maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
+               measurementUnit       : response.data.financial.measurementUnit ,
           
 
            },()=>{
                     });
 
 
-                     var includeCharges = this.state.includeCharges;
+                    var includeCharges = this.state.includeCharges;
                     console.log("here includeCharges", includeCharges);
                     var includeChargesList = includeCharges.map((item,index)=>{
                       var propPresent = this.state.prevCharges.find((obj)=>{
@@ -180,7 +182,7 @@ $('#maintenanceCharges').keyup(function(event) {
 
 updateUser(event){
   event.preventDefault();
-  console.log("this.state.expectedRate",this.state.expectedRate);
+  // console.log("this.state.expectedRate",this.state.expectedRate);
    
   // console.log("Financials req = ",formValues);
   console.log("updateOperation",this.state.updateOperation);
@@ -198,10 +200,10 @@ updateUser(event){
               }
             })
 
-            console.log("includeChargesDataList true",includeChargesDataList);
-            console.log("this.state.availableFrom",this.state.availableFrom);
+            // console.log("includeChargesDataList true",includeChargesDataList);
+            // console.log("this.state.availableFrom",this.state.availableFrom);
 
-            console.log("maintenanceCharges",this.state.maintenanceCharges);
+            // console.log("maintenanceCharges",this.state.maintenanceCharges);
 
         const formValues = {
         "expectedRate"        : this.state.expectedRate.replace(/,/g, ''),
@@ -213,6 +215,7 @@ updateUser(event){
         "includeCharges"      : includeChargesDataList,
         "maintenanceCharges"  : this.state.maintenanceCharges.replace(/,/g, ''),
         "maintenancePer"      : this.state.maintenancePer,
+        "measurementUnit"     : this.state.measurementUnit,  
         "property_id"         : localStorage.getItem("propertyId"),
         "uid"                 : localStorage.getItem("uid"),
 
@@ -244,8 +247,8 @@ updateUser(event){
               }
             })
 
-            console.log("includeChargesDataList true",includeChargesDataList);
-            console.log("here result amenity",ov.includeCharges);
+            // console.log("includeChargesDataList true",includeChargesDataList);
+            // console.log("here result amenity",ov.includeCharges);
 
             // compare chcekbox data
             var eq =true;
@@ -354,6 +357,7 @@ updateUser(event){
                 "includeCharges"      : includeChargesDataList,
                 "maintenanceCharges"  : maintenanceCharges,
                 "maintenancePer"      : this.state.maintenancePer,
+                "measurementUnit"        : this.state.measurementUnit,  
                 "property_id"         : localStorage.getItem("propertyId"),
                 "uid"                 : localStorage.getItem("uid"),
 
@@ -559,7 +563,17 @@ return (
                   {console.log("here",this.state.expectedRate)}
                   <input type="text" className="form-control" ref="expectedrate" name="expectedRate" value={this.state.expectedRate} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} onBlur={this.checkValue1.bind(this)} id="expRate" placeholder="Expected Rate" min="0"/>
                  <div className="input-group-addon inputIcon">
-                 /Sq ft
+                    <select value={this.state.measurementUnit} name="measurementUnit" onChange={this.handleChange.bind(this)} >
+                        <option value="Sq Ft">Sq Ft</option>
+                        <option value="Sq Meter">Sq Meter</option>
+                        <option value="Guntha">Guntha</option>
+                        <option value="Acre">Acre</option>
+                        <option value="Sq Yard">Sq Yard</option>
+                        <option value="Bigha">Bigha</option>
+                        <option value="Hectare">Hectare</option>
+                        <option value="Marla">Marla</option>
+                        <option value="Kanal">Kanal</option>
+                    </select>
                 </div>
               </div>
           </div>

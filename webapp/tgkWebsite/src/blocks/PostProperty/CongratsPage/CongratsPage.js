@@ -181,23 +181,23 @@ import './CongratsPage.css';
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<img src="/images/fireworks.png" className="col-lg-3 col-xs-12" style={{height:"154px"}} />
-					<p className="col-lg-6 CP1">Congratulations</p>
+					<p className="col-lg-6  CP1">Congratulations</p>
 					<img src="/images/fireworks.png" className="col-lg-3 col-xs-12" style={{height:"154px"}} />
 				</div>
 				<p className="col-lg-12 CP2">Your Property is <b className="fontColor">FAST SELLING HOT POTATO</b></p>
 				<p className="col-lg-12 CP3">and qualifies for a <b className="fontColor">{this.state.percentage!="" ? this.state.percentage+"%" : null}</b> brokerage to be paid by us on successful deal through us </p>
-				<div className="col-lg-12 CP4 col-xs-12">
-					<img src="/images/meter.png" className="" />
+				<div className="col-lg-6 col-lg-offset-3 CP4 col-xs-12">
+					<img src="/images/meter.png" className="col-lg-12 col-xs-12" />
 					{this.props.congratsPage === true?
-						<img src="/images/needle1.png" className="needle " style={{transform: "rotate("+this.state.per+"deg)",transformOrigin: "90% 55%",transition : "transform 3s",transitionDelay: "1s"}} />
+						<img src="/images/needle1.png" className="needle col-lg-5 col-xs-5 " style={{transform: "rotate("+this.state.per+"deg)",transformOrigin: "90% 55%",transition : "transform 3s",transitionDelay: "1s"}} />
 						:
 						null
 						
 					}
 
-					<b className="col-lg-12 CP5">Sell-O-Meter</b>
+					<b className="col-lg-12 col-xs-12 CP5">Sell-O-Meter</b>
 				</div>
-				<p className="col-lg-12 CP6">Your Property <b className="congColor">Successfully</b> submitted & will be published soon!!!</p>
+				<p className="col-lg-12 col-xs-12 CP6">Your Property <b className="congColor">Successfully</b> submitted & will be published soon!!!</p>
 				<div>
 					 <button className="btn btn-primary CP7 pull-right" onClick={this.redirectToProfile.bind(this)}>Profile Preview</button>
 				</div>
