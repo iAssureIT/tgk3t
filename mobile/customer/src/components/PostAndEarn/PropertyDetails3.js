@@ -81,7 +81,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   {label:"Hectare", value:"Hectare"},
                   {label:"Marla", value:"Marla"},
                   {label:"Kanal", value:"Kanal"}],
-      unit : 'Sq ft',
+      unit1 : 'Sq ft',
+      unit2 : 'Sq ft',
       floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
       totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
       floor: 'Basement',
@@ -91,6 +92,7 @@ export default class PropertyDetails3 extends ValidationComponent{
       iconType: 'material-community',
       allAmenities:[],
       isChecked: true,
+      btnLoading : false,
      /* expectedRate : '',
       totalAsk : '',
       totalAskIndex : 0,
@@ -114,6 +116,7 @@ export default class PropertyDetails3 extends ValidationComponent{
   }
 
    componentDidMount(){
+    
     axios
       .get('http://qatgk3tapi.iassureit.com/api/masteramenities/list')
       .then(
@@ -175,7 +178,11 @@ export default class PropertyDetails3 extends ValidationComponent{
     // this.setState({internalAmenities});
   }
 
-  submitFun(){
+  submitDataFun(event){
+    // this.setState({
+    //   btnLoading : true,
+    // })
+    console.log("here btn pressed");
      const formValues = {
        
         "floor"           : this.state.floor,
@@ -186,7 +193,8 @@ export default class PropertyDetails3 extends ValidationComponent{
         "yearsOld"        : this.state.yearsOld,
         "propertyFacing"  : this.state.propertyFacing,
         "superArea"       : this.state.superArea,
-        "unit"            : this.state.unit,
+        "unit1"            : this.state.unit1,
+        "unit2"            : this.state.unit2,
         "builtArea"       : this.state.builtArea,
 
         // "uid"         : localStorage.getItem("uid"),
@@ -470,8 +478,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelTextFull}
                   style               = {styles.ddStyle}
                   data                = {this.state.UnitData}
-                  value               = {this.state.unit}
-                  onChangeText        = {unit => {this.setState({unit});}}
+                  value               = {this.state.unit1}
+                  onChangeText        = {unit1 => {this.setState({unit1});}}
                 />
               </View>
             </View>
@@ -517,8 +525,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelTextFull}
                   style               = {styles.ddStyle}
                   data                = {this.state.UnitData}
-                  value               = {this.state.unit}
-                  onChangeText        = {unit => {this.setState({unit});}}
+                  value               = {this.state.unit2}
+                  onChangeText        = {unit2 => {this.setState({unit2});}}
                 />
               </View>
             </View>
@@ -539,7 +547,7 @@ export default class PropertyDetails3 extends ValidationComponent{
 
             <Text style={[styles.heading3,styles.marginBottom5]}>All Amenities </Text>
             
-            <View style={[styles.marginBottom15]}>
+            <View style={[styles.marginBottom15,{}]}>
               {this.state.allAmenities && this.state.allAmenities.length >0 ?
                 this.state.allAmenities.map((data,index)=>(
                 <React.Fragment key={index}>
@@ -573,22 +581,51 @@ export default class PropertyDetails3 extends ValidationComponent{
             </View>
 
 
-
             <Button
-              onPress         = {this.submitFun.bind(this)}
-              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails4')}
+              
+              onPress         = {this.submitDataFun.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('OTPScreen')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
               iconRight
               icon = {<Icon
-                name="chevrons-right" 
-                type="feather"
-                size={22}
-                color="white"
+              name="chevrons-right" 
+              type="feather"
+              size={22}
+              color="white"
               />}
             />
+
+             {/*this.state.btnLoading
+                ?
+                  <Button
+                    titleStyle      = {styles.buttonText}
+                    title           = "Processing"
+                    loading
+                    buttonStyle     = {styles.button}
+                    containerStyle  = {styles.buttonContainer}
+                  />
+                :
+                 <Button
+                    onPress         = {this.submitFun.bind(this)}
+                    titleStyle      = {styles.buttonText}
+                    title           = "Save & Next"
+                    buttonStyle     = {styles.button}
+                    containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+                    iconRight
+                    icon = {<Icon
+                      name="chevrons-right" 
+                      type="feather"
+                      size={22}
+                      color="white"
+                    />}
+                  />
+                */}
+
+
+                
 
           </View>
         </ScrollView>

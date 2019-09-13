@@ -89,6 +89,23 @@ export default class MobileScreen extends ValidationComponent {
         }
 	}
 
+  handleMobileChange(value){
+    // console.log("value = ",value);
+    if(value.startsWith && value.startsWith('+')){
+      value = value.substr(3);
+    }
+    let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    // let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    console.log("x value = ",x);
+    // let y = !x[2] ? x[1] : x[1]+'-'+x[2];
+    let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
+    // let y = '+1 '+x[1]+'-'+x[2]+'-'+x[3];
+    // console.log("y value = ",y)
+    this.setState({
+      mobileNumber : y,
+    });
+  }
+
 	render() {
 		const { navigation } = this.props;
     	let {activeBtn} = this.state;
@@ -174,7 +191,7 @@ export default class MobileScreen extends ValidationComponent {
              animationOutTiming={500}>
                 <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
                   <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
-                    <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+                    <Icon size={30} name='window-close' type='fontAwesome5' color='#fff' style={{}}/>
                   </View>
                   <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
                     Please enter Mobile Number

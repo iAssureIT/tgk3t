@@ -168,9 +168,9 @@ export default class MobileScreen extends ValidationComponent {
              animationOutTiming={500}>
                 <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
                   <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
-                    <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+                    <Icon size={30} name='window-close' type='fontAwesome5' color='#fff' style={{}}/>
                   </View>
-                  <Text style={{fontFamily:'Montserrat-Regular',fontSize:15,textAlign:'center',marginTop:20}}>
+                  <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
                    Please enter OTP
                   </Text>
 
@@ -194,9 +194,9 @@ export default class MobileScreen extends ValidationComponent {
              animationOutTiming={500}>
                 <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
                   <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
-                    <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+                    <Icon size={30} name='window-close' type='fontAwesome5' color='#fff' style={{}}/>
                   </View>
-                  <Text style={{fontFamily:'Montserrat-Regular',fontSize:15,textAlign:'center',marginTop:20}}>
+                  <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
                    Sorry, Your OTP is not Matching,Please try again!
                   </Text>
 

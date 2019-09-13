@@ -37,7 +37,10 @@ export default class PropertySuccess extends ValidationComponent{
   render(){
 
     const { navigation } = this.props;
-    
+
+    let prop = {
+        imageSource : require('../../images/p1.png'),
+      }
 
     return (
       <React.Fragment>
@@ -86,6 +89,20 @@ export default class PropertySuccess extends ValidationComponent{
             </Text>
           </View>
 
+            <Button
+              onPress         = {()=>this.props.navigation.navigate('PropertyDetails',{image:prop.imageSource})}
+              titleStyle      = {styles.buttonText}
+              title           = "Property Details"
+              buttonStyle     = {styles.button}
+              containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+              iconRight
+              icon = {<Icon
+                name="chevrons-right" 
+                type="feather"
+                size={22}
+                color="white"
+              />}
+            />
           </View>
         </ScrollView>
       

@@ -4,9 +4,9 @@ import Home from '../components/Home/Home.js';
 import SideMenu from '../layouts/SideMenu/SideMenu.js';
 import SignUp from '../components/SystemSecurity/SignUp/SignUp.js';
 import PropertyDetails1 from '../components/PostAndEarn/PropertyDetails1.js';
-import PropertyDetails2 from '../components/PostAndEarn/PropertyDetails2.js';
+// import PropertyDetails2 from '../components/PostAndEarn/PropertyDetails2.js';
 import PropertyDetails3 from '../components/PostAndEarn/PropertyDetails3.js';
-import PropertyDetails4 from '../components/PostAndEarn/PropertyDetails4.js';
+// import PropertyDetails4 from '../components/PostAndEarn/PropertyDetails4.js';
 import PropertyDetails5 from '../components/PostAndEarn/PropertyDetails5.js';
 import PropertyDetails6 from '../components/PostAndEarn/PropertyDetails6.js';
 import PropertyDetails7 from '../components/PostAndEarn/PropertyDetails7.js';
@@ -45,24 +45,24 @@ const HomeStack = createStackNavigator({
       header: null
     }
   },
-  PropertyDetails2:{
-    screen: PropertyDetails2,
-    navigationOptions: {
-      header: null
-    }
-  },
+  // PropertyDetails2:{
+  //   screen: PropertyDetails2,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
    PropertyDetails3:{
     screen: PropertyDetails3,
     navigationOptions: {
       header: null
     }
   },
-  PropertyDetails4:{
-    screen: PropertyDetails4,
-    navigationOptions: {
-      header: null
-    }
-  },
+  // PropertyDetails4:{
+  //   screen: PropertyDetails4,
+  //   navigationOptions: {
+  //     header: null
+  //   }
+  // },
   PropertyDetails5:{
     screen: PropertyDetails5,
     navigationOptions: {

@@ -54,6 +54,7 @@ export default class PropertyDetails extends ValidationComponent{
       
     const { navigation } = this.props;
     let imageSource = navigation.state.params.image;
+    console.log("imageSource",imageSource);
     let {activeBtn,activePropType,activeRoomIndex} = this.state;
 
     let overviewData = [

@@ -140,11 +140,11 @@ export default StyleSheet.create({
     marginVertical:5,
   },
   inputTextWrapperM : {
-    width:'55%',
+    width:'68%',
     justifyContent:'center'
   },
   inputRightWrapper1:{
-    width:'33%',
+    width:'20%',
     // justifyContent:'center',
     // alignItems:'center',
     borderLeftWidth:1,

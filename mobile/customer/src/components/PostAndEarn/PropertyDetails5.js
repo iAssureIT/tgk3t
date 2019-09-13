@@ -42,7 +42,17 @@ export default class PropertyDetails5 extends ValidationComponent{
       },
       {
         value: 'Yearly'
-      }]
+      }],
+       UnitData  : [{label:"Sq ft", value:"Sq ft"},
+                  {label:"Sq Meter", value:"Sq Meter"},
+                  {label:"Guntha", value:"Guntha"},
+                  {label:"Acre", value:"Acre"},
+                  {label:"Sq-Yrd", value:"Sq-Yrd"},
+                  {label:"Bigha", value:"Bigha"},
+                  {label:"Hectare", value:"Hectare"},
+                  {label:"Marla", value:"Marla"},
+                  {label:"Kanal", value:"Kanal"}],
+      unit1 : 'Sq ft',
     };
   }
 
@@ -133,7 +143,7 @@ export default class PropertyDetails5 extends ValidationComponent{
               </View>
             </View>*/}
 
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+           {/* <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
@@ -162,7 +172,56 @@ export default class PropertyDetails5 extends ValidationComponent{
               <View style={styles.inputRightWrapper}>
                 <Text style={styles.inputText}>Sq ft</Text>
               </View>
+            </View>*/}
+
+
+             <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapperM}>
+                <TextField
+                  label                 = "Expected Rate"
+                  onChangeText          = {expectedRate => {this.setState({expectedRate})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.expectedRate}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "numeric"
+                  maxLength             = {10}
+                />
+              </View>
+              <View style={[styles.inputRightWrapper1,{height:35}]}>
+                <Dropdown
+                  containerStyle      = {styles.dropHeight,{paddingLeft:5}}
+                  dropdownOffset      = {{top:0, left: 0}}
+                  itemTextStyle       = {styles.ddItemText}
+                  inputContainerStyle = {styles.ddInputContainer}
+                  labelHeight         = {10}
+                  tintColor           = {colors.button}
+                  labelFontSize       = {sizes.label}
+                  fontSize            = {15}
+                  baseColor           = {'#666'}
+                  textColor           = {'#333'}
+                  labelTextStyle      = {styles.ddLabelTextFull}
+                  style               = {styles.ddStyle}
+                  data                = {this.state.UnitData}
+                  value               = {this.state.unit1}
+                  onChangeText        = {unit1 => {this.setState({unit1});}}
+                />
+              </View>
             </View>
+
 
             <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>

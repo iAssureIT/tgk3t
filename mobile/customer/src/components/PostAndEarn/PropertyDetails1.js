@@ -106,7 +106,9 @@ export default class PropertyDetails1 extends ValidationComponent{
   }
 
   setActive = (name)=>{
-    this.setState({activeTab:name});
+    console.log("console name propertyHolder",name);
+    this.setState({activeTab:name ,
+                   propertyHolder: name });
   }
 
   onToggle=()=>{
@@ -577,13 +579,35 @@ export default class PropertyDetails1 extends ValidationComponent{
 
           {/*here end*/}
 
+                      {/*  {this.state.btnLoading
+                ?
+                  <Button
+                    titleStyle      = {styles.buttonText}
+                    title           = "Processing"
+                    loading
+                    buttonStyle     = {styles.button}
+                    containerStyle  = {styles.buttonContainer}
+                  />
+                :
+                  <Button
+                    onPress         ={this.login.bind(this)}
+                    titleStyle      = {styles.buttonText}
+                    title           = "Sign In"
+                    buttonStyle     = {styles.button}
+                    containerStyle  = {styles.buttonContainer}
+                  />
+                }*/}
 
+
+
+          {/* <TouchableOpacity >*/}
+                
             <Button
             
               onPress         = {this.submitFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
               titleStyle      = {styles.buttonText}
-              title           = "Save & Next"
+              title           = "Save & Next >>"
               buttonStyle     = {styles.button}
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
               iconRight
@@ -594,6 +618,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                 color="white"
               />}
             />
+            {/* </TouchableOpacity>*/}
 
           </View>
         </ScrollView>
