@@ -102,7 +102,7 @@ export default class MobileScreen extends ValidationComponent {
     // let y = '+1 '+x[1]+'-'+x[2]+'-'+x[3];
     // console.log("y value = ",y)
     this.setState({
-      mobileNumber : y,
+      mobile : y,
     });
   }
 
@@ -139,7 +139,7 @@ export default class MobileScreen extends ValidationComponent {
               <View style={styles.inputImgWrapper}>
                 <Icon name="mobile" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
-              <View style={[styles.inputRightWrapperNoBorder,styles.borderRight,{height:35}]}>
+       {/*       <View style={[styles.inputRightWrapperNoBorder,styles.borderRight,{height:35}]}>
                 <Dropdown
                   containerStyle      = {styles.dropHeight,{paddingLeft:5}}
                   dropdownOffset      = {{top:0, left: 0}}
@@ -157,11 +157,11 @@ export default class MobileScreen extends ValidationComponent {
                   value               = {this.state.unitCode}
                   onChangeText        = {unitCode => {this.setState({unitCode});}}
                 />
-              </View>
-              <View style={styles.inputTextWrapperM}>
+              </View>*/}
+              <View style={styles.inputTextWrapper}>
                 <TextField
                   label                 = "Mobile no"
-                  onChangeText          = {mobile => {this.setState({mobile})}}
+                  onChangeText          = {(mobile) => {this.setState({ mobile },()=>{}),this.handleMobileChange(mobile)}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}
                   inputContainerPadding = {0}
@@ -183,6 +183,7 @@ export default class MobileScreen extends ValidationComponent {
               
             </View>
 
+        
              <Modal isVisible={this.state.openModal} 
              onBackdropPress={() => this.setState({ openModal: false })}
              coverScreen={true}

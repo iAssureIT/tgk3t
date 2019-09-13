@@ -94,14 +94,9 @@ export default class PropertySuccess extends ValidationComponent{
               titleStyle      = {styles.buttonText}
               title           = "Property Details"
               buttonStyle     = {styles.button}
-              containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+              containerStyle  = {[styles.buttonContainer,styles.marginBottom15,{marginTop:20}]}
               iconRight
-              icon = {<Icon
-                name="chevrons-right" 
-                type="feather"
-                size={22}
-                color="white"
-              />}
+            
             />
           </View>
         </ScrollView>

@@ -607,7 +607,7 @@ export default class PropertyDetails1 extends ValidationComponent{
               onPress         = {this.submitFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
               titleStyle      = {styles.buttonText}
-              title           = "Save & Next >>"
+              title           = "Save & Next"
               buttonStyle     = {styles.button}
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
               iconRight
