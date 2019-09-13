@@ -55,6 +55,7 @@ class BasicInfo extends Component{
       			},
 
       			originalValuesLocation : "",
+      			type 					:true
 
 			};
 			this.handleChange = this.handleChange.bind(this);
@@ -69,11 +70,12 @@ class BasicInfo extends Component{
 					.get('/api/properties/'+this.props.property_id)
 					.then( (res) =>{
 						console.log("get property = ",res);
-						console.log("get property code = ",res.data.propertyCode);
+						console.log("get property transactionType = ",res.data.transactionType);
 						this.setState({
 									originalValues  : res.data,
 									propertyHolder  : res.data.propertyHolder,
 					        		transactionType : res.data.transactionType,
+					        		type 			: res.data.transactionType==="Sell" ? true : false,
 									propertyType 	: res.data.propertyType,
 									propertySubType : res.data.propertySubType,
 									// floor 			: res.data.floor,
@@ -436,7 +438,7 @@ class BasicInfo extends Component{
 			}
 			    
 		}
-		selectType(event){
+		/*selectType(event){
 			var selectedData = event.target.getAttribute('data-checked');
 			console.log("selectedData",selectedData);
 
@@ -454,7 +456,22 @@ class BasicInfo extends Component{
               }); 
             
           }
-      }
+      }*/
+      	handleToggle(event){
+		    if (this.state.type===true){
+		      this.setState({
+		        type: false,
+		        transactionType:"Rent"
+		      })
+		    }
+		    else{
+		      this.setState({
+		        type: true,
+		        transactionType:"Sell"
+
+		      })
+		    }   
+		}
 	   radioChange(event) {
 	    	this.setState({
 	      	"propertyHolder": event.currentTarget.value,
@@ -817,7 +834,8 @@ class BasicInfo extends Component{
 
 
 	render() {
-
+		console.log("transactionType=>",this.state.transactionType);
+		console.log("type=>",this.state.type);
 		// "countryCode" 		: "IN",
 		// 		"stateCode" 		: this.state.stateCode,
 		// 		"districtName" 		: this.state.districtName,
@@ -869,7 +887,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType2"  >
+					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-1 sellerType2"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="Care Taker" 
@@ -882,7 +900,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType3"   >
+					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-1 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Broker" 
@@ -895,7 +913,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					      <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType4"   >
+					      {/*<div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType4"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Flatmate" 
@@ -906,14 +924,15 @@ class BasicInfo extends Component{
 						      		 />
 					  			<i className=" logo1"><img src="/images/broker.png" alt="" /></i>
 						    </label>
-					    </div>
+					    </div>*/}
+
 
 					</div>
 					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
-					  			<span className="col-lg-3 col-xs-3 ownerLeft "> Owner</span>
-					  			<span className="col-lg-3 col-xs-3 noPad"> Caretaker</span>
+					  			<span className="col-lg-4 col-xs-3 ownerLeft "> Owner</span>
+					  			<span className="col-lg-4 col-xs-3 noPad"> Caretaker</span>
 					  			<span className="col-lg-3 col-xs-3 noPad"> Broker</span>
-					  			<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>
+					  			{/*<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>*/}
 
 					  	</div>
          		
@@ -926,7 +945,7 @@ class BasicInfo extends Component{
 							 </div>
 
 
-				   			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">	    		
+				   			{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">	    		
 						  	 	<div className="form-group" id="">
 									<div className="can-toggle genderbtn demo-rebrand-2 " value={this.state.transactionType} onChange={this.selectType.bind(this)}>
 						              <input id="d" type="checkbox" />
@@ -936,7 +955,31 @@ class BasicInfo extends Component{
 						              </label>
 					            	</div>
 					            </div>
-							</div>
+							</div>*/}
+							<div className="container5 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">
+						        {this.state.type===true ?
+
+						         <div className="switch" onChange={this.handleToggle.bind(this)} >
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  checked />
+						            <label for="week" className="switch-label switch-label-off">SELL</label>
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month"  />
+						            <label for="month" className="switch-label switch-label-on">RENT</label>
+						            <span className="switch-selection"></span>
+						          </div>
+
+						          :
+
+						           <div className="switch" onChange={this.handleToggle.bind(this)} >
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"   />
+						            <label for="week" className="switch-label switch-label-off">SELL</label>
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" checked  />
+						            <label for="month" className="switch-label switch-label-on">RENT</label>
+						            <span className="switch-selection" ></span>
+						          </div>
+						       
+						      }
+						    
+						  </div>
 
 						</div>
 

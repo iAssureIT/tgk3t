@@ -64,6 +64,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				isLoading			: true,
 				originalValues      : '',
 				tempLoader 			: false,
+				type 				: true
 
 			};
    			
@@ -90,6 +91,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 								imgArrayWSaws 				: response.data.gallery.Images,
 								singleVideo 	    		: response.data.gallery.video ? response.data.gallery.video : "" ,
 								updateOperation     		: true,
+								type 						: response.data.contactPerson==="Someone" ? true : false,
 
 						 
 						},()=>{
@@ -298,7 +300,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		    
 			
 		}
-		selectType(event){
+		/*selectType(event){
           if(this.state.contactPerson === "Someone" )
             {
               this.setState(
@@ -314,7 +316,22 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
             
           }
           // console.log("contactPerson onchange",this.state.contactPerson);
-      }
+      }*/
+      handleToggle(event){
+		    if (this.state.type===true){
+		      this.setState({
+		        type: false,
+		        contactPerson:"Myself"
+		      })
+		    }
+		    else{
+		      this.setState({
+		        type: true,
+		        contactPerson:"Someone"
+
+		      })
+		    }   
+		}
 
       backToFinancials(){
 		// this.props.backToFinancials();
@@ -669,13 +686,39 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  	<div className="form-group" id="">
 			  	 		<label className="">Who will show?</label>
-					 	<div className="can-toggle1 genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
+					 	{/*<div className="can-toggle1 genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox"/>
 				              <label className="formLable" htmlFor="d">
 				             	 <div className="can-toggle1__switch" data-checked="Myself"  data-unchecked="Someone Else" ></div>
 				                <div className="can-toggle1__label-text"></div>
 				              </label>
-			            </div>
+			            </div>*/}
+
+			            <div className="container5 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">
+						        {this.state.type===true ?
+
+						         <div className="switch1" onChange={this.handleToggle.bind(this)} >
+						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"  checked />
+						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
+						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month"  />
+						            <label for="month" className="switch1-label switch1-label-on">Myself</label>
+						            <span className="switch1-selection"></span>
+						          </div>
+
+						          :
+
+						           <div className="switch1" onChange={this.handleToggle.bind(this)} >
+						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"   />
+						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
+						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month" checked  />
+						            <label for="month" className="switch1-label switch1-label-on">Myself</label>
+						            <span className="switch1-selection" ></span>
+						          </div>
+						       
+						      }
+						    
+						  </div>
+
 				  	</div>
 				  </div>
 				  

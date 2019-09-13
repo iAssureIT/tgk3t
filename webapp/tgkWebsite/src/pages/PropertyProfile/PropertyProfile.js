@@ -392,8 +392,8 @@ class PropertyProfile extends Component{
                             </ul>
                             <ul className="col-lg-5 col-md-5 col-sm-12 col-xs-12 bolder">   
                               <li className="col-lg-6 col-xs-6 noPad">Facing          </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
-                              <li className="col-lg-6 col-xs-6 noPad">Super Area      </li> <span className="col-lg-6  col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></span>
-                              <li className="col-lg-6 col-xs-6 noPad">Built up Area   </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></span>
+                              <li className="col-lg-6 col-xs-6 noPad">Super Area      </li> <span className="col-lg-6  col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>{this.state.propertyFeatures && this.state.propertyFeatures.superAreaUnit       ? <b>{this.state.propertyFeatures.superAreaUnit}       </b> : "-"}</b></span>
+                              <li className="col-lg-6 col-xs-6 noPad">Built up Area   </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>{this.state.propertyFeatures && this.state.propertyFeatures.builtupAreaUnit       ? <b>{this.state.propertyFeatures.builtupAreaUnit}       </b> : "-"}</b></span>
                               <li className="col-lg-6 col-xs-6 noPad">Floor           </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures.floor ? <b>{this.state.propertyFeatures.floor}</b> : "-"}</span>
                               <li className="col-lg-6 col-xs-6 noPad">Total Floors     </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures.totalFloor ? <b>{this.state.propertyFeatures.totalFloor}</b> : "-"}</span>
                               <li className="col-lg-6 col-xs-6 noPad">Age of Property </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty === "New" ? "0-1" : this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
@@ -469,7 +469,7 @@ class PropertyProfile extends Component{
                                           {this.state.pricing && this.state.pricing.expectedRate ?
                                             <b>
                                               <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
+                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}.</span>
                                             </b>
                                           : 
                                           <b>

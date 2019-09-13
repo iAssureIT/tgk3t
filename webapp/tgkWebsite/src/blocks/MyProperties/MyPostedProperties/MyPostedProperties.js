@@ -184,9 +184,9 @@ import './MyPostedProperties.css';
 					this.state.myProperties.map((myProperty,index)=>{
 						// console.log("here details",myProperty);
 					return(
-						<div key={index} id={myProperty._id} onClick={this.goProfile.bind(this)} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-xs-10 propertyBox ">			
-							<div className="row pull-right" id="triangle-topright">				</div>	
-									<div className="col-lg-3 col-md-3 col-sm-10 col-xs-10 noPad">				
+						<div key={index} id={myProperty._id} onClick={this.goProfile.bind(this)} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
+							<div className="row pull-right hidden-xs hidden-sm" id="triangle-topright">				</div>	
+									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
 										{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pull-right ">
 											<h5 className="col-lg-8 col-md-8 col-sm-12 col-xs-12 pull-right intrestBtn">
 												<i  className="fa fa-heart-o heartBtn" onClick={this.heartClick.bind(this)}></i>&nbsp;<span>{this.state.heartStatus}</span>
@@ -252,7 +252,7 @@ import './MyPostedProperties.css';
 											</div>	
 										</div>
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+											<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
 												{
 													myProperty.propertyType ==="Residential" ?
 													<span className="propertySubText1">
@@ -268,7 +268,7 @@ import './MyPostedProperties.css';
 													</span>
 												}
 											</div>
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">
+											<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
 												{
 													myProperty.propertyType ==="Residential" ?
 													<span className="propertySubText1">
@@ -284,18 +284,18 @@ import './MyPostedProperties.css';
 													</span>
 												}				
 											</div>
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+											<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
 												<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
 												<span className="propertySubText1">{myProperty.propertyDetails.floor? myProperty.propertyDetails.floor :"-"}  /  {myProperty.propertyDetails.floor? myProperty.propertyDetails.totalFloor :"-"}</span><br/>Floor / Total Floors
 											</div>
-											<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+											<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
 												<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;
 												<span className="propertySubText1">{myProperty.propertyDetails? myProperty.propertyDetails.facing :"-"}</span><br/>Facing
 											</div>
 										</div>
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
-											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">				
-												Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
+											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad ">				
+												Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;{myProperty.propertyDetails ? myProperty.propertyDetails.superAreaUnit : "-"}</b>
 											</div>
 											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad ">				
 												Possession by : <span className="propertySubText2">{myProperty.financial ? myProperty.financial.availableFrom : "-"}</span>

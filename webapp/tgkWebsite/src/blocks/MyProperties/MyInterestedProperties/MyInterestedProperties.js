@@ -162,7 +162,7 @@ import './MyInterestedProperties.css';
 						// console.log("here details",myProperty);
 					return(
 						<div key={index} id={myProperty._id} onClick={this.goProfile.bind(this)} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox ">			
-							<div className="row pull-right" id="triangle-topright">				</div>	
+							<div className="row pull-right hidden-xs hidden-sm" id="triangle-topright">				</div>	
 								<div className="row">
 									<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">				
 										{
@@ -269,7 +269,7 @@ import './MyInterestedProperties.css';
 											</div>
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
 												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
-													Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
+													Super Area : <b>{myProperty.propertyDetails ? myProperty.propertyDetails.superArea : "-"}&nbsp;{myProperty.propertyDetails ? myProperty.propertyDetails.superAreaUnit : "-"}</b>
 												</div>
 												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">				
 													Possession by : <span className="propertySubText2">{myProperty.financial ? myProperty.financial.availableFrom : "-"}</span>

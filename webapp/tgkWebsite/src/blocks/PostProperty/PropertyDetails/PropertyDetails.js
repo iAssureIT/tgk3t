@@ -28,7 +28,7 @@ import './PropertyDetails.css';
 				allAmenities  	  : "",
 				prevAmenities 	  : "",
 				superAreaUnit 	  : "Sq Ft",
-				builtupAreaUnit 	  : "Sq Ft",
+				builtupAreaUnit   : "Sq Ft",
 				furnishedOptions    : [
                           {name:"Directors Cabin",checked: false},
                           {name:"Meeting Room",checked: false},
@@ -84,10 +84,10 @@ import './PropertyDetails.css';
 												totalfloor 		: response.data.propertyDetails.totalFloor,
 												prevAmenities 	: response.data.propertyDetails.Amenities,
 												superAreaUnit 	: response.data.propertyDetails.superAreaUnit,
-												builtupAreaUnit 	: response.data.propertyDetails.builtupAreaUnit,
-												prevCharges 	: response.data.propertyDetails.prevCharges,
+												builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
+												prevCharges 	: response.data.propertyDetails.furnishedOptions,
 												workStation 	: response.data.propertyDetails.workStation,
-												furnishPantry	 	: response.data.propertyDetails.furnishPantry,
+												furnishPantry	: response.data.propertyDetails.furnishPantry,
 											});
 
 										// amenities
@@ -413,12 +413,13 @@ import './PropertyDetails.css';
 	              }
 	            })
 
-	            console.log("furnishedOptionsDataList true",furnishedOptionsDataList);
-	            console.log("here result amenity",ov.furnishedOptions);
+	            // console.log("furnishedOptionsDataList true",furnishedOptionsDataList);
+	            // console.log("this.state.furnishedOptions",this.state.furnishedOptions);
 
 	            // compare chcekbox data
 	            var eq =true;
-	            if(furnishedOptionsDataList.length != ov.furnishedOptions.length )
+	            // console.log("this.state.furnishedOptions.length",this.state.furnishedOptions.length);
+	            if(furnishedOptionsDataList.length !== this.state.furnishedOptions.length )
 	            {
 	              eq = false;
 	               console.log("equal not",eq);
@@ -913,7 +914,7 @@ import './PropertyDetails.css';
 					    </label>
 					</div>
 					{
-			          this.state.furnishedstatus === "Fully furnished" || this.state.furnishedstatus === "Semi furnished" ?
+			          (this.state.furnishedstatus === "Fully furnished" || this.state.furnishedstatus === "Semi furnished") && this.props.propertyType == "Commercial" ?
 			         
 			          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm mt-10">
 			            

@@ -140,7 +140,7 @@ width: 100%;
 .imgHeight{
   height: 130px !important;
 }*/
-blockquote, q {
+/*blockquote, q {
   quotes: none;
 }
 
@@ -222,7 +222,6 @@ q:before, q:after {
 }
 .switch-input:checked + .switch-label-on ~ .switch-selection {
   left: 60px;
-  /* Note: left: 50%; doesn't transition in WebKit */
 }
 
 .switch-selection {
@@ -268,3 +267,4 @@ q:before, q:after {
   background-image: linear-gradient(top, #e0dd94, #c4bb61);
 }
 
+*/

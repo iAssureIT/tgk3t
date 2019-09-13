@@ -30,6 +30,7 @@ var imgTitleArray = [];
 			originalValues      : '',
 			tempLoader 			: false,
       type : true,
+      transactionType:"Sell"
 
 
 		}
@@ -409,25 +410,24 @@ var imgTitleArray = [];
 
 	}
   handleToggle(event){
-    event.preventDefault();
-    
-    if (this.state.type=true){
-    this.setState = ({
-      type: false
-    })
-}
-else{
-   this.setState = ({
-      type: true
-})
+    if (this.state.type===true){
+      this.setState({
+        type: false,
+        transactionType:"Rent"
+      })
+    }
+    else{
+      this.setState({
+        type: true,
+        transactionType:"Sell"
 
-    
-  }
+      })
+    }   
 }
 	
 
 	render() {
-    console.log("singleVideo=>",this.state.singleVideo);
+    console.log("transitionType=>",this.state.transitionType);
 		console.log("type=>",this.state.type);
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -580,25 +580,25 @@ else{
 				  	</div>
 				</div>
 
-        <div class="container5">
+        <div className="container5">
         {this.state.type===true ?
 
-         <div class="switch" onChange={this.handleToggle.bind(this)} >
-            <input type="radio" class="switch-input" name="view" value="sell" id="week"  checked />
-            <label for="week" class="switch-label switch-label-off">SELL</label>
-            <input type="radio" class="switch-input" name="view" value="rent" id="month"  />
-            <label for="month" class="switch-label switch-label-on">RENT</label>
-            <span class="switch-selection"></span>
+         <div className="switch" onChange={this.handleToggle.bind(this)} >
+            <input type="radio" className="switch-input" name="view" value="sell" id="week"  checked />
+            <label for="week" className="switch-label switch-label-off">SELL</label>
+            <input type="radio" className="switch-input" name="view" value="rent" id="month"  />
+            <label for="month" className="switch-label switch-label-on">RENT</label>
+            <span className="switch-selection"></span>
           </div>
 
           :
 
-           <div class="switch" onChange={this.handleToggle.bind(this)} >
-            <input type="radio" class="switch-input" name="view" value="sell" id="week"   />
-            <label for="week" class="switch-label switch-label-off">SELL</label>
-            <input type="radio" class="switch-input" name="view" value="rent" id="month" checked  />
-            <label for="month" class="switch-label switch-label-on">RENT</label>
-            <span class="switch-selection" ></span>
+           <div className="switch" onChange={this.handleToggle.bind(this)} >
+            <input type="radio" className="switch-input" name="view" value="sell" id="week"   />
+            <label for="week" className="switch-label switch-label-off">SELL</label>
+            <input type="radio" className="switch-input" name="view" value="rent" id="month" checked  />
+            <label for="month" className="switch-label switch-label-on">RENT</label>
+            <span className="switch-selection" ></span>
           </div>
        
       }

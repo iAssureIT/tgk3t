@@ -206,240 +206,122 @@
  
 /*******************************************************************************************************
 /*************************************************************************************
-***************************************************************************************/
-/*toggle button*/
-
-
-.can-toggle {
-  position: relative;
+****************************************toggle button***********************************************/
+blockquote, q {
+  quotes: none;
 }
-.can-toggle *, .can-toggle *:before, .can-toggle *:after {
-  box-sizing: border-box;
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
 }
-.can-toggle input[type="checkbox"] {
-  opacity: 0;
+
+.container5 {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 10px;
 }
-.can-toggle input[type="checkbox"][disabled] ~ label {
-  pointer-events: none;
-}
-.can-toggle input[type="checkbox"][disabled] ~ label .can-toggle__switch {
-  opacity: 0.4;
-}
-.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:before {
-  content: attr(data-unchecked);
-  left: 0px;
-}
-.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
-  content: attr(data-checked);
-}
-.can-toggle label {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.can-toggle label .can-toggle__label-text {
-  flex: 1;
-  padding-left: 32px;
-}
-.can-toggle label .can-toggle__switch {
-  position: relative;
-}
-.can-toggle label .can-toggle__switch:before {
-  content: attr(data-checked);
-  position: absolute;
-  top: 0;
 
+
+.switch {
+  position: relative;
+  height: 26px;
+  width: 120px;
+  margin: 20px auto;
+  /*background: rgba(0, 0, 0, 0.25);*/
+  border-radius: 3px;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.switch-label {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 58px;
+  line-height: 26px;
+  /*font-size: 11px;*/
+  color:  #2e2b2b;
   text-align: center;
-}
-.can-toggle label .can-toggle__switch:after {
-  content: attr(data-unchecked);
-  position: absolute;
-  z-index: 5;
- 
-  text-align: center;
-  background: #039BE5;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
-}
-.can-toggle input[type="checkbox"][disabled] ~ label {
-  color: rgba(119, 119, 119, 0.5);
-}
-
-.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch {
-  background-color: #70c767;
-}
-.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
-  color: #ffffff;
-}
-
-
-.can-toggle label .can-toggle__label-text {
-  flex: 1;
-}
-.can-toggle label .can-toggle__switch {
-  transition: background-color 0.9s cubic-bezier(0, 1, 0.9, 1);
-  background: #848484;
-}
-.can-toggle label .can-toggle__switch:before {
-  color: rgba(255, 255, 255, 0.5);
-}
-.can-toggle label .can-toggle__switch:after {
-  transition: -webkit-transform 0.3s cubic-bezier(0, 1, 0.5, 1);
-  transition: transform 0.9s cubic-bezier(0, 1, 0.9, 1);
-  transition: transform 0.9s cubic-bezier(0, 1, 0.9, 1), -webkit-transform 0.3s cubic-bezier(0, 1, 0.5, 1);
-  color: #777;
-}
-
-.can-toggle input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
-  -webkit-transform: translate3d(65px, 0, 0);
-          transform: translate3d(65px, 0, 0);
-}
-
-.can-toggle label {
-  font-size: 14px;
-}
-.can-toggle label .can-toggle__switch {
-  height: 36px;
-  flex: 0 0 134px;
-  border-radius: 4px;
-}
-.can-toggle label .can-toggle__switch:before {
-  left: 67px;
-  font-size: 12px;
-  line-height: 36px;
-  width: 67px;
-  padding: 0 12px;
-}
-.can-toggle label .can-toggle__switch:after {
-  top: 2px;
-  left: 2px;
-  border-radius: 2px;
-  width: 65px;
-  line-height: 32px;
-  font-size: 12px;
-}
-
-
-
-.can-toggle.can-toggle--size-large input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
-  -webkit-transform: translate3d(78px, 0, 0);
-          transform: translate3d(78px, 0, 0);
-}
-
-.can-toggle.can-toggle--size-large label {
-  font-size: 14px;
-}
-.can-toggle.can-toggle--size-large label .can-toggle__switch {
-  height: 50px;
-  flex: 0 0 160px;
-  border-radius: 4px;
-}
-.can-toggle.can-toggle--size-large label .can-toggle__switch:before {
-  left: 80px;
-  font-size: 14px;
-  line-height: 50px;
-  width: 80px;
-  padding: 0 12px;
-}
-.can-toggle.can-toggle--size-large label .can-toggle__switch:after {
-  top: 2px;
-  left: 2px;
-  border-radius: 2px;
-  width: 78px;
-  line-height: 46px;
-  font-size: 14px;
-}
-
-.can-toggle.demo-rebrand-1 input[type="checkbox"][disabled] ~ label {
-  color: rgba(181, 62, 116, 0.5);
-}
-
-
-.can-toggle.demo-rebrand-1 input[type="checkbox"]:checked ~ label .can-toggle__switch {
-  background-color: #44ae7f;
-}
-.can-toggle.demo-rebrand-1 input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
-  color: #368a65;
-}
-
-.can-toggle.demo-rebrand-1 label .can-toggle__label-text {
-  flex: 1;
-}
-.can-toggle.demo-rebrand-1 label .can-toggle__switch {
-  transition: background-color 0.9s ease-in-out;
-  background: #c14b81;
-}
-.can-toggle.demo-rebrand-1 label .can-toggle__switch:before {
-  color: rgba(255, 255, 255, 0.6);
-}
-.can-toggle.demo-rebrand-1 label .can-toggle__switch:after {
-  transition: -webkit-transform 0.3s ease-in-out;
-  transition: transform 0.3s ease-in-out;
-  transition: transform 0.3s ease-in-out, -webkit-transform 0.3s ease-in-out;
-  color: #b53e74;
-}
-.can-toggle.demo-rebrand-2 input[type="checkbox"][disabled] ~ label {
-  color: rgba(68, 68, 68, 0.5);
-}
-
-.can-toggle.demo-rebrand-2 input[type="checkbox"]:checked ~ label .can-toggle__switch {
-  background-color: #FFF;
-}
-.can-toggle.demo-rebrand-2 input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
-  color: #666;
-}
-
-.can-toggle.demo-rebrand-2 label .can-toggle__label-text {
-  flex: 1;
-}
-.can-toggle.demo-rebrand-2 label .can-toggle__switch {
-  transition: background-color 0.9s cubic-bezier(0.86, 0, 0.07, 1);
-  background: #ffffff;
-  border: 1px solid #979797;
-}
-.can-toggle.demo-rebrand-2 label .can-toggle__switch:before {
-  color: #2E3951;
-}
-.can-toggle.demo-rebrand-2 label .can-toggle__switch:after {
-  transition: -webkit-transform 0.3s cubic-bezier(0.86, 0, 0.07, 1) ease;
-  transition: transform 0.9s cubic-bezier(0.86, 0, 0.07, 1) ease;
-  transition: transform 0.9s cubic-bezier(0.86, 0, 0.07, 1) ease,
-  -webkit-transform 0.3s cubic-bezier(0.86, 0, 0.07, 1) ease;
-  color: #ffffff !important;
-}
-
-.can-toggle.demo-rebrand-2 input[type="checkbox"]:checked ~ label .can-toggle__switch:after {
-  -webkit-transform: translate3d(49PX, 0, 0);
-          transform: translate3d(49PX, 0, 0);
-}
-
-.can-toggle.demo-rebrand-2 label {
-  font-size: 13px;
-}
-.can-toggle.demo-rebrand-2 label .can-toggle__switch {
-  height: 30px;
-  flex: 0 0 120px;
-  font-weight: 800;
-  border-radius: 60px;
+  /*text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);*/
   cursor: pointer;
 }
-.can-toggle.demo-rebrand-2 label .can-toggle__switch:before {
-  font-size: 13px;
-  line-height: 28px;
-  width: 50px;
-  padding: 0 12px;
+.switch-label:active {
+  font-weight: 100;
 }
-.can-toggle.demo-rebrand-2 label .can-toggle__switch:after {
+
+.switch-label-off {
+  padding-left: 2px;
+}
+
+.switch-label-on {
+  padding-right: 2px;
+}
+
+
+.switch-input {
+  display: none;
+}
+.switch-input:checked + .switch-label {
+  font-weight: 100;
+  color: #fff;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.25);
+  -webkit-transition: 0.15s ease-out;
+  -moz-transition: 0.15s ease-out;
+  -ms-transition: 0.15s ease-out;
+  -o-transition: 0.15s ease-out;
+  transition: 0.15s ease-out;
+  -webkit-transition-property: color, text-shadow;
+  -moz-transition-property: color, text-shadow;
+  -ms-transition-property: color, text-shadow;
+  -o-transition-property: color, text-shadow;
+  transition-property: color, text-shadow;
+}
+.switch-input:checked + .switch-label-on ~ .switch-selection {
+  left: 60px;
+  /* Note: left: 50%; doesn't transition in WebKit */
+}
+
+.switch-selection {
+  position: absolute;
+  z-index: 1;
   top: 2px;
   left: 2px;
-  border-radius: 30px;
-  line-height: 25px;
-  font-size: 13px;
+  display: block;
+  width: 58px;
+  height: 22px;
+  border-radius: 3px;
+  background-color: #269be5;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9dd993), color-stop(100%, #65bd63));
+  background-image: -webkit-linear-gradient(top, #9dd993, #65bd63);
+  background-image: -moz-linear-gradient(top, #9dd993, #65bd63);
+  background-image: -ms-linear-gradient(top, #9dd993, #65bd63);
+  background-image: -o-linear-gradient(top, #9dd993, #65bd63);
+  background-image: linear-gradient(top, #9dd993, #65bd63);
+  -webkit-box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+  -webkit-transition: left 0.15s ease-out;
+  -moz-transition: left 0.15s ease-out;
+  -ms-transition: left 0.15s ease-out;
+  -o-transition: left 0.15s ease-out;
+  transition: left 0.15s ease-out;
 }
+.switch-blue .switch-selection {
+  background-color: #3aa2d0;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4fc9ee), color-stop(100%, #3aa2d0));
+  background-image: -webkit-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: -moz-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: -ms-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: -o-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: linear-gradient(top, #4fc9ee, #3aa2d0);
+}
+.switch-yellow .switch-selection {
+  background-color: #c4bb61;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e0dd94), color-stop(100%, #c4bb61));
+  background-image: -webkit-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: -moz-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: -ms-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: -o-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: linear-gradient(top, #e0dd94, #c4bb61);
+}
+

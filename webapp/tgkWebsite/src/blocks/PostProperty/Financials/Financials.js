@@ -52,6 +52,7 @@ class Financials extends Component{
               console.log('date',date);
                 availableFrom = new Date(date[2], date[1] - 1, date[0])
             }
+
             
 
 
@@ -64,16 +65,13 @@ class Financials extends Component{
                prevCharges        : response.data.financial.includeCharges,
                updateOperation    : true,
                startDate          : availableFrom,
-               description        : response.data.financial.description ,
+               description        : response.data.financial.description,
                maintenanceCharges : response.data.financial.maintenanceCharges,
                maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
-               measurementUnit       : response.data.financial.measurementUnit ,
-          
-
+               measurementUnit    : response.data.financial.measurementUnit ,
+               availableFrom      : response.data.financial.availableFrom,
            },()=>{
                     });
-
-
                     var includeCharges = this.state.includeCharges;
                     console.log("here includeCharges", includeCharges);
                     var includeChargesList = includeCharges.map((item,index)=>{
@@ -367,7 +365,7 @@ updateUser(event){
                 "includeCharges"      : includeChargesDataList,
                 "maintenanceCharges"  : maintenanceCharges,
                 "maintenancePer"      : this.state.maintenancePer,
-                "measurementUnit"        : this.state.measurementUnit,  
+                "measurementUnit"     : this.state.measurementUnit,  
                 "property_id"         : localStorage.getItem("propertyId"),
                 "uid"                 : localStorage.getItem("uid"),
 
@@ -702,13 +700,13 @@ return (
                      <span>Per</span>
                     <div className="input-group inputBox-main " id="">
                       <div className="input-group-addon inputIcon">
-                                     <i className="fa fa-building iconClr"></i>
-                                    </div>
-                                    <select className="custom-select form-control " name="maintenancePer" ref="maintenancePer" value={this.state.maintenancePer} onChange={this.handleChange.bind(this)} placeholder="select" >
-                                        <option className="hidden" disabled>--Select--</option>
-                                        <option value="Month">Month</option>
-                                        <option value="Year">Year</option>
-                                    </select>
+                         <i className="fa fa-building iconClr"></i>
+                        </div>
+                        <select className="custom-select form-control " name="maintenancePer" ref="maintenancePer" value={this.state.maintenancePer} onChange={this.handleChange.bind(this)} placeholder="select" >
+                            <option className="hidden" disabled>--Select--</option>
+                            <option value="Month">Month</option>
+                            <option value="Year">Year</option>
+                        </select>
                   </div>
                 </div>
             </div>
@@ -737,6 +735,7 @@ return (
                       // value={this.state.availableFrom}
                       max="2100-12-31"
                       onKeyDown={e=>e.preventDefault()}
+
                     />
                   </div>
                 </div>
