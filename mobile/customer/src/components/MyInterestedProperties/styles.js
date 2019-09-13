@@ -101,12 +101,22 @@ export default StyleSheet.create({
   marginBottom5:{
     marginBottom:5
   },
-  // propertyWrap:{
-  //   width:'100%',
-  //   borderRadius:4,
-  //   elevation:5,
-  // },
-  bgImage: {
+  propertyWrap:{
+    width:'100%',
+    ...Platform.select({
+      ios:{
+       borderWidth:1,
+       borderRadius:4,
+       borderColor:'#ccc',
+        elevation:5,
+      },
+      android : {
+        borderRadius:4,
+        elevation:5,
+      }
+    })
+  },
+    bgImage: {
     width:'100%',
     height:200,
     alignItems:'flex-end',

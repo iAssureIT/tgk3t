@@ -198,6 +198,7 @@ export default class PropertyList extends ValidationComponent{
 
                       <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
                         <Button
+                          onPress={()=>this.props.navigation.navigate('PropertyDetails',{image:prop.imageSource})}
                           titleStyle      = {styles.buttonText2}
                           title           = "Details"
                           buttonStyle     = {styles.button3}

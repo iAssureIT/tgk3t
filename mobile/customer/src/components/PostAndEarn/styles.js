@@ -165,6 +165,7 @@ export default StyleSheet.create({
       }
     })
   },
+  
   textInputContainer:{
     backgroundColor:'transparent',
     borderBottomColor: "transparent"

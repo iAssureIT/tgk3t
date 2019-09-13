@@ -494,15 +494,15 @@ export default class SearchProperty extends ValidationComponent{
                   color={colors.grey}
                   containerStyle={{marginRight:5}}
                 />
-                <Text style={styles.inputText}>100+ Cr</Text>
+                <Text style={styles.inputText}>{this.state.activeBtn==="rent" ? "10 Lac"  : "100 Cr"}</Text>
               </View>
             </View>
             <View style={[{width:'100%'}]}>
               <Slider
                 value={this.state.value}
                 animationType={"spring"}
-                minimumValue={1000000}
-                maximumValue={1000000000}
+                minimumValue={this.state.activeBtn==="rent" ? 5000 : 1000000 }
+                maximumValue={this.state.activeBtn==="rent" ?  1000000:  1000000000}
                 step={1}
                 minimumTrackTintColor={colors.golden}
                 thumbStyle={{backgroundColor:'#fff',height:30,width:20,borderWidth:1,borderColor:'#ccc'}}

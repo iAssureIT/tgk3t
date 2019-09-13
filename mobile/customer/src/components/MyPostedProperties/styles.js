@@ -103,8 +103,18 @@ export default StyleSheet.create({
   },
   propertyWrap:{
     width:'100%',
-    borderRadius:4,
-    elevation:5,
+    ...Platform.select({
+      ios:{
+       borderWidth:1,
+       borderRadius:4,
+       borderColor:'#ccc',
+        elevation:5,
+      },
+      android : {
+        borderRadius:4,
+        elevation:5,
+      }
+    })
   },
 
   bgImage: {
