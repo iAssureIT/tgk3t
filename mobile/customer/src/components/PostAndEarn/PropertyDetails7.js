@@ -26,8 +26,8 @@ import { Dropdown } from 'react-native-material-dropdown';
 import DatePicker from "react-native-datepicker";
 import TimePicker from "react-native-24h-timepicker";
 import Modal from "react-native-modal";
-import ImagePicker from 'react-native-image-picker';
-import RNFS from 'react-native-fs';
+// import ImagePicker from 'react-native-image-picker';
+// import RNFS from 'react-native-fs';
 import axios          from 'axios';
 import {
   Table,
@@ -196,66 +196,66 @@ export default class PropertyDetails7 extends ValidationComponent{
         };
 
         //Launch Camera
-        ImagePicker.launchCamera(options, (response) => {
+        // ImagePicker.launchCamera(options, (response) => {
 
-          var image = response.data;
+        //   var image = response.data;
 
-          var fileName    = 'img-'+new Date().getTime()+'.jpeg';
-          const imageData = image;
-          const imagePath = RNFS.DocumentDirectoryPath+'/'+fileName;
+        //   var fileName    = 'img-'+new Date().getTime()+'.jpeg';
+        //   const imageData = image;
+        //   const imagePath = RNFS.DocumentDirectoryPath+'/'+fileName;
 
-          RNFS.writeFile(imagePath, imageData, 'base64')
-              .then(() => {
+        //   RNFS.writeFile(imagePath, imageData, 'base64')
+        //       .then(() => {
 
-                            var fileExt = fileName.split('.').pop();
-                            var file = {
-                              uri   : 'file://'+imagePath,
-                              name  : fileName,
-                              type  : response.type,
-                            };
-                           // this.setState({ image : file.uri });
-                            // console.log("file obj => ",file);
+        //                     var fileExt = fileName.split('.').pop();
+        //                     var file = {
+        //                       uri   : 'file://'+imagePath,
+        //                       name  : fileName,
+        //                       type  : response.type,
+        //                     };
+        //                    // this.setState({ image : file.uri });
+        //                     // console.log("file obj => ",file);
                           
-                            const options = {
-                              keyPrefix           : "AttendanceCheckIn/",
-                              bucket              : s3Data.bucket,
-                              region              : s3Data.region,
-                              accessKey           : s3Data.key,
-                              secretKey           : s3Data.secret,
-                            };
+        //                     const options = {
+        //                       keyPrefix           : "AttendanceCheckIn/",
+        //                       bucket              : s3Data.bucket,
+        //                       region              : s3Data.region,
+        //                       accessKey           : s3Data.key,
+        //                       secretKey           : s3Data.secret,
+        //                     };
 
-                             RNS3.put(file, options).then((response) => {
+        //                      RNS3.put(file, options).then((response) => {
 
-                               if (response.status !== 201)
-                                throw new Error("Failed to upload image to S3");
+        //                        if (response.status !== 201)
+        //                         throw new Error("Failed to upload image to S3");
 
-                               var link = response.body.postResponse.location;
-                               var linkArrCount = link.split('AttendanceCheckIn%2F')[1].split('.').length;
+        //                        var link = response.body.postResponse.location;
+        //                        var linkArrCount = link.split('AttendanceCheckIn%2F')[1].split('.').length;
 
 
-                               var imgLink = {
-                                  "_id"       : "",
-                                  "userId"    : Meteor.userId(),
-                                  "imgLink"   : link,
-                                  "imgExt"    : link.split('AttendanceCheckIn%2F')[1].split('.')[linkArrCount-1],
-                                  "imgName"   : response.body.postResponse.key.split('AttendanceCheckIn/')[1],
-                                  "createdAt" : new Date() ,                                       
-                                };
-                                // console.log('imgLink: ',imgLink);
-                               // console.log("---------  response.body  ------------------");
+        //                        var imgLink = {
+        //                           "_id"       : "",
+        //                           "userId"    : Meteor.userId(),
+        //                           "imgLink"   : link,
+        //                           "imgExt"    : link.split('AttendanceCheckIn%2F')[1].split('.')[linkArrCount-1],
+        //                           "imgName"   : response.body.postResponse.key.split('AttendanceCheckIn/')[1],
+        //                           "createdAt" : new Date() ,                                       
+        //                         };
+        //                         // console.log('imgLink: ',imgLink);
+        //                        // console.log("---------  response.body  ------------------");
                             
-                                this.setState({'images' : [ ...this.state.images , imgLink ] },
-                                               ()=>{
-                                                // console.log(this.state.cameraImgs);
-                                               });
+        //                         this.setState({'images' : [ ...this.state.images , imgLink ] },
+        //                                        ()=>{
+        //                                         // console.log(this.state.cameraImgs);
+        //                                        });
 
-                            }).catch((error) => console.log("Handled Exceptions image ",error));
-                          })
-                          .catch((err) => {
-                            console.log('err => ',err.message);
-                          });
+        //                     }).catch((error) => console.log("Handled Exceptions image ",error));
+        //                   })
+        //                   .catch((err) => {
+        //                     console.log('err => ',err.message);
+        //                   });
 
-        });
+        // });
 
       } else {
         console.log('Camera permission denied');
