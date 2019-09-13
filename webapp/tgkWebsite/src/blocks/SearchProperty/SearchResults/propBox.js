@@ -358,7 +358,7 @@ class propBox extends React.Component {
 									</div>
 									<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 										<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
-										<span className="propertySubText1">{result.floor? result.floor :"-"}  /  {result.floor? result.totalFloor :"-"}</span><br/>Floor / Total Floor
+										<span className="propertySubText1">{result.propertyDetails.floor? result.propertyDetails.floor :"-"}  /  {result.propertyDetails.totalFloor? result.propertyDetails.totalFloor :"-"}</span><br/>Floor / Total Floor
 									</div>
 									<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
 										<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;

@@ -54,7 +54,7 @@ class Header extends Component {
 					    <ul className="nav navbar-nav customNav col-lg-12">
 					    	 <li className=" col-xs-6"><Link to="/AboutUs">ABOUT US</Link></li>
 					   
-					      {localStorage.getItem("uid") ? (
+					      {localStorage.getItem("token") ? (
 					      	<li className="dropdown col-xs-6"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
 						          <li><Link to="/MyPostedProperties">My Listings</Link></li>
