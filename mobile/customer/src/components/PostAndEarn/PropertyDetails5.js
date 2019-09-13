@@ -35,7 +35,7 @@ export default class PropertyDetails5 extends ValidationComponent{
       totalAsk : '',
       totalAskIndex : 0,
       availableFromDate : '',
-      description:'',
+      description:'2 BHK beautiful, tastefully decorated and well maintained flat with 2 attached bathrooms located in Sylvania, Magarpatta City, Pune. The society is gated, extremely safe and boasts a number of key amenities like Seasons Mall, Amanora Mall, Gold’s Gym, ABS Gym. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.',
       dropdownData:[
       {
         value: 'Monthly'
@@ -355,17 +355,17 @@ export default class PropertyDetails5 extends ValidationComponent{
                     dateInput: {
                       borderWidth: 0,
                       alignItems:'flex-start',
-                      fontFamily:'Montserrat-Regular',
+                      // fontFamily:'Montserrat-Regular',
                       paddingLeft:5
                     },
                     dateTouchBody:{
-                      fontFamily:'Montserrat-Regular'
+                      // fontFamily:'Montserrat-Regular'
                     },
                     dateText:{
-                      fontFamily:'Montserrat-Regular'
+                      // fontFamily:'Montserrat-Regular'
                     },
                     placeholderText:{
-                      fontFamily:'Montserrat-Regular'
+                      // fontFamily:'Montserrat-Regular'
                     }
                   }}
                   onDateChange={availableFromDate => {this.setState({ availableFromDate});}}

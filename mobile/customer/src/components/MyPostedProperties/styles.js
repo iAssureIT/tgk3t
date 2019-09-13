@@ -106,6 +106,7 @@ export default StyleSheet.create({
     borderRadius:4,
     elevation:5,
   },
+
   bgImage: {
     width:'100%',
     height:200,

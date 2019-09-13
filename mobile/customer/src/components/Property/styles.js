@@ -62,7 +62,15 @@ export default StyleSheet.create({
     ...Platform.select({
       ios:{
         justifyContent:'center',
-        marginLeft: 40
+        shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
 
       },
       android : {
@@ -103,8 +111,18 @@ export default StyleSheet.create({
   },
   propertyWrap:{
     width:'100%',
-    borderRadius:4,
-    elevation:5,
+    ...Platform.select({
+      ios:{
+       borderWidth:1,
+       borderRadius:4,
+       borderColor:'#ccc',
+        elevation:5,
+      },
+      android : {
+        borderRadius:4,
+        elevation:5,
+      }
+    })
   },
   bgImage: {
     width:'100%',

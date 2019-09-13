@@ -31,7 +31,7 @@ export default class PropertyDetails3 extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
-      
+     
       bedroomData : [{ value: 1},
                      { value: 2},
                      { value: 3},
@@ -67,7 +67,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                             {label:"South", value: 'South',},
                             {label:"Northeast", value: 'Northeast',},
                             {label:"Northwest", value: 'Northwest',},
-                            {label:"Southeast", value: 'Southeast',},  
+                            {label:"Southeast", value: 'Southeast',}, 
                             {label:"Southwest", value: 'Southwest',}],
 
       superArea : '',
@@ -151,8 +151,8 @@ export default class PropertyDetails3 extends ValidationComponent{
 
         console.log("error = ",error);
         alert("Something went wrong! Please check Get URL.");
-         });  
-      
+         }); 
+     
   }
 
    handleOnClickInternal = (index)=>{
@@ -178,13 +178,14 @@ export default class PropertyDetails3 extends ValidationComponent{
     // this.setState({internalAmenities});
   }
 
-  submitDataFun(event){
+
+  submitDataFun(){
     // this.setState({
     //   btnLoading : true,
     // })
     console.log("here btn pressed");
      const formValues = {
-       
+      
         "floor"           : this.state.floor,
         "totalFloor"      : this.state.totalfloor,
         "bedroom"         : this.state.bedroom,
@@ -202,10 +203,12 @@ export default class PropertyDetails3 extends ValidationComponent{
 
       };
       console.log("formValues",formValues);
+
+
       this.props.navigation.navigate('PropertyDetails5');
   }
   render(){
-    
+   
     const { navigation } = this.props;
     let {activeTab} = this.state;
 
@@ -231,7 +234,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                 </View>
                 <View style={styles.inputTextWrapper2}>
                  <Dropdown
-                  
+                 
                   containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
                   dropdownOffset      = {{top:0, left: 0}}
                   itemTextStyle       = {styles.ddItemText}
@@ -253,13 +256,13 @@ export default class PropertyDetails3 extends ValidationComponent{
               <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
               </View>
                 <View style={[styles.inputWrapper2,{height:40}]}>
-              
+             
                 <View style={styles.inputImgWrapper2}>
                   <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
                 </View>
                 <View style={[styles.inputTextWrapper2]}>
                   <Dropdown
-                  
+                 
                   containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
                   dropdownOffset      = {{top:0, left: 0}}
                   itemTextStyle       = {styles.ddItemText}
@@ -373,11 +376,11 @@ export default class PropertyDetails3 extends ValidationComponent{
                 <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'fullFurnished'} >
                   <Text style={styles.inputText}>Full furnished</Text>
                 </RadioButton>
-         
+        
                 <RadioButton style={{paddingHorizontal:0}} value={'semiFurnished'}>
                   <Text style={styles.inputText}>Semi furnished</Text>
                 </RadioButton>
-         
+        
                 <RadioButton style={{paddingHorizontal:0,paddingBottom:0}} value={'unfurnished'}>
                   <Text style={styles.inputText}>Unfurnished</Text>
                 </RadioButton>
@@ -532,7 +535,7 @@ export default class PropertyDetails3 extends ValidationComponent{
             </View>
 
             <View>
-                  
+                 
               </View>
 
             {/*end*/}
@@ -546,7 +549,7 @@ export default class PropertyDetails3 extends ValidationComponent{
             <View style={styles.divider}></View>
 
             <Text style={[styles.heading3,styles.marginBottom5]}>All Amenities </Text>
-            
+
             <View style={[styles.marginBottom15,{}]}>
               {this.state.allAmenities && this.state.allAmenities.length >0 ?
                 this.state.allAmenities.map((data,index)=>(
@@ -561,7 +564,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                     rightTextView = {
                       <View style={{flexDirection:'row',flex:1}}>
                         <Icon
-                          name={this.state.defaultIcon} 
+                          name={this.state.defaultIcon}
                           type={this.state.iconType}
                           size={18}
                           color= {colors.button}
@@ -571,8 +574,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                       </View>
                     }
                   />
-                
-                </React.Fragment>  
+               
+                </React.Fragment> 
               ))
 
                 :
@@ -582,16 +585,17 @@ export default class PropertyDetails3 extends ValidationComponent{
 
 
             <Button
-              
               onPress         = {this.submitDataFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('OTPScreen')}
               titleStyle      = {styles.buttonText}
-              title           = "Save & Next"
+              title           = "Save & Next >>"
               buttonStyle     = {styles.button}
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
               iconRight
               icon = {<Icon
+
               name="chevrons-right" 
+
               type="feather"
               size={22}
               color="white"
@@ -617,6 +621,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                     iconRight
                     icon = {<Icon
                       name="chevrons-right" 
+
                       type="feather"
                       size={22}
                       color="white"
@@ -625,14 +630,12 @@ export default class PropertyDetails3 extends ValidationComponent{
                 */}
 
 
-                
 
           </View>
         </ScrollView>
-      
+     
       </React.Fragment>
     );
-    
+   
   }
 }
-

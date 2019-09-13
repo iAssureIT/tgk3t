@@ -157,7 +157,13 @@ export default StyleSheet.create({
   },
   textContainer:{
     height:40,
-    paddingLeft:4
+    paddingLeft:4,
+    ...Platform.select({
+      ios:{
+        height:40,
+        paddingLeft:4,
+      }
+    })
   },
   textInputContainer:{
     backgroundColor:'transparent',
@@ -233,6 +239,15 @@ export default StyleSheet.create({
     ...Platform.select({
       ios:{
         justifyContent:'center',
+         shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
       },
       android : {
         alignItems:'center'

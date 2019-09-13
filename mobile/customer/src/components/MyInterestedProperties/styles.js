@@ -101,11 +101,11 @@ export default StyleSheet.create({
   marginBottom5:{
     marginBottom:5
   },
-  propertyWrap:{
-    width:'100%',
-    borderRadius:4,
-    elevation:5,
-  },
+  // propertyWrap:{
+  //   width:'100%',
+  //   borderRadius:4,
+  //   elevation:5,
+  // },
   bgImage: {
     width:'100%',
     height:200,
