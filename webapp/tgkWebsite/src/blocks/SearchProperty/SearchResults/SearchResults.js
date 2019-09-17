@@ -811,7 +811,7 @@ class SearchResults extends Component {
 							</div>
 						</div>
 						<div className="col-lg-8 col-md-12 col-xs-12 col-sm-12 searchDiv1">
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 property propertyType noPad">
+							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 property propertyType noPad">
 							  	<div className="dropdown" id="dropdown">
 						       		{this.state.checkPropValue === true ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -842,7 +842,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
+							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.checkBudgetValue === true ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -866,7 +866,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							<div className="col-lg-1 col-md-2 col-xs-12 col-sm-12 noPad property">
+							<div className="col-lg-1 col-md-2 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.flatType && this.state.flatType.length >0 ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -892,7 +892,7 @@ class SearchResults extends Component {
 								</div>
 
 							</div>
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
+							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.furnish ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -920,7 +920,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad property">
+							<div className="col-lg-1 col-md-1 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.floor ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -943,7 +943,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							<div className="col-lg-1 col-md-2 col-xs-12 col-sm-12 noPad property">
+							<div className="col-lg-1 col-md-2 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.propertyAge ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -989,7 +989,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>*/}
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 noPad property">
+							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.availability ? 
 						       			<span className="badge badge-secondary badgeP">

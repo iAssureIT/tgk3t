@@ -104,7 +104,7 @@ class PropertyProfile extends Component{
         this.setState({
           prop_id             : postsdata._id,
           propertyFeatures    : postsdata.propertyDetails,
-          amenities           : postsdata.Amenities,
+          amenities           : postsdata.propertyDetails.Amenities,
           propertyImages      : postsdata.gallery.Images,
           propertyVideo       : postsdata.gallery.video,
           pricing             : postsdata.financial,
@@ -153,11 +153,7 @@ class PropertyProfile extends Component{
     event.preventDefault();
    var element   = event.target;         // DOM element, in this example .owl-carousel
     var items     = event.item.count;     // Number of items
-    console.log("here index og pic",event.item.index);
-    console.log("here count og pic",event.item.count);
 
-    // console.log("previndex",previndex);    // Position of the current item
-    // console.log("this.state.countno",this.state.countno);
     if(itemCount < items){
       var item1 = itemCount+1; 
       itemCount = item1;
@@ -167,22 +163,6 @@ class PropertyProfile extends Component{
     }
     
       $('#counter').html("Media "+item1+" of "+items)
-
-    // if(item<=items) 
-    // {
-    
-
-    //   item = item + 1 ;
-    //   this.setState({
-    //     countno : item,
-    //   })
-    // }
-  // it loop is true then reset counter from 1
-  // if(item > items) {
-  //   item = item - items;
-  // }
-  // console.log("item display",element);
-  
 }
 
   render() {
@@ -264,7 +244,7 @@ class PropertyProfile extends Component{
                 </div>
                 <div className="row">
                   {
-                    this.state.propertyImages && this.state.propertyImages.length < 2 ?
+                    this.state.propertyImages && this.state.propertyImages.length <= 2 ?
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
                           {
@@ -292,7 +272,7 @@ class PropertyProfile extends Component{
                       </div>
                     </div>
                     :
-                    (this.state.propertyImages && this.state.propertyImages.length >=2) || (this.state.propertyVideo && this.state.propertyVideo.length === 0) ?
+                    (this.state.propertyImages && this.state.propertyImages.length >2) || (this.state.propertyVideo && this.state.propertyVideo.length === 0) ?
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imagesOfProperty noPad" >
                       <OwlCarousel
                           className=" owl-theme "
@@ -469,7 +449,7 @@ class PropertyProfile extends Component{
                                           {this.state.pricing && this.state.pricing.expectedRate ?
                                             <b>
                                               <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}.</span>
+                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
                                             </b>
                                           : 
                                           <b>

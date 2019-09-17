@@ -745,6 +745,7 @@ import './PropertyDetails.css';
 		 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb10">
 					  		<b>My Property has</b>
+							<span className="astrick">*</span>
 					  	</div>
 			  		</div>
 			  		{
@@ -1116,6 +1117,8 @@ import './PropertyDetails.css';
 				 	</div>
 				 	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 itIs ">
 					  		<b>Select Amenities</b>
+							<span className="astrick">*</span>
+					  		
 					</div>
 
 				 	 <div className="col-lg-12  col-md-10 col-sm-12 col-xs-12  borderClass padd0">

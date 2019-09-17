@@ -78,6 +78,7 @@ class BasicInfo extends Component{
 					        		type 			: res.data.transactionType==="Sell" ? true : false,
 									propertyType 	: res.data.propertyType,
 									propertySubType : res.data.propertySubType,
+
 									// floor 			: res.data.floor,
 									// totalfloor 		: res.data.totalFloor,
 									fullPropTtype 	: res.data.propertyType+'-'+res.data.propertySubType,
@@ -102,6 +103,7 @@ class BasicInfo extends Component{
 										console.log("cityName",this.state.cityName);
 										console.log("areaName",this.state.areaName);
 										console.log("subAreaName",this.state.subAreaName);
+										console.log("type2",this.state.type);
 
 										        //==================================================================
 										        // 			Get Cities
@@ -239,20 +241,6 @@ class BasicInfo extends Component{
 		        $('.sellerType4').addClass('highlight').siblings().removeClass('highlight');       
 		    });
 		    
-		    //  var $select = $(".Fl60");
-		    //  	$select.append($('<option></option>').val("").html("Floor"))
-		    //     $select.append($('<option></option>').val(-1).html("Basement"))
-		    //     $select.append($('<option></option>').val(0).html("Ground"))
-
-		    // for (var i=1;i<=60;i++){
-		    //     $select.append($('<option></option>').val(i).html(i))
-		    // }
-		    //  var $select = $(".1-60");
-		    // for (var i=1;i<=60;i++){
-		    //     $select.append($('<option></option>').val(i).html(i))
-		    // }
-
-
 		    axios({
 	    	method: 'get',
 	    	url: 'http://locationapi.iassureit.com/api/states/get/list/IN',
@@ -295,31 +283,6 @@ class BasicInfo extends Component{
 	      [name]:value
 	    } );
 	  }
-
-		// insertProperty(event){
-		// 		const formValues = {
-		// 		"propertyHolder" 	: this.state.propertyHolder,
-  //       		"transactionType"	: this.state.transactionType,
-		// 		"propertyType"  	: this.state.propertyType,
-		// 		"propertySubType"	: this.state.propertySubType,
-		// 		"listing"       	: false,
-		// 		"status"			: "WIP",
-		// 		"uid" 				: localStorage.getItem("uid"),
-		// 		countryCode 		: "IN",
-
-		// 		stateCode 			: this.state.stateCode,
-		// 	    districtName 		: this.state.districtName,
-		// 	    blockName 			: this.state.blockName,
-		// 	    cityName 			: this.state.cityName,
-		// 	    areaName 			: this.state.areaName,
-		// 	    subareaName			: this.state.subareaName,
-		// 	    societyName			: this.state.societyName,
-		// 	};
-
-		// console.log("here values",formValues);
-		// this.props.redirectToPropertyDetails();
-		// // this.props.uid,this.props.property_id
-		// }
 
 		insertProperty(event){
 			event.preventDefault();			
@@ -367,6 +330,7 @@ class BasicInfo extends Component{
 						)
 					{
 						console.log("same data");
+						console.log("same data22",this.state.type);
 						
 					localStorage.setItem('propertyId',this.props.property_id)
 					this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
@@ -458,10 +422,14 @@ class BasicInfo extends Component{
           }
       }*/
       	handleToggle(event){
+      		console.log("this.state.type",this.state.type)
 		    if (this.state.type===true){
 		      this.setState({
 		        type: false,
 		        transactionType:"Rent"
+		      },()=>{
+      				console.log("this.state.type",this.state.type)
+
 		      })
 		    }
 		    else{
@@ -469,6 +437,8 @@ class BasicInfo extends Component{
 		        type: true,
 		        transactionType:"Sell"
 
+		      },()=>{
+      				console.log("this.state.type",this.state.type)
 		      })
 		    }   
 		}

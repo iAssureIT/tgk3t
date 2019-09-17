@@ -3,7 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import axios 						   from 'axios';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
-import swal                     	from 'sweetalert';
+import swal                     	   from 'sweetalert';
 import Add_data 					   from './add_data.js';
 /*import Add_dataTable 				   from './add_dataTable.js';*/
 import $ from "jquery";

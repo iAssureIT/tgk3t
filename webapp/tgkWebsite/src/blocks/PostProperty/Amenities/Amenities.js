@@ -109,55 +109,7 @@ import './Amenities.css';
 
 			// -----------------------------------------------------------------------------------
 
-	    //     	axios
-					// .get('/api/properties/'+this.props.property_id)
-					// .then( (response) =>{
-					// 	console.log("response.data.Amenities= ",response);
-
-					// 	this.setState({
-					// 			originalValues 		: response.data,
-					// 			prevAmenities 		: response.data.Amenities,
-					// 			updateOperation     : true,
-
-						 
-					// 	},()=>{
-					// 		console.log("here prevAmenities", this.state.prevAmenities);
-					// 		});
-
-					// 	var allAmenitiesData = this.state.allAmenities;
-					// 		console.log("here allAmenitiesData", allAmenitiesData);
-					// 	var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
-					// 		console.log("item",item.amenity);
-					// 		var propPresent = this.state.prevAmenities.find((obj)=>{
-					// 		console.log("obj",obj);
-					// 			return item.amenity === obj;
-					// 		console.log("here propPresent ", propPresent);
-
-					// 		})
-					// 		var newObj = Object.assign({},item);
-					// 		if(propPresent){
-					// 			newObj.checked = true
-					// 		}else{
-					// 			newObj.checked = false
-					// 		}
-					// 		console.log("newObj",newObj);
-					// 		return newObj;
-
-					// 	})
-					// 	// console.log("allAmenitiesDataList after data match",allAmenitiesDataList);
-					// 	this.setState({
-					// 			allAmenities : allAmenitiesDataList,
-					// 		},()=>{
-					// 			console.log("here allAmenities in didmount after match result",this.state.allAmenities);
-
-					// 		});
-
-
-					// })
-					// .catch((error) =>{
-					// 	console.log("error = ", error);
-					// });
-
+	  
         	}
 
 
@@ -410,6 +362,7 @@ import './Amenities.css';
 		  	 	</div>*/}
 
 		  	 	<div className = "container-fluid padd0 ">
+
 		  	 		{console.log("here amenity in map",this.state.allAmenities)}
 		  	 		{this.state.allAmenities && this.state.allAmenities.length > 0 ?
 		  	 			this.state.allAmenities.map((data,index)=>{
@@ -438,6 +391,7 @@ import './Amenities.css';
 		  	 			null
 		  	 		}
 		  	 	</div>
+		  	 	
 		  	</div>
 		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		  	{

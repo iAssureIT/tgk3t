@@ -351,13 +351,13 @@ class HomePageProperties extends Component {
                                   </div>
                                   <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   {property.propertyType === "Residential" ?
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9 col-xs-9 row">
                                       <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
                                     </div>
                                     :
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9  col-xs-9 row">
                                       <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
@@ -377,18 +377,18 @@ class HomePageProperties extends Component {
                                   </div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                                    <div className="col-lg-5 col-md-5 col-sm-6 col-xs-6 noPad mt10">
+                                    <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 noPad mt10">
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                         {console.log("exp rate",property.financial.expectedRate)}
                                         {
                                           property.transactionType === "Sell" ?
-                                          property.financial.expectedRate + " /Sq.ft." 
+                                          property.financial.expectedRate + '/'+ property.financial.measurementUnit 
                                           :
                                           property.financial.depositAmount+" Deposit"
 
                                         }
                                     </div>    
-                                    <div className="pull-right col-lg-7 col-md-7 col-sm-6 col-xs-6 noPad mt10">
+                                    <div className="pull-right col-lg-7 col-md-7 col-sm-5 col-xs-7 noPad mt10">
                                       <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i> {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                     </div>
                                   </div>
@@ -450,13 +450,13 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   {property.propertyType === "Residential" ?
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9 col-xs-9 row">
                                       <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
                                     </div>
                                     :
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9 col-xs-9 row">
                                       <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
@@ -476,15 +476,15 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                                  <div className="col-lg-5 col-md-5 col-sm-6 col-xs-6 noPad mt10">
+                                  <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {property.transactionType === "Sell" ?
-                                      property.financial.expectedRate + " /Sq.ft." 
+                                      property.financial.expectedRate +'/'+ property.financial.measurementUnit
                                       :
                                       property.financial.depositAmount+" Deposit "
                                     }
                                   </div>
-                                  <div className="pull-right col-lg-7 col-md-7 col-sm-6 col-xs-6 noPad mt10">
+                                  <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
                                     <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
@@ -549,13 +549,13 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   {property.propertyType === "Residential" ?
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9 col-xs-9 row">
                                       <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
                                     </div>
                                     :
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9 col-xs-9 row">
                                       <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
@@ -575,15 +575,15 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                                  <div className="col-lg-5 col-md-5 col-sm-6 col-xs-6 noPad mt10">
+                                  <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {property.transactionType === "Sell" ?
-                                      property.financial.expectedRate+ " /Sq.ft."  
+                                      property.financial.expectedRate+'/'+ property.financial.measurementUnit
                                       :
                                       property.financial.depositAmount+" Deposit "
                                     }
                                   </div>
-                                  <div className="pull-right col-lg-7 col-md-7 col-sm-6 col-xs-6 noPad mt10">
+                                  <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
                                     <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
@@ -645,13 +645,13 @@ class HomePageProperties extends Component {
                                     </div>
                                     <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                     {property.propertyType === "Residential" ?
-                                        <div className=" col-lg-9 row">
+                                        <div className=" col-lg-9 col-xs-9 row">
                                           <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
                                           <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                           
                                         </div>
                                         :
-                                        <div className=" col-lg-9 row">
+                                        <div className=" col-lg-9 col-xs-9 row">
                                           <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
                                           <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                           
@@ -671,15 +671,15 @@ class HomePageProperties extends Component {
                                     </div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                                        <div className="col-lg-5 col-md-5 col-sm-6 col-xs-6 noPad mt10">
+                                        <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 noPad mt10">
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                         {property.transactionType === "Sell" ?
-                                          property.financial.expectedRate+ " /Sq.ft."  
+                                          property.financial.expectedRate+'/'+ property.financial.measurementUnit
                                           :
                                           property.financial.depositAmount+" Deposit "
                                         }
                                       </div>
-                                      <div className="pull-right col-lg-7 col-md-7 col-sm-6 col-xs-6 noPad mt10">
+                                      <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
                                         <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                       </div>
                                     </div>
@@ -743,13 +743,13 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className=" col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                                   {property.propertyType === "Residential" ?
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9 col-xs-9 row">
                                       <h4 className="pull-left"><span> Bed {property.propertyDetails  ? property.propertyDetails.bedrooms: "-"}</span> <span>Baths {property.propertyDetails  ? property.propertyDetails.bathrooms: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
                                     </div>
                                     :
-                                    <div className=" col-lg-9 row">
+                                    <div className=" col-lg-9 col-xs-9 row">
                                       <h4 className="pull-left"><span> Washrooms {property.propertyDetails  ? property.propertyDetails.washrooms: "-"}</span> <span>Pantry {property.propertyDetails  ? property.propertyDetails.pantry: "-"}</span> </h4>
                                       <div className="pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad"> <b> {property.propertySubType  ? property.propertySubType: "-"} </b></div>
                                       
@@ -769,16 +769,16 @@ class HomePageProperties extends Component {
                                 </div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bBottom mt10"></div>
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                                  <div className="col-lg-5 col-md-5 col-sm-6 col-xs-6 noPad mt10">
+                                  <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 noPad mt10">
                                     <i className="fa fa-inr pr8" aria-hidden="true"></i>
                                     {
                                       property.transactionType === "Sell" ?
-                                      property.financial.expectedRate+ " /Sq.ft."  
+                                      property.financial.expectedRate+'/'+ property.financial.measurementUnit
                                       :
                                       property.financial.depositAmount+" Deposit "
                                     }
                                   </div> 
-                                  <div className="pull-right col-lg-7 col-md-7 col-sm-6 col-xs-6 noPad mt10">
+                                  <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
                                    <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>

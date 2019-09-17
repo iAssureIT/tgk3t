@@ -242,15 +242,15 @@ class propBox extends React.Component {
 			 	this.state.searchResult.map((result,index)=>{
 			 	return(
 					<div key={index} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox">			
-						<div className="row pull-right topRightTriangle" id="triangle-topright"> 
+						<div className="row pull-right topRightTriangle hidden-xs hidden-sm" id="triangle-topright"> 
 						</div>	
 						<div className="row">
 							<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">
 							{
 								result && result.gallery && result.gallery.Images && result.gallery.Images.length > 0 ?
-								<img alt=""  className="propertyImgDiv" src={result.gallery.Images[0].imgPath} />
+								<img alt=""  className="propertyImgDiv " src={result.gallery.Images[0].imgPath} />
 								:
-								<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
+								<img alt=""  className="propertyImgDiv " src="/images/loading_img.jpg" />
 							}															
 						</div>
 						{
@@ -324,7 +324,7 @@ class propBox extends React.Component {
 
 								</div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
-									<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+									<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
 									{
 										result.propertyType ==="Residential" ?
 										<span className="propertySubText1">
@@ -340,7 +340,7 @@ class propBox extends React.Component {
 										</span>
 									}
 									</div>
-									<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+									<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
 										{
 											result.propertyType ==="Residential" ?
 											<span className="propertySubText1">
@@ -356,11 +356,11 @@ class propBox extends React.Component {
 											</span>
 										}
 									</div>
-									<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+									<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
 										<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
 										<span className="propertySubText1">{result.propertyDetails.floor? result.propertyDetails.floor :"-"}  /  {result.propertyDetails.totalFloor? result.propertyDetails.totalFloor :"-"}</span><br/>Floor / Total Floor
 									</div>
-									<div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">				
+									<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
 										<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;
 										<span className="propertySubText1">{result.propertyDetails? result.propertyDetails.facing :"-"}</span><br/>Facing
 									</div>
