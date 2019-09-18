@@ -32,55 +32,7 @@
 //   constructor(props){
 //     super(props);
 //     this.state={
-//       /*superArea : '',
-//       builtArea : '',
-//       expectedRate : '',
-//       totalAsk : '',
-//       totalAskIndex : 0,
-//       availableFromDate : '',
-//       dropdownData:[
-//       {
-//         value: 'Monthly'
-//       },
-//       {
-//         value: 'Yearly'
-//       }],*/
-//       // if(this.state.mobile!=""){
-
-        
-//       //   axios
-//       //     .post('http://qatgk3tapi.iassureit.com/api/usersotp/verify_mobile',formValues)
-//       //     .then((response)=>{
-//       //       console.log("response = ",response.data);
-//       //         axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
-//       //       // localStorage.setItem('token',response.data.token)
-            
-//       //         if(response.data.message === 'MOBILE-NUMBER-EXISTS')
-//       //         {
-//       //          console.log("here otp from response",response.data.otp);
-//       //           this.props.navigation.navigate('SignUp');
-
-//       //          // this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message});
-          
-//       //         }else{
-//       //           this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobile});
-          
-//       //           console.log("new mob no");
-//       //         }
-
-//       //       })
-//       //     .catch(function(error){
-//       //       console.log("here can't access the url");
-//       //       console.log(error);
-//       //     })
-        
-//       //   }else{
-//       //         this.setState({
-//       //             "openModal": true
-//       //         });
-//       //     // swal("Please enter Mobile Number", "", "warning");
-
-//       //   }
+     
 //       defaultIcon:'flag',
 //       iconType: 'material-community',
 //       allAmenities:[],
@@ -102,11 +54,9 @@
 //         (res)=>{
 //           console.log('res postdata', res);
 //           const postsdata = res.data;
-//           // console.log('postsdata',postsdata);
-//           this.setState({
+//          this.setState({
 //             allAmenities : postsdata,
 //           },()=>{
-//             // console.log("data from admin side",this.state.allAmenities);
 //             var allAmenitiesDataList = this.state.allAmenities.map((item,index)=>{
 
 //               var newObj = Object.assign({},item);
@@ -115,7 +65,6 @@
 //                 }else{
 //                   newObj.checked = true
 //                 }
-//                 // console.log("newObj",newObj);
 //                 return newObj;
 
 //             });
@@ -149,31 +98,9 @@
 //     },()=>{
 //       console.log("here new data of amenities",this.state.allAmenities);
 //     });
-//     // var data = index.target.getAttribute('isChecked');
 //     console.log("current data status",status);
-//     // let {internalAmenities} = this.state;
-//     // let checked = !internalAmenities[index].checked;
-//     // internalAmenities[index].checked = checked;
-//     // this.setState({internalAmenities});
-//   }
+//    }
 
- 
-
-//   handleOnClickInternalOption = (index,optionIndex)=>{
-//     let {internalAmenities} = this.state;
-//     let options = internalAmenities[index].options;
-//     let checked = !options[optionIndex].checked;
-//     options[optionIndex].checked = checked;
-//     internalAmenities[index].options = options;
-//     this.setState({internalAmenities});
-//   }
-
-//   handleOnClickExternal = (index)=>{
-//     let {externalAmenities} = this.state;
-//     let checked = !externalAmenities[index].checked;
-//     externalAmenities[index].checked = checked;
-//     this.setState({externalAmenities});
-//   }
 
 //   render(){
 

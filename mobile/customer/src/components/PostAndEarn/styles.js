@@ -81,6 +81,13 @@ export default StyleSheet.create({
     flexDirection:'row',
     borderRadius: 3,
   },
+  inputWrapperHalf:{
+    width:'100%',
+    borderColor: colors.black,
+    borderWidth:1,
+    flexDirection:'row',
+    borderRadius: 3,
+  },
   imgbox:{
      // width:'46%',
     borderColor: colors.black,
@@ -140,7 +147,7 @@ export default StyleSheet.create({
     marginVertical:5,
   },
   inputTextWrapperM : {
-    width:'68%',
+    width:'80%',
     justifyContent:'center'
   },
   inputRightWrapper1:{
@@ -153,7 +160,7 @@ export default StyleSheet.create({
     // marginRight:5,
   },
   inputRightWrapperNoBorder:{
-    width:'23%',
+    width:'18%',
   },
   textContainer:{
     height:40,

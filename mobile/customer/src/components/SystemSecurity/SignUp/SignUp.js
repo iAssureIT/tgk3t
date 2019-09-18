@@ -42,6 +42,8 @@ export default class SignUp extends ValidationComponent{
       unitCode : '+91',
       mobileNo : '',
       openModal: false,
+      uid : '',
+      token : '',
 
     };
   }
@@ -51,16 +53,29 @@ export default class SignUp extends ValidationComponent{
   }
   
   componentDidMount(){
+      // console.log("here token in otp form ", AsyncStorage.getItem("token"));
+      var token = this.props.navigation.getParam('token','No token');
+      console.log("token",token);
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+     var uid = this.props.navigation.getParam('uid','No uid');
+    console.log("uid in signupscreen",uid);
+
     var mobile = this.props.navigation.getParam('mobile','No mobile');
     console.log("mobile in sign up screen",mobile);
     this.setState({
         mobile : mobile,
+        uid    : uid,
+        token   : token,
     });
   }
   signupUser(){
 
+               var id = this.state.uid;
+               console.log("here id in signup",id);
                 const formValues = {
-                // "userID"    : localStorage.getItem("uid"),
+                "userID"      : id,
                 "fullName"    : this.state.name,
                 "emailId"     : this.state.email,
                 "city"        : this.state.location,
@@ -70,10 +85,89 @@ export default class SignUp extends ValidationComponent{
                 "roles"       : 'Client',
               };
 
-            
-
               console.log("mobileSignupForm==",formValues);
-              this.props.navigation.navigate('PropertyDetails1',{});
+
+              // if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){ 
+
+                axios
+                .patch('http://qatgk3tapi.iassureit.com/api/usersotp/signup',formValues)
+                .then( (res) =>{
+                  console.log("res in signup",res)
+                  this.props.navigation.navigate('PropertyDetails1',{token:this.state.token,uid:this.state.uid});
+
+                  if(res.data.message === "USER-UPDATED"){
+                          var sendDataToUser = {
+                              "templateName"  : "User - New Registration",
+                              "toUserId"    : formValues.userID,
+                              "variables"   : {
+                                "userName"    : this.state.name,
+                                "userMobile"  : this.refs.mobile.value,
+                              }
+                          }
+                          console.log("sendData",sendDataToUser);
+                          var sendDataToAdmin = {
+                              "templateName"  : "Admin - New Registration",
+                              "toUserId"    : "admin",
+                              "variables"   : {
+                                "userName"    : this.state.name,
+                                "userMobile"  : this.refs.mobile.value,
+                                "userEmail"   : this.state.email,
+                              "userCity"    : this.state.city,
+                              }
+                          }
+                          console.log("sendData",sendDataToAdmin);
+                          axios
+                          .post('http://qatgk3tapi.iassureit.com/api/masternotifications/post/sendNotification',sendDataToAdmin)
+                          .then((result) =>{
+                            console.log("SendEmailNotificationToAdmin",result);
+                            axios
+                            .post('http://qatgk3tapi.iassureit.com/api/masternotifications/post/sendNotification',sendDataToUser)
+                            .then((res) =>{
+                              console.log("SendEmailNotificationToUser",res);           
+                            })
+                            .catch((error)=>{
+                                              console.log("error = ",error);
+                                              if(error.message === "Request failed with status code 401")
+                                              {
+                                                   swal("Your session is expired! Please login again.","", "error");
+                                                   this.props.history.push("/");
+                                              }
+                                  });         
+                          })
+                          .catch((error)=>{
+                                              console.log("error = ",error);
+                                              if(error.message === "Request failed with status code 401")
+                                              {
+                                                   swal("Your session is expired! Please login again.","", "error");
+                                                   this.props.history.push("/");
+                                              }
+                                          });
+                          console.log("BasicInfo res = ",res);
+                          if(this.props.originPage === "header")
+                          {
+                            this.props.history.push("/");
+                            window.location.reload();
+                          }else{
+                            this.props.redirectToBasicInfo(res.data.user_id);
+                          }
+                        }
+
+                })
+                .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+                            });
+
+
+              // }else{
+              //       swal("Please enter mandatory fields", "", "warning");
+                    
+              //     }           
+
 
               }
 

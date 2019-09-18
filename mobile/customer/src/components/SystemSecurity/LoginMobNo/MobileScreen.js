@@ -20,14 +20,14 @@ import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
 import {colors,sizes} from '../../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
 import Modal from "react-native-modal";
-
+// import ValidationComponent from "react-native-form-validator";
 
 export default class MobileScreen extends ValidationComponent {
 	
 	constructor(props) {
 		super(props);
 		 this.state={
-		      mobile : '',
+		      mobileNumber : '',
 		      codeData : [{ value: '+91'},
                      { value: '+82'},
                      { value: '+65'},
@@ -36,40 +36,109 @@ export default class MobileScreen extends ValidationComponent {
                      { value: '+45'}],
 		      unitCode : '+91',
           openModal: false,
+          mobileNumberError : [],
 		    };
 	}
 
-	checkUser(){
-		console.log("unitCode",this.state.unitCode);
-		console.log("mobile",this.state.mobile);
+  validInput = () => {
+    const {
+      mobileNumber,
+    } = this.state;
+    let valid = true;
 
-        var formValues = {
-        mobileNumber : this.state.mobile,
+    this.validate({
+      mobileNumber: { 
+        required: true, 
+        mobileNo: true,
+        // numbers: true, 
+        minlength: 9, 
+        maxlength: 10 
+      },
+    });
+
+    if (this.isFieldInError("mobileNumber")) {
+      this.setState({ mobileNumberError: this.getErrorsInField("mobileNumber") });
+      valid = false;
+    } else {
+      this.setState({ mobileNumberError: "" });
+      valid = true;
+    }
+
+    return  !this.isFieldInError("mobileNumber") ;
+  };
+
+
+  validInputField = (stateName, stateErr) => {
+      const {
+      mobileNumber,
+      } = this.state;
+      let valid = true;
+
+      this.validate({
+      [stateName]: {
+      required: true,
+      },
+      });
+
+      if (this.isFieldInError(stateName)) {
+      let validinptError = this.getErrorsInField(stateName);
+      this.setState({ validinptError });
+      valid = false;
+      } else {
+      this.setState({ [stateErr]: "" });
+      }
+
+      return valid;
+};
+
+
+    componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
+    }
+
+	checkUser(){
+
+    if(this.validInput()){
+    let {
+       
+        mobileNumber,
+       
+      } = this.state;
+       var mobileNo = mobileNumber.split(' ')[1].split('-').join('')
+ 
+ 
+
+		console.log("unitCode",this.state.unitCode);
+		console.log("mobile",mobileNo);
+
+      var formValues = {
+        mobileNumber : mobileNo,
         countryCode  : this.state.unitCode
       };
       console.log("LoginMobNum==",formValues);
-      // this.props.navigation.navigate('PropertyDetails7');
 
-
-      if(this.state.mobile!=""){
+      if(this.state.mobileNumber!=""){
+                // this.props.navigation.navigate('PropertyDetails1');
 
         
         axios
           .post('http://qatgk3tapi.iassureit.com/api/usersotp/verify_mobile',formValues)
           .then((response)=>{
-            console.log("response = ",response.data);
+            console.log("response after submit mob no= ",response.data);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
-            // localStorage.setItem('token',response.data.token)
             
+              console.log("response.data.user_id",response.data.user_id);
+                AsyncStorage.setItem("token",response.data.token);
+                // AsyncStorage.setItem("uid",response.data.user_id);
+
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
                console.log("here otp from response",response.data.otp);
-                // this.props.navigation.navigate('SignUp');
 
-               this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message});
+               this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message});
           
               }else{
-                this.props.navigation.navigate('OTPScreen',{originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobile});
+                this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobileNumber});
           
                 console.log("new mob no");
               }
@@ -89,6 +158,18 @@ export default class MobileScreen extends ValidationComponent {
         }
 	}
 
+}
+
+ displayValidationError = (errorField) =>{
+    let error = null;
+    if(this.state[errorField]){
+      error = <View style={styles.errorWrapper}>
+                <Text style={styles.errorText}>{this.state[errorField][0]}</Text>
+              </View> ;
+    }
+    return error;
+  }
+
   handleMobileChange(value){
     // console.log("value = ",value);
     if(value.startsWith && value.startsWith('+')){
@@ -96,13 +177,13 @@ export default class MobileScreen extends ValidationComponent {
     }
     let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
     // let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    console.log("x value = ",x);
+    // console.log("x value = ",x);
     // let y = !x[2] ? x[1] : x[1]+'-'+x[2];
     let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
     // let y = '+1 '+x[1]+'-'+x[2]+'-'+x[3];
     // console.log("y value = ",y)
     this.setState({
-      mobile : y,
+      mobileNumber : y,
     });
   }
 
@@ -135,11 +216,42 @@ export default class MobileScreen extends ValidationComponent {
             	<Text style={[styles.heading2,styles.marginBottom5]}>Please enter your Mobile No</Text>
             </View>
 
-             <View style={[styles.inputWrapper,styles.marginBottom25]}>
+            <View style={[styles.formInputView,styles.marginBottom25]}>
+                  <View style={[styles.inputWrapper]}>
+                  <View style={styles.inputImgWrapper}>
+                      <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper}>
+                      <TextField
+                        label                 = "Mobile"
+                        onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber },()=>{this.validInputField('mobileNumber', 'mobileNumberError');}),this.handleMobileChange(mobileNumber)}}
+                                                 // {mobileNumber => this.handleMobileChange(mobileNumber)}
+                        lineWidth             = {1}
+                        tintColor             = {colors.button}
+                        inputContainerPadding = {0}
+                        labelHeight           = {15}
+                        labelFontSize         = {sizes.label}
+                        titleFontSize         = {sizes.title}
+                        baseColor             = {'#666'}
+                        textColor             = {'#333'}
+                        value                 = {this.state.mobileNumber}
+                        containerStyle        = {styles.textContainer}
+                        inputContainerStyle   = {styles.textInputContainer}
+                        titleTextStyle        = {styles.textTitle}
+                        style                 = {styles.textStyle}
+                        labelTextStyle        = {styles.textLabel}
+                        keyboardType          = "numeric"
+                      />
+                    </View>
+                  </View>
+                  {this.displayValidationError('mobileNumberError')}
+                </View>
+
+            {/* <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
                 <Icon name="mobile" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
-       {/*       <View style={[styles.inputRightWrapperNoBorder,styles.borderRight,{height:35}]}>
+              <View style={[styles.inputRightWrapperNoBorder,styles.borderRight,{height:35}]}>
                 <Dropdown
                   containerStyle      = {styles.dropHeight,{paddingLeft:5}}
                   dropdownOffset      = {{top:0, left: 0}}
@@ -157,11 +269,14 @@ export default class MobileScreen extends ValidationComponent {
                   value               = {this.state.unitCode}
                   onChangeText        = {unitCode => {this.setState({unitCode});}}
                 />
-              </View>*/}
+              </View>
               <View style={styles.inputTextWrapper}>
                 <TextField
                   label                 = "Mobile no"
-                  onChangeText          = {(mobile) => {this.setState({ mobile },()=>{}),this.handleMobileChange(mobile)}}
+               
+                  onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber },()=>{this.validInputField('mobileNumber', 'mobileNumberError');}),this.handleMobileChange(mobileNumber)}}
+                  // onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber })}}
+                                                
                   lineWidth             = {1}
                   tintColor             = {colors.button}
                   inputContainerPadding = {0}
@@ -170,7 +285,7 @@ export default class MobileScreen extends ValidationComponent {
                   titleFontSize         = {15}
                   baseColor             = {'#666'}
                   textColor             = {'#333'}
-                  value                 = {this.state.mobile}
+                  value                 = {this.state.mobileNumber}
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
@@ -180,8 +295,8 @@ export default class MobileScreen extends ValidationComponent {
                   maxLength             = {10}
                 />
               </View>
-              
-            </View>
+              {this.displayValidationError('mobileNumberError')}
+            </View>*/}
 
         
              <Modal isVisible={this.state.openModal} 
@@ -204,7 +319,7 @@ export default class MobileScreen extends ValidationComponent {
                       titleStyle      = {styles.buttonText}
                       title           = "OK"
                       buttonStyle     = {styles.buttonSignUp}
-                      containerStyle  = {styles.buttonContainer1}
+                      containerStyle  = {styles.buttonContainer}
                     />
                   </View>
                 </View>
@@ -240,4 +355,25 @@ export default class MobileScreen extends ValidationComponent {
 	  </React.Fragment>
 		);
 	}
+}
+MobileScreen.defaultProps = {
+  messages: {
+    en: {
+      mobileNo: 'Enter a valid mobile number.',
+      minlength: 'Length should be greater than {1}',
+
+    }
+  },
+
+  rules: {
+    mobileNo: /^(\+91\s)?[0-9]{3}\-[0-9]{3}\-[0-9]{4}$/,
+    minlength(length, value) {
+      if (length === void(0)) {
+        throw 'ERROR: It is not a valid length, checkout your minlength settings.';
+      } else if(value.length > length) {
+        return true;
+      }
+      return false;
+    },
+  },
 }

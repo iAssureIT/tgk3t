@@ -32,6 +32,7 @@ export default class MobileScreen extends ValidationComponent {
           originalOTP : '',
           openModal: false,
           openModal1: false,
+          token     : "",
 		    };
 	}
 
@@ -42,11 +43,17 @@ export default class MobileScreen extends ValidationComponent {
     console.log("message in otpscreen",msg);
     var mob = this.props.navigation.getParam('mobile','No mobile'); 
     console.log("mobile in otpscreen",mob);
+     var uid = this.props.navigation.getParam('uid','No uid');
+    console.log("uid in otpscreen",uid);
+     var token = this.props.navigation.getParam('token','No token');
+    console.log("token",token);
 
     this.setState({
                  msg         : msg,
                  originalOTP : otp,
                  mob         : mob,
+                 uid         : uid,
+                 token       : token,
                });
     // AsyncStorage.multiGet(['message','user_id','originalotp'])
     //   .then((data)=>{
@@ -73,13 +80,13 @@ export default class MobileScreen extends ValidationComponent {
                
         
         if(this.state.msg === "NEW-USER-CREATED"){
-                this.props.navigation.navigate('SignUp',{mobile:this.state.mob});
+                this.props.navigation.navigate('SignUp',{token:this.state.token,mobile:this.state.mob,uid: this.state.uid});
                 console.log("signup");
         }else{
 
           if(this.state.msg === "MOBILE-NUMBER-EXISTS")
           {
-              this.props.navigation.navigate('PropertyDetails1',{});
+              this.props.navigation.navigate('PropertyDetails1',{token:this.state.token,uid:this.state.uid});
               console.log("already");
           }
         }

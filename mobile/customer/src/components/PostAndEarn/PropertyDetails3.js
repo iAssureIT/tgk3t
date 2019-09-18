@@ -37,23 +37,29 @@ export default class PropertyDetails3 extends ValidationComponent{
                      { value: 3},
                      { value: 4},
                      { value: 5},
-                     { value: 6}],
+                     ],
 
        balconieData : [{ value: 1},
-                     { value: 2},
-                     { value: 3},
-                     { value: 4},
-                     { value: 5},
-                     { value: 6}],
+                       { value: 2},
+                       { value: 3},
+                       { value: 4},
+                      ],
 
        bathroomData : [{ value: 1},
-                     { value: 2},
-                     { value: 3},
-                     { value: 4},
-                     { value: 5},
-                     { value: 6}],
+                       { value: 2},
+                       { value: 3},
+                       { value: 4},
+                      ],
+
+        washroomData : [{ value: 1},
+                        { value: 2},
+                        { value: 3},
+                        { value: 4}],
       furnishedValue :'',
       furnishedIndex : 0,
+      workStation    : 0,
+      personal       : 0,
+      pantry         : 0,
       yearsData : [ {label:"Under Construction", value: 'Under Construction',},
                     {label:"new", value: 'New(Less than a year)',},
                     {label:"1-2 Years", value: '1-2',},
@@ -71,7 +77,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                             {label:"Southwest", value: 'Southwest',}],
 
       superArea : '',
-      builtArea : '',
+      builtupArea : '',
       UnitData  : [{label:"Sq ft", value:"Sq ft"},
                   {label:"Sq Meter", value:"Sq Meter"},
                   {label:"Guntha", value:"Guntha"},
@@ -93,6 +99,7 @@ export default class PropertyDetails3 extends ValidationComponent{
       allAmenities:[],
       isChecked: true,
       btnLoading : false,
+      propertyId : "",
      /* expectedRate : '',
       totalAsk : '',
       totalAskIndex : 0,
@@ -111,12 +118,30 @@ export default class PropertyDetails3 extends ValidationComponent{
   onSelect=(index,value)=>{
     this.setState({
       furnishedIndex: index,
-      furnishedValue: value
+      workStation   : index,
+      personal      : index,
+      pantry        : index,
+      furnishedValue: value,
     });
   }
 
    componentDidMount(){
-    
+
+      var token = this.props.navigation.getParam('token','No token');
+      console.log("token",token);
+      var uid = this.props.navigation.getParam('uid','No uid');
+      console.log("uid",uid);
+      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
+      console.log("propertyId",propertyId);
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+      this.setState({
+        token : token,
+        uid   : uid,
+        propertyId : propertyId,
+      });
+
     axios
       .get('http://qatgk3tapi.iassureit.com/api/masteramenities/list')
       .then(
@@ -186,26 +211,40 @@ export default class PropertyDetails3 extends ValidationComponent{
     console.log("here btn pressed");
      const formValues = {
       
-        "floor"           : this.state.floor,
-        "totalFloor"      : this.state.totalfloor,
-        "bedroom"         : this.state.bedroom,
-        "balconies"       : this.state.balconies,
-        "bathroom"        : this.state.bathroom,
-        "yearsOld"        : this.state.yearsOld,
-        "propertyFacing"  : this.state.propertyFacing,
-        "superArea"       : this.state.superArea,
-        "unit1"            : this.state.unit1,
-        "unit2"            : this.state.unit2,
-        "builtArea"       : this.state.builtArea,
+          "unit1"             : this.state.unit1,
+          "unit2"             : this.state.unit2,
+          "bedrooms"          : this.state.bedrooms,
+          "balconies"         : this.state.balconies,
+          "washrooms"     : this.state.washrooms,
+          "furnishedStatus"   : this.state.furnishedstatus,
+          // all radio
+          "personal"        : this.state.personal,
+          "pantry"        : this.state.pantry,
+          "workStation"     : this.state.workStation,
 
-        // "uid"         : localStorage.getItem("uid"),
-        // "property_id"   : this.props.property_id
+          "bathrooms"         : this.state.bathrooms,
+          "ageofProperty"     : this.state.ageofproperty,
+          "facing"            : this.state.facing,
+          "superArea"         : this.state.superArea,
+          "builtupArea"       : this.state.builtupArea,
+          "property_id"       : this.state.propertyId,
+          "uid"               : this.state.uid,
+
+          // "Amenities"     : allAmenitiesDataList,
+          "floor"             : this.state.floor,
+          "totalFloor"        : this.state.totalfloor,
+          // "superAreaUnit"     : this.state.superAreaUnit,
+          // "builtupAreaUnit"     : this.state.builtupAreaUnit,
+          // "furnishPantry"       : this.state.furnishPantry, 
+            // checkbox
+          //     "furnishedOptions"    : furnishedOptionsDataList,
+
+
+        
 
       };
       console.log("formValues",formValues);
-
-
-      this.props.navigation.navigate('PropertyDetails5');
+      this.props.navigation.navigate('PropertyDetails5',{token:this.state.token,uid:this.state.uid});
   }
   render(){
    
@@ -304,8 +343,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelText}
                   style               = {styles.ddStyle}
                   data                = {this.state.bedroomData}
-                  value               = {this.state.bedroom}
-                  onChangeText        = {bedroom => {this.setState({bedroom});}}
+                  value               = {this.state.bedrooms}
+                  onChangeText        = {bedrooms => {this.setState({bedrooms});}}
                 />
               </View>
             </View>
@@ -356,13 +395,107 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelText}
                   style               = {styles.ddStyle}
                   data                = {this.state.bathroomData}
-                  value               = {this.state.bathroom}
-                  onChangeText        = {bathroom => {this.setState({bathroom});}}
+                  value               = {this.state.bathrooms}
+                  onChangeText        = {bathrooms => {this.setState({bathrooms});}}
+                />
+              </View>
+            </View>
+
+            {/*washrooms*/}
+            <View style={[styles.inputWrapper,styles.marginBottom15]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <Dropdown
+                  label               = 'Washrooms'
+                  containerStyle      = {styles.ddContainer}
+                  dropdownOffset      = {{top:0, left: 0}}
+                  itemTextStyle       = {styles.ddItemText}
+                  inputContainerStyle = {styles.ddInputContainer}
+                  labelHeight         = {10}
+                  tintColor           = {colors.button}
+                  labelFontSize       = {sizes.label}
+                  fontSize            = {15}
+                  baseColor           = {'#666'}
+                  textColor           = {'#333'}
+                  labelTextStyle      = {styles.ddLabelText}
+                  style               = {styles.ddStyle}
+                  data                = {this.state.washroomData}
+                  value               = {this.state.washrooms}
+                  onChangeText        = {washrooms => {this.setState({washrooms});}}
                 />
               </View>
             </View>
 
           {/*2nd*/}
+
+            <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
+            <View style={[styles.marginBottom15]}>
+              <RadioGroup
+                size={20}
+                color={colors.grey}
+                thickness={2}
+                selectedIndex = {this.state.pantry}
+                onSelect = {(index, value) => this.onSelect(index, value)}
+              >
+                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
+                  <Text style={styles.inputText}>Yes</Text>
+                </RadioButton>
+        
+                <RadioButton style={{paddingHorizontal:0}} value={'no'}>
+                  <Text style={styles.inputText}>No</Text>
+                </RadioButton>
+        
+              </RadioGroup>
+            </View>
+
+            
+
+            <Text style={[styles.heading2,styles.marginBottom15]}>Personal Washroom</Text>
+            <View style={[styles.marginBottom15]}>
+              <RadioGroup
+                size={20}
+                color={colors.grey}
+                thickness={2}
+                selectedIndex = {this.state.personal}
+                onSelect = {(index, value) => this.onSelect(index, value)}
+              >
+                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
+                  <Text style={styles.inputText}>Yes</Text>
+                </RadioButton>
+        
+                <RadioButton style={{paddingHorizontal:0}} value={'no'}>
+                  <Text style={styles.inputText}>No</Text>
+                </RadioButton>
+        
+              </RadioGroup>
+            </View>
+
+
+             <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
+            <View style={[styles.marginBottom15]}>
+              <RadioGroup
+                size={20}
+                color={colors.grey}
+                thickness={2}
+                selectedIndex = {this.state.workStation}
+                onSelect = {(index, value) => this.onSelect(index, value)}
+              >
+                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
+                  <Text style={styles.inputText}>0</Text>
+                </RadioButton>
+        
+                <RadioButton style={{paddingHorizontal:0}} value={1}>
+                  <Text style={styles.inputText}>1</Text>
+                </RadioButton>
+
+                 <RadioButton style={{paddingHorizontal:0}} value={2}>
+                  <Text style={styles.inputText}>2</Text>
+                </RadioButton>
+              </RadioGroup>
+            </View>
+
 
             <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
             <View style={[styles.marginBottom15]}>
@@ -408,8 +541,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelText}
                   style               = {styles.ddStyle}
                   data                = {this.state.yearsData}
-                  value               = {this.state.yearsOld}
-                  onChangeText        = {yearsOld => {this.setState({yearsOld});}}
+                  value               = {this.state.ageofproperty}
+                  onChangeText        = {ageofproperty => {this.setState({ageofproperty});}}
                 />
               </View>
             </View>
@@ -434,8 +567,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelText}
                   style               = {styles.ddStyle}
                   data                = {this.state.propertyFacingData}
-                  value               = {this.state.propertyFacing}
-                  onChangeText        = {propertyFacing => {this.setState({propertyFacing});}}
+                  value               = {this.state.facing}
+                  onChangeText        = {facing => {this.setState({facing});}}
                 />
               </View>
             </View>
@@ -444,7 +577,7 @@ export default class PropertyDetails3 extends ValidationComponent{
               <View style={styles.inputImgWrapper}>
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
-              <View style={styles.inputTextWrapperM}>
+              <View style={[styles.inputTextWrapperM,{backgroundColor:"#ff0"}]}>
                 <TextField
                   label                 = "Super Area"
                   onChangeText          = {superArea => {this.setState({superArea})}}
@@ -466,7 +599,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                   maxLength             = {10}
                 />
               </View>
-              <View style={[styles.inputRightWrapper1,{height:35}]}>
+              <View style={[styles.inputRightWrapper1,{height:35,backgroundColor:"#f00"}]}>
                 <Dropdown
                   containerStyle      = {styles.dropHeight,{paddingLeft:5}}
                   dropdownOffset      = {{top:0, left: 0}}
@@ -494,7 +627,7 @@ export default class PropertyDetails3 extends ValidationComponent{
               <View style={styles.inputTextWrapperM}>
                 <TextField
                   label                 = "Built Area"
-                  onChangeText          = {builtArea => {this.setState({builtArea})}}
+                  onChangeText          = {builtupArea => {this.setState({builtupArea})}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}
                   inputContainerPadding = {0}
@@ -503,7 +636,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                   titleFontSize         = {15}
                   baseColor             = {'#666'}
                   textColor             = {'#333'}
-                  value                 = {this.state.builtArea}
+                  value                 = {this.state.builtupArea}
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
