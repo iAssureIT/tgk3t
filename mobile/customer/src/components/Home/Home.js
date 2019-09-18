@@ -30,7 +30,7 @@ export default class Home extends ValidationComponent{
     super(props);
     this.state={
       searchText      : '',
-      activeBtn       : 'buy',
+      activeBtn       : 'Residential-Sell',
       location        :'',
       locSearchResults:''
     };
@@ -110,8 +110,18 @@ export default class Home extends ValidationComponent{
         </View>
      </TouchableWithoutFeedback>
     );
-
 }
+
+  handleSearch = (event)=>{
+    var property      = this.state.activeBtn.split("-");
+    var propertyType  = property[0];
+    var transactionType = property[1];
+    const formValues = {
+      property  : this.state.activeBtn,   
+      location  : this.state.location,
+    }
+   this.props.navigation.navigate('SearchProperty',{searchResults : formValues})
+  }
 
   render(){
     
@@ -144,7 +154,7 @@ export default class Home extends ValidationComponent{
 
             <View style={styles.optionsWrapper}>
               <View style={styles.buttonContainer}>
-                {activeBtn=='buy'
+                {activeBtn=='Residential-Sell'
                 ?
                   <React.Fragment>
                     <Button
@@ -156,7 +166,7 @@ export default class Home extends ValidationComponent{
                   </React.Fragment>
                 :
                   <Button
-                    onPress         = {()=>this.handleOption('buy')}
+                    onPress         = {()=>this.handleOption('Residential-Sell')}
                     titleStyle      = {styles.buttonText}
                     title           = "Buy"
                     buttonStyle     = {styles.button}
@@ -166,7 +176,7 @@ export default class Home extends ValidationComponent{
               </View>
 
               <View style={styles.buttonContainer}>
-              {activeBtn=='rent'
+              {activeBtn=='Residential-Rent'
               ?
                 <React.Fragment>
                   <Button
@@ -179,7 +189,7 @@ export default class Home extends ValidationComponent{
                 </React.Fragment>
               :
                 <Button
-                  onPress         = {()=>this.handleOption('rent')}
+                  onPress         = {()=>this.handleOption('Residential-Rent')}
                   titleStyle      = {styles.buttonText}
                   title           = "Rent"
                   buttonStyle     = {styles.button}
@@ -188,7 +198,7 @@ export default class Home extends ValidationComponent{
               </View>
 
               <View style={styles.buttonContainer}>
-              {activeBtn=='commertial'
+              {activeBtn=='Commercial-Sell' || activeBtn=='Commercial-Rent'
               ?
                 <React.Fragment>
                   <Button
@@ -201,14 +211,13 @@ export default class Home extends ValidationComponent{
                 </React.Fragment>
               :
                 <Button
-                  onPress         = {()=>this.handleOption('commertial')}
+                  onPress         = {()=>this.handleOption('Commercial-Sell')}
                   titleStyle      = {styles.buttonText}
                   title           = "Commercial"
                   buttonStyle     = {styles.button}
                 />
               }
               </View>
-
             </View>
 
             <View style={styles.formInputView}>
@@ -229,7 +238,7 @@ export default class Home extends ValidationComponent{
                   />
                 </View>
                 <TouchableOpacity 
-                  onPress={()=>this.props.navigation.navigate('SearchProperty')}
+                  onPress = {this.handleSearch.bind(this)}
                   style={styles.searchBtnWrapper}
                 >
                   <View >

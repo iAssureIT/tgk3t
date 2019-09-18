@@ -32,7 +32,14 @@ export default class PropertyList extends ValidationComponent{
       includeNearby: false,
       activePropType: 'flat',
       activeRoomIndex: 0,
+      searchResults:[]
     };
+  }
+
+  componentDidMount(){
+    var searchResults = this.props.navigation.getParam('searchResults','No Result')
+    console.log("searchResults=>",searchResults);
+    this.setState({searchResults:searchResults})
   }
 
   searchUpdated=(searchText)=>{
@@ -55,48 +62,194 @@ export default class PropertyList extends ValidationComponent{
     this.setState({activeRoomIndex:index});
   }
 
+  convertNumberToRupees(totalPrice){
+      return Math.abs(Number(totalPrice)) >= 1.0e+7
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+7 + " Cr"
+
+      : Math.abs(Number(totalPrice)) >= 1.0e+5
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
+
+      : Math.abs(Number(totalPrice)) >= 1.0e+3
+
+      ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+
+      : Math.abs(Number(totalPrice));
+    }
+
+
+  interestBtn(event){
+      event.preventDefault();
+      var id = event.currentTarget.id;
+
+      var formValues ={
+        property_id : event.currentTarget.id,
+        buyer_id    : localStorage.getItem('uid'),
+      }
+
+      var searchData = JSON.parse(localStorage.getItem("searchData"));
+      searchData.uid = localStorage.getItem('uid');
+
+
+    if($("#"+id).hasClass("resInterestExpress")){
+     axios
+      .post('/api/interestedProperties/',formValues)
+      .then(res=>{
+         //After Express Interest, again get all properties
+
+          axios
+            .post('/api/search/properties/',searchData)
+            .then(resultData =>{
+              axios
+                .get('/api/properties/'+id)
+                .then((propertyData) =>{
+                  console.log("propertiesData",propertyData.data);
+                  axios
+                    .get('/api/users/get/one/'+localStorage.getItem("uid"))
+                    .then((userData) =>{
+                          var sendDataToUser = {
+                          "templateName"  : "User - Express Interest",
+                          "toUserId"      : userData.data._id,
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      console.log("sendData",sendDataToUser);
+                      var sendDataToAdmin = {
+                          "templateName"        : "Admin - User Express Interest",
+                          "toUserId"            : "admin",
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "userMobile"        : userData.data.profile.mobileNumber,
+                              "userEmail"         : userData.data.profile.emailId,
+                              "userCity"          : userData.data.profile.city,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      console.log("sendData",sendDataToAdmin);
+                      axios
+                      .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
+                      .then((result) =>{
+                        console.log("SendEmailNotificationToAdmin",result);
+                        axios
+                        .post('/api/masternotifications/post/sendNotification',sendDataToUser)
+                        .then((res) =>{
+                          console.log("SendEmailNotificationToUser",res);           
+                        })
+                       .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+                 });        
+                      })
+                            
+                })
+               .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+            });
+                               
+              })
+             .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+        });
+                this.setState({
+                  searchResult  : resultData.data,
+                },()=>{
+                })
+            })
+           .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+             });
+      })
+     .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+                  });
+      }else{
+        var deleteValues = {
+          uid         : localStorage.getItem('uid'),
+          property_id : event.currentTarget.id
+        }
+        axios
+          .delete('/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
+          .then(
+            (res)=>{                
+                axios
+                  .post('/api/search/properties/',searchData)
+                  .then(resultData =>{
+                      this.setState({
+                        searchResult  : resultData.data,
+                      })
+                  })
+                .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+                });
+            }
+          )
+         .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                     this.props.history.push("/");
+                                }
+        });
+      }
+    }
+
+
   render(){
     
     const { navigation } = this.props;
     let {activeBtn,activePropType,activeRoomIndex} = this.state;
-    let propData = [
-      {
-        name:'Beds',
-        quantity: 2,
-        iconName:'bed-empty', 
-        iconType: 'material-community',
-      },
-      {
-        name:'Baths',
-        quantity: 2,
-        iconName:'bath', 
-        iconType: 'font-awesome',
-      },
-      {
-        name:'Floor',
-        quantity: 3,
-        iconName:'stairs', 
-        iconType: 'material-community',
-      },
-    ];
+  
 
-    let properDetails = [
-      {
-        imageSource : require('../../images/p1.png'),
-      },
-      {
-        imageSource : require('../../images/p2.png'),
-      },
-      {
-        imageSource : require('../../images/p3.png'),
-      },
-      {
-        imageSource : require('../../images/p4.png'),
-      },
-      {
-        imageSource : require('../../images/p5.png'),
-      },
-    ];
+
 
     // console.log("this.props.navigation = ",this.props.navigation);
     return (
@@ -136,19 +289,21 @@ export default class PropertyList extends ValidationComponent{
                 />}
               />
             </View>
-
-            {properDetails.map((prop,i)=>(
-              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetails',{image:prop.imageSource})}>
+            {this.state.searchResults && this.state.searchResults.length>0 ? 
+              this.state.searchResults.map((prop,i)=>(
+              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetails',{propertyDetails:prop})}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
+                  {console.log("img",prop.gallery.Images[0].imgPath) }
                   <ImageBackground 
                     // source={require('../../images/p1.png')}
-                    source={prop.imageSource}
+                    // source={prop.gallery ? prop.gallery.Images[0].imgPath : null}
+                    source = {{uri:prop.gallery.Images[0].imgPath}}
                     style={styles.bgImage}
                     resizeMode="cover"
                     imageStyle={{borderRadius:4}}
                   >
                     <Button
-                      // onPress         = {()=>this.props.navigation.navigate('PropertySuccess')}
+                      onPress         = {this.interestBtn.bind(this)}
                       titleStyle      = {styles.buttonText2}
                       title           = "Interested"
                       buttonStyle     = {styles.button2}
@@ -165,7 +320,7 @@ export default class PropertyList extends ValidationComponent{
                   </ImageBackground>
                   <View style={{width:'100%',padding:10}}>
                     <View style={{flexDirection:'row'}}>
-                      <Text style={styles.textSmallLight}>Park Avenue Apartment</Text>
+                      <Text style={styles.textSmallLight}>{prop.propertyLocation.society}</Text>
                       <Text style={{marginLeft:15}}>{'\u2022' + " "}</Text>
                       <Text style={styles.textSmallLight}>New Proerty</Text>
                     </View>
@@ -180,7 +335,7 @@ export default class PropertyList extends ValidationComponent{
                             color={colors.black}
                             containerStyle={{marginRight:5}}
                           />
-                          <Text style={styles.textLarge}>63.2 Lac</Text>
+                          <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.totalPrice)}</Text>
                         </View>
 
                         <View style={{flexDirection:'row'}}>
@@ -191,14 +346,14 @@ export default class PropertyList extends ValidationComponent{
                             color={colors.golden}
                             containerStyle={{marginRight:5}}
                           />
-                          <Text style={styles.textSmall}>Hadapsar Pune</Text>
+                          <Text style={styles.textSmall}>{prop.propertyLocation.area+", "+prop.propertyLocation.city}</Text>
                         </View>
                         
                       </View>
 
                       <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
                         <Button
-                          onPress={()=>this.props.navigation.navigate('PropertyDetails',{image:prop.imageSource})}
+                          onPress={()=>this.props.navigation.navigate('PropertyDetails',{propertyDetails:prop})}
                           titleStyle      = {styles.buttonText2}
                           title           = "Details"
                           buttonStyle     = {styles.button3}
@@ -212,39 +367,59 @@ export default class PropertyList extends ValidationComponent{
                         />
                       </View>
                     </View>
-
                     <View style={styles.divider}></View>
 
                     <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
-                    {propData.map((data,index)=>(
-                      <View key={index} style={{}}>
+                      <View  style={{}}>
                         <View style={{flexDirection:'row'}}>
                           <Icon
-                            name={data.iconName} 
-                            type={data.iconType}
+                            name={"bed-empty"} 
+                            type={'material-community'}
                             size={20}
                             color={colors.grey}
                           />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{data.quantity}</Text>
+                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>{data.name}</Text>
+                        <Text style={styles.textSmallLight}>Beds</Text>
                       </View>
-                    ))
-                    }
+                      <View  style={{}}>
+                        <View style={{flexDirection:'row'}}>
+                          <Icon
+                            name={"bath"} 
+                            type={'font-awesome'}
+                            size={20}
+                            color={colors.grey}
+                          />
+                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies}</Text>
+                        </View>
+                        <Text style={styles.textSmallLight}>Baths</Text>
+                      </View>
+                      <View  style={{}}>
+                        <View style={{flexDirection:'row'}}>
+                          <Icon
+                            name={"stairs"} 
+                            type={'material-community'}
+                            size={20}
+                            color={colors.grey}
+                          />
+                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
+                        </View>
+                        <Text style={styles.textSmallLight}>Floor</Text>
+                      </View>
                     </View>
 
                     <View style={[styles.divider,{marginBottom:10}]}></View>
 
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
                       <Text style={styles.textSmallLight}>
-                        Carpet Area
-                        <Text style={styles.textLarge}> 773 </Text>
+                        Super Area
+                        <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
                         Sqft
                       </Text>
 
                       <Text style={styles.textSmallLight}>
                         Possession by
-                        <Text style={styles.textLarge}> Jul '19 </Text>
+                        <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
                       </Text>
                     </View>
 
@@ -252,6 +427,8 @@ export default class PropertyList extends ValidationComponent{
                 </View>
               </TouchableOpacity>
             ))
+            :
+             <Text style={styles.textLarge}> No Data Found </Text>
             }
               
 

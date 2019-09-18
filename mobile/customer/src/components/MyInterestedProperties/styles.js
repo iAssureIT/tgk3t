@@ -116,7 +116,7 @@ export default StyleSheet.create({
       }
     })
   },
-    bgImage: {
+     bgImage: {
     width:'100%',
     height:200,
     alignItems:'flex-end',

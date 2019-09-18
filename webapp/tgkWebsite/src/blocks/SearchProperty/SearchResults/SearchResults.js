@@ -6,7 +6,6 @@ import { connect } 				from 'react-redux';
 import PropBox 					from './propBox.js';
 import Loader 					from 'react-loader-spinner'
 import swal                     from 'sweetalert';
-
 import './SearchResults.css';
 
 class SearchResults extends Component {
@@ -225,8 +224,7 @@ class SearchResults extends Component {
 			propertyTransList : [
 			]
 			})
-
-
+		
 		 $(".dropdown").hover(            
             function() {
                 $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");

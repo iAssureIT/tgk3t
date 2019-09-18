@@ -122,7 +122,7 @@ export default class MobileScreen extends ValidationComponent {
 
         
         axios
-          .post('http://qatgk3tapi.iassureit.com/api/usersotp/verify_mobile',formValues)
+          .post('/api/usersotp/verify_mobile',formValues)
           .then((response)=>{
             console.log("response after submit mob no= ",response.data);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
@@ -247,56 +247,7 @@ export default class MobileScreen extends ValidationComponent {
                   {this.displayValidationError('mobileNumberError')}
                 </View>
 
-            {/* <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="mobile" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={[styles.inputRightWrapperNoBorder,styles.borderRight,{height:35}]}>
-                <Dropdown
-                  containerStyle      = {styles.dropHeight,{paddingLeft:5}}
-                  dropdownOffset      = {{top:0, left: 0}}
-                  itemTextStyle       = {styles.ddItemText}
-                  inputContainerStyle = {styles.ddInputContainer}
-                  labelHeight         = {10}
-                  tintColor           = {colors.button}
-                  labelFontSize       = {sizes.label}
-                  fontSize            = {15}
-                  baseColor           = {'#666'}
-                  textColor           = {'#333'}
-                  labelTextStyle      = {styles.ddLabelTextFull}
-                  style               = {styles.ddStyle}
-                  data                = {this.state.codeData}
-                  value               = {this.state.unitCode}
-                  onChangeText        = {unitCode => {this.setState({unitCode});}}
-                />
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <TextField
-                  label                 = "Mobile no"
-               
-                  onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber },()=>{this.validInputField('mobileNumber', 'mobileNumberError');}),this.handleMobileChange(mobileNumber)}}
-                  // onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber })}}
-                                                
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {15}
-                  baseColor             = {'#666'}
-                  textColor             = {'#333'}
-                  value                 = {this.state.mobileNumber}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {styles.textStyle}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "numeric"
-                  maxLength             = {10}
-                />
-              </View>
-              {this.displayValidationError('mobileNumberError')}
-            </View>*/}
+
 
         
              <Modal isVisible={this.state.openModal} 

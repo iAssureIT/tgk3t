@@ -1,3 +1,6 @@
+//Module -Search Property
+//Developer Name - Rushikesh Salunkhe
+/*-----------------------------------------------------------*/
 import React, { Component } from 'react';
 import {
   ScrollView,
@@ -8,18 +11,20 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,TextInput,
-  Alert
+  Alert,
+  AsyncStorage
 } from 'react-native';
 
+import axios                              from 'axios';
 import { Button,Icon, SearchBar, Slider } from 'react-native-elements';
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
+import ValidationComponent                from "react-native-form-validator";
+import { TextField }                      from 'react-native-material-textfield';
 
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
-import CheckBox from 'react-native-check-box';
-import { Dropdown } from 'react-native-material-dropdown';
+import HeaderBar                          from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                             from './styles.js';
+import {colors,sizes}                     from '../../config/styles.js';
+import CheckBox                           from 'react-native-check-box';
+import { Dropdown }                       from 'react-native-material-dropdown';
 
 
 const window = Dimensions.get('window');
@@ -28,99 +33,243 @@ export default class SearchProperty extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
-      searchText            : '',
-      activeBtn             : 'buy',
+      location            : '',
+      activeBtn             : 'Residential-Sell',
       includeNearby         : false,
-      activePropType        : 'MultiStorey Apartment',
-      selectBudget          : 'Select Budget',
-      budgetList1 : [
-        {value: 1000000, option: "Upto 10 Lac", checked:false},
-        {value: 2000000, option: "Upto 20 Lac", checked:false},
-        {value: 3000000, option: "Upto 30 Lac", checked:false},
-        {value: 4000000, option: "Upto 40 Lac", checked:false},
-        {value: 5000000, option: "Upto 50 Lac", checked:false},
-        {value: 6000000, option: "Upto 60 Lac", checked:false},
-        {value: 7000000, option: "Upto 70 Lac", checked:false},
-        {value: 8000000, option: "Upto 80 Lac",checked:false},
-        {value: 9000000, option: "Upto 90 Lac",checked:false},
-        {value: 10000000, option: "Upto 1 Cr",checked:false},
-        {value: 20000000, option: "Upto 2 Cr",checked:false},
-        {value: 30000000, option: "Upto 3 Cr",checked:false},
-        {value: 50000000, option: "Upto 5 Cr",checked:false},
-        {value: 100000000, option: "Upto 10 Cr",checked:false},
-      ],
-
-      budgetList2 : [
-        {value: 5000,  option: "Upto 5,000",checked:false},
-        {value: 10000, option: "Upto 10,000",checked:false},
-        {value: 15000, option: "Upto 15,000",checked:false},
-        {value: 20000, option: "Upto 20,000",checked:false},
-        {value: 25000, option: "Upto 25,000",checked:false},
-        {value: 30000, option: "Upto 30,000",checked:false},
-        {value: 40000, option: "Upto 40,000",checked:false},
-        {value: 50000, option: "Upto 50,000",checked:false},
-        {value: 60000, option: "Upto 60,000",checked:false},
-        {value: 70000, option: "Upto 70,000",checked:false},
-        {value: 80000, option: "Upto 80,000",checked:false},
-        {value: 90000, option: "Upto 90,000",checked:false},
-        {value: 100000, option: "Upto 1 Lac",checked:false},
-      ],
-      activeRoomIndex       : 0,
-      activeFloorIndex      : 0,
-      activeAgeIndex        : 0,
-      activeAvailabeIndex   : 0,
-      activeFurnishedStatus : 'Fully Furnished',
-      value:"",
+      activePropType        : [],
+      selectBudget          : 0,
+      activeRoom            : [],
+      activeFloor           : "",
+      activeAge             : "",
+      activeAvailabe        : "",
+      activeFurnishedStatus : '',
+      roomsList             : "",
+      propertyList          : [],
+      propertyList1         : [],
+      propertyList2         : [],
+      floorsList            : [],
+      ageList               : [],
+      availableList         : [],
+      furnishList            : [],
     };
   }
 
-  searchUpdated = (searchText)=>{
-    this.setState({searchText});
+
+  componentDidMount(){
+   var searchResults = this.props.navigation.getParam('searchResults','No Result');
+
+   console.log("searchResults123",searchResults);
+   this.setState({
+      location :searchResults.location,
+      activeBtn:searchResults.property,
+      roomsList : [ 
+        {value: 1,  option: "1 BHK", checked:false},
+        {value: 2,  option: "2 BHK", checked:false},
+        {value: 3,  option: "3 BHK", checked:false},
+        {value: 4,  option: "4 BHK", checked:false},
+        {value: 5,  option: "5 BHK", checked:false},
+        ],
+      propertyList1 : [
+        {name:'MultiStorey Apartment', checked:false, iconName:"building-o",      type:"font-awesome",       size:12},
+        {name:'Residential House',     checked:false, iconName:"home",            type:"material-community", size:18},
+        {name:'Studio Apartment',      checked:false, iconName:"office-building", type:"material-community", size:16},
+        {name:'Villa',                 checked:false, iconName:"home",            type:"material-community", size:16},
+        {name:'Penthouse',             checked:false, iconName:"office-building", type:"font-awesome",       size:16}
+      ],
+      propertyList2 : [
+        {name:'Office in IT Park/SEZ',    checked:false, iconName:"building-o",      type:"font-awesome",       size:12},
+        {name:'Commercial Office Space',  checked:false, iconName:"office-building", type:"material-community", size:16},
+        {name:'Commercial Showroom',      checked:false, iconName:"office-building", type:"material-community", size:16},
+        {name:'Commercial Shop',          checked:false, iconName:"office-building", type:"material-community", size:16},
+        {name:'Industrial Building',      checked:false, iconName:"office-building", type:"material-community", size:16},
+        {name:'Warehouse/Godown',         checked:false, iconName:"office-building", type:"material-community", size:16}
+      ],
+
+      furnishList : [
+        {value:'Fully furnished', checked:false, iconName:"building-o",      type:"font-awesome",       size:12},
+        {value:'Semi furnished',  checked:false, iconName:"home",            type:"material-community", size:18},
+        {value:'Unfurnished',     checked:false, iconName:"office-building", type:"material-community", size:16},
+      ],
+      floorsList : 
+        [
+          {value: "-1",   option: "Basement", checked:false},
+          {value:  "0",   option: "Ground",   checked:false},
+          {value: '1-5',  option: "1-5",      checked:false},
+          {value: '5-10', option: "5-10",     checked:false},
+          {value: '>10',  option: "> 10",     checked:false}
+      ],
+      ageList : [
+        {value: "Under Construction", option: "Under Construction", checked:false},
+        {value: "New",                option: "Newly Built",        checked:false},
+        {value: "<4",                 option: "Less than 4 Years",  checked:false},
+        {value: "4-8",                option: "4 - 8 Years",        checked:false},
+        {value: "8-12",               option: "8 - 12 Years",       checked:false},
+        {value: ">12",                option: "Above 12 Years",     checked:false},
+      ],
+      availableList : [
+        {value:"Immediate",     checked:false},
+        {value:"2 Weeks",       checked:false},
+        {value:"2-4 Weeks",     checked:false},
+        {value:"After a month", checked:false},
+      ],
+    },()=>{
+      this.setState({propertyList:this.state.propertyList1})
+    })
+  }
+
+  handleLocation = (value)=>{
+    this.setState({location:value});
   }
 
   handleOption = (option)=>{
     this.setState({
       activeBtn:option
     },()=>{
-      if(this.state.activeBtn === "commertial")
-      {
-        this.setState({activePropType:"Office in IT Park/SEZ"});
+      var propertyList = [];
+      if(this.state.activeBtn === "Commercial-Sell" || this.state.activeBtn === "Commercial-Rent"){
+        this.setState({propertyList:this.state.propertyList2,activePropType:[]})
       }else{
-        this.setState({activePropType:'MultiStorey Apartment'});
+        this.setState({propertyList:this.state.propertyList1,activePropType:[]})
       }
     });
+  }
+
+  handleTransacrtionType = (value)=>{
+    this.setState({
+      activeBtn: value
+    })
   }
 
   handleIncludeNearby = ()=>{
     this.setState({includeNearby: !this.state.includeNearby});
   }
 
-  selectBudget = (name)=>{
-    this.setState({selectBudget:name})
+  selectBudget = (value)=>{
+    this.setState({selectBudget:value})
   }
 
   setActive = (name)=>{
-    this.setState({activePropType:name});
+    let propsType    = this.state.activePropType;
+    let propertyList = this.state.propertyList;
+    for (var i = propertyList.length - 1; i >= 0; i--) {
+      if(propertyList[i].name === name){
+        if(propertyList[i].checked === true){
+          propertyList[i].checked = false;
+          for (var i = propsType.length - 1; i >= 0; i--) {
+            if(propsType[i] === name){
+              propsType.splice(i,1)
+            }
+          }
+        }else{
+          propertyList[i].checked = true;
+          propsType.push(name);
+        }
+      }
+    }
+    this.setState({activePropType:propsType})
+    this.setState({propertyList:propertyList})
   }
 
-  setActiveRoom = (index)=>{
-    this.setState({activeRoomIndex:index});
+  setActiveRoom = (value)=>{
+    let roomsList =this.state.roomsList;
+    let rooms     =this.state.activeRoom;
+    for (var i = roomsList.length - 1; i >= 0; i--) {
+      if(roomsList[i].value === value){
+        if(roomsList[i].checked === true){
+          roomsList[i].checked = false;
+          for (var i = rooms.length - 1; i >= 0; i--) {
+            if(rooms[i] === value){
+              rooms.splice(i,1)
+            }
+          }
+        }else{
+          roomsList[i].checked = true;
+          rooms.push(value);
+        }
+      }
+    }
+    this.setState({activeRoom:rooms})
+    this.setState({roomsList:roomsList})
   }
 
-  setActiveFloor = (index)=>{
-    this.setState({activeFloorIndex:index});
+  setActiveFloor = (value)=>{
+    var floorsList =this.state.floorsList;
+    for (var i =floorsList.length - 1; i >= 0; i--){
+      if(floorsList[i].value === value){
+        if(floorsList[i].checked === true){
+          floorsList[i].checked = false;
+            this.setState({activeFloor:""})
+        }else{
+          for (var j =floorsList.length - 1; j >= 0; j--){
+            floorsList[j].checked = false;
+            this.setState({activeFloor:""})
+          }
+          floorsList[i].checked = true;
+          this.setState({activeFloor:value})
+        }
+      }
+    }
+    this.setState({floorsList:floorsList});
   }
 
-
-  setActiveAge = (index)=>{
-    this.setState({activeAgeIndex:index});
+  setActiveAge = (value)=>{
+    var ageList =this.state.ageList;
+    for (var i =ageList.length - 1; i >= 0; i--){
+      if(ageList[i].value === value){
+        if(ageList[i].checked === true){
+          ageList[i].checked = false;
+            this.setState({activeAge:""})
+        }else{
+          for (var j =ageList.length - 1; j >= 0; j--){
+            ageList[j].checked = false;
+            this.setState({activeAge:""})
+          }
+          ageList[i].checked = true;
+          this.setState({activeAge:value})
+        }
+      }
+    }
+    this.setState({ageList:ageList});
   }
 
-  setActiveAvailable = (index)=>{
-    this.setState({activeAvailabeIndex:index});
+  setActiveAvailable = (value)=>{
+    var availableList =this.state.availableList;
+    for (var i =availableList.length - 1; i >= 0; i--){
+      if(availableList[i].value === value){
+        if(availableList[i].checked === true){
+          availableList[i].checked = false;
+            this.setState({activeAvailabe:""})
+        }else{
+          for (var j =availableList.length - 1; j >= 0; j--){
+            availableList[j].checked = false;
+            this.setState({activeAvailabe:""})
+          }
+          availableList[i].checked = true;
+          this.setState({activeAvailabe:value})
+        }
+      }
+    }
+    this.setState({availableList:availableList});
   }
-  setActiveFurnish = (status)=>{
-    this.setState({activeFurnishedStatus:status});
+
+  setActiveFurnish = (value)=>{
+    var furnishList =this.state.furnishList;
+    for (var i =furnishList.length - 1; i >= 0; i--){
+      if(furnishList[i].value === value){
+        if(furnishList[i].checked === true){
+          furnishList[i].checked = false;
+            this.setState({activeFurnishedStatus:""})
+        }else{
+          for (var j =furnishList.length - 1; j >= 0; j--){
+            furnishList[j].checked = false;
+            this.setState({activeFurnishedStatus:""})
+          }
+          furnishList[i].checked = true;
+          this.setState({activeFurnishedStatus:value})
+        }
+      }
+    }
+    this.setState({furnishList:furnishList});
   }
 
   convertNumberToRupees(totalPrice) 
@@ -141,17 +290,51 @@ export default class SearchProperty extends ValidationComponent{
     : Math.floor(Number(totalPrice));
   }
 
-  render(){
-    
-    const { navigation } = this.props;
-    let {activeBtn,activePropType,activeRoomIndex,activeFloorIndex,activeAgeIndex,activeAvailabeIndex,activeFurnishedStatus,selectBudget} = this.state;
-    let rooms = ["1 RK","1 BHK","2 BHK","3 BHK","4 BHK","4+BHK"];
-    let floors = ["Basement","Ground","1-5","5-10","> 10"];
-    let ages = ["Under Construction"," New ","1-2 Years","2-5 Years","5-10 Years","> 8 Years"];
-    let available = ["Immediate","2 Weeks","2-4 Weeks","After a month"];
-    // var value =this.state.value;
-    var budget=this.convertNumberToRupees(this.state.value)
+  handleSearch = (event)=>{
+    var property      = this.state.activeBtn.split("-");
+    var propertyType  = property[0];
+    var transactionType = property[1];
+    const formValues = {
+      transactionType : transactionType,
+      propertyType    : propertyType,
+      location        : this.state.location,
+      budget          : this.state.selectBudget,
+      propertySubType : this.state.activePropType,
+      floor           : this.state.activeFloor,
+      furnishedStatus : this.state.activeFurnishedStatus,
+      flatType        : this.state.activeRoom,
+      propertyAge     : this.state.activeAge,
+      availability    : this.state.activeAvailabe,
+    }
+    console.log("formValues",formValues);
+    axios
+      .post("/api/search/properties/", formValues)
+      .then((searchResults) => {
+        console.log("searchResults",searchResults);
+        this.props.navigation.navigate('PropertyList',{searchResults : searchResults.data })
+      })
+       .catch((error)=>{
+            console.log("error = ",error);
+            if(error.message === "Request failed with status code 401")
+            {
+                 swal("Your session is expired! Please login again.","", "error");
+            }
+      });
+  }
 
+
+
+  render(){
+
+    const { navigation } = this.props;
+
+    let {activeBtn,activePropType,activeRoom,activeFloor,activeAge,activeAvailabe,activeFurnishedStatus,selectBudget} = this.state;
+  
+    
+    // var value =this.state.value;
+    var budget=this.convertNumberToRupees(this.state.selectBudget)
+
+    
     // console.log("this.props.navigation = ",this.props.navigation);
     return (
       <React.Fragment>
@@ -162,7 +345,7 @@ export default class SearchProperty extends ValidationComponent{
             
             <View style={styles.optionsWrapper}>
               <View style={styles.buttonContainer}>
-                {activeBtn=='buy'
+                {activeBtn=='Residential-Sell'
                 ?
                   <React.Fragment>
                     <Button
@@ -174,7 +357,7 @@ export default class SearchProperty extends ValidationComponent{
                   </React.Fragment>
                 :
                   <Button
-                    onPress         = {()=>this.handleOption('buy')}
+                    onPress         = {()=>this.handleOption('Residential-Sell')}
                     titleStyle      = {styles.buttonText}
                     title           = "Buy"
                     buttonStyle     = {styles.button}
@@ -184,7 +367,7 @@ export default class SearchProperty extends ValidationComponent{
               </View>
 
               <View style={styles.buttonContainer}>
-              {activeBtn=='rent'
+              {activeBtn=='Residential-Rent'
               ?
                 <React.Fragment>
                   <Button
@@ -197,7 +380,7 @@ export default class SearchProperty extends ValidationComponent{
                 </React.Fragment>
               :
                 <Button
-                  onPress         = {()=>this.handleOption('rent')}
+                  onPress         = {()=>this.handleOption('Residential-Rent')}
                   titleStyle      = {styles.buttonText}
                   title           = "Rent"
                   buttonStyle     = {styles.button}
@@ -206,7 +389,7 @@ export default class SearchProperty extends ValidationComponent{
               </View>
 
               <View style={styles.buttonContainer}>
-              {activeBtn=='commertial'
+              {activeBtn=='Commercial-Sell' || activeBtn=='Commercial-Rent'
               ?
                 <React.Fragment>
                   <Button
@@ -219,7 +402,7 @@ export default class SearchProperty extends ValidationComponent{
                 </React.Fragment>
               :
                 <Button
-                  onPress         = {()=>this.handleOption('commertial')}
+                  onPress         = {()=>this.handleOption('Commercial-Sell')}
                   titleStyle      = {styles.buttonText}
                   title           = "Commercial"
                   buttonStyle     = {styles.button}
@@ -227,6 +410,50 @@ export default class SearchProperty extends ValidationComponent{
               }
               </View>
             </View>
+
+            {activeBtn === "Commercial-Sell" || activeBtn === "Commercial-Rent" ?
+              <View>
+                <Text style={[styles.heading,styles.marginBottom5]}>Looking For</Text>
+                <View style={[styles.optionsWrapper,styles.marginBottom25]}>
+                  <View style={styles.buttonContainer1}>
+                    {activeBtn === "Commercial-Sell" ?
+                        <Button
+                          titleStyle      = {styles.activeButtonText}
+                          title           = "Buy"
+                          buttonStyle     = {styles.activeButton}
+                        />
+                    :
+                      <Button
+                        onPress         = {()=>this.handleTransacrtionType('Commercial-Sell')}
+                        titleStyle      = {styles.buttonText}
+                        title           = "Buy"
+                        buttonStyle     = {styles.button}
+                        // containerStyle  = {[{width:'100%',backgroundColor:'#f0f'}]}
+                      />
+                    }
+                  </View>
+
+                  <View style={styles.buttonContainer1}>
+                  {activeBtn === "Commercial-Rent"?
+                      <Button
+                        titleStyle      = {styles.activeButtonText}
+                        title           = "Lease"
+                        buttonStyle     = {styles.activeButton}
+                      />
+                  :
+                    <Button
+                      onPress         = {()=>this.handleTransacrtionType('Commercial-Rent')}
+                      titleStyle      = {styles.buttonText}
+                      title           = "Lease"
+                      buttonStyle     = {styles.button}
+                    />
+                  }
+                  </View>
+                </View>
+              </View>  
+              :
+              null
+            }
 
             <View style={[styles.searchInputWrapper,styles.marginBottom25]}>
               <View style={styles.inputTextWrapper}>
@@ -240,11 +467,11 @@ export default class SearchProperty extends ValidationComponent{
                   inputContainerStyle={styles.searchInputContainer}
                   inputStyle={styles.searchInput}
                   placeholder='Enter city'
-                  onChangeText = {(text) => this.searchUpdated(text)}
-                  value={this.state.searchText}
+                  onChangeText = {(text) => this.handleLocation(text)}
+                  value={this.state.location}
                 />
               </View>
-              <TouchableOpacity 
+{/*              <TouchableOpacity 
                 onPress={()=>this.props.navigation.navigate('SearchProperty')}
                 style={styles.searchBtnWrapper}
               >
@@ -253,228 +480,53 @@ export default class SearchProperty extends ValidationComponent{
                     source={require('../../images/key.png') }
                   />
                 </View>
-              </TouchableOpacity>
+              </TouchableOpacity>*/}
             </View>
 
-           {/* <View style={styles.outerView}>
-              <CheckBox
-                style={{marginBottom:10}}
-                onClick={() => this.handleIncludeNearby()}
-                isChecked={this.state.includeNearby}
-                rightTextStyle={{marginLeft:0}}
-                checkBoxColor= {colors.grey}
-                rightTextView = {
-                  <View style={{flex:1,paddingLeft:10}}>
-                    <Text style={styles.inputText}>Include nearby properties</Text>
-                  </View>
-                }
-              />
-            </View>*/}
             <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn!=='commertial'? "Residential" : "Commercial"}</Text>
-            {this.state.activeBtn!=='commertial'?
               <View style={[styles.tabWrap,styles.marginBottom25]}>
                <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
+                 {this.state.propertyList.length && this.state.propertyList.length >0 ?
+                  this.state.propertyList.map((data,index)=>(
                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('MultiStorey Apartment')}
-                    style={[(activePropType=="MultiStorey Apartment"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusLeft2]}
+                    key={index}
+                    onPress = {()=>this.setActive(data.name)}
+                    style={[(data.checked===true?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
                   >
                       <Icon
-                        name="building-o" 
-                        type="font-awesome"
-                        size={12}
+                        name={data.iconName} 
+                        type={data.type}
+                        size={data.size}
                         color="white"
                         style={[{paddingLeft:10}]}
 
                       />
-                      <Text style={styles.tabText}> MultiStorey Apartment </Text>
+                      <Text style={styles.tabText}> {data.name} </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Residential House')}
-                    style={[(activePropType=="Residential House"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
-                  >
-                    <Icon
-                      name="home" 
-                      type="material-community"
-                      size={18}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-
-                    />
-                    <Text style={styles.tabText}> Residential House </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Studio Apartment')}
-                    style={[(activePropType=="Studio Apartment"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
-                  >
-                    <Icon
-                      name="office-building" 
-                      type="material-community"
-                      size={16}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-                    />
-                    <Text style={styles.tabText}> Studio Apartment </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Villa')}
-                    style={[(activePropType=="Villa"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
-                  >
-                    <Icon
-                      name="home" 
-                      type="material-community"
-                      size={16}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-
-                    />
-                    <Text style={styles.tabText}> Villa </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Penthouse')}
-                    style={[(activePropType=="Penthouse"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusRight2]}
-                  >
-                    <Icon
-                      name="office-building" 
-                      type="material-community"
-                      size={16}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-
-                    />
-                    <Text style={styles.tabText}> Penthouse </Text>
-                  </TouchableOpacity>
-
+                  ))
+                  :
+                  null
+                }
                 </ScrollView>
               </View>
-              :
-              <View style={[styles.tabWrap,styles.marginBottom25]}>
-               <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
-                 <TouchableOpacity 
-                    onPress = {()=>this.setActive('Office in IT Park/SEZ')}
-                    style={[(activePropType=="Office in IT Park/SEZ"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusLeft2]}
-                  >
-                      <Icon
-                        name="building-o" 
-                        type="font-awesome"
-                        size={12}
-                        color="white"
-                        style={[{paddingLeft:10}]}
-
-                      />
-                      <Text style={styles.tabText}> Office in IT Park/SEZ </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Commercial Office Space')}
-                    style={[(activePropType=="Commercial Office Space"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
-                  >
-                    <Icon
-                      name="home" 
-                      type="material-community"
-                      size={18}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-
-                    />
-                    <Text style={styles.tabText}> Commercial Office Space </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Commercial Showroom')}
-                    style={[(activePropType=="Commercial Showroom"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
-                  >
-                    <Icon
-                      name="office-building" 
-                      type="material-community"
-                      size={16}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-                    />
-                    <Text style={styles.tabText}> Commercial Showroom </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Commercial Shop')}
-                    style={[(activePropType=="Commercial Shop"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
-                  >
-                    <Icon
-                      name="office-building" 
-                      type="material-community"
-                      size={16}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-
-                    />
-                    <Text style={styles.tabText}> Commercial Shop </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Industrial Building')}
-                    style={[(activePropType=="Industrial Building"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder]}
-                  >
-                    <Icon
-                      name="office-building" 
-                      type="material-community"
-                      size={16}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-
-                    />
-                    <Text style={styles.tabText}> Industrial Building </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity 
-                    onPress = {()=>this.setActive('Warehouse/Godown')}
-                    style={[(activePropType=="Warehouse/Godown"?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,styles.tabBorder,styles.borderRadiusRight2]}
-                  >
-                    <Icon
-                      name="office-building" 
-                      type="material-community"
-                      size={16}
-                      color="white"
-                      style={[{paddingLeft:10}]}
-                    />
-                    <Text style={styles.tabText}> Warehouse/Godown </Text>
-                  </TouchableOpacity>
-
-                </ScrollView>
-              </View>
-            }
             <Text style={[styles.heading,styles.marginBottom5]}>Bedroom</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
-            {rooms.map((data,index)=>(
+            {this.state.roomsList && this.state.roomsList.length > 0 ?
+              this.state.roomsList.map((data,index)=>(
               <TouchableOpacity 
-                onPress={()=>this.setActiveRoom(index)}
+                onPress={()=>this.setActiveRoom(data.value)}
                 key={index} 
-                style={[(index==activeRoomIndex?styles.activeTabView2:styles.tabView2),(index==0?styles.borderRadiusLeft2:(index==5)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
+                style={[(data.checked==true?styles.activeTabView2:styles.tabView2),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<5)?styles.tabBorder:null]}
               >
-                <Text style={styles.tabText}>{data}</Text>
+                <Text style={styles.tabText}>{data.option}</Text>
               </TouchableOpacity>
             ))
+            :
+            null
             }
             </View>
 
             <Text style={[styles.heading,styles.marginBottom5]}>Price Range</Text>
- {/*             <View style={[styles.inputWrapper,styles.marginBottom15]}>
-                  <View style={styles.inputTextWrapperFull}>
-                    <Dropdown
-                      // label               = 'Property Type'
-                      containerStyle      = {styles.ddContainer}
-                      dropdownOffset      = {{top:0, left: 0}}
-                      itemTextStyle       = {styles.ddItemText}
-                      inputContainerStyle = {styles.ddInputContainer}
-                      labelHeight         = {10}
-                      tintColor           = {colors.button}
-                      labelFontSize       = {sizes.label}
-                      fontSize            = {15}
-                      baseColor           = {'#666'}
-                      textColor           = {'#333'}
-                      labelTextStyle      = {styles.ddLabelTextFull}
-                      style               = {styles.ddStyle}
-                      data                = {this.state.budgetList1}
-                      value               = {this.state.selectBudget}
-                      // onChangeText        = {this.selectProp.bind(this)}
-                      onChangeText={ (selectBudget) => this.selectBudget(selectBudget) } 
-                      // onChangeText        = {fullPropertyType => {this.setState({fullPropertyType});}}
-                    />
-                  </View>
-              </View>*/}
-
             <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
               <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Icon
@@ -499,23 +551,25 @@ export default class SearchProperty extends ValidationComponent{
             </View>
             <View style={[{width:'100%'}]}>
               <Slider
-                value={this.state.value}
+                value={this.state.selectBudget}
                 animationType={"spring"}
-                minimumValue={this.state.activeBtn==="rent" ? 5000 : 1000000 }
-                maximumValue={this.state.activeBtn==="rent" ?  1000000:  1000000000}
+                minimumValue={this.state.activeBtn==="Residential-Rent" ? 5000 : 1000000 }
+                maximumValue={this.state.activeBtn==="Residential-Rent" ?  1000000:  1000000000}
                 step={1}
                 minimumTrackTintColor={colors.golden}
                 thumbStyle={{backgroundColor:'#fff',height:30,width:20,borderWidth:1,borderColor:'#ccc'}}
                 trackStyle={{height:10,borderColor:'#ccc',borderWidth:1}}
-                onValueChange={value => this.setState({ value })}
+                onValueChange={selectBudget => this.setState({ selectBudget })}
               />
             </View>
 
             <Text style={[styles.heading,styles.marginBottom5]}>Furnish Status</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
+            {this.state.furnishList.map((data,index)=>(
               <TouchableOpacity 
-                onPress = {()=>this.setActiveFurnish('Fully Furnished')}
-                style={[(activeFurnishedStatus=='Fully Furnished'?styles.activeTabView:styles.tabView),styles.tabBorder,styles.borderRadiusLeft]}
+                onPress = {()=>this.setActiveFurnish(data.value)}
+                key={index}
+                style={[(data.checked === true?styles.activeTabView:styles.tabView),(index==0?styles.borderRadiusLeft:(index==2)?styles.borderRadiusRight:null),(index<4)?styles.tabBorder:null]}
               >
                   <Icon
                     name="building-o" 
@@ -523,43 +577,21 @@ export default class SearchProperty extends ValidationComponent{
                     size={12}
                     color="white"
                   />
-                  <Text style={styles.tabText}>Fully Furnished</Text>
+                  <Text style={styles.tabText}>{data.value}</Text>
               </TouchableOpacity>
-              <TouchableOpacity 
-                onPress = {()=>this.setActiveFurnish('Semi Furnished')}
-                style={[(activeFurnishedStatus=='Semi Furnished'?styles.activeTabView:styles.tabView),styles.tabBorder]}
-              >
-                <Icon
-                  name="home" 
-                  type="material-community"
-                  size={18}
-                  color="white"
-                />
-                <Text style={styles.tabText}>Semi Furnished</Text>
-              </TouchableOpacity>
-              <TouchableOpacity 
-                onPress = {()=>this.setActiveFurnish("Unfunished")}
-                style={[(activeFurnishedStatus=="Unfunished"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
-              >
-                <Icon
-                  name="office-building" 
-                  type="material-community"
-                  size={16}
-                  color="white"
-                />
-                <Text style={styles.tabText}>Unfunished</Text>
-              </TouchableOpacity>
+               ))
+            }
             </View>
 
             <Text style={[styles.heading,styles.marginBottom5]}>Floors</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
-            {floors.map((data,index)=>(
+            {this.state.floorsList.map((data,index)=>(
               <TouchableOpacity 
-                onPress={()=>this.setActiveFloor(index)}
+                onPress={()=>this.setActiveFloor(data.value)}
                 key={index} 
-                style={[(index==activeFloorIndex?styles.activeTabViewFloor:styles.tabViewFloor),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
+                style={[(data.checked === true?styles.activeTabViewFloor:styles.tabViewFloor),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
               >
-                <Text style={styles.tabText}>{data}</Text>
+                <Text style={styles.tabText}>{data.option}</Text>
               </TouchableOpacity>
             ))
             }
@@ -569,13 +601,13 @@ export default class SearchProperty extends ValidationComponent{
             <Text style={[styles.heading,styles.marginBottom5]}>Age</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
-            {ages.map((data,index)=>(
+            {this.state.ageList.map((data,index)=>(
               <TouchableOpacity 
-                onPress={()=>this.setActiveAge(index)}
+                onPress={()=>this.setActiveAge(data.value)}
                 key={index} 
-                style={[(index==activeAgeIndex?styles.activeTabViewAge:styles.tabViewAge),(index<6)?styles.tabBorder:null]}
+                style={[(data.checked===true?styles.activeTabViewAge:styles.tabViewAge),(index<6)?styles.tabBorder:null]}
               >
-                <Text style={styles.tabText}>{data}</Text>
+                <Text style={styles.tabText}>{data.option}</Text>
               </TouchableOpacity>
             ))
             }
@@ -584,13 +616,13 @@ export default class SearchProperty extends ValidationComponent{
 
              <Text style={[styles.heading,styles.marginBottom5]}>Availability</Text>
               <View style={[styles.tabWrap,styles.marginBottom25]}>
-              {available.map((data,index)=>(
+              {this.state.availableList.map((data,index)=>(
                 <TouchableOpacity 
-                  onPress={()=>this.setActiveAvailable(index)}
+                  onPress={()=>this.setActiveAvailable(data.value)}
                   key={index} 
-                  style={[(index==activeAvailabeIndex?styles.activeTabViewAvl:styles.tabViewAvl),(index==0?styles.borderRadiusLeft2:(index==3)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
+                  style={[(data.checked=== true?styles.activeTabViewAvl:styles.tabViewAvl),(index==0?styles.borderRadiusLeft2:(index==3)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
                 >
-                  <Text style={styles.tabText}>{data}</Text>
+                  <Text style={styles.tabText}>{data.value}</Text>
                 </TouchableOpacity>
               ))
               }
@@ -598,7 +630,7 @@ export default class SearchProperty extends ValidationComponent{
               </View>
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertyList')}
+              onPress         = {this.handleSearch.bind(this)}
               titleStyle      = {styles.buttonSubmitText}
               title           = "Search"
               buttonStyle     = {styles.buttonSubmit}

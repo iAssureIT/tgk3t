@@ -26,10 +26,18 @@ export default StyleSheet.create({
     flexWrap:'wrap',
     width: '100%',
   },
+
+
   buttonContainer:{
     width:'31%',
     elevation:8
   },
+
+  buttonContainer1:{
+    width:'48%',
+    elevation:8
+  },
+
   activeButtonText:{
     color: colors.white,
     fontSize: 15,
@@ -99,7 +107,7 @@ export default StyleSheet.create({
     marginBottom:5
   },
   inputTextWrapper:{
-    width:'83%',
+    width:'100%',
     justifyContent:'center'
   },
   searchContainer:{
@@ -220,7 +228,7 @@ export default StyleSheet.create({
     textAlign:'center',
   },
   tabView2:{
-    width:'16.66%',
+    width:'20%',
     backgroundColor: colors.button,
     paddingHorizontal: 5,
     paddingVertical:15
@@ -250,7 +258,7 @@ export default StyleSheet.create({
     textAlign:'center',
   },
   activeTabView2:{
-    width:'16.66%',
+    width:'20%',
     backgroundColor: colors.primary,
     paddingHorizontal: 5,
     paddingVertical:15,
