@@ -208,7 +208,7 @@ class PropertyProfile extends Component{
                 </div>
                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName"> 
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameOfProperty noPad" >
-                    <div className="row">
+                    <div className="col-lg-12 col-xs-12">
                       <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
                         <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 backButton">
                           <img src="/images/profilePic.png"/>
@@ -265,7 +265,7 @@ class PropertyProfile extends Component{
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
                             {this.state.propertyImages[1] ?
-                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[1].imgPath} />
+                            <img className="noPad propertyImageDiv col-lg-12 col-xs-12 noPad" src={this.state.propertyImages[1].imgPath} />
                             :
                             <img src="/images/loading_img.jpg" className="col-lg-12 col-xs-12 noPad" />
                           }
@@ -328,22 +328,22 @@ class PropertyProfile extends Component{
                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl3">
                   <div className="">
                     <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                      <div className="row"> 
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <label className="row">Property Description</label>
+                      <div className=""> 
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+                          <label className="">Property Description</label>
                         </div>
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 descriptionWrap">
-                          <div className="row"> 
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 descriptionWrap noPad">
+                          <div className=""> 
                             {this.state.pricing && this.state.pricing.description ? this.state.pricing.description : "-"}                             
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row"> 
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <label className="row">Key Features</label>
+                    <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
+                      <div className="">
+                        <div className=""> 
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                            <label className="">Key Features</label>
                           </div>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul className="col-lg-7 col-md-7 col-sm-12 col-xs-12 bolder">   
@@ -422,17 +422,17 @@ class PropertyProfile extends Component{
                             </div>
                           </div>
                         </div>
-                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
+                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
+                          <div className="">
+                            <div className=""> 
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <label className="row">Financials</label>
+                                <label className="">Financials</label>
                               </div>
-                              <div className="row"> 
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                  <div className="row"> 
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                     <div className="row">
+                              <div className=""> 
+                                <div className="">
+                                  <div className=""> 
+                                    <div className=" ">
+                                     <div className="">
                                        <ul  className="bolder">
                                           {this.state.pricing && this.state.pricing.totalPrice ?
                                             <b>

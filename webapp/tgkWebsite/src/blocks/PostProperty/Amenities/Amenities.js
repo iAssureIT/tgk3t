@@ -369,7 +369,7 @@ import './Amenities.css';
 		  	 				// console.log("data",data);
 		  	 				return(
 		  	 						<div className="col-lg-6 FF4I1 sideBorder" key={index}>
-		  	 							
+
 										<label className="container2">
 											  <input type="checkbox"
 											  		 value={data.amenity} 
@@ -379,9 +379,83 @@ import './Amenities.css';
 										      		 data-index={data.checked}
 										      		 checked={data.checked}
 										      		 />
-											 <span className="checkmark pull-left"></span>
-											 <span className="Ameni1"><i className="fa fa-flag" aria-hidden="true"></i></span>
-											 <span className="AmeniName">  {data.amenity} </span>
+											<span className="checkmark pull-left"></span>
+
+											{data.amenity==="AC" ? 
+												<span> 
+												 	<span className="Ameni1"><img src="/images/ac.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+												</span>
+											    :
+												data.amenity==="Swimming Pool" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/pool.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+												:
+												data.amenity==="Gas Pipeline" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/gasPipe.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="24*7 Water" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/water.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="Lift" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/lift.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="Power Backup" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/powerBk.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="Shopping Center" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/shopping.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="Children's Play Area" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/playArea.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="Internal Gym" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/gym.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="Park" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/park.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+											 	data.amenity==="Internet Services" ?
+												<span> 
+												 	<span className="Ameni1"><img src="/images/internet.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											 	:
+												<span> 
+												 	<span className="Ameni1"><img src="/images/internet.png" /></span>
+												 	<span className="AmeniName">  {data.amenity} </span>
+											 	</span>
+											}
+
+											 
+											 
+
 									
 										</label>
 		  	 						</div>

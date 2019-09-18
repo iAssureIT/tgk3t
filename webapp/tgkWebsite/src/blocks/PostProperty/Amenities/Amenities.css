@@ -194,7 +194,7 @@
 .checkmark {
   position: absolute;
   top: 3px;
-  left: 66px;
+  /*left: 66px;*/
   height: 22px;
   width: 22px;
   /*background-color: #ccc;*/
@@ -236,11 +236,11 @@
 
 .Ameni1{
     position: relative;
-    left: 117px;
+    left: 38px;
 }
 .AmeniName{
     position: relative;
-    left: 129px;
+    left: 50px;
     font-weight: 100;
     font-size: 16px;
 }

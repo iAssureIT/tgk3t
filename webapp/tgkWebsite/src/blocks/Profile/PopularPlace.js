@@ -86,7 +86,7 @@ class PopularPlaces extends Component{
                     </div>
                   </div>
                   <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai marginRight pull-right Bg">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai  pull-right Bg">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
                         <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
                         <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} Properties</h4>
@@ -106,7 +106,7 @@ class PopularPlaces extends Component{
                     </div>
                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 ">
                         <div className="">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik marginRight pull-right Sm">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik  pull-right Sm">
                             <div className="">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
                                 <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3]._id : null}</h4>

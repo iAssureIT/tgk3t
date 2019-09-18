@@ -254,10 +254,16 @@ class masterData extends Component {
 												   return( 
 													<tr className="ReverseData">
 														<td className="textAlignLeft">{roleData.amenity}</td>		
-														<td className="roleTextCenter pointerCls"> 						
+														<td className="roleTextCenter pointerCls">
+															{roleData.amenity=="Swimming Pool" || roleData.amenity=="AC" || roleData.amenity=="Gas Pipeline" || roleData.amenity=="24*7 Water" || roleData.amenity=="Lift"  || roleData.amenity=="Power Backup" || roleData.amenity=="Shopping Center" || roleData.amenity=="Children's Play Area" || roleData.amenity=="Internal Gym" || roleData.amenity=="Park"  ?
+															null
+															:	
+															<div>		
 															<i className="fa fa-pencil editTcon editIcon pointerCls"  data-toggle="modal" id={roleData._id} onClick={this.getData.bind(this)} title=" Edit" data-target={`#${roleData._id}-edit`} title="Edit" ></i>
-															&nbsp;&nbsp;
 															<i className="deleteIcon roleDelete  redFont fa fa-trash delIcon detailsCenter"  id="" title="Delete" data-toggle="modal" title="Delete" data-target={`#${roleData._id}-rm`} ></i>
+															</div>
+															
+															}
 														</td>
 
 														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-rm`}  role="dialog">

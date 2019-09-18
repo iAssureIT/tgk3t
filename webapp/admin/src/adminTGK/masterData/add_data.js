@@ -16,7 +16,7 @@ class add_data extends Component {
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
   }
 
-     createData(event){
+  createData(event){
     event.preventDefault();
     const formValues = {
       "amenity"     : this.refs.Amenities.value,

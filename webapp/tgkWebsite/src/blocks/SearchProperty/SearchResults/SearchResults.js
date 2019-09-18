@@ -818,7 +818,7 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
+								    <button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Property Type
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
 							      	{
@@ -849,7 +849,7 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-							  	 	<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Budget
+							  	 	<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Budget
 								   		<b className="caret pull-right"></b>
 								   	</button>
 								    <ul className="dropdown-menu scrollable-menu col-lg-12 pad mt36">
@@ -873,7 +873,7 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12 pad" type="button" data-toggle="dropdown">BHK
+									<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12 pad" type="button" data-toggle="dropdown">BHK
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 pad mt36">
 										<div className="col-md-12">
@@ -899,7 +899,7 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Furnished
+									<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Furnished
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 mt36">
 										<span className="col-lg-12 inputStyledbtn">
@@ -927,7 +927,7 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12 " type="button" data-toggle="dropdown">Floor
+									<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12 " type="button" data-toggle="dropdown">Floor
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 pad mt36">
 								    	{
@@ -950,7 +950,7 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Age
+									<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Age
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 noPad mt36 pAge">
 								    	{
@@ -996,7 +996,7 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Availability
+									<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Availability
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 mt36">
 										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="Immediate" ref="" className="" value="0" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="Immediate">Immediate</label><br /><span className="radioBoxBlock"></span></span>
@@ -1006,7 +1006,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							  	<button className="btn bgWhite col-lg-1" title="Reset" onClick={this.reset.bind(this)}><span className="glyphicon glyphicon-repeat"></span></button>
+							  	<button className="btn bgWhite col-lg-1 col-xs-6" title="Reset" onClick={this.reset.bind(this)}><span className="glyphicon glyphicon-repeat"></span></button>
 							{/*<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 areaBtn noPad property">
 							  	<div className="dropdown">
 								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Area

@@ -534,6 +534,8 @@ totalInclude(event){
 render() {
 
 return (
+  console.log("this.props.transactionType",this.props.transactionType),
+    console.log("this.props.propertyType",this.props.propertyType),
   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <form id="form">
         <div className=" row"></div>
@@ -644,42 +646,6 @@ return (
             null
           }
 
-          {/*<label className="container1 checkbox-inline col-lg-2"><span className="fs1">Car Park</span>
-            <input type="checkbox"
-            value="Car Park"
-                id="1"
-                name="userCheckbox"
-                onChange={this.totalInclude.bind(this)} />
-            <span className="checkmark1"></span>
-
-          </label>
-          <label className="container1 checkbox-inline col-lg-4 row"><span className="fs2">One Time Maintenance</span>
-            <input type="checkbox"
-            value="One Time Maintenance"
-                id="2"
-                name="userCheckbox"
-                onChange={this.totalInclude.bind(this)} />
-            <span className="checkmark1"></span>
-
-          </label>
-          <label className="container1 checkbox-inline col-lg-3 row"><span className="fs2">Stamp Duty</span>
-            <input type="checkbox"
-            value="Stamp Duty"
-                id="3"
-                name="userCheckbox"
-                onChange={this.totalInclude.bind(this)} />
-            <span className="checkmark1"></span>
-
-          </label>
-          <label className="container1 checkbox-inline col-lg-3"><span className="fs2">Club House</span>
-            <input type="checkbox"
-            value="Club House"
-                id="4"
-                name="userCheckbox"
-                onChange={this.totalInclude.bind(this)} />
-            <span className="checkmark1"></span>
-
-          </label>*/}
         </div>
         }
         

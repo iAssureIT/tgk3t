@@ -107,7 +107,7 @@ class LoginOtp extends Component {
 						    </div>
 						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-									<img alt=""  src="/images/1.png" className="build_img2"/>
+									<img alt=""  src="/images/1.png" className="build_img3"/>
 								</div>
 								<span className="col-lg-12 formImgB">
 									We charge tenants/buyers brokerage & share upto 50% with the property owners.

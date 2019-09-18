@@ -310,6 +310,8 @@ class BasicInfo extends Component{
 				"landmark" 			: this.state.landmark,
 				"pincode" 			: this.state.pincode,
 				"index"				: this.state.index,
+				"type" 				: this.state.transactionType==="Sell" ? true : false,
+
 				// "uid" 				: localStorage.getItem("uid"),		
 
 			};
@@ -422,6 +424,7 @@ class BasicInfo extends Component{
           }
       }*/
       	handleToggle(event){
+      			event.preventDefault();
       		console.log("this.state.type",this.state.type)
 		    if (this.state.type===true){
 		      this.setState({
@@ -901,7 +904,7 @@ class BasicInfo extends Component{
 					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
 					  			<span className="col-lg-4 col-xs-3 ownerLeft "> Owner</span>
 					  			<span className="col-lg-4 col-xs-3 noPad"> Caretaker</span>
-					  			<span className="col-lg-3 col-xs-3 noPad"> Broker</span>
+					  			<span className="col-lg-3 col-xs-3 noPad">&nbsp; Broker</span>
 					  			{/*<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>*/}
 
 					  	</div>
@@ -909,10 +912,10 @@ class BasicInfo extends Component{
          			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
          				<div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 noPad">
 
-						 	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+						 	
 					   			<label>I would like to</label>
 								<span className="astrick">*</span>
-							 </div>
+							
 
 
 				   			{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">	    		
@@ -926,10 +929,10 @@ class BasicInfo extends Component{
 					            	</div>
 					            </div>
 							</div>*/}
-							<div className="container5 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">
+							{/*<div className="container6 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">*/}
 						        {this.state.type===true ?
 
-						         <div className="switch" onChange={this.handleToggle.bind(this)} >
+						         <div className="switch" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  checked />
 						            <label for="week" className="switch-label switch-label-off">SELL</label>
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month"  />
@@ -939,7 +942,7 @@ class BasicInfo extends Component{
 
 						          :
 
-						           <div className="switch" onChange={this.handleToggle.bind(this)} >
+						           <div className="switch" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"   />
 						            <label for="week" className="switch-label switch-label-off">SELL</label>
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" checked  />
@@ -949,7 +952,7 @@ class BasicInfo extends Component{
 						       
 						      }
 						    
-						  </div>
+						 {/* </div>*/}
 
 						</div>
 
@@ -1009,9 +1012,9 @@ class BasicInfo extends Component{
 						</div>
 
 							<div className=" col-lg-1 col-md-1 col-sm-1  col-xs-1 ">
-								<div className="vl"></div>
+								<div className="vl hidden-xs"></div>
 									<span className="">OR</span>
-								<div className="vl"></div>
+								<div className="vl hidden-xs"></div>
 							</div>
 
 							<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">

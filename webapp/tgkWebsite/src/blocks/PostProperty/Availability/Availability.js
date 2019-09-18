@@ -318,6 +318,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
           // console.log("contactPerson onchange",this.state.contactPerson);
       }*/
       handleToggle(event){
+      		event.preventDefault();
 		    if (this.state.type===true){
 		      this.setState({
 		        type: false,
@@ -694,10 +695,10 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				              </label>
 			            </div>*/}
 
-			            <div className="container5 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">
+			            {/*<div className="container5 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">*/}
 						        {this.state.type===true ?
 
-						         <div className="switch1" onChange={this.handleToggle.bind(this)} >
+						         <div className="switch1" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"  checked />
 						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month"  />
@@ -707,7 +708,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 						          :
 
-						           <div className="switch1" onChange={this.handleToggle.bind(this)} >
+						           <div className="switch1" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"   />
 						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month" checked  />
@@ -717,7 +718,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						       
 						      }
 						    
-						  </div>
+						  {/*</div>*/}
 
 				  	</div>
 				  </div>

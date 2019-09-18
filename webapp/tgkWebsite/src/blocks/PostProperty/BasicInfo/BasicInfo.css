@@ -217,9 +217,9 @@ q:before, q:after {
   content: none;
 }
 
-.container5 {
+.container6 {
   position: absolute;
-  top: 10px;
+  top: 26px;
 }
 
 
@@ -227,7 +227,7 @@ q:before, q:after {
   position: relative;
   height: 26px;
   width: 120px;
-  margin: 20px auto;
+  /*margin: 20px auto;*/
   /*background: rgba(0, 0, 0, 0.25);*/
   border-radius: 10px;
   -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);

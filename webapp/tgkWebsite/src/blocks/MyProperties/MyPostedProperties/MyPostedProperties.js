@@ -300,7 +300,7 @@ import './MyPostedProperties.css';
 											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad ">				
 												Possession by : <span className="propertySubText2">{myProperty.financial ? myProperty.financial.availableFrom : "-"}</span>
 											</div>
-											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 ">				
+											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 mb6 ">				
 												<button className="col-lg-8 pull-right btn btn-primary" id={myProperty._id} data-toggle="modal" data-target="#postPropertyModal" onClick={this.editProperty.bind(this)} > Edit Property</button> 
 											</div>
 											<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 pull-right">				
