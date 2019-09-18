@@ -315,13 +315,20 @@ class classRating extends Component {
                                                              <option value="C"> C </option>
                                                              <option value="D"> D </option>
                                                              <option value="E"> E </option>
-                                                             <option value="F"> F </option>
                                                          </select>
 
                                                     </div>
                                                     <div className="modal-body adminModal-body col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                         <label className="textAlignLeft">  Earning %<span className="astrick">*</span></label>
-                                                        <input type="number" ref="earning" name="earning" id="earning" value={this.state.earning} onChange={this.handleChange} className="form-control rolesField" required/>
+                                                        {/*<input type="number" ref="earning" name="earning" id="earning" value={this.state.earning} onChange={this.handleChange} className="form-control rolesField" required/>*/}
+                                                        <select className="rolesField col-lg-6 col-md-6 col-xs-12 col-sm-8 form-control" title="Please select Earning Rate" id="earning" ref="earning" name="earning" value={this.state.earning} onChange={this.handleChange} required>
+                                                             <option value="">-Select-</option>
+                                                             <option value="10"> 10 </option>
+                                                             <option value="20"> 20 </option>
+                                                             <option value="30"> 30 </option>
+                                                             <option value="40"> 40 </option>
+                                                             <option value="50"> 50 </option>
+                                                        </select>
                                                     </div>
 
                                                   </div>

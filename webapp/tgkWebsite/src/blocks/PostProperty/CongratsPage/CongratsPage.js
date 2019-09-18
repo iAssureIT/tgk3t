@@ -30,6 +30,7 @@ import './CongratsPage.css';
 
 		}
 
+		console.log("index",formvalues)
 			axios
 				.post('/api/properties/post/findindexper',formvalues)
 				.then( (res) =>{
@@ -124,23 +125,23 @@ import './CongratsPage.css';
 					},()=>{
 						var data =  this.state.percentage;
 						var per = 0;
-						if(data <=10)
+						if(data <=10 && data >= 0)
 						{
 							per = 18;
 						}
-						if(data <=20)
+						if(data <=20 && data >= 10)
 						{
 							per = 18+18;
 						}
-						if(data <=30)
+						if(data <=30 && data >= 20)
 						{
 							per = 18+18+18;
 						}
-						if(data <=40)
+						if(data <=40 && data >=30)
 						{
 							per = 18+18+18+18;
 						}
-						if(data <=50)
+						if(data <=50 && data >=40)
 						{
 							per = 18+18+18+18+18;
 						}
@@ -177,6 +178,8 @@ import './CongratsPage.css';
  	}
 
 	render() {
+			console.log("this.state.percentage",this.state.percentage)
+
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

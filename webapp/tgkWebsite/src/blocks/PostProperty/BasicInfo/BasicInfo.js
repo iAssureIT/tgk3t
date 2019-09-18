@@ -334,7 +334,9 @@ class BasicInfo extends Component{
 						console.log("same data");
 						console.log("same data22",this.state.type);
 						
-					localStorage.setItem('propertyId',this.props.property_id)
+					localStorage.setItem('propertyId',this.props.property_id);
+					localStorage.setItem("index",this.state.index);
+
 					this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 					
 					// this.props.redirectToLocation(this.state.propertyCode, this.props.property_id,this.props.uid);						
@@ -350,6 +352,8 @@ class BasicInfo extends Component{
 							console.log("here updated data",res);
 							if(res.status === 200){
 								localStorage.setItem('propertyId',this.props.property_id);
+								localStorage.setItem("index",this.state.index);
+
 								this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 								// this.props.redirectToLocation(this.state.propertyCode, this.props.property_id,this.props.uid);						
 								this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
@@ -377,7 +381,9 @@ class BasicInfo extends Component{
 						if(res.status === 200){
 							// swal("Good job!", "Property inserted successfully!", "success");
 							console.log("here prop id",res.data.property_id);
-							localStorage.setItem('propertyId',res.data.property_id)
+							localStorage.setItem('propertyId',res.data.property_id);
+							localStorage.setItem("index",this.state.index);
+
 							console.log("BasicInfo res = ",res);
 							console.log("propertyCode",res.data.propertyCode);
 							// this.props.prop_id = res.data.property_id;

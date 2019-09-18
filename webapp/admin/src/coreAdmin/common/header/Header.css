@@ -81,10 +81,10 @@ padding: 5px 5px !important;
     color: #fff;
     cursor: pointer;
 }
-.hover:hover{
+/*.hover:hover{
     background-color: #367fa9;
     height: 50px;
-}
+}*/
 .img{
     position: absolute;
     top: 15px;

@@ -1,9 +1,12 @@
-import React,{Component} from 'react';
+import React,{Component}     from 'react';
 // import TrackerReact from 'meteor/ultimatejs:tracker-react';
-import { render } from 'react-dom';
+import { render }            from 'react-dom';
 import { Route , withRouter} from 'react-router-dom';
+import $                     from "jquery";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+
 
 import './Header.css';
 import Rightsidebar from '../rightSidebar/Rightsidebar.js';
@@ -22,6 +25,7 @@ export default class Header extends Component{
   componentDidMount(){
      const token = localStorage.getItem("token");
      // console.log("Dashboard Token = ",token);
+     
    
   }
     
