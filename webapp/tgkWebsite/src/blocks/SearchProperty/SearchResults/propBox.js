@@ -244,7 +244,7 @@ class propBox extends React.Component {
 					<div key={index} className="col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-12 col-xs-12 propertyBox">			
 						<div className="row pull-right topRightTriangle hidden-xs hidden-sm" id="triangle-topright"> 
 						</div>	
-						<div className="row">
+						<div className="">
 							<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">
 							{
 								result && result.gallery && result.gallery.Images && result.gallery.Images.length > 0 ?

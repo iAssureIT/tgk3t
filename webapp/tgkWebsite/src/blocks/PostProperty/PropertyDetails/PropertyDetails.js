@@ -751,7 +751,7 @@ import './PropertyDetails.css';
 			  		{
 			  			this.props.propertyType == "Commercial" ? 
 			  			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				    	<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+				    	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							<div className="form-group" id="bathroom">
 							    <span htmlFor="" className="mb7">Washrooms</span>
 							    <div className="input-group  " id="">
@@ -769,7 +769,7 @@ import './PropertyDetails.css';
 								</div>
 							</div>
 						</div>
-						<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						    <span htmlFor="" className="mb7 col-lg-12 row">Personal Washroom</span>
 							<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
@@ -793,7 +793,7 @@ import './PropertyDetails.css';
 
 						    </label>
 						</div>
-						<div className="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						    <span htmlFor="" className="mb7 col-lg-12 row">Pantry</span>
 							<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
@@ -942,7 +942,7 @@ import './PropertyDetails.css';
 			            :
 			            null
 			          }
-			          <div className="col-lg-12 col-md-4 col-sm-4 col-xs-4 mt-10">
+			          <div className="col-lg-12 col-md-4 col-sm-12 col-xs-12 mt-10">
 								    <span htmlFor="" className="mb7 col-lg-12 row">Work Stations</span>
 									<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"
@@ -977,7 +977,7 @@ import './PropertyDetails.css';
 								    </label>
 								</div>
 
-								<div className="col-lg-12 col-md-4 col-sm-4 col-xs-4 mt-10">
+								<div className="col-lg-12 col-md-4 col-sm-12 col-xs-12 mt-10">
 								    <span htmlFor="" className="mb7 col-lg-12 row">Pantry</span>
 									<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"

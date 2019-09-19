@@ -410,25 +410,7 @@ class BasicInfo extends Component{
 			}
 			    
 		}
-		/*selectType(event){
-			var selectedData = event.target.getAttribute('data-checked');
-			console.log("selectedData",selectedData);
-
-          if(this.state.transactionType === "Sell")
-            {
-              this.setState(
-              {
-                "transactionType" : "Rent",
-              });
-            }else if(this.state.transactionType === "Rent")
-            {
-               this.setState(
-               {
-                "transactionType" : "Sell",
-              }); 
-            
-          }
-      }*/
+		
       	handleToggle(event){
       			event.preventDefault();
       		console.log("this.state.type",this.state.type)
@@ -815,19 +797,6 @@ class BasicInfo extends Component{
 	render() {
 		console.log("transactionType=>",this.state.transactionType);
 		console.log("type=>",this.state.type);
-		// "countryCode" 		: "IN",
-		// 		"stateCode" 		: this.state.stateCode,
-		// 		"districtName" 		: this.state.districtName,
-		// 		"blockName" 		: this.state.blockName,
-		// 		"cityName" 			: this.state.cityName,
-		// 		"areaName" 			: this.state.areaName,
-		// 		"subAreaName"		: this.state.subAreaName,
-		// 		"societyName"	    : this.state.societyName,
-		// 		"address" 	        : this.state.address,
-		// 		"landmark" 			: this.state.landmark,
-		// 		"pincode" 			: this.state.pincode,
-		// 		"index"				: this.state.index,
-
 		console.log("CongratsPage",this.props.congratsPage)
 		var cityName = this.state.cityName;
 	    var areaName = this.state.areaName;
@@ -847,7 +816,7 @@ class BasicInfo extends Component{
     return (
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  <div className="row"></div>
-		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row mt30">	
+		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  mt30">	
 				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				  	 	<label>I am</label>
@@ -1126,48 +1095,8 @@ class BasicInfo extends Component{
 
 									{/*12 close*/}	
 								</div>
-
-
-
-
 							</div>
 					</div>
-
-
-			{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-			  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
-			  		<b>My Property is on</b>
-					<span className="astrick">*</span>
-
-			  	</div>
-		  </div>*/}
-		 {/* <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
-		  	<div className="col-lg-5 col-md-5 col-sm-12 col-xs-12 "> 
-			  <div className="form-group" id="floor">
-		  		<div className="input-group inputBox-main " id="">
-			      	<div className="input-group-addon inputIcon">
-                     	<i className=" iconClr"><img src="/images/floor.png" alt="" /></i>
-                    </div>
-			  		<select className="custom-select form-control Fl60"  ref="floor" id='select' value={this.state.floor} onChange={this.floorChange.bind(this)}>  </select> 
-				</div>
-			  </div>
-			</div>
-			<div className="col-lg-1 noPad ofText">OF</div>
-
-			<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-				  <div className="form-group" id="totalfloor">
-				  	<div className="input-group inputBox-main " id="">
-				      	<div className="input-group-addon inputIcon">
-	                     <i className="iconClr"><img src="/images/floor.png" alt="" /></i>
-	                    </div>
-					  	<select className="custom-select form-control 1-60"  ref="totalfloor" onChange={this.totalFloor.bind(this)} value={this.state.totalfloor} >
-					    	<option value="" className="hidden">Total Floors</option>
-						</select>
-					</div>
-				  </div>
-			 </div>
-		  </div>*/}
-
 			  	</div>
 				  
 				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 boxLayout">
@@ -1178,9 +1107,7 @@ class BasicInfo extends Component{
 
 			  </div>
 				  
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row noPad">
-
-
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
 					 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad" >
 				  		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						  	<div className="form-group"  id="" >

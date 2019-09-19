@@ -206,10 +206,10 @@ class PropertyProfile extends Component{
                     <label>Property Profile</label>
                   </div>     
                 </div>
-               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName"> 
+               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName noPad"> 
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameOfProperty noPad" >
-                    <div className="col-lg-12 col-xs-12">
-                      <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                    <div className="col-lg-12 col-xs-12 mb10 noPad">
+                      <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2 noPad">
                         <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 backButton">
                           <img src="/images/profilePic.png"/>
                         </div>
@@ -260,7 +260,7 @@ class PropertyProfile extends Component{
                           {this.state.propertyImages[0] ?
                             <img className="noPad propertyImageDiv col-lg-12 col-xs-12 noPad" src={this.state.propertyImages[0].imgPath} />
                             :
-                            <img src="/images/loading_img.jpg" className="col-lg-12 noPad"/>
+                            <img src="/images/loading_img.jpg" className="col-lg-12 col-xs-12 noPad"/>
                           }
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
@@ -324,7 +324,8 @@ class PropertyProfile extends Component{
                   } 
                 </div>
              </div>
-             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
+             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div className="mt40 hidden-xs hidden-sm"></div>
                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl3">
                   <div className="">
                     <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
@@ -347,7 +348,7 @@ class PropertyProfile extends Component{
                           </div>
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <ul className="col-lg-7 col-md-7 col-sm-12 col-xs-12 bolder">   
-                              <li className="col-lg-5 col-xs-7 noPad">Property Type</li> <span className="col-lg-7 col-xs-5 noPad"> : {this.state.propertySubType && this.state.propertySubType ? <b>{this.state.propertySubType} </b> : "-"}</span>
+                              <li className="col-lg-5 col-xs-6 noPad">Property Type</li> <span className="col-lg-7 col-xs-5 noPad"> : {this.state.propertySubType && this.state.propertySubType ? <b>{this.state.propertySubType} </b> : "-"}</span>
                               <li className="col-lg-5 col-xs-6 noPad">Furnished Status</li> <span className="col-lg-7  col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> : "-"}</span>
                               {this.state.propertyType === "Commercial" ?
                                   <b>
@@ -385,7 +386,8 @@ class PropertyProfile extends Component{
                   </div>
                 </div>
              </div>
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div className="mt40 hidden-xs hidden-sm"></div>
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -83,7 +83,7 @@ class LoginOtp extends Component {
 					<form id="" className=" ">
 						<div className="hr_border row"></div>
 						
-						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
 						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
 						  		<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt20 headlineBlack">
 						  		{this.props.fullName && this.props.fullName!==null &&this.props.fullName!=="" ?

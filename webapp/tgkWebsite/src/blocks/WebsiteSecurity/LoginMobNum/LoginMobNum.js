@@ -126,8 +126,9 @@ class LoginMobNum extends Component {
 
    	 const {formerrors} = this.state;
 		return (
-				<form className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row" id="xyz">
-						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 mt-150">	
+				<form className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " id="xyz">
+						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
+						  		<div className="mt-150 hidden-xs hidden-sm"></div>	
 							  <div className="form-group">
 							    <label htmlFor="">Please enter your Mobile No</label>
 							    <div className="input-group inputBox-main " id="">

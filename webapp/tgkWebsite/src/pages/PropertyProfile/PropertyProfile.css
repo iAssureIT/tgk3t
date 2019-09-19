@@ -18,10 +18,10 @@
   margin-top: 50px;
 }
 .propertyName{
-	height: 100px;
+	height: auto;
 }
 .nameOfProperty{
-	height: 100px;
+	height: auto;
 }
 .mainDescriptionDiv{
   font-family: 'Roboto', sans-serif;
