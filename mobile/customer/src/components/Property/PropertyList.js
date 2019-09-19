@@ -8,10 +8,12 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,TextInput,
-  Alert
+  AsyncStorage,
+  Alert,
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
+import axios                              from 'axios';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -32,14 +34,18 @@ export default class PropertyList extends ValidationComponent{
       includeNearby: false,
       activePropType: 'flat',
       activeRoomIndex: 0,
-      searchResults:[]
+      searchResults:[],
+      uid:"",
+      token:"",
+      searchData:""
     };
   }
 
   componentDidMount(){
     var searchResults = this.props.navigation.getParam('searchResults','No Result')
-    console.log("searchResults=>",searchResults);
+    // console.log("searchResults=>",searchResults);
     this.setState({searchResults:searchResults})
+    this._retrieveData();
   }
 
   searchUpdated=(searchText)=>{
@@ -78,35 +84,41 @@ export default class PropertyList extends ValidationComponent{
       : Math.abs(Number(totalPrice));
     }
 
-
-  interestBtn(event){
-      event.preventDefault();
-      var id = event.currentTarget.id;
-
-      var formValues ={
-        property_id : event.currentTarget.id,
-        buyer_id    : localStorage.getItem('uid'),
+  _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      const searchData = await AsyncStorage.getItem('searchData');
+      if (uid !== null && token !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+        this.setState({searchData:searchData})
       }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
 
-      var searchData = JSON.parse(localStorage.getItem("searchData"));
-      searchData.uid = localStorage.getItem('uid');
-
-
-    if($("#"+id).hasClass("resInterestExpress")){
+  interestBtn(property_id,isInterested){
+      
+    var formValues ={
+      property_id : property_id,
+      buyer_id    : this.state.uid,
+    }
+    if(isInterested == false){
      axios
       .post('/api/interestedProperties/',formValues)
       .then(res=>{
          //After Express Interest, again get all properties
-
           axios
-            .post('/api/search/properties/',searchData)
+            .post('/api/search/properties/',this.state.searchData)
             .then(resultData =>{
               axios
-                .get('/api/properties/'+id)
+                .get('/api/properties/'+property_id)
                 .then((propertyData) =>{
-                  console.log("propertiesData",propertyData.data);
                   axios
-                    .get('/api/users/get/one/'+localStorage.getItem("uid"))
+                    .get('/api/users/get/one/'+this.state.uid)
                     .then((userData) =>{
                           var sendDataToUser = {
                           "templateName"  : "User - Express Interest",
@@ -124,7 +136,6 @@ export default class PropertyList extends ValidationComponent{
                               "state"             : propertyData.data.propertyLocation.state,
                           }
                       }
-                      console.log("sendData",sendDataToUser);
                       var sendDataToAdmin = {
                           "templateName"        : "Admin - User Express Interest",
                           "toUserId"            : "admin",
@@ -144,103 +155,66 @@ export default class PropertyList extends ValidationComponent{
                               "state"             : propertyData.data.propertyLocation.state,
                           }
                       }
-                      console.log("sendData",sendDataToAdmin);
                       axios
                       .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
                       .then((result) =>{
-                        console.log("SendEmailNotificationToAdmin",result);
                         axios
                         .post('/api/masternotifications/post/sendNotification',sendDataToUser)
                         .then((res) =>{
-                          console.log("SendEmailNotificationToUser",res);           
                         })
                        .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
-                 });        
-                      })
+                            console.log("error = ",error);
+                        });        
+                    })
                             
                 })
                .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
-            });
+                    console.log("error = ",error);
+                });
                                
               })
              .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
-        });
-                this.setState({
-                  searchResult  : resultData.data,
-                },()=>{
-                })
+                    console.log("error = ",error);
+              });
+              this.setState({
+                searchResults  : resultData.data,
+              },()=>{
+              })
             })
            .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
+                 console.log("error = ",error);
              });
       })
      .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
-                  });
+          console.log("error = ",error);
+      });
       }else{
         var deleteValues = {
-          uid         : localStorage.getItem('uid'),
-          property_id : event.currentTarget.id
+          uid         : this.state.uid,
+          property_id : property_id
         }
         axios
-          .delete('/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
+          .delete('/api/interestedProperties/'+this.state.uid+"/"+property_id)
           .then(
             (res)=>{                
                 axios
-                  .post('/api/search/properties/',searchData)
+                  .post('/api/search/properties/',this.state.searchData)
                   .then(resultData =>{
                       this.setState({
-                        searchResult  : resultData.data,
+                        searchResults  : resultData.data,
                       })
                   })
                 .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
+                      console.log("error = ",error);
                 });
             }
           )
          .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
+              console.log("error = ",error);
         });
       }
-    }
+    
+  }
 
 
   render(){
@@ -248,8 +222,7 @@ export default class PropertyList extends ValidationComponent{
     const { navigation } = this.props;
     let {activeBtn,activePropType,activeRoomIndex} = this.state;
   
-
-
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
 
     // console.log("this.props.navigation = ",this.props.navigation);
     return (
@@ -291,9 +264,8 @@ export default class PropertyList extends ValidationComponent{
             </View>
             {this.state.searchResults && this.state.searchResults.length>0 ? 
               this.state.searchResults.map((prop,i)=>(
-              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetails',{propertyDetails:prop})}>
+              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('propertyDetails',{propertyDetails:prop})}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
-                  {console.log("img",prop.gallery.Images[0].imgPath) }
                   <ImageBackground 
                     // source={require('../../images/p1.png')}
                     // source={prop.gallery ? prop.gallery.Images[0].imgPath : null}
@@ -302,21 +274,56 @@ export default class PropertyList extends ValidationComponent{
                     resizeMode="cover"
                     imageStyle={{borderRadius:4}}
                   >
-                    <Button
-                      onPress         = {this.interestBtn.bind(this)}
-                      titleStyle      = {styles.buttonText2}
-                      title           = "Interested"
-                      buttonStyle     = {styles.button2}
-                      containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                      iconLeft
-                      icon = {<Icon
-                        name="thumbs-o-up" 
-                        type="font-awesome"
-                        size={20}
-                        color={colors.white}
-                        containerStyle={{marginRight:5}}
-                      />}
-                    />
+                  {this.state.token?
+                    prop.isInterested ?
+                      <Button
+                        onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                        titleStyle      = {styles.buttonText2}
+                        title           = "Interest Shown"
+                        buttonStyle     = {styles.button3}
+                        containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                        iconLeft
+                        icon = {<Icon
+                          name="thumbs-up" 
+                          type="font-awesome"
+                          size={20}
+                          color={colors.white}
+                          containerStyle={{marginRight:5}}
+                        />}
+                        />
+                        :
+                        <Button
+                            onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                            titleStyle      = {styles.buttonText2}
+                            title           = "Express Interest"
+                            buttonStyle     = {styles.button2}
+                            containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                            iconLeft
+                            icon = {<Icon
+                              name="thumbs-o-up" 
+                              type="font-awesome"
+                              size={20}
+                              color={colors.white}
+                              containerStyle={{marginRight:5}}
+                        />}
+                        />
+                        :
+                      <Button
+                          onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                          titleStyle      = {styles.buttonText2}
+                          title           = "Express Interest"
+                          buttonStyle     = {styles.button2}
+                          containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                          iconLeft
+                          icon = {<Icon
+                            name="thumbs-o-up" 
+                            type="font-awesome"
+                            size={20}
+                            color={colors.white}
+                            containerStyle={{marginRight:5}}
+                          />}
+                        />
+                      }
                   </ImageBackground>
                   <View style={{width:'100%',padding:10}}>
                     <View style={{flexDirection:'row'}}>

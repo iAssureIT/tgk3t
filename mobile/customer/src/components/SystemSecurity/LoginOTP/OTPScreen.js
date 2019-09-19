@@ -37,6 +37,7 @@ export default class MobileScreen extends ValidationComponent {
 	}
 
   componentDidMount(){
+
     var otp = this.props.navigation.getParam('originalotp','No OTP');
     console.log("otp in otpscreen",otp);
     var msg = this.props.navigation.getParam('message','No message'); 

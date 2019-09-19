@@ -9,7 +9,8 @@ import {
   ImageBackground,
   Image,TextInput,
   Alert,
-  Animated
+  Animated,
+  AsyncStorage
 } from 'react-native';
 
 import moment from 'moment'
@@ -17,7 +18,7 @@ import { Button,Icon, SearchBar } from 'react-native-elements';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
-
+import axios                              from 'axios';
 import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
@@ -37,8 +38,31 @@ export default class PropertyDetails extends ValidationComponent{
         longitude: -122.6653281029795,
         latitudeDelta: 0.04864195044303443,
         longitudeDelta: 0.040142817690068,
+        propertyProfile: "",
+        uid:"",
+        token:"",
       },
     };
+  }
+
+  componentDidMount(){
+    var propertyProfile = this.props.navigation.getParam('propertyDetails','No Result');
+    this.setState({propertyProfile:propertyProfile})
+    this._retrieveData();
+  }
+
+  _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      if (uid !== null && token !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
   }
 
   _renderItem = (item,index)=>{
@@ -66,11 +90,124 @@ export default class PropertyDetails extends ValidationComponent{
       : Math.abs(Number(totalPrice));
     }
 
+
+  interestBtn(property_id,isInterested){
+      
+    var formValues ={
+      property_id : property_id,
+      buyer_id    : this.state.uid,
+    }
+    if(isInterested == false){
+     axios
+      .post('/api/interestedProperties/',formValues)
+      .then(res=>{
+         //After Express Interest, again get all properties
+              axios
+                .post('/api/properties/one/property',formValues)
+                .then((propertyData) =>{
+                  console.log("propertyData",propertyData);
+                  this.setState({
+                    propertyProfile  : propertyData.data,
+                  })
+                  axios
+                    .get('/api/users/get/one/'+this.state.uid)
+                    .then((userData) =>{
+                          var sendDataToUser = {
+                          "templateName"  : "User - Express Interest",
+                          "toUserId"      : userData.data._id,
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      var sendDataToAdmin = {
+                          "templateName"        : "Admin - User Express Interest",
+                          "toUserId"            : "admin",
+                          "variables"           : {
+                              "userName"          : userData.data.profile.fullName,
+                              "userMobile"        : userData.data.profile.mobileNumber,
+                              "userEmail"         : userData.data.profile.emailId,
+                              "userCity"          : userData.data.profile.city,
+                              "propertyType"      : propertyData.data.propertyType,
+                              "transactionType"   : propertyData.data.transactionType,
+                              "propertyID"        : propertyData.data.propertyCode,
+                              "address"           : propertyData.data.propertyLocation.address,
+                              "society"           : propertyData.data.propertyLocation.society,
+                              "subArea"           : propertyData.data.propertyLocation.subArea,
+                              "area"              : propertyData.data.propertyLocation.area,
+                              "city"              : propertyData.data.propertyLocation.city,
+                              "state"             : propertyData.data.propertyLocation.state,
+                          }
+                      }
+                      axios
+                      .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
+                      .then((result) =>{
+                        axios
+                        .post('/api/masternotifications/post/sendNotification',sendDataToUser)
+                        .then((res) =>{
+                        })
+                       .catch((error)=>{
+                            console.log("error = ",error);
+                        });        
+                    })
+                            
+                })
+               .catch((error)=>{
+                    console.log("error = ",error);
+                });
+                               
+              })
+             .catch((error)=>{
+                    console.log("error = ",error);
+              });
+              
+            })
+           .catch((error)=>{
+                 console.log("error = ",error);
+             });
+    
+      }else{
+        var deleteValues = {
+          uid         : this.state.uid,
+          property_id : property_id
+        }
+        axios
+          .delete('/api/interestedProperties/'+this.state.uid+"/"+property_id)
+          .then(
+            (res)=>{                
+                axios
+                  .post('/api/properties/one/property',formValues)
+                  .then(propertyData =>{
+                  console.log("propertyData",propertyData);
+                      this.setState({
+                        propertyProfile  : propertyData.data,
+                      })
+                  })
+                .catch((error)=>{
+                      console.log("error = ",error);
+                });
+            }
+          )
+         .catch((error)=>{
+              console.log("error = ",error);
+        });
+      }
+    
+  }
+
   render(){
     const { navigation } = this.props;
-    let propertyProfile = navigation.state.params.propertyDetails;
-    console.log("propertyProfile",propertyProfile);
+    let propertyProfile = this.state.propertyProfile;
     let {activeBtn,activePropType,activeRoomIndex} = this.state;
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
 
     let similarProps = [
       {source:require('../../images/p6.png'),price:'45 Lacs',property:'2 BHK'},
@@ -78,11 +215,12 @@ export default class PropertyDetails extends ValidationComponent{
       {source:require('../../images/p8.png'),price:'46 Lacs',property:'2 BHK'},
       {source:require('../../images/p6.png'),price:'50 Lacs',property:'2 BHK'},
     ];
-    console.log("propertyProfile.gallery.video",propertyProfile.gallery.video);
+    // console.log("propertyProfile.gallery.video",propertyProfile.gallery.video);
     return (
       <React.Fragment>
+        
         <HeaderBar showBackBtn={true} navigation={navigation}/>
-
+        {propertyProfile!=null ?  
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
 
           <View style={{width:'100%'}}>
@@ -112,20 +250,56 @@ export default class PropertyDetails extends ValidationComponent{
                             containerStyle  = {[styles.buttonContainer4]}
                           />
 
-                          <Button
-                            titleStyle      = {styles.buttonText2}
-                            title           = "Interested"
-                            buttonStyle     = {styles.button2}
-                            containerStyle  = {[styles.buttonContainer2]}
-                            iconLeft
-                            icon = {<Icon
-                              name="thumbs-o-up" 
-                              type="font-awesome"
-                              size={20}
-                              color={colors.white}
-                              containerStyle={{marginRight:5}}
-                            />}
-                          />
+                          {this.state.token?
+                            propertyProfile.isInterested ?
+                              <Button
+                                onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
+                                titleStyle      = {styles.buttonText2}
+                                title           = "Interest Shown"
+                                buttonStyle     = {styles.button3}
+                                containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                                iconLeft
+                                icon = {<Icon
+                                  name="thumbs-up" 
+                                  type="font-awesome"
+                                  size={20}
+                                  color={colors.white}
+                                  containerStyle={{marginRight:5}}
+                                />}
+                                />
+                                :
+                                <Button
+                                    onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
+                                    titleStyle      = {styles.buttonText2}
+                                    title           = "Express Interest"
+                                    buttonStyle     = {styles.button2}
+                                    containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                                    iconLeft
+                                    icon = {<Icon
+                                      name="thumbs-o-up" 
+                                      type="font-awesome"
+                                      size={20}
+                                      color={colors.white}
+                                      containerStyle={{marginRight:5}}
+                                />}
+                                />
+                                :
+                              <Button
+                                  onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
+                                  titleStyle      = {styles.buttonText2}
+                                  title           = "Express Interest"
+                                  buttonStyle     = {styles.button2}
+                                  containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                                  iconLeft
+                                  icon = {<Icon
+                                    name="thumbs-o-up" 
+                                    type="font-awesome"
+                                    size={20}
+                                    color={colors.white}
+                                    containerStyle={{marginRight:5}}
+                                  />}
+                                />
+                              }
                         </View>
                       </ImageBackground>
                   </View>
@@ -450,6 +624,10 @@ export default class PropertyDetails extends ValidationComponent{
 
           </View>
         </ScrollView>
+        :
+        null
+      }
+
       
       </React.Fragment>
     );

@@ -108,8 +108,8 @@ export default class MobileScreen extends ValidationComponent {
  
  
 
-		console.log("unitCode",this.state.unitCode);
-		console.log("mobile",mobileNo);
+		// console.log("unitCode",this.state.unitCode);
+		// console.log("mobile",mobileNo);
 
       var formValues = {
         mobileNumber : mobileNo,
@@ -124,28 +124,20 @@ export default class MobileScreen extends ValidationComponent {
         axios
           .post('/api/usersotp/verify_mobile',formValues)
           .then((response)=>{
-            console.log("response after submit mob no= ",response.data);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
-            
-              console.log("response.data.user_id",response.data.user_id);
+                AsyncStorage.setItem("uid",response.data.user_id);
                 AsyncStorage.setItem("token",response.data.token);
-                // AsyncStorage.setItem("uid",response.data.user_id);
-
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
-               console.log("here otp from response",response.data.otp);
-
                this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message});
           
               }else{
                 this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobileNumber});
-          
-                console.log("new mob no");
               }
 
             })
           .catch(function(error){
-            console.log("here can't access the url");
+            // console.log("here can't access the url");
             console.log(error);
           })
         
@@ -159,6 +151,7 @@ export default class MobileScreen extends ValidationComponent {
 	}
 
 }
+
 
  displayValidationError = (errorField) =>{
     let error = null;

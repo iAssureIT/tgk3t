@@ -1,0 +1,32 @@
+Searching 68 files for "Your query"
+
+0 matches
+
+Searching 68 files for "Your"
+
+/Users/iassureit/Public/React App/tgkapi2/api/coreAdmin/controllers/oldbackup.js:
+   23                          const client = new plivo.Client('MAMZU2MWNHNGYWY2I2MZ', 'MWM1MDc4NzVkYzA0ZmE0NzRjMzU2ZTRkNTRjOTcz');
+   24                          const sourceMobile = "+919923393733";
+   25:                         var text = OTP+" is your OTP for online verification to your LYVO Account. OTP is valid for 24 hours and can be only used once."; 
+   26                          client.messages.create(
+   27  							src=sourceMobile,
+   ..
+   77                          const client = new plivo.Client('MAMZU2MWNHNGYWY2I2MZ', 'MWM1MDc4NzVkYzA0ZmE0NzRjMzU2ZTRkNTRjOTcz');
+   78                          const sourceMobile = "+919923393733";
+   79:                         var text = OTP+" is your OTP for online verification to your LYVO Account. OTP is valid for 24 hours and can be only used once."; 
+   80                          client.messages.create(
+   81                              src=sourceMobile,
+
+/Users/iassureit/Public/React App/tgkapi2/api/coreAdmin/controllers/otp.js:
+  112                  const client = new plivo.Client('MAMZU2MWNHNGYWY2I2MZ', 'MWM1MDc4NzVkYzA0ZmE0NzRjMzU2ZTRkNTRjOTcz');
+  113                  const sourceMobile = "+919923393733";
+  114:                 var text = OTP+" is your OTP for online verification to your LYVO Account. OTP is valid for 24 hours and can be only used once."; 
+  115                  client.messages.create(
+  116                      src=sourceMobile,
+
+6 matches across 2 files
+
+
+Searching 68 files for "TheGoldenKey"
+
+0 matches

@@ -50,15 +50,16 @@ export default class SearchProperty extends ValidationComponent{
       floorsList            : [],
       ageList               : [],
       availableList         : [],
-      furnishList            : [],
+      furnishList           : [],
+      uid                   : "",
+      token                 : "",
     };
   }
 
 
   componentDidMount(){
    var searchResults = this.props.navigation.getParam('searchResults','No Result');
-
-   console.log("searchResults123",searchResults);
+   this._retrieveData();
    this.setState({
       location :searchResults.location,
       activeBtn:searchResults.property,
@@ -115,6 +116,20 @@ export default class SearchProperty extends ValidationComponent{
     },()=>{
       this.setState({propertyList:this.state.propertyList1})
     })
+  }
+
+   _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      if (uid !== null && token !== null ) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
   }
 
   handleLocation = (value)=>{
@@ -274,7 +289,6 @@ export default class SearchProperty extends ValidationComponent{
 
   convertNumberToRupees(totalPrice) 
   {
-    console.log("totalPrice",totalPrice);
     return Math.floor(Number(totalPrice) >= 1.0e+7)
 
     ? Math.floor(Number(totalPrice) / 1.0e+7) + " Cr"
@@ -305,12 +319,13 @@ export default class SearchProperty extends ValidationComponent{
       flatType        : this.state.activeRoom,
       propertyAge     : this.state.activeAge,
       availability    : this.state.activeAvailabe,
+      uid             : this.state.uid,
     }
-    console.log("formValues",formValues);
+    var searchData = JSON.stringify(formValues);
+    AsyncStorage.setItem("searchData",searchData);
     axios
       .post("/api/search/properties/", formValues)
       .then((searchResults) => {
-        console.log("searchResults",searchResults);
         this.props.navigation.navigate('PropertyList',{searchResults : searchResults.data })
       })
        .catch((error)=>{
