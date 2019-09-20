@@ -49,9 +49,12 @@
 }
 
 .sale{
-    margin-top: 70px;
-    font-size: 11px;
+    margin-top: 65px;
+    font-size: 12px;
     margin-left: 19%;
     text-align: center;
+}
+.saleText{
+    font-size: 15px;
 }
 
