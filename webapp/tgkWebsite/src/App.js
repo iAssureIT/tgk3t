@@ -11,7 +11,7 @@ import './lib/router.js';
 
 
 
-// axios.defaults.baseURL = 'http://localhost:5016/';
+// axios.defaults.baseURL = 'http://localhost:5018/';
 axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 
 // axios.defaults.baseURL = 'http://uatapi.lyvo.in/';
