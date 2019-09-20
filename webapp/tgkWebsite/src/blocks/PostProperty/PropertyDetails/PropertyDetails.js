@@ -53,9 +53,9 @@ import './PropertyDetails.css';
 				.get('/api/masteramenities/list')
 				.then(
 					(res)=>{
-						console.log('res postdata', res);
+						// console.log('res postdata', res);
 						const postsdata = res.data;
-						console.log('postsdata',postsdata);
+						// console.log('postsdata',postsdata);
 						this.setState({
 							allAmenities : postsdata,
 						},()=>{
@@ -92,13 +92,13 @@ import './PropertyDetails.css';
 
 										// amenities
 										var allAmenitiesData = this.state.allAmenities;
-												console.log("here allAmenitiesData", allAmenitiesData);
+												// console.log("here allAmenitiesData", allAmenitiesData);
 											var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
-												console.log("item",item.amenity);
+												// console.log("item",item.amenity);
 												var propPresent = this.state.prevAmenities.find((obj)=>{
-												console.log("obj",obj);
+												// console.log("obj",obj);
 													return item.amenity === obj;
-												console.log("here propPresent ", propPresent);
+												// console.log("here propPresent ", propPresent);
 
 												})
 												var newObj = Object.assign({},item);
@@ -107,7 +107,7 @@ import './PropertyDetails.css';
 												}else{
 													newObj.checked = false
 												}
-												console.log("newObj",newObj);
+												// console.log("newObj",newObj);
 												return newObj;
 
 											})
@@ -115,19 +115,19 @@ import './PropertyDetails.css';
 											this.setState({
 													allAmenities : allAmenitiesDataList,
 												},()=>{
-													console.log("here allAmenities in didmount after match result",this.state.allAmenities);
+													// console.log("here allAmenities in didmount after match result",this.state.allAmenities);
 
 												});
 											// close here
 
 											//furnishedOptions
 											var furnishedOptions = this.state.furnishedOptions;
-						                    console.log("here furnishedOptions", furnishedOptions);
+						                    // console.log("here furnishedOptions", furnishedOptions);
 						                    var furnishedOptionsList = furnishedOptions.map((item,index)=>{
 						                      var propPresent = this.state.prevCharges.find((obj)=>{
 						                        return item.name === obj
 						                      })
-						                      console.log("here propPresent ", propPresent);
+						                      // console.log("here propPresent ", propPresent);
 						                      var newObj = Object.assign({},item);
 						                      if(propPresent){
 						                        newObj.checked = true
@@ -141,7 +141,7 @@ import './PropertyDetails.css';
 						                    this.setState({
 						                      furnishedOptions : furnishedOptionsList,
 						                    },()=>{
-						                      console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
+						                      // console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
 
 						                    });
 						                    //close

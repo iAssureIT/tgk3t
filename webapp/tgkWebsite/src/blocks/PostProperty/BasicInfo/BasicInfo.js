@@ -303,12 +303,12 @@ class BasicInfo extends Component{
     		var longitude = "";	
 
     		var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
-      Geocode.fromAddress(fullAddress).then(
+      /*Geocode.fromAddress(fullAddress).then(
         response => {
-          // console.log("google map API keay result--->",response.data);             
+          console.log("google map API keay result--->",response.data);             
           const { lat, lng } = response.results[0].geometry.location;
           lattitude = lat;
-          longitude = lng;	
+          longitude = lng;	*/
 
 			const formValues = {
 				"propertyHolder" 	: this.state.propertyHolder,
@@ -435,12 +435,12 @@ class BasicInfo extends Component{
 				swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
-		},
+		/*},
 			error => {
             swal("Oops...!", "google map key has problem. Please contact to admin", "warning");
             console.error("map key error = ",error);
           }
-        );  
+        );  */
 			    
 		}
 		
@@ -943,9 +943,9 @@ class BasicInfo extends Component{
 
 						         <div className="switch" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  checked />
-						            <label for="week" className="switch-label switch-label-off">SELL</label>
+						            <label htmlFor="week" className="switch-label switch-label-off">SELL</label>
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month"  />
-						            <label for="month" className="switch-label switch-label-on">RENT</label>
+						            <label htmlFor="month" className="switch-label switch-label-on">RENT</label>
 						            <span className="switch-selection"></span>
 						          </div>
 
@@ -953,9 +953,9 @@ class BasicInfo extends Component{
 
 						           <div className="switch" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"   />
-						            <label for="week" className="switch-label switch-label-off">SELL</label>
+						            <label htmlFor="week" className="switch-label switch-label-off">SELL</label>
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" checked  />
-						            <label for="month" className="switch-label switch-label-on">RENT</label>
+						            <label htmlFor="month" className="switch-label switch-label-on">RENT</label>
 						            <span className="switch-selection" ></span>
 						          </div>
 						       
