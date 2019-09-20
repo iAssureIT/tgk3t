@@ -66,10 +66,10 @@ class sellOMeter extends Component {
   			event.preventDefault();
 			var id = event.target.id;
 			console.log("id",id);
-			const token = '';
+			// const token = '';
 			const url = '/api/sellometers/'+id ;
 			const headers = {
-				    "Authorization" : token,
+				    "Authorization" : 'Bearer '+ localStorage.getItem("token"),
 				    "Content-Type" 	: "application/json",
 				};
 

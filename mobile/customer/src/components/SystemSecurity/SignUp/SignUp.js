@@ -44,6 +44,7 @@ export default class SignUp extends ValidationComponent{
       openModal: false,
       uid : '',
       token : '',
+      
 
     };
   }
@@ -90,10 +91,10 @@ export default class SignUp extends ValidationComponent{
               // if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){ 
 
                 axios
-                .patch('http://qatgk3tapi.iassureit.com/api/usersotp/signup',formValues)
+                .patch('/api/usersotp/signup',formValues)
                 .then( (res) =>{
                   console.log("res in signup",res)
-                  this.props.navigation.navigate('PropertyDetails1',{token:this.state.token,uid:this.state.uid});
+                  this.props.navigation.navigate('PropertyDetails1',{mobile:this.state.mobile,token:this.state.token,uid:this.state.uid});
 
                   if(res.data.message === "USER-UPDATED"){
                           var sendDataToUser = {

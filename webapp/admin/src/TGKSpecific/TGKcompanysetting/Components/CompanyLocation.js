@@ -728,7 +728,7 @@ selectType(event){
         companyId  : 1,
         locationID : id,
       }
-      const token = '';
+      const token = 'Bearer '+ localStorage.getItem("token");
 
       axios.patch('/api/tgkSpecificcompanysettings/location/remove',formValues)
         .then( (response)=> {

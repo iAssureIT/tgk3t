@@ -124,12 +124,13 @@ export default class MobileScreen extends ValidationComponent {
         axios
           .post('/api/usersotp/verify_mobile',formValues)
           .then((response)=>{
+              console.log("here response",response);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
-                AsyncStorage.setItem("uid",response.data.user_id);
-                AsyncStorage.setItem("token",response.data.token);
+                // AsyncStorage.setItem("uid",response.data.user_id);
+                // AsyncStorage.setItem("token",response.data.token);
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
-               this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message});
+               this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobileNumber});
           
               }else{
                 this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobileNumber});
@@ -240,12 +241,6 @@ export default class MobileScreen extends ValidationComponent {
                   {this.displayValidationError('mobileNumberError')}
                 </View>
 
-<<<<<<< Updated upstream
-
-
-        
-=======
->>>>>>> Stashed changes
              <Modal isVisible={this.state.openModal} 
              onBackdropPress={() => this.setState({ openModal: false })}
              coverScreen={true}

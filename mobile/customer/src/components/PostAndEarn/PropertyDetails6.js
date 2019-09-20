@@ -43,7 +43,8 @@ export default class PropertyDetails6 extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
-      mobile : '',
+      someOnemobile : '',
+      mobileNumberError : [],
       builtArea : '',
       expectedRate : '',
       totalAsk : '',
@@ -86,8 +87,81 @@ export default class PropertyDetails6 extends ValidationComponent{
         value: 'Sunday'
       }],
       toggle : false,
-      toggleText:'My Self'
+      contactPerson:'My Self',
+      mobile:"",
+      propertyId : '',
+      uid : '',
+      token : '',
     };
+  }
+
+  validInput = () => {
+    const {
+      someOnemobile,
+    } = this.state;
+    let valid = true;
+
+    this.validate({
+      someOnemobile: { 
+        required: true, 
+        mobileNo: true,
+        // numbers: true, 
+        minlength: 9, 
+        maxlength: 10 
+      },
+    });
+
+    if (this.isFieldInError("someOnemobile")) {
+      this.setState({ mobileNumberError: this.getErrorsInField("someOnemobile") });
+      valid = false;
+    } else {
+      this.setState({ mobileNumberError: "" });
+      valid = true;
+    }
+
+    return  !this.isFieldInError("someOnemobile") ;
+  };
+
+
+ validInputField = (stateName, stateErr) => {
+      const {
+      someOnemobile,
+      } = this.state;
+      let valid = true;
+
+      this.validate({
+      [stateName]: {
+      required: true,
+      },
+      });
+
+      if (this.isFieldInError(stateName)) {
+      let validinptError = this.getErrorsInField(stateName);
+      this.setState({ validinptError });
+      valid = false;
+      } else {
+      this.setState({ [stateErr]: "" });
+      }
+
+      return valid;
+};
+
+
+handleMobileChange(value){
+    // console.log("value = ",value);
+    if(value.startsWith && value.startsWith('+')){
+      value = value.substr(3);
+    }
+    let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    // let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    // console.log("x value = ",x);
+    // let y = !x[2] ? x[1] : x[1]+'-'+x[2];
+    let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
+    // let y = '+1 '+x[1]+'-'+x[2]+'-'+x[3];
+    // console.log("y value = ",y)
+    this.setState({
+      someOnemobile : y,
+    });
   }
 
   setActive=(index)=>{
@@ -101,40 +175,46 @@ export default class PropertyDetails6 extends ValidationComponent{
       console.log("uid",uid);
       var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
       console.log("propertyId",propertyId);
-     
+      var mobile = this.props.navigation.getParam('mobile','No mobile'); 
+    console.log("mobile in otpscreen",mobile);
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
       this.setState({
         token : token,
         uid   : uid,
         propertyId : propertyId,
+        mobile: mobile,
       });
 
  }
 
   submitFun(){
 
+      console.log("someOnemobile",this.state.someOnemobile);
+      console.log("mobile",this.state.mobile);
       const formValues = {
      
-        "contactPersonMobile" : mobNo,
+        // "contactPersonMobile" : mobNo,
         "contactPerson"       : this.state.contactPerson,
         "available"           : this.state.available,
-        "propertyImages"      : this.state.imgArrayWSaws,
-        "video"               : this.state.singleVideo,
+        // "propertyImages"      : this.state.imgArrayWSaws,
+        // "video"               : this.state.singleVideo,
         "status"              : "New",
         "property_id"         : this.state.propertyId,
         "uid"                 : this.state.uid,
       };
       console.log("formValues",formValues);
+      this.props.navigation.navigate('PropertyDetails7',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+
   }
 
 
   onToggle=()=>{
     let {toggle} = this.state;
     if(toggle){
-      this.setState({toggleText:'My Self'})
+      this.setState({contactPerson:'My Self'})
     }else{
-      this.setState({toggleText:'Someone else'})
+      this.setState({contactPerson:'Someone else'})
     }
     this.setState({toggle:!this.state.toggle});
   }
@@ -210,7 +290,7 @@ export default class PropertyDetails6 extends ValidationComponent{
                 onPress={()=>this.onToggle()}
                 circleColorOn={colors.button}
                 circleColorOff={colors.primary}
-                buttonText={this.state.toggleText}
+                buttonText={this.state.contactPerson}
                 containerStyle={{
                   width: 140,
                   height: 38,
@@ -235,7 +315,9 @@ export default class PropertyDetails6 extends ValidationComponent{
                 }}
               />
             </View>
-            
+
+            {this.state.contactPerson==="My Self" ?
+
             <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
                 <Icon name="mobile" type="entypo" size={16}  color="#aaa" style={{}}/>
@@ -262,6 +344,71 @@ export default class PropertyDetails6 extends ValidationComponent{
                 />
               </View>
             </View>
+
+          :
+            
+          null
+           /* <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="mobile" type="entypo" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Phone Number"
+                  // onChangeText          = {someOnemobile => {this.setState({someOnemobile})}}
+                  onChangeText          = {(someOnemobile) => {this.setState({ someOnemobile },()=>{this.validInputField('someOnemobile', 'mobileNumberError');}),this.handleMobileChange(someOnemobile)}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {sizes.title}
+                  baseColor             = {'#666'}
+                  textColor             = {'#666'}
+                  value                 = {this.state.someOnemobile}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "numeric"
+                />
+              </View>
+            </View>*/
+
+          }
+
+
+           <View style={[styles.formInputView,styles.marginBottom25]}>
+                  <View style={[styles.inputWrapper]}>
+                  <View style={styles.inputImgWrapper}>
+                      <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper}>
+                      <TextField
+                        label                 = "Mobile"
+                        onChangeText          = {(someOnemobile) => {this.setState({ someOnemobile },()=>{this.validInputField('someOnemobile', 'mobileNumberError');}),this.handleMobileChange(someOnemobile)}}
+                                                 // {mobileNumber => this.handleMobileChange(mobileNumber)}
+                        lineWidth             = {1}
+                        tintColor             = {colors.button}
+                        inputContainerPadding = {0}
+                        labelHeight           = {15}
+                        labelFontSize         = {sizes.label}
+                        titleFontSize         = {sizes.title}
+                        baseColor             = {'#666'}
+                        textColor             = {'#333'}
+                        value                 = {this.state.someOnemobile}
+                        containerStyle        = {styles.textContainer}
+                        inputContainerStyle   = {styles.textInputContainer}
+                        titleTextStyle        = {styles.textTitle}
+                        style                 = {styles.textStyle}
+                        labelTextStyle        = {styles.textLabel}
+                        keyboardType          = "numeric"
+                      />
+                    </View>
+                  </View>
+                  {this.displayValidationError('mobileNumberError')}
+                </View>
 
             <Text style={[styles.heading2,styles.marginBottom15]}>Visiting Schedule (Add as many as you like)</Text>
             <View style={[styles.inputWrapper,styles.marginBottom25]}>
@@ -421,6 +568,8 @@ export default class PropertyDetails6 extends ValidationComponent{
 
 
 
+
+
             <Button
               onPress         = {this.submitFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails7')}
@@ -470,6 +619,28 @@ export default class PropertyDetails6 extends ValidationComponent{
     );
     
   }
+}
+
+MobileScreen.defaultProps = {
+  messages: {
+    en: {
+      mobileNo: 'Enter a valid mobile number.',
+      minlength: 'Length should be greater than {1}',
+
+    }
+  },
+
+  rules: {
+    mobileNo: /^(\+91\s)?[0-9]{3}\-[0-9]{3}\-[0-9]{4}$/,
+    minlength(length, value) {
+      if (length === void(0)) {
+        throw 'ERROR: It is not a valid length, checkout your minlength settings.';
+      } else if(value.length > length) {
+        return true;
+      }
+      return false;
+    },
+  },
 }
 
 

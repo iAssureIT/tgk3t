@@ -58,7 +58,7 @@ export default class CompanyLocationList extends Component {
   			event.preventDefault();
 			var id = event.target.id;
 			console.log("id",id);
-			const token = '';
+			const token = 'Bearer '+ localStorage.getItem("token");
 			// const url = '/api/role/'+id ;
 			// const headers = {
 			// 	    "Authorization" : token,

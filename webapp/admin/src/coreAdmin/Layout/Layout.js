@@ -57,7 +57,7 @@ import PropertyProfile from '../../adminTGK/PropertyProfile/PropertyProfile.js';
    
 componentDidMount(){
 
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
     $(document).ready(function () {
        $('#sidebarCollapse').on('click', function () {
@@ -112,20 +112,20 @@ componentDidMount(){
     // {console.log("loggedIn status layput = ", this.state.loggedIn)}
     if(this.state.loggedIn===true){
       
-      window.onscroll = function() {scrollFunction()};
+      // window.onscroll = function() {scrollFunction()};
 
-      function scrollFunction() {
-        if( document.getElementById("mySidenav"))
-        {
-            if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-              document.getElementById("mySidenav").style.top = "0";
-            } else {
-              document.getElementById("mySidenav").style.top = "50px";
-            }
+      // function scrollFunction() {
+      //   if( document.getElementById("mySidenav"))
+      //   {
+      //       if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+      //         document.getElementById("mySidenav").style.top = "0";
+      //       } else {
+      //         document.getElementById("mySidenav").style.top = "50px";
+      //       }
 
-        }
+      //   }
         
-      }
+      // }
 
       return(
             <div className="App container-fluid">
@@ -166,6 +166,7 @@ componentDidMount(){
                                 <Route path="/propertyList" component={PropertyList} exact />
                                 <Route path="/listedProperties" component={ListedProperties} exact />
                                 <Route path="/propertyProfile/:id" component={PropertyProfile} exact />
+                                <Route path="/login"          exact strict component={ Login } />
 
                                 
 

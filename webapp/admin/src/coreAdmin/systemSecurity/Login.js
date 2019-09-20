@@ -52,9 +52,9 @@ class Login extends Component {
 
         console.log("localStorage =",localStorage);
         // browserHistory.replace('/');
-        if(axios.defaults.headers.common.Authorization)
-          {
-            this.props.history.push("/");
+        // if(axios.defaults.headers.common.Authorization)
+        //   {
+            this.props.history.push("/dashboard");
             window.location.reload();
             // direct.setState({loggedIn:response.data.token})
             if(localStorage==null){
@@ -64,7 +64,7 @@ class Login extends Component {
                   loggedIn  :   true
               })
             }
-          }
+          // }
       })
       .catch((error)=>{
                         console.log("error = ",error);

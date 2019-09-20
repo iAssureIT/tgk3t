@@ -697,10 +697,10 @@ class UMListOfUsers extends Component {
 					  	var selectedId = checkedUsersList[i];
 					  	
 					  	// console.log("selected i",selectedId);
-					  	const token = '';
+					  	const token = 'Bearer '+ localStorage.getItem("token");
 					  	const url = '/api/users/delete/one/'+selectedId ;
 						const headers = {
-							    "Authorization" : token,
+							    "Authorization" : 'Bearer '+ localStorage.getItem("token"),
 							    "Content-Type" 	: "application/json",
 							};
 						axios({

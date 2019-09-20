@@ -64,15 +64,14 @@ class masterData extends Component {
 	
 
   		deleteAmenity(event){
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
   			event.preventDefault();
 			var id = event.target.id;
 			console.log("id",id);
-			const token = '';
+			const token = 'Bearer '+ localStorage.getItem("token");
 			const url = '/api/masteramenities/'+id ;
 			const headers = {
-				    "Authorization" : token,
+				    "Authorization" : 'Bearer '+ localStorage.getItem("token"),
 				    "Content-Type" 	: "application/json",
 				};
 

@@ -64,6 +64,7 @@ export default class PropertyDetails5 extends ValidationComponent{
                      {label: 'One Time Maintenance',checked: false},
                      {label: 'Stamp Duty & Registration',checked: false},
                      {label: 'Clubhouse',checked: false}],
+      mobile : "",
     };
   }
 
@@ -75,16 +76,17 @@ export default class PropertyDetails5 extends ValidationComponent{
 
    componentDidMount(){
       var token = this.props.navigation.getParam('token','No token');
-      console.log("token",token);
+      // console.log("token",token);
       var uid = this.props.navigation.getParam('uid','No uid');
-      console.log("uid",uid);
+      // console.log("uid",uid);
       var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-      console.log("propertyId",propertyId);
+      // console.log("propertyId",propertyId);
       var propertyType = this.props.navigation.getParam('propertyType','No propertyType');
-      console.log("propertyType",propertyType);
+      // console.log("propertyType",propertyType);
       var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
-      console.log("transactionType",transactionType);
-
+      // console.log("transactionType",transactionType);
+        var mobile = this.props.navigation.getParam('mobile','No mobile'); 
+    // console.log("mobile in otpscreen",mobile);
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
       this.setState({
@@ -93,6 +95,7 @@ export default class PropertyDetails5 extends ValidationComponent{
         propertyId : propertyId,
         propertyType : propertyType,
         transactionType : transactionType,
+        mobile: mobile,
       });
 
 }
@@ -135,7 +138,7 @@ submitFun(){
         .then( (res) =>{
           console.log("Financials res = ",res);
           if(res.status === 200){
-         this.props.navigation.navigate('PropertyDetails6',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+         this.props.navigation.navigate('PropertyDetails6',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
          
           }
         })

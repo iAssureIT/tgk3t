@@ -33,6 +33,8 @@ export default class MobileScreen extends ValidationComponent {
           openModal: false,
           openModal1: false,
           token     : "",
+          mob:"",
+          uid : '',
 		    };
 	}
 
@@ -87,7 +89,7 @@ export default class MobileScreen extends ValidationComponent {
 
           if(this.state.msg === "MOBILE-NUMBER-EXISTS")
           {
-              this.props.navigation.navigate('PropertyDetails1',{token:this.state.token,uid:this.state.uid});
+              this.props.navigation.navigate('PropertyDetails1',{mobile:this.state.mob,token:this.state.token,uid:this.state.uid});
               console.log("already");
           }
         }

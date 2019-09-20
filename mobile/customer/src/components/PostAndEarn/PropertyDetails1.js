@@ -124,6 +124,7 @@ export default class PropertyDetails1 extends ValidationComponent{
       stateCode       : "State",
       token           : "",
       uid             : "",
+      mobile          : '',
     };
 
   }
@@ -134,12 +135,14 @@ export default class PropertyDetails1 extends ValidationComponent{
       // console.log("token",token);
       var uid = this.props.navigation.getParam('uid','No uid');
       // console.log("uid",uid);
-
+      var mobile = this.props.navigation.getParam('mobile','No mobile'); 
+    // console.log("mobile in otpscreen",mobile);
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
       this.setState({
         token : token,
         uid   : uid,
+        mobile: mobile,
       });
 
        axios({
@@ -223,7 +226,7 @@ export default class PropertyDetails1 extends ValidationComponent{
               // this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid});          
 
           axios
-          .post('http://qatgk3tapi.iassureit.com/api/properties',formValues)
+          .post('/api/properties',formValues)
           .then( (res) =>{
             console.log("here 1st form result",res.data);
             if(res.status === 200){
@@ -233,7 +236,7 @@ export default class PropertyDetails1 extends ValidationComponent{
               // console.log("propertyCode",res.data.propertyCode);
               // this.props.prop_id = res.data.property_id;
               // this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
-              this.props.navigation.navigate('PropertyDetails5',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
               
             }else{
               // alert(" Please Fill all fields")

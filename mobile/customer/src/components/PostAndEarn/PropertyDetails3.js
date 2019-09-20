@@ -101,14 +101,16 @@ export default class PropertyDetails3 extends ValidationComponent{
       allAmenities:[],
       isChecked: true,
       btnLoading : false,
-      propertyId : "",
 
       furnishItem : [{label: 'Directors Cabin',checked: false},
                      {label: 'Meeting Room',checked: false},
                      {label: 'Reception',checked: false}],
       propertyType : "",
       transactionType : "",
-
+      mobile : '',
+      propertyId : "",
+      uid : "",
+      token : "",
      /* expectedRate : '',
       totalAsk : '',
       totalAskIndex : 0,
@@ -167,14 +169,15 @@ export default class PropertyDetails3 extends ValidationComponent{
   }
    componentDidMount(){
       var token = this.props.navigation.getParam('token','No token');
-      console.log("token",token);
+      // console.log("token",token);
       var uid = this.props.navigation.getParam('uid','No uid');
-      console.log("uid",uid);
+      // console.log("uid",uid);
       var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-      console.log("propertyId",propertyId);
+      // console.log("propertyId",propertyId);
       var propertyType = this.props.navigation.getParam('propertyType','No propertyType');
-      console.log("propertyType",propertyType);
-      
+      // console.log("propertyType",propertyType);
+        var mobile = this.props.navigation.getParam('mobile','No mobile'); 
+    // console.log("mobile in otpscreen",mobile);
       var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
 
 
@@ -186,10 +189,11 @@ export default class PropertyDetails3 extends ValidationComponent{
         propertyId : propertyId,
         propertyType : propertyType,
         transactionType : transactionType,
+        mobile:mobile,
       });
 
     axios
-      .get('http://qatgk3tapi.iassureit.com/api/masteramenities/list')
+      .get('/api/masteramenities/list')
       .then(
         (res)=>{
           console.log('res postdata', res);
@@ -318,7 +322,7 @@ export default class PropertyDetails3 extends ValidationComponent{
               console.log(res);
               if(res.status === 200){
                 console.log("PropertyDetails Res = ",res);
-               this.props.navigation.navigate('PropertyDetails5',{propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+               this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
 
               }
             })
