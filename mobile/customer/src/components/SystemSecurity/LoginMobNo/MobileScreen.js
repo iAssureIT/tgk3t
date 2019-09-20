@@ -240,9 +240,12 @@ export default class MobileScreen extends ValidationComponent {
                   {this.displayValidationError('mobileNumberError')}
                 </View>
 
+<<<<<<< Updated upstream
 
 
         
+=======
+>>>>>>> Stashed changes
              <Modal isVisible={this.state.openModal} 
              onBackdropPress={() => this.setState({ openModal: false })}
              coverScreen={true}

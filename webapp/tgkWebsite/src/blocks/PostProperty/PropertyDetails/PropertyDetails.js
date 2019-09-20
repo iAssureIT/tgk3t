@@ -475,6 +475,8 @@ import './PropertyDetails.css';
 					"furnishPantry"	    : this.state.furnishPantry,	
                 	"furnishedOptions"  : furnishedOptionsDataList,
 
+
+                	
 					// "property_id" 		: localStorage.getItem("propertyId"),
 					// "uid" 				: localStorage.getItem("uid"),
 				};

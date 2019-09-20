@@ -131,9 +131,9 @@ export default class PropertyDetails1 extends ValidationComponent{
     componentDidMount(){
       // console.log("here token in form 1", AsyncStorage.getItem("token"));
       var token = this.props.navigation.getParam('token','No token');
-      console.log("token",token);
+      // console.log("token",token);
       var uid = this.props.navigation.getParam('uid','No uid');
-      console.log("uid",uid);
+      // console.log("uid",uid);
 
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
@@ -218,33 +218,35 @@ export default class PropertyDetails1 extends ValidationComponent{
         "uid"             : uid,
       };
       console.log("formValues",formValues);
-      console.log("submit data");
+      // console.log("submit data");
+      
+              // this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid});          
 
-              this.props.navigation.navigate('PropertyDetails3',{token:this.state.token,uid:this.state.uid});          
-
-          // axios
-          // .post('http://qatgk3tapi.iassureit.com/api/properties',formValues)
-          // .then( (res) =>{
-          //   console.log(res.data);
-          //   if(res.status === 200){
-          //     console.log("here prop id",res.data.property_id);
-          //     // localStorage.setItem('propertyId',res.data.property_id)
-          //     console.log("BasicInfo res = ",res);
-          //     console.log("propertyCode",res.data.propertyCode);
-          //     // this.props.prop_id = res.data.property_id;
-          //     this.props.navigation.navigate('PropertyDetails3',{token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
-          //   }else{
-          //     // alert(" Please Fill all fields")
-          //   }
-          // })
-          // .catch((error)=>{
-          //               console.log("error = ",error);
-          //               if(error.message === "Request failed with status code 401")
-          //               {
-          //                    swal("Your session is expired! Please login again.","", "error");
-          //                    this.props.history.push("/");
-          //               }
-          //           });
+          axios
+          .post('http://qatgk3tapi.iassureit.com/api/properties',formValues)
+          .then( (res) =>{
+            console.log("here 1st form result",res.data);
+            if(res.status === 200){
+              // console.log("here prop id",res.data.property_id);
+              // localStorage.setItem('propertyId',res.data.property_id)
+              // console.log("BasicInfo res = ",res);
+              // console.log("propertyCode",res.data.propertyCode);
+              // this.props.prop_id = res.data.property_id;
+              // this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              this.props.navigation.navigate('PropertyDetails5',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              
+            }else{
+              // alert(" Please Fill all fields")
+            }
+          })
+          .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/");
+                        }
+                    });
 
 
   }
@@ -402,6 +404,9 @@ export default class PropertyDetails1 extends ValidationComponent{
       fullPropertyType: value,
       propertyType : propertyType,
       propertySubType : propertySubType,
+    },()=>{
+      // console.log("propertyType",this.state.propertyType);
+      // console.log("propertySubType",this.state.propertySubType);
     });
   }
 
@@ -449,7 +454,7 @@ export default class PropertyDetails1 extends ValidationComponent{
   selectCity(cityName){
      
       var dist_block_city = cityName;
-      console.log("here dist_block_city ",dist_block_city );
+      // console.log("here dist_block_city ",dist_block_city );
       var districtName = dist_block_city.split('-')[0];
       var blockName    = dist_block_city.split('-')[1];
       var cityName   = dist_block_city.split('-')[2];
@@ -565,12 +570,12 @@ export default class PropertyDetails1 extends ValidationComponent{
 
     if(index < 0){
       const formValues ={
-        countryCode   : "IN",
-        stateCode     : this.state.stateCode,
+          countryCode   : "IN",
+          stateCode     : this.state.stateCode,
           districtName  : this.state.districtName,
           blockName     : this.state.blockName,
-          cityName    : this.state.cityName,
-          areaName    : this.state.areaName,
+          cityName      : this.state.cityName,
+          areaName      : this.state.areaName,
           subareaName   : valSubAreaName,
       };
 
@@ -874,7 +879,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                   <View style={[{borderColor: colors.black,
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                     <View style={styles.inputTextWrapperFull}>
-                   {console.log("here cityname in render",this.state.cityName)}
+               
                        <Picker
                           selectedValue       ={this.state.cityName}
                           style               ={[styles.ddStyle,{height:40}]}

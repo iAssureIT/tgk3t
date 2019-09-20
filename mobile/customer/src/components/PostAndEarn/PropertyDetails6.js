@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
+import axios          from 'axios';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -92,6 +93,41 @@ export default class PropertyDetails6 extends ValidationComponent{
   setActive=(index)=>{
     this.setState({activeIndex:index});
   }
+
+  componentDidMount(){
+      var token = this.props.navigation.getParam('token','No token');
+      console.log("token",token);
+      var uid = this.props.navigation.getParam('uid','No uid');
+      console.log("uid",uid);
+      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
+      console.log("propertyId",propertyId);
+     
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+      this.setState({
+        token : token,
+        uid   : uid,
+        propertyId : propertyId,
+      });
+
+ }
+
+  submitFun(){
+
+      const formValues = {
+     
+        "contactPersonMobile" : mobNo,
+        "contactPerson"       : this.state.contactPerson,
+        "available"           : this.state.available,
+        "propertyImages"      : this.state.imgArrayWSaws,
+        "video"               : this.state.singleVideo,
+        "status"              : "New",
+        "property_id"         : this.state.propertyId,
+        "uid"                 : this.state.uid,
+      };
+      console.log("formValues",formValues);
+  }
+
 
   onToggle=()=>{
     let {toggle} = this.state;
@@ -386,7 +422,8 @@ export default class PropertyDetails6 extends ValidationComponent{
 
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertyDetails7')}
+              onPress         = {this.submitFun.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails7')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}

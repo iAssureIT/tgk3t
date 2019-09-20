@@ -36,6 +36,11 @@ export default StyleSheet.create({
     fontFamily: 'Roboto-Regular',
     color:colors.grey,
   },
+  inputTextSmall:{
+    fontSize: 13,
+    fontFamily: 'Roboto-Regular',
+    color:colors.grey,
+  },
   heading3: {
     fontSize: 14,
     fontFamily: 'Roboto-Regular',
@@ -148,6 +153,10 @@ export default StyleSheet.create({
   },
   inputTextWrapperM : {
     width:'80%',
+    justifyContent:'center'
+  },
+  inputTextWrapper68 : {
+    width:'68%',
     justifyContent:'center'
   },
   inputRightWrapper1:{

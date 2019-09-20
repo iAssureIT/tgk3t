@@ -55,11 +55,12 @@ export default class PropertyDetails3 extends ValidationComponent{
                         { value: 2},
                         { value: 3},
                         { value: 4}],
-      furnishedValue :'',
+      
       furnishedIndex : 0,
-      workStation    : 0,
-      personal       : 0,
-      pantry         : 0,
+      workStationIndex : 0,
+      personalIndex  : 0,
+      pantryIndex         : 0,
+      furnishpantryIndex  : 0,
       yearsData : [ {label:"Under Construction", value: 'Under Construction',},
                     {label:"new", value: 'New(Less than a year)',},
                     {label:"1-2 Years", value: '1-2',},
@@ -75,7 +76,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                             {label:"Northwest", value: 'Northwest',},
                             {label:"Southeast", value: 'Southeast',}, 
                             {label:"Southwest", value: 'Southwest',}],
-
+      furnishedstatus : "fullFurnished",
       superArea : '',
       builtupArea : '',
       UnitData  : [{label:"Sq ft", value:"Sq ft"},
@@ -87,12 +88,13 @@ export default class PropertyDetails3 extends ValidationComponent{
                   {label:"Hectare", value:"Hectare"},
                   {label:"Marla", value:"Marla"},
                   {label:"Kanal", value:"Kanal"}],
-      unit1 : 'Sq ft',
-      unit2 : 'Sq ft',
+      superAreaUnit : 'Sq ft',
+      builtupAreaUnit : 'Sq ft',
       floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
       totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
       floor: 'Basement',
       totalFloor:'Total Floors',
+
 
       defaultIcon:'flag',
       iconType: 'material-community',
@@ -100,6 +102,13 @@ export default class PropertyDetails3 extends ValidationComponent{
       isChecked: true,
       btnLoading : false,
       propertyId : "",
+
+      furnishItem : [{label: 'Directors Cabin',checked: false},
+                     {label: 'Meeting Room',checked: false},
+                     {label: 'Reception',checked: false}],
+      propertyType : "",
+      transactionType : "",
+
      /* expectedRate : '',
       totalAsk : '',
       totalAskIndex : 0,
@@ -115,24 +124,59 @@ export default class PropertyDetails3 extends ValidationComponent{
   }
 
 
-  onSelect=(index,value)=>{
+  onSelectFurnishStatus=(index,value)=>{
+    console.log("here value",value);
     this.setState({
       furnishedIndex: index,
-      workStation   : index,
-      personal      : index,
-      pantry        : index,
-      furnishedValue: value,
+      furnishedstatus : value,
+      // workStation   : index,
+      // personal      : index,
+      // pantry        : index,
+      // furnishedValue: value,
+      //   totalAskIndex: index,
+      //   furnishpantry: index,
     });
   }
 
-   componentDidMount(){
+  onWorkStation=(index,value)=>{
+    this.setState({
+    workStationIndex   : index,
+    workStation : value,
+    });
+  }
 
+  onPersonal=(index,value)=>{
+    this.setState({
+    personalIndex : index,
+    personal : value,
+    });
+  }
+
+  onPantry=(index,value)=>{
+    this.setState({
+    pantryIndex : index,
+    pantry : value,
+    });
+  }
+
+  onFurnishpantry=(index,value)=>{
+    this.setState({
+    furnishpantryIndex : index,
+    furnishpantry : value,
+    });
+  }
+   componentDidMount(){
       var token = this.props.navigation.getParam('token','No token');
       console.log("token",token);
       var uid = this.props.navigation.getParam('uid','No uid');
       console.log("uid",uid);
       var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
       console.log("propertyId",propertyId);
+      var propertyType = this.props.navigation.getParam('propertyType','No propertyType');
+      console.log("propertyType",propertyType);
+      
+      var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
+
 
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
@@ -140,6 +184,8 @@ export default class PropertyDetails3 extends ValidationComponent{
         token : token,
         uid   : uid,
         propertyId : propertyId,
+        propertyType : propertyType,
+        transactionType : transactionType,
       });
 
     axios
@@ -189,38 +235,61 @@ export default class PropertyDetails3 extends ValidationComponent{
     }else{
       alldata[index].checked = true;
     }
-
     this.setState({
       allAmenities: alldata,
     },()=>{
       console.log("here new data of amenities",this.state.allAmenities);
     });
-    // var data = index.target.getAttribute('isChecked');
+
     console.log("current data status",status);
-    // let {internalAmenities} = this.state;
-    // let checked = !internalAmenities[index].checked;
-    // internalAmenities[index].checked = checked;
-    // this.setState({internalAmenities});
+
   }
 
+  handleOnFurnish = (index)=>{
 
-  submitDataFun(){
+     console.log("index",index);
+    var alldata = this.state.furnishItem;
+    var status = alldata[index].checked;
+    if(status===true){
+      alldata[index].checked = false;
+    }else{
+      alldata[index].checked = true;
+    }
+    this.setState({
+      furnishItem: alldata,
+    },()=>{
+      console.log("here new data of furnishItem",this.state.furnishItem);
+    });
+    console.log("current data status",status);
+  }
+
+  submitFun(){
     // this.setState({
     //   btnLoading : true,
     // })
+
+     var allAmenitiesData = this.state.allAmenities;
+        var allAmenitiesDataList =[];     
+            allAmenitiesData.map((item,index)=>{
+              if(item.checked == true)
+              {
+               allAmenitiesDataList.push(item.label);
+              }
+            })
+
     console.log("here btn pressed");
      const formValues = {
       
-          "unit1"             : this.state.unit1,
-          "unit2"             : this.state.unit2,
+          // "unit1"             : this.state.unit1,
+          // "unit2"             : this.state.unit2,
           "bedrooms"          : this.state.bedrooms,
           "balconies"         : this.state.balconies,
-          "washrooms"     : this.state.washrooms,
+          "washrooms"         : this.state.washrooms,
           "furnishedStatus"   : this.state.furnishedstatus,
           // all radio
-          "personal"        : this.state.personal,
-          "pantry"        : this.state.pantry,
-          "workStation"     : this.state.workStation,
+          "personal"          : this.state.personal,
+          "pantry"            : this.state.pantry,
+          "workStation"       : this.state.workStation,
 
           "bathrooms"         : this.state.bathrooms,
           "ageofProperty"     : this.state.ageofproperty,
@@ -230,22 +299,40 @@ export default class PropertyDetails3 extends ValidationComponent{
           "property_id"       : this.state.propertyId,
           "uid"               : this.state.uid,
 
-          // "Amenities"     : allAmenitiesDataList,
+          "Amenities"         : allAmenitiesDataList,
           "floor"             : this.state.floor,
           "totalFloor"        : this.state.totalfloor,
-          // "superAreaUnit"     : this.state.superAreaUnit,
-          // "builtupAreaUnit"     : this.state.builtupAreaUnit,
-          // "furnishPantry"       : this.state.furnishPantry, 
+          "superAreaUnit"     : this.state.superAreaUnit,
+          "builtupAreaUnit"   : this.state.builtupAreaUnit,
+          "furnishPantry"       : this.state.furnishpantry, 
             // checkbox
           //     "furnishedOptions"    : furnishedOptionsDataList,
 
-
-        
-
       };
       console.log("formValues",formValues);
-      this.props.navigation.navigate('PropertyDetails5',{token:this.state.token,uid:this.state.uid});
+      // this.props.navigation.navigate('PropertyDetails5',{transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+      
+             axios
+            .patch('/api/properties/patch/propertyDetails',formValues)
+            .then( (res) =>{
+              console.log(res);
+              if(res.status === 200){
+                console.log("PropertyDetails Res = ",res);
+               this.props.navigation.navigate('PropertyDetails5',{propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+
+              }
+            })
+            .catch((error)=>{
+                                  console.log("error = ",error);
+                                  if(error.message === "Request failed with status code 401")
+                                  {
+                                       swal("Your session is expired! Please login again.","", "error");
+                                       this.props.history.push("/");
+                                  }
+                 });
+
   }
+
   render(){
    
     const { navigation } = this.props;
@@ -265,7 +352,7 @@ export default class PropertyDetails3 extends ValidationComponent{
 
             <View style={styles.divider}></View>
 
-              <Text style={[styles.heading2,styles.marginBottom5]}>My Property is on</Text>
+              <Text style={[styles.heading2,styles.marginBottom15]}>My Property is on</Text>
              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
               <View style={[styles.inputWrapper2,{height:40}]}>
                 <View style={styles.inputImgWrapper2}>
@@ -322,203 +409,311 @@ export default class PropertyDetails3 extends ValidationComponent{
               </View>
             </View>
 
-            <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+            {this.state.propertyType !== "Commercial" ?
+
+            <View>
+
+                    <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
+                    <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                      <View style={styles.inputImgWrapper}>
+                        <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                      </View>
+                      <View style={styles.inputTextWrapper}>
+                        <Dropdown
+                          label               = 'Bedrooms'
+                          containerStyle      = {styles.ddContainer}
+                          dropdownOffset      = {{top:0, left: 0}}
+                          itemTextStyle       = {styles.ddItemText}
+                          inputContainerStyle = {styles.ddInputContainer}
+                          labelHeight         = {10}
+                          tintColor           = {colors.button}
+                          labelFontSize       = {sizes.label}
+                          fontSize            = {15}
+                          baseColor           = {'#666'}
+                          textColor           = {'#333'}
+                          labelTextStyle      = {styles.ddLabelText}
+                          style               = {styles.ddStyle}
+                          data                = {this.state.bedroomData}
+                          value               = {this.state.bedrooms}
+                          onChangeText        = {bedrooms => {this.setState({bedrooms});}}
+                        />
+                      </View>
+                    </View>
+
+                    <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                      <View style={styles.inputImgWrapper}>
+                        <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                      </View>
+                      <View style={styles.inputTextWrapper}>
+                        <Dropdown
+                          label               = 'Balconies'
+                          containerStyle      = {styles.ddContainer}
+                          dropdownOffset      = {{top:0, left: 0}}
+                          itemTextStyle       = {styles.ddItemText}
+                          inputContainerStyle = {styles.ddInputContainer}
+                          labelHeight         = {10}
+                          tintColor           = {colors.button}
+                          labelFontSize       = {sizes.label}
+                          fontSize            = {15}
+                          baseColor           = {'#666'}
+                          textColor           = {'#333'}
+                          labelTextStyle      = {styles.ddLabelText}
+                          style               = {styles.ddStyle}
+                          data                = {this.state.balconieData}
+                          value               = {this.state.balconies}
+                          onChangeText        = {balconies => {this.setState({balconies});}}
+                        />
+                      </View>
+                    </View>
+
+                    <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                      <View style={styles.inputImgWrapper}>
+                        <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                      </View>
+                      <View style={styles.inputTextWrapper}>
+                        <Dropdown
+                          label               = 'Bathrooms'
+                          containerStyle      = {styles.ddContainer}
+                          dropdownOffset      = {{top:0, left: 0}}
+                          itemTextStyle       = {styles.ddItemText}
+                          inputContainerStyle = {styles.ddInputContainer}
+                          labelHeight         = {10}
+                          tintColor           = {colors.button}
+                          labelFontSize       = {sizes.label}
+                          fontSize            = {15}
+                          baseColor           = {'#666'}
+                          textColor           = {'#333'}
+                          labelTextStyle      = {styles.ddLabelText}
+                          style               = {styles.ddStyle}
+                          data                = {this.state.bathroomData}
+                          value               = {this.state.bathrooms}
+                          onChangeText        = {bathrooms => {this.setState({bathrooms});}}
+                        />
+                      </View>
+                    </View>
+
               </View>
-              <View style={styles.inputTextWrapper}>
-                <Dropdown
-                  label               = 'Bedrooms'
-                  containerStyle      = {styles.ddContainer}
-                  dropdownOffset      = {{top:0, left: 0}}
-                  itemTextStyle       = {styles.ddItemText}
-                  inputContainerStyle = {styles.ddInputContainer}
-                  labelHeight         = {10}
-                  tintColor           = {colors.button}
-                  labelFontSize       = {sizes.label}
-                  fontSize            = {15}
-                  baseColor           = {'#666'}
-                  textColor           = {'#333'}
-                  labelTextStyle      = {styles.ddLabelText}
-                  style               = {styles.ddStyle}
-                  data                = {this.state.bedroomData}
-                  value               = {this.state.bedrooms}
-                  onChangeText        = {bedrooms => {this.setState({bedrooms});}}
-                />
-              </View>
-            </View>
 
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <Dropdown
-                  label               = 'Balconies'
-                  containerStyle      = {styles.ddContainer}
-                  dropdownOffset      = {{top:0, left: 0}}
-                  itemTextStyle       = {styles.ddItemText}
-                  inputContainerStyle = {styles.ddInputContainer}
-                  labelHeight         = {10}
-                  tintColor           = {colors.button}
-                  labelFontSize       = {sizes.label}
-                  fontSize            = {15}
-                  baseColor           = {'#666'}
-                  textColor           = {'#333'}
-                  labelTextStyle      = {styles.ddLabelText}
-                  style               = {styles.ddStyle}
-                  data                = {this.state.balconieData}
-                  value               = {this.state.balconies}
-                  onChangeText        = {balconies => {this.setState({balconies});}}
-                />
-              </View>
-            </View>
-
-            <View style={[styles.inputWrapper,styles.marginBottom15]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <Dropdown
-                  label               = 'Bathrooms'
-                  containerStyle      = {styles.ddContainer}
-                  dropdownOffset      = {{top:0, left: 0}}
-                  itemTextStyle       = {styles.ddItemText}
-                  inputContainerStyle = {styles.ddInputContainer}
-                  labelHeight         = {10}
-                  tintColor           = {colors.button}
-                  labelFontSize       = {sizes.label}
-                  fontSize            = {15}
-                  baseColor           = {'#666'}
-                  textColor           = {'#333'}
-                  labelTextStyle      = {styles.ddLabelText}
-                  style               = {styles.ddStyle}
-                  data                = {this.state.bathroomData}
-                  value               = {this.state.bathrooms}
-                  onChangeText        = {bathrooms => {this.setState({bathrooms});}}
-                />
-              </View>
-            </View>
-
-            {/*washrooms*/}
-            <View style={[styles.inputWrapper,styles.marginBottom15]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <Dropdown
-                  label               = 'Washrooms'
-                  containerStyle      = {styles.ddContainer}
-                  dropdownOffset      = {{top:0, left: 0}}
-                  itemTextStyle       = {styles.ddItemText}
-                  inputContainerStyle = {styles.ddInputContainer}
-                  labelHeight         = {10}
-                  tintColor           = {colors.button}
-                  labelFontSize       = {sizes.label}
-                  fontSize            = {15}
-                  baseColor           = {'#666'}
-                  textColor           = {'#333'}
-                  labelTextStyle      = {styles.ddLabelText}
-                  style               = {styles.ddStyle}
-                  data                = {this.state.washroomData}
-                  value               = {this.state.washrooms}
-                  onChangeText        = {washrooms => {this.setState({washrooms});}}
-                />
-              </View>
-            </View>
-
-          {/*2nd*/}
-
-            <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
-            <View style={[styles.marginBottom15]}>
-              <RadioGroup
-                size={20}
-                color={colors.grey}
-                thickness={2}
-                selectedIndex = {this.state.pantry}
-                onSelect = {(index, value) => this.onSelect(index, value)}
-              >
-                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
-                  <Text style={styles.inputText}>Yes</Text>
-                </RadioButton>
-        
-                <RadioButton style={{paddingHorizontal:0}} value={'no'}>
-                  <Text style={styles.inputText}>No</Text>
-                </RadioButton>
-        
-              </RadioGroup>
-            </View>
-
-            
-
-            <Text style={[styles.heading2,styles.marginBottom15]}>Personal Washroom</Text>
-            <View style={[styles.marginBottom15]}>
-              <RadioGroup
-                size={20}
-                color={colors.grey}
-                thickness={2}
-                selectedIndex = {this.state.personal}
-                onSelect = {(index, value) => this.onSelect(index, value)}
-              >
-                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
-                  <Text style={styles.inputText}>Yes</Text>
-                </RadioButton>
-        
-                <RadioButton style={{paddingHorizontal:0}} value={'no'}>
-                  <Text style={styles.inputText}>No</Text>
-                </RadioButton>
-        
-              </RadioGroup>
-            </View>
+            :
 
 
-             <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
-            <View style={[styles.marginBottom15]}>
-              <RadioGroup
-                size={20}
-                color={colors.grey}
-                thickness={2}
-                selectedIndex = {this.state.workStation}
-                onSelect = {(index, value) => this.onSelect(index, value)}
-              >
-                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
-                  <Text style={styles.inputText}>0</Text>
-                </RadioButton>
-        
-                <RadioButton style={{paddingHorizontal:0}} value={1}>
-                  <Text style={styles.inputText}>1</Text>
-                </RadioButton>
+              <View>
 
-                 <RadioButton style={{paddingHorizontal:0}} value={2}>
-                  <Text style={styles.inputText}>2</Text>
-                </RadioButton>
-              </RadioGroup>
-            </View>
+                    {/*washrooms*/}
+                    <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
+                    <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                      <View style={styles.inputImgWrapper}>
+                        <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                      </View>
+                      <View style={styles.inputTextWrapper}>
+                        <Dropdown
+                          label               = 'Washrooms'
+                          containerStyle      = {styles.ddContainer}
+                          dropdownOffset      = {{top:0, left: 0}}
+                          itemTextStyle       = {styles.ddItemText}
+                          inputContainerStyle = {styles.ddInputContainer}
+                          labelHeight         = {10}
+                          tintColor           = {colors.button}
+                          labelFontSize       = {sizes.label}
+                          fontSize            = {15}
+                          baseColor           = {'#666'}
+                          textColor           = {'#333'}
+                          labelTextStyle      = {styles.ddLabelText}
+                          style               = {styles.ddStyle}
+                          data                = {this.state.washroomData}
+                          value               = {this.state.washrooms}
+                          onChangeText        = {washrooms => {this.setState({washrooms});}}
+                        />
+                      </View>
+                    </View>
 
+                  {/*2nd*/}
+
+                       <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom15]}>
+                        <View style={[{width:'46%'}]}>
+
+                                <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
+                                <View style={[styles.marginBottom15]}>
+                                  <RadioGroup
+                                    size={20}
+                                    color={colors.grey}
+                                    thickness={2}
+                                    selectedIndex = {this.state.pantryIndex}
+                                    onSelect = {(index, value) => this.onPantry(index, value)}
+                                  >
+                                    <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
+                                      <Text style={styles.inputText}>Yes</Text>
+                                    </RadioButton>
+                            
+                                    <RadioButton style={{paddingHorizontal:0}} value={'no'}>
+                                      <Text style={styles.inputText}>No</Text>
+                                    </RadioButton>
+                            
+                                  </RadioGroup>
+                                </View>
+
+                        </View>
+
+                        <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                           {/* <Text style={styles.heading3}>of</Text>*/}
+                        </View>
+
+                         <View style={[{width:'46%'}]}>
+
+                               <Text style={[styles.heading2,styles.marginBottom15]}>Personal Washroom</Text>
+                                <View style={[styles.marginBottom15]}>
+                                  <RadioGroup
+                                    size={20}
+                                    color={colors.grey}
+                                    thickness={2}
+                                    selectedIndex = {this.state.personalIndex}
+                                    onSelect = {(index, value) => this.onPersonal(index, value)}
+                                  >
+                                    <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
+                                      <Text style={styles.inputText}>Yes</Text>
+                                    </RadioButton>
+                            
+                                    <RadioButton style={{paddingHorizontal:0}} value={'no'}>
+                                      <Text style={styles.inputText}>No</Text>
+                                    </RadioButton>
+                            
+                                  </RadioGroup>
+                                </View>
+
+                        </View>
+                      </View>
+
+                    </View>
+
+                  }
+             
 
             <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
-            <View style={[styles.marginBottom15]}>
+            <View style={[styles.marginBottom15,{width:'100%'}]}>
               <RadioGroup
                 size={20}
                 color={colors.grey}
+                style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}
                 thickness={2}
                 selectedIndex = {this.state.furnishedIndex}
-                onSelect = {(index, value) => this.onSelect(index, value)}
+                onSelect = {(index, value) => this.onSelectFurnishStatus(index, value)}
               >
-                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'fullFurnished'} >
-                  <Text style={styles.inputText}>Full furnished</Text>
+                <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10}} value={'fullFurnished'} >
+                  <Text style={[styles.inputTextSmall,]}>Full furnished</Text>
                 </RadioButton>
-        
-                <RadioButton style={{paddingHorizontal:0}} value={'semiFurnished'}>
-                  <Text style={styles.inputText}>Semi furnished</Text>
+
+                <RadioButton style={{paddingHorizontal:0,marginLeft:5}} value={'semiFurnished'}>
+                  <Text style={styles.inputTextSmall}>Semi furnished</Text>
                 </RadioButton>
-        
-                <RadioButton style={{paddingHorizontal:0,paddingBottom:0}} value={'unfurnished'}>
-                  <Text style={styles.inputText}>Unfurnished</Text>
+
+                <RadioButton style={{paddingHorizontal:0,paddingBottom:0,marginLeft:5}} value={'unfurnished'}>
+                  <Text style={styles.inputTextSmall,{marginTop: -5}}>Unfurnished</Text>
                 </RadioButton>
               </RadioGroup>
             </View>
+
+             {(this.state.furnishedstatus==="fullFurnished" && this.state.propertyType === "Commercial") || (this.state.furnishedstatus==="semiFurnished" && this.state.propertyType ==="Commercial" ) ?
+                 <View style={[styles.marginBottom15,{}]}>
+                            {this.state.furnishItem && this.state.furnishItem.length >0 ?
+                              this.state.furnishItem.map((data,index)=>(
+
+                              <React.Fragment key={index}>
+                                <CheckBox
+                                  key={index}
+                                  style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}
+                                  style={{marginBottom:10}}
+                                  onClick={() => this.handleOnFurnish(index)}
+                                  isChecked={data.checked}
+                                  rightTextStyle={{marginLeft:0}}
+                                  checkBoxColor= {colors.grey}
+                                  rightTextView = {
+                                    <View style={{flexDirection:'row',flex:1}}>
+                                      <Text style={styles.inputText}>{data.label}</Text>
+                                    </View>
+                                  }
+                                />
+                             
+                              </React.Fragment> 
+                            ))
+
+                              :
+                              null
+                            }
+                         
+                                        <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+                                          <View style={[{width:'46%'}]}>
+
+                                                <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
+                                                  <View style={[styles.marginBottom15]}>
+                                                    <RadioGroup
+                                                      size={20}
+                                                      color={colors.grey}
+                                                      thickness={2}
+                                                      selectedIndex = {this.state.workStationIndex}
+                                                      onSelect = {(index, value) => this.onWorkStation(index, value)}
+                                                    >
+                                                      <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
+                                                        <Text style={styles.inputText}>0</Text>
+                                                      </RadioButton>
+                                              
+                                                      <RadioButton style={{paddingHorizontal:0}} value={1}>
+                                                        <Text style={styles.inputText}>1</Text>
+                                                      </RadioButton>
+
+                                                       <RadioButton style={{paddingHorizontal:0}} value={2}>
+                                                        <Text style={styles.inputText}>2</Text>
+                                                      </RadioButton>
+                                                    </RadioGroup>
+                                                  </View>
+
+
+                                          </View>
+
+                                          <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                                             {/* <Text style={styles.heading3}>of</Text>*/}
+                                          </View>
+
+                                           <View style={[{width:'46%'}]}>
+
+
+                                                 <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
+                                                  <View style={[styles.marginBottom15]}>
+                                                    <RadioGroup
+                                                      size={20}
+                                                      color={colors.grey}
+                                                      thickness={2}
+                                                      selectedIndex = {this.state.furnishpantryIndex}
+                                                      onSelect = {(index, value) => this.onFurnishpantry(index, value)}
+                                                    >
+                                                      <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'dry'} >
+                                                        <Text style={styles.inputText}>Dry</Text>
+                                                      </RadioButton>
+                                              
+                                                      <RadioButton style={{paddingHorizontal:0}} value={'wet'}>
+                                                        <Text style={styles.inputText}>Wet</Text>
+                                                      </RadioButton>
+
+                                                        <RadioButton style={{paddingHorizontal:0}} value={'not available'}>
+                                                        <Text style={styles.inputText}>Not available</Text>
+                                                      </RadioButton>
+                                              
+                                                    </RadioGroup>
+                                                  </View>
+
+
+                                           </View>
+                                        </View>
+
+                 </View>
+                  :
+                  null}
+
+                         
+
+
+                       
+
+          {/*here ends*/}
 
              <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
             <View style={[styles.inputWrapper,styles.marginBottom25]}>
@@ -577,7 +772,7 @@ export default class PropertyDetails3 extends ValidationComponent{
               <View style={styles.inputImgWrapper}>
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
-              <View style={[styles.inputTextWrapperM,{backgroundColor:"#ff0"}]}>
+              <View style={[styles.inputTextWrapper68,{}]}>
                 <TextField
                   label                 = "Super Area"
                   onChangeText          = {superArea => {this.setState({superArea})}}
@@ -599,7 +794,7 @@ export default class PropertyDetails3 extends ValidationComponent{
                   maxLength             = {10}
                 />
               </View>
-              <View style={[styles.inputRightWrapper1,{height:35,backgroundColor:"#f00"}]}>
+              <View style={[styles.inputRightWrapper1,{height:35}]}>
                 <Dropdown
                   containerStyle      = {styles.dropHeight,{paddingLeft:5}}
                   dropdownOffset      = {{top:0, left: 0}}
@@ -614,8 +809,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelTextFull}
                   style               = {styles.ddStyle}
                   data                = {this.state.UnitData}
-                  value               = {this.state.unit1}
-                  onChangeText        = {unit1 => {this.setState({unit1});}}
+                  value               = {this.state.superAreaUnit}
+                  onChangeText        = {superAreaUnit => {this.setState({superAreaUnit});}}
                 />
               </View>
             </View>
@@ -624,7 +819,7 @@ export default class PropertyDetails3 extends ValidationComponent{
               <View style={styles.inputImgWrapper}>
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
-              <View style={styles.inputTextWrapperM}>
+              <View style={styles.inputTextWrapper68}>
                 <TextField
                   label                 = "Built Area"
                   onChangeText          = {builtupArea => {this.setState({builtupArea})}}
@@ -661,8 +856,8 @@ export default class PropertyDetails3 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelTextFull}
                   style               = {styles.ddStyle}
                   data                = {this.state.UnitData}
-                  value               = {this.state.unit2}
-                  onChangeText        = {unit2 => {this.setState({unit2});}}
+                  value               = {this.state.builtupAreaUnit}
+                  onChangeText        = {builtupAreaUnit => {this.setState({builtupAreaUnit});}}
                 />
               </View>
             </View>
@@ -718,20 +913,19 @@ export default class PropertyDetails3 extends ValidationComponent{
 
 
             <Button
-              onPress         = {this.submitDataFun.bind(this)}
-              // onPress         = {()=>this.props.navigation.navigate('OTPScreen')}
+            
+              onPress         = {this.submitFun.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
               iconRight
               icon = {<Icon
-
-              name="chevrons-right" 
-
-              type="feather"
-              size={22}
-              color="white"
+                name="chevrons-right"
+                type="feather"
+                size={22}
+                color="white"
               />}
             />
 

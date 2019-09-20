@@ -12,6 +12,8 @@ import {
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
+import axios          from 'axios';
+import CheckBox from 'react-native-check-box'
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -32,7 +34,7 @@ export default class PropertyDetails5 extends ValidationComponent{
       superArea : '',
       builtArea : '',
       expectedRate : '',
-      totalAsk : '',
+      totalPrice : '',
       totalAskIndex : 0,
       availableFromDate : '',
       description:'2 BHK beautiful, tastefully decorated and well maintained flat with 2 attached bathrooms located in Sylvania, Magarpatta City, Pune. The society is gated, extremely safe and boasts a number of key amenities like Seasons Mall, Amanora Mall, Gold’s Gym, ABS Gym. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.',
@@ -52,7 +54,16 @@ export default class PropertyDetails5 extends ValidationComponent{
                   {label:"Hectare", value:"Hectare"},
                   {label:"Marla", value:"Marla"},
                   {label:"Kanal", value:"Kanal"}],
-      unit1 : 'Sq ft',
+      measurementUnit : 'Sq ft',
+      uid   : "",
+      token : '',
+      propertyId  : "",
+      transactionType : '',
+      propertyType : '',
+      totalAskItem : [{label: 'Car Park',checked: false},
+                     {label: 'One Time Maintenance',checked: false},
+                     {label: 'Stamp Duty & Registration',checked: false},
+                     {label: 'Clubhouse',checked: false}],
     };
   }
 
@@ -61,6 +72,104 @@ export default class PropertyDetails5 extends ValidationComponent{
       totalAskIndex: index,
     });
   }
+
+   componentDidMount(){
+      var token = this.props.navigation.getParam('token','No token');
+      console.log("token",token);
+      var uid = this.props.navigation.getParam('uid','No uid');
+      console.log("uid",uid);
+      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
+      console.log("propertyId",propertyId);
+      var propertyType = this.props.navigation.getParam('propertyType','No propertyType');
+      console.log("propertyType",propertyType);
+      var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
+      console.log("transactionType",transactionType);
+
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+      this.setState({
+        token : token,
+        uid   : uid,
+        propertyId : propertyId,
+        propertyType : propertyType,
+        transactionType : transactionType,
+      });
+
+}
+
+submitFun(){
+
+   // console.log("here btn pressed");
+
+     var totalAskItemData = this.state.totalAskItem;
+        var totalAskItemDataList =[];     
+            totalAskItemData.map((item,index)=>{
+              if(item.checked == true)
+              {
+                totalAskItemDataList.push(item.label);
+              }
+            })
+
+
+     const formValues = {
+      
+        "expectedRate"        : this.state.expectedRate,
+        "totalPrice"          : this.state.totalPrice,
+        // "monthlyRent"         : this.state.monthlyRent,
+        // "depositAmount"       : this.state.depositAmount,
+        "includeCharges"      : totalAskItemDataList,
+        "description"         : this.state.description,
+        "availableFrom"       : this.state.availableFrom,
+        "maintenanceCharges"  : this.state.maintenanceCharges,
+        "maintenancePer"      : this.state.maintenancePer,
+        "measurementUnit"     : this.state.measurementUnit,  
+        "property_id"         : this.state.propertyId,
+        "uid"                 : this.state.uid,
+      };
+      console.log("formValues",formValues);
+      
+         // this.props.navigation.navigate('PropertyDetails6',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+
+       axios
+        .patch('/api/properties/patch/financials',formValues)
+        .then( (res) =>{
+          console.log("Financials res = ",res);
+          if(res.status === 200){
+         this.props.navigation.navigate('PropertyDetails6',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+         
+          }
+        })
+       .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               swal("Your session is expired! Please login again.","", "error");
+                               this.props.history.push("/");
+                          }
+                      })
+
+      // this.props.navigation.navigate('PropertyDetails5',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+}
+
+
+ handleOnItem = (index)=>{
+
+     console.log("index",index);
+    var alldata = this.state.totalAskItem;
+    var status = alldata[index].checked;
+    if(status===true){
+      alldata[index].checked = false;
+    }else{
+      alldata[index].checked = true;
+    }
+    this.setState({
+      totalAskItem: alldata,
+    },()=>{
+      console.log("here new data of totalAskItem",this.state.totalAskItem);
+    });
+    console.log("current data status",status);
+  }
+
 
   render(){
     
@@ -81,105 +190,14 @@ export default class PropertyDetails5 extends ValidationComponent{
 
             <View style={styles.divider}></View>
 
-      {/*      <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper2}>
-                <TextField
-                  label                 = "Super Area"
-                  onChangeText          = {superArea => {this.setState({superArea})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {15}
-                  baseColor             = {'#666'}
-                  textColor             = {'#333'}
-                  value                 = {this.state.superArea}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {styles.textStyle}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "numeric"
-                  maxLength             = {10}
-                />
-              </View>
-              <View style={styles.inputRightWrapper}>
-                <Text style={styles.inputText}>Sq ft</Text>
-              </View>
-            </View>
+            {this.state.transactionType === "Sell" ?
 
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper2}>
-                <TextField
-                  label                 = "Built Area"
-                  onChangeText          = {builtArea => {this.setState({builtArea})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {15}
-                  baseColor             = {'#666'}
-                  textColor             = {'#333'}
-                  value                 = {this.state.builtArea}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {styles.textStyle}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "numeric"
-                  maxLength             = {10}
-                />
-              </View>
-              <View style={styles.inputRightWrapper}>
-                <Text style={styles.inputText}>Sq ft</Text>
-              </View>
-            </View>*/}
-
-           {/* <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper2}>
-                <TextField
-                  label                 = "Expected Rate"
-                  onChangeText          = {expectedRate => {this.setState({expectedRate})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {15}
-                  baseColor             = {'#666'}
-                  textColor             = {'#333'}
-                  value                 = {this.state.expectedRate}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {styles.textStyle}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "numeric"
-                  maxLength             = {10}
-                />
-              </View>
-              <View style={styles.inputRightWrapper}>
-                <Text style={styles.inputText}>Sq ft</Text>
-              </View>
-            </View>*/}
-
-
+            <View>
              <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
-              <View style={styles.inputTextWrapperM}>
+              <View style={styles.inputTextWrapper68}>
                 <TextField
                   label                 = "Expected Rate"
                   onChangeText          = {expectedRate => {this.setState({expectedRate})}}
@@ -216,8 +234,8 @@ export default class PropertyDetails5 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelTextFull}
                   style               = {styles.ddStyle}
                   data                = {this.state.UnitData}
-                  value               = {this.state.unit1}
-                  onChangeText        = {unit1 => {this.setState({unit1});}}
+                  value               = {this.state.measurementUnit}
+                  onChangeText        = {measurementUnit => {this.setState({measurementUnit});}}
                 />
               </View>
             </View>
@@ -230,7 +248,7 @@ export default class PropertyDetails5 extends ValidationComponent{
               <View style={styles.inputTextWrapper}>
                 <TextField
                   label                 = "Total Ask"
-                  onChangeText          = {totalAsk => {this.setState({totalAsk})}}
+                  onChangeText          = {totalPrice => {this.setState({totalPrice})}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}
                   inputContainerPadding = {0}
@@ -239,7 +257,39 @@ export default class PropertyDetails5 extends ValidationComponent{
                   titleFontSize         = {15}
                   baseColor             = {'#666'}
                   textColor             = {'#333'}
-                  value                 = {this.state.totalAsk}
+                  value                 = {this.state.totalPrice}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "numeric"
+                  maxLength             = {10}
+                />
+              </View>
+            </View>
+            </View>
+
+            :
+
+            <View>
+              <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Monthly Rent"
+                  onChangeText          = {monthlyRent => {this.setState({monthlyRent})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.monthlyRent}
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
@@ -251,41 +301,15 @@ export default class PropertyDetails5 extends ValidationComponent{
               </View>
             </View>
 
-            <Text style={[styles.heading2,styles.marginBottom15]}>My Total ask includes</Text>
-            <View style={[styles.marginBottom25]}>
-              <RadioGroup
-                size={20}
-                color={colors.grey}
-                thickness={2}
-                selectedIndex = {this.state.totalAskIndex}
-                onSelect = {(index, value) => this.onSelect(index, value)}
-              >
-                <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'carPark'} >
-                  <Text style={styles.inputText}>Car Park</Text>
-                </RadioButton>
-         
-                <RadioButton style={{paddingHorizontal:0}} value={'oneTimeMaintenance'}>
-                  <Text style={styles.inputText}>One Time Maintenance</Text>
-                </RadioButton>
-         
-                <RadioButton style={{paddingHorizontal:0}} value={'stampDuty&Registration'}>
-                  <Text style={styles.inputText}>Stamp Duty & Registration</Text>
-                </RadioButton>
 
-                <RadioButton style={{paddingHorizontal:0,paddingBottom:0}} value={'clubhouse'}>
-                  <Text style={styles.inputText}>Clubhouse</Text>
-                </RadioButton>
-              </RadioGroup>
-            </View>
-
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
-                <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
               <View style={styles.inputTextWrapper}>
                 <TextField
-                  label                 = "Maintenance Charge"
-                  onChangeText          = {maintenanceCharge => {this.setState({maintenanceCharge})}}
+                  label                 = "Deposit Amount"
+                  onChangeText          = {depositAmount => {this.setState({depositAmount})}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}
                   inputContainerPadding = {0}
@@ -294,7 +318,79 @@ export default class PropertyDetails5 extends ValidationComponent{
                   titleFontSize         = {15}
                   baseColor             = {'#666'}
                   textColor             = {'#333'}
-                  value                 = {this.state.maintenanceCharge}
+                  value                 = {this.state.depositAmount}
+                  containerStyle        = {styles.textContainer}
+                  inputContainerStyle   = {styles.textInputContainer}
+                  titleTextStyle        = {styles.textTitle}
+                  style                 = {styles.textStyle}
+                  labelTextStyle        = {styles.textLabel}
+                  keyboardType          = "numeric"
+                  maxLength             = {10}
+                />
+              </View>
+            </View>
+
+          </View>
+
+        }
+
+
+          {this.state.propertyType==="Commercial" && this.state.transactionType==="Rent" ?
+
+            
+            null
+            :
+            <View>
+            <Text style={[styles.heading2,styles.marginBottom15]}>My Property includes</Text>
+            <View style={[styles.marginBottom25]}>
+             
+               {this.state.totalAskItem && this.state.totalAskItem.length >0 ?
+                              this.state.totalAskItem.map((data,index)=>(
+
+                              <React.Fragment key={index}>
+                                <CheckBox
+                                  key={index}
+                                  style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}
+                                  style={{marginBottom:10}}
+                                  onClick={() => this.handleOnItem(index)}
+                                  isChecked={data.checked}
+                                  rightTextStyle={{marginLeft:0}}
+                                  checkBoxColor= {colors.grey}
+                                  rightTextView = {
+                                    <View style={{flexDirection:'row',flex:1}}>
+                                      <Text style={styles.inputText}>{data.label}</Text>
+                                    </View>
+                                  }
+                                />
+                             
+                              </React.Fragment> 
+                            ))
+
+                              :
+                              null
+                            }
+            </View>
+            </View>
+            
+          }
+
+            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={styles.inputImgWrapper}>
+                <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+              </View>
+              <View style={styles.inputTextWrapper}>
+                <TextField
+                  label                 = "Maintenance Charge"
+                  onChangeText          = {maintenanceCharges => {this.setState({maintenanceCharges})}}
+                  lineWidth             = {1}
+                  tintColor             = {colors.button}
+                  inputContainerPadding = {0}
+                  labelHeight           = {15}
+                  labelFontSize         = {sizes.label}
+                  titleFontSize         = {15}
+                  baseColor             = {'#666'}
+                  textColor             = {'#333'}
+                  value                 = {this.state.maintenanceCharges}
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
@@ -326,8 +422,8 @@ export default class PropertyDetails5 extends ValidationComponent{
                   labelTextStyle      = {styles.ddLabelText}
                   style               = {styles.ddStyle}
                   data                = {this.state.dropdownData}
-                  value               = {this.state.maintenanceChargePer}
-                  onChangeText        = {maintenanceChargePer => {this.setState({maintenanceChargePer});}}
+                  value               = {this.state.maintenancePer}
+                  onChangeText        = {maintenancePer => {this.setState({maintenancePer});}}
                 />
               </View>
             </View> 
@@ -344,7 +440,7 @@ export default class PropertyDetails5 extends ValidationComponent{
                     width: "100%",
                     marginRight:5,
                   }}
-                  date={this.state.availableFromDate}
+                  date={this.state.availableFrom}
                   mode="date"
                   placeholder="dd/mm/yyyy"
                   format="DD/MM/YYYY"
@@ -368,7 +464,7 @@ export default class PropertyDetails5 extends ValidationComponent{
                       // fontFamily:'Montserrat-Regular'
                     }
                   }}
-                  onDateChange={availableFromDate => {this.setState({ availableFromDate});}}
+                  onDateChange={availableFrom => {this.setState({ availableFrom});}}
                   showIcon = {false}
                   minDate = {new Date()}
                 />
@@ -408,7 +504,8 @@ export default class PropertyDetails5 extends ValidationComponent{
             </View>
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
+              onPress         = {this.submitFun.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}
