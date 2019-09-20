@@ -22,6 +22,8 @@ class PopularPlaces extends Component{
 
   componentDidMount() {
 
+ /*   $("#place1").addClass("mT30");*/
+
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
              axios
@@ -85,7 +87,7 @@ class PopularPlaces extends Component{
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                  <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 hidden-xs hidden-sm">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai  pull-right Bg">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
                         <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
@@ -93,6 +95,16 @@ class PopularPlaces extends Component{
                       </div>
                     </div>
                  </div>
+               {/*responsive img 2*/}
+                  <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad hidden-lg hidden-md " id="place1">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai  pull-right Bg">
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
+                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
+                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} Properties</h4>
+                      </div>
+                    </div>
+                 </div> 
+                {/*end*/}
                 <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad mT30">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  imgContainer aurangabad Bg">
                    <div className="">
@@ -103,7 +115,7 @@ class PopularPlaces extends Component{
                     </div> 
                   </div>
                 </div>
-                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mT30">
+                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mT30 hidden-xs hidden-sm">
                     <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik  pull-right Sm">
                         <div className="">
@@ -115,6 +127,20 @@ class PopularPlaces extends Component{
                       </div>
                     </div>           
                   </div>
+                {/*responsive img 4*/}
+                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mT30 noPad hidden-lg hidden-md">
+                    <div className="">
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik  pull-right Sm">
+                        <div className="">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
+                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3]._id : null}</h4>
+                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} Properties</h4>
+                          </div>
+                        </div> 
+                      </div>
+                    </div>           
+                  </div>
+                {/*end*/}
               </div>
       </div>
       :

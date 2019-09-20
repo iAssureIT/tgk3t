@@ -127,23 +127,23 @@ import './CongratsPage.css';
 						var per = 0;
 						if(data <=10 && data >= 0)
 						{
-							per = 18;
+							per = 30;
 						}
-						if(data <=20 && data >= 10)
+						if(data <=20 && data > 10)
 						{
-							per = 18+18;
+							per = 60;
 						}
-						if(data <=30 && data >= 20)
+						if(data <=30 && data > 20)
 						{
-							per = 18+18+18;
+							per = 90;
 						}
-						if(data <=40 && data >=30)
+						if(data <=40 && data >30)
 						{
-							per = 18+18+18+18;
+							per = 120;
 						}
-						if(data <=50 && data >=40)
+						if(data <=50 && data >40)
 						{
-							per = 18+18+18+18+18;
+							per = 150;
 						}
 
 						console.log("data",data);

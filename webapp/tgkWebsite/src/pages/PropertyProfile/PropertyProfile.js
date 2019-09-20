@@ -20,8 +20,8 @@ import CongratsPage           from '../../blocks/PostProperty/CongratsPage/Congr
 import ImageUpload            from '../../blocks/PostProperty/ImageUpload/ImageUpload.js';
 import Loadable               from 'react-loadable';
 import Header                 from "../../blocks/common/Header/Header.js";
-import swal                     from 'sweetalert';
-
+import swal                   from 'sweetalert';
+import GoogleMapReact         from 'google-map-react';
 import "./PropertyProfile.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
@@ -39,9 +39,16 @@ const OwlCarousel = Loadable({
 
 axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+const AnyReactComponent = ({ text }) => <div><img src="../images/Location.png" style={{width:'47px',height:'47px'}} className="img-responsive " alt="loading"/></div>
 
 class PropertyProfile extends Component{
+    static defaultProps = {
+      center: {
+        lat: 18.5204,
+        lng: 73.8567
+      },
+      zoom: 12
+    };
   constructor(props){
     super(props);
      var profileId = this.props.match.params.id;
@@ -68,6 +75,7 @@ class PropertyProfile extends Component{
       "ownerId"           : "",
       "countno"           : 2,
       "callfun"           : 0,
+      "location"          :{latitude: 18.5184,longitude: 73.9343}
     }
   }
 
@@ -85,7 +93,9 @@ class PropertyProfile extends Component{
   }
 
   removeBackdrop(){
-    $(".modal-backdrop").remove();    
+    $(".modal-backdrop").remove();
+    window.location.reload();
+
   }
 
   componentWillReceiveProps(nextProps){
@@ -486,7 +496,7 @@ class PropertyProfile extends Component{
                                           }
                                           
                                           
-                                          <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : "-"}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                          <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                           {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
                                         </ul>
                                     </div>
@@ -514,8 +524,21 @@ class PropertyProfile extends Component{
                     { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.subArea+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                       <div className="row">
-                        <div className="mapouter"><div className="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Magarpatta&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
-                      </div>
+                      <div style={{ height: '500px', width: '100%',padding:'20px' }}>
+                          <GoogleMapReact
+                            bootstrapURLKeys={{ key:"" }}
+                            defaultCenter={this.props.center}
+                            defaultZoom={this.props.zoom}
+                          >
+                            <AnyReactComponent
+                              lat={this.state.location.latitude}
+                              lng={this.state.location.longitude}
+                            />
+                          </GoogleMapReact>
+                        </div>
+
+{/*                        <div className="mapouter"><div className="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Magarpatta&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
+*/}                      </div>
                     </div>              
                     </div>
                   </div>

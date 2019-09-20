@@ -45,7 +45,10 @@ class BannerwithModal extends Component {
 	}
 
 	removeBackdrop(){
- 		$(".modal-backdrop").remove();		
+ 		$(".modal-backdrop").remove();
+   		window.location.reload();
+
+
 	}
 
 	componentDidMount() {

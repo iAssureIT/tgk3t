@@ -470,10 +470,10 @@ import './PropertyDetails.css';
 					"floor"         	: this.state.floor,
 					"totalFloor"    	: this.state.totalfloor,
 					"superAreaUnit"    	: this.state.superAreaUnit,
-					"builtupAreaUnit"    	: this.state.builtupAreaUnit,
+					"builtupAreaUnit"   : this.state.builtupAreaUnit,
 					"workStation"    	: this.state.workStation,
-					"furnishPantry"	    	: this.state.furnishPantry,	
-                	"furnishedOptions"    : furnishedOptionsDataList,
+					"furnishPantry"	    : this.state.furnishPantry,	
+                	"furnishedOptions"  : furnishedOptionsDataList,
 
 					// "property_id" 		: localStorage.getItem("propertyId"),
 					// "uid" 				: localStorage.getItem("uid"),

@@ -4,6 +4,8 @@ import $ 					  from "jquery";
 import swal                   from 'sweetalert';
 import { connect } 			  from 'react-redux';
 import { withRouter}  		  from 'react-router-dom';
+import Geocode                from "react-geocode";
+
 
 import './BasicInfo.css';
 
@@ -19,6 +21,11 @@ const formValid = formerrors=>{
 
 const companypincodeRegex = RegExp(/^[1-9][0-9]{5}$/);
 
+Geocode.setApiKey("");
+Geocode.enableDebug();
+
+var lattitude = "";
+var longitude = "";
 
 
 class BasicInfo extends Component{
@@ -55,7 +62,10 @@ class BasicInfo extends Component{
       			},
 
       			originalValuesLocation : "",
-      			type 					:true
+      			type 					:true,
+      			fullAddress             : "",
+      			country             : "India",
+
 
 			};
 			this.handleChange = this.handleChange.bind(this);
@@ -97,6 +107,7 @@ class BasicInfo extends Component{
 									address 	    : res.data.propertyLocation.address,
 									landmark		: res.data.propertyLocation.landmark,
 									pincode 	 	: res.data.propertyLocation.pincode,
+									fullAddress 	: res.data.propertyLocation.fullAddress,
 
 								},()=>{
 										// location
@@ -104,6 +115,7 @@ class BasicInfo extends Component{
 										console.log("areaName",this.state.areaName);
 										console.log("subAreaName",this.state.subAreaName);
 										console.log("type2",this.state.type);
+										console.log("fullAddress",this.state.fullAddress);
 
 										        //==================================================================
 										        // 			Get Cities
@@ -285,7 +297,19 @@ class BasicInfo extends Component{
 	  }
 
 		insertProperty(event){
-			event.preventDefault();			
+			event.preventDefault();	
+
+			var lattitude = "";
+    		var longitude = "";	
+
+    		var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
+      Geocode.fromAddress(fullAddress).then(
+        response => {
+          // console.log("google map API keay result--->",response.data);             
+          const { lat, lng } = response.results[0].geometry.location;
+          lattitude = lat;
+          longitude = lng;	
+
 			const formValues = {
 				"propertyHolder" 	: this.state.propertyHolder,
         		"transactionType"	: this.state.transactionType,
@@ -311,6 +335,9 @@ class BasicInfo extends Component{
 				"pincode" 			: this.state.pincode,
 				"index"				: this.state.index,
 				"type" 				: this.state.transactionType==="Sell" ? true : false,
+				"fullAddress" 		: this.state.fullAddress,
+            	"location"          : {latitude: lattitude,longitude:longitude},
+
 
 				// "uid" 				: localStorage.getItem("uid"),		
 
@@ -328,7 +355,7 @@ class BasicInfo extends Component{
 						&& this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType && 
 						this.state.pincode === ovLoc.pincode && this.state.stateCode === ovLoc.state && this.state.cityName === ovLoc.city && 
 						this.state.areaName === ovLoc.area && this.state.subAreaName === ovLoc.subArea && this.state.societyName === ovLoc.society &&
-						this.state.address === ovLoc.address &&  this.state.landmark === ovLoc.landmark
+						this.state.address === ovLoc.address &&  this.state.landmark === ovLoc.landmark &&  this.state.fullAddress === ovLoc.fullAddress
 						)
 					{
 						console.log("same data");
@@ -408,6 +435,12 @@ class BasicInfo extends Component{
 				swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
+		},
+			error => {
+            swal("Oops...!", "google map key has problem. Please contact to admin", "warning");
+            console.error("map key error = ",error);
+          }
+        );  
 			    
 		}
 		
@@ -797,6 +830,7 @@ class BasicInfo extends Component{
 	render() {
 		console.log("transactionType=>",this.state.transactionType);
 		console.log("type=>",this.state.type);
+		console.log("fullAddress",this.state.fullAddress);
 		console.log("CongratsPage",this.props.congratsPage)
 		var cityName = this.state.cityName;
 	    var areaName = this.state.areaName;

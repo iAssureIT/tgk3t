@@ -9,6 +9,7 @@ import InfoSale  			    from '../../blocks/HomePageDescription/InfoSale/InfoSale
 import InfoRent  			    from '../../blocks/HomePageDescription/InfoRent/InfoRent.js';
 import InfoCommercial  			from '../../blocks/HomePageDescription/InfoCommercial/InfoCommercial.js';
 import HomePageProperties  		from '../../blocks/HomePageProperties/HomePageProperties.js';
+import $                        from "jquery";
 
 // import 'bootstrap/js/tab.js';
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -28,6 +29,10 @@ import './HomePage.css';
 		this.setState({
 			inputData : inputData,
 		})
+	}
+	componentDidMount(){
+		
+    $("#place1").addClass("mT30");
 	}
 	render() {
 		return (

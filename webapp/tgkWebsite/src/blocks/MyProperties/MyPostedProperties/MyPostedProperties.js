@@ -100,6 +100,8 @@ import './MyPostedProperties.css';
 
 	removeBackdrop(){
 		$(".modal-backdrop").remove();
+   		window.location.reload();
+
 		// $("#BasicInfo").remove();  
 	}
 

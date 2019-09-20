@@ -32,6 +32,9 @@ import './MyInterestedProperties.css';
 	}
 	componentDidMount(){
 
+		$(".headerMenu").addClass("headerColor");
+	
+
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
     	console.log("this.state.uid",this.state.uid)
@@ -91,7 +94,9 @@ import './MyInterestedProperties.css';
 	}
 
 	removeBackdrop(){
-		$(".modal-backdrop").remove();    
+		$(".modal-backdrop").remove();
+   		window.location.reload();
+
 	}
 
 	goProfile(event){
