@@ -221,20 +221,20 @@ class MainFooter extends Component{
                 </div>
                 <div className="col-lg-6 col-md-10 col-sm-12 col-xs-12 footerContactUs mt20 ml20" >
                       <div className="col-lg-2 col-md-10 col-sm-4 col-xs-4  col-xs-offset-2 footerImgContainer" >
-                        <img alt=""  src="/images/Logo.png" />
+                        <img alt=""  src="/images/new/logo.png" />
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails mt40">
-                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 1 </span><span className="col-lg-9 noPad">: +91 9952 040 040</span>
+                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 1 </span><span className="col-lg-9 noPad">: +91 99221 34567</span>
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
-                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 7776 040 040</span>
+                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 99221 34568</span>
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
-                         <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad">: customercare@thegoldenkey.co.jp</span><br/>
-                         <span className="col-lg-6 col-lg-offset-3 noPad">&nbsp; /sales@thegoldenkey.co.jp</span>
+                         <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad"> &nbsp; &nbsp;&nbsp;: info@lyvo.com</span>
+                         
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails1 mt10">
-                        <span className="col-lg-3 noPad"><i className="fa fa-globe globe col-lg-1" aria-hidden="true"></i>&nbsp;  Website</span><span className="col-lg-9 noPad">  : www.tgk.com</span>
+                        <span className="col-lg-3 noPad"><i className="fa fa-globe globe col-lg-1" aria-hidden="true"></i>&nbsp;  Website</span><span className="col-lg-9 noPad">  : www.lyvo.com</span>
                       </div>
                         <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 footerContactDetails" >
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">

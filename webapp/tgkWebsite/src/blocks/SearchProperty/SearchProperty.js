@@ -103,17 +103,17 @@ class SearchProperty extends Component {
 		var searchData = JSON.stringify(formValues);
 		localStorage.setItem("searchData",searchData);
 
-		$(".dropdown").hover(            
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
-            $(this).toggleClass('open');
-            $('b', this).toggleClass("caret caret-up");                
-        },
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
-            $(this).toggleClass('open');
-            $('b', this).toggleClass("caret caret-up");                
-        });
+		// $(".dropdown").hover(            
+  //       function() {
+  //           $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+  //           $(this).toggleClass('open');
+  //           $('b', this).toggleClass("caret caret-up");                
+  //       },
+  //       function() {
+  //           $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+  //           $(this).toggleClass('open');
+  //           $('b', this).toggleClass("caret caret-up");                
+  //       });
 	}
 
 
@@ -311,9 +311,9 @@ class SearchProperty extends Component {
 							  	<div className="dropdown" id="dropdown">
 								    <button className="dropdown-toggle btn divWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
-								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt39">
-							      		{this.props.propertyType === "Commercial" ?
-										<div className="col-lg-12 ">
+								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt39 noPad">
+							      		{this.props.propertyType === "Commercial" ? 
+										<div className="col-lg-12 noPad ">
 										  	<div className="col-lg-12">
 												<h5>Commercial</h5>
 												{
@@ -330,13 +330,13 @@ class SearchProperty extends Component {
 											</div>
 										</div>
 										:
-										<div className="col-lg-12">
+										<div className="col-lg-12 noPad">
 										  	<div className="col-lg-12">
 												<h5>Residential</h5>
 												{
 													this.state.propertyList1.map((data,index)=>{
 														return(
-															<span key={index} className="col-lg-6 col-md-6 col-xs-6 col-sm-6 noPad inputStyledbtn">
+															<span key={index} className="col-lg-6 col-md-6 col-xs-12 col-sm-12 noPad inputStyledbtn">
 																<input type="checkBox" value={data.name} id={data.name} onChange={this.propertySubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
 																<span className="checkBoxBlock"></span>
 															</span>

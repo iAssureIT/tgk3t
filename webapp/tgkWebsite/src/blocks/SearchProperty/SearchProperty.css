@@ -13,9 +13,9 @@
 
 .searchProperty{
 	background-color: #fff;
-	margin-top: 21px;
+	/*margin-top: 21px;*/
     height: 40px;
-    border-radius:5px;
+    /*border-radius:5px;*/
 }
 
 .searchProperty select {
@@ -42,7 +42,7 @@
     background-size: 100%,100%;
     background-repeat: no-repeat;
     background-color: #000;
-    border-radius:0px 5px 5px 0px;
+    /*border-radius:0px 5px 5px 0px;*/
 }
 
 .budget{

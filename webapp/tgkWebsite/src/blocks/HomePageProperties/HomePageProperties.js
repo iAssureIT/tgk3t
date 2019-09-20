@@ -279,7 +279,7 @@ class HomePageProperties extends Component {
 
 		return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">      
-        <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad">
+        <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad mt40">
             
       				  <h3 className="textC"> <b>
                 {

@@ -14,7 +14,12 @@
     animation-fill-mode: forwards;    
 */
 }
-
+.needleXs{
+    right: 135px !important;
+    position: absolute;
+    float: left;
+    bottom: 33px;
+}
 /* Standard syntax */
 
 

@@ -26,8 +26,11 @@ ul ul a {
     margin-top: 24px;
 }
 .hImg{
-	height: 100px;
+	/*height: 100px;*/
 	text-align: center;
+    width: 80px;
+    height: 61px;
+    margin-top: 19px;
 }
 
 .headerMenu{

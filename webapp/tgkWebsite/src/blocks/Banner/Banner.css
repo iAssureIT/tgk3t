@@ -1,6 +1,6 @@
 .BoxSize{
 	height: 742px;
-	background-image: url("/images/TGK_Post.png");
+	background-image: url("/images/new/1.png");
 }
 
 .hText{
@@ -17,9 +17,10 @@
 
 }
 .hText1{
-	/*margin-top: 35px;*/
+	margin-top: 35px;
     text-align: center;
     color: #fff;
+    margin-bottom: 30px;
 }
 
 .ml-10{
@@ -93,10 +94,10 @@
     cursor:pointer;
 }
 
-.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+/*.nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
     color: #fff !important;
     background-color: #f5ad3e !important;
-}
+}*/
 
 
 
@@ -156,11 +157,21 @@
   transform: translateX(-9%) translateY(-25%) rotate(45deg);
 }
 
-.banner .nav-pills>li+li{
-  margin-left: 0% !important
+.banner .nav>li>a {
+color: #fff !important;
+background-color: #000 !important;
 }
 .mb-64{
   margin-bottom: 64px;
+}
+.banner .nav-tabs>li>a {
+  border: 0px !important;
+  border-radius:  0px !important ;
+  margin-right: 0px !important;
+}
+.banner .nav-tabs>li.active>a{
+  background-color: #fff !important;
+  color: #000 !important;
 }
 
 

@@ -29,9 +29,9 @@ class PopularPlaces extends Component{
              axios
               .get('/api/properties/get/locationWiseListCount/')
               .then( (res) =>{
-                console.log("here polular result",res);
+                // console.log("here polular result",res);
                 if(res.status === 200){
-                  console.log("data=>",res.data);
+                  // console.log("data=>",res.data);
                   this.setState({
                       subAreaList:res.data,
                   })
@@ -78,7 +78,10 @@ class PopularPlaces extends Component{
       this.state.subAreaList.length > 0 ?
       <div className="container-fluid noPad">
           <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" >
-              <div className="headText col-lg-12 col-md-12 col-sm-12 col-xs-12 ">Properties In Most Popular Places</div>
+              <div className="headText col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm ">Properties In Most Popular Places</div>
+              {/*responsive*/}
+              <div className="headText1 col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-lg hidden-md ">Properties In Most Popular Places</div>
+               {/*end*/}
                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 imgContainer pune Sm">
                     <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[0]?this.state.subAreaList[0]._id:null} onClick={this.getSubAreaName.bind(this)}>                     

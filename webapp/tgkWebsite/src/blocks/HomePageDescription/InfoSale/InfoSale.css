@@ -24,6 +24,34 @@
 /*.mt40{
     margin-top: 60px;
 }*/
-.mt56{
-    margin-top: 56px;
+.mt9{
+    margin-top: 9px;
 }
+.arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  
+  border-left: 60px solid green;
+}
+.sale1{
+    z-index: 1;
+}
+.sale2{
+    z-index: 2
+}
+.saleImg{
+    width: 359px;
+    position: absolute;
+    top: 41px;
+    left: -20px;
+}
+
+.sale{
+    margin-top: 70px;
+    font-size: 11px;
+    margin-left: 19%;
+    text-align: center;
+}
+

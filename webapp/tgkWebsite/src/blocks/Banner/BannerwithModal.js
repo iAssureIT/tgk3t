@@ -65,7 +65,7 @@ class BannerwithModal extends Component {
             uid : localStorage.getItem("uid")
           }
 
-         console.log("formValues = ", formValues);
+         // console.log("formValues = ", formValues);
          axios
             .post('/api/properties/post/list',formValues)
             .then(resultData =>{
@@ -197,9 +197,9 @@ class BannerwithModal extends Component {
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
 				</div>
-				<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 mt-10">
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-					  <ul className="nav nav-pills textC" role="tablist">
+				<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3">
+					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad banner">
+					  {/*<ul className="nav nav-pills textC" role="tablist">
 					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-3 active">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
 					    </li>
@@ -209,7 +209,16 @@ class BannerwithModal extends Component {
 					    <li className="nav-item col-lg-4 col-md-4 col-sm-5 col-xs-5">
 					      <a className="nav-link active btn-bg" property-type="Commercial" transaction-type="Sell"  data-toggle="pill" href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a>
 					    </li>	    
-					  </ul>
+					  </ul>*/}
+
+					  <ul class="nav nav-tabs">
+  						<li class="active"><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a></li>
+						<li><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a></li>
+						<li><a data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a></li>
+						<li><a data-toggle="tab" href="#menu2">Post & Earn</a></li>
+					</ul>
+
+
 				 	</div>
 				</div>
 				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 mb-64">
@@ -226,8 +235,9 @@ class BannerwithModal extends Component {
 					</div>
 					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 prText">
 						<span className="postDetails ">For our Buyers / Tenants</span><br/>
-						<p className="postDetails1"><b>Best properties, amazing services</b>
-						<br/><b>And up-to 50% discount on brokerage</b>
+						<p className="postDetails1"><b>Upto 50% Discount</b>
+						<br/><b>On Brokerage <br/>for Renting/Buying with us!</b>
+
 						</p>
 						
 					</div>
