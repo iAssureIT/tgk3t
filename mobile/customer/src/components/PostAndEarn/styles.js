@@ -184,7 +184,8 @@ export default StyleSheet.create({
   
   textInputContainer:{
     backgroundColor:'transparent',
-    borderBottomColor: "transparent"
+    borderBottomColor: "transparent",
+    paddingHorizontal:10
   },
   textTitle:{
     fontFamily:"Roboto-Regular",

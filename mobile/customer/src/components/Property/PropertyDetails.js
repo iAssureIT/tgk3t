@@ -24,7 +24,7 @@ import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
 import CheckBox from 'react-native-check-box'
 import Video from 'react-native-video';
-import MapView,{PROVIDER_GOOGLE} from 'react-native-maps';
+// import MapView,{PROVIDER_GOOGLE} from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 
 const window = Dimensions.get('window');
