@@ -59,6 +59,14 @@ export default class SideMenu extends React.Component {
     this.props.navigation.navigate('Home');
 	}
 
+
+	logout(){
+		// onPress={()=>this.navigateScreen('Logout')}
+	console.log("here i get call");
+	AsyncStorage.removeItem("token");
+    this.props.navigation.navigate('Home');
+	}
+
   render(){
     const { navigation } = this.props;
   	// console.log("uid=>",this.state.uid);
