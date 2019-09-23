@@ -161,4 +161,9 @@ export default StyleSheet.create({
     color:colors.black,
     textAlign: 'center'
   },
+  textCenter:{
+    textAlign: 'center',
+    marginBottom :15,
+    fontSize :25 
+  }
 });

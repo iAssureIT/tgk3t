@@ -317,17 +317,29 @@ export default class PropertyDetails extends ValidationComponent{
             </View>
 
             <View style={[{width:'100%'},styles.marginBottom15]}>
-              <View style={{flexDirection:'row',alignItems:'center'}}>
-                <Icon
-                  name="rupee" 
-                  type="font-awesome"
-                  size={18}
-                  color={colors.black}
-                  containerStyle={{marginRight:5}}
-                />
-                <Text style={styles.textLarge}>{this.convertNumberToRupees(propertyProfile.financial.totalPrice)}</Text>
-              </View>
-
+             {propertyProfile.transactionType === "Sell" ?
+                  <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Icon
+                      name="rupee" 
+                      type="font-awesome"
+                      size={18}
+                      color={colors.black}
+                      containerStyle={{marginRight:5}}
+                    />
+                    <Text style={styles.textLarge}>{this.convertNumberToRupees(propertyProfile.financial.totalPrice)}</Text>
+                  </View>
+                :
+                  <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Icon
+                      name="rupee" 
+                      type="font-awesome"
+                      size={18}
+                      color={colors.black}
+                      containerStyle={{marginRight:5}}
+                    />
+                    <Text style={styles.textLarge}>{this.convertNumberToRupees(propertyProfile.financial.monthlyRent)}</Text>
+                  </View>
+              }
               <View style={{flexDirection:'row'}}>
                 <Icon
                   name="marker" 
@@ -338,6 +350,7 @@ export default class PropertyDetails extends ValidationComponent{
                 />
                 <Text style={styles.textSmall}>{propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
               </View>
+             
             </View>
 
             <View style={[{width:'100%'},styles.marginBottom15]}>
@@ -360,22 +373,7 @@ export default class PropertyDetails extends ValidationComponent{
                 />
                 <View>
                   <Text style={styles.textSmallLight}>Super Area</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.superArea} Sqft</Text>
-                  {/*data.price
-                  ?
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                      <Icon
-                        name="rupee" 
-                        type="font-awesome"
-                        size={14}
-                        color={colors.grey}
-                        containerStyle={{marginRight:2}}
-                      />
-                      <Text style={styles.textSmall}>{data.price}</Text>
-                    </View>
-                  :
-                    null*/
-                  }
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.superArea} {propertyProfile.propertyDetails.superAreaUnit}</Text>
                 </View>
               </View>
 
@@ -389,9 +387,20 @@ export default class PropertyDetails extends ValidationComponent{
                 />
                 <View>
                   <Text style={styles.textSmallLight}>Builtup Area</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.builtupArea} Sqft</Text>
-                  {/*data.price
-                  ?
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.builtupArea} {propertyProfile.propertyDetails.builtupAreaUnit}</Text>
+                </View>
+              </View>
+              {propertyProfile.transactionType === "Sell" ?
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Expected Rate</Text>
                     <View style={{flexDirection:'row',alignItems:'center'}}>
                       <Icon
                         name="rupee" 
@@ -400,15 +409,37 @@ export default class PropertyDetails extends ValidationComponent{
                         color={colors.grey}
                         containerStyle={{marginRight:2}}
                       />
-                      <Text style={styles.textSmall}>{data.price}</Text>
-                    </View>
-                  :
-                    null*/
-                  }
+                     <Text style={styles.textSmall}>{propertyProfile.financial.expectedRate} / {propertyProfile.financial.measurementUnit}</Text>
+                    </View>  
+                  </View>
                 </View>
-              </View>
+                :
 
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Deposit</Text>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                      <Icon
+                        name="rupee" 
+                        type="font-awesome"
+                        size={14}
+                        color={colors.grey}
+                        containerStyle={{marginRight:2}}
+                      />
+                     <Text style={styles.textSmall}>{propertyProfile.financial.depositAmount}</Text>
+                    </View>  
+                  </View>
+                </View>
+              }  
+
+              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
                 <Icon
                   name="crosshairs" 
                   type="font-awesome"
@@ -422,7 +453,7 @@ export default class PropertyDetails extends ValidationComponent{
                 </View>
               </View>
 
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
                 <Icon
                   name="crosshairs" 
                   type="font-awesome"
@@ -436,49 +467,96 @@ export default class PropertyDetails extends ValidationComponent{
                 </View>
               </View>
 
+              {propertyProfile.propertyType === "Residential" ?
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Bedrooms</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bedrooms ? propertyProfile.propertyDetails.bedrooms : "-"}</Text>
+                  </View>
+                </View>
+                :
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Washrooms</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.washrooms ? propertyProfile.propertyDetails.washrooms : "-"}</Text>
+                  </View>
+                </View>
+              }
+
+              {propertyProfile.propertyType === "Residential" ?
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Balconies</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.balconies}</Text>
+                  </View>
+                </View>
+                :
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Pantry</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.pantry}</Text>
+                  </View>
+                </View>
+              } 
+
+              {propertyProfile.propertyType === "Residential" ?
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Bathrooms</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bathrooms ? propertyProfile.propertyDetails.bathrooms : "-"}</Text>
+                  </View>
+                </View>
+                :
+                 <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Personal</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.personal ? propertyProfile.propertyDetails.personal : "-"}</Text>
+                  </View>
+                </View>
+              }
               <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                <Icon
-                  name="crosshairs" 
-                  type="font-awesome"
-                  size={20}
-                  color={colors.button}
-                  containerStyle={{marginRight:6}}
-                />
-                <View>
-                  <Text style={styles.textSmallLight}>Bedrooms</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bedrooms}</Text>
-                </View>
-              </View>
-
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
-                <Icon
-                  name="crosshairs" 
-                  type="font-awesome"
-                  size={20}
-                  color={colors.button}
-                  containerStyle={{marginRight:6}}
-                />
-                <View>
-                  <Text style={styles.textSmallLight}>Balconies</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.balconies}</Text>
-                </View>
-              </View> 
-
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                <Icon
-                  name="crosshairs" 
-                  type="font-awesome"
-                  size={20}
-                  color={colors.button}
-                  containerStyle={{marginRight:6}}
-                />
-                <View>
-                  <Text style={styles.textSmallLight}>Bathrooms</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bathrooms}</Text>
-                </View>
-              </View>
-
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
                 <Icon
                   name="crosshairs" 
                   type="font-awesome"
@@ -491,7 +569,7 @@ export default class PropertyDetails extends ValidationComponent{
                   <Text style={styles.textSmall}>{propertyProfile.propertyDetails.ageofProperty}</Text>
                 </View>
               </View>
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
                 <Icon
                   name="crosshairs" 
                   type="font-awesome"
@@ -505,7 +583,7 @@ export default class PropertyDetails extends ValidationComponent{
                 </View>
               </View>
 
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
                 <Icon
                   name="crosshairs" 
                   type="font-awesome"

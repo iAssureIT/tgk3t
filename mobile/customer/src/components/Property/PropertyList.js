@@ -269,7 +269,7 @@ export default class PropertyList extends ValidationComponent{
                   <ImageBackground 
                     // source={require('../../images/p1.png')}
                     // source={prop.gallery ? prop.gallery.Images[0].imgPath : null}
-                    source = {{uri:prop.gallery.Images[0].imgPath}}
+                    source = {{uri:prop.gallery.Images && prop.gallery.Images.length>0 ? prop.gallery.Images[0].imgPath : require('../../images/p1.png')}}
                     style={styles.bgImage}
                     resizeMode="cover"
                     imageStyle={{borderRadius:4}}
@@ -377,18 +377,34 @@ export default class PropertyList extends ValidationComponent{
                     <View style={styles.divider}></View>
 
                     <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"bed-empty"} 
-                            type={'material-community'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
+                      {prop.propertyType === "Residential" ?
+                        <View  style={{}}>
+                          <View style={{flexDirection:'row'}}>
+                            <Icon
+                              name={"bed-empty"} 
+                              type={'material-community'}
+                              size={20}
+                              color={colors.grey}
+                            />
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>Beds</Text>
+                        <Text style={styles.textSmallLight}>Bedrooms</Text>
                       </View>
+                      :
+                      <View  style={{}}>
+                          <View style={{flexDirection:'row'}}>
+                            <Icon
+                              name={"bed-empty"} 
+                              type={'material-community'}
+                              size={20}
+                              color={colors.grey}
+                            />
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms}</Text>
+                        </View>
+                        <Text style={styles.textSmallLight}>Washrooms</Text>
+                      </View>
+                    }
+                    {prop.propertyType === "Residential" ?
                       <View  style={{}}>
                         <View style={{flexDirection:'row'}}>
                           <Icon
@@ -401,6 +417,20 @@ export default class PropertyList extends ValidationComponent{
                         </View>
                         <Text style={styles.textSmallLight}>Baths</Text>
                       </View>
+                      :
+                      <View  style={{}}>
+                        <View style={{flexDirection:'row'}}>
+                          <Icon
+                            name={"bath"} 
+                            type={'font-awesome'}
+                            size={20}
+                            color={colors.grey}
+                          />
+                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry}</Text>
+                        </View>
+                        <Text style={styles.textSmallLight}>Pantry</Text>
+                      </View>
+                    }  
                       <View  style={{}}>
                         <View style={{flexDirection:'row'}}>
                           <Icon
@@ -412,6 +442,19 @@ export default class PropertyList extends ValidationComponent{
                           <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
                         </View>
                         <Text style={styles.textSmallLight}>Floor</Text>
+                      </View>
+
+                      <View  style={{}}>
+                        <View style={{flexDirection:'row'}}>
+                          <Icon
+                            name={"compass"} 
+                            type={'font-awesome'}
+                            size={20}
+                            color={colors.grey}
+                          />
+                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing}</Text>
+                        </View>
+                        <Text style={styles.textSmallLight}>Facing</Text>
                       </View>
                     </View>
 

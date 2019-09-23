@@ -140,6 +140,7 @@ export default class SearchProperty extends ValidationComponent{
     this.setState({
       activeBtn:option
     },()=>{
+      this.setState({selectBudget:0})
       var propertyList = [];
       if(this.state.activeBtn === "Commercial-Sell" || this.state.activeBtn === "Commercial-Rent"){
         this.setState({propertyList:this.state.propertyList2,activePropType:[]})
@@ -152,7 +153,10 @@ export default class SearchProperty extends ValidationComponent{
   handleTransacrtionType = (value)=>{
     this.setState({
       activeBtn: value
+    },()=>{
+      this.setState({selectBudget:0})
     })
+
   }
 
   handleIncludeNearby = ()=>{
@@ -561,15 +565,15 @@ export default class SearchProperty extends ValidationComponent{
                   color={colors.grey}
                   containerStyle={{marginRight:5}}
                 />
-                <Text style={styles.inputText}>{this.state.activeBtn==="rent" ? "10 Lac"  : "100 Cr"}</Text>
+                <Text style={styles.inputText}>{this.state.activeBtn==="Residential-Rent" || this.state.activeBtn==="Commercial-Rent"  ? "10 Lac"  : "100 Cr"}</Text>
               </View>
             </View>
             <View style={[{width:'100%'}]}>
               <Slider
                 value={this.state.selectBudget}
                 animationType={"spring"}
-                minimumValue={this.state.activeBtn==="Residential-Rent" ? 5000 : 1000000 }
-                maximumValue={this.state.activeBtn==="Residential-Rent" ?  1000000:  1000000000}
+                minimumValue={this.state.activeBtn==="Residential-Rent" || this.state.activeBtn==="Commercial-Rent" ? 5000 : 1000000 }
+                maximumValue={this.state.activeBtn==="Residential-Rent" || this.state.activeBtn==="Commercial-Rent" ? 1000000:  1000000000}
                 step={1}
                 minimumTrackTintColor={colors.golden}
                 thumbStyle={{backgroundColor:'#fff',height:30,width:20,borderWidth:1,borderColor:'#ccc'}}

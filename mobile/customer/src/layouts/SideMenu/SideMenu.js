@@ -7,7 +7,8 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
-  Image
+  Image,
+  AsyncStorage,
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -24,8 +25,35 @@ export default class SideMenu extends React.Component {
         });
         this.props.navigation.dispatch(navigateAction);
 	}
+	constructor(props){
+    super(props);
+    this.state={
+      uid:"",
+      token:''
+    };
+  }	
+
+  componentDidMount(){
+    this._retrieveData();
+  }
+
+  _retrieveData = async () => {
+    try {
+      const uid = await AsyncStorage.getItem('uid');
+      const token = await AsyncStorage.getItem('token');
+      if (uid !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
 
   render(){
+    const { navigation } = this.props;
+  	// console.log("uid=>",this.state.uid);
   	return(
       <ScrollView contentContainerStyle={[styles.container]} scrollsToTop={false}>
       	<ImageBackground 
@@ -76,7 +104,7 @@ export default class SideMenu extends React.Component {
 	        		<Text style={styles.menuText}>Post Property</Text>
 	        	</View>
         	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.navigateScreen('MyPostedProperties')}>
+        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyPostedProperties',{uid:this.state.uid,token:this.state.token})}>
 	        	<View style={styles.menu}>
 	        		<Icon 
 	              size={18} 
@@ -88,7 +116,7 @@ export default class SideMenu extends React.Component {
 	        		<Text style={styles.menuText}>My Property</Text>
 	        	</View>
         	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.navigateScreen('MyInterestedProperties')}>
+        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyInterestedProperties',{uid:this.state.uid,token:this.state.token})}>
 	        	<View style={styles.menu}>
 	        		<Icon 
 	              size={18} 
