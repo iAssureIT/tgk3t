@@ -337,9 +337,7 @@ class PropertyProfile extends Component{
              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                 <div className="mt40 hidden-xs hidden-sm"></div>
                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl3">
-                  <div className="">
                     <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                      <div className=""> 
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                           <label className="">Property Description</label>
                         </div>
@@ -348,11 +346,8 @@ class PropertyProfile extends Component{
                             {this.state.pricing && this.state.pricing.description ? this.state.pricing.description : "-"}                             
                           </div>
                         </div>
-                      </div>
                     </div>
                     <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
-                      <div className="">
-                        <div className=""> 
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
                             <label className="">Key Features</label>
                           </div>
@@ -390,10 +385,7 @@ class PropertyProfile extends Component{
                               <li className="col-lg-6 col-xs-6 noPad">Age of Property </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty === "New" ? "0-1" : this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
                             </ul>
                           </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
                 </div>
              </div>
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
@@ -434,79 +426,127 @@ class PropertyProfile extends Component{
                             </div>
                           </div>
                         </div>
-                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
-                          <div className="">
-                            <div className=""> 
+
+                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad hidden-xs hidden-sm">
                               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                 <label className="">Financials</label>
                               </div>
-                              <div className=""> 
-                                <div className="">
-                                  <div className=""> 
-                                    <div className=" ">
-                                     <div className="">
-                                       <ul  className="bolder">
-                                          {this.state.pricing && this.state.pricing.totalPrice ?
-                                            <b>
-                                              <li className="col-lg-5 col-xs-6 noPad">Total Ask    </li> 
-                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
-                                            </b>
-                                          : 
-                                          <b>
-                                              <li className="col-lg-5 col-xs-6 noPad">Deposit Amount    </li>
-                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
-                                            </b>
-                                          }
+                              <div>
+                                 <ul  className="bolder">
+                                    {this.state.pricing && this.state.pricing.totalPrice ?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Total Ask    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Deposit Amount    </li>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+                                      </b>
+                                    }
 
-                                          {this.state.pricing && this.state.pricing.expectedRate ?
-                                            <b>
-                                              <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
-                                            </b>
-                                          : 
-                                          <b>
-                                              <li className="col-lg-5 col-xs-6 noPad">Monthly Rent    </li> 
-                                              <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
-                                            </b>
+                                    {this.state.pricing && this.state.pricing.expectedRate ?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Monthly Rent    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+                                      </b>
+                                    }
+                                    {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?
+                                    null
+                                    :
+                                      <div>
+                                    <li className="col-lg-5 col-xs-12 noPad">Charges Included in Total Ask </li> 
+                                    <span className="col-lg-7 col-xs-12 noPad"> : 
+                                    {this.state.pricing && this.state.pricing.includeCharges     ? 
+                                      <b>{
+                                      this.state.pricing.includeCharges.map((includeCharges,index)=>{
+                                        console.log("index = ",index);
+                                          var comma = ", ";
+                                          var i = index;
+                                          if(index >= (this.state.pricing.includeCharges.length-1) ){
+                                            comma = "";
                                           }
-                                          {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?
-                                          null
-                                          :
-                                            <div>
-                                          <li className="col-lg-5 col-xs-12 noPad">Charges Included in Total Ask </li> 
-                                          <span className="col-lg-7 col-xs-12 noPad"> : 
-                                          {this.state.pricing && this.state.pricing.includeCharges     ? 
-                                            <b>{
-                                            this.state.pricing.includeCharges.map((includeCharges,index)=>{
-                                              console.log("index = ",index);
-                                                var comma = ", ";
-                                                var i = index;
-                                                if(index >= (this.state.pricing.includeCharges.length-1) ){
-                                                  comma = "";
-                                                }
-                                                return(
-                                                    <b key={i++}>
-                                                        {" "+includeCharges+comma}
-                                                    </b>                  
-                                                  )
-                                                })
-                                          }  </b> : "-"}
-                                          </span>
-                                          </div>
-                                          }
-                                          
-                                          
-                                          <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
-                                          {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
-                                        </ul>
+                                          return(
+                                              <b key={i++}>
+                                                  {" "+includeCharges+comma}
+                                              </b>                  
+                                            )
+                                          })
+                                    }  </b> : "-"}
+                                    </span>
                                     </div>
-                                  </div>
+                                    }
+                                    <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                    {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
+                                  </ul>
                                 </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
                         </div>
+                      {/*resp*/}
+                      <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad hidden-lg hidden-md">
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+                                <label className="">Financials</label>
+                              </div>
+                              <div>
+                                 <ul  className="bolder col-xs-12 ">
+                                    {this.state.pricing && this.state.pricing.totalPrice ?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Total Ask    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Deposit Amount    </li>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+                                      </b>
+                                    }
+
+                                    {this.state.pricing && this.state.pricing.expectedRate ?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Monthly Rent    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+                                      </b>
+                                    }
+                                    {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?
+                                    null
+                                    :
+                                      <div>
+                                    <li className="col-lg-5 col-xs-12 noPad">Charges Included in Total Ask </li> 
+                                    <span className="col-lg-7 col-xs-12 noPad"> : 
+                                    {this.state.pricing && this.state.pricing.includeCharges     ? 
+                                      <b>{
+                                      this.state.pricing.includeCharges.map((includeCharges,index)=>{
+                                        console.log("index = ",index);
+                                          var comma = ", ";
+                                          var i = index;
+                                          if(index >= (this.state.pricing.includeCharges.length-1) ){
+                                            comma = "";
+                                          }
+                                          return(
+                                              <b key={i++}>
+                                                  {" "+includeCharges+comma}
+                                              </b>                  
+                                            )
+                                          })
+                                    }  </b> : "-"}
+                                    </span>
+                                    </div>
+                                    }
+                                    <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                    {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
+                                  </ul>
+                                </div>
+                        </div>
+                    {/*end*/}
                       </div>
                     </div>
                   </div>
@@ -524,7 +564,7 @@ class PropertyProfile extends Component{
                     { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.subArea+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                       <div className="row">
-                      <div style={{ height: '500px', width: '100%',padding:'20px' }}>
+                      <div style={{ height: '500px', width: '100%',paddingTop:'15px' }}>
                           <GoogleMapReact
                             bootstrapURLKeys={{ key:"" }}
                             defaultCenter={this.props.center}

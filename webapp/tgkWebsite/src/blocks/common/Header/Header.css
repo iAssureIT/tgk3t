@@ -48,3 +48,6 @@ ul ul a {
 .customNav>li>a:focus, .customNav>li>a:hover{
  background-color: #8f90ce !important;
 }
+.navbar-nav .open .dropdown-menu{
+    background-color: #fff !important;
+}

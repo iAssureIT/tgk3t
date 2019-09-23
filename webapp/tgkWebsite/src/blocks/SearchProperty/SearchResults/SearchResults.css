@@ -83,6 +83,16 @@
 
 .propertyType .dropdown-menu{
 	min-width: 390px !important;
+  line-height: 25px !important;
+  position: absolute;
+  /*left: -88px;*/
+}
+
+.propertyType1 .dropdown-menu{
+  min-width: 220px !important;
+  line-height: 25px !important;
+  position: absolute;
+  /*left: -88px;*/
 }
 
 .property{
@@ -90,9 +100,6 @@
 	/*margin-top   : 3px;*/
 }
 
-.property .dropdown-menu{
-	line-height: 25px !important
-}
 
 
 .mt36{
@@ -199,6 +206,14 @@
     max-height: 250px;
     overflow-x: hidden;
     width : 180px;
+}
+.scrollable-menu1 {
+    height: auto;
+    max-height: 250px;
+    overflow-x: hidden;
+    width : 131px;
+    position: absolute;
+    left: -26px;
 }
 
 

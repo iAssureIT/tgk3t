@@ -100,7 +100,7 @@ class PopularPlaces extends Component{
                  </div>
                {/*responsive img 2*/}
                   <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad hidden-lg hidden-md " id="place1">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai  pull-right Bg">
+                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai1  pull-right Bg">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
                         <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
                         <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} Properties</h4>

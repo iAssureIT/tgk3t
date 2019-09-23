@@ -10,20 +10,8 @@ export default class InfoSale extends Component {
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt9">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 divContainer">
 					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-						{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad sale1">
-
-								<img alt=""  src="images/15.png" />
-								<br/>
-								<label className="mt10">We LOVE Property Owners</label>
-								<br/>
-								We at TGK, love our PROPERTY OWNERS i.e. YOU. It is because of you we generate revenue so we are going to share up-to 50% brokerage with you based on salability of your property.
-								Hurry, check our SELL-O-METER rating now to find salability of your property.
-							</div>
-							<div className="sale2 arrow-right"></div>
-						</div>*/}
-						<img className="saleImg" src="/images/new/e.png" />
-						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 noPad sale">
+						<img className="saleImg1" src="/images/new/e.png" />
+						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-8 col-xs-8 noPad sale">
 							<img alt="" className="" src="/images/15.png" />
 							<br/>
 							<label className="saleText">We LOVE Property Owners</label>
@@ -34,18 +22,8 @@ export default class InfoSale extends Component {
 
 					</div>
 					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-						{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-								<img alt=""  src="images/16.png" />
-
-								<br/>
-								<label className="saleText">For our Buyers & Tenants</label>
-								<br/>
-								Buyers and Tenants are our key business partners and we offer you high class, streamlined brokerage services on top of massive discount (up-to 50%) on brokerage you pay.
-							</div>
-						</div>*/}
-						<img className="saleImg" src="/images/new/e.png" />
-						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 noPad sale">
+						<img className="saleImg1" src="/images/new/e.png" />
+						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-8 col-xs-8 noPad sale">
 							<img alt="" className="" src="/images/16.png" />
 							<br/>
 							<label className="saleText">For our Buyers & Tenant</label>
@@ -55,17 +33,8 @@ export default class InfoSale extends Component {
 
 					</div>
 					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-						{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-								<img alt=""  src="images/17.png" />
-								<br/>
-								<label className="saleText">What we do?</label>
-								<br/>
-								India’s only ONLINE-OFFLINE Property Company, which comes with ONLINE presence to bring property dealing at your fingertips with strong backbone of broker network for on the ground execution.
-							</div>
-						</div>*/}
-						<img className="saleImg" src="/images/new/e.png" />
-						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 noPad sale">
+						<img className="saleImg1" src="/images/new/e.png" />
+						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-8 col-xs-8 noPad sale">
 							<img alt="" className="" src="/images/17.png" />
 							<br/>
 							<label className="saleText">What we do?</label>
@@ -73,21 +42,10 @@ export default class InfoSale extends Component {
 							India’s only ONLINE-OFFLINE Property Company, which comes with ONLINE presence to bring property dealing at your fingertips with strong backbone of broker network for on the ground execution.
 						</div>
 
-
 					</div>
 					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
-						{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 personServices">
-							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-								<img alt=""  src="images/18.png" />
-								<br/>
-								<label className="saleText">Why we are the best?</label>
-								<br/>
-								Be assured to find best properties only on TGK.
-								BEST Properties are only listed at THE GOLDEN KEY as we pay REAL MONEY (up-to 50% of Brokerage) to Property Owners for listing with us.
-							</div>
-						</div>*/}
-						<img className="saleImg" src="/images/new/e.png" />
-						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 noPad sale">
+						<img className="saleImg1" src="/images/new/e.png" />
+						<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-8 col-xs-8 noPad sale">
 							<img alt="" className="" src="/images/17.png" />
 							<br/>
 							<label className="saleText">Why we are the best?</label>
@@ -95,7 +53,6 @@ export default class InfoSale extends Component {
 							Be assured to find best properties only on LYVO.
 							as we pay REAL MONEY (up-to 50% of Brokerage) to Property Owners for listing with us.
 						</div>
-
 					</div>
 				</div>
 				

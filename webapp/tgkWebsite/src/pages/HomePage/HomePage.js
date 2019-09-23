@@ -37,6 +37,7 @@ import './HomePage.css';
 	render() {
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad BoxSize">
+			
 				<Header />
 
 				<BannerwithModal inputData={this.inputData.bind(this)}/>

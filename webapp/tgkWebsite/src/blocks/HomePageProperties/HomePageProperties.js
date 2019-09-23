@@ -279,7 +279,7 @@ class HomePageProperties extends Component {
 
 		return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">      
-        <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad mt40">
+        <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad mt75">
             
       				  <h3 className="textC"> <b>
                 {
@@ -389,7 +389,7 @@ class HomePageProperties extends Component {
                                         }
                                     </div>    
                                     <div className="pull-right col-lg-7 col-md-7 col-sm-5 col-xs-7 noPad mt10">
-                                      <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i> {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                      &nbsp; &nbsp;<i className="fa fa-shopping-bag pr8" aria-hidden="true"></i> {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                     </div>
                                   </div>
                                 </div>
@@ -485,7 +485,7 @@ class HomePageProperties extends Component {
                                     }
                                   </div>
                                   <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
-                                    <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                   &nbsp;&nbsp; <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -584,7 +584,7 @@ class HomePageProperties extends Component {
                                     }
                                   </div>
                                   <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
-                                    <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                   &nbsp;&nbsp; <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>
@@ -680,7 +680,7 @@ class HomePageProperties extends Component {
                                         }
                                       </div>
                                       <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
-                                        <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                       &nbsp;&nbsp; <i className="fa fa-shopping-bag  pr8 pull-left" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                       </div>
                                     </div>
                                   </div>
@@ -779,7 +779,7 @@ class HomePageProperties extends Component {
                                     }
                                   </div> 
                                   <div className="pull-right col-lg-7 col-md-7 col-sm-7 col-xs-7 noPad mt10">
-                                   <i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
+                                   &nbsp;&nbsp;<i className="fa fa-shopping-bag pr8" aria-hidden="true"></i>  {moment(property.propertyCreatedAt).format('MMMM Do YYYY')}
                                   </div>
                                 </div>
                               </div>

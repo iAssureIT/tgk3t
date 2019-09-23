@@ -683,7 +683,7 @@ return (
             <b>My Apartment is Available From</b>
             </div>
           </div>
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30">
+          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_30 dateIndex">
               <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                 <div className="form-group margBtm_5" id="date">
                   <div className="input-group inputBox-main " id="">
@@ -695,7 +695,7 @@ return (
                       selected={this.state.startDate}
                       onChange={this.handleDate}
                       dateFormat="dd-MM-yyyy"
-                      className="form-control col-lg-12"
+                      className="form-control col-lg-12 "
                       minDate={(new Date())}
                       name="availableFrom"
                       ref="availableFrom"

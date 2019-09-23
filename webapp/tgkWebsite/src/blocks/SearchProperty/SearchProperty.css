@@ -1,5 +1,5 @@
 .tgkImg{
-	padding:7px 5px 7px 5px !important;
+	padding:0px 0px 0px 0px !important;
 	border-size:0px !important;
 }
 
@@ -42,7 +42,7 @@
     background-size: 100%,100%;
     background-repeat: no-repeat;
     background-color: #000;
-    /*border-radius:0px 5px 5px 0px;*/
+    border-radius:0px 0px 0px 0px;
 }
 
 .budget{
@@ -104,5 +104,5 @@
 }
 
 .searchProperty .btn{
-    padding: 0px !important
+    /*padding: 0px !important*/
 }

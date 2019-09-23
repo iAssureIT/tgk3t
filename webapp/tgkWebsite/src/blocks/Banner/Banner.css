@@ -1,6 +1,8 @@
 .BoxSize{
 	height: 742px;
 	background-image: url("/images/new/1.png");
+  /*background-size: 100%,100%;
+  background-repeat: no-repeat;*/
 }
 
 .hText{
@@ -174,5 +176,12 @@ background-color: #000 !important;
   color: #000 !important;
 }
 
-
+.bannerBtn{
+  padding-top: 12px;
+  background-color: black;
+  color: #fff;
+}
+.bannerBtn:hover{
+color: #fff;
+}
 

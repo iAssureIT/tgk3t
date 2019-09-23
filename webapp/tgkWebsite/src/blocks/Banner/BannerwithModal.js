@@ -211,11 +211,12 @@ class BannerwithModal extends Component {
 					    </li>	    
 					  </ul>*/}
 
-					  <ul class="nav nav-tabs">
-  						<li class="active"><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a></li>
-						<li><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a></li>
-						<li><a data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a></li>
-						<li><a data-toggle="tab" href="#menu2">Post & Earn</a></li>
+					  <ul className="nav nav-tabs col-xs-12 textC noPad">
+  						<li className="active col-xs-3 noPad"><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a></li>
+						<li className="bannerTab col-xs-3 noPad"><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a></li>
+						<li className="col-xs-3 noPad"><a style={{paddingLeft:"0px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a></li>
+						<button className="col-xs-3 noPad btn bannerBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}>Post & Earn</button>
+						{/*<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
 					</ul>
 
 

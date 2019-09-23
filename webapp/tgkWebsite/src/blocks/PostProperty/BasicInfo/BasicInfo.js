@@ -869,7 +869,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-1 sellerType2"  >
+					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-2 sellerType2"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="Care Taker" 
@@ -882,7 +882,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-1 sellerType3"   >
+					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-2 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Broker" 
@@ -911,34 +911,18 @@ class BasicInfo extends Component{
 
 					</div>
 					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
-					  			<span className="col-lg-4 col-xs-3 ownerLeft "> Owner</span>
-					  			<span className="col-lg-4 col-xs-3 noPad"> Caretaker</span>
+					  			<span className="col-lg-4 col-xs-4 ownerLeft "> Owner</span>
+					  			<span className="col-lg-4 col-xs-4 noPad"> Caretaker</span>
 					  			<span className="col-lg-3 col-xs-3 noPad">&nbsp; Broker</span>
 					  			{/*<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>*/}
 
 					  	</div>
          		
-         			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
-         				<div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 noPad">
-
-						 	
+         			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
+         				<div className="mb-30 hidden-sm hidden-xs"></div>
+         					<div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 noPad">
 					   			<label>I would like to</label>
 								<span className="astrick">*</span>
-							
-
-
-				   			{/*<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">	    		
-						  	 	<div className="form-group" id="">
-									<div className="can-toggle genderbtn demo-rebrand-2 " value={this.state.transactionType} onChange={this.selectType.bind(this)}>
-						              <input id="d" type="checkbox" />
-						              <label className="formLable" htmlFor="d">
-						             	 <div className="can-toggle__switch" data-checked="Rent" data-unchecked="Sell" ></div>
-						                <div className="can-toggle__label-text"></div>
-						              </label>
-					            	</div>
-					            </div>
-							</div>*/}
-							{/*<div className="container6 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">*/}
 						        {this.state.type===true ?
 
 						         <div className="switch" onClick={this.handleToggle.bind(this)} >
@@ -959,11 +943,9 @@ class BasicInfo extends Component{
 						            <span className="switch-selection" ></span>
 						          </div>
 						       
-						      }
-						    
-						 {/* </div>*/}
-
-						</div>
+						      	}
+							</div>
+							
 
 						<div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 noPad">
 
@@ -999,13 +981,15 @@ class BasicInfo extends Component{
 
 					</div>
 
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad ">
-						<div className="col-lg-4 noPad pt28">
+					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad ">
+						<div className="mb-30 hidden-xs hidden-sm"></div>
+
+						<div className="col-lg-4 noPad  hidden-xs hidden-sm">
+							<div className="pt28 hidden-xs hidden-sm"></div>
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 noPad">
 									 <b>Pincode </b>
 									<span className="astrick">*</span>
 								</div>
-						    	{/*<span className="col-lg-12 locSpan">Pincode </span>*/}
 						    	<div className="col-lg-12 noPad">
 									    <div className="input-group inputBox-main " id="">
 									      	<div className="input-group-addon inputIcon">
@@ -1019,12 +1003,39 @@ class BasicInfo extends Component{
 				                        )}
 								</div>
 						</div>
-
-							<div className=" col-lg-1 col-md-1 col-sm-1  col-xs-1 ">
-								<div className="vl hidden-xs"></div>
+					{/*resp*/}
+					<div className="col-lg-4 noPad  hidden-lg hidden-md ">
+							<div className="pt28 hidden-xs hidden-sm"></div>
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 ">
+									 <b>Pincode </b>
+									<span className="astrick">*</span>
+								</div>
+						    	<div className="col-lg-12 ">
+									    <div className="input-group inputBox-main " id="">
+									      	<div className="input-group-addon inputIcon">
+							                <i className="fa fa-building iconClr"></i>
+						                    </div>
+									    <input type="text" data-text="pincode" value={this.state.pincode} onBlur={this.handlePincode.bind(this)} onChange={this.handleChange.bind(this)} name="pincode"  className="form-control" ref="pincode"  placeholder="Enter Pincode" />
+									   
+									  	</div>
+									  	{this.state.formerrors.pincode &&(
+				                            <span className="text-danger">{this.state.formerrors.pincode}</span> 
+				                        )}
+								</div>
+						</div>
+					{/*end*/}
+							<div className=" col-lg-1 col-md-1 col-sm-1  col-xs-1 hidden-sm hidden-xs ">
+								<div className="vl "></div>
 									<span className="">OR</span>
-								<div className="vl hidden-xs"></div>
+								<div className="vl"></div>
 							</div>
+							{/*resp*/}
+							<div className=" col-lg-1 col-md-1 col-sm-12  col-xs-12 textC hidden-lg hidden-md mt10 ">
+								<div className=" "></div>
+									<span className="">OR</span>
+								<div className=" "></div>
+							</div>
+							{/*end*/}
 
 							<div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
 								<div className="col-lg-12 noPad">
@@ -1146,7 +1157,7 @@ class BasicInfo extends Component{
 				  		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						  	<div className="form-group"  id="" >
 							   
-								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 row">
 						   			 <b>Society</b>
 									<span className="astrick">*</span>
 						   		</div>
@@ -1170,7 +1181,7 @@ class BasicInfo extends Component{
 						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							  <div className="form-group"  id="" >
 								  
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 row">
 							   			 <b>House/Building Number</b>
 										
 							   		</div>
@@ -1188,7 +1199,7 @@ class BasicInfo extends Component{
 						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 							  <div className="form-group"  id="" >
 								 
-								    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5">
+								    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 row">
 							   			 <b>Landmark</b>
 										
 							   		</div>

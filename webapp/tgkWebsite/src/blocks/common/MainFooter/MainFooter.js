@@ -79,7 +79,7 @@ class MainFooter extends Component{
         "email"         : this.refs.email.value ,
         "subject"       : "Your Query/Feedback is sent successfully to www.TheGoldenKey.com!",
         "Text"          : "", 
-        "mail"          : 'Dear' + this.refs.name.value + ', <br/><br/>'+
+        "mail"          : 'Dear ' + this.refs.name.value + ', <br/><br/>'+
                           "<b>Your Mobile: </b>" + this.refs.mobileNumber.value + '<br/>'+
                           "<b>Your Email: </b>"  + this.refs.email.value + '<br/><br/>'+
                           "Your following message has been successfully delivered to the admin of www.TheGoldenKey.com! We will get back to you shortly. <br/> <br/> " + 
@@ -220,7 +220,7 @@ class MainFooter extends Component{
                     </div>
                 </div>
                 <div className="col-lg-6 col-md-10 col-sm-12 col-xs-12 footerContactUs mt20 ml20" >
-                      <div className="col-lg-2 col-md-10 col-sm-4 col-xs-4  col-xs-offset-2 footerImgContainer" >
+                      <div className="col-lg-2 col-md-10 col-sm-4 col-xs-12  textC footerImgContainer" >
                         <img alt=""  src="/images/new/logo.png" />
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails mt40">
@@ -230,7 +230,7 @@ class MainFooter extends Component{
                         <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 99221 34568</span>
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
-                         <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad"> &nbsp; &nbsp;&nbsp;: info@lyvo.com</span>
+                         <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad"> : info@lyvo.com</span>
                          
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails1 mt10">
@@ -281,7 +281,7 @@ class MainFooter extends Component{
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 bottomDivFooter" >
               <div className="col-lg-12 col-md-10 col-sm-12 col-xs-12 " >
                 <div className="col-lg-6 col-md-10 col-sm-6 col-xs-6 " >
-                  <label>Copyright <i className="fa fa-copyright"></i> 2019 THE GOLDEN KEY. All rights reserved.</label>
+                  <label>Copyright <i className="fa fa-copyright"></i> 2019 LYVO All rights reserved.</label>
                 </div>
                  <div className="col-lg-6 col-md-10 col-sm-6 col-xs-6 rightDiv" >
                  <label className="pull-right">Version 2.2</label>

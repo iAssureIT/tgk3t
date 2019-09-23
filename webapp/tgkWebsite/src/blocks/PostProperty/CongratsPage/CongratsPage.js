@@ -185,7 +185,8 @@ import './CongratsPage.css';
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<img src="/images/fireworks.png" className="col-lg-3 col-xs-12 hidden-xs hidden-sm" style={{height:"154px"}} />
-					<p className="col-lg-6  CP1">Congratulations</p>
+					<p className="col-lg-6  CP1 hidden-xs hidden-sm">Congratulations</p>
+					<p className="col-lg-6  CP11 hidden-lg hidden-md">Congratulations</p>
 					<img src="/images/fireworks.png" className="col-lg-3 col-xs-12 hidden-xs hidden-sm" style={{height:"154px"}} />
 				</div>
 				<p className="col-lg-12 CP2">Your Property is <b className="fontColor">FAST SELLING HOT POTATO</b></p>

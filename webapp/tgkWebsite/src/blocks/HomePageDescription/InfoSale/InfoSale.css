@@ -44,6 +44,12 @@
 .saleImg{
     width: 359px;
     position: absolute;
+    top: 48px;
+    left: -20px;
+}
+.saleImg1{
+    width: 359px;
+    position: absolute;
     top: 41px;
     left: -20px;
 }

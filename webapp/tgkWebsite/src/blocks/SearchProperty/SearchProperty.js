@@ -278,7 +278,7 @@ class SearchProperty extends Component {
 					<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 searchProperty noPad">
 						{this.props.propertyType === "Commercial" ?
 						<div>
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12">
+							<div className="col-lg-2 col-md-2 col-xs-2 col-sm-2 noPad ">
 							 	<div className="form-group noPad">
 							  		<div className="col-lg-12 input-group noPad">
 								  		<select className="form-control col-lg-12 noPad budgetOption" ref="transactionType" onChange={this.handleSearch.bind(this)}>
@@ -288,8 +288,9 @@ class SearchProperty extends Component {
 									</div>
 								</div>
 							</div>
-							<div className="col-lg-4 col-md-4 col-xs-4 col-sm-4 noPad">
-								<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch col-xs-10" onChange={this.handleLocation.bind(this)} />								
+						
+							<div className="col-lg-4 col-md-4 col-xs-2 col-sm-2 noPad">
+								<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch col-xs-12 noPad" onChange={this.handleLocation.bind(this)} />								
 							</div>
 						</div>
 						:
@@ -307,7 +308,7 @@ class SearchProperty extends Component {
 					    	}								
 						</datalist>
 
-						<div className="col-lg-3 col-md-3 col-xs-4 col-sm-4 propertyType noPad property">
+						<div className="col-lg-3 col-md-3 col-xs-4 col-sm-4 propertyType noPad property hidden-xs hidden-sm">
 							  	<div className="dropdown" id="dropdown">
 								    <button className="dropdown-toggle btn divWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
@@ -319,7 +320,7 @@ class SearchProperty extends Component {
 												{
 													this.state.propertyList2.map((data,index)=>{
 														return(
-															<span className="col-lg-6 noPad inputStyledbtn">
+															<span className="col-lg-6 col-xs-12 noPad inputStyledbtn">
 																<input type="checkbox" className="" value={data.name} id={data.name} key={index}  onChange={this.propertySubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
 																<span className="checkBoxBlock"></span>
 															</span>
@@ -350,8 +351,53 @@ class SearchProperty extends Component {
 								    </ul>
 								</div>
 							</div>
+							{/*resp*/}
+							<div className="col-lg-3 col-md-3 col-xs-4 col-sm-4 propertyType1 noPad property hidden-lg hidden-md">
+							  	<div className="dropdown" id="dropdown">
+								    <button className="dropdown-toggle btn divWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
+								    <span className="caret caretMl"></span></button>
+								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt39 noPad">
+							      		{this.props.propertyType === "Commercial" ? 
+										<div className="col-lg-12 noPad ">
+										  	<div className="col-lg-12">
+												<h5>Commercial</h5>
+												{
+													this.state.propertyList2.map((data,index)=>{
+														return(
+															<span className="col-lg-6 col-xs-12 noPad inputStyledbtn">
+																<input type="checkbox" className="" value={data.name} id={data.name} key={index}  onChange={this.propertySubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</span>
+														)
+													})
+
+												}
+											</div>
+										</div>
+										:
+										<div className="col-lg-12 noPad">
+										  	<div className="col-lg-12">
+												<h5>Residential</h5>
+												{
+													this.state.propertyList1.map((data,index)=>{
+														return(
+															<span key={index} className="col-lg-6 col-md-6 col-xs-12 col-sm-12 noPad inputStyledbtn">
+																<input type="checkBox" value={data.name} id={data.name} onChange={this.propertySubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</span>
+														)
+													})
+
+												}
+											</div>
+										</div>
+										}
+								    </ul>
+								</div>
+							</div>
+						{/*end*/}
 						
-							<div className="col-lg-2 col-md-2 col-xs-3 col-sm-3 noPad property">
+							<div className="col-lg-2 col-md-2 col-xs-3 col-sm-3 noPad property hidden-xs hidden-sm">
 							  	<div className="dropdown">
 							  	 	<button className="btn dropdown-toggle divWhite col-lg-12 col-md-12 col-xs-12 col-sm-12" type="button" data-toggle="dropdown">Budget
 								   		<span className="caret"></span>
@@ -379,14 +425,53 @@ class SearchProperty extends Component {
 								    </ul>
 								</div>
 							</div>
+							{/*resp*/}
+							<div className="col-lg-2 col-md-2 col-xs-3 col-sm-3 noPad property hidden-lg hidden-md">
+							  	<div className="dropdown">
+							  	 	<button className="btn dropdown-toggle divWhite col-lg-12 col-md-12 col-xs-12 col-sm-12" type="button" data-toggle="dropdown">Budget
+								   		<span className="caret"></span>
+								   	</button>
+								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad mt39 scrollable-menu1">
+									{this.props.transactionType === "Rent" || (this.props.propertyType === "Commercial" && this.state.transactionType === "Commercial-Rent")?
+								     this.state.budgetList2.map((budget,index)=>{
+							    		return(
+												<span className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputStyledbtn" key={index}>
+								    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+								    				<span className="radioBoxBlock"></span>
+								    			</span>
+							    			);
+							    		})
+								     	:
+									    this.state.budgetList1.map((budget,index)=>{
+								    		return(
+												<span  key={index} className="col-lg-12 col-md-12 col-xs-12 col-sm-12 inputStyledbtn">
+								    				<input type="radio" value={budget.value} ref="budget" id={budget.value} name="budget" className="selectOption" onClick={this.handleBudget.bind(this)}/>&nbsp; <label htmlFor={budget.value}>{budget.option}</label>
+								    				<span className="radioBoxBlock"></span>
+								    			</span>
+								    			);
+									    	})
+								    	}
+								    </ul>
+								</div>
+							</div>
+							{/*end*/}
 
-							<div className="col-lg-1 col-md-1 col-xs-1 col-sm-1  noPad">
+							<div className="col-lg-1 col-md-1 col-xs-1 col-sm-1 hidden-sm hidden-xs  noPad">
 									<Link to={"/SearchResults"}>	
 										<button className="btn sImg" onClick={this.searchResultbtn.bind(this)}>
-											<img alt=""  src="/images/TGK-key.png" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 tgkImg" />
+											<img alt=""  src="/images/new/search.jpg" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 tgkImg" />
 										</button>
 									</Link>
 							</div>
+						{/*resp*/}
+						<div className="col-lg-1 col-md-1 col-xs-1 col-sm-1 hidden-lg hidden-md  noPad">
+									<Link to={"/SearchResults"}>	
+										<button className="btn sImg noPad" onClick={this.searchResultbtn.bind(this)}>
+											<img alt=""  src="/images/new/search.jpg" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 tgkImg" />
+										</button>
+									</Link>
+							</div>
+						{/*end*/}
 						</div>
 					</form>
 				</div>
