@@ -7,8 +7,8 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
-  Image,
   AsyncStorage,
+  Image
 } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -50,6 +50,14 @@ export default class SideMenu extends React.Component {
       // Error retrieving data
     }
   }
+
+
+	logout(){
+		// onPress={()=>this.navigateScreen('Logout')}
+	console.log("here i get call");
+	AsyncStorage.removeItem("token");
+    this.props.navigation.navigate('Home');
+	}
 
   render(){
     const { navigation } = this.props;
@@ -128,7 +136,8 @@ export default class SideMenu extends React.Component {
 	        		<Text style={styles.menuText}>My Interested</Text>
 	        	</View>
         	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.navigateScreen('Logout')}>
+                 
+        	<TouchableOpacity    onPress = {this.logout.bind(this)}>
 	        	<View style={styles.menu}>
 	        		<Icon 
 	              size={18} 

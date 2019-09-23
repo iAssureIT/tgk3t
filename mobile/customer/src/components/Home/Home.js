@@ -10,6 +10,7 @@ import {
   ImageBackground,
   Image,TextInput,
   TouchableWithoutFeedback,
+  AsyncStorage,
   Alert
 } from 'react-native';
 import axios          from 'axios';
@@ -32,7 +33,8 @@ export default class Home extends ValidationComponent{
       searchText      : '',
       activeBtn       : 'Residential-Sell',
       location        :'',
-      locSearchResults:''
+      locSearchResults:'',
+      uid:"",
     };
   }
 
@@ -40,6 +42,11 @@ export default class Home extends ValidationComponent{
   handleOption = (option)=>{
     this.setState({activeBtn:option});
   }
+
+  componentDidMount(){
+      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
+        this._retrieveData();
+    }
 
   handleLocation(value){
     var location =value;
@@ -123,6 +130,38 @@ export default class Home extends ValidationComponent{
    this.props.navigation.navigate('SearchProperty',{searchResults : formValues})
   }
 
+
+
+  login(){
+    // const originPage = "post" ;
+    const token = this.state.token;
+    console.log("state token",this.state.token);
+    if(token!=null){
+      this.props.navigation.navigate('PropertyDetails1');
+    }else{
+      this.props.navigation.navigate('MobileScreen');
+    }
+  }
+
+  _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      // const searchData = await AsyncStorage.getItem('searchData');
+      console.log("async get token in mob screen out",token);
+
+      if (token !== null ) {
+        // We have data!!
+      console.log("async get token in mob screen in",token);
+
+        this.setState({token:token})
+        // this.setState({token:token})
+        // this.setState({searchData:searchData})
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
   render(){
     
     const { navigation } = this.props;
@@ -267,8 +306,9 @@ export default class Home extends ValidationComponent{
             <View style={[styles.alignCenter]}>
               <Text style={[styles.heading2,{marginBottom:10}]}>Welcome Owners</Text>
                 <Button
-                  onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
+                  // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
                   // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
+                  onPress         = {this.login.bind(this)}
                   titleStyle      = {styles.buttonText2}
                   title           = "Post & Earn"
                   buttonStyle     = {styles.button2}

@@ -33,6 +33,25 @@ export default class PropertySuccess extends ValidationComponent{
     };
   }
 
+   componentDidMount(){
+      var token = this.props.navigation.getParam('token','No token');
+      console.log("token",token);
+      var uid = this.props.navigation.getParam('uid','No uid');
+      console.log("uid",uid);
+      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
+      console.log("propertyId",propertyId);
+      
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+      this.setState({
+        token : token,
+        uid   : uid,
+        propertyId : propertyId,
+      
+      });
+
+    }
+
   
   render(){
 
@@ -90,7 +109,7 @@ export default class PropertySuccess extends ValidationComponent{
           </View>
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertyDetails',{image:prop.imageSource})}
+              onPress         = {()=>this.props.navigation.navigate('PropertyDetails',{propertyId:this.state.propertyId,image:prop.imageSource})}
               titleStyle      = {styles.buttonText}
               title           = "Property Details"
               buttonStyle     = {styles.button}

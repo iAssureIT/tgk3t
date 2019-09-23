@@ -26,6 +26,7 @@ import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
 // import { Dropdown } from 'react-native-material-dropdown';
 import SwitchToggle from 'react-native-switch-toggle';
+import RNPickerSelect from 'react-native-picker-select';
 
 const window = Dimensions.get('window');
 
@@ -235,8 +236,8 @@ export default class PropertyDetails1 extends ValidationComponent{
               // console.log("BasicInfo res = ",res);
               // console.log("propertyCode",res.data.propertyCode);
               // this.props.prop_id = res.data.property_id;
-              // this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
-              this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              // this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
               
             }else{
               // alert(" Please Fill all fields")
@@ -868,6 +869,20 @@ export default class PropertyDetails1 extends ValidationComponent{
                           
                         </Picker>
 
+                        
+                         {/* <RNPickerSelect
+                            onValueChange={(stateCode) =>
+                            this.selectState(stateCode)
+                          }
+                            items={[
+                                { label: 'Football', value: 'football' },
+                                { label: 'Baseball', value: 'baseball' },
+                                { label: 'Hockey', value: 'hockey' },
+                            ]}
+
+
+                          />*/}
+
                       
                     </View>
                   </View>
@@ -1119,7 +1134,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                 :
                   <Button
                     onPress         ={this.login.bind(this)}
-                    titleStyle      = {styles.buttonText}
+     logout               titleStyle      = {styles.buttonText}
                     title           = "Sign In"
                     buttonStyle     = {styles.button}
                     containerStyle  = {styles.buttonContainer}

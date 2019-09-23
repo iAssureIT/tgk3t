@@ -37,6 +37,7 @@ export default class MobileScreen extends ValidationComponent {
 		      unitCode : '+91',
           openModal: false,
           mobileNumberError : [],
+          uid:"",
 		    };
 	}
 
@@ -126,8 +127,14 @@ export default class MobileScreen extends ValidationComponent {
           .then((response)=>{
               console.log("here response",response);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
+              this.setState({
+                uid:response.data.user_id,
+                token:response.data.token,
+              });
+              this._storeData();
                 // AsyncStorage.setItem("uid",response.data.user_id);
                 // AsyncStorage.setItem("token",response.data.token);
+
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
                this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobileNumber});
@@ -153,6 +160,15 @@ export default class MobileScreen extends ValidationComponent {
 
 }
 
+_storeData = async () => {
+  try {
+    await AsyncStorage.setItem("uid:this.state.uid");
+    await AsyncStorage.setItem("token:this.state.token");
+
+  } catch (error) {
+    // Error saving data
+  }
+}
 
  displayValidationError = (errorField) =>{
     let error = null;
