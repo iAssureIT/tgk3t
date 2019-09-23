@@ -162,7 +162,6 @@ export default class MobileScreen extends ValidationComponent {
 
 _storeData = async () => {
   try {
-    console.log("here set token")
     await AsyncStorage.setItem("uid",this.state.uid);
     await AsyncStorage.setItem("token",this.state.token);
 

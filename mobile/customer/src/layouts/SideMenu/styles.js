@@ -18,7 +18,7 @@ export default StyleSheet.create({
     borderColor:'#ff0'
   },
   logoImage:{
-  	width:80,
+  	width:70,
   	height:55,
   	marginRight:40
   },

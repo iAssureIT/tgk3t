@@ -73,30 +73,31 @@ export default StyleSheet.create({
   },
   button:{
     width:'100%',
-    backgroundColor: colors.white,
+    backgroundColor: colors.black,
     height: 45,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius:4
   },
   button2:{
-    width:'100%',
+    width:'70%',
     backgroundColor: colors.button,
-    height: 45,
+    height: 55,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius:4
+    borderRadius:4,
+    marginLeft:"15%"
   },
   activeButton:{
     width:'100%',
-    backgroundColor: colors.golden,
+    backgroundColor: colors.white,
     height: 45,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius:4
   },
   buttonText:{
-    color: colors.black,
+    color: colors.white,
     fontSize: 15,
     fontFamily:"Roboto-Regular",
   },
@@ -106,7 +107,7 @@ export default StyleSheet.create({
     fontFamily:"Roboto-Regular",
   },
   activeButtonText:{
-    color: colors.white,
+    color: colors.black,
     fontSize: 15,
     fontFamily:"Roboto-Regular",
   },
@@ -176,7 +177,7 @@ export default StyleSheet.create({
     borderBottomWidth: 14,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderBottomColor: colors.golden,
+    borderBottomColor: colors.white,
     transform: [
       {rotate: '180deg'}
     ],

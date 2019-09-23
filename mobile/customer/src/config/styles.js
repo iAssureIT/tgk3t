@@ -9,7 +9,7 @@ export const colors = {
   primary : '#283593',
   button : '#376bff',
   golden: '#f5ad3e',
-  black: '#333333',
+  black: '#000',
   grey: '#666666', 
   white: '#ffffff',
   white2 : '#f1f1f1',

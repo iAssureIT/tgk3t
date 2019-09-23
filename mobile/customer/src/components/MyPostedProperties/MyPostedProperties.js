@@ -68,16 +68,11 @@ export default class PropertyList extends ValidationComponent{
             console.log("error = ",error.message);
             if(error.message === "Request failed with status code 401")
             {
-                 // swal("Your session is expired! Please login again.","", "error");
                  this.props.history.push("/");
-                 // window.location.reload();
-                 // $(".modal-backdrop").open();
             }
         })
     })
      
-    // console.log("searchResults=>",searchResults);
-    // this.setState({searchResults:searchResults})
     this._retrieveData();
   }
 
@@ -147,23 +142,32 @@ export default class PropertyList extends ValidationComponent{
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={styles.formWrapper}>
-          <Text style={styles.textCenter}>My Posted Properties</Text>
+            <Text style={styles.textCenter}>My Posted Properties</Text>
             {this.state.searchResults && this.state.searchResults.length>0 ? 
               this.state.searchResults.map((prop,i)=>(
               <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('propertyDetails',{propertyDetails:prop})}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
-                  <ImageBackground 
-                    // source={require('../../images/p1.png')}
-                    // source={prop.gallery ? prop.gallery.Images[0].imgPath : null}
-                    source = {{uri:prop.gallery.Images[0].imgPath}}
-                    style={styles.bgImage}
-                    resizeMode="cover"
-                    imageStyle={{borderRadius:4}}
-                  >
-                  </ImageBackground>
+                  {
+                    prop.gallery.Images && prop.gallery.Images.length>0 ?
+                      <ImageBackground 
+                        source = {{uri:prop.gallery.Images[0].imgPath}}
+                        style={styles.bgImage}
+                        resizeMode="cover"
+                        imageStyle={{borderRadius:4}}
+                      >
+                      </ImageBackground>
+                      :
+                      <ImageBackground 
+                        source={require('../../images/1.png') }
+                        style={styles.bgImage}
+                        resizeMode="cover"
+                        imageStyle={{borderRadius:4}}
+                      >
+                    </ImageBackground>
+                   }
                   <View style={{width:'100%',padding:10}}>
                     <View style={{flexDirection:'row'}}>
-                      <Text style={styles.textSmallLight}>{prop.propertyLocation.society}</Text>
+                      <Text style={styles.textSmallLight}>{prop.propertyLocation && prop.propertyLocation.society ? prop.propertyLocation.society : "-"}</Text>
                       <Text style={{marginLeft:15}}>{'\u2022' + " "}</Text>
                       <Text style={styles.textSmallLight}>New Proerty</Text>
                     </View>
@@ -189,7 +193,7 @@ export default class PropertyList extends ValidationComponent{
                             color={colors.golden}
                             containerStyle={{marginRight:5}}
                           />
-                          <Text style={styles.textSmall}>{prop.propertyLocation.area+", "+prop.propertyLocation.city}</Text>
+                          <Text style={styles.textSmall}>{prop.propertyLocation && prop.propertyLocation.area && prop.propertyLocation.city? prop.propertyLocation.area+", "+prop.propertyLocation.city:"-"}</Text>
                         </View>
                         
                       </View>

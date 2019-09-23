@@ -17,12 +17,10 @@ import axios          from 'axios';
 
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
-
-import ValidationComponent from "react-native-form-validator";
-
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors} from '../../config/styles.js';
+import ValidationComponent        from "react-native-form-validator";
+import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                     from './styles.js';
+import {colors}                   from '../../config/styles.js';
 
 const window = Dimensions.get('window');
 
@@ -44,8 +42,16 @@ export default class Home extends ValidationComponent{
   }
 
   componentDidMount(){
+    var uid = this.props.navigation.getParam('uid','No uid');
+    var token = this.props.navigation.getParam('token','No token');
+    this.setState({
+      "uid":uid,
+      "token":token,
+    },()=>{
+      console.log("uid",this.state.uid,"token",this.state.token)
+    })
+    this._retrieveData();
       // axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
-        this._retrieveData();
     }
 
   handleLocation(value){
@@ -136,7 +142,7 @@ export default class Home extends ValidationComponent{
     // const originPage = "post" ;
     const token = this.state.token;
     console.log("state token",this.state.token);
-    if(token!=null){
+    if(token!=="No token"){
       this.props.navigation.navigate('PropertyDetails1');
     }else{
       this.props.navigation.navigate('MobileScreen');
@@ -147,19 +153,13 @@ export default class Home extends ValidationComponent{
     try {
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
-      // const searchData = await AsyncStorage.getItem('searchData');
       console.log("async get token in mob screen out",token);
-
       if (token !== null ) {
-        // We have data!!
       console.log("async get token in mob screen in",token);
 
         this.setState({token:token})
-        // this.setState({token:token})
-        // this.setState({searchData:searchData})
       }
     } catch (error) {
-      // Error retrieving data
     }
   }
   render(){
@@ -173,7 +173,7 @@ export default class Home extends ValidationComponent{
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <ImageBackground
-            source={require('../../images/Home-Screen.png')}
+            source={require('../../images/lvyobg.png')}
             style={styles.bgImage}
             resizeMode="cover"
           >
@@ -282,7 +282,10 @@ export default class Home extends ValidationComponent{
                 >
                   <View >
                     <Image 
-                      source={require('../../images/key.png') }
+                      source={require('../../images/search.jpg') }
+                      style={styles.searchBtnWrapper}
+                      style={{ width: 20 }}
+                      resizeMode="contain"
                     />
                   </View>
                 </TouchableOpacity>
@@ -297,7 +300,7 @@ export default class Home extends ValidationComponent{
             </View>
 
             <View style={[styles.alignCenter,styles.marginBottom30]}>
-              <Text style={styles.heading2}>Tenants/Buyers</Text>
+              <Text style={styles.heading2}>For our Buyers / Tenants</Text>
               <Text style={styles.heading3}>Upto 50% Discount</Text>
               <Text style={styles.heading3}>On Brokerage</Text>
               <Text style={styles.heading3}>for Renting/Buying with us!</Text>

@@ -58,17 +58,6 @@ export default class MobileScreen extends ValidationComponent {
                  uid         : uid,
                  token       : token,
                });
-    // AsyncStorage.multiGet(['message','user_id','originalotp'])
-    //   .then((data)=>{
-    //     console.log('user',data[0][1])
-    //          message = data[0][1]
-    //          user_id = data[1][1]
-    //          originalotp = data[2][1]
-
-    //          console.log("originalotp in otp screen",originalotp);
-    //            
-
-    // })
 
   }
 

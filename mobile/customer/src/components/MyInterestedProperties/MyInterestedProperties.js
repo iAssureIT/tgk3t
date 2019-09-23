@@ -145,7 +145,7 @@ export default class PropertyList extends ValidationComponent{
       .then(res=>{
          //After Express Interest, again get all properties
           axios
-            .post('/api/search/properties/',this.state.searchData)
+            .get('/api/interestedProperties/list/'+this.state.uid)
             .then(resultData =>{
               axios
                 .get('/api/properties/'+property_id)
@@ -231,7 +231,7 @@ export default class PropertyList extends ValidationComponent{
           .then(
             (res)=>{                
                 axios
-                  .post('/api/search/properties/',this.state.searchData)
+                  .get('/api/interestedProperties/list/'+this.state.uid)
                   .then(resultData =>{
                       this.setState({
                         searchResults  : resultData.data,
@@ -269,6 +269,8 @@ export default class PropertyList extends ValidationComponent{
               this.state.searchResults.map((prop,i)=>(
               <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('propertyDetails',{propertyDetails:prop})}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
+                  {
+                  prop.gallery.Images && prop.gallery.Images.length>0 ?
                   <ImageBackground 
                     // source={require('../../images/p1.png')}
                     // source={prop.gallery ? prop.gallery.Images[0].imgPath : null}
@@ -277,57 +279,16 @@ export default class PropertyList extends ValidationComponent{
                     resizeMode="cover"
                     imageStyle={{borderRadius:4}}
                   >
-                  {this.state.token?
-                    prop.isInterested ?
-                      <Button
-                        onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
-                        titleStyle      = {styles.buttonText2}
-                        title           = "Interest Shown"
-                        buttonStyle     = {styles.button3}
-                        containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                        iconLeft
-                        icon = {<Icon
-                          name="thumbs-up" 
-                          type="font-awesome"
-                          size={20}
-                          color={colors.white}
-                          containerStyle={{marginRight:5}}
-                        />}
-                        />
-                        :
-                        <Button
-                            onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
-                            titleStyle      = {styles.buttonText2}
-                            title           = "Express Interest"
-                            buttonStyle     = {styles.button2}
-                            containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                            iconLeft
-                            icon = {<Icon
-                              name="thumbs-o-up" 
-                              type="font-awesome"
-                              size={20}
-                              color={colors.white}
-                              containerStyle={{marginRight:5}}
-                        />}
-                        />
-                        :
-                      <Button
-                          onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
-                          titleStyle      = {styles.buttonText2}
-                          title           = "Express Interest"
-                          buttonStyle     = {styles.button2}
-                          containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                          iconLeft
-                          icon = {<Icon
-                            name="thumbs-o-up" 
-                            type="font-awesome"
-                            size={20}
-                            color={colors.white}
-                            containerStyle={{marginRight:5}}
-                          />}
-                        />
-                      }
                   </ImageBackground>
+                   :
+                   <ImageBackground 
+                      source={require('../../images/1.png') }
+                      style={styles.bgImage}
+                      resizeMode="cover"
+                      imageStyle={{borderRadius:4}}
+                    >
+                    </ImageBackground>
+                  }
                   <View style={{width:'100%',padding:10}}>
                     <View style={{flexDirection:'row'}}>
                       <Text style={styles.textSmallLight}>{prop.propertyLocation.society}</Text>

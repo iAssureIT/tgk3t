@@ -249,57 +249,6 @@ export default class PropertyDetails extends ValidationComponent{
                             buttonStyle     = {styles.button4}
                             containerStyle  = {[styles.buttonContainer4]}
                           />
-
-                          {this.state.token?
-                            propertyProfile.isInterested ?
-                              <Button
-                                onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
-                                titleStyle      = {styles.buttonText2}
-                                title           = "Interest Shown"
-                                buttonStyle     = {styles.button3}
-                                containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                                iconLeft
-                                icon = {<Icon
-                                  name="thumbs-up" 
-                                  type="font-awesome"
-                                  size={20}
-                                  color={colors.white}
-                                  containerStyle={{marginRight:5}}
-                                />}
-                                />
-                                :
-                                <Button
-                                    onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
-                                    titleStyle      = {styles.buttonText2}
-                                    title           = "Express Interest"
-                                    buttonStyle     = {styles.button2}
-                                    containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                                    iconLeft
-                                    icon = {<Icon
-                                      name="thumbs-o-up" 
-                                      type="font-awesome"
-                                      size={20}
-                                      color={colors.white}
-                                      containerStyle={{marginRight:5}}
-                                />}
-                                />
-                                :
-                              <Button
-                                  onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
-                                  titleStyle      = {styles.buttonText2}
-                                  title           = "Express Interest"
-                                  buttonStyle     = {styles.button2}
-                                  containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                                  iconLeft
-                                  icon = {<Icon
-                                    name="thumbs-o-up" 
-                                    type="font-awesome"
-                                    size={20}
-                                    color={colors.white}
-                                    containerStyle={{marginRight:5}}
-                                  />}
-                                />
-                              }
                         </View>
                       </ImageBackground>
                   </View>
@@ -317,57 +266,6 @@ export default class PropertyDetails extends ValidationComponent{
                         buttonStyle     = {styles.button4}
                         containerStyle  = {[styles.buttonContainer4]}
                       />
-
-                      {this.state.token?
-                        propertyProfile.isInterested ?
-                          <Button
-                            onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
-                            titleStyle      = {styles.buttonText2}
-                            title           = "Interest Shown"
-                            buttonStyle     = {styles.button3}
-                            containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                            iconLeft
-                            icon = {<Icon
-                              name="thumbs-up" 
-                              type="font-awesome"
-                              size={20}
-                              color={colors.white}
-                              containerStyle={{marginRight:5}}
-                            />}
-                            />
-                            :
-                            <Button
-                                onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
-                                titleStyle      = {styles.buttonText2}
-                                title           = "Express Interest"
-                                buttonStyle     = {styles.button2}
-                                containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                                iconLeft
-                                icon = {<Icon
-                                  name="thumbs-o-up" 
-                                  type="font-awesome"
-                                  size={20}
-                                  color={colors.white}
-                                  containerStyle={{marginRight:5}}
-                            />}
-                            />
-                            :
-                          <Button
-                              onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
-                              titleStyle      = {styles.buttonText2}
-                              title           = "Express Interest"
-                              buttonStyle     = {styles.button2}
-                              containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                              iconLeft
-                              icon = {<Icon
-                                name="thumbs-o-up" 
-                                type="font-awesome"
-                                size={20}
-                                color={colors.white}
-                                containerStyle={{marginRight:5}}
-                              />}
-                            />
-                          }
                     </View>
                   </ImageBackground>
 
@@ -694,20 +592,23 @@ export default class PropertyDetails extends ValidationComponent{
             </View>
 
             <View style={[styles.divider,styles.marginBottom15]}></View>
-
-            <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Video</Text>
-            <View style={[{width:'100%'},styles.marginBottom15]}>
-              <Video 
-                source={{uri:"https://tgk3t.s3.amazonaws.com/propertiesImages/Luxury HolidayVillas.mp4",}}   // Can be a URL or a local file.
-                repeats
-                controls={true}
-                resizeMode={"stretch"}
-                style={{height:150,width:'100%'}} 
-              />
-            </View>
-
-             <View style={[styles.divider,styles.marginBottom15]}></View>
-
+            {propertyProfile.gallery.video && propertyProfile.gallery.video!=="" ?
+              <View>
+                <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Video</Text>
+                <View style={[{width:'100%'},styles.marginBottom15]}>
+                  <Video 
+                    source={{uri:propertyProfile.gallery.video}}   // Can be a URL or a local file.
+                    repeats
+                    controls={true}
+                    resizeMode={"stretch"}
+                    style={{height:150,width:'100%'}} 
+                  />
+                </View>
+                <View style={[styles.divider,styles.marginBottom15]}></View>
+              </View>  
+              :
+              null
+            }
             <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Location</Text>
             {/*<MapView
               ref={map => this.map = map}
@@ -721,8 +622,7 @@ export default class PropertyDetails extends ValidationComponent{
                   latitude: 45.524698,
                   longitude: -122.6655507,
                 }}
-              >
-              </MapView.Marker>
+              />
             </MapView>*/}
 
             <View style={[styles.divider,styles.marginBottom15]}></View>

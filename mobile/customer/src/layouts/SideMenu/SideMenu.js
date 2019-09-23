@@ -41,23 +41,31 @@ export default class SideMenu extends React.Component {
     try {
       const uid = await AsyncStorage.getItem('uid');
       const token = await AsyncStorage.getItem('token');
-      if (uid !== null) {
-        // We have data!!
+      if (uid !== null && token !== null) {
         this.setState({uid:uid})
         this.setState({token:token})
+      }
+    } catch (error) {
+    }
+  }
+
+
+	logout= async () => {
+    try {
+      const uid = await AsyncStorage.removeItem('uid');
+      const token = await AsyncStorage.removeItem('token');
+      if (uid == null && token == null) {
+        this.setState({uid:uid})
+        this.setState({token:token})
+        if(uid==null && token == null){
+    		this.props.navigation.navigate('Home',{uid:uid,token:token});
+        }
       }
     } catch (error) {
       // Error retrieving data
     }
   }
 
-
-	logout(){
-		// onPress={()=>this.navigateScreen('Logout')}
-	console.log("here i get call");
-	AsyncStorage.removeItem("token");
-    this.props.navigation.navigate('Home');
-	}
 
   render(){
     const { navigation } = this.props;
@@ -72,11 +80,12 @@ export default class SideMenu extends React.Component {
         	<Image
             style={styles.logoImage}
             source={require("../../images/logo.png")}
+            resizeMode="contain"
           />
         </ImageBackground>
 
         <View style={styles.menuWrapper}>
-        	<TouchableOpacity onPress={()=>this.navigateScreen('Home')}>
+        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('Home',{uid:this.state.uid,token:this.state.token})}>
 	        	<View style={styles.menu}>
 	        		<Icon 
 	              size={18} 
@@ -88,7 +97,7 @@ export default class SideMenu extends React.Component {
 	        		<Text style={styles.menuText}>Home</Text>
 	        	</View>
         	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.navigateScreen('SearchProperty')}>
+        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('SearchProperty',{uid:this.state.uid,token:this.state.token})}>
 	        	<View style={styles.menu}>
 	        		<Icon 
 	              size={20} 
@@ -100,7 +109,7 @@ export default class SideMenu extends React.Component {
 	        		<Text style={styles.menuText}>Search Property</Text>
 	        	</View>
         	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.navigateScreen('SignUp')}>
+        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
 	        	<View style={styles.menu}>
 	        		<Icon 
 	              size={18} 
@@ -136,19 +145,33 @@ export default class SideMenu extends React.Component {
 	        		<Text style={styles.menuText}>My Interested</Text>
 	        	</View>
         	</TouchableOpacity>
-                 
-        	<TouchableOpacity    onPress = {this.logout.bind(this)}>
-	        	<View style={styles.menu}>
-	        		<Icon 
-	              size={18} 
-	              name='power' 
-	              type='material-community' 
-	              color={colors.primary} 
-	              containerStyle={styles.iconContainer}
-	            />
-	        		<Text style={styles.menuText}>Logout</Text>
-	        	</View>
-        	</TouchableOpacity>
+            {AsyncStorage.getItem('token') ?  
+	        	<TouchableOpacity onPress={this.logout.bind(this)}>
+		        	<View style={styles.menu}>
+		        		<Icon 
+		              size={18} 
+		              name='power' 
+		              type='material-community' 
+		              color={colors.primary} 
+		              containerStyle={styles.iconContainer}
+		            />
+		        		<Text style={styles.menuText}>Logout</Text>
+		        	</View>
+	        	</TouchableOpacity>
+	        	:
+	        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
+		        	<View style={styles.menu}>
+		        		<Icon 
+		              size={18} 
+		              name='power' 
+		              type='material-community' 
+		              color={colors.primary} 
+		              containerStyle={styles.iconContainer}
+		            />
+		        		<Text style={styles.menuText}>Login</Text>
+		        	</View>
+	        	</TouchableOpacity>
+	        }
         </View>
 
   		</ScrollView>
