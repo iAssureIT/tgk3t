@@ -621,7 +621,7 @@ handleMobileChange(value){
   }
 }
 
-MobileScreen.defaultProps = {
+PropertyDetails6.defaultProps = {
   messages: {
     en: {
       mobileNo: 'Enter a valid mobile number.',

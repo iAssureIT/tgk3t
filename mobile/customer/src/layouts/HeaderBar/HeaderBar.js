@@ -40,6 +40,8 @@ export default class NotificationHeader extends ValidationComponent {
           <View>
             <Image 
               source={require('../../images/logo.png') }
+              style={{ width: 70 }}
+              resizeMode="contain"
             />
           </View>
         }

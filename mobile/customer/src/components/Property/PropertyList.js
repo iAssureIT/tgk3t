@@ -91,6 +91,7 @@ export default class PropertyList extends ValidationComponent{
       const searchData = await AsyncStorage.getItem('searchData');
       if (uid !== null && token !== null) {
         // We have data!!
+        console.log("token",token)
         this.setState({uid:uid})
         this.setState({token:token})
         this.setState({searchData:searchData})
@@ -106,6 +107,7 @@ export default class PropertyList extends ValidationComponent{
       property_id : property_id,
       buyer_id    : this.state.uid,
     }
+    console.log("formValues",formValues);
     if(isInterested == false){
      axios
       .post('/api/interestedProperties/',formValues)
@@ -187,6 +189,11 @@ export default class PropertyList extends ValidationComponent{
       })
      .catch((error)=>{
           console.log("error = ",error);
+           if(error.message === "Request failed with status code 401")
+          {
+            Alert.alert('Your session is expired!', 'Please login again.');
+              this.props.navigation.navigate('MobileScreen')
+          }
       });
       }else{
         var deleteValues = {
@@ -211,6 +218,8 @@ export default class PropertyList extends ValidationComponent{
           )
          .catch((error)=>{
               console.log("error = ",error);
+          this.props.navigation.navigate('MobileScreen')
+
         });
       }
     
@@ -266,15 +275,74 @@ export default class PropertyList extends ValidationComponent{
               this.state.searchResults.map((prop,i)=>(
               <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('propertyDetails',{propertyDetails:prop})}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
-                  <ImageBackground 
-                    // source={require('../../images/p1.png')}
-                    // source={prop.gallery ? prop.gallery.Images[0].imgPath : null}
-                    source = {{uri:prop.gallery.Images && prop.gallery.Images.length>0 ? prop.gallery.Images[0].imgPath : require('../../images/p1.png')}}
-                    style={styles.bgImage}
-                    resizeMode="cover"
-                    imageStyle={{borderRadius:4}}
-                  >
+                  {
+                    prop.gallery.Images && prop.gallery.Images.length>0 ?
+                    <ImageBackground 
+                      source = {{uri:prop.gallery.Images[0].imgPath}}
+                      style={styles.bgImage}
+                      resizeMode="cover"
+                      imageStyle={{borderRadius:4}}
+                    >
                   {this.state.token?
+                    prop.isInterested ?
+                      <Button
+                        onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                        titleStyle      = {styles.buttonText2}
+                        title           = "Interest Shown"
+                        buttonStyle     = {styles.button3}
+                        containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                        iconLeft
+                        icon = {<Icon
+                          name="thumbs-up" 
+                          type="font-awesome"
+                          size={20}
+                          color={colors.white}
+                          containerStyle={{marginRight:5}}
+                        />}
+                        />
+                        :
+                        <Button
+                            onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                            titleStyle      = {styles.buttonText2}
+                            title           = "Express Interest"
+                            buttonStyle     = {styles.button2}
+                            containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                            iconLeft
+                            icon = {<Icon
+                              name="thumbs-o-up" 
+                              type="font-awesome"
+                              size={20}
+                              color={colors.white}
+                              containerStyle={{marginRight:5}}
+                        />}
+                        />
+                        :
+                      <Button
+                          // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
+                          onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                          titleStyle      = {styles.buttonText2}
+                          title           = "Express Interest"
+                          buttonStyle     = {styles.button2}
+                          containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                          iconLeft
+                          icon = {<Icon
+                            name="thumbs-o-up" 
+                            type="font-awesome"
+                            size={20}
+                            color={colors.white}
+                            containerStyle={{marginRight:5}}
+                          />}
+                        />
+                      }
+                  </ImageBackground>
+                  :
+                   <ImageBackground 
+                      source={require('../../images/1.png') }
+                      style={styles.bgImage}
+                      resizeMode="cover"
+                      imageStyle={{borderRadius:4}}
+                    >
+                    {this.state.token?
                     prop.isInterested ?
                       <Button
                         onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
@@ -324,7 +392,8 @@ export default class PropertyList extends ValidationComponent{
                           />}
                         />
                       }
-                  </ImageBackground>
+                    </ImageBackground>
+                  }
                   <View style={{width:'100%',padding:10}}>
                     <View style={{flexDirection:'row'}}>
                       <Text style={styles.textSmallLight}>{prop.propertyLocation.society}</Text>

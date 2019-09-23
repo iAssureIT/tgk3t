@@ -24,4 +24,8 @@ export default StyleSheet.create({
     elevation: 2
   },
 
+  logoSize:{
+    height:10,
+  }
+
 });

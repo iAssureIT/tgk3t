@@ -909,15 +909,12 @@ export default class PropertyDetails3 extends ValidationComponent{
                
                 </React.Fragment> 
               ))
-
                 :
                 null
               }
             </View>
 
-
             <Button
-            
               onPress         = {this.submitFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
               titleStyle      = {styles.buttonText}
@@ -959,9 +956,6 @@ export default class PropertyDetails3 extends ValidationComponent{
                     />}
                   />
                 */}
-
-
-
           </View>
         </ScrollView>
      

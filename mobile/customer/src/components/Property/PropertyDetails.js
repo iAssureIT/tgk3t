@@ -234,7 +234,7 @@ export default class PropertyDetails extends ValidationComponent{
                   style={{minWidth: '100%' }} 
                   contentContainerStyle={{ minWidth: '100%',marginBottom:0 }}
                 >
-                {
+                {propertyProfile.gallery.Images &&  propertyProfile.gallery.Images.length>0 ?
                 propertyProfile.gallery.Images.map((data,index)=>(
                   <View key={index} style={{width:(window.width),height:300}} >
                     <ImageBackground 
@@ -304,6 +304,72 @@ export default class PropertyDetails extends ValidationComponent{
                       </ImageBackground>
                   </View>
                 ))
+                :
+                 <ImageBackground 
+                    source={require('../../images/1.png') }
+                    style={styles.bgImage2}
+                    resizeMode="cover"
+                  >
+                    <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
+                      <Button
+                        titleStyle      = {styles.buttonText}
+                        title           = {propertyProfile.gallery.Images.length+" Photos"}
+                        buttonStyle     = {styles.button4}
+                        containerStyle  = {[styles.buttonContainer4]}
+                      />
+
+                      {this.state.token?
+                        propertyProfile.isInterested ?
+                          <Button
+                            onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
+                            titleStyle      = {styles.buttonText2}
+                            title           = "Interest Shown"
+                            buttonStyle     = {styles.button3}
+                            containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                            iconLeft
+                            icon = {<Icon
+                              name="thumbs-up" 
+                              type="font-awesome"
+                              size={20}
+                              color={colors.white}
+                              containerStyle={{marginRight:5}}
+                            />}
+                            />
+                            :
+                            <Button
+                                onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
+                                titleStyle      = {styles.buttonText2}
+                                title           = "Express Interest"
+                                buttonStyle     = {styles.button2}
+                                containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                                iconLeft
+                                icon = {<Icon
+                                  name="thumbs-o-up" 
+                                  type="font-awesome"
+                                  size={20}
+                                  color={colors.white}
+                                  containerStyle={{marginRight:5}}
+                            />}
+                            />
+                            :
+                          <Button
+                              onPress         = {()=>this.interestBtn(propertyProfile._id,propertyProfile.isInterested)}
+                              titleStyle      = {styles.buttonText2}
+                              title           = "Express Interest"
+                              buttonStyle     = {styles.button2}
+                              containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                              iconLeft
+                              icon = {<Icon
+                                name="thumbs-o-up" 
+                                type="font-awesome"
+                                size={20}
+                                color={colors.white}
+                                containerStyle={{marginRight:5}}
+                              />}
+                            />
+                          }
+                    </View>
+                  </ImageBackground>
                 }
               </ScrollView>
             </View>
