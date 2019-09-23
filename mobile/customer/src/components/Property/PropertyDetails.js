@@ -370,6 +370,7 @@ export default class PropertyDetails extends ValidationComponent{
                           }
                     </View>
                   </ImageBackground>
+
                 }
               </ScrollView>
             </View>

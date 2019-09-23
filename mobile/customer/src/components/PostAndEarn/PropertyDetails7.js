@@ -48,9 +48,7 @@ const options = {
     skipBackup: true,
     path: 'images',
   },
-
-
-    
+  
 };
 export default class PropertyDetails7 extends ValidationComponent{
   constructor(props){

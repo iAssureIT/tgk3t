@@ -91,7 +91,6 @@ export default class PropertyList extends ValidationComponent{
       const searchData = await AsyncStorage.getItem('searchData');
       if (uid !== null && token !== null) {
         // We have data!!
-        console.log("token",token)
         this.setState({uid:uid})
         this.setState({token:token})
         this.setState({searchData:searchData})
@@ -107,7 +106,6 @@ export default class PropertyList extends ValidationComponent{
       property_id : property_id,
       buyer_id    : this.state.uid,
     }
-    console.log("formValues",formValues);
     if(isInterested == false){
      axios
       .post('/api/interestedProperties/',formValues)
@@ -218,8 +216,6 @@ export default class PropertyList extends ValidationComponent{
           )
          .catch((error)=>{
               console.log("error = ",error);
-          this.props.navigation.navigate('MobileScreen')
-
         });
       }
     
@@ -318,7 +314,6 @@ export default class PropertyList extends ValidationComponent{
                         />
                         :
                       <Button
-                          // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
                           onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
                           titleStyle      = {styles.buttonText2}
                           title           = "Express Interest"
