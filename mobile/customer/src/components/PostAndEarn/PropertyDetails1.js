@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Image,TextInput,
   Alert,
+  StyleSheet,
   Picker
 } from 'react-native';
 import Hr from "react-native-hr-component";
@@ -29,6 +30,13 @@ import SwitchToggle from 'react-native-switch-toggle';
 import RNPickerSelect from 'react-native-picker-select';
 
 const window = Dimensions.get('window');
+
+const sports = [
+  {
+    label: 'Select state',
+    value: 'state',
+  },
+];
 
 export default class PropertyDetails1 extends ValidationComponent{
   constructor(props){
@@ -107,7 +115,7 @@ export default class PropertyDetails1 extends ValidationComponent{
       house           : '',
       landmark        : '',
       listofStates    : '',
-      listofStates    : "",
+          
       listofBlocks    : "",
       listofCities    : "",
       onlyState       : "",
@@ -160,14 +168,15 @@ export default class PropertyDetails1 extends ValidationComponent{
                     var stateList=[];
                     for (var i = 0; i < allStateData.length; i++) {
                         var state = {
+                          label:allStateData[i].stateName,
                           value:allStateData[i].stateCode,
-                          name :allStateData[i].stateName,
                         }
                        stateList.push(state);
                     }
                     this.setState({
                       onlyState : stateList,
                     },()=>{
+                      console.log("onlyState",this.state.onlyState);
                     })
 
 
@@ -231,11 +240,7 @@ export default class PropertyDetails1 extends ValidationComponent{
           .then( (res) =>{
             console.log("here 1st form result",res.data);
             if(res.status === 200){
-              // console.log("here prop id",res.data.property_id);
-              // localStorage.setItem('propertyId',res.data.property_id)
-              // console.log("BasicInfo res = ",res);
-              // console.log("propertyCode",res.data.propertyCode);
-              // this.props.prop_id = res.data.property_id;
+
               this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
               // this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
               
@@ -286,21 +291,23 @@ export default class PropertyDetails1 extends ValidationComponent{
                 this.setState({
                   listofCities : response.data,
                 },()=>{
-                   // var allCityData = this.state.listofCities;
-                   //  // cityname = allCityData.map(a=>a.cityName);
-                   //  var cityList=[];
-                   //  for (var i = 0; i < allCityData.length; i++) {
-                   //      var city = {
-                   //        value:allCityData[i].cityName,
-                   //      }
-                   //     cityList.push(city);
-                   //  }
-                   //  this.setState({
-                   //    onlyCity : cityList,
-                   //  },()=>{
-                   //  // console.log("only city name",this.state.onlyCity);
+                   var allCityData = this.state.listofCities;
+                    // cityname = allCityData.map(a=>a.cityName);
+                    var cityList=[];
+                    for (var i = 0; i < allCityData.length; i++) {
+                        var city = {
+                          label:allCityData[i].cityName,
+                          value:allCityData[i].cityName,
+                          // value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
+                        }
+                       cityList.push(city);
+                    }
+                    this.setState({
+                      onlyCity : cityList,
+                    },()=>{
+                    // console.log("only city name",this.state.onlyCity);
 
-                   //  })
+                    })
                 })
 
                
@@ -324,21 +331,22 @@ export default class PropertyDetails1 extends ValidationComponent{
                 this.setState({
                   listofAreas : response.data
                 },()=>{
-                   // var allAreaData = this.state.listofAreas;
-                   //  // cityname = allCityData.map(a=>a.cityName);
-                   //  var areaList=[];
-                   //  for (var i = 0; i < allAreaData.length; i++) {
-                   //      var area = {
-                   //        value:allAreaData[i].areaName,
-                   //      }
-                   //     areaList.push(area);
-                   //  }
-                   //  this.setState({
-                   //    onlyArea : areaList,
-                   //  },()=>{
-                   //  // console.log("onlyArea name",this.state.onlyArea);
+                   var allAreaData = this.state.listofAreas;
+                    // cityname = allCityData.map(a=>a.cityName);
+                    var areaList=[];
+                    for (var i = 0; i < allAreaData.length; i++) {
+                        var area = {
+                          label:allAreaData[i].areaName,
+                          value:allAreaData[i].areaName,
+                        }
+                       areaList.push(area);
+                    }
+                    this.setState({
+                      onlyArea : areaList,
+                    },()=>{
+                    // console.log("onlyArea name",this.state.onlyArea);
 
-                   //  })
+                    })
                 })
             }).catch((error)=>{
                                 console.log("error = ",error);
@@ -359,22 +367,23 @@ export default class PropertyDetails1 extends ValidationComponent{
               this.setState({
                 subAreaList : response.data
               },()=>{
-                   // var allSubAreaData= this.state.subAreaList;
+                   var allSubAreaData= this.state.subAreaList;
 
-                   //  // cityname = allCityData.map(a=>a.cityName);
-                   //  var subareaList=[];
-                   //  for (var i = 0; i < allSubAreaData.length; i++) {
-                   //      var subarea = {
-                   //        value:allSubAreaData[i].subareaName,
-                   //      }
-                   //     subareaList.push(subarea);
-                   //  }
-                   //  this.setState({
-                   //    onlySubArea : subareaList,
-                   //  },()=>{
-                   //  // console.log("onlySubArea name",this.state.onlySubArea);
+                    // cityname = allCityData.map(a=>a.cityName);
+                    var subareaList=[];
+                    for (var i = 0; i < allSubAreaData.length; i++) {
+                        var subarea = {
+                          label:allSubAreaData[i].subareaName,
+                          value:allSubAreaData[i].subareaName,
+                        }
+                       subareaList.push(subarea);
+                    }
+                    this.setState({
+                      onlySubArea : subareaList,
+                    },()=>{
+                    // console.log("onlySubArea name",this.state.onlySubArea);
 
-                   //  })
+                    })
                 })
           }).catch((error)=>{
                                 console.log("error = ",error);
@@ -416,6 +425,7 @@ export default class PropertyDetails1 extends ValidationComponent{
 
   selectState(stateCode){
     var selectedState = stateCode;
+    console.log("selectedState",selectedState);
     this.setState({
         stateCode : selectedState,
       });
@@ -428,21 +438,24 @@ export default class PropertyDetails1 extends ValidationComponent{
           this.setState({
             listofCities : response.data,
           },()=>{
-                   // var allCityData = this.state.listofCities;
-                   //  // cityname = allCityData.map(a=>a.cityName);
-                   //  var cityList=[];
-                   //  for (var i = 0; i < allCityData.length; i++) {
-                   //      var city = {
-                   //        value:allCityData[i].cityName,
-                   //      }
-                   //     cityList.push(city);
-                   //  }
-                   //  this.setState({
-                   //    onlyCity : cityList,
-                   //  },()=>{
-                   //  // console.log("only city name",this.state.onlyCity);
+                   var allCityData = this.state.listofCities;
+                    // cityname = allCityData.map(a=>a.cityName);
+                    var cityList=[];
+                    for (var i = 0; i < allCityData.length; i++) {
+                        var city = {
+                          label:allCityData[i].cityName,
+                          value:allCityData[i].cityName,
+                          // value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
 
-                   //  })
+                        }
+                       cityList.push(city);
+                    }
+                    this.setState({
+                      onlyCity : cityList,
+                    },()=>{
+                    // console.log("only city name",this.state.onlyCity);
+
+                    })
                 })
       }).catch((error)=>{
                         console.log("error = ",error);
@@ -475,25 +488,26 @@ export default class PropertyDetails1 extends ValidationComponent{
         method: 'get',
         url: url,
       }).then((response)=> {
-          // console.log("here area",response.data);
+          console.log("here area",response.data);
           this.setState({
             listofAreas : response.data
           },()=>{
-                   // var allAreaData = this.state.listofAreas;
-                   //  // cityname = allCityData.map(a=>a.cityName);
-                   //  var areaList=[];
-                   //  for (var i = 0; i < allAreaData.length; i++) {
-                   //      var area = {
-                   //        value:allAreaData[i].areaName,
-                   //      }
-                   //     areaList.push(area);
-                   //  }
-                   //  this.setState({
-                   //    onlyArea : areaList,
-                   //  },()=>{
-                   //  // console.log("onlyArea name",this.state.onlyArea);
+                   var allAreaData = this.state.listofAreas;
+                    // cityname = allCityData.map(a=>a.cityName);
+                    var areaList=[];
+                    for (var i = 0; i < allAreaData.length; i++) {
+                        var area = {
+                          label:allAreaData[i].areaName,
+                          value:allAreaData[i].areaName,
+                        }
+                       areaList.push(area);
+                    }
+                    this.setState({
+                      onlyArea : areaList,
+                    },()=>{
+                    // console.log("onlyArea name",this.state.onlyArea);
 
-                   //  })
+                    })
                 })
       }).catch((error)=>{
                         console.log("error = ",error);
@@ -508,16 +522,22 @@ export default class PropertyDetails1 extends ValidationComponent{
 
   selectArea(areaName){
     // event.preventDefault();
-    var areaName = areaName;
-
-
+    var areaName = this.state.areaName;
+    console.log("areaName",areaName);
+    // var data = "411028";
     if(this.state.listofAreas.length > 0){
+      console.log("all area data",this.state.listofAreas);
       var index = this.state.listofAreas.findIndex( x => x.areaName === areaName);
-    }
-    this.setState({
+      console.log("here index",index);
+
+       this.setState({
       areaName : areaName,
       pincode : this.state.listofAreas[index].pincode,
-    });
+    })
+    
+    }
+
+    
 
   var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+areaName+'/' ;
 
@@ -528,22 +548,23 @@ export default class PropertyDetails1 extends ValidationComponent{
         this.setState({
           subAreaList : response.data
         },()=>{
-                   // var allSubAreaData= this.state.subAreaList;
+                   var allSubAreaData= this.state.subAreaList;
 
-                   //  // cityname = allCityData.map(a=>a.cityName);
-                   //  var subareaList=[];
-                   //  for (var i = 0; i < allSubAreaData.length; i++) {
-                   //      var subarea = {
-                   //        value:allSubAreaData[i].subareaName,
-                   //      }
-                   //     subareaList.push(subarea);
-                   //  }
-                   //  this.setState({
-                   //    onlySubArea : subareaList,
-                   //  },()=>{
-                   //  // console.log("onlySubArea name",this.state.onlySubArea);
+                    // cityname = allCityData.map(a=>a.cityName);
+                    var subareaList=[];
+                    for (var i = 0; i < allSubAreaData.length; i++) {
+                        var subarea = {
+                          label:allSubAreaData[i].subareaName,
+                          value:allSubAreaData[i].subareaName,
+                        }
+                       subareaList.push(subarea);
+                    }
+                    this.setState({
+                      onlySubArea : subareaList,
+                    },()=>{
+                    // console.log("onlySubArea name",this.state.onlySubArea);
 
-                   //  })
+                    })
                 })
     }).catch((error)=>{
                         console.log("error = ",error);
@@ -671,6 +692,29 @@ export default class PropertyDetails1 extends ValidationComponent{
    
     const { navigation } = this.props;
     let {propertyHolder} = this.state;
+    const placeholderState = {
+      label: 'State',
+      value: null,
+      color: '#9EA0A4',
+    };
+     const placeholderCity = {
+      label: 'City',
+      value: null,
+      color: '#9EA0A4',
+    };
+    const placeholderArea = {
+      label: 'Area/Suburb',
+      value: null,
+      color: '#9EA0A4',
+    };
+     const placeholderSubarea = {
+      label: 'Sub-Area',
+      value: null,
+      color: '#9EA0A4',
+    };
+
+
+
     // console.log("this.props.navigation = ",this.props.navigation);
     return (
       <React.Fragment>
@@ -837,7 +881,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                   <View style={[{borderColor: colors.black,
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                     <View style={styles.inputTextWrapperFull}>
-                        <Picker
+                        {/*<Picker
                           selectedValue       ={this.state.stateCode}
                           style               ={[styles.ddStyle,{height:40}]}
                           placeholder         = "State"
@@ -867,21 +911,19 @@ export default class PropertyDetails1 extends ValidationComponent{
                             null
                           }
                           
-                        </Picker>
+                        </Picker>*/}
 
                         
-                         {/* <RNPickerSelect
+
+                          <RNPickerSelect
                             onValueChange={(stateCode) =>
                             this.selectState(stateCode)
                           }
-                            items={[
-                                { label: 'Football', value: 'football' },
-                                { label: 'Baseball', value: 'baseball' },
-                                { label: 'Hockey', value: 'hockey' },
-                            ]}
-
-
-                          />*/}
+                          value                  = {this.state.stateCode}
+                          style                  = {pickerSelectStyles}
+                          placeholder            = {placeholderState}
+                          items                  = {this.state.onlyState.length>0 ? this.state.onlyState : sports }
+                          />
 
                       
                     </View>
@@ -898,7 +940,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                     <View style={styles.inputTextWrapperFull}>
                
-                       <Picker
+                       {/*<Picker
                           selectedValue       ={this.state.cityName}
                           style               ={[styles.ddStyle,{height:40}]}
                           placeholder         = "City"
@@ -929,7 +971,17 @@ export default class PropertyDetails1 extends ValidationComponent{
                             <Picker.Item label="Select State first" />
                           }
                           
-                        </Picker>
+                        </Picker>*/}
+
+                         <RNPickerSelect
+                            onValueChange={(cityName) =>
+                            this.selectCity(cityName)
+                          }
+                          value                  = {this.state.cityName}
+                          style                  = {pickerSelectStyles}
+                          placeholder            = {placeholderCity}
+                          items                  = {this.state.onlyCity.length>0 ? this.state.onlyCity : sports }
+                          />
 
                     </View>
                   </View>
@@ -945,7 +997,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                     <View style={styles.inputTextWrapperFull}>
                        
-
+{/*
                       <Picker
                           selectedValue       ={this.state.areaName}
                           style               ={[styles.ddStyle,{height:40}]}
@@ -977,7 +1029,17 @@ export default class PropertyDetails1 extends ValidationComponent{
                             
                           }
                           
-                        </Picker>
+                        </Picker>*/}
+                        {console.log("this.state.onlyArea in render",this.state.onlyArea)}
+                        <RNPickerSelect
+                            onValueChange={(areaName) =>
+                            this.selectArea(areaName)
+                          }
+                          value                  = {this.state.areaName}
+                          style                  = {pickerSelectStyles}
+                          placeholder            = {placeholderArea}
+                          items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : sports }
+                          />
 
                     </View>
                   </View>
@@ -994,7 +1056,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                     <View style={styles.inputTextWrapperFull}>
                     {/*console.log("onlySubArea in render",this.state.onlySubArea)*/}
                       
-                       <Picker
+                       {/*<Picker
                           selectedValue       ={this.state.subAreaName}
                           style               ={[styles.ddStyle,{height:40}]}
                           placeholder         = "Sub-Area"
@@ -1026,7 +1088,19 @@ export default class PropertyDetails1 extends ValidationComponent{
                             
                           }
                           
-                        </Picker>
+                        </Picker>*/}
+
+                         <RNPickerSelect
+                            onValueChange={(subAreaName) =>
+                            this.setState({subAreaName})
+                          }
+                          onBlur                 = {()=>this.handleSubarea()}
+                          value                  = {this.state.subAreaName}
+                          style                  = {pickerSelectStyles}
+                          placeholder            = {placeholderSubarea}
+                          items                  = {this.state.onlySubArea.length>0 ? this.state.onlySubArea : sports }
+                          />
+
                     </View>
                   </View>
                 </View>
@@ -1171,3 +1245,24 @@ export default class PropertyDetails1 extends ValidationComponent{
    
   }
 }
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 15,
+    fontFamily:"Roboto-Regular",
+    height:40,
+    flex: 1,  
+    alignItems: 'center',  
+    justifyContent: 'center',  
+    color: '#333',
+  },
+  inputAndroid: {
+    fontSize: 15,
+    fontFamily:"Roboto-Regular",
+    height:40,
+    flex: 1,  
+    alignItems: 'center',  
+    justifyContent: 'center',  
+    color: '#333',
+  },
+});

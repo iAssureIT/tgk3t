@@ -463,7 +463,9 @@ export default StyleSheet.create({
  propImage:{
   height:100,
   width:'100%',
- }
+ },
+
+ 
 
 });
 
