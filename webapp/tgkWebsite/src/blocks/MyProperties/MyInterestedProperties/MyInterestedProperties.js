@@ -281,7 +281,7 @@ import './MyInterestedProperties.css';
 												</div>
 												<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
 		                                      		<Link to={"/PropertyProfile/"+myProperty._id} target="_blank">
-														<button className="btn pull-right btnDetails">Details &nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>
+														<button className="btn pull-right btnDetails">Details &nbsp;<img alt=""  className="btnImg" src="/images/new/logo1.png"/></button>
 													</Link>
 												</div>
 											</div>

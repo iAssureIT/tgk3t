@@ -788,7 +788,7 @@ class HomePageProperties extends Component {
                       }
                     })
                   :
-                  <div className="col-lg-offset-5"><h1>No Data Available</h1></div>
+                  <div className="col-lg-offset-5 "><h1>No Data Available</h1></div>
       					}
 
           </div>

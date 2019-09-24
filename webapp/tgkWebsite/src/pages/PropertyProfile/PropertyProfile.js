@@ -140,8 +140,9 @@ class PropertyProfile extends Component{
                                 }
                             });
 
-     $(this).find('input[type="checkbox"]').is(':checked');
-    
+    $(this).find('input[type="checkbox"]').is(':checked');
+
+    $(".headerMenu").addClass("headerColor");
 
   }
 
@@ -218,7 +219,7 @@ class PropertyProfile extends Component{
                 </div>
                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName noPad"> 
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameOfProperty noPad" >
-                    <div className="col-lg-12 col-xs-12 mb10 noPad">
+                    <div className="col-lg-12 col-xs-12 mb20 noPad">
                       <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2 noPad">
                         <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 backButton">
                           <img src="/images/profilePic.png"/>
