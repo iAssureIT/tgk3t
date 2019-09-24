@@ -80,13 +80,23 @@ export default StyleSheet.create({
     borderRadius:4
   },
   button2:{
-    width:'70%',
     backgroundColor: colors.button,
     height: 55,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius:4,
-    marginLeft:"15%"
+    ...Platform.select({
+      ios:{
+          width:'70%',
+           marginLeft:"15%"
+      },
+      android : {
+        width:'60%',
+        
+      }
+     
+    })
+
   },
   activeButton:{
     width:'100%',

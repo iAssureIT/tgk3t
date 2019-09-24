@@ -48,7 +48,7 @@ const options = {
   
 };
 
-export default class PropertyDetails6 extends ValidationComponent{
+export default class Availability extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
@@ -213,13 +213,13 @@ handleOriginalMobileChange(value){
 
   componentDidMount(){
       var token = this.props.navigation.getParam('token','No token');
-      console.log("token",token);
+      // console.log("token",token);
       var uid = this.props.navigation.getParam('uid','No uid');
-      console.log("uid",uid);
+      // console.log("uid",uid);
       var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-      console.log("propertyId",propertyId);
+      // console.log("propertyId",propertyId);
       var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-    console.log("mobile in otpscreen",mobile);
+    console.log("mobile in last screen",mobile);
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
       this.setState({
@@ -269,15 +269,17 @@ handleOriginalMobileChange(value){
         mobile,
        
       } = this.state;
+     
 
-       var someOnemobileNo = someOnemobile.value.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
-       var myMobileNo = mobile.value.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+       var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
+       var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
 
-      console.log("someOnemobile",someOnemobileNo);
-      console.log("myMobileNo",myMobileNo);
+       console.log("someOnemobileNo",someOnemobileNo);
+       console.log("myMobileNo",myMobileNo);
 
+     
         var mobNo = "";
-        if(this.state.contactPerson === "Myself"){
+        if(this.state.contactPerson === "My Self"){
           mobNo = myMobileNo;
         }else{
           mobNo = someOnemobileNo;
@@ -296,25 +298,25 @@ handleOriginalMobileChange(value){
         "uid"                 : this.state.uid,
       };
       console.log("formValues",formValues);
-      this.props.navigation.navigate('PropertySuccess',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+      // this.props.navigation.navigate('PropertySuccess',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
 
 
-            // axios
-            // .patch('/api/properties/patch/availabilityPlan',formValues)
-            // .then( (res) =>{
-            //   console.log("availabilityPlan----------------",res);
-            //   if(res.status === 200){
-            //   this.props.navigation.navigate('PropertySuccess',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
-            //   }
-            // })
-            // .catch((error)=>{
-            //                 console.log("error = ",error);
-            //                 if(error.message === "Request failed with status code 401")
-            //                 {
-            //                      swal("Your session is expired! Please login again.","", "error");
-            //                      this.props.history.push("/");
-            //                 }
-            //         });
+            axios
+            .patch('/api/properties/patch/availabilityPlan',formValues)
+            .then( (res) =>{
+              console.log("availabilityPlan----------------",res);
+              if(res.status === 200){
+              this.props.navigation.navigate('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+              }
+            })
+            .catch((error)=>{
+                            console.log("error = ",error);
+                            if(error.message === "Request failed with status code 401")
+                            {
+                                 swal("Your session is expired! Please login again.","", "error");
+                                 this.props.history.push("/");
+                            }
+                    });
     // }
   }
 
@@ -644,34 +646,6 @@ removeImg = (imgIndex)=>{
             </View>
 
             {this.state.contactPerson==="My Self" ?
-
-           /* <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="mobile" type="entypo" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <TextField
-                  label                 = "Phone Number"
-                  onChangeText          = {mobile => {this.setState({mobile})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {sizes.title}
-                  baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.mobile}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {styles.textStyle}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "numeric"
-                />
-              </View>
-            </View>*/
-
 
              <View style={[styles.formInputView,styles.marginBottom25]}>
                   <View style={[styles.inputWrapper]}>
@@ -1043,7 +1017,7 @@ removeImg = (imgIndex)=>{
   }
 }
 
-PropertyDetails6.defaultProps = {
+Availability.defaultProps = {
   messages: {
     en: {
       mobileNo: 'Enter a valid mobile number.',

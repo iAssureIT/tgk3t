@@ -38,7 +38,7 @@ const defaultOption = [
   },
 ];
 
-export default class PropertyDetails1 extends ValidationComponent{
+export default class BasicInfo extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
@@ -146,7 +146,7 @@ export default class PropertyDetails1 extends ValidationComponent{
       var uid = this.props.navigation.getParam('uid','No uid');
       // console.log("uid",uid);
       var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-    // console.log("mobile in otpscreen",mobile);
+      console.log("mobile in otpscreen",mobile);
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
       this.setState({
@@ -177,7 +177,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                     this.setState({
                       onlyState : stateList,
                     },()=>{
-                      console.log("onlyState",this.state.onlyState);
+                      // console.log("onlyState",this.state.onlyState);
                     })
 
 
@@ -232,19 +232,14 @@ export default class PropertyDetails1 extends ValidationComponent{
         "uid"             : uid,
       };
       console.log("formValues",formValues);
-      // console.log("submit data");
-      
-              // this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid});          
-
-          axios
+         axios
           .post('/api/properties',formValues)
           .then( (res) =>{
             console.log("here 1st form result",res.data);
             if(res.status === 200){
 
-              this.props.navigation.navigate('PropertyDetails2form',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
-              // this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
-              
+              this.props.navigation.navigate('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+            
             }else{
               // alert(" Please Fill all fields")
             }
@@ -431,7 +426,7 @@ export default class PropertyDetails1 extends ValidationComponent{
 
   selectState(stateCode){
     var selectedState = stateCode;
-    console.log("selectedState",selectedState);
+    // console.log("selectedState",selectedState);
     this.setState({
         stateCode : selectedState,
       });
@@ -478,7 +473,7 @@ export default class PropertyDetails1 extends ValidationComponent{
   selectCity(cityName){
      
       var dist_block_city = cityName;
-      console.log("here dist_block_city ",dist_block_city );
+      // console.log("here dist_block_city ",dist_block_city );
 
       var districtName = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[0] : "Pune";
       var blockName    = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[1] : "Haveli";
@@ -497,7 +492,7 @@ export default class PropertyDetails1 extends ValidationComponent{
         method: 'get',
         url: url,
       }).then((response)=> {
-          console.log("here area",response.data);
+          // console.log("here area",response.data);
           this.setState({
             listofAreas : response.data
           },()=>{
@@ -535,12 +530,12 @@ export default class PropertyDetails1 extends ValidationComponent{
 
     // event.preventDefault();
     var areaName = areaName;
-    console.log("var areaName ",areaName);
+    // console.log("var areaName ",areaName);
     // var data = "411028";
     if(this.state.listofAreas.length > 0){
-      console.log("all area data",this.state.listofAreas);
+      // console.log("all area data",this.state.listofAreas);
       var index = this.state.listofAreas.findIndex( x => x.areaName === areaName);
-      console.log("here index",index);
+      // console.log("here index",index);
 
        this.setState({
       areaName : areaName,
@@ -574,7 +569,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                     this.setState({
                       onlySubArea : subareaList,
                     },()=>{
-                    console.log("onlySubArea name",this.state.onlySubArea);
+                    // console.log("onlySubArea name",this.state.onlySubArea);
                     })
                 })
     }).catch((error)=>{

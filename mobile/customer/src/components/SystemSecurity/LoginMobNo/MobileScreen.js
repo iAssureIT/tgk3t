@@ -109,7 +109,7 @@ export default class MobileScreen extends ValidationComponent {
       if(this.state.mobileNumber!=""){
                 // this.props.navigation.navigate('PropertyDetails1');
 
-        
+      console.log("here mobileNumber no",this.state.mobileNumber);        
         axios
           .post('/api/usersotp/verify_mobile',formValues)
           .then((response)=>{

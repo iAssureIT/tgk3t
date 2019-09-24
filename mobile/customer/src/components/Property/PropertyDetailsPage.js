@@ -29,7 +29,7 @@ import Carousel from 'react-native-snap-carousel';
 
 const window = Dimensions.get('window');
 
-export default class PropertyDetails extends ValidationComponent{
+export default class PropertyDetailsPage extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
@@ -47,6 +47,7 @@ export default class PropertyDetails extends ValidationComponent{
 
   componentDidMount(){
     var propertyProfile = this.props.navigation.getParam('propertyDetails','No Result');
+    console.log("here data",propertyProfile);
     this.setState({propertyProfile:propertyProfile})
     this._retrieveData();
   }
@@ -234,7 +235,7 @@ export default class PropertyDetails extends ValidationComponent{
                   style={{minWidth: '100%' }} 
                   contentContainerStyle={{ minWidth: '100%',marginBottom:0 }}
                 >
-                {propertyProfile.gallery.Images &&  propertyProfile.gallery.Images.length>0 ?
+                {propertyProfile.gallery && propertyProfile.gallery.Images!=null &&  propertyProfile.gallery.Images.length>0 ?
                 propertyProfile.gallery.Images.map((data,index)=>(
                   <View key={index} style={{width:(window.width),height:300}} >
                     <ImageBackground 
@@ -262,7 +263,8 @@ export default class PropertyDetails extends ValidationComponent{
                     <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
                       <Button
                         titleStyle      = {styles.buttonText}
-                        title           = {propertyProfile.gallery.Images.length+" Photos"}
+                        title           = {"Photos"}
+                        // title           = {propertyProfile.gallery.Images.length+" Photos"}
                         buttonStyle     = {styles.button4}
                         containerStyle  = {[styles.buttonContainer4]}
                       />
@@ -592,7 +594,7 @@ export default class PropertyDetails extends ValidationComponent{
             </View>
 
             <View style={[styles.divider,styles.marginBottom15]}></View>
-            {propertyProfile.gallery.video && propertyProfile.gallery.video!=="" ?
+            {propertyProfile.gallery && propertyProfile.gallery.video!=null && propertyProfile.gallery.video!=="" ?
               <View>
                 <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Video</Text>
                 <View style={[{width:'100%'},styles.marginBottom15]}>

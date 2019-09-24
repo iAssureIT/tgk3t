@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
+import axios          from 'axios';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -24,11 +25,14 @@ import {colors,sizes} from '../../config/styles.js';
 
 const window = Dimensions.get('window');
 
-export default class PropertySuccess extends ValidationComponent{
+export default class Congratulation extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
-      
+      token : "",
+      uid : "",
+      propertyId : "",
+      allData : "",
       
     };
   }
@@ -50,6 +54,41 @@ export default class PropertySuccess extends ValidationComponent{
       
       });
 
+    }
+
+
+    submitFun(){
+
+      var id = this.state.propertyId;
+      console.log("id",id);
+
+      if(id.length>0)
+      {
+
+        axios
+          .get('/api/properties/'+id)
+          .then( (res) =>{
+              console.log("get property = ",res.data);
+              this.setState({
+                allData : res.data,
+              },()=>{
+                 this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:this.state.allData})
+
+              });
+
+            // console.log("get property transactionType = ",res.data.transactionType);
+          })
+          .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                            
+                        }
+           });
+
+      }
+
+      
     }
 
   
@@ -109,7 +148,8 @@ export default class PropertySuccess extends ValidationComponent{
           </View>
 
             <Button
-              onPress         = {()=>this.props.navigation.navigate('PropertyDetails',{propertyId:this.state.propertyId,image:prop.imageSource})}
+              onPress         = {this.submitFun.bind(this)}
+              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails',{propertyId:this.state.propertyId,propertyDetails:this.state.propertyDetails})}
               titleStyle      = {styles.buttonText}
               title           = "Property Details"
               buttonStyle     = {styles.button}

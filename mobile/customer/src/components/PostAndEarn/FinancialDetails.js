@@ -27,7 +27,7 @@ import DatePicker from "react-native-datepicker";
 
 const window = Dimensions.get('window');
 
-export default class PropertyDetails5 extends ValidationComponent{
+export default class FinancialDetails extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={
@@ -86,7 +86,7 @@ export default class PropertyDetails5 extends ValidationComponent{
       var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
       // console.log("transactionType",transactionType);
         var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-    // console.log("mobile in otpscreen",mobile);
+    console.log("mobile in otpscreen",mobile);
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
       this.setState({
@@ -130,15 +130,12 @@ submitFun(){
         "uid"                 : this.state.uid,
       };
       console.log("formValues",formValues);
-      
-         // this.props.navigation.navigate('PropertyDetails6',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
-
-       axios
+        axios
         .patch('/api/properties/patch/financials',formValues)
         .then( (res) =>{
           console.log("Financials res = ",res);
           if(res.status === 200){
-         this.props.navigation.navigate('PropertyDetails6',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+         this.props.navigation.navigate('Availability',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
          
           }
         })
@@ -153,8 +150,6 @@ submitFun(){
                                
                           }
                       })
-
-      // this.props.navigation.navigate('PropertyDetails5',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
 }
 
 
@@ -511,7 +506,6 @@ submitFun(){
 
             <Button
               onPress         = {this.submitFun.bind(this)}
-              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
               titleStyle      = {styles.buttonText}
               title           = "Save & Next"
               buttonStyle     = {styles.button}

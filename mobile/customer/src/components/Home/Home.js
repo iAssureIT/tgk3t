@@ -153,7 +153,7 @@ export default class Home extends ValidationComponent{
     if(this.state.token == null || this.state.token == ""){
       this.props.navigation.navigate("MobileScreen")
     }else{
-      this.props.navigation.navigate("PropertyDetails1")
+      this.props.navigation.navigate("BasicInfo")
     }
 
   }

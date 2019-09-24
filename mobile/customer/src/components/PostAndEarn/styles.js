@@ -175,7 +175,7 @@ export default StyleSheet.create({
   },
   textContainer:{
     height:40,
-    paddingLeft:4,
+    paddingLeft:3,
     ...Platform.select({
       ios:{
         height:40,

@@ -125,7 +125,7 @@ export default class PropertyDetails extends ValidationComponent{
       var propertyType = this.props.navigation.getParam('propertyType','No propertyType');
       // console.log("propertyType",propertyType);
         var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-    // console.log("mobile in otpscreen",mobile);
+        console.log("mobile in otpscreen",mobile);
       var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
 
 
@@ -267,11 +267,6 @@ export default class PropertyDetails extends ValidationComponent{
 
    console.log("here clicked");
 
-
-    //    console.log("here clicked");
-    //   this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
-
-
      var allAmenitiesData = this.state.allAmenities;
         var allAmenitiesDataList =[];     
             allAmenitiesData.map((item,index)=>{
@@ -305,7 +300,7 @@ export default class PropertyDetails extends ValidationComponent{
 
           "Amenities"         : allAmenitiesDataList,
           "floor"             : this.state.floor,
-          "totalFloor"        : this.state.totalfloor,
+          "totalFloor"        : this.state.totalFloor,
           "superAreaUnit"     : this.state.superAreaUnit,
           "builtupAreaUnit"   : this.state.builtupAreaUnit,
           "furnishPantry"       : this.state.furnishpantry, 
@@ -314,17 +309,13 @@ export default class PropertyDetails extends ValidationComponent{
 
       };
       console.log("formValues",formValues);
-      // this.props.navigation.navigate('PropertyDetails5');
-
-      // this.props.navigation.navigate('PropertyDetails5',{transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
-      
-             axios
+            axios
             .patch('/api/properties/patch/propertyDetails',formValues)
             .then( (res) =>{
               console.log(res);
               if(res.status === 200){
                 console.log("PropertyDetails Res = ",res);
-               this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+               this.props.navigation.navigate('FinancialDetails',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
 
               }
             })
@@ -332,8 +323,8 @@ export default class PropertyDetails extends ValidationComponent{
                                   console.log("error = ",error);
                                   if(error.message === "Request failed with status code 401")
                                   {
-                                      Alert.alert("Your session is expired!"," Please login again.");
-                             this.props.navigation.navigate('MobileScreen');          
+                             //          Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
                                       
                                        
                                        

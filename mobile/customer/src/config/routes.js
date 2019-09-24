@@ -3,18 +3,14 @@ import AuthLoadingScreen from '../layouts/AuthLoading/AuthLoadingScreen.js'
 import Home from '../components/Home/Home.js';
 import SideMenu from '../layouts/SideMenu/SideMenu.js';
 import SignUp from '../components/SystemSecurity/SignUp/SignUp.js';
-import PropertyDetails1 from '../components/PostAndEarn/PropertyDetails1.js';
-// import PropertyDetails2 from '../components/PostAndEarn/PropertyDetails2.js';
-import PropertyDetails2form from '../components/PostAndEarn/PropertyDetails2form.js';
-import PropertyDetails3 from '../components/PostAndEarn/PropertyDetails3.js';
-// import PropertyDetails4 from '../components/PostAndEarn/PropertyDetails4.js';
-import PropertyDetails5 from '../components/PostAndEarn/PropertyDetails5.js';
-import PropertyDetails6 from '../components/PostAndEarn/PropertyDetails6.js';
-import PropertyDetails7 from '../components/PostAndEarn/PropertyDetails7.js';
-import PropertySuccess  from '../components/PostAndEarn/PropertySuccess.js';
+import BasicInfo from '../components/PostAndEarn/BasicInfo.js';
+import PropertyDetails from '../components/PostAndEarn/PropertyDetails.js';
+import FinancialDetails from '../components/PostAndEarn/FinancialDetails.js';
+import Availability from '../components/PostAndEarn/Availability.js';
+import Congratulation  from '../components/PostAndEarn/Congratulation.js';
 import SearchProperty   from '../components/SearchProperty/SearchProperty.js';
 import PropertyList     from '../components/Property/PropertyList.js';
-import PropertyDetails  from '../components/Property/PropertyDetails.js';
+import PropertyDetailsPage  from '../components/Property/PropertyDetailsPage.js';
 import MyPostedProperties from '../components/MyPostedProperties/MyPostedProperties.js';
 import MyInterestedProperties from '../components/MyInterestedProperties/MyInterestedProperties.js';
 import MobileScreen from '../components/SystemSecurity/LoginMobNo/MobileScreen.js';
@@ -34,47 +30,34 @@ const HomeStack = createStackNavigator({
       header: null
     }
   },
+  PropertyDetailsPage:{
+    screen: PropertyDetailsPage,
+    navigationOptions: {
+      header: null
+    }
+  },
+   BasicInfo:{
+    screen: BasicInfo,
+    navigationOptions: {
+      header: null
+    }
+  },
+
   PropertyDetails:{
     screen: PropertyDetails,
     navigationOptions: {
       header: null
     }
   },
-   PropertyDetails1:{
-    screen: PropertyDetails1,
-    navigationOptions: {
-      header: null
-    }
-  },
 
-  PropertyDetails2form:{
-    screen: PropertyDetails2form,
+   FinancialDetails:{
+    screen: FinancialDetails,
     navigationOptions: {
       header: null
     }
   },
-
-   PropertyDetails3:{
-    screen: PropertyDetails3,
-    navigationOptions: {
-      header: null
-    }
-  },
-
-  PropertyDetails5:{
-    screen: PropertyDetails5,
-    navigationOptions: {
-      header: null
-    }
-  },
-   PropertyDetails6:{
-    screen: PropertyDetails6,
-    navigationOptions: {
-      header: null
-    }
-  },
-    PropertyDetails7:{
-    screen: PropertyDetails7,
+   Availability:{
+    screen: Availability,
     navigationOptions: {
       header: null
     }
@@ -97,8 +80,8 @@ const HomeStack = createStackNavigator({
       header: null
     }
   },
-  PropertySuccess:{
-    screen: PropertySuccess,
+  Congratulation:{
+    screen: Congratulation,
     navigationOptions: {
       header: null
     }
