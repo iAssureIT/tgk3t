@@ -146,8 +146,11 @@ submitFun(){
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                               swal("Your session is expired! Please login again.","", "error");
-                               this.props.history.push("/");
+                               Alert.alert("Your session is expired!"," Please login again.");
+                             this.props.navigation.navigate('MobileScreen');          
+                                     
+                               
+                               
                           }
                       })
 

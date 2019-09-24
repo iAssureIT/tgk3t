@@ -4,7 +4,9 @@ import {colors} from '../../config/styles.js';
 const window = Dimensions.get('window');
 
 export default StyleSheet.create({
-
+  amenitiesWrapper : {
+    backgroundColor: "#ff0",
+  },
   container:{
     backgroundColor: '#fff',
     minHeight:'90%',
@@ -231,7 +233,7 @@ export default StyleSheet.create({
     height: 45,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius:4
+    borderRadius:4  
   },
   buttonSmall:{
     width:'100%',

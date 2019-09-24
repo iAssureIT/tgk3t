@@ -31,7 +31,7 @@ import RNPickerSelect from 'react-native-picker-select';
 
 const window = Dimensions.get('window');
 
-const sports = [
+const defaultOption = [
   {
     label: 'Select state',
     value: 'state',
@@ -134,6 +134,7 @@ export default class PropertyDetails1 extends ValidationComponent{
       token           : "",
       uid             : "",
       mobile          : '',
+      // areaName        : '',
     };
 
   }
@@ -185,8 +186,8 @@ export default class PropertyDetails1 extends ValidationComponent{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                               swal("Your session is expired! Please login again.","", "error");
-                               this.props.history.push("/");
+                             //   Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
                                
                           }
           });
@@ -241,7 +242,7 @@ export default class PropertyDetails1 extends ValidationComponent{
             console.log("here 1st form result",res.data);
             if(res.status === 200){
 
-              this.props.navigation.navigate('PropertyDetails3',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              this.props.navigation.navigate('PropertyDetails2form',{transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
               // this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
               
             }else{
@@ -252,8 +253,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             Alert.alert("Your session is expired!"," Please login again.");
+                             this.props.navigation.navigate('MobileScreen');          
+                               
                         }
                     });
 
@@ -315,8 +317,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             // Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                         }
                     });
 
@@ -352,8 +355,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                                 console.log("error = ",error);
                                 if(error.message === "Request failed with status code 401")
                                 {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
+                             //         Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                                 }
                  });
 
@@ -389,8 +393,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                                 console.log("error = ",error);
                                 if(error.message === "Request failed with status code 401")
                                 {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
+                             //         Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                                 }
                 });
 
@@ -400,8 +405,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                                 console.log("error = ",error);
                                 if(error.message === "Request failed with status code 401")
                                 {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
+                             //          Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                                 }
       });
   }
@@ -461,8 +467,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             //  Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                         }
             });
 
@@ -471,17 +478,19 @@ export default class PropertyDetails1 extends ValidationComponent{
   selectCity(cityName){
      
       var dist_block_city = cityName;
-      // console.log("here dist_block_city ",dist_block_city );
-      var districtName = dist_block_city.split('-')[0];
-      var blockName    = dist_block_city.split('-')[1];
-      var cityName   = dist_block_city.split('-')[2];
+      console.log("here dist_block_city ",dist_block_city );
+
+      var districtName = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[0] : "Pune";
+      var blockName    = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[1] : "Haveli";
+      var cityName   = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[2] : "Pune City";
 
     var url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+this.state.stateCode+'/'+districtName+'/'+blockName+'/'+cityName+'/' ;
 
       this.setState({
         districtName  : districtName,
         blockName   : blockName,
-        cityName    : cityName,
+        // cityName    : "Pune-Haveli-Pune City",
+        cityName : cityName,
       });
 
       axios({
@@ -513,17 +522,20 @@ export default class PropertyDetails1 extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             // Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                         }
              });
 
   }
 
   selectArea(areaName){
+    // console.log("areaName",areaName);
+
     // event.preventDefault();
-    var areaName = this.state.areaName;
-    console.log("areaName",areaName);
+    var areaName = areaName;
+    console.log("var areaName ",areaName);
     // var data = "411028";
     if(this.state.listofAreas.length > 0){
       console.log("all area data",this.state.listofAreas);
@@ -532,14 +544,14 @@ export default class PropertyDetails1 extends ValidationComponent{
 
        this.setState({
       areaName : areaName,
-      pincode : this.state.listofAreas[index].pincode,
+      // pincode : this.state.listofAreas[index].pincode,
     })
     
     }
 
     
 
-  var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+areaName+'/' ;
+  var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/' ;
 
     axios({
       method: 'get',
@@ -562,16 +574,16 @@ export default class PropertyDetails1 extends ValidationComponent{
                     this.setState({
                       onlySubArea : subareaList,
                     },()=>{
-                    // console.log("onlySubArea name",this.state.onlySubArea);
-
+                    console.log("onlySubArea name",this.state.onlySubArea);
                     })
                 })
     }).catch((error)=>{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             // Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                         }
             });
 
@@ -614,8 +626,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             //  Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                         }
                     });
 
@@ -634,8 +647,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             //  Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                         }
                 });   
     }
@@ -681,8 +695,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
+                             //  Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
+                               
                         }
                     });
     }
@@ -922,7 +937,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                           value                  = {this.state.stateCode}
                           style                  = {pickerSelectStyles}
                           placeholder            = {placeholderState}
-                          items                  = {this.state.onlyState.length>0 ? this.state.onlyState : sports }
+                          items                  = {this.state.onlyState.length>0 ? this.state.onlyState : defaultOption }
                           />
 
                       
@@ -972,7 +987,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                           }
                           
                         </Picker>*/}
-
+                        {console.log("city name",this.state.cityName)}
                          <RNPickerSelect
                             onValueChange={(cityName) =>
                             this.selectCity(cityName)
@@ -980,8 +995,10 @@ export default class PropertyDetails1 extends ValidationComponent{
                           value                  = {this.state.cityName}
                           style                  = {pickerSelectStyles}
                           placeholder            = {placeholderCity}
-                          items                  = {this.state.onlyCity.length>0 ? this.state.onlyCity : sports }
+                          items                  = {this.state.onlyCity.length>0 ? this.state.onlyCity : defaultOption }
                           />
+                          
+                         
 
                     </View>
                   </View>
@@ -1030,7 +1047,9 @@ export default class PropertyDetails1 extends ValidationComponent{
                           }
                           
                         </Picker>*/}
-                        {console.log("this.state.onlyArea in render",this.state.onlyArea)}
+                        {/*console.log("this.state.onlyArea in render",this.state.onlyArea)*/}
+
+
                         <RNPickerSelect
                             onValueChange={(areaName) =>
                             this.selectArea(areaName)
@@ -1038,7 +1057,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                           value                  = {this.state.areaName}
                           style                  = {pickerSelectStyles}
                           placeholder            = {placeholderArea}
-                          items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : sports }
+                          items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : defaultOption }
                           />
 
                     </View>
@@ -1090,6 +1109,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                           
                         </Picker>*/}
 
+                        { this.state.onlySubArea.length>0  ? 
                          <RNPickerSelect
                             onValueChange={(subAreaName) =>
                             this.setState({subAreaName})
@@ -1098,9 +1118,31 @@ export default class PropertyDetails1 extends ValidationComponent{
                           value                  = {this.state.subAreaName}
                           style                  = {pickerSelectStyles}
                           placeholder            = {placeholderSubarea}
-                          items                  = {this.state.onlySubArea.length>0 ? this.state.onlySubArea : sports }
+                          items                  = {this.state.onlySubArea}
                           />
 
+                          :
+                             <TextInput
+                              placeholder           = "Sub-Area"
+                              onChangeText          ={(subAreaName) => this.setState({subAreaName})}
+                              onBlur                 = {()=>this.handleSubarea()}
+                              lineWidth             = {1}
+                              tintColor             = {colors.button}
+                              inputContainerPadding = {0}
+                              labelHeight           = {15}
+                              labelFontSize         = {sizes.label}
+                              titleFontSize         = {10}
+                              baseColor             = {'#666'}
+                              textColor             = {'#666'}
+                              value                 = {this.state.subAreaName}
+                              containerStyle        = {styles.textContainer}
+                              inputContainerStyle   = {styles.textInputContainer}
+                              titleTextStyle        = {styles.textTitle}
+                              style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular"}]}
+                              labelTextStyle        = {styles.textLabel}
+                              keyboardType          = "default"
+                            />
+                          }
                     </View>
                   </View>
                 </View>

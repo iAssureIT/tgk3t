@@ -5,6 +5,7 @@ import SideMenu from '../layouts/SideMenu/SideMenu.js';
 import SignUp from '../components/SystemSecurity/SignUp/SignUp.js';
 import PropertyDetails1 from '../components/PostAndEarn/PropertyDetails1.js';
 // import PropertyDetails2 from '../components/PostAndEarn/PropertyDetails2.js';
+import PropertyDetails2form from '../components/PostAndEarn/PropertyDetails2form.js';
 import PropertyDetails3 from '../components/PostAndEarn/PropertyDetails3.js';
 // import PropertyDetails4 from '../components/PostAndEarn/PropertyDetails4.js';
 import PropertyDetails5 from '../components/PostAndEarn/PropertyDetails5.js';
@@ -45,7 +46,14 @@ const HomeStack = createStackNavigator({
       header: null
     }
   },
-  
+
+  PropertyDetails2form:{
+    screen: PropertyDetails2form,
+    navigationOptions: {
+      header: null
+    }
+  },
+
    PropertyDetails3:{
     screen: PropertyDetails3,
     navigationOptions: {

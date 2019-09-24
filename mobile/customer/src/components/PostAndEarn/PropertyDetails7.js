@@ -160,11 +160,13 @@ export default class PropertyDetails7 extends ValidationComponent{
       })
      .catch((error)=>{
                         console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
-                        }
+                       if(error.message === "Request failed with status code 401")
+                          {
+                               Alert.alert("Your session is expired! Please login again.","", "error");
+                               this.props.navigation.navigate('Home');          
+                               
+                               
+                          }
         });
 
   }

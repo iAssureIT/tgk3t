@@ -27,12 +27,12 @@ import DatePicker from "react-native-datepicker";
 
 const window = Dimensions.get('window');
 
-export default class PropertyDetails3 extends ValidationComponent{
-  constructor(props){
+export default class PropertyDetails extends ValidationComponent{
+
+	 constructor(props){
     super(props);
     this.state={
-     
-      bedroomData : [{ value: 1},
+     bedroomData : [{ value: 1},
                      { value: 2},
                      { value: 3},
                      { value: 4},
@@ -111,17 +111,7 @@ export default class PropertyDetails3 extends ValidationComponent{
       propertyId : "",
       uid : "",
       token : "",
-     /* expectedRate : '',
-      totalAsk : '',
-      totalAskIndex : 0,
-      availableFromDate : '',
-      dropdownData:[
-      {
-        value: 'Monthly'
-      },
-      {
-        value: 'Yearly'
-      }]*/
+
     };
   }
 
@@ -183,13 +173,13 @@ export default class PropertyDetails3 extends ValidationComponent{
       .catch((error)=>{
 
         console.log("error = ",error);
-        if(error.message === "Request failed with status code 401")
-                          {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                             this.props.navigation.navigate('MobileScreen');          
+        // if(error.message === "Request failed with status code 401")
+        //                   {
+        //                       Alert.alert("Your session is expired!"," Please login again.");
+        //                      this.props.navigation.navigate('MobileScreen');          
                                
                                
-                          }
+        //                   }
          }); 
      
   }
@@ -273,17 +263,13 @@ export default class PropertyDetails3 extends ValidationComponent{
     console.log("current data status",status);
   }
 
+ submitFun(){
 
-  // nextScreen(){
-  //   console.log("here clicked");
-  // }
-  submitFun(){
-    // this.setState({
-    //   btnLoading : true,
-    // })
+   console.log("here clicked");
 
-    console.log("here clicked");
-      this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+
+    //    console.log("here clicked");
+    //   this.props.navigation.navigate('PropertyDetails5',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
 
 
      var allAmenitiesData = this.state.allAmenities;
@@ -328,6 +314,8 @@ export default class PropertyDetails3 extends ValidationComponent{
 
       };
       console.log("formValues",formValues);
+      // this.props.navigation.navigate('PropertyDetails5');
+
       // this.props.navigation.navigate('PropertyDetails5',{transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
       
              axios
@@ -352,16 +340,17 @@ export default class PropertyDetails3 extends ValidationComponent{
                                   }
                  });
 
-  }
+ }
 
   render(){
-   
+    
     const { navigation } = this.props;
     let {activeTab} = this.state;
 
     return (
-      <React.Fragment>
-        <HeaderBar showBackBtn={true} navigation={navigation}/>
+    	   <React.Fragment>
+          
+           <HeaderBar showBackBtn={true} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={styles.formWrapper}>
@@ -889,7 +878,7 @@ export default class PropertyDetails3 extends ValidationComponent{
 
             {/*end*/}
 
-             <View>
+            {/* <View>
               <Text style={styles.heading}>
                 My Apartment has following Amenities
               </Text>
@@ -897,9 +886,8 @@ export default class PropertyDetails3 extends ValidationComponent{
 
             <View style={styles.divider}></View>
 
-            <Text style={[styles.heading3,styles.marginBottom5]}>All Amenities </Text>
-
-            <View style={[styles.marginBottom15,{}]}>
+            <View style={styles.amenitiesWrapper} >
+              <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
               {this.state.allAmenities && this.state.allAmenities.length >0 ?
                 this.state.allAmenities.map((data,index)=>(
                 <React.Fragment key={index}>
@@ -922,14 +910,21 @@ export default class PropertyDetails3 extends ValidationComponent{
                         <Text style={styles.inputText}>{data.amenity}</Text>
                       </View>
                     }
-                  />
-               
+                  />                 
                 </React.Fragment> 
               ))
                 :
                 null
-              }
-            </View>
+              }          
+            </View>*/}
+{/*
+            <View>
+              <Text style={styles.heading}>
+               -----------------------------------------------
+              </Text>
+            </View>*/}
+
+
 
             <Button
               onPress         = {this.submitFun.bind(this)}
@@ -947,37 +942,20 @@ export default class PropertyDetails3 extends ValidationComponent{
               />}
             />
 
-             {/*this.state.btnLoading
-                ?
-                  <Button
-                    titleStyle      = {styles.buttonText}
-                    title           = "Processing"
-                    loading
-                    buttonStyle     = {styles.button}
-                    containerStyle  = {styles.buttonContainer}
-                  />
-                :
-                 <Button
-                    onPress         = {this.submitFun.bind(this)}
-                    titleStyle      = {styles.buttonText}
-                    title           = "Save & Next"
-                    buttonStyle     = {styles.button}
-                    containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-                    iconRight
-                    icon = {<Icon
-                      name="chevrons-right" 
+            {/*<TouchableOpacity
+               style={styles.button}
+               onPress={this.onPress}
+            >
+              <Text> Touch Here </Text>
+            </TouchableOpacity>*/}
 
-                      type="feather"
-                      size={22}
-                      color="white"
-                    />}
-                  />
-                */}
+            
           </View>
         </ScrollView>
-     
-      </React.Fragment>
+
+    	   </React.Fragment>
     );
-   
+    
   }
 }
+

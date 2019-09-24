@@ -249,10 +249,12 @@ handleOriginalMobileChange(value){
      .catch((error)=>{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
-                        {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
-                        }
+                          {
+                               Alert.alert("Your session is expired! Please login again.","", "error");
+                               this.props.navigation.navigate('Home');          
+                               
+                               
+                          }
         });
 
 
@@ -930,7 +932,7 @@ removeImg = (imgIndex)=>{
                             <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
                             {
                               properDetails.map((data,i)=>{
-                                return(
+                                // return(
                                   <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{}:{marginLeft:'10%'})]}>
                                     <ImageBackground  
                                     // source={require('../../images/p1.png')}
@@ -958,7 +960,7 @@ removeImg = (imgIndex)=>{
                                       </ImageBackground>
 
                                   </View>
-                                )
+                                // );
                               }) 
                             }
                           {/*{properDetails.map((prop,i)=>( 
