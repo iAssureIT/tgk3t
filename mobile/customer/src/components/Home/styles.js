@@ -12,7 +12,7 @@ export default StyleSheet.create({
     zIndex:0
   },
   bgImage: {
-    width:'100%',
+    width:window.width,
     height:window.height,
   },
   headingText:{

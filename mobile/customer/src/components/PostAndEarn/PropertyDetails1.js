@@ -862,7 +862,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular"}]}
+                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                   labelTextStyle        = {styles.textLabel}
                   keyboardType          = "default"
               />
@@ -1130,7 +1130,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular"}]}
+                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                   labelTextStyle        = {styles.textLabel}
                   keyboardType          = "default"
                 />
@@ -1158,7 +1158,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular"}]}
+                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                   labelTextStyle        = {styles.textLabel}
                   keyboardType          = "default"
                 />
@@ -1187,7 +1187,7 @@ export default class PropertyDetails1 extends ValidationComponent{
                   containerStyle        = {styles.textContainer}
                   inputContainerStyle   = {styles.textInputContainer}
                   titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular"}]}
+                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                   labelTextStyle        = {styles.textLabel}
                   keyboardType          = "default"
                 />
@@ -1255,6 +1255,7 @@ const pickerSelectStyles = StyleSheet.create({
     alignItems: 'center',  
     justifyContent: 'center',  
     color: '#333',
+    paddingHorizontal:5
   },
   inputAndroid: {
     fontSize: 15,

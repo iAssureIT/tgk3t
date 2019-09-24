@@ -10,23 +10,24 @@ import {
   ImageBackground,
   Image,TextInput,
   TouchableWithoutFeedback,
-  AsyncStorage,
+  // AsyncStorage,
   Alert
 } from 'react-native';
-import axios          from 'axios';
 
-
+import axios                      from 'axios';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import ValidationComponent        from "react-native-form-validator";
 import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
 import styles                     from './styles.js';
 import {colors}                   from '../../config/styles.js';
+import AsyncStorage               from '@react-native-community/async-storage';
 
 const window = Dimensions.get('window');
 
 export default class Home extends ValidationComponent{
   constructor(props){
     super(props);
+    // this.retrieveToken()
     this.state={
       searchText      : '',
       activeBtn       : 'Residential-Sell',
@@ -42,6 +43,8 @@ export default class Home extends ValidationComponent{
   }
 
   componentDidMount(){
+    this.retrieveToken()
+
     var uid = this.props.navigation.getParam('uid','No uid');
     var token = this.props.navigation.getParam('token','No token');
     this.setState({
@@ -50,9 +53,16 @@ export default class Home extends ValidationComponent{
     },()=>{
       console.log("uid",this.state.uid,"token",this.state.token)
     })
-    this._retrieveData();
       // axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
     }
+
+  retrieveToken = async()=>{
+    var token = await AsyncStorage.getItem('token')
+    var uid = await AsyncStorage.getItem('uid')
+    console.log('token',token)
+    console.log('uid',uid)
+    this.setState({token:token})
+  }
 
   handleLocation(value){
     var location =value;
@@ -140,28 +150,14 @@ export default class Home extends ValidationComponent{
 
   login(){
     // const originPage = "post" ;
-    const token = this.state.token;
-    console.log("state token",this.state.token);
-    if(token!=="No token"){
-      this.props.navigation.navigate('PropertyDetails1');
+    if(this.state.token == null || this.state.token == ""){
+      this.props.navigation.navigate("MobileScreen")
     }else{
-      this.props.navigation.navigate('MobileScreen');
+      this.props.navigation.navigate("PropertyDetails1")
     }
+
   }
 
-  _retrieveData = async () => {
-    try {
-      const uid        = await AsyncStorage.getItem('uid');
-      const token      = await AsyncStorage.getItem('token');
-      console.log("async get token in mob screen out",token);
-      if (token !== null ) {
-      console.log("async get token in mob screen in",token);
-
-        this.setState({token:token})
-      }
-    } catch (error) {
-    }
-  }
   render(){
     
     const { navigation } = this.props;

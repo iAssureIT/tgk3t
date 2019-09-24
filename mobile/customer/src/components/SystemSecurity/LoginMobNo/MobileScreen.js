@@ -70,48 +70,36 @@ export default class MobileScreen extends ValidationComponent {
 
 
   validInputField = (stateName, stateErr) => {
-      const {
-      mobileNumber,
-      } = this.state;
-      let valid = true;
+    const {mobileNumber,} = this.state;
+    let valid = true;
 
-      this.validate({
-      [stateName]: {
-      required: true,
-      },
-      });
+    this.validate({
+    [stateName]: {
+    required: true,
+    },
+    });
 
-      if (this.isFieldInError(stateName)) {
-      let validinptError = this.getErrorsInField(stateName);
-      this.setState({ validinptError });
-      valid = false;
-      } else {
-      this.setState({ [stateErr]: "" });
-      }
+    if (this.isFieldInError(stateName)) {
+    let validinptError = this.getErrorsInField(stateName);
+    this.setState({ validinptError });
+    valid = false;
+    } else {
+    this.setState({ [stateErr]: "" });
+    }
 
       return valid;
-};
+  };
 
 
-    componentDidMount(){
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
-    }
+  componentDidMount(){
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
+  }
 
 	checkUser(){
 
     if(this.validInput()){
-    let {
-       
-        mobileNumber,
-       
-      } = this.state;
-       var mobileNo = mobileNumber.split(' ')[1].split('-').join('')
- 
- 
-
-		// console.log("unitCode",this.state.unitCode);
-		// console.log("mobile",mobileNo);
-
+      let {mobileNumber,} = this.state;
+      var mobileNo = mobileNumber.split(' ')[1].split('-').join('')
       var formValues = {
         mobileNumber : mobileNo,
         countryCode  : this.state.unitCode
@@ -130,8 +118,10 @@ export default class MobileScreen extends ValidationComponent {
               this.setState({
                 uid:response.data.user_id,
                 token:response.data.token,
+              },()=>{
+                this._storeData();
               });
-              this._storeData();
+              
                 // AsyncStorage.setItem("uid",response.data.user_id);
                 // AsyncStorage.setItem("token",response.data.token);
 

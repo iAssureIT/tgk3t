@@ -45,24 +45,14 @@ const HomeStack = createStackNavigator({
       header: null
     }
   },
-  // PropertyDetails2:{
-  //   screen: PropertyDetails2,
-  //   navigationOptions: {
-  //     header: null
-  //   }
-  // },
+  
    PropertyDetails3:{
     screen: PropertyDetails3,
     navigationOptions: {
       header: null
     }
   },
-  // PropertyDetails4:{
-  //   screen: PropertyDetails4,
-  //   navigationOptions: {
-  //     header: null
-  //   }
-  // },
+
   PropertyDetails5:{
     screen: PropertyDetails5,
     navigationOptions: {

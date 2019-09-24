@@ -7,15 +7,15 @@ import {
   TouchableOpacity,
   Alert,
   ImageBackground,
-  AsyncStorage,
+  // AsyncStorage,
   Image
 } from 'react-native';
-import { Icon } from 'react-native-elements';
 
-import {NavigationActions} from 'react-navigation';
-
-import styles from './styles.js';
-import {colors} from '../../config/styles.js';
+import { Icon } 			from 'react-native-elements';
+import {NavigationActions} 	from 'react-navigation';
+import styles 				from './styles.js';
+import {colors} 			from '../../config/styles.js';
+import AsyncStorage 		from '@react-native-community/async-storage';
 
 export default class SideMenu extends React.Component {
 
@@ -51,131 +51,121 @@ export default class SideMenu extends React.Component {
 
 
 	logout= async () => {
-    try {
-      const uid = await AsyncStorage.removeItem('uid');
-      const token = await AsyncStorage.removeItem('token');
-      if (uid == null && token == null) {
-        this.setState({uid:uid})
-        this.setState({token:token})
-        if(uid==null && token == null){
-    		this.props.navigation.navigate('Home',{uid:uid,token:token});
-        }
-      }
-    } catch (error) {
-      // Error retrieving data
-    }
+      await AsyncStorage.removeItem('uid');
+      await AsyncStorage.removeItem('token');
+      this.props.navigation.closeDrawer();
+      this.props.navigation.navigate('Home');
   }
 
 
   render(){
-    const { navigation } = this.props;
-  	// console.log("uid=>",this.state.uid);
-  	return(
-      <ScrollView contentContainerStyle={[styles.container]} scrollsToTop={false}>
-      	<ImageBackground 
-          source={require('../../images/sideMenu.png')}
-          style={styles.bgImage}
-          resizeMode="cover"
-        >
-        	<Image
-            style={styles.logoImage}
-            source={require("../../images/logo.png")}
-            resizeMode="contain"
-          />
-        </ImageBackground>
+	    const { navigation } = this.props;
+	  	// console.log("uid=>",this.state.uid);
+	  	return(
+	      	<ScrollView contentContainerStyle={[styles.container]} scrollsToTop={false}>
+		      	<ImageBackground 
+		          source={require('../../images/sideMenu.png')}
+		          style={styles.bgImage}
+		          resizeMode="cover"
+		        >
+		        	<Image
+		            style={styles.logoImage}
+		            source={require("../../images/logo.png")}
+		            resizeMode="contain"
+		          />
+		        </ImageBackground>
 
-        <View style={styles.menuWrapper}>
-        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('Home',{uid:this.state.uid,token:this.state.token})}>
-	        	<View style={styles.menu}>
-	        		<Icon 
-	              size={18} 
-	              name='desktop-mac' 
-	              type='material-community' 
-	              color={colors.primary} 
-	              containerStyle={styles.iconContainer}
-	            />
-	        		<Text style={styles.menuText}>Home</Text>
-	        	</View>
-        	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('SearchProperty',{uid:this.state.uid,token:this.state.token})}>
-	        	<View style={styles.menu}>
-	        		<Icon 
-	              size={20} 
-	              name='search-web' 
-	              type='material-community' 
-	              color={colors.primary} 
-	              containerStyle={styles.iconContainer}
-	            />
-	        		<Text style={styles.menuText}>Search Property</Text>
-	        	</View>
-        	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
-	        	<View style={styles.menu}>
-	        		<Icon 
-	              size={18} 
-	              name='home-city' 
-	              type='material-community' 
-	              color={colors.primary} 
-	              containerStyle={styles.iconContainer}
-	            />
-	        		<Text style={styles.menuText}>Post Property</Text>
-	        	</View>
-        	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyPostedProperties',{uid:this.state.uid,token:this.state.token})}>
-	        	<View style={styles.menu}>
-	        		<Icon 
-	              size={18} 
-	              name='home' 
-	              type='font-awesome' 
-	              color={colors.primary} 
-	              containerStyle={styles.iconContainer}
-	            />
-	        		<Text style={styles.menuText}>My Property</Text>
-	        	</View>
-        	</TouchableOpacity>
-        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyInterestedProperties',{uid:this.state.uid,token:this.state.token})}>
-	        	<View style={styles.menu}>
-	        		<Icon 
-	              size={18} 
-	              name='home' 
-	              type='font-awesome' 
-	              color={colors.primary} 
-	              containerStyle={styles.iconContainer}
-	            />
-	        		<Text style={styles.menuText}>My Interested</Text>
-	        	</View>
-        	</TouchableOpacity>
-            {AsyncStorage.getItem('token') ?  
-	        	<TouchableOpacity onPress={this.logout.bind(this)}>
-		        	<View style={styles.menu}>
-		        		<Icon 
-		              size={18} 
-		              name='power' 
-		              type='material-community' 
-		              color={colors.primary} 
-		              containerStyle={styles.iconContainer}
-		            />
-		        		<Text style={styles.menuText}>Logout</Text>
-		        	</View>
-	        	</TouchableOpacity>
-	        	:
-	        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
-		        	<View style={styles.menu}>
-		        		<Icon 
-		              size={18} 
-		              name='power' 
-		              type='material-community' 
-		              color={colors.primary} 
-		              containerStyle={styles.iconContainer}
-		            />
-		        		<Text style={styles.menuText}>Login</Text>
-		        	</View>
-	        	</TouchableOpacity>
-	        }
-        </View>
-
-  		</ScrollView>
-  	);
+		        <View style={styles.menuWrapper}>
+		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('Home',{uid:this.state.uid,token:this.state.token})}>
+			        	<View style={styles.menu}>
+			        		<Icon 
+			              size={18} 
+			              name='desktop-mac' 
+			              type='material-community' 
+			              color={colors.primary} 
+			              containerStyle={styles.iconContainer}
+			            />
+			        		<Text style={styles.menuText}>Home</Text>
+			        	</View>
+		        	</TouchableOpacity>
+		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('SearchProperty',{uid:this.state.uid,token:this.state.token})}>
+			        	<View style={styles.menu}>
+			        		<Icon 
+			              size={20} 
+			              name='search-web' 
+			              type='material-community' 
+			              color={colors.primary} 
+			              containerStyle={styles.iconContainer}
+			            />
+			        		<Text style={styles.menuText}>Search Property</Text>
+			        	</View>
+		        	</TouchableOpacity>
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
+			        	<View style={styles.menu}>
+			        		<Icon 
+			              size={18} 
+			              name='home-city' 
+			              type='material-community' 
+			              color={colors.primary} 
+			              containerStyle={styles.iconContainer}
+			            />
+			        		<Text style={styles.menuText}>Post Property</Text>
+			        	</View>
+		        	</TouchableOpacity>
+		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyPostedProperties',{uid:this.state.uid,token:this.state.token})}>
+			        	<View style={styles.menu}>
+			        		<Icon 
+			              size={18} 
+			              name='home' 
+			              type='font-awesome' 
+			              color={colors.primary} 
+			              containerStyle={styles.iconContainer}
+			            />
+			        		<Text style={styles.menuText}>My Property</Text>
+			        	</View>
+		        	</TouchableOpacity>
+		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyInterestedProperties',{uid:this.state.uid,token:this.state.token})}>
+			        	<View style={styles.menu}>
+			        		<Icon 
+			              size={18} 
+			              name='home' 
+			              type='font-awesome' 
+			              color={colors.primary} 
+			              containerStyle={styles.iconContainer}
+			            />
+			        		<Text style={styles.menuText}>My Interested</Text>
+			        	</View>
+		        	</TouchableOpacity>
+		            {AsyncStorage.getItem('token') ?  
+			        	<TouchableOpacity onPress={this.logout.bind(this)}>
+				        	<View style={styles.menu}>
+				        		<Icon 
+				              size={18} 
+				              name='power' 
+				              type='material-community' 
+				              color={colors.primary} 
+				              containerStyle={styles.iconContainer}
+				            />
+				        		<Text style={styles.menuText}>Logout</Text>
+				        	</View>
+			        	</TouchableOpacity>
+			        	:
+			        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
+				        	<View style={styles.menu}>
+				        		<Icon 
+				              size={18} 
+				              name='power' 
+				              type='material-community' 
+				              color={colors.primary} 
+				              containerStyle={styles.iconContainer}
+				            />
+				        		<Text style={styles.menuText}>Login</Text>
+				        	</View>
+			        	</TouchableOpacity>
+			        }
+		        </View>
+	  		</ScrollView>
+	  	);
 	}
 
 }
