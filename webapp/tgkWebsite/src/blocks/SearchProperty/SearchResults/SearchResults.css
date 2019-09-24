@@ -89,7 +89,7 @@
 }
 
 .propertyType1 .dropdown-menu{
-  min-width: 220px !important;
+  min-width: 224px !important;
   line-height: 25px !important;
   position: absolute;
   /*left: -88px;*/
@@ -194,7 +194,7 @@
 }
 
 .pAge{
-	width:200px;
+	width:180px;
 }
 
 .misc{

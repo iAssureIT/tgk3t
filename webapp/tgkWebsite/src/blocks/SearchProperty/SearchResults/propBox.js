@@ -262,6 +262,7 @@ class propBox extends React.Component {
 	                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
 	                              <span className="intText"> Interest Shown </span>
 	                            </div>
+	                            
 	                          :
 	                            <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 resInterestExpress" id={result._id} onClick={this.interestBtn.bind(this)}>
 	                              <i className="fa fa-heart-o "  aria-hidden="true" ></i>
@@ -375,7 +376,7 @@ class propBox extends React.Component {
 									<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">				
 	                              		{localStorage.getItem('uid') ?
 	                              		<Link to={"/PropertyProfile/"+result._id} target="_blank">
-											<button className="btn pull-right btnDetails">Details &nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>
+											<button className="btn pull-right btnDetails">Details &nbsp;<img alt=""  className="btnImg" src="/images/new/logo1.png"/></button>
 										</Link>
 										:
 										<button className="btn pull-right btnDetails" onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal">Details &nbsp;<img alt=""  className="btnImg" src="/images/TGK-key.png"/></button>

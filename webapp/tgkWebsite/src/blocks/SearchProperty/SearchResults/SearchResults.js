@@ -8,6 +8,7 @@ import Loader 					from 'react-loader-spinner'
 import swal                     from 'sweetalert';
 import './SearchResults.css';
 
+
 class SearchResults extends Component {
 
 	constructor(){
@@ -225,7 +226,13 @@ class SearchResults extends Component {
 			]
 			})
 		
-		 $(".dropdown").hover(            
+		 
+
+		 var S1 =window.screen.width
+		 console.log("s1==========",S1)
+
+		 if(S1>400){
+		 	$(".dropdown").hover(            
             function() {
                 $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
                 $(this).toggleClass('open');
@@ -236,7 +243,8 @@ class SearchResults extends Component {
                 $(this).toggleClass('open');
                 $('b', this).toggleClass("caret caret-up");                
             });
-
+		 }
+		 
 	}
 
 	propertyType(event){
@@ -688,19 +696,6 @@ class SearchResults extends Component {
 
 	reset(event){
 		event.preventDefault();
-		// var searchData ={
-		// 	availability: "",
-		// 	budget: "",
-		// 	flatType: "",
-		// 	floor: "",
-		// 	furnishedStatus: "",
-		// 	location: "",
-		// 	propertyAge: "",
-		// 	propertySubType: [],
-		// 	propertyType: "",
-		// 	transactionType: "",
-		// }
-		// localStorage.setItem("searchData",searchData);
 		this.setState({
 			inputData  				: "",
 			propertyTransactionType	: "Residential-Sell",
@@ -809,7 +804,7 @@ class SearchResults extends Component {
 							</div>
 						</div>
 						<div className="col-lg-8 col-md-12 col-xs-12 col-sm-12 searchDiv1">
-							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 property propertyType noPad">
+							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 property propertyType noPad hidden-xs hidden-sm">
 							  	<div className="dropdown" id="dropdown">
 						       		{this.state.checkPropValue === true ? 
 						       			<span className="badge badge-secondary badgeP">
@@ -820,7 +815,7 @@ class SearchResults extends Component {
 								    <b className="caret pull-right"></b></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
 							      	{
-										<div className="col-lg-12">
+										<div className="col-lg-12 noPad">
 										  	<div className="col-lg-12">
 												<h5>{this.state.propertyType}</h5>
 												{
@@ -840,6 +835,39 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
+							{/*resp*/}
+							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 property propertyType1 hidden-lg hidden-md noPad">
+							  	<div className="dropdown" id="dropdown">
+						       		{this.state.checkPropValue === true ? 
+						       			<span className="badge badge-secondary badgeP">
+						       			<i className="fa fa-check"></i></span> 
+						       		: null
+						       		}
+								    <button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Property Type
+								    <b className="caret pull-right"></b></button>
+								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
+							      	{
+										<div className="col-lg-12 noPad">
+										  	<div className="col-lg-12">
+												<h5>{this.state.propertyType}</h5>
+												{
+													this.state.propertySubTypeList.map((data,index)=>{
+														return(
+															<div className="col-lg-6 noPad inputStyledbtn" key={index}>
+																<input type="checkbox" name ="propertySubType" ref="propertySubType" className="" value={data.name}  checked={data.checked} id={data.name} onChange={this.handlePropSubType.bind(this)}/>&nbsp;<label htmlFor={data.name}>{data.name}</label>
+																<span className="checkBoxBlock"></span>
+															</div>
+														)
+													})
+
+												}
+											</div>
+										</div>
+									}
+								    </ul>
+								</div>
+							</div>
+							{/*end*/}
 							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.checkBudgetValue === true ? 
@@ -847,14 +875,14 @@ class SearchResults extends Component {
 						       			<i className="fa fa-check"></i></span> 
 						       		: null
 						       		}
-							  	 	<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Budget
+							  	 	<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12 col-sm-12" type="button" data-toggle="dropdown">Budget
 								   		<b className="caret pull-right"></b>
 								   	</button>
 								    <ul className="dropdown-menu scrollable-menu col-lg-12 pad mt36">
 									{
 									    this.state.budgetList.map((budget,index)=>{
 								    		return(
-												<span key={index} className="col-lg-12 checkbg inputStyledbtn">
+												<span key={index} className="col-lg-12 col-xs-12 col-md-12 col-sm-12 checkbg inputStyledbtn">
 								    				<input type="radio" value={budget.value} id={"id-"+budget.value} ref="budget" name="budget" className="selectOption" checked={budget.checked} onChange={this.handleBudget.bind(this)} />&nbsp; <label htmlFor={"id-"+budget.value}>{budget.option}</label>
 													<span className="radioBoxBlock"></span>
 								    			</span>
@@ -878,7 +906,7 @@ class SearchResults extends Component {
 								    	{
 							    			this.state.flatTypeList.map((flatType,index)=>{
 								    			return(
-													<span key={index} className="col-lg-12 noPad inputStyledbtn">
+													<span key={index} className="col-lg-12 col-xs-12 noPad inputStyledbtn">
 								    					<input type="checkbox" value={flatType.value}  className="selectOption" id={flatType.value} onChange={this.handleBHK.bind(this)}/>&nbsp; <label htmlFor={flatType.value}>{flatType.option}</label>
 														<span className="checkBoxBlock"></span>
 								    				</span>
@@ -931,7 +959,7 @@ class SearchResults extends Component {
 								    	{
 								    		this.state.floorList.map((floor,index)=>{
 									    		return(
-													<span className="col-lg-12 inputStyledbtn" key={index}>
+													<span className="col-lg-12 col-xs-12 inputStyledbtn" key={index}>
 										    			<input type="radio" value={floor.value} key={index} ref="floor" name="floor" id={floor.value} className="selectOption" onChange={this.handleFloor.bind(this)}/>&nbsp; <label htmlFor={floor.value}>{floor.option}</label>
 														<span className="radioBoxBlock"></span>
 													</span>
@@ -954,7 +982,7 @@ class SearchResults extends Component {
 								    	{
 								    		this.state.propertyAgeList.map((age,index)=>{
 									    		return(
-													<span className="col-lg-12 inputStyledbtn" key={index}>
+													<span className="col-lg-12 col-xs-12 inputStyledbtn" key={index}>
 									    				<input type="radio" value={age.value} id={age.value} ref="age" name="propertyAge" className="selectOption" onChange={this.handleAge.bind(this)}/> &nbsp; <label htmlFor={age.value}>{age.option}</label>
 														<span className="radioBoxBlock"></span>
 									    			</span>
@@ -964,29 +992,6 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							{/*<div className="col-lg-1 col-md-1 col-xs-12 col-sm-12 noPad property">
-							  	<div className="dropdown">
-						       		{this.state.MISC ? 
-						       			<span className="badge badge-secondary badgeP">
-						       			<i className="fa fa-check"></i></span> 
-						       		: null
-						       		}
-									<button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">MISC
-								    <b className="caret pull-right"></b></button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt36 misc">
-								    	{
-								    		this.state.MISCList.map((misc,index)=>{
-									    		return(
-														<span key={index} className="col-lg-12 inputStyledbtn">
-									    					<input type="radio" value={misc.value} ref="age" name="propertyAge" className="selectOption" /> &nbsp; {misc.option}
-															<span className="radioBoxBlock"></span>
-									    				</span>
-									    			);
-									    		})
-								    	}
-								    </ul>
-								</div>
-							</div>*/}
 							<div className="col-lg-2 col-md-2 col-xs-6 col-sm-6 noPad property">
 							  	<div className="dropdown">
 						       		{this.state.availability ? 
@@ -996,7 +1001,7 @@ class SearchResults extends Component {
 						       		}
 									<button className="btn dropdown-toggle bgWhite col-lg-12 col-xs-12" type="button" data-toggle="dropdown">Availability
 								    <b className="caret pull-right"></b></button>
-								    <ul className="dropdown-menu col-lg-12 mt36">
+								    <ul className="dropdown-menu col-lg-12 col-xs-12 mt36">
 										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="Immediate" ref="" className="" value="0" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="Immediate">Immediate</label><br /><span className="radioBoxBlock"></span></span>
 										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoWeeks" ref="" className="" value="14" onChange={this.handleAvailability.bind(this)} />&nbsp; <label htmlFor="twoWeeks">2 Weeks</label><br /><span className="radioBoxBlock"></span></span>
 										<span className="col-lg-12 inputStyledbtn"><input type="radio" name="availability" id="twoFourWeeks" ref="" className="" value="30" onChange={this.handleAvailability.bind(this)}/>&nbsp; <label htmlFor="twoFourWeeks">2-4 Weeks</label><br /><span className="radioBoxBlock"></span></span>
@@ -1005,29 +1010,6 @@ class SearchResults extends Component {
 								</div>
 							</div>
 							  	<button className="btn bgWhite col-lg-1 col-xs-6" title="Reset" onClick={this.reset.bind(this)}><span className="glyphicon glyphicon-repeat"></span></button>
-							{/*<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 areaBtn noPad property">
-							  	<div className="dropdown">
-								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Area
-								    <span className="caret pull-right"></span></button>
-								    <ul className="dropdown-menu col-lg-12 noPad mt36">
-							      		<input type="text" className="col-lg-3 col-md-3 col-xs-12 col-sm-12 marginLeft" ref="areaMin" placeholder="Min" />
-							      		<input type="text" className="col-lg-3 col-md-3 col-xs-12 col-sm-12 marginLeft" ref="areaMax" placeholder="Max" />
-							      		<span className="col-lg-3 col-md-3 col-xs-12 col-sm-12 sqftMt">Sqft</span>
-							      		<button type="button" className="col-lg-2 col-md-2 col-xs-12 col-sm-12 goBtn" onClick={this.handleArea.bind(this)} >Go</button>
-								    </ul>
-								</div>
-							</div>
-
-							<div className="col-lg-2 col-md-2 col-xs-12 col-sm-12 constructionBtn noPad property">
-							  	<div className="dropdown">
-								    <button className="btn dropdown-toggle bgWhite col-lg-12" type="button" data-toggle="dropdown">Construction Status
-								    <span className="caret pull-rightC"></span></button>
-								    <ul className="dropdown-menu col-lg-10 col-md-12 col-xs-12 col-sm-12 pad mt36">
-								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox" value="Ready To Move" name="constructionType" ref="constructionType" onChange={this.handleConstruction.bind(this)}/> Ready To Move</div>
-								    	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12"><input type="checkBox" value="Under Construction" name="constructionType" ref="constructionType" onChange={this.handleConstruction.bind(this)}/> Under Construction</div>
-								    </ul>
-								</div>
-							</div>*/}
 						</div>
 					</div>
 				</form>
