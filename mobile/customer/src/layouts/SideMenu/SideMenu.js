@@ -34,23 +34,23 @@ export default class SideMenu extends React.Component {
   }	
 
   componentDidMount(){
-    this._retrieveData();
+        this._retrieveData();
   }
 
   _retrieveData = async () => {
     try {
       const uid = await AsyncStorage.getItem('uid');
       const token = await AsyncStorage.getItem('token');
-      if (uid !== null && token !== null) {
+      // if (uid !== null && token !== null) {
         this.setState({uid:uid})
         this.setState({token:token})
-      }
+      // }
     } catch (error) {
     }
   }
 
 
-	logout= async () => {
+   logout= async () => {
       await AsyncStorage.removeItem('uid');
       await AsyncStorage.removeItem('token');
       this.props.navigation.closeDrawer();
@@ -136,7 +136,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>My Interested</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		            {AsyncStorage.getItem('token') ?  
+			        {this.state.token!== null && this.state.token!== "" ?
 			        	<TouchableOpacity onPress={this.logout.bind(this)}>
 				        	<View style={styles.menu}>
 				        		<Icon 
@@ -153,12 +153,12 @@ export default class SideMenu extends React.Component {
 			        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
 				        	<View style={styles.menu}>
 				        		<Icon 
-				              size={18} 
-				              name='power' 
-				              type='material-community' 
-				              color={colors.primary} 
-				              containerStyle={styles.iconContainer}
-				            />
+				              		size={18} 
+				              		name='power' 
+				              		type='material-community' 
+				              		color={colors.primary} 
+				              		containerStyle={styles.iconContainer}
+				            	/>
 				        		<Text style={styles.menuText}>Login</Text>
 				        	</View>
 			        	</TouchableOpacity>

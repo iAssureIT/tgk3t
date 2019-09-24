@@ -34,6 +34,7 @@ export default class Home extends ValidationComponent{
       location        :'',
       locSearchResults:'',
       uid:"",
+      token:"",
     };
   }
 
@@ -43,16 +44,13 @@ export default class Home extends ValidationComponent{
   }
 
   componentDidMount(){
-    this.retrieveToken()
-
-    var uid = this.props.navigation.getParam('uid','No uid');
-    var token = this.props.navigation.getParam('token','No token');
-    this.setState({
-      "uid":uid,
-      "token":token,
-    },()=>{
-      console.log("uid",this.state.uid,"token",this.state.token)
-    })
+        var uid = this.props.navigation.getParam('uid','No uid');
+        var token = this.props.navigation.getParam('token','No token');
+        this.setState({
+          "uid":uid,
+          "token":token,
+        })
+        this.retrieveToken();
       // axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
     }
 

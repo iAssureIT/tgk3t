@@ -37,7 +37,7 @@ export default class PropertyList extends ValidationComponent{
       searchResults:[],
       uid:"",
       token:"",
-      searchData:""
+      searchData:"",
     };
   }
 

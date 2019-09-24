@@ -53,6 +53,7 @@ export default class SearchProperty extends ValidationComponent{
       furnishList           : [],
       uid                   : "",
       token                 : "",
+      btnLoading            : false
     };
   }
 
@@ -309,6 +310,7 @@ export default class SearchProperty extends ValidationComponent{
   }
 
   handleSearch = (event)=>{
+    this.setState({btnLoading:true})
     var property      = this.state.activeBtn.split("-");
     var propertyType  = property[0];
     var transactionType = property[1];
@@ -330,10 +332,12 @@ export default class SearchProperty extends ValidationComponent{
     axios
       .post("/api/search/properties/", formValues)
       .then((searchResults) => {
+        this.setState({btnLoading:false})
         this.props.navigation.navigate('PropertyList',{searchResults : searchResults.data })
       })
        .catch((error)=>{
             console.log("error = ",error);
+                this.setState({btnLoading:false})
             if(error.message === "Request failed with status code 401")
             {
                  swal("Your session is expired! Please login again.","", "error");
@@ -647,21 +651,32 @@ export default class SearchProperty extends ValidationComponent{
               }
               
               </View>
+            {
+              this.state.btnLoading ? 
+                <Button
+                  titleStyle      = {styles.buttonSubmitText}
+                  title           = "Loading..."
+                  buttonStyle     = {styles.buttonSubmit}
+                  containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15]}
+                  loading
+                />
+              :
+                <Button
+                  onPress         = {this.handleSearch.bind(this)}
+                  titleStyle      = {styles.buttonSubmitText}
+                  title           = "Search"
+                  buttonStyle     = {styles.buttonSubmit}
+                  containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15]}
+                  iconRight
+                  icon = {<Icon
+                    name="chevrons-right" 
+                    type="feather"
+                    size={22}
+                    color="white"
+                  />}
+                />              
+            }
 
-            <Button
-              onPress         = {this.handleSearch.bind(this)}
-              titleStyle      = {styles.buttonSubmitText}
-              title           = "Search"
-              buttonStyle     = {styles.buttonSubmit}
-              containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15]}
-              iconRight
-              icon = {<Icon
-                name="chevrons-right" 
-                type="feather"
-                size={22}
-                color="white"
-              />}
-            />
 
           </View>
         </ScrollView>
