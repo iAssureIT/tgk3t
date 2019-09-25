@@ -57,6 +57,11 @@ export default class SideMenu extends React.Component {
       this.props.navigation.navigate('Home');
   }
 
+  home(){
+  	this.props.navigation.navigate('Home')
+    this.props.navigation.closeDrawer();
+  }
+
 
   render(){
 	    const { navigation } = this.props;
@@ -76,7 +81,7 @@ export default class SideMenu extends React.Component {
 		        </ImageBackground>
 
 		        <View style={styles.menuWrapper}>
-		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('Home',{uid:this.state.uid,token:this.state.token})}>
+		        	<TouchableOpacity onPress={this.home.bind(this)}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={18} 

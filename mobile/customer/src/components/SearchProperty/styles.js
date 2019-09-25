@@ -236,7 +236,7 @@ export default StyleSheet.create({
   tabViewFloor:{
     width:'20%',
     backgroundColor: colors.button,
-    paddingHorizontal: 5,
+    paddingHorizontal: 3,
     paddingVertical:15,
     textAlign:'center',
   },
@@ -253,9 +253,9 @@ export default StyleSheet.create({
   tabViewAvl:{
     width:'25%',
     backgroundColor: colors.button,
-    paddingHorizontal: 5,
+    paddingHorizontal: 3,
     paddingVertical:15,
-    textAlign:'center',
+    // textAlign:'center',
   },
   activeTabView2:{
     width:'20%',
@@ -267,7 +267,7 @@ export default StyleSheet.create({
   activeTabViewFloor:{
     width:'20%',
     backgroundColor: colors.primary,
-    paddingHorizontal: 5,
+    paddingHorizontal: 3,
     paddingVertical:10,
     elevation: 4,
     textAlign:'center',
@@ -287,10 +287,10 @@ export default StyleSheet.create({
   activeTabViewAvl:{
     width:'25%',
     backgroundColor: colors.primary,
-    paddingHorizontal: 5,
+    paddingHorizontal: 3,
     paddingVertical:15,
     elevation: 4,
-    textAlign:'center',
+    // textAlign:'center',
   },
   buttonSubmitContainer:{
     width:'100%',

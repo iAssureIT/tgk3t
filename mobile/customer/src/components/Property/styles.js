@@ -144,7 +144,7 @@ export default StyleSheet.create({
     color:colors.grey,
   },
   textLarge: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: 'Roboto-Medium',
     color:colors.black,
   },

@@ -269,7 +269,7 @@ export default class PropertyList extends ValidationComponent{
             </View>
             {this.state.searchResults && this.state.searchResults.length>0 ? 
               this.state.searchResults.map((prop,i)=>(
-              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('propertyDetails',{propertyDetails:prop})}>
+              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
                   {
                     prop.gallery.Images && prop.gallery.Images.length>0 ?
@@ -424,17 +424,12 @@ export default class PropertyList extends ValidationComponent{
 
                       <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
                         <Button
-                          onPress={()=>this.props.navigation.navigate('PropertyDetails',{propertyDetails:prop})}
+                          onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
                           titleStyle      = {styles.buttonText2}
                           title           = "Details"
                           buttonStyle     = {styles.button3}
                           containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
                           iconRight
-                          icon = {
-                            <Image 
-                              source={require('../../images/key.png') }
-                            />
-                          }
                         />
                       </View>
                     </View>
@@ -528,14 +523,16 @@ export default class PropertyList extends ValidationComponent{
                       <Text style={styles.textSmallLight}>
                         Super Area
                         <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
-                        Sqft
+                        <Text style={styles.textLarge}> {prop.propertyDetails.superAreaUnit} </Text>
                       </Text>
+                    </View>
 
+                    <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
                       <Text style={styles.textSmallLight}>
                         Possession by
                         <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
                       </Text>
-                    </View>
+                    </View>  
 
                   </View>
                 </View>

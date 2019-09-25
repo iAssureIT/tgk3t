@@ -13,15 +13,16 @@ import {
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
-import axios                              from 'axios';
+import axios                      from 'axios';
+import ValidationComponent        from "react-native-form-validator";
+import { TextField }              from 'react-native-material-textfield';
+import CheckBox                   from 'react-native-check-box'
 
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
+import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
+import Loading                    from '../../layouts/Loading/Loading.js'
 
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
-import CheckBox from 'react-native-check-box'
+import styles                     from './styles.js';
+import {colors,sizes}             from '../../config/styles.js';
 
 const window = Dimensions.get('window');
 
@@ -37,7 +38,8 @@ export default class PropertyList extends ValidationComponent{
       searchResults:[],
       uid:"",
       token:"",
-      searchData:""
+      searchData:"",
+      isLoading :true,
     };
   }
 
@@ -61,6 +63,7 @@ export default class PropertyList extends ValidationComponent{
 
           this.setState({
             searchResults : postsdata,
+            isLoading     : false
             // propertyCity :city,
           });
          // console.log("PropertyDetails",postsdata); 
@@ -261,7 +264,7 @@ export default class PropertyList extends ValidationComponent{
     return (
       <React.Fragment>
         <HeaderBar showBackBtn={true} navigation={navigation}/>
-
+        {this.state.isLoading === false ?
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={styles.formWrapper}>
           <Text style={styles.textCenter}>My Intereted Properties</Text>
@@ -324,17 +327,12 @@ export default class PropertyList extends ValidationComponent{
 
                       <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
                         <Button
-                          onPress={()=>this.props.navigation.navigate('propertyDetailsPage',{propertyDetails:prop})}
+                          onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
                           titleStyle      = {styles.buttonText2}
                           title           = "Details"
                           buttonStyle     = {styles.button3}
                           containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
                           iconRight
-                          icon = {
-                            <Image 
-                              source={require('../../images/key.png') }
-                            />
-                          }
                         />
                       </View>
                     </View>
@@ -428,27 +426,29 @@ export default class PropertyList extends ValidationComponent{
                       <Text style={styles.textSmallLight}>
                         Super Area
                         <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
-                        Sqft
+                        <Text style={styles.textLarge}> {prop.propertyDetails.superAreaUnit} </Text>
                       </Text>
+                    </View>
 
+                    <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
                       <Text style={styles.textSmallLight}>
                         Possession by
                         <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
                       </Text>
-                    </View>
+                    </View> 
 
                   </View>
                 </View>
               </TouchableOpacity>
             ))
             :
-             <Text style={styles.textLarge}> No Data Found </Text>
+             <Text style={[styles.textLarge,{textAlign:'center'}]}> Your Interested Properties will be shown here. </Text>
             }
-              
-
           </View>
         </ScrollView>
-      
+         :
+         <Loading /> 
+       }
       </React.Fragment>
     );
     

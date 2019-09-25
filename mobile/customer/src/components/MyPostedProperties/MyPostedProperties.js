@@ -13,15 +13,16 @@ import {
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
-import axios                              from 'axios';
+import axios                      from 'axios';
+import ValidationComponent        from "react-native-form-validator";
+import { TextField }              from 'react-native-material-textfield';
+import CheckBox                   from 'react-native-check-box'
 
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
+import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
+import Loading                    from '../../layouts/Loading/Loading.js'
 
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
-import CheckBox from 'react-native-check-box'
+import styles                     from './styles.js';
+import {colors,sizes}             from '../../config/styles.js';
 
 const window = Dimensions.get('window');
 
@@ -37,7 +38,8 @@ export default class PropertyList extends ValidationComponent{
       searchResults:[],
       uid:"",
       token:"",
-      searchData:""
+      searchData:"",
+      isLoading :true,
     };
   }
 
@@ -55,9 +57,9 @@ export default class PropertyList extends ValidationComponent{
           console.log(searchResults);
           const postsdata = searchResults.data;
           console.log("postsdata",postsdata);
-
           this.setState({
             searchResults : postsdata,
+            isLoading     : false
             // propertyCity :city,
           });
          // console.log("PropertyDetails",postsdata); 
@@ -139,192 +141,191 @@ export default class PropertyList extends ValidationComponent{
     return (
       <React.Fragment>
         <HeaderBar showBackBtn={true} navigation={navigation}/>
-
-        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
-          <View style={styles.formWrapper}>
-            <Text style={styles.textCenter}>My Posted Properties</Text>
-            {this.state.searchResults && this.state.searchResults.length>0 ? 
-              this.state.searchResults.map((prop,i)=>(
-              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('propertyDetailsPage',{propertyDetails:prop})}>
-                <View style={[styles.propertyWrap,styles.marginBottom20]}>
-                  {
-                    prop.gallery.Images && prop.gallery.Images.length>0 ?
-                      <ImageBackground 
-                        source = {{uri:prop.gallery.Images[0].imgPath}}
-                        style={styles.bgImage}
-                        resizeMode="cover"
-                        imageStyle={{borderRadius:4}}
-                      >
+        {this.state.isLoading === false ?
+          <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
+            <View style={styles.formWrapper}>
+              <Text style={styles.textCenter}>My Posted Properties</Text>
+              {this.state.searchResults && this.state.searchResults.length>0 ? 
+                this.state.searchResults.map((prop,i)=>(
+                <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}>
+                  <View style={[styles.propertyWrap,styles.marginBottom20]}>
+                    {
+                      prop.gallery.Images && prop.gallery.Images.length>0 ?
+                        <ImageBackground 
+                          source = {{uri:prop.gallery.Images[0].imgPath}}
+                          style={styles.bgImage}
+                          resizeMode="cover"
+                          imageStyle={{borderRadius:4}}
+                        >
+                        </ImageBackground>
+                        :
+                        <ImageBackground 
+                          source={require('../../images/1.png') }
+                          style={styles.bgImage}
+                          resizeMode="cover"
+                          imageStyle={{borderRadius:4}}
+                        >
                       </ImageBackground>
-                      :
-                      <ImageBackground 
-                        source={require('../../images/1.png') }
-                        style={styles.bgImage}
-                        resizeMode="cover"
-                        imageStyle={{borderRadius:4}}
-                      >
-                    </ImageBackground>
-                   }
-                  <View style={{width:'100%',padding:10}}>
-                    <View style={{flexDirection:'row'}}>
-                      <Text style={styles.textSmallLight}>{prop.propertyLocation && prop.propertyLocation.society ? prop.propertyLocation.society : "-"}</Text>
-                      <Text style={{marginLeft:15}}>{'\u2022' + " "}</Text>
-                      <Text style={styles.textSmallLight}>New Proerty</Text>
-                    </View>
-
-                    <View style={{flexDirection:'row',marginBottom:15}}>
-                      <View style={{width:'50%'}}>
-                        <View style={{flexDirection:'row',alignItems:'center'}}>
-                          <Icon
-                            name="rupee" 
-                            type="font-awesome"
-                            size={18}
-                            color={colors.black}
-                            containerStyle={{marginRight:5}}
-                          />
-                          <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.totalPrice)}</Text>
-                        </View>
-
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name="marker" 
-                            type="foundation"
-                            size={20}
-                            color={colors.golden}
-                            containerStyle={{marginRight:5}}
-                          />
-                          <Text style={styles.textSmall}>{prop.propertyLocation && prop.propertyLocation.area && prop.propertyLocation.city? prop.propertyLocation.area+", "+prop.propertyLocation.city:"-"}</Text>
-                        </View>
-                        
+                     }
+                    <View style={{width:'100%',padding:10}}>
+                      <View style={{flexDirection:'row'}}>
+                        <Text style={styles.textSmallLight}>{prop.propertyLocation && prop.propertyLocation.society ? prop.propertyLocation.society : "-"}</Text>
+                        <Text style={{marginLeft:15}}>{'\u2022' + " "}</Text>
+                        <Text style={styles.textSmallLight}>New Proerty</Text>
                       </View>
 
-                      <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
-                        <Button
-                          onPress={()=>this.props.navigation.navigate('propertyDetailsPage',{propertyDetails:prop})}
-                          titleStyle      = {styles.buttonText2}
-                          title           = "Details"
-                          buttonStyle     = {styles.button3}
-                          containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
-                          iconRight
-                          icon = {
-                            <Image 
-                              source={require('../../images/key.png') }
+                      <View style={{flexDirection:'row',marginBottom:15}}>
+                        <View style={{width:'50%'}}>
+                          <View style={{flexDirection:'row',alignItems:'center'}}>
+                            <Icon
+                              name="rupee" 
+                              type="font-awesome"
+                              size={18}
+                              color={colors.black}
+                              containerStyle={{marginRight:5}}
                             />
-                          }
-                        />
-                      </View>
-                    </View>
-                    <View style={styles.divider}></View>
+                            <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.totalPrice)}</Text>
+                          </View>
 
-                    <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
+                          <View style={{flexDirection:'row'}}>
+                            <Icon
+                              name="marker" 
+                              type="foundation"
+                              size={20}
+                              color={colors.golden}
+                              containerStyle={{marginRight:5}}
+                            />
+                            <Text style={styles.textSmall}>{prop.propertyLocation && prop.propertyLocation.area && prop.propertyLocation.city? prop.propertyLocation.area+", "+prop.propertyLocation.city:"-"}</Text>
+                          </View>
+                          
+                        </View>
+
+                        <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
+                          <Button
+                            onPress={()=>this.props.navigation.navigate('propertyDetailsPage',{propertyDetails:prop})}
+                            titleStyle      = {styles.buttonText2}
+                            title           = "Details"
+                            buttonStyle     = {styles.button3}
+                            containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
+                            iconRight
+                          />
+                        </View>
+                      </View>
+                      <View style={styles.divider}></View>
+
+                      <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
+                        {prop.propertyType === "Residential" ?
+                          <View  style={{}}>
+                            <View style={{flexDirection:'row'}}>
+                              <Icon
+                                name={"bed-empty"} 
+                                type={'material-community'}
+                                size={20}
+                                color={colors.grey}
+                              />
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Bedrooms</Text>
+                        </View>
+                        :
+                        <View  style={{}}>
+                            <View style={{flexDirection:'row'}}>
+                              <Icon
+                                name={"bed-empty"} 
+                                type={'material-community'}
+                                size={20}
+                                color={colors.grey}
+                              />
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Washrooms</Text>
+                        </View>
+                      }
                       {prop.propertyType === "Residential" ?
                         <View  style={{}}>
                           <View style={{flexDirection:'row'}}>
                             <Icon
-                              name={"bed-empty"} 
-                              type={'material-community'}
+                              name={"bath"} 
+                              type={'font-awesome'}
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Baths</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>Bedrooms</Text>
-                      </View>
-                      :
-                      <View  style={{}}>
+                        :
+                        <View  style={{}}>
                           <View style={{flexDirection:'row'}}>
                             <Icon
-                              name={"bed-empty"} 
+                              name={"bath"} 
+                              type={'font-awesome'}
+                              size={20}
+                              color={colors.grey}
+                            />
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Pantry</Text>
+                        </View>
+                      }  
+                        <View  style={{}}>
+                          <View style={{flexDirection:'row'}}>
+                            <Icon
+                              name={"stairs"} 
                               type={'material-community'}
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Floor</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>Washrooms</Text>
-                      </View>
-                    }
-                    {prop.propertyType === "Residential" ?
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"bath"} 
-                            type={'font-awesome'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies}</Text>
+
+                        <View  style={{}}>
+                          <View style={{flexDirection:'row'}}>
+                            <Icon
+                              name={"compass"} 
+                              type={'font-awesome'}
+                              size={20}
+                              color={colors.grey}
+                            />
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Facing</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>Baths</Text>
-                      </View>
-                      :
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"bath"} 
-                            type={'font-awesome'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry}</Text>
-                        </View>
-                        <Text style={styles.textSmallLight}>Pantry</Text>
-                      </View>
-                    }  
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"stairs"} 
-                            type={'material-community'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
-                        </View>
-                        <Text style={styles.textSmallLight}>Floor</Text>
                       </View>
 
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"compass"} 
-                            type={'font-awesome'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing}</Text>
-                        </View>
-                        <Text style={styles.textSmallLight}>Facing</Text>
+                      <View style={[styles.divider,{marginBottom:10}]}></View>
+
+                      <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                        <Text style={styles.textSmallLight}>
+                          Super Area
+                          <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
+                          <Text style={styles.textLarge}> {prop.propertyDetails.superAreaUnit} </Text>
+                        </Text>
                       </View>
+
+                      <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                        <Text style={styles.textSmallLight}>
+                          Possession by
+                          <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
+                        </Text>
+                      </View> 
+
                     </View>
-
-                    <View style={[styles.divider,{marginBottom:10}]}></View>
-
-                    <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                      <Text style={styles.textSmallLight}>
-                        Super Area
-                        <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
-                        Sqft
-                      </Text>
-
-                      <Text style={styles.textSmallLight}>
-                        Possession by
-                        <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
-                      </Text>
-                    </View>
-
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))
-            :
-             <Text style={styles.textLarge}> No Data Found </Text>
-            }
-              
+                </TouchableOpacity>
+              ))
+              :
+               <Text style={[styles.textLarge,{textAlign:'center'}]}> Posted properties will be shown here. </Text>
+              }
+                
 
-          </View>
-        </ScrollView>
-      
+            </View>
+          </ScrollView>
+          :
+         <Loading /> 
+       }
       </React.Fragment>
     );
     

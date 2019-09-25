@@ -11,15 +11,16 @@ import {
   Image,TextInput,
   Alert
 } from 'react-native';
-import axios          from 'axios';
-import {AsyncStorage} from 'react-native';
-import styles from '../../PostAndEarn/styles.js';
+
+import axios                      from 'axios';
+import AsyncStorage               from '@react-native-community/async-storage';
+import styles                     from '../../PostAndEarn/styles.js';
 import { Button,Icon, SearchBar } from 'react-native-elements';
-import { TextField } from 'react-native-material-textfield';
-import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
-import {colors,sizes} from '../../../config/styles.js';
-import { Dropdown } from 'react-native-material-dropdown';
-import Modal from "react-native-modal";
+import { TextField }              from 'react-native-material-textfield';
+import HeaderBar                  from '../../../layouts/HeaderBar/HeaderBar.js';
+import {colors,sizes}             from '../../../config/styles.js';
+import { Dropdown }               from 'react-native-material-dropdown';
+import Modal                      from "react-native-modal";
 // import ValidationComponent from "react-native-form-validator";
 
 export default class MobileScreen extends ValidationComponent {
@@ -171,17 +172,11 @@ _storeData = async () => {
   }
 
   handleMobileChange(value){
-    // console.log("value = ",value);
     if(value.startsWith && value.startsWith('+')){
       value = value.substr(3);
     }
     let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    // let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    // console.log("x value = ",x);
-    // let y = !x[2] ? x[1] : x[1]+'-'+x[2];
     let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
-    // let y = '+1 '+x[1]+'-'+x[2]+'-'+x[3];
-    // console.log("y value = ",y)
     this.setState({
       mobileNumber : y,
     });
