@@ -309,16 +309,17 @@ const navigateAction = StackActions.reset({
                     // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
                     onPress         = {this.login.bind(this)}
                     titleStyle      = {styles.buttonText2}
-                    title           = "Post & Earn"
+                    title           = "Post & Earn &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "
                     buttonStyle     = {styles.button2}
                     containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
                     iconRight
-                    icon = {<Icon
-                      name="chevrons-right" 
-                      type="feather"
-                      size={22}
-                      color="white"
-                    />}
+                    // icon = {<Icon
+                    //   name="chevrons-right" 
+                    //   type="feather"
+                    //   size={22}
+                    //   color="white"
+                    // />}
+
                   /> 
                 
                 <Text style={styles.heading2}>Earn upto 50% Brokerage for</Text>
