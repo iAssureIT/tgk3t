@@ -44,44 +44,6 @@ export default class PropertyList extends ValidationComponent{
   }
 
   componentDidMount(){
-    var uid = this.props.navigation.getParam('uid','No uid');
-    var token = this.props.navigation.getParam('token','No token');
-    console.log("uidI",uid)
-    console.log("tokenI",token)
-    this.setState({
-      "uid":uid,
-      "token":token,
-    },()=>{
-       axios
-      .get('/api/interestedProperties/list/'+this.state.uid)
-      .then(
-        (res)=>{
-          console.log(res);
-          const postsdata = res.data;
-          console.log("postsdata",res);
-            // var city = postsdata[2].propertyLocation.city.split('|')[0];
-
-          this.setState({
-            searchResults : postsdata,
-            isLoading     : false
-            // propertyCity :city,
-          });
-         // console.log("PropertyDetails",postsdata); 
-
-        }
-      )
-      .catch((error)=>{
-          console.log("error = ",error);
-          if(error.message === "Request failed with status code 401")
-          {
-               // swal("Your session is expired! Please login again.","", "error");
-                Alert.alert("Your session is expired!","Please login again.")
-                this.props.navigation.navigate("MobileScreen");
-          }
-      })
-    })
-    // console.log("searchResults=>",searchResults);
-    // this.setState({searchResults:searchResults})
     this._retrieveData();
   }
 
@@ -131,6 +93,34 @@ export default class PropertyList extends ValidationComponent{
         this.setState({uid:uid})
         this.setState({token:token})
         this.setState({searchData:searchData})
+
+        axios
+        .get('/api/interestedProperties/list/'+uid)
+        .then(
+          (res)=>{
+            console.log(res);
+            const postsdata = res.data;
+            console.log("postsdata",res);
+              // var city = postsdata[2].propertyLocation.city.split('|')[0];
+
+            this.setState({
+              searchResults : postsdata,
+              isLoading     : false
+              // propertyCity :city,
+            });
+           // console.log("PropertyDetails",postsdata); 
+
+          }
+        )
+        .catch((error)=>{
+            console.log("error = ",error);
+            if(error.message === "Request failed with status code 401")
+            {
+                 // swal("Your session is expired! Please login again.","", "error");
+                  Alert.alert("Your session is expired!","Please login again.")
+                  this.props.navigation.navigate("MobileScreen");
+            }
+        })
       }
     } catch (error) {
       // Error retrieving data

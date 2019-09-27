@@ -28,7 +28,7 @@ import styles                             from './styles.js';
 import {colors,sizes}                     from '../../config/styles.js';
 import CheckBox                           from 'react-native-check-box';
 import { Dropdown }                       from 'react-native-material-dropdown';
-import AsyncStorage               from '@react-native-community/async-storage';
+import AsyncStorage                       from '@react-native-community/async-storage';
 
 const window = Dimensions.get('window');
 
@@ -569,13 +569,13 @@ export default class SearchProperty extends ValidationComponent{
                 onChangeText = {(text) => this.handleLocation(text)}
                 value={this.state.location}
                 />
-                <View style={styles.flatList}>
+             {/*   <View style={styles.flatList}>
                     <FlatList
                       data={this.state.locSearchResults}
                       renderItem={this._renderList}
                       // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
                     />
-                </View>
+                </View>*/}
               </View>
             </View>
             <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn!=='commertial'? "Residential" : "Commercial"}</Text>

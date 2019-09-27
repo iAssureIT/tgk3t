@@ -8,13 +8,23 @@ import {
 } from "react-native";
 import { Header, Icon  } from 'react-native-elements';
 import ValidationComponent from "react-native-form-validator";
-import { NavigationActions } from 'react-navigation'
+import { NavigationActions, StackActions } from 'react-navigation'
 
 import styles from "./styles.js";
 
 import AsyncStorage               from '@react-native-community/async-storage';
 
 export default class NotificationHeader extends React.Component {
+
+  navigateScreen=(route)=>{
+    const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+                NavigationActions.navigate({ routeName: route}),
+              ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+  }
 
 
   constructor(props) {

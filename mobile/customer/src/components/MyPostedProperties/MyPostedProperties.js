@@ -44,38 +44,6 @@ export default class PropertyList extends ValidationComponent{
   }
 
   componentDidMount(){
-    var uid = this.props.navigation.getParam('uid','No uid');
-    var token = this.props.navigation.getParam('token','No token');
-    this.setState({
-      "uid":uid,
-      "token":token,
-    },()=>{
-       axios
-      .get('/api/properties/mypropertylist/'+this.state.uid)
-      .then(
-        (searchResults)=>{
-          console.log(searchResults);
-          const postsdata = searchResults.data;
-          console.log("postsdata",postsdata);
-          this.setState({
-            searchResults : postsdata,
-            isLoading     : false
-            // propertyCity :city,
-          });
-         // console.log("PropertyDetails",postsdata); 
-
-        }
-      )
-      .catch((error)=>{
-            console.log("error = ",error.message);
-            if(error.message === "Request failed with status code 401")
-            {
-                Alert.alert("Your session is expired!","Please login again.")
-                this.props.navigation.navigate("MobileScreen");
-            }
-        })
-    })
-     
     this._retrieveData();
   }
 
@@ -125,6 +93,31 @@ export default class PropertyList extends ValidationComponent{
         this.setState({uid:uid})
         this.setState({token:token})
         this.setState({searchData:searchData})
+
+        axios
+        .get('/api/properties/mypropertylist/'+uid)
+        .then(
+          (searchResults)=>{
+            console.log(searchResults);
+            const postsdata = searchResults.data;
+            console.log("postsdata",postsdata);
+            this.setState({
+              searchResults : postsdata,
+              isLoading     : false
+              // propertyCity :city,
+            });
+           // console.log("PropertyDetails",postsdata); 
+
+          }
+        )
+        .catch((error)=>{
+              console.log("error = ",error.message);
+              if(error.message === "Request failed with status code 401")
+              {
+                  Alert.alert("Your session is expired!","Please login again.")
+                  this.props.navigation.navigate("MobileScreen");
+              }
+          })
       }
     } catch (error) {
       // Error retrieving data
@@ -203,7 +196,7 @@ export default class PropertyList extends ValidationComponent{
 
                         <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
                           <Button
-                            onPress={()=>this.props.navigation.navigate('propertyDetailsPage',{propertyDetails:prop})}
+                            onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
                             titleStyle      = {styles.buttonText2}
                             title           = "Details"
                             buttonStyle     = {styles.button3}
@@ -242,26 +235,6 @@ export default class PropertyList extends ValidationComponent{
                           <Text style={styles.textSmallLight}>Washrooms</Text>
                         </View>
                       }
-
-                      <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
-                        <Button
-                          onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
-                          titleStyle      = {styles.buttonText2}
-                          title           = "Details"
-                          buttonStyle     = {styles.button3}
-                          containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
-                          iconRight
-                          icon = {
-                            <Image 
-                              source={require('../../images/key.png') }
-                            />
-                          }
-                        />
-                      </View>
-                    </View>
-                    <View style={styles.divider}></View>
-
-                    <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
 
                       {prop.propertyType === "Residential" ?
                         <View  style={{}}>

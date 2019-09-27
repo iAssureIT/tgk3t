@@ -96,7 +96,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>Home</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.navigateScreen('SearchProperty',{uid:this.state.uid,token:this.state.token})}>
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('SearchProperty')}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={20} 
@@ -120,7 +120,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>Post Property</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.navigateScreen('MyPostedProperties',{uid:this.state.uid,token:this.state.token})}>
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('MyPostedProperties')}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={18} 
@@ -132,7 +132,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>My Property</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.navigateScreen('MyInterestedProperties',{uid:this.state.uid,token:this.state.token})}>
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('MyInterestedProperties')}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={18} 

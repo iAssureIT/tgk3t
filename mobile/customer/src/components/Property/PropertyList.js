@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,TextInput,
-  AsyncStorage,
   Alert,
 } from 'react-native';
 
@@ -22,6 +21,7 @@ import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
 import CheckBox from 'react-native-check-box'
+import AsyncStorage     from '@react-native-community/async-storage';
 
 const window = Dimensions.get('window');
 
