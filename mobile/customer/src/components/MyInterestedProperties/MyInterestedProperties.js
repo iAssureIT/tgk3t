@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,TextInput,
-  AsyncStorage,
   Alert,
 } from 'react-native';
 
@@ -17,6 +16,7 @@ import axios                      from 'axios';
 import ValidationComponent        from "react-native-form-validator";
 import { TextField }              from 'react-native-material-textfield';
 import CheckBox                   from 'react-native-check-box'
+import AsyncStorage     from '@react-native-community/async-storage';
 
 import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
 import Loading                    from '../../layouts/Loading/Loading.js'
