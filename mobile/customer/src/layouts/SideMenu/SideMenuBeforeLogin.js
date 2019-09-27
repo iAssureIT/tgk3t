@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import { Icon } 			from 'react-native-elements';
-import {NavigationActions} 	from 'react-navigation';
+import { NavigationActions, StackActions } from 'react-navigation'
 import styles 				from './styles.js';
 import {colors} 			from '../../config/styles.js';
 import AsyncStorage 		from '@react-native-community/async-storage';
@@ -20,11 +20,16 @@ import AsyncStorage 		from '@react-native-community/async-storage';
 export default class SideMenu extends React.Component {
 
 	navigateScreen=(route)=>{
-		const navigateAction = NavigationActions.navigate({
-            routeName: route
+		const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            		NavigationActions.navigate({ routeName: route}),
+            	],
         });
         this.props.navigation.dispatch(navigateAction);
 	}
+
+
 	constructor(props){
     super(props);
     this.state={
@@ -54,17 +59,16 @@ export default class SideMenu extends React.Component {
       await AsyncStorage.removeItem('uid');
       await AsyncStorage.removeItem('token');
       this.props.navigation.closeDrawer();
-      this.props.navigation.navigate('Home');
+      this.navigateScreen('MobileScreen');
   }
 
   home(){
-  	this.props.navigation.navigate('Home')
+  	this.navigateScreen('Home')
     this.props.navigation.closeDrawer();
   }
 
 
   render(){
-	    const { navigation } = this.props;
 	  	// console.log("uid=>",this.state.uid);
 	  	return(
 	      	<ScrollView contentContainerStyle={[styles.container]} scrollsToTop={false}>
@@ -93,7 +97,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>Home</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('SearchProperty',{uid:this.state.uid,token:this.state.token})}>
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('SearchProperty',{uid:this.state.uid,token:this.state.token})}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={20} 
@@ -105,7 +109,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>Search Property</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen')}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={18} 
@@ -117,7 +121,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>Post Property</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyPostedProperties',{uid:this.state.uid,token:this.state.token})}>
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('MyPostedProperties',{uid:this.state.uid,token:this.state.token})}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={18} 
@@ -129,45 +133,19 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>My Property</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MyInterestedProperties',{uid:this.state.uid,token:this.state.token})}>
+	
+		        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen')}>
 			        	<View style={styles.menu}>
 			        		<Icon 
-			              size={18} 
-			              name='home' 
-			              type='font-awesome' 
-			              color={colors.primary} 
-			              containerStyle={styles.iconContainer}
-			            />
-			        		<Text style={styles.menuText}>My Interested</Text>
+			              		size={18} 
+			              		name='power' 
+			              		type='material-community' 
+			              		color={colors.primary} 
+			              		containerStyle={styles.iconContainer}
+			            	/>
+			        		<Text style={styles.menuText}>Login</Text>
 			        	</View>
 		        	</TouchableOpacity>
-			        {this.state.token!== null && this.state.token!== "" ?
-			        	<TouchableOpacity onPress={this.logout.bind(this)}>
-				        	<View style={styles.menu}>
-				        		<Icon 
-				              size={18} 
-				              name='power' 
-				              type='material-community' 
-				              color={colors.primary} 
-				              containerStyle={styles.iconContainer}
-				            />
-				        		<Text style={styles.menuText}>Logout</Text>
-				        	</View>
-			        	</TouchableOpacity>
-			        	:
-			        	<TouchableOpacity onPress={()=>this.props.navigation.navigate('MobileScreen',{uid:this.state.uid,token:this.state.token})}>
-				        	<View style={styles.menu}>
-				        		<Icon 
-				              		size={18} 
-				              		name='power' 
-				              		type='material-community' 
-				              		color={colors.primary} 
-				              		containerStyle={styles.iconContainer}
-				            	/>
-				        		<Text style={styles.menuText}>Login</Text>
-				        	</View>
-			        	</TouchableOpacity>
-			        }
 		        </View>
 	  		</ScrollView>
 	  	);

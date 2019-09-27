@@ -6,10 +6,11 @@ const window = Dimensions.get('window');
 export default StyleSheet.create({
 
   container:{
-    backgroundColor: '#ccc',
-    // minHeight:'90%',
+    backgroundColor: colors.white,
+    //minHeight:'83%',
     width: window.width,
-    alignItems: 'center',
+    zIndex:-10,
+    // position:"absolute"
   },
 
 
@@ -323,6 +324,21 @@ export default StyleSheet.create({
   paddLeft5:{
     paddingLeft:6,
     paddingRight:6,
+  },
+  item: {
+    backgroundColor:"#fff", 
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+    width:'100%',
+    // marginLeft:20,
+  },
+   flatList: {
+    position: 'absolute', 
+    zIndex: 2,
+  },
+  marginTop20:{
+    marginTop:20
   }
 });
 

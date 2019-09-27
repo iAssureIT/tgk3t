@@ -120,7 +120,9 @@ export default class MobileScreen extends ValidationComponent {
                 uid:response.data.user_id,
                 token:response.data.token,
               },()=>{
-                this._storeData();
+                // this._storeData();
+                AsyncStorage.setItem("uid",this.state.uid);
+                AsyncStorage.setItem("token",this.state.token);
               });
               
                 // AsyncStorage.setItem("uid",response.data.user_id);

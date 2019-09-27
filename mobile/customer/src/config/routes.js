@@ -1,7 +1,8 @@
 import {createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
 import AuthLoadingScreen from '../layouts/AuthLoading/AuthLoadingScreen.js' 
 import Home from '../components/Home/Home.js';
-import SideMenu from '../layouts/SideMenu/SideMenu.js';
+import SideMenuAfterLogin from '../layouts/SideMenu/SideMenuAfterLogin.js';
+import SideMenuBeforeLogin from '../layouts/SideMenu/SideMenuBeforeLogin.js';
 import SignUp from '../components/SystemSecurity/SignUp/SignUp.js';
 import BasicInfo from '../components/PostAndEarn/BasicInfo.js';
 import PropertyDetails from '../components/PostAndEarn/PropertyDetails.js';
@@ -118,7 +119,7 @@ const drawer = createDrawerNavigator({
 		screen: HomeStack
 	}
 },{
-  contentComponent: SideMenu
+  contentComponent: SideMenuAfterLogin
 });
 
 

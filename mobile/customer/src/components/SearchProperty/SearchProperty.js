@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import {
   ScrollView,
   Text,
+  FlatList,
   View,
   BackHandler,
   Dimensions,
@@ -12,7 +13,9 @@ import {
   ImageBackground,
   Image,TextInput,
   Alert,
-  AsyncStorage
+  // AsyncStorage,
+ TouchableWithoutFeedback
+
 } from 'react-native';
 
 import axios                              from 'axios';
@@ -25,7 +28,7 @@ import styles                             from './styles.js';
 import {colors,sizes}                     from '../../config/styles.js';
 import CheckBox                           from 'react-native-check-box';
 import { Dropdown }                       from 'react-native-material-dropdown';
-
+import AsyncStorage               from '@react-native-community/async-storage';
 
 const window = Dimensions.get('window');
 
@@ -53,7 +56,8 @@ export default class SearchProperty extends ValidationComponent{
       furnishList           : [],
       uid                   : "",
       token                 : "",
-      btnLoading            : false
+      btnLoading            : false,
+      locSearchResults      : "",
     };
   }
 
@@ -133,9 +137,6 @@ export default class SearchProperty extends ValidationComponent{
     }
   }
 
-  handleLocation = (value)=>{
-    this.setState({location:value});
-  }
 
   handleOption = (option)=>{
     this.setState({
@@ -345,6 +346,76 @@ export default class SearchProperty extends ValidationComponent{
       });
   }
 
+   _selectedItem(item){
+    this.setState({locSearchResults:""})
+    console.log("item",item);
+    this.setState({'searchText':item,location : item,})
+  }
+
+   _renderList = ({ item }) => {
+    console.log("item",item)
+    return (
+     <TouchableWithoutFeedback style={styles.flatList} onPress={()=>this._selectedItem(item)}>
+       <View>
+            <Text style={styles.item} >{item}</Text>
+        </View>
+     </TouchableWithoutFeedback>
+    );
+  }
+
+   handleLocation(value){
+    var location =value;
+    this.setState({
+      searchText:value,
+      location : location,
+    },()=>{
+      if(this.state.location.length>=3)
+      {
+      axios({
+            method: 'get',
+            url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
+          })        
+        .then((searchResults) => {
+          if(searchResults.data.length>0){
+            var cities = searchResults.data.map(a=>a.cityName);
+            cities = [...new Set(cities)];
+
+            var areas = searchResults.data.map(a=>a.areaName);
+            areas = [...new Set(areas)];
+
+            var subareaName = searchResults.data.map(a=>a.subareaName);
+            subareaName = [...new Set(subareaName)];
+
+            for(let i=0; i<cities.length; i++) {
+              for(let j=0; j<areas.length; j++) {
+                areas[j] = areas[j] + ', ' + cities[i];
+              }
+            }
+
+            for(let i=0; i<cities.length; i++) {
+              for(let j=0; j<subareaName.length; j++) {
+                subareaName[j] = subareaName[j] + ', ' + cities[i];
+              }
+            }
+
+            var citiesAreas = cities.concat(areas);
+            var citiesAreassubAreas = citiesAreas.concat(subareaName);
+
+
+            this.setState({
+              locSearchResults : citiesAreassubAreas,
+            });         
+
+          }
+        })
+            .catch((error) =>{
+              console.log("error = ", error);
+            }); 
+      }
+    })
+  }
+
+
 
 
   render(){
@@ -364,189 +435,190 @@ export default class SearchProperty extends ValidationComponent{
         <HeaderBar showBackBtn={true} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
-          <View style={styles.formWrapper}>
             
-            <View style={styles.optionsWrapper}>
-              <View style={styles.buttonContainer}>
-                {activeBtn=='Residential-Sell'
-                ?
-                  <React.Fragment>
+            <View style={styles.formWrapper}>
+            
+              <View style={styles.optionsWrapper}>
+                <View style={styles.buttonContainer}>
+                  {
+                    activeBtn=='Residential-Sell'
+                    ?
+                    <React.Fragment>
+                      <Button
+                        titleStyle      = {styles.activeButtonText}
+                        title           = "Buy"
+                        buttonStyle     = {styles.activeButton}
+                      />
+                      <View style={styles.triangle}></View>
+                    </React.Fragment>
+                  :
                     <Button
-                      titleStyle      = {styles.activeButtonText}
+                      onPress         = {()=>this.handleOption('Residential-Sell')}
+                      titleStyle      = {styles.buttonText}
                       title           = "Buy"
-                      buttonStyle     = {styles.activeButton}
+                      buttonStyle     = {styles.button}
+                      // containerStyle  = {[{width:'100%',backgroundColor:'#f0f'}]}
                     />
-                    <View style={styles.triangle}></View>
-                  </React.Fragment>
-                :
-                  <Button
-                    onPress         = {()=>this.handleOption('Residential-Sell')}
-                    titleStyle      = {styles.buttonText}
-                    title           = "Buy"
-                    buttonStyle     = {styles.button}
-                    // containerStyle  = {[{width:'100%',backgroundColor:'#f0f'}]}
-                  />
+                  }
+                </View>
+
+                <View style={styles.buttonContainer}>
+                {
+                  activeBtn=='Residential-Rent'
+                  ?
+                    <React.Fragment>
+                      <Button
+                        titleStyle      = {styles.activeButtonText}
+                        title           = "Rent"
+                        buttonStyle     = {styles.activeButton}
+
+                      />
+                      <View style={styles.triangle}></View>
+                    </React.Fragment>
+                  :
+                    <Button
+                      onPress         = {()=>this.handleOption('Residential-Rent')}
+                      titleStyle      = {styles.buttonText}
+                      title           = "Rent"
+                      buttonStyle     = {styles.button}
+                    />
                 }
-              </View>
+                </View>
 
-              <View style={styles.buttonContainer}>
-              {activeBtn=='Residential-Rent'
-              ?
-                <React.Fragment>
-                  <Button
-                    titleStyle      = {styles.activeButtonText}
-                    title           = "Rent"
-                    buttonStyle     = {styles.activeButton}
-
-                  />
-                  <View style={styles.triangle}></View>
-                </React.Fragment>
-              :
-                <Button
-                  onPress         = {()=>this.handleOption('Residential-Rent')}
-                  titleStyle      = {styles.buttonText}
-                  title           = "Rent"
-                  buttonStyle     = {styles.button}
-                />
-              }
-              </View>
-
-              <View style={styles.buttonContainer}>
-              {activeBtn=='Commercial-Sell' || activeBtn=='Commercial-Rent'
-              ?
-                <React.Fragment>
-                  <Button
-                    titleStyle      = {styles.activeButtonText}
-                    title           = "Commercial"
-                    buttonStyle     = {styles.activeButton}
-
-                  />
-                  <View style={styles.triangle}></View>
-                </React.Fragment>
-              :
-                <Button
-                  onPress         = {()=>this.handleOption('Commercial-Sell')}
-                  titleStyle      = {styles.buttonText}
-                  title           = "Commercial"
-                  buttonStyle     = {styles.button}
-                />
-              }
-              </View>
-            </View>
-
-            {activeBtn === "Commercial-Sell" || activeBtn === "Commercial-Rent" ?
-              <View>
-                <Text style={[styles.heading,styles.marginBottom5]}>Looking For</Text>
-                <View style={[styles.optionsWrapper,styles.marginBottom25]}>
-                  <View style={styles.buttonContainer1}>
-                    {activeBtn === "Commercial-Sell" ?
+                <View style={styles.buttonContainer}>
+                {
+                  activeBtn=='Commercial-Sell' || activeBtn=='Commercial-Rent'
+                    ?
+                      <React.Fragment>
                         <Button
                           titleStyle      = {styles.activeButtonText}
+                          title           = "Commercial"
+                          buttonStyle     = {styles.activeButton}
+
+                        />
+                        <View style={styles.triangle}></View>
+                      </React.Fragment>
+                    :
+                      <Button
+                        onPress         = {()=>this.handleOption('Commercial-Sell')}
+                        titleStyle      = {styles.buttonText}
+                        title           = "Commercial"
+                        buttonStyle     = {styles.button}
+                      />
+                }
+                </View>
+              </View>
+
+              {
+                activeBtn === "Commercial-Sell" || activeBtn === "Commercial-Rent" ?
+                <View>
+                  <Text style={[styles.heading,styles.marginBottom5]}>Looking For</Text>
+                  <View style={[styles.optionsWrapper,styles.marginBottom25]}>
+                    <View style={styles.buttonContainer1}>
+                      {activeBtn === "Commercial-Sell" ?
+                          <Button
+                            titleStyle      = {styles.activeButtonText}
+                            title           = "Buy"
+                            buttonStyle     = {styles.activeButton}
+                          />
+                      :
+                        <Button
+                          onPress         = {()=>this.handleTransacrtionType('Commercial-Sell')}
+                          titleStyle      = {styles.buttonText}
                           title           = "Buy"
+                          buttonStyle     = {styles.button}
+                          // containerStyle  = {[{width:'100%',backgroundColor:'#f0f'}]}
+                        />
+                      }
+                    </View>
+
+                    <View style={styles.buttonContainer1}>
+                    {activeBtn === "Commercial-Rent"?
+                        <Button
+                          titleStyle      = {styles.activeButtonText}
+                          title           = "Lease"
                           buttonStyle     = {styles.activeButton}
                         />
                     :
                       <Button
-                        onPress         = {()=>this.handleTransacrtionType('Commercial-Sell')}
+                        onPress         = {()=>this.handleTransacrtionType('Commercial-Rent')}
                         titleStyle      = {styles.buttonText}
-                        title           = "Buy"
+                        title           = "Lease"
                         buttonStyle     = {styles.button}
-                        // containerStyle  = {[{width:'100%',backgroundColor:'#f0f'}]}
                       />
                     }
+                    </View>
                   </View>
+                </View>  
+                :
+                null
+              }
 
-                  <View style={styles.buttonContainer1}>
-                  {activeBtn === "Commercial-Rent"?
-                      <Button
-                        titleStyle      = {styles.activeButtonText}
-                        title           = "Lease"
-                        buttonStyle     = {styles.activeButton}
-                      />
-                  :
-                    <Button
-                      onPress         = {()=>this.handleTransacrtionType('Commercial-Rent')}
-                      titleStyle      = {styles.buttonText}
-                      title           = "Lease"
-                      buttonStyle     = {styles.button}
-                    />
-                  }
-                  </View>
-                </View>
-              </View>  
-              :
-              null
-            }
-
-            <View style={[styles.searchInputWrapper,styles.marginBottom25]}>
+              <View style={[styles.searchInputWrapper,styles.marginBottom25]}>
               <View style={styles.inputTextWrapper}>
                 <SearchBar
-                  searchIcon={
-                    <View>
-                      <Icon name="map-marker-radius" type="material-community" size={24}  color={colors.black} style={{}}/>
-                    </View>
-                  }
-                  containerStyle={styles.searchContainer}
-                  inputContainerStyle={styles.searchInputContainer}
-                  inputStyle={styles.searchInput}
-                  placeholder='Enter city'
-                  onChangeText = {(text) => this.handleLocation(text)}
-                  value={this.state.location}
-                />
-              </View>
-{/*              <TouchableOpacity 
-                onPress={()=>this.props.navigation.navigate('SearchProperty')}
-                style={styles.searchBtnWrapper}
-              >
-                <View >
-                  <Image 
-                    source={require('../../images/key.png') }
-                  />
-                </View>
-              </TouchableOpacity>*/}
-            </View>
-
-            <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn!=='commertial'? "Residential" : "Commercial"}</Text>
-              <View style={[styles.tabWrap,styles.marginBottom25]}>
-               <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
-                 {this.state.propertyList.length && this.state.propertyList.length >0 ?
-                  this.state.propertyList.map((data,index)=>(
-                 <TouchableOpacity 
-                    key={index}
-                    onPress = {()=>this.setActive(data.name)}
-                    style={[(data.checked===true?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
-                  >
-                      <Icon
-                        name={data.iconName} 
-                        type={data.type}
-                        size={data.size}
-                        color="white"
-                        style={[{paddingLeft:10}]}
-
-                      />
-                      <Text style={styles.tabText}> {data.name} </Text>
-                  </TouchableOpacity>
-                  ))
-                  :
-                  null
+                searchIcon={
+                  <View>
+                    <Icon name="map-marker-radius" type="material-community" size={24}  color={colors.black} style={{}}/>
+                  </View>
                 }
-                </ScrollView>
+                containerStyle={styles.searchContainer}
+                inputContainerStyle={styles.searchInputContainer}
+                inputStyle={styles.searchInput}
+                placeholder='Enter city'
+                onChangeText = {(text) => this.handleLocation(text)}
+                value={this.state.location}
+                />
+                <View style={styles.flatList}>
+                    <FlatList
+                      data={this.state.locSearchResults}
+                      renderItem={this._renderList}
+                      // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                    />
+                </View>
               </View>
+            </View>
+            <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn!=='commertial'? "Residential" : "Commercial"}</Text>
+            <View style={[styles.tabWrap,styles.marginBottom25]}>
+              <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
+               {this.state.propertyList.length && this.state.propertyList.length >0 ?
+                this.state.propertyList.map((data,index)=>(
+               <TouchableOpacity 
+                  key={index}
+                  onPress = {()=>this.setActive(data.name)}
+                  style={[(data.checked===true?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
+                >
+                    <Icon
+                      name={data.iconName} 
+                      type={data.type}
+                      size={data.size}
+                      color="white"
+                      style={[{paddingLeft:10}]}
+
+                    />
+                    <Text style={styles.tabText}> {data.name} </Text>
+                </TouchableOpacity>
+                ))
+                :
+                null
+              }
+              </ScrollView>
+            </View>
             <Text style={[styles.heading,styles.marginBottom5]}>Bedroom</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
-            {this.state.roomsList && this.state.roomsList.length > 0 ?
-              this.state.roomsList.map((data,index)=>(
-              <TouchableOpacity 
-                onPress={()=>this.setActiveRoom(data.value)}
-                key={index} 
-                style={[(data.checked==true?styles.activeTabView2:styles.tabView2),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<5)?styles.tabBorder:null]}
-              >
-                <Text style={styles.tabText}>{data.option}</Text>
-              </TouchableOpacity>
-            ))
-            :
-            null
-            }
+              {this.state.roomsList && this.state.roomsList.length > 0 ?
+                this.state.roomsList.map((data,index)=>(
+                <TouchableOpacity 
+                  onPress={()=>this.setActiveRoom(data.value)}
+                  key={index} 
+                  style={[(data.checked==true?styles.activeTabView2:styles.tabView2),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<5)?styles.tabBorder:null]}
+                >
+                  <Text style={styles.tabText}>{data.option}</Text>
+                </TouchableOpacity>
+              ))
+              :
+              null
+              }
             </View>
 
             <Text style={[styles.heading,styles.marginBottom5]}>Price Range</Text>

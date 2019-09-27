@@ -6,11 +6,11 @@ const window = Dimensions.get('window');
 export default StyleSheet.create({
 
   container:{
-    backgroundColor: colors.primary,
+    backgroundColor: colors.white,
     //minHeight:'83%',
-    width: window.width,
-    zIndex:0
-  },
+    width: window.width, 
+    zIndex:-10
+  }, 
   bgImage: {
     width:window.width,
     height:window.height,
@@ -148,7 +148,7 @@ export default StyleSheet.create({
   formInputView:{
     width:'100%',
     alignItems:'center',
-    marginBottom: 30
+    marginBottom: 30,
   },
   searchContainer:{
     borderTopWidth:0,
@@ -169,7 +169,7 @@ export default StyleSheet.create({
   },
   alignCenter:{
     alignItems:'center',
-    justifyContent:'center'
+    justifyContent:'center',
   },
   marginBottom30:{
     marginBottom:30
@@ -194,12 +194,19 @@ export default StyleSheet.create({
     marginLeft:10
   },
    item: {
+    backgroundColor:"#fff", 
     padding: 10,
     fontSize: 18,
     height: 44,
-    backgroundColor:'#fff',
-    width:'75%',
-    marginLeft:20,
-    zIndex:1
+    width:'100%',
+    // marginLeft:20,
   },
+   flatList: {
+    marginTop:45,
+    position: 'absolute', 
+    zIndex: 2,
+  },
+  marginTop20:{
+    marginTop:20
+  }
 });

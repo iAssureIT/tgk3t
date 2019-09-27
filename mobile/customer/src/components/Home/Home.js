@@ -14,6 +14,7 @@ import {
   Alert
 } from 'react-native';
 
+import { NavigationActions } from 'react-navigation'
 import axios                      from 'axios';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import ValidationComponent        from "react-native-form-validator";
@@ -24,7 +25,8 @@ import AsyncStorage               from '@react-native-community/async-storage';
 
 const window = Dimensions.get('window');
 
-export default class Home extends ValidationComponent{
+export default class Home extends Component{
+
   constructor(props){
     super(props);
     // this.retrieveToken()
@@ -44,27 +46,21 @@ export default class Home extends ValidationComponent{
   }
 
   componentDidMount(){
-        var uid = this.props.navigation.getParam('uid','No uid');
-        var token = this.props.navigation.getParam('token','No token');
-        this.setState({
-          "uid":uid,
-          "token":token,
-        })
+        // var uid = this.props.navigation.getParam('uid','No uid');
+        // var token = this.props.navigation.getParam('token','No token');
         this.retrieveToken();
-      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
-    }
+    
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
+  }
 
   retrieveToken = async()=>{
     var token = await AsyncStorage.getItem('token')
     var uid = await AsyncStorage.getItem('uid')
-    console.log('token',token)
-    console.log('uid',uid)
     this.setState({token:token})
   }
 
   handleLocation(value){
     var location =value;
-    console.log("location",location);
     this.setState({
       searchText:value,
       location : location,
@@ -104,8 +100,6 @@ export default class Home extends ValidationComponent{
 
             this.setState({
               locSearchResults : citiesAreassubAreas,
-            },()=>{
-              console.log("locSearchResults",this.state.locSearchResults)
             });         
 
           }
@@ -118,16 +112,17 @@ export default class Home extends ValidationComponent{
   }
 
   _selectedItem(item){
-    console.log('item1',item)
-    this.setState({'searchText':item})
+    this.setState({locSearchResults:""})
+    console.log("item",item);
+    this.setState({'searchText':item,location : item,})
   }
 
    _renderList = ({ item }) => {
-    console.log("item",item);
+    console.log("item",item)
     return (
-     <TouchableWithoutFeedback onPress={(item)=>this._selectedItem(item)}>
-       <View style={styles.container}>
-            <Text style={styles.item} onPress={(item)=>this._selectedItem(item)}>{item}</Text>
+     <TouchableWithoutFeedback onPress={()=>this._selectedItem(item)}>
+       <View>
+            <Text style={styles.item}>{item}</Text>
         </View>
      </TouchableWithoutFeedback>
     );
@@ -157,7 +152,6 @@ export default class Home extends ValidationComponent{
   }
 
   render(){
-    
     const { navigation } = this.props;
     let {activeBtn} = this.state;
     // console.log("this.props.navigation = ",this.props.navigation);
@@ -174,6 +168,7 @@ export default class Home extends ValidationComponent{
 
             <View style={styles.headingView}>
               <Text style={styles.headingText}>
+                <Text style={{fontFamily:'Roboto-Regular',fontSize:5}}>{this.state.token}</Text>
                 <Text style={{fontFamily:'Roboto-Regular'}}>Every dream </Text>
                 <Text style={{fontFamily:'Roboto-Medium'}}>has a key</Text>
               </Text>
@@ -284,45 +279,71 @@ export default class Home extends ValidationComponent{
                   </View>
                 </TouchableOpacity>
               </View>
-              <View style={styles.container}>
+              <View style={styles.flatList}>
                   <FlatList
                     data={this.state.locSearchResults}
                     renderItem={this._renderList}
-                    // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
                   />
               </View>
-            </View>
+              <View style={[styles.alignCenter,styles.marginBottom30,styles.marginTop20]}>
+                <Text style={styles.heading2}>For our Buyers / Tenants</Text>
+                <Text style={styles.heading3}>Upto 50% Discount</Text>
+                <Text style={styles.heading3}>On Brokerage</Text>
+                <Text style={styles.heading3}>for Renting/Buying with us!</Text>
+              </View>
 
-            <View style={[styles.alignCenter,styles.marginBottom30]}>
-              <Text style={styles.heading2}>For our Buyers / Tenants</Text>
-              <Text style={styles.heading3}>Upto 50% Discount</Text>
-              <Text style={styles.heading3}>On Brokerage</Text>
-              <Text style={styles.heading3}>for Renting/Buying with us!</Text>
+              <View style={[styles.alignCenter]}>
+                <Text style={[styles.heading2,{marginBottom:10}]}>Welcome Owners</Text>
+                  <Button
+                    // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
+                    // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
+                    onPress         = {this.login.bind(this)}
+                    titleStyle      = {styles.buttonText2}
+                    title           = "Post & Earn"
+                    buttonStyle     = {styles.button2}
+                    containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
+                    iconRight
+                    icon = {<Icon
+                      name="chevrons-right" 
+                      type="feather"
+                      size={22}
+                      color="white"
+                    />}
+                  /> 
+                
+                <Text style={styles.heading2}>Earn upto 50% Brokerage for</Text>
+                <Text style={[styles.heading2,styles.marginBottom15]}>Listing With Us!</Text>
+              </View>
             </View>
+{/*              <View style={[styles.alignCenter,styles.marginBottom30,styles]}>
+                <Text style={styles.heading2}>For our Buyers / Tenants</Text>
+                <Text style={styles.heading3}>Upto 50% Discount</Text>
+                <Text style={styles.heading3}>On Brokerage</Text>
+                <Text style={styles.heading3}>for Renting/Buying with us!</Text>
+              </View>
 
-            <View style={[styles.alignCenter]}>
-              <Text style={[styles.heading2,{marginBottom:10}]}>Welcome Owners</Text>
-                <Button
-                  // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
-                  // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
-                  onPress         = {this.login.bind(this)}
-                  titleStyle      = {styles.buttonText2}
-                  title           = "Post & Earn"
-                  buttonStyle     = {styles.button2}
-                  containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
-                  iconRight
-                  icon = {<Icon
-                    name="chevrons-right" 
-                    type="feather"
-                    size={22}
-                    color="white"
-                  />}
-                /> 
-              
-              <Text style={styles.heading2}>Earn upto 50% Brokerage for</Text>
-              <Text style={[styles.heading2,styles.marginBottom15]}>Listing With Us!</Text>
-
-            </View>
+              <View style={[styles.alignCenter]}>
+                <Text style={[styles.heading2,{marginBottom:10}]}>Welcome Owners</Text>
+                  <Button
+                    // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
+                    // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
+                    onPress         = {this.login.bind(this)}
+                    titleStyle      = {styles.buttonText2}
+                    title           = "Post & Earn"
+                    buttonStyle     = {styles.button2}
+                    containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
+                    iconRight
+                    icon = {<Icon
+                      name="chevrons-right" 
+                      type="feather"
+                      size={22}
+                      color="white"
+                    />}
+                  /> 
+                
+                <Text style={styles.heading2}>Earn upto 50% Brokerage for</Text>
+                <Text style={[styles.heading2,styles.marginBottom15]}>Listing With Us!</Text>
+              </View>*/}
           </ImageBackground>
         </ScrollView>
       

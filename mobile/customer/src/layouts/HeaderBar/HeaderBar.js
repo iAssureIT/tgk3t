@@ -8,20 +8,39 @@ import {
 } from "react-native";
 import { Header, Icon  } from 'react-native-elements';
 import ValidationComponent from "react-native-form-validator";
+import { NavigationActions } from 'react-navigation'
 
 import styles from "./styles.js";
 
-export default class NotificationHeader extends ValidationComponent {
+import AsyncStorage               from '@react-native-community/async-storage';
+
+export default class NotificationHeader extends React.Component {
+
+
   constructor(props) {
     super(props);
-    
+    this.state={
+      'uid':"",
+      'token':"",
+    }
   }
 
-  toggleDrawer = () =>{
-    this.props.navigation.openDrawer();
+
+  retrieveToken = async()=>{
+    var token = await AsyncStorage.getItem('token')
+    var uid = await AsyncStorage.getItem('uid')
+    // console.log('token',token)
+    // console.log('uid',uid)
+    this.setState({token:token})
   }
+
+   toggleDrawer = () => {
+      this.props.navigation.toggleDrawer(); 
+  }
+
 
   render() {
+    
     return (
       <Header
         placement="center"
@@ -48,7 +67,7 @@ export default class NotificationHeader extends ValidationComponent {
       
         rightComponent={
           
-            <TouchableOpacity onPress={()=>this.toggleDrawer()}>
+            <TouchableOpacity onPress={this.toggleDrawer}>
               <Icon size={28} name='menu' type='material-community' color='#fff' />
             </TouchableOpacity>
 
@@ -58,3 +77,5 @@ export default class NotificationHeader extends ValidationComponent {
     );
   }
 }
+
+

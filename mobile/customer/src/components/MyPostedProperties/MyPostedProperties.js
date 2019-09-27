@@ -70,7 +70,8 @@ export default class PropertyList extends ValidationComponent{
             console.log("error = ",error.message);
             if(error.message === "Request failed with status code 401")
             {
-                 this.props.history.push("/");
+                Alert.alert("Your session is expired!","Please login again.")
+                this.props.navigation.navigate("MobileScreen");
             }
         })
     })
