@@ -14,7 +14,7 @@ import {
   Alert
 } from 'react-native';
 
-import { NavigationActions } from 'react-navigation'
+// import { NavigationActions } from 'react-navigation'
 import axios                      from 'axios';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import ValidationComponent        from "react-native-form-validator";
@@ -22,10 +22,20 @@ import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
 import styles                     from './styles.js';
 import {colors}                   from '../../config/styles.js';
 import AsyncStorage               from '@react-native-community/async-storage';
+import { NavigationActions, StackActions } from 'react-navigation';
 
 const window = Dimensions.get('window');
 
 export default class Home extends Component{
+   navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
 
   constructor(props){
     super(props);
@@ -49,8 +59,8 @@ export default class Home extends Component{
         // var uid = this.props.navigation.getParam('uid','No uid');
         // var token = this.props.navigation.getParam('token','No token');
         this.retrieveToken();
-    
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
+        console.log("token home componentDidMount",AsyncStorage.getItem('token'));
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem('token');
   }
 
   retrieveToken = async()=>{
@@ -143,10 +153,11 @@ export default class Home extends Component{
 
   login(){
     // const originPage = "post" ;
-    if(this.state.token == null || this.state.token == ""){
-      this.props.navigation.navigate("MobileScreen")
+    console.log("token in home screen",this.state.token);
+    if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
+       this.navigateScreen("MobileScreen");
     }else{
-      this.props.navigation.navigate("BasicInfo")
+       this.navigateScreen("BasicInfo");
     }
 
   }

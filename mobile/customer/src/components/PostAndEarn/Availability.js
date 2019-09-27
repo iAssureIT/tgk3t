@@ -14,6 +14,7 @@ import {
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import axios          from 'axios';
 import { NavigationActions, StackActions } from 'react-navigation';
+import AsyncStorage               from '@react-native-community/async-storage';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -120,45 +121,7 @@ const navigateAction = StackActions.reset({
 
           var property_id = this.props.navigation.getParam('property_id','No property_id');
       console.log("property_id in constructor property details",property_id);
-      if(property_id!=null)
-      {
-        console.log("here edit 4th form");
-
-
-          axios
-          .get('/api/properties/'+this.props.property_id)
-          .then( (response) =>{
-            // console.log("response in availability= ",response);
-            
-            this.setState({
-
-                originalValues          : response.data.avalibilityPlanVisit,
-                contactPersonMobile     : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : "",
-                contactPerson           : response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "Someone" ,
-                available               : response.data.avalibilityPlanVisit.available,
-                updateOperation         : true,
-                prevAvailable           : response.data.avalibilityPlanVisit.available,
-                originalValuesGallery   : response.data.gallery,
-                imgArrayWSaws           : response.data.gallery.Images,
-                singleVideo             : response.data.gallery.video ? response.data.gallery.video : "" ,
-               
-                // type            : response.data.contactPerson==="Someone" ? true : false,
-                
-            },()=>{
-              // console.log("here available in comp did mount",this.state.contactPerson);
-              });
-
-          })
-          .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             // swal("Your session is expired! Please login again.","", "error");
-                             // this.props.history.push("/");
-                        }
-                    });
-
-      }
+     
   }
 
   validInput = () => {
@@ -269,22 +232,23 @@ handleOriginalMobileChange(value){
   }
 
   componentDidMount(){
-      var token = this.props.navigation.getParam('token','No token');
-      // console.log("token",token);
-      var uid = this.props.navigation.getParam('uid','No uid');
-      // console.log("uid",uid);
-      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-      // console.log("propertyId",propertyId);
-      var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-    console.log("mobile in last screen",mobile);
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+    //   var token = this.props.navigation.getParam('token','No token');
+    //   // console.log("token",token);
+    //   var uid = this.props.navigation.getParam('uid','No uid');
+    //   // console.log("uid",uid);
+    //   var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
+    //   // console.log("propertyId",propertyId);
+    //   var mobile = this.props.navigation.getParam('mobile','No mobile'); 
+    // console.log("mobile in last screen",mobile);
+    //   axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
-      this.setState({
-        token : token,
-        uid   : uid,
-        propertyId : propertyId,
-        mobile: mobile,
-      });
+    //   this.setState({
+    //     token : token,
+    //     uid   : uid,
+    //     propertyId : propertyId,
+    //     mobile: mobile,
+    //   });
+    this._retrieveData();
 
        axios
       .get('/api/projectSettings/get/one/S3')
@@ -316,6 +280,81 @@ handleOriginalMobileChange(value){
 
 
  }
+
+ _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      const mobile      = await AsyncStorage.getItem('mobile');
+      const propertyId      = await AsyncStorage.getItem('propertyId');
+      const propertyType      = await AsyncStorage.getItem('propertyType');
+      const transactionType      = await AsyncStorage.getItem('transactionType');
+
+      console.log("availability propertyId",propertyId);
+      console.log("availability mobile",mobile);
+      // if (uid !== null && token !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+        this.setState({mobile:mobile})
+        this.setState({propertyId:propertyId})
+        this.setState({propertyType:propertyType})
+        this.setState({transactionType:transactionType})
+
+
+        if(token!="")
+        {
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+           var property_id = propertyId;
+           console.log("property_id in constructor property details",property_id);
+
+            if(property_id!=null)
+            {
+              console.log("here edit 4th form");
+
+
+                axios
+                .get('/api/properties/'+property_id)
+                .then( (response) =>{
+                  this.setState({
+
+                      originalValues          : response.data.avalibilityPlanVisit,
+                      contactPersonMobile     : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : mobile,
+                      contactPerson           : response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "My Self" ,
+                      available               : response.data.avalibilityPlanVisit.available,
+                      updateOperation         : true,
+                      prevAvailable           : response.data.avalibilityPlanVisit.available,
+                      originalValuesGallery   : response.data.gallery,
+                      imgArrayWSaws           : response.data.gallery.Images,
+                      singleVideo             : response.data.gallery.video ? response.data.gallery.video : "" ,
+                     
+                      // type            : response.data.contactPerson==="Someone" ? true : false,
+                      
+                  },()=>{
+                    // console.log("here available in comp did mount",this.state.contactPerson);
+                    });
+
+                })
+                .catch((error)=>{
+                              console.log("error = ",error);
+                              if(error.message === "Request failed with status code 401")
+                              {
+                                   // swal("Your session is expired! Please login again.","", "error");
+                                   // this.props.history.push("/");
+                              }
+                          });
+
+            }
+
+        }
+
+
+  } catch (error) {
+      // Error retrieving data
+    }
+  }
 
   submitFun(){
 
@@ -703,6 +742,8 @@ removeImg = (imgIndex)=>{
 
   render(){
 
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
+    
     const { navigation } = this.props;
     let {activeIndex} = this.state;
     // let weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];

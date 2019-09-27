@@ -19,7 +19,7 @@ import { NavigationActions, StackActions } from 'react-navigation';
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-
+import AsyncStorage               from '@react-native-community/async-storage';
 import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
 import {colors,sizes} from '../../config/styles.js';
@@ -128,82 +128,11 @@ const navigateAction = StackActions.reset({
       originalValues    :"",
     };
 
-
-        var property_id = this.props.navigation.getParam('property_id','No property_id');
-      console.log("property_id in constructor property details",property_id);
-      if(property_id!=null)
-      {
-        console.log("here edit 2nd form");
-
-                 axios
-                  .get('/api/properties/'+property_id)
-                  .then( (response) =>{
-                    console.log("get property in property = ",response);
-
-                    this.setState({
-                        originalValues  : response.data.propertyDetails,
-                        bedrooms        : response.data.propertyDetails.bedrooms,
-                        balconies       : response.data.propertyDetails.balconies,
-                        washrooms       : response.data.propertyDetails.washrooms,
-                        furnishedstatus : response.data.propertyDetails.furnishedStatus,
-                        personal        : response.data.propertyDetails.personal,
-                        pantry          : response.data.propertyDetails.pantry,
-                        bathrooms       : response.data.propertyDetails.bathrooms,
-                        ageofproperty   : response.data.propertyDetails.ageofProperty,
-                        facing          : response.data.propertyDetails.facing,
-                        superArea       : response.data.propertyDetails.superArea,
-                        builtupArea     : response.data.propertyDetails.builtupArea,
-                        updateOperation : true,
-                        // amenity
-                        floor           : response.data.propertyDetails.floor,
-                        totalFloor      : response.data.propertyDetails.totalFloor,
-                        // prevAmenities   : response.data.propertyDetails.Amenities,
-                        superAreaUnit   : response.data.propertyDetails.superAreaUnit,
-                        builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
-                        prevCharges     : response.data.propertyDetails.furnishedOptions,
-                        workStation     : response.data.propertyDetails.workStation,
-                        furnishPantry   : response.data.propertyDetails.furnishPantry,
-
-                      });
-                  })
-                  .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             // swal("Your session is expired! Please login again.","", "error");
-                             // this.props.history.push("/");
-                        }
-                    });
-    }
-    
-
   }
 
    componentDidMount(){
-      var token = this.props.navigation.getParam('token','No token');
-      console.log("token",token);
-      var uid = this.props.navigation.getParam('uid','No uid');
-      // console.log("uid",uid);
-      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-      // console.log("propertyId",propertyId);
-      var propertyType = this.props.navigation.getParam('propertyType','No propertyType');
-      // console.log("propertyType",propertyType);
-        var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-        console.log("mobile in otpscreen",mobile);
-      var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
-
-
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
-
-      this.setState({
-        token : token,
-        uid   : uid,
-        propertyId : propertyId,
-        propertyType : propertyType,
-        transactionType : transactionType,
-        mobile:mobile,
-      });
-
+     
+    this._retrieveData();
     // axios
     //   .get('/api/masteramenities/list')
     //   .then(
@@ -247,6 +176,90 @@ const navigateAction = StackActions.reset({
     //      }); 
      
   }
+
+  _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      const mobile      = await AsyncStorage.getItem('mobile');
+      const propertyId      = await AsyncStorage.getItem('propertyId');
+      const propertyType      = await AsyncStorage.getItem('propertyType');
+      const transactionType      = await AsyncStorage.getItem('transactionType');
+
+      console.log("token basicinfo",token);
+      console.log("propertyId basicinfo",propertyId);
+      // if (uid !== null && token !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+        this.setState({mobile:mobile})
+        this.setState({propertyId:propertyId})
+        this.setState({propertyType:propertyType})
+        this.setState({transactionType:transactionType})
+
+
+        if(token!="")
+        {
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+           var property_id = propertyId;
+          console.log("property_id in constructor property details",property_id);
+
+           if(property_id!=null)
+                {
+                  console.log("here edit 2nd form");
+
+                           axios
+                            .get('/api/properties/'+property_id)
+                            .then( (response) =>{
+                              console.log("get property in property = ",response);
+
+                              this.setState({
+                                  originalValues  : response.data.propertyDetails,
+                                  bedrooms        : response.data.propertyDetails.bedrooms,
+                                  balconies       : response.data.propertyDetails.balconies,
+                                  washrooms       : response.data.propertyDetails.washrooms,
+                                  furnishedstatus : response.data.propertyDetails.furnishedStatus,
+                                  personal        : response.data.propertyDetails.personal,
+                                  pantry          : response.data.propertyDetails.pantry,
+                                  bathrooms       : response.data.propertyDetails.bathrooms,
+                                  ageofproperty   : response.data.propertyDetails.ageofProperty,
+                                  facing          : response.data.propertyDetails.facing,
+                                  superArea       : response.data.propertyDetails.superArea,
+                                  builtupArea     : response.data.propertyDetails.builtupArea,
+                                  updateOperation : true,
+                                  // amenity
+                                  floor           : response.data.propertyDetails.floor,
+                                  totalFloor      : response.data.propertyDetails.totalFloor,
+                                  // prevAmenities   : response.data.propertyDetails.Amenities,
+                                  superAreaUnit   : response.data.propertyDetails.superAreaUnit,
+                                  builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
+                                  prevCharges     : response.data.propertyDetails.furnishedOptions,
+                                  workStation     : response.data.propertyDetails.workStation,
+                                  furnishPantry   : response.data.propertyDetails.furnishPantry,
+
+                                });
+                            })
+                            .catch((error)=>{
+                                  console.log("error = ",error);
+                                  if(error.message === "Request failed with status code 401")
+                                  {
+                                       // swal("Your session is expired! Please login again.","", "error");
+                                       // this.props.history.push("/");
+                                  }
+                              });
+              }
+
+        }
+
+
+      // }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
+
   onSelectFurnishStatus=(index,value)=>{
     console.log("here value",value);
     this.setState({
@@ -347,7 +360,7 @@ const navigateAction = StackActions.reset({
 
 
             var eq ="";
-            if(furnishedOptionsDataList.length != ov.propertyDetails.furnishedOptions.length )
+            if(furnishedOptionsDataList.length != this.state.furnishItem.length )
             {
               eq = false;
                console.log("equal not",eq);
@@ -355,7 +368,7 @@ const navigateAction = StackActions.reset({
               
               for (var i = 0; i < furnishedOptionsDataList.length; i++)
               { 
-                  if (furnishedOptionsDataList[i] != ov.propertyDetails.furnishedOptions[i]){
+                  if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
                   eq = false;
                       }else{
                   eq = true;  
@@ -372,6 +385,7 @@ const navigateAction = StackActions.reset({
                  eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry )
               {
                   console.log("same data");
+                 this.navigateScreen('FinancialDetails');
                   
               }else{
                   console.log("diff data");
@@ -403,7 +417,7 @@ const navigateAction = StackActions.reset({
                   "furnishedOptions"    : furnishedOptionsDataList,
                 };
 
-                if( this.state.furnishedstatus!=="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!=="" && 
+                if( this.state.furnishedstatus!=="" && this.state.furnishedstatus!==undefined &&  this.state.builtupArea.value!=="" && 
                     this.state.floor!=="" &&  this.state.totalFloor!=="" ){
 
 
@@ -413,7 +427,7 @@ const navigateAction = StackActions.reset({
                           console.log(res);
                           if(res.status === 200){
                             console.log("PropertyDetails Res = ",res);
-                            this.navigateScreen('FinancialDetails',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                            this.navigateScreen('FinancialDetails');
                           }
                         })
                         .catch((error)=>{
@@ -447,14 +461,14 @@ const navigateAction = StackActions.reset({
               })
 
                 var eq =true;
-                if(furnishedOptionsDataList.length !== ov.propertyDetails.furnishedOptions.length )
+                if(furnishedOptionsDataList.length !== this.state.furnishItem.length )
                 {
                   eq = false;
                    console.log("equal not",eq);
                 }else{
                   for (var i = 0; i < furnishedOptionsDataList.length; i++)
                   { 
-                          if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+                          if (furnishedOptionsDataList[i] != this.state.furnishItem[i]){
                       eq = false;
                           }else{
                       eq = true;  
@@ -534,6 +548,8 @@ const navigateAction = StackActions.reset({
  }
 
   render(){
+    
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
     
     const { navigation } = this.props;
     let {activeTab} = this.state;

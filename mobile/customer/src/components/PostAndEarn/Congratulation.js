@@ -13,6 +13,7 @@ import {
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import axios          from 'axios';
+import AsyncStorage               from '@react-native-community/async-storage';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -38,24 +39,58 @@ export default class Congratulation extends ValidationComponent{
   }
 
    componentDidMount(){
-      var token = this.props.navigation.getParam('token','No token');
-      console.log("token",token);
-      var uid = this.props.navigation.getParam('uid','No uid');
-      console.log("uid",uid);
-      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-      console.log("propertyId",propertyId);
+      // var token = this.props.navigation.getParam('token','No token');
+      // console.log("token",token);
+      // var uid = this.props.navigation.getParam('uid','No uid');
+      // console.log("uid",uid);
+      // var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
+      // console.log("propertyId",propertyId);
       
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
-      this.setState({
-        token : token,
-        uid   : uid,
-        propertyId : propertyId,
+      // this.setState({
+      //   token : token,
+      //   uid   : uid,
+      //   propertyId : propertyId,
       
-      });
+      // });
+
+      this._retrieveData();
 
     }
 
+
+  _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      const mobile      = await AsyncStorage.getItem('mobile');
+      const propertyId      = await AsyncStorage.getItem('propertyId');
+      const propertyType      = await AsyncStorage.getItem('propertyType');
+      const transactionType      = await AsyncStorage.getItem('transactionType');
+
+      console.log("Congratulation propertyId",propertyId);
+      // if (uid !== null && token !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+        this.setState({mobile:mobile})
+        this.setState({propertyId:propertyId})
+        this.setState({propertyType:propertyType})
+        this.setState({transactionType:transactionType})
+
+
+        if(token!="")
+        {
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+        }
+
+      } catch (error) {
+      // Error retrieving data
+    }
+  }
 
     submitFun(){
 
@@ -93,6 +128,8 @@ export default class Congratulation extends ValidationComponent{
 
   
   render(){
+
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
 
     const { navigation } = this.props;
 

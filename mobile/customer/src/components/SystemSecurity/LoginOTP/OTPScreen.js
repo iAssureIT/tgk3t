@@ -19,9 +19,22 @@ import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
 import {colors,sizes} from '../../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
 import Modal from "react-native-modal";
+import { NavigationActions, StackActions } from 'react-navigation';
+import axios          from 'axios';
+
 
 
 export default class MobileScreen extends ValidationComponent {
+  navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
+
 	
 	constructor(props) {
 		super(props);
@@ -39,26 +52,37 @@ export default class MobileScreen extends ValidationComponent {
 	}
 
   componentDidMount(){
+                
 
-    var otp = this.props.navigation.getParam('originalotp','No OTP');
-    console.log("otp in otpscreen",otp);
-    var msg = this.props.navigation.getParam('message','No message'); 
-    console.log("message in otpscreen",msg);
-    var mob = this.props.navigation.getParam('mobile','No mobile'); 
-    console.log("mobile in otpscreen",mob);
-     var uid = this.props.navigation.getParam('uid','No uid');
-    console.log("uid in otpscreen",uid);
-     var token = this.props.navigation.getParam('token','No token');
-    console.log("token",token);
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
+    this._retrieveData();
 
-    this.setState({
+  }
+
+_retrieveData = async () => {
+    try {
+      
+       const otp = await AsyncStorage.getItem('originalotp');
+      console.log("otp in otpscreen-----------------------------",otp);
+      const msg = await AsyncStorage.getItem('message'); 
+      console.log("message in otpscreen--------------",msg);
+      const mob = await AsyncStorage.getItem('mobile'); 
+      console.log("mobile in otpscreen---------------------",mob);
+       const uid = await AsyncStorage.getItem('uid');
+      console.log("uid in otpscreen--------------------",uid);
+       const token = await AsyncStorage.getItem('token');
+      console.log("token-------------------------------",token);
+      // if (uid !== null && token !== null) {
+       this.setState({
                  msg         : msg,
                  originalOTP : otp,
                  mob         : mob,
                  uid         : uid,
                  token       : token,
                });
-
+      // }
+    } catch (error) {
+    }
   }
 
   OTPfunction(){
@@ -72,13 +96,13 @@ export default class MobileScreen extends ValidationComponent {
                
         
         if(this.state.msg === "NEW-USER-CREATED"){
-                this.props.navigation.navigate('SignUp',{token:this.state.token,mobile:this.state.mob,uid: this.state.uid});
+                 this.navigateScreen('SignUp');
                 console.log("signup");
         }else{
 
           if(this.state.msg === "MOBILE-NUMBER-EXISTS")
           {
-              this.props.navigation.navigate('BasicInfo',{mobile:this.state.mob,token:this.state.token,uid:this.state.uid});
+               this.navigateScreen('BasicInfo');
               console.log("already");
           }
         }

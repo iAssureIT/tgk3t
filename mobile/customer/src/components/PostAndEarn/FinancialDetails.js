@@ -15,6 +15,7 @@ import { Button,Icon, SearchBar } from 'react-native-elements';
 import axios          from 'axios';
 import CheckBox from 'react-native-check-box'
 import { NavigationActions, StackActions } from 'react-navigation';
+import AsyncStorage               from '@react-native-community/async-storage';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -82,72 +83,6 @@ const navigateAction = StackActions.reset({
       mobile          : "",
     };
 
-
-        var property_id = this.props.navigation.getParam('property_id','No property_id');
-      console.log("property_id in constructor property details",property_id);
-      if(property_id!=null)
-      {
-        console.log("here edit 3rd form");
-
-                  axios
-                  .get('/api/properties/'+property_id)
-                  .then( (response) =>{
-                    console.log("get property in property = ",response);
-
-                    this.setState({
-                       originalValues     : response.data.financial,
-                       expectedRate       : response.data.financial.expectedRate,
-                       totalPrice         : response.data.financial.totalPrice,
-                       monthlyRent        : response.data.financial.monthlyRent,
-                       depositAmount      : response.data.financial.depositAmount,
-                       prevCharges        : response.data.financial.includeCharges,
-                       updateOperation    : true,
-                       // startDate          : availableFrom,
-                       description        : response.data.financial.description,
-                       maintenanceCharges : response.data.financial.maintenanceCharges,
-                       maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
-                       measurementUnit    : response.data.financial.measurementUnit ,
-                       availableFrom      : response.data.financial.availableFrom,
-
-                      });
-                      var includeCharges = this.state.totalAskItem;
-                      console.log("here includeCharges", includeCharges);
-                      var includeChargesList = includeCharges.map((item,index)=>{
-                        var propPresent = this.state.prevCharges.find((obj)=>{
-                          return item.name === obj
-                        })
-                        console.log("here propPresent ", propPresent);
-                        var newObj = Object.assign({},item);
-                        if(propPresent){
-                          newObj.checked = true
-                        }else{
-                          newObj.checked = false
-                        }
-                        return newObj;
-
-                     })
-
-                      this.setState({
-                        totalAskItem : includeChargesList,
-                      },()=>{
-                        console.log("here totalAskItem in didmount after match result",this.state.totalAskItem);
-
-                      });
-
-                  })
-                  .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             // swal("Your session is expired! Please login again.","", "error");
-                             // this.props.history.push("/");
-                        }
-                    });
-
-
-
-      }
-
   }
 
   onSelect=(index,value)=>{
@@ -157,31 +92,103 @@ const navigateAction = StackActions.reset({
   }
 
    componentDidMount(){
-      var token = this.props.navigation.getParam('token','No token');
-      // console.log("token",token);
-      var uid = this.props.navigation.getParam('uid','No uid');
-      // console.log("uid",uid);
-      var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-      // console.log("propertyId",propertyId);
-      var propertyType = this.props.navigation.getParam('propertyType','No propertyType');
-      // console.log("propertyType",propertyType);
-      var transactionType = this.props.navigation.getParam('transactionType','No transactionType');
-      // console.log("transactionType",transactionType);
-        var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-    console.log("mobile in otpscreen",mobile);
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
-
-      this.setState({
-        token : token,
-        uid   : uid,
-        propertyId : propertyId,
-        propertyType : propertyType,
-        transactionType : transactionType,
-        mobile: mobile,
-      });
-
+     
+       this._retrieveData();
 }
 
+
+_retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      const mobile      = await AsyncStorage.getItem('mobile');
+      const propertyId      = await AsyncStorage.getItem('propertyId');
+      const propertyType      = await AsyncStorage.getItem('propertyType');
+      const transactionType      = await AsyncStorage.getItem('transactionType');
+
+      console.log("token basicinfo",token);
+      // if (uid !== null && token !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+        this.setState({mobile:mobile})
+        this.setState({propertyId:propertyId})
+        this.setState({propertyType:propertyType})
+        this.setState({transactionType:transactionType})
+
+
+        if(token!="")
+        {
+
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+           var property_id = propertyId;
+           console.log("property_id in constructor property details",property_id);
+              if(property_id!=null)
+              {
+                console.log("here edit 3rd form");
+
+                          axios
+                          .get('/api/properties/'+property_id)
+                          .then( (response) =>{
+                            console.log("get property in property = ",response);
+
+                            this.setState({
+                               originalValues     : response.data.financial,
+                               expectedRate       : response.data.financial.expectedRate,
+                               totalPrice         : response.data.financial.totalPrice,
+                               monthlyRent        : response.data.financial.monthlyRent,
+                               depositAmount      : response.data.financial.depositAmount,
+                               prevCharges        : response.data.financial.includeCharges,
+                               updateOperation    : true,
+                               // startDate          : availableFrom,
+                               description        : response.data.financial.description ? response.data.financial.description : this.state.description,
+                               maintenanceCharges : response.data.financial.maintenanceCharges,
+                               maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Monthly",
+                               measurementUnit    : response.data.financial.measurementUnit ,
+                               availableFrom      : response.data.financial.availableFrom,
+
+                              });
+                              var includeCharges = this.state.totalAskItem;
+                              console.log("here includeCharges", includeCharges);
+                              var includeChargesList = includeCharges.map((item,index)=>{
+                                var propPresent = this.state.prevCharges.find((obj)=>{
+                                  return item.name === obj
+                                })
+                                console.log("here propPresent ", propPresent);
+                                var newObj = Object.assign({},item);
+                                if(propPresent){
+                                  newObj.checked = true
+                                }else{
+                                  newObj.checked = false
+                                }
+                                return newObj;
+
+                             })
+
+                              this.setState({
+                                totalAskItem : includeChargesList,
+                              },()=>{
+                                console.log("here totalAskItem in didmount after match result",this.state.totalAskItem);
+
+                              });
+
+                          })
+                          .catch((error)=>{
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     // swal("Your session is expired! Please login again.","", "error");
+                                     // this.props.history.push("/");
+                                }
+                            });
+              }
+         }
+
+  } catch (error) {
+      // Error retrieving data
+    }
+  }
 submitFun(){
 
    // console.log("here btn pressed");
@@ -432,6 +439,8 @@ submitFun(){
 
 
   render(){
+    
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
     
     const { navigation } = this.props;
     let {activeTab} = this.state;

@@ -10,11 +10,12 @@ import {
   Image,TextInput,
   Alert,
   Animated,
-  AsyncStorage
 } from 'react-native';
 
 import moment from 'moment'
 import { Button,Icon, SearchBar } from 'react-native-elements';
+import { NavigationActions, StackActions } from 'react-navigation';
+import AsyncStorage               from '@react-native-community/async-storage';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -30,6 +31,17 @@ import Carousel from 'react-native-snap-carousel';
 const window = Dimensions.get('window');
 
 export default class PropertyDetailsPage extends ValidationComponent{
+
+   navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
+
   constructor(props){
     super(props);
     this.state={
@@ -210,10 +222,12 @@ export default class PropertyDetailsPage extends ValidationComponent{
   editProp(){
     console.log("here edit property");
     var property_id = this.state.property_id;
+    AsyncStorage.setItem("propertyId",property_id);
+
     console.log("here property_id in edit ",property_id);
     if(property_id!=null)
     {
-    this.props.navigation.navigate('BasicInfo',{property_id:property_id});          
+     this.navigateScreen('BasicInfo');          
     }
   }
 
@@ -613,7 +627,8 @@ export default class PropertyDetailsPage extends ValidationComponent{
             <Text style={[styles.textHeading,styles.marginBottom5]}>Amenities</Text>
 
             <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-              {propertyProfile.propertyDetails.Amenities.map((data,index)=>(
+              {propertyProfile.propertyDetails && propertyProfile.propertyDetails.Amenities!==null ?
+                propertyProfile.propertyDetails.Amenities.map((data,index)=>(
 
                 <View key={index} style={[{width:'50%',flexDirection:'row',paddingVertical:10},(index%2==0?{}:{paddingLeft:'10%'})]}>
                   <Icon
@@ -626,6 +641,9 @@ export default class PropertyDetailsPage extends ValidationComponent{
                   <Text style={[styles.textSmall,{textAlign:'center'}]}>{data}</Text>
                 </View>  
               ))
+
+                :
+                null
               }
             </View>
 

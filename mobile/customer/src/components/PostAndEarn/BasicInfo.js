@@ -16,7 +16,7 @@ import Hr from "react-native-hr-component";
 import { Dropdown }   from 'react-native-material-dropdown';
 import { NavigationActions, StackActions } from 'react-navigation';
 import axios          from 'axios';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage               from '@react-native-community/async-storage';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 
 import ValidationComponent from "react-native-form-validator";
@@ -154,80 +154,12 @@ const navigateAction = StackActions.reset({
       originalValuesLocation  : "",
     };
 
-
-    // get propertyid 
-    
-
-      var property_id = this.props.navigation.getParam('property_id','No property_id');
-      console.log("property_id in constructor basicinfo",property_id);
-      if(property_id!=null)
-      {
-        console.log("here edit 1st form");
-    
-        axios
-          .get('/api/properties/'+property_id)
-          .then( (res) =>{
-            console.log("get property = ",res);
-            // console.log("get property transactionType = ",res.data.transactionType);
-            this.setState({
-                    originalValues            : res.data,
-                  
-                  // // floor      : res.data.floor,
-                  // // totalfloor     : res.data.totalFloor,
-                    fullPropertyType          : res.data.propertyType+'-'+res.data.propertySubType,
-                    updateOperation           : true,
-                    propertyCode              : res.data.propertyCode,
-
-                  // // location
-                    originalValuesLocation    : res.data.propertyLocation,
-                    districtName              : res.data.propertyLocation.district,
-                    blockName                 : res.data.propertyLocation.block,
-                    fullAddress               : res.data.propertyLocation.fullAddress,
-                    propertyHolder            : res.data.propertyHolder,
-                    transactionType           : res.data.transactionType,
-                    propertyType              : res.data.propertyType,
-                    propertySubType           : res.data.propertySubType,
-
-                    pincode                   : res.data.propertyLocation.pincode,
-                    stateCode                 : res.data.propertyLocation.state,
-                    cityName                  : res.data.propertyLocation.city,
-                    areaName                  : res.data.propertyLocation.area,
-                    subAreaName               : res.data.propertyLocation.subArea,
-                    societyName               : res.data.propertyLocation.society,
-                    address                   : res.data.propertyLocation.address,
-                    house                     : res.data.propertyLocation.address,
-                    landmark                  : res.data.propertyLocation.landmark,
-
-                })
-          })
-            .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             // swal("Your session is expired! Please login again.","", "error");
-                             // this.props.history.push("/");
-                        }
-                    });
-
-      }
+      
   }
 
     componentDidMount(){
-      // console.log("here token in form 1", AsyncStorage.getItem("token"));
-      var token = this.props.navigation.getParam('token','No token');
-      // console.log("token",token);
-      var uid = this.props.navigation.getParam('uid','No uid');
-      // console.log("uid",uid);
-      var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-      console.log("mobile in otpscreen",mobile);
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
-
-      this.setState({
-        token : token,
-        uid   : uid,
-        mobile: mobile,
-      });
-
+      console.log("here token in form 1",this.state.token);
+      this._retrieveData();
        axios({
         method: 'get',
         url: 'http://locationapi.iassureit.com/api/states/get/list/IN',
@@ -259,12 +191,80 @@ const navigateAction = StackActions.reset({
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                             //   Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                               Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');          
                                
                           }
           });
     }
+
+ _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      const mobile      = await AsyncStorage.getItem('mobile');
+      const propertyId      = await AsyncStorage.getItem('propertyId');
+        this.setState({uid:uid})
+        this.setState({token:token})
+        this.setState({mobile:mobile})
+        this.setState({propertyId:propertyId})
+        console.log("here basic info token get",token);
+        if(token!=="")
+        {
+
+           var property_id = propertyId;
+            console.log("property_id in constructor basicinfo",property_id);
+            if(property_id!=null)
+            {
+              console.log("here edit 1st form------------------------------");
+          
+              axios
+                .get('/api/properties/'+property_id)
+                .then( (res) =>{
+                  console.log("get property = ",res);
+                  this.setState({
+                          originalValues            : res.data,
+                          fullPropertyType          : res.data.propertyType+'-'+res.data.propertySubType,
+                          updateOperation           : true,
+                          propertyCode              : res.data.propertyCode,
+
+                        // // location
+                          originalValuesLocation    : res.data.propertyLocation,
+                          districtName              : res.data.propertyLocation.district,
+                          blockName                 : res.data.propertyLocation.block,
+                          fullAddress               : res.data.propertyLocation.fullAddress,
+                          propertyHolder            : res.data.propertyHolder,
+                          transactionType           : res.data.transactionType,
+                          propertyType              : res.data.propertyType,
+                          propertySubType           : res.data.propertySubType,
+
+                          pincode                   : res.data.propertyLocation.pincode,
+                          stateCode                 : res.data.propertyLocation.state,
+                          cityName                  : res.data.propertyLocation.city,
+                          areaName                  : res.data.propertyLocation.area,
+                          subAreaName               : res.data.propertyLocation.subArea,
+                          societyName               : res.data.propertyLocation.society,
+                          address                   : res.data.propertyLocation.address,
+                          house                     : res.data.propertyLocation.address,
+                          landmark                  : res.data.propertyLocation.landmark,
+
+                      })
+                })
+                  .catch((error)=>{
+                              console.log("error = ",error);
+                              if(error.message === "Request failed with status code 401")
+                              {
+                                    Alert.alert("Your session is expired!"," Please login again.");
+                                    this.navigateScreen('MobileScreen');   
+                              }
+                          });
+
+                }
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
 
   setActive = (name)=>{
     // console.log("console name propertyHolder",name);
@@ -284,9 +284,7 @@ const navigateAction = StackActions.reset({
   submitFun(){
    var uid = this.state.uid;
    var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
-
     const formValues = {
-        // "activeTab"       : this.state.activeTab,
         "propertyHolder"  : this.state.propertyHolder,
         "transactionType" : this.state.transactionType,
         "propertyType"    : this.state.propertyType,
@@ -322,7 +320,10 @@ const navigateAction = StackActions.reset({
             )
           {
             console.log("same data");
-            this.navigateScreen('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:ov._id});          
+                AsyncStorage.setItem("propertyId",ov._id );
+                AsyncStorage.setItem("transactionType",this.state.transactionType);
+                AsyncStorage.setItem("propertyType",this.state.propertyType);
+                this.navigateScreen('PropertyDetails');          
 
           }else{
 
@@ -333,7 +334,11 @@ const navigateAction = StackActions.reset({
             .then( (res) =>{
               console.log("here updated data",res);
               if(res.status === 200){
-                this.navigateScreen('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+                console.log("res.data.property_id",res.data.property_id);
+                AsyncStorage.setItem("propertyId",res.data.property_id);
+                AsyncStorage.setItem("transactionType",this.state.transactionType);
+                AsyncStorage.setItem("propertyType",this.state.propertyType);
+                this.navigateScreen('PropertyDetails');          
               }else{
               }
             })
@@ -357,8 +362,10 @@ const navigateAction = StackActions.reset({
           .then( (res) =>{
             console.log("here 1st form result",res.data);
             if(res.status === 200){
-
-              this.navigateScreen('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+                AsyncStorage.setItem("propertyId",res.data.property_id);
+                AsyncStorage.setItem("transactionType",this.state.transactionType);
+                AsyncStorage.setItem("propertyType",this.state.propertyType);
+                this.navigateScreen('PropertyDetails');          
             
             }else{
               // alert(" Please Fill all fields")
@@ -368,8 +375,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             // Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                              Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');             
                                
                         }
                     });
@@ -380,14 +387,6 @@ const navigateAction = StackActions.reset({
       }else{
         Alert.alert("Please enter mandatory fields","warning");
       }
-
-
-
-
-
-
-        
-
 
   }
 
@@ -446,8 +445,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             // Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                              Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');             
                                
                         }
                     });
@@ -484,8 +483,9 @@ const navigateAction = StackActions.reset({
                                 console.log("error = ",error);
                                 if(error.message === "Request failed with status code 401")
                                 {
-                             //         Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                            
+                                   Alert.alert("Your session is expired!"," Please login again.");
+                                   this.navigateScreen('MobileScreen');                
                                
                                 }
                  });
@@ -522,8 +522,9 @@ const navigateAction = StackActions.reset({
                                 console.log("error = ",error);
                                 if(error.message === "Request failed with status code 401")
                                 {
-                             //         Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                           
+                                   Alert.alert("Your session is expired!"," Please login again.");
+                                   this.navigateScreen('MobileScreen');               
                                
                                 }
                 });
@@ -534,8 +535,9 @@ const navigateAction = StackActions.reset({
                                 console.log("error = ",error);
                                 if(error.message === "Request failed with status code 401")
                                 {
-                             //          Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                             
+                                 Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');              
                                
                                 }
       });
@@ -593,8 +595,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             //  Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                              Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');        
                                
                         }
             });
@@ -648,8 +650,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             // Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                              Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');               
                                
                         }
              });
@@ -707,8 +709,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             // Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                              Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');             
                                
                         }
             });
@@ -752,8 +754,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             //  Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                              Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');            
                                
                         }
                     });
@@ -773,8 +775,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             //  Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                              Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');           
                                
                         }
                 });   
@@ -821,8 +823,8 @@ const navigateAction = StackActions.reset({
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             //  Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
+                             Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');             
                                
                         }
                     });
@@ -830,6 +832,7 @@ const navigateAction = StackActions.reset({
   }
 
   render(){
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
    
     const { navigation } = this.props;
     let {propertyHolder} = this.state;

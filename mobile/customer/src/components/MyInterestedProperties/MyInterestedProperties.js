@@ -26,7 +26,7 @@ import {colors,sizes}             from '../../config/styles.js';
 
 const window = Dimensions.get('window');
 
-export default class PropertyList extends ValidationComponent{
+export default class MyInterestedProperties extends ValidationComponent{
   constructor(props){
     super(props);
     this.state={

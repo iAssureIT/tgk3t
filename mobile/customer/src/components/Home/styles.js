@@ -91,8 +91,8 @@ export default StyleSheet.create({
            marginLeft:"15%"
       },
       android : {
-        width:'60%',
-        
+        width:'70%',
+        marginLeft:"0%"
       }
      
     })
@@ -115,6 +115,8 @@ export default StyleSheet.create({
     color: colors.white,
     fontSize: 16,
     fontFamily:"Roboto-Regular",
+    alignItems: 'center',
+    
   },
   activeButtonText:{
     color: colors.black,

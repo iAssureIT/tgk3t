@@ -21,9 +21,22 @@ import HeaderBar                  from '../../../layouts/HeaderBar/HeaderBar.js'
 import {colors,sizes}             from '../../../config/styles.js';
 import { Dropdown }               from 'react-native-material-dropdown';
 import Modal                      from "react-native-modal";
+import { NavigationActions, StackActions } from 'react-navigation';
+
 // import ValidationComponent from "react-native-form-validator";
 
 export default class MobileScreen extends ValidationComponent {
+
+  navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
+
 	
 	constructor(props) {
 		super(props);
@@ -116,24 +129,24 @@ export default class MobileScreen extends ValidationComponent {
           .then((response)=>{
               console.log("here response",response);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
-              this.setState({
-                uid:response.data.user_id,
-                token:response.data.token,
-              },()=>{
-                // this._storeData();
-                AsyncStorage.setItem("uid",this.state.uid);
-                AsyncStorage.setItem("token",this.state.token);
-              });
-              
-                // AsyncStorage.setItem("uid",response.data.user_id);
-                // AsyncStorage.setItem("token",response.data.token);
-
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
-               this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobileNumber});
+                AsyncStorage.setItem("uid",response.data.user_id );
+                AsyncStorage.setItem("token",response.data.token);
+                AsyncStorage.setItem("originalotp",response.data.otp.toString());
+                AsyncStorage.setItem("message",response.data.message);
+                AsyncStorage.setItem("mobile",this.state.mobileNumber);
+                this.navigateScreen('OTPScreen');
           
               }else{
-                this.props.navigation.navigate('OTPScreen',{token:response.data.token,uid:response.data.user_id ,originalotp:response.data.otp,message:response.data.message,mobile:this.state.mobileNumber});
+
+                AsyncStorage.setItem("uid",response.data.user_id );
+                AsyncStorage.setItem("token",response.data.token);
+                AsyncStorage.setItem("originalotp",response.data.otp);
+                AsyncStorage.setItem("message",response.data.message);
+                AsyncStorage.setItem("mobile",this.state.mobileNumber);
+
+                 this.navigateScreen('OTPScreen');
               }
 
             })
@@ -153,15 +166,6 @@ export default class MobileScreen extends ValidationComponent {
 
 }
 
-_storeData = async () => {
-  try {
-    await AsyncStorage.setItem("uid",this.state.uid);
-    await AsyncStorage.setItem("token",this.state.token);
-
-  } catch (error) {
-    // Error saving data
-  }
-}
 
  displayValidationError = (errorField) =>{
     let error = null;
