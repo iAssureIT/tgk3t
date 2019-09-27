@@ -107,6 +107,7 @@ export default class Congratulation extends ValidationComponent{
               this.setState({
                 allData : res.data,
               },()=>{
+                 AsyncStorage.removeItem('propertyId');
                  this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:this.state.allData})
 
               });

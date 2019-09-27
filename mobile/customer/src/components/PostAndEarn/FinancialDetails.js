@@ -81,6 +81,7 @@ const navigateAction = StackActions.reset({
                           {label: 'Stamp Duty & Registration',checked: false},
                           {label: 'Clubhouse',checked: false}],
       mobile          : "",
+
     };
 
   }
@@ -135,43 +136,48 @@ _retrieveData = async () => {
 
                             this.setState({
                                originalValues     : response.data.financial,
-                               expectedRate       : response.data.financial.expectedRate,
-                               totalPrice         : response.data.financial.totalPrice,
-                               monthlyRent        : response.data.financial.monthlyRent,
-                               depositAmount      : response.data.financial.depositAmount,
+                               expectedRate       : response.data.financial.expectedRate ? response.data.financial.expectedRate.toString() : "",
+                               totalPrice         : response.data.financial.totalPrice ? response.data.financial.totalPrice.toString() : "",
+                               monthlyRent        : response.data.financial.monthlyRent ? response.data.financial.monthlyRent.toString() : "",
+                               depositAmount      : response.data.financial.depositAmount ? response.data.financial.depositAmount.toString() : "",
                                prevCharges        : response.data.financial.includeCharges,
                                updateOperation    : true,
                                // startDate          : availableFrom,
                                description        : response.data.financial.description ? response.data.financial.description : this.state.description,
-                               maintenanceCharges : response.data.financial.maintenanceCharges,
+                               maintenanceCharges : response.data.financial.maintenanceCharges ? response.data.financial.maintenanceCharges.toString() : "" ,
                                maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Monthly",
-                               measurementUnit    : response.data.financial.measurementUnit ,
+                               measurementUnit    : response.data.financial.measurementUnit ? response.data.financial.measurementUnit : this.state.measurementUnit,
                                availableFrom      : response.data.financial.availableFrom,
 
-                              });
-                              var includeCharges = this.state.totalAskItem;
-                              console.log("here includeCharges", includeCharges);
-                              var includeChargesList = includeCharges.map((item,index)=>{
-                                var propPresent = this.state.prevCharges.find((obj)=>{
-                                  return item.name === obj
-                                })
-                                console.log("here propPresent ", propPresent);
-                                var newObj = Object.assign({},item);
-                                if(propPresent){
-                                  newObj.checked = true
-                                }else{
-                                  newObj.checked = false
-                                }
-                                return newObj;
-
-                             })
-
-                              this.setState({
-                                totalAskItem : includeChargesList,
                               },()=>{
-                                console.log("here totalAskItem in didmount after match result",this.state.totalAskItem);
+                                console.log("prev charge",this.state.prevCharges);
+
+                                var includeCharges = this.state.totalAskItem;
+                                  console.log("here includeCharges", includeCharges);
+                                  var includeChargesList = includeCharges.map((item,index)=>{
+                                    var propPresent = this.state.prevCharges.find((obj)=>{
+                                      return item.label === obj
+                                    })
+                                    console.log("here propPresent ", propPresent);
+                                    var newObj = Object.assign({},item);
+                                    if(propPresent){
+                                      newObj.checked = true
+                                    }else{
+                                      newObj.checked = false
+                                    }
+                                    return newObj;
+
+                                 })
+
+                                  this.setState({
+                                    totalAskItem : includeChargesList,
+                                  },()=>{
+                                    console.log("here totalAskItem in didmount after match result",this.state.totalAskItem);
+
+                                  });
 
                               });
+                              
 
                           })
                           .catch((error)=>{
@@ -297,11 +303,12 @@ submitFun(){
             }
 
             console.log("outside eq",eq);
-
-             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
-              this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
+             // this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
+             if(eq === true && parseInt(this.state.expectedRate) === ov.expectedRate && parseInt(this.state.totalPrice) === ov.totalPrice &&
+             
               this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
-               this.state.maintenanceCharges === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer)
+               parseInt(this.state.maintenanceCharges) === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer &&
+               this.state.measurementUnit === ov.measurementUnit)
               {
               console.log("same data");
                 this.navigateScreen('Availability',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});

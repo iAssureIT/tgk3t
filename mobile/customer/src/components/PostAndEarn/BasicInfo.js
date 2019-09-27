@@ -159,6 +159,8 @@ const navigateAction = StackActions.reset({
 
     componentDidMount(){
       console.log("here token in form 1",this.state.token);
+      // AsyncStorage.removeItem('propertyId');
+
       this._retrieveData();
        axios({
         method: 'get',
@@ -303,6 +305,7 @@ const navigateAction = StackActions.reset({
         "landmark"        : this.state.landmark,
         "index"           : this.state.index,
         "uid"             : uid,
+        "property_id"     : this.state.propertyId,
       };
       console.log("formValues",formValues);
 

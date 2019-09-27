@@ -28,7 +28,7 @@ import DatePicker from "react-native-datepicker";
 
 const window = Dimensions.get('window');
 
-
+  
 
 
 export default class PropertyDetails extends ValidationComponent{
@@ -90,7 +90,7 @@ const navigateAction = StackActions.reset({
                             {label:"Northwest", value: 'Northwest',},
                             {label:"Southeast", value: 'Southeast',}, 
                             {label:"Southwest", value: 'Southwest',}],
-      furnishedstatus : "fullFurnished",
+      furnishedStatus : "fullFurnished",
       superArea       : '',
       builtupArea     : '',
       UnitData  : [{label:"Sq ft", value:"Sq ft"},
@@ -126,6 +126,10 @@ const navigateAction = StackActions.reset({
       uid               : "",
       token             : "",
       originalValues    :"",
+      personal          : "",
+      washrooms         : "",
+      pantry            : "",
+      workStation       : "",
     };
 
   }
@@ -214,19 +218,20 @@ const navigateAction = StackActions.reset({
                             .get('/api/properties/'+property_id)
                             .then( (response) =>{
                               console.log("get property in property = ",response);
+                              console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
 
                               this.setState({
                                   originalValues  : response.data.propertyDetails,
                                   bedrooms        : response.data.propertyDetails.bedrooms,
                                   balconies       : response.data.propertyDetails.balconies,
-                                  washrooms       : response.data.propertyDetails.washrooms,
-                                  furnishedstatus : response.data.propertyDetails.furnishedStatus,
-                                  personal        : response.data.propertyDetails.personal,
-                                  pantry          : response.data.propertyDetails.pantry,
+                                  washrooms       : response.data.propertyDetails.washrooms ? response.data.propertyDetails.washrooms : "",
+                                  furnishedStatus : response.data.propertyDetails.furnishedStatus,
+                                  personal        : response.data.propertyDetails.personal ? response.data.propertyDetails.personal : "",
+                                  pantry          : response.data.propertyDetails.pantry ? response.data.propertyDetails.pantry : "",
                                   bathrooms       : response.data.propertyDetails.bathrooms,
                                   ageofproperty   : response.data.propertyDetails.ageofProperty,
                                   facing          : response.data.propertyDetails.facing,
-                                  superArea       : response.data.propertyDetails.superArea,
+                                  superArea       : response.data.propertyDetails.superArea.toString(),
                                   builtupArea     : response.data.propertyDetails.builtupArea,
                                   updateOperation : true,
                                   // amenity
@@ -235,9 +240,26 @@ const navigateAction = StackActions.reset({
                                   // prevAmenities   : response.data.propertyDetails.Amenities,
                                   superAreaUnit   : response.data.propertyDetails.superAreaUnit,
                                   builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
-                                  prevCharges     : response.data.propertyDetails.furnishedOptions,
-                                  workStation     : response.data.propertyDetails.workStation,
+                                  prevCharges     : response.data.propertyDetails.furnishedOptions.length > 0 ? response.data.propertyDetails.furnishedOptions : "",
+                                  workStation     : response.data.propertyDetails.workStation ? response.data.propertyDetails.workStation : "",
                                   furnishPantry   : response.data.propertyDetails.furnishPantry,
+
+                                },()=>{
+
+                                  console.log("supeeeeeeerarea",this.state.superArea);
+                                  console.log("furnishedStatus",this.state.furnishedStatus);
+                                  if(this.state.furnishedStatus == "semiFurnished")
+                                  {
+                                    this.setState({furnishedIndex:1});
+                                  }
+                                  if(this.state.furnishedStatus == "fullFurnished")
+                                  {
+                                    this.setState({furnishedIndex:0});
+                                  }
+                                  if(this.state.furnishedStatus == "unfurnished")
+                                  {
+                                    this.setState({furnishedIndex:2});
+                                  }
 
                                 });
                             })
@@ -262,9 +284,11 @@ const navigateAction = StackActions.reset({
 
   onSelectFurnishStatus=(index,value)=>{
     console.log("here value",value);
+    console.log("here index",index);
+
     this.setState({
       furnishedIndex: index,
-      furnishedstatus : value,
+      furnishedStatus : value,
       // workStation   : index,
       // personal      : index,
       // pantry        : index,
@@ -362,7 +386,7 @@ const navigateAction = StackActions.reset({
             var eq ="";
             if(furnishedOptionsDataList.length != this.state.furnishItem.length )
             {
-              eq = false;
+              eq = true;
                console.log("equal not",eq);
             }else{
               
@@ -377,11 +401,12 @@ const navigateAction = StackActions.reset({
               console.log("equal yes but same",eq); 
             }
             console.log("outside eq",eq);
-
+            console.log("here state value",parseInt(this.state.superArea));
+            console.log("here ov value",ov.superArea);
             if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
-                this.state.furnishedstatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
+                this.state.furnishedStatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
                  this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing 
-                 && this.state.superArea === ov.superArea && this.state.builtupArea === ov.builtupArea &&
+                 && parseInt(this.state.superArea) === ov.superArea && this.state.builtupArea === ov.builtupArea &&
                  eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry )
               {
                   console.log("same data");
@@ -395,7 +420,7 @@ const navigateAction = StackActions.reset({
                   "bedrooms"          : this.state.bedrooms,
                   "balconies"         : this.state.balconies,
                   "washrooms"         : this.state.washrooms,
-                  "furnishedStatus"   : this.state.furnishedstatus,
+                  "furnishedStatus"   : this.state.furnishedStatus,
                   "personal"          : this.state.personal,
                   "pantry"            : this.state.pantry,
                   "workStation"       : this.state.workStation,
@@ -403,7 +428,7 @@ const navigateAction = StackActions.reset({
                   "bathrooms"         : this.state.bathrooms,
                   "ageofProperty"     : this.state.ageofproperty,
                   "facing"            : this.state.facing,
-                  "superArea"         : this.state.superArea,
+                  "superArea"         : parseInt(this.state.superArea),
                   "builtupArea"       : this.state.builtupArea,
                   "property_id"       : this.state.propertyId,
                   "uid"               : this.state.uid,
@@ -414,10 +439,10 @@ const navigateAction = StackActions.reset({
                   "superAreaUnit"     : this.state.superAreaUnit,
                   "builtupAreaUnit"   : this.state.builtupAreaUnit,
                   "furnishPantry"       : this.state.furnishpantry, 
-                  "furnishedOptions"    : furnishedOptionsDataList,
+                  "furnishedOptions"    : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
                 };
 
-                if( this.state.furnishedstatus!=="" && this.state.furnishedstatus!==undefined &&  this.state.builtupArea.value!=="" && 
+                if( this.state.furnishedStatus!=="" && this.state.furnishedStatus!==undefined &&  this.state.builtupArea.value!=="" && 
                     this.state.floor!=="" &&  this.state.totalFloor!=="" ){
 
 
@@ -483,7 +508,7 @@ const navigateAction = StackActions.reset({
                   "bedrooms"          : this.state.bedrooms,
                   "balconies"         : this.state.balconies,
                   "washrooms"         : this.state.washrooms,
-                  "furnishedStatus"   : this.state.furnishedstatus,
+                  "furnishedStatus"   : this.state.furnishedStatus,
                   "personal"          : this.state.personal,
                   "pantry"            : this.state.pantry,
                   "workStation"       : this.state.workStation,
@@ -491,7 +516,7 @@ const navigateAction = StackActions.reset({
                   "bathrooms"         : this.state.bathrooms,
                   "ageofProperty"     : this.state.ageofproperty,
                   "facing"            : this.state.facing,
-                  "superArea"         : this.state.superArea,
+                  "superArea"         : parseInt(this.state.superArea),
                   "builtupArea"       : this.state.builtupArea,
                   "property_id"       : this.state.propertyId,
                   "uid"               : this.state.uid,
@@ -502,11 +527,11 @@ const navigateAction = StackActions.reset({
                   "superAreaUnit"     : this.state.superAreaUnit,
                   "builtupAreaUnit"   : this.state.builtupAreaUnit,
                   "furnishPantry"       : this.state.furnishpantry, 
-                  "furnishedOptions"    : furnishedOptionsDataList,
+                  "furnishedOptions"    : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
                 };
                 console.log("formValues",formValues);
 
-                  if( this.state.furnishedstatus!="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!="" &&
+                  if( this.state.furnishedStatus!="" && this.state.furnishedStatus!==undefined &&  this.state.builtupArea.value!="" &&
                     this.state.floor!=="" &&  this.state.totalFloor!=="" ){
                     
 
@@ -807,6 +832,7 @@ const navigateAction = StackActions.reset({
 
             <Text style={[styles.heading2,styles.marginBottom15]}>It is<Text style={[{color:"#f00"}]}>*</Text></Text>
             <View style={[styles.marginBottom15,{width:'100%'}]}>
+            {console.log("here index render",this.state.furnishedIndex)}
               <RadioGroup
                 size={20}
                 color={colors.grey}
@@ -829,7 +855,7 @@ const navigateAction = StackActions.reset({
               </RadioGroup>
             </View>
 
-             {(this.state.furnishedstatus==="fullFurnished" && this.state.propertyType === "Commercial") || (this.state.furnishedstatus==="semiFurnished" && this.state.propertyType ==="Commercial" ) ?
+             {(this.state.furnishedStatus==="fullFurnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="semiFurnished" && this.state.propertyType ==="Commercial" ) ?
                  <View style={[styles.marginBottom15,{}]}>
                             {this.state.furnishItem && this.state.furnishItem.length >0 ?
                               this.state.furnishItem.map((data,index)=>(
@@ -990,9 +1016,9 @@ const navigateAction = StackActions.reset({
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
               <View style={[styles.inputTextWrapper68,{}]}>
+              {console.log("here superArea",this.state.superArea)}
                 <TextField
                   label                 = "Super Area"
-                  onChangeText          = {superArea => {this.setState({superArea})}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}
                   inputContainerPadding = {0}
@@ -1009,6 +1035,8 @@ const navigateAction = StackActions.reset({
                   labelTextStyle        = {styles.textLabel}
                   keyboardType          = "numeric"
                   maxLength             = {10}
+                  onChangeText          = {superArea => {this.setState({superArea})}}
+
                 />
               </View>
               <View style={[styles.inputRightWrapper1,{height:35}]}>
