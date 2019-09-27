@@ -17,6 +17,10 @@ class ResetPassword extends Component {
         }
     }
 
+  //   componentDidMount(){
+  //     axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  // }
+
   showSignPass(){
     $('.showPwd').toggleClass('showPwd1');
     $('.hidePwd').toggleClass('hidePwd1');

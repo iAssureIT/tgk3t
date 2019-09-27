@@ -1,9 +1,12 @@
-import React,{Component} from 'react';
+import React,{Component}     from 'react';
 // import TrackerReact from 'meteor/ultimatejs:tracker-react';
-import { render } from 'react-dom';
+import { render }            from 'react-dom';
 import { Route , withRouter} from 'react-router-dom';
+import $                     from "jquery";
+
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
+
 
 import './Header.css';
 import Rightsidebar from '../rightSidebar/Rightsidebar.js';
@@ -22,6 +25,7 @@ export default class Header extends Component{
   componentDidMount(){
      const token = localStorage.getItem("token");
      // console.log("Dashboard Token = ",token);
+     
    
   }
     
@@ -94,17 +98,11 @@ logout(){
                   </div>
                   </div>
                 </div>
-                <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 ">
+                <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 padd0">
                   <div className="">
-<<<<<<< Updated upstream
-                   { /*<div onClick={this.toggleNav.bind(this)}className="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center pull-right hover">
-                    <i className="fa fa-cogs headicon "></i>
-                  </div>*/}
-=======
                    { <div onClick={this.toggleNav.bind(this)}className="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center pull-right hover">
                     <i className="fa fa-cogs headicon "></i>
                   </div>}
->>>>>>> Stashed changes
                   <div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 pull-right text-center padd0 hover">
                     <div className="row">
                      { /*<div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
@@ -128,7 +126,7 @@ logout(){
                                     <a className="noneAtag">
                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 padd0 " > 
                                           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-left padd0 marTop ">
-                                            <img src="images/person.png" height="50px" className=" marLeft "/>
+                                            <img src="/images/person.png" height="50px" className=" marLeft "/>
                                           </div>
                                           <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 pull-right padd0 marTop">
                                            <h5 className=" nomargin ">

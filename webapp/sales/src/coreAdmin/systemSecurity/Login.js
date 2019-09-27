@@ -25,7 +25,7 @@ class Login extends Component {
         }
   }
   componentDidMount(){
-    
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
   }
   userlogin(event){
     event.preventDefault();
@@ -38,13 +38,13 @@ class Login extends Component {
         console.log("auth value",auth);
 
     axios
-      .post('/api/users/login',auth)
+      .post('/api/users/post/login',auth)
       .then((response)=> {
         console.log("-------userData------>>",response);
         // this.setState({
         //   token : response.data.token
         // });
-
+        axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
         localStorage.setItem("token",response.data.token);
         localStorage.setItem("admin_ID",response.data.user_ID);
         // localStorage.setItem("admin_email",response.data.email);
@@ -52,23 +52,31 @@ class Login extends Component {
 
         console.log("localStorage =",localStorage);
         // browserHistory.replace('/');
-        this.props.history.push("/");
-        window.location.reload();
-        // direct.setState({loggedIn:response.data.token})
-        if(localStorage==null){
-          swal("Invalid Email or Password","Please Enter valid email and password","warning");
-        }else{
-          this.setState({
-              loggedIn  :   true
-          })
-        }
+        // if(axios.defaults.headers.common.Authorization)
+        //   {
+            this.props.history.push("/dashboard");
+            window.location.reload();
+            // direct.setState({loggedIn:response.data.token})
+            if(localStorage==null){
+              swal("Invalid Email or Password","Please Enter valid email and password","warning");
+            }else{
+              this.setState({
+                  loggedIn  :   true
+              })
+            }
+          // }
       })
-      .catch(function (error) {
-          console.log(error);
-        if(localStorage!==null){
-          swal("Invalid Email or Password","Please Enter valid email and password","warning");
-        }
-      });
+      .catch((error)=>{
+                        console.log("error = ",error);
+                        if(localStorage!==null){
+                          swal("Invalid Email or Password","Please Enter valid email and password","warning");
+                        }
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                             this.props.history.push("/login");
+                        }
+              });
   }
   showSignPass(){
       $('.showPwd').toggleClass('showPwd1');
@@ -116,7 +124,7 @@ class Login extends Component {
           <div className="divLoginInWrap">
 
             <div className="col-lg-4 col-lg-offset-4 marbtm10 ">
-              <img src="images/Logo.png" height="70px"/>
+              <img src="images/logo.png" height="70px"/>
               </div>
 
             <form id="login" onSubmit={this.userlogin.bind(this)}>
@@ -153,10 +161,7 @@ class Login extends Component {
                 <input id="logInBtn" type="submit" className="col-lg-12 col-md-12 col-xs-12 col-sm-12 UMloginbutton hvr-sweep-to-right" value="Login"/>
               </div>
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pdcls">
-               {/* <div className="col-lg-6 col-md-6 col-sm-6 ">
-=======
                { /*<div className="col-lg-6 col-md-6 col-sm-6 ">
->>>>>>> Stashed changes
                   <Link to='/signup' className="UMGreyy UMGreyy_l UMcreateacc col-lg-12 col-md-12 col-xs-12 col-sm-12"> Sign Up</Link>
                 </div>*/}
                 {/*<div className="col-lg-6 col-md-6 col-sm-6 offset-lg-1 customFl">

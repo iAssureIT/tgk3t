@@ -1,0 +1,2311 @@
+Searching 88 files for "qatgk"
+
+/Users/iassureit/Public/React App/tgk3t/webapp/tgkWebsite/src/App.js:
+   12  
+   13  // axios.defaults.baseURL = 'http://localhost:5016/';
+   14: axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+   15  
+   16: // axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+   17  axios.defaults.headers.post['Content-Type'] = 'application/json';
+   18  
+
+2 matches in 1 file
+
+
+Searching 120 files for "api.js"
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/API.js:
+    1: // utils/API.js
+    2  
+    3  import axios from "axios";
+
+1 match in 1 file
+
+
+Searching 119 files for "api.js"
+
+0 matches
+
+Searching 7 files for "api"
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyBankDetails.js:
+   82        // }//close array
+   83  
+   84:     //   axios.patch('/api/companysettings/bank/edit/',{companyBankDetailsFormValue})
+   85      // .then(function (response) {
+   86      //   // handle success
+   ..
+   97        
+   98    
+   99:       axios.patch('/api/companysettings/bank/add',companyBankDetailsFormValue)
+  100        .then(function (response) {
+  101          // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyInformation.js:
+    7  import InputMask  from 'react-input-mask';
+    8  import S3FileUpload from 'react-s3';
+    9: import "../../../API";
+   10  
+   11  const formValid = formerrors=>{
+   ..
+   69    componentDidMount() {
+   70    var companyId = 1;
+   71:     axios.get('/api/tgkSpecificcompanysettings/'+ companyId)
+   72      .then( (res)=>{      
+   73        console.log("here company data",res.data);
+   ..
+  148         
+  149              axios
+  150:              .get('/api/projectsettings/get/one/S3')
+  151               .then((response)=>{
+  152                console.log("response data hereeeeeeeeeeeeeeeeeee",response);
+  ...
+  260  
+  261      if(this.state.submitVal == true){
+  262:         axios.post('/api/tgkSpecificcompanysettings',companyInfoFormValue)
+  263          .then( (response)=> {
+  264            // handle success
+  ...
+  299  
+  300        console.log("update axios");
+  301:       axios.patch('/api/tgkSpecificcompanysettings/information',companyInfoFormValueUpdate)
+  302          .then( (response)=> {
+  303            // handle success
+  ...
+  307             // after update show updated data
+  308                          var companyId = 1;
+  309:                         axios.get('/api/tgkSpecificcompanysettings/'+ companyId)
+  310                          .then( (res)=>{      
+  311                            // console.log("here company data",res.data);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyLocation.js:
+  180      $('.subjectRowError').css({'display':'none'});
+  181      axios
+  182:       .get('/api/tgkSpecificcompanysettings/list')
+  183        .then(
+  184          (res)=>{
+  ...
+  285             $('.subjectRowError').css({'display':'none'});
+  286           
+  287:             axios.patch('/api/tgkSpecificcompanysettings/location/add',companyLocationFormValue)
+  288                .then( (response)=> {
+  289                  // handle success
+  ...
+  310  
+  311                            axios
+  312:                         .get('/api/tgkSpecificcompanysettings/list')
+  313                          .then(
+  314                            (res)=>{
+  ...
+  354                 $('.subjectRowError').css({'display':'none'});
+  355  
+  356:                   axios.patch('/api/tgkSpecificcompanysettings/location/add',companyLocationFormValue)
+  357                .then( (response)=> {
+  358                  // handle success
+  ...
+  377                          // here for table
+  378                            axios
+  379:                         .get('/api/tgkSpecificcompanysettings/list')
+  380                          .then(
+  381                            (res)=>{
+  ...
+  423             $('.subjectRow').css({'display':'none'});
+  424  
+  425:            axios.patch('/api/tgkSpecificcompanysettings/location/edit',companyLocationFormValueupdate)
+  426          .then( (response)=> {
+  427            // handle success
+  ...
+  450  
+  451                      axios
+  452:                     .get('/api/tgkSpecificcompanysettings/list')
+  453                      .then(
+  454                        (res)=>{
+  ...
+  503  
+  504  
+  505:            axios.patch('/api/tgkSpecificcompanysettings/location/edit',companyLocationFormValueupdate)
+  506          .then( (response)=> {
+  507            // handle success
+  ...
+  530  
+  531                      axios
+  532:                     .get('/api/tgkSpecificcompanysettings/list')
+  533                      .then(
+  534                        (res)=>{
+  ...
+  622          console.log("here r formValues",FormValue);
+  623  
+  624:           axios.post('/api/tgkSpecificcompanysettings/companysettinglocation/',FormValue)
+  625          .then( (response)=> {
+  626            // handle success
+  ...
+  683        const token = '';
+  684  
+  685:       axios.patch('/api/tgkSpecificcompanysettings/location/remove',formValues)
+  686          .then( (response)=> {
+  687            // handle success
+  ...
+  690  
+  691                axios
+  692:               .get('/api/tgkSpecificcompanysettings/list')
+  693                .then(
+  694                  (res)=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyLocationList.js:
+   22  
+   23  // 		axios
+   24: // 			.get('/api/tgkSpecificcompanysettings/list')
+   25  // 			.then(
+   26  // 				(res)=>{
+   ..
+   78  // 			const token = '';
+   79  
+   80: // 			axios.patch('/api/tgkSpecificcompanysettings/location/remove',formValues)
+   81  // 		    .then( (response)=> {
+   82  // 		      // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyTaxDetails.js:
+   65        
+   66    
+   67:       axios.patch('/api/companysettings/tax/add',companytaxinfo)
+   68        .then(function (response) {
+   69          // handle success
+
+23 matches across 5 files
+
+
+Searching 119 files for "api"
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/ListedProperties/ListedProperties.js:
+   34           console.log("formValues = ", formValues);
+   35           axios
+   36:             .post('/api/properties/post/list',formValues)
+   37              .then(resultData =>{
+   38                  console.log("resultData",resultData);
+   ..
+   75  
+   76            axios
+   77:             .post('/api/properties/post/list',formValues)
+   78              .then(resultData =>{
+   79                  console.log("resultData",resultData);
+   ..
+  102              console.log("formValues",formValues)
+  103            axios
+  104:             .post('/api/properties/post/list',formValues)
+  105              .then(resultData =>{
+  106                  console.log("resultData",resultData);
+  ...
+  158            if(isConfirm) {
+  159              axios
+  160:             .delete('/api/properties/'+id)
+  161              .then(res =>{
+  162                   if(res){
+  163                      axios
+  164:                     .post('/api/properties/post/list',formValues)
+  165                      .then(resultData =>{
+  166                          console.log("resultData",resultData);
+  ...
+  220  
+  221                    axios
+  222:                     .patch('/api/properties/patch/updateListing',listedData)
+  223                      .then(resultData =>{
+  224                          axios
+  225:                             .post('/api/properties/post/list',formValues)
+  226                              .then(resultData =>{
+  227                                  console.log("resultData",resultData);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/masterData/add_data.js:
+   20        console.log("formValues",formValues);
+   21        
+   22:     axios.post('/api/masteramenities', formValues)
+   23        .then( (res)=>{
+   24            console.log("submit ");
+   ..
+   27  
+   28            axios
+   29:           .get('/api/masteramenities/list')
+   30            .then(
+   31              (res)=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/masterData/masterData.js:
+   28  
+   29  		axios
+   30: 			.get('/api/masteramenities/list')
+   31  			.then(
+   32  				(res)=>{
+   ..
+   61  			console.log("id",id);
+   62  			const token = '';
+   63: 			const url = '/api/masteramenities/'+id ;
+   64  			const headers = {
+   65  				    "Authorization" : token,
+   ..
+   79  
+   80  			    	axios
+   81: 					.get('/api/masteramenities/list')
+   82  					.then(
+   83  						(res)=>{
+   ..
+  120  		      		   $('.subjectRowError').css({'display':'none'});
+  121  
+  122: 		      		 axios.put('/api/masteramenities/'+id, formValues)
+  123  				      .then( (res)=>{
+  124  				          console.log("submit ",res);
+  ...
+  128  
+  129  				          axios
+  130: 						.get('/api/masteramenities/list')
+  131  						.then(
+  132  							(res)=>{
+  ...
+  177        console.log("here id",id);
+  178  
+  179:        axios.get('/api/masteramenities/'+ id)
+  180          .then( (res)=>{
+  181            console.log("here data_______________",res.data);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/PropertyList/PropertyList.js:
+   34           console.log("formValues = ", formValues);
+   35           axios
+   36:             .post('/api/properties/post/list',formValues)
+   37              .then(resultData =>{
+   38                  console.log("resultData",resultData);
+   ..
+   75  
+   76            axios
+   77:             .post('/api/properties/post/list',formValues)
+   78              .then(resultData =>{
+   79                  console.log("resultData",resultData);
+   ..
+  102              console.log("formValues",formValues)
+  103            axios
+  104:             .post('/api/properties/post/list',formValues)
+  105              .then(resultData =>{
+  106                  console.log("resultData",resultData);
+  ...
+  158            if(isConfirm) {
+  159              axios
+  160:             .delete('/api/properties/'+id)
+  161              .then(res =>{
+  162                   if(res){
+  163                      axios
+  164:                     .post('/api/properties/post/list',formValues)
+  165                      .then(resultData =>{
+  166                          console.log("resultData",resultData);
+  ...
+  220  
+  221                    axios
+  222:                     .patch('/api/properties/patch/updateListing',listedData)
+  223                      .then(resultData =>{
+  224                          axios
+  225:                             .post('/api/properties/post/list',formValues)
+  226                              .then(resultData =>{
+  227                                  console.log("resultData",resultData);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/PropertyProfile/PropertyProfile.js:
+   20  });
+   21  
+   22: axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+   23  axios.defaults.headers.post['Content-Type'] = 'application/json';
+   24  
+   ..
+   72    componentDidMount() {
+   73    axios
+   74:     .get('/api/properties/'+this.state.profileId)
+   75      .then(
+   76        (res)=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/sell-o-meter/add_classRating.js:
+   46      if(this.refs.propertyClass.value!="" && this.refs.earning.value!="" )
+   47      {
+   48:        axios.post('/api/mastersellometers/', formValues)
+   49          .then( (res)=>{
+   50              console.log("submit ");
+   ..
+   56  
+   57               axios
+   58:               .get('/api/mastersellometers/list')
+   59                .then(
+   60                  (res)=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/sell-o-meter/add_sellometer.js:
+   52  
+   53  
+   54:         axios.post('/api/sellometers/', formValues)
+   55            .then( (res)=>{
+   56                console.log("submit ");
+   ..
+   70  
+   71                axios
+   72:               .get('/api/sellometers/list')
+   73                .then(
+   74                  (res)=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/sell-o-meter/classRating.js:
+   27  
+   28      axios
+   29:       .get('/api/mastersellometers/list')
+   30        .then(
+   31          (res)=>{
+   ..
+   60        console.log("id",id);
+   61        const token = '';
+   62:       const url = '/api/mastersellometers/'+id ;
+   63        const headers = {
+   64              "Authorization" : token,
+   ..
+   79  
+   80               axios
+   81:             .get('/api/mastersellometers/list')
+   82              .then(
+   83                (res)=>{
+   ..
+  124        if(this.state.propclass!=""&& this.state.earning!="")
+  125        {
+  126:         axios.put('/api/mastersellometers/'+id, formValues)
+  127            .then( (res)=>{
+  128                console.log("submit ");
+  ...
+  137  
+  138                 axios
+  139:                 .get('/api/mastersellometers/list')
+  140                  .then(
+  141                    (res)=>{
+  ...
+  184        console.log("here id",id);
+  185  
+  186:        axios.get('/api/mastersellometers/'+ id)
+  187          .then( (res)=>{
+  188            console.log("here data_______________",res.data);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/sell-o-meter/sellOMeter.js:
+   31  
+   32  		axios
+   33: 			.get('/api/sellometers/list')
+   34  			.then(
+   35  				(res)=>{
+   ..
+   64  			console.log("id",id);
+   65  			const token = '';
+   66: 			const url = '/api/sellometers/'+id ;
+   67  			const headers = {
+   68  				    "Authorization" : token,
+   ..
+   83  
+   84  			    	axios
+   85: 					.get('/api/sellometers/list')
+   86  					.then(
+   87  						(res)=>{
+   ..
+  138  		 	  {
+  139  		 	  	axios
+  140: 		 	  	.put('/api/sellometers/'+id, formValues)
+  141  			    .then( (res)=>{
+  142  			          console.log("submit ",res);
+  ...
+  158  
+  159  		          	axios
+  160: 					.get('/api/sellometers/list')
+  161  					.then(
+  162  						(res)=>{
+  ...
+  207  		      console.log("here id",id);
+  208  
+  209: 		       axios.get('/api/sellometers/'+ id)
+  210  		        .then( (res)=>{
+  211  		          console.log("here data_______________",res.data);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/App.js:
+    8  import $ from 'jquery';
+    9  
+   10: axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+   11  axios.defaults.headers.post['Content-Type'] = 'application/json';
+   12  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/common/footer/Footer.js:
+   10  import './Footer.css';
+   11  
+   12: // import {StudentMaster} from '/imports/admin/forms/student/api/studentMaster.js';
+   13: // import { FranchiseDetails }  from '/imports/admin/companySetting/api/CompanySettingMaster.js';
+   14  // import { FlowRouter }   from 'meteor/ostrio:flow-router-extra';
+   15  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyBankDetails.js:
+   82        // }//close array
+   83  
+   84:     //   axios.patch('/api/companysettings/bank/edit/',{companyBankDetailsFormValue})
+   85      // .then(function (response) {
+   86      //   // handle success
+   ..
+   97        
+   98    
+   99:       axios.patch('/api/companysettings/bank/add',companyBankDetailsFormValue)
+  100        .then(function (response) {
+  101          // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyInformation.js:
+    7  import InputMask  from 'react-input-mask';
+    8  
+    9: import "../../../API";
+   10  
+   11  const formValid = formerrors=>{
+   ..
+   67    componentDidMount() {
+   68    var companyId = 2;
+   69:     /*axios.get('/api/companysettings/'+ companyId)
+   70      .then( (res)=>{      
+   71        console.log("here company data",res.data);
+   ..
+  200      console.log('companyName    : this.state.companyName');
+  201  
+  202:     axios.post('/api/companysettings',companyInfoFormValue)
+  203      .then( (response)=> {
+  204        // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyLocation.js:
+    6  import axios from 'axios';
+    7  
+    8: // import "../../../API";
+    9  const formValid = formerrors=>{
+   10    console.log("formerrors",formerrors);
+   ..
+  153      }//close array
+  154      if(formValid(this.state.formerrors)){
+  155:     axios.patch('/api/companysettings/location/add',companyLocationFormValue)
+  156      .then( (response)=> {
+  157        // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyLocationList.js:
+   19  
+   20  		axios
+   21: 			.get('/api/companysettings/list')
+   22  			.then(
+   23  				(res)=>{
+   ..
+   52  			console.log("id",id);
+   53  			const token = '';
+   54: 			// const url = '/api/role/'+id ;
+   55  			// const headers = {
+   56  			// 	    "Authorization" : token,
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyTaxDetails.js:
+   65        
+   66    
+   67:       axios.patch('/api/companysettings/tax/add',companytaxinfo)
+   68        .then(function (response) {
+   69          // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/dashboard/chart/Chart.js:
+   10  import './Chart.css';
+   11  
+   12: // import {StudentMaster} from '/imports/admin/forms/student/api/studentMaster.js';
+   13: // import { FranchiseDetails }  from '/imports/admin/companySetting/api/CompanySettingMaster.js';
+   14  // import { FlowRouter }   from 'meteor/ostrio:flow-router-extra';
+   15  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/dashboard/Dashboard.js:
+   15  import './Dashboard.css';
+   16  
+   17: // import {StudentMaster} from '/imports/admin/forms/student/api/studentMaster.js';
+   18: // import { FranchiseDetails }  from '/imports/admin/companySetting/api/CompanySettingMaster.js';
+   19  // import { FlowRouter }   from 'meteor/ostrio:flow-router-extra';
+   20  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/dashboard/Infocomponent/Infocomponent.js:
+   10  import './Infocomponent.css';
+   11  
+   12: // import {StudentMaster} from '/imports/admin/forms/student/api/studentMaster.js';
+   13: // import { FranchiseDetails }  from '/imports/admin/companySetting/api/CompanySettingMaster.js';
+   14  // import { FlowRouter }   from 'meteor/ostrio:flow-router-extra';
+   15  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/dashboard/StatusComponent/StatusComponent.js:
+   10  import './StatusComponent.css';
+   11  
+   12: // import {StudentMaster} from '/imports/admin/forms/student/api/studentMaster.js';
+   13: // import { FranchiseDetails }  from '/imports/admin/companySetting/api/CompanySettingMaster.js';
+   14  // import { FlowRouter }   from 'meteor/ostrio:flow-router-extra';
+   15  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/dashboard/TableComponent/TableComponent.js:
+   10  import './TableComponent.css';
+   11  
+   12: // import {StudentMaster} from '/imports/admin/forms/student/api/studentMaster.js';
+   13: // import { FranchiseDetails }  from '/imports/admin/companySetting/api/CompanySettingMaster.js';
+   14  // import { FlowRouter }   from 'meteor/ostrio:flow-router-extra';
+   15  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/dashboard/UpdateComponent/UpdateComponent.js:
+   10  import './UpdateComponent.css';
+   11  
+   12: // import {StudentMaster} from '/imports/admin/forms/student/api/studentMaster.js';
+   13: // import { FranchiseDetails }  from '/imports/admin/companySetting/api/CompanySettingMaster.js';
+   14  // import { FlowRouter }   from 'meteor/ostrio:flow-router-extra';
+   15  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/IAssureTableUM/IAssureTable.jsx:
+  523  		// console.log("id",id);
+  524  		const token = '';
+  525: 		const url = '/api/users/'+id ;
+  526  		const headers = {
+  527  			    "Authorization" : token,
+  ...
+  570  			if(password==conPassword){
+  571  				if(password.length >= 6){
+  572: 					axios.put('/api/users/resetpwd/'+ newID, formValues)
+  573  				      .then( (res)=>{
+  574  				      	console.log("response",res);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/EditNotificationModal.jsx:
+  142  				}
+  143  				
+  144: 				axios.put('/api/masternotifications/'+editId, formValues)
+  145  				.then((response)=> {		
+  146  					swal("Template updated successfully","", "success");			
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/emails/EmailTemplateRow.jsx:
+   33  		console.log("id",id);
+   34  		const token = '';
+   35: 		const url = '/api/masternotifications/'+id ;
+   36  		const headers = {
+   37  			    "Authorization" : token,
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/notifications/AllNotificationTemplateRow.jsx:
+   23  		var id = event.target.id;
+   24  		console.log('id',id);
+   25: 		axios.get('/api/masternotifications/'+id)
+   26  		.then((response)=> {
+   27  			
+   ..
+   42  		var id = event.target.id;
+   43  		console.log('id',id);
+   44: 		axios.delete('/api/masternotifications/'+id)
+   45  		.then((response)=> {
+   46  	    	console.log('delete response',response);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/sms/AllSMSTemplateRow.jsx:
+   21  		var id = event.target.id;
+   22  		console.log('id',id);
+   23: 		axios.get('/api/masternotifications/'+id)
+   24  		.then((response)=> {
+   25  	    	console.log('delete response',response);
+   ..
+   40  		var id = event.target.id;
+   41  		console.log('id',id);
+   42: 		axios.delete('/api/masternotifications/'+id)
+   43  		.then((response)=> {
+   44  			swal("Template deleted successfully","", "success");
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/ViewTemplates.jsx:
+  175  		axios({
+  176  			method: 'get',
+  177: 			url: '/api/masternotifications/list',
+  178  		}).then((response)=> {
+  179  			var emailTemplatesList = response.data.filter((a)=>{ return a.templateType == "Email"});	   	    
+  ...
+  210      	axios({
+  211  			method: 'get',
+  212: 			url: '/api/masternotifications/'+id,
+  213  		}).then((response)=> {
+  214  		    this.setState({
+  ...
+  221  	  axios({
+  222  					method: 'get',
+  223: 					// url: 'http://localhost:3048/api/masternotifications/'+id,
+  224: 					url: '/api/masternotifications/'+id,
+  225  				}).then((response)=> {
+  226  	    this.setState({
+  ...
+  235  	  axios({
+  236  					method: 'get',
+  237: 					// url: 'http://localhost:3048/api/masternotifications/'+id,
+  238: 					url: '/api/masternotifications/'+id,
+  239  				}).then((response)=> {
+  240  	    this.setState({
+  ...
+  249  	  axios({
+  250  					method: 'get',
+  251: 					// url: 'http://localhost:3048/api/masternotifications/'+id,
+  252: 					url: '/api/masternotifications/'+id,
+  253  				}).then((response)=> {
+  254  	    this.setState({
+  ...
+  263      	axios({
+  264  			method: 'get',
+  265: 			url: '/api/masternotifications/'+id,
+  266  		}).then((response)=> {
+  267  			this.setState({
+  ...
+  273      	axios({
+  274  			method: 'get',
+  275: 			url: '/api/masternotifications/'+id,
+  276  		}).then((response)=> {
+  277  	    	this.setState({
+  ...
+  342  				
+  343  						if(formValid(this.state.formerrors)){
+  344: 							axios.post('/api/masternotifications', formValues)
+  345  							.then((response)=> {	
+  346  							console.log('response here of add --------------',response);	
+  ...
+  359  									axios({
+  360  										method: 'get',
+  361: 										url: '/api/masternotifications/list',
+  362  									}).then((response)=> {
+  363  										console.log("here are the response--------------------", response);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/systemSecurity/Login.js:
+   39  
+   40      axios
+   41:       .post('/api/users/post/login',auth)
+   42        .then((response)=> {
+   43          console.log("-------userData------>>",response);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/systemSecurity/SignUp.css:
+  767  .loginLoadingTimeDiv{
+  768    text-align: center;
+  769:   text-transform: capitalize;
+  770    /*opacity: 0.4;*/
+  771    cursor: not-allowed;
+  ...
+ 1971  .loginLoadingTimeDiv{
+ 1972    text-align: center;
+ 1973:   text-transform: capitalize;
+ 1974    /*opacity: 0.4;*/
+ 1975    cursor: not-allowed;
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/systemSecurity/SignUp.js:
+   12  
+   13  import axios from 'axios';
+   14: axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+   15  // axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
+   16  axios.defaults.headers.post['Content-Type'] = 'application/json';
+   ..
+   90        				// browserHistory.push("/"),
+   91                  	axios
+   92:                 	 	.post('/api/users',auth)
+   93  			            .then((response)=> {
+   94  			                console.log("-------userData------>>",response);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/Roles/UMaddRoles.jsx:
+   16        }
+   17  
+   18:     axios.post('/api/roles', formValues)
+   19        .then( (res)=>{
+   20            console.log("submit ");
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/Roles/UMRolesList.js:
+   25  
+   26  		axios
+   27: 			.get('/api/roles/list')
+   28  			.then(
+   29  				(res)=>{
+   ..
+   58  			console.log("id",id);
+   59  			const token = '';
+   60: 			const url = '/api/role/'+id ;
+   61  			const headers = {
+   62  				    "Authorization" : token,
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/CreateUser.js:
+   35        }
+   36  
+   37:     axios.post('/api/users', formValues)
+   38        .then( (res)=>{
+   39          console.log(res.data);
+   ..
+  117                                                               <i className="fa fa-user-circle fa "></i>
+  118                                                              </div>  
+  119:                                                               <input type="text" style={{textTransform:'capitalize'}}
+  120                                                                 className="form-control UMname inputText form-control  has-content"
+  121                                                                  id="firstname" ref="firstname" name="firstname" placeholder="First Name"/>
+  ...
+  179                                                                      <label className="">First Name <label className="requiredsign">*</label></label>
+  180                                                                      <span className="blocking-span">
+  181:                                                                         <input type="text" style={{textTransform:'capitalize'}} className="form-control UMname inputText tmsUserAccForm has-content" id="firstname" ref="firstname" name="firstname"/>
+  182                                                                      </span>
+  183                                                                  </div>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/EditUserProfile.js:
+   32  		}
+   33  		console.log("formvalues",formvalues);
+   34: 				axios.put('/api/users/'+userid, formvalues)
+   35  				.then((response)=> {		
+   36  					swal("User updated successfully","", "success");		
+   ..
+   53  		var userid = this.state.UserId;
+   54  		console.log("userid-----------------------------------------",userid);
+   55: 		 axios.get('/api/users/'+ userid)
+   56  	      .then( (res)=>{
+   57  	        console.log(res.data);
+   ..
+  105                                                               <i className="fa fa-user-circle fa "></i>
+  106                                                              </div>  
+  107:                                                               <input type="text" style={{textTransform:'capitalize'}}
+  108                                                                 className="form-control UMname inputText form-control  has-content"
+  109                                                                  id="fullname" ref="fullname" name="fullname"  onChange={this.handleChange} placeholder="Full Name"/>
+  ...
+  119                                                               <i className="fa fa-user-circle fa "></i>
+  120                                                              </div>  
+  121:                                                               <input type="text" style={{textTransform:'capitalize'}}
+  122                                                                 className="form-control UMname inputText form-control  has-content"
+  123                                                                  id="firstName" ref="firstName" name="firstName" onChange={this.handleChange}  placeholder="First Name"/>
+  ...
+  150  	                                                            <i className="fa fa-mobile"></i>
+  151  	                                                            </div>  
+  152: 	                                                              <input type="text" style={{textTransform:'capitalize'}}
+  153  	                                                               className="form-control UMname inputText form-control  has-content"
+  154  	                                                                id="mobNumber" ref="mobNumber" name="mobNumber"  onChange={this.handleChange} placeholder="mobile number"/>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/UMListOfUsers.js:
+   53              "limitRange"        : this.state.limitRange, 
+   54  		}
+   55: 		axios.post('/api/users/post/userslist', data)
+   56  		.then( (res)=>{      
+   57  			console.log("herer",res);
+   ..
+   81              "limitRange"        : limitRange, 
+   82  		}    
+   83:        axios.post('/api/users/post/userslist', data)
+   84          .then( (res)=>{  
+   85            	this.setState({
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/UsereditModal.jsx:
+  140  				}
+  141  				
+  142: 				axios.patch('/api/masternotifications/'+editId, formValues)
+  143  				.then((response)=> {					
+  144  					
+  ...
+  231                                                               <i className="fa fa-user-circle fa "></i>
+  232                                                              </div>  
+  233:                                                               <input type="text" style={{textTransform:'capitalize'}}
+  234                                                                 className="form-control UMname inputText form-control  has-content"
+  235                                                                  id="firstname" ref="firstname" name="firstname" placeholder="First Name"/>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/userManagement.css:
+ 1119  }
+ 1120  .inputText title{
+ 1121:   text-transform: capitalize !important;
+ 1122  }
+ 1123  .examDateSpan{
+ ....
+ 1281  
+ 1282  .practiceExamDropDN{
+ 1283:   text-transform: capitalize;
+ 1284  }
+ 1285  .userListDropdown{
+ 1286:   /*text-transform: capitalize;*/
+ 1287  }
+ 1288  .defaultLabelOesE{
+ ....
+ 2999  }
+ 3000  .inputText title{
+ 3001:   text-transform: capitalize !important;
+ 3002  }
+ 3003  .examDateSpan{
+ ....
+ 3162  
+ 3163  .practiceExamDropDN{
+ 3164:   text-transform: capitalize;
+ 3165  }
+ 3166  .userListDropdown{
+ 3167:   /*text-transform: capitalize;*/
+ 3168  }
+ 3169  .defaultLabelOesE{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/UserManagementMaster.js:
+    5  import { check } from 'meteor/check';
+    6  import { Email } from 'meteor/email';
+    7: import {Orders}  from '/imports/StoreManagement/orders/api/orderMaster.js';
+    8: import {Cart}  from '/imports/StoreManagement/reports/api/ReportMaster.js';
+    9: import {Wishlist}  from '/imports/StoreManagement/reports/api/ReportMaster.js';
+   10  if (Meteor.isServer) {
+   11  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyBankDetails.js:
+   82        // }//close array
+   83  
+   84:     //   axios.patch('/api/companysettings/bank/edit/',{companyBankDetailsFormValue})
+   85      // .then(function (response) {
+   86      //   // handle success
+   ..
+   97        
+   98    
+   99:       axios.patch('/api/companysettings/bank/add',companyBankDetailsFormValue)
+  100        .then(function (response) {
+  101          // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyInformation.js:
+    7  import InputMask  from 'react-input-mask';
+    8  import S3FileUpload from 'react-s3';
+    9: import "../../../API";
+   10  
+   11  const formValid = formerrors=>{
+   ..
+   69    componentDidMount() {
+   70    var companyId = 1;
+   71:     axios.get('/api/tgkSpecificcompanysettings/'+ companyId)
+   72      .then( (res)=>{      
+   73        console.log("here company data",res.data);
+   ..
+  148         
+  149              axios
+  150:              .get('/api/projectsettings/get/one/S3')
+  151               .then((response)=>{
+  152                console.log("response data hereeeeeeeeeeeeeeeeeee",response);
+  ...
+  260  
+  261      if(this.state.submitVal == true){
+  262:         axios.post('/api/tgkSpecificcompanysettings',companyInfoFormValue)
+  263          .then( (response)=> {
+  264            // handle success
+  ...
+  299  
+  300        console.log("update axios");
+  301:       axios.patch('/api/tgkSpecificcompanysettings/information',companyInfoFormValueUpdate)
+  302          .then( (response)=> {
+  303            // handle success
+  ...
+  307             // after update show updated data
+  308                          var companyId = 1;
+  309:                         axios.get('/api/tgkSpecificcompanysettings/'+ companyId)
+  310                          .then( (res)=>{      
+  311                            // console.log("here company data",res.data);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyLocation.js:
+  180      $('.subjectRowError').css({'display':'none'});
+  181      axios
+  182:       .get('/api/tgkSpecificcompanysettings/list')
+  183        .then(
+  184          (res)=>{
+  ...
+  285             $('.subjectRowError').css({'display':'none'});
+  286           
+  287:             axios.patch('/api/tgkSpecificcompanysettings/location/add',companyLocationFormValue)
+  288                .then( (response)=> {
+  289                  // handle success
+  ...
+  310  
+  311                            axios
+  312:                         .get('/api/tgkSpecificcompanysettings/list')
+  313                          .then(
+  314                            (res)=>{
+  ...
+  354                 $('.subjectRowError').css({'display':'none'});
+  355  
+  356:                   axios.patch('/api/tgkSpecificcompanysettings/location/add',companyLocationFormValue)
+  357                .then( (response)=> {
+  358                  // handle success
+  ...
+  377                          // here for table
+  378                            axios
+  379:                         .get('/api/tgkSpecificcompanysettings/list')
+  380                          .then(
+  381                            (res)=>{
+  ...
+  423             $('.subjectRow').css({'display':'none'});
+  424  
+  425:            axios.patch('/api/tgkSpecificcompanysettings/location/edit',companyLocationFormValueupdate)
+  426          .then( (response)=> {
+  427            // handle success
+  ...
+  450  
+  451                      axios
+  452:                     .get('/api/tgkSpecificcompanysettings/list')
+  453                      .then(
+  454                        (res)=>{
+  ...
+  503  
+  504  
+  505:            axios.patch('/api/tgkSpecificcompanysettings/location/edit',companyLocationFormValueupdate)
+  506          .then( (response)=> {
+  507            // handle success
+  ...
+  530  
+  531                      axios
+  532:                     .get('/api/tgkSpecificcompanysettings/list')
+  533                      .then(
+  534                        (res)=>{
+  ...
+  622          console.log("here r formValues",FormValue);
+  623  
+  624:           axios.post('/api/tgkSpecificcompanysettings/companysettinglocation/',FormValue)
+  625          .then( (response)=> {
+  626            // handle success
+  ...
+  683        const token = '';
+  684  
+  685:       axios.patch('/api/tgkSpecificcompanysettings/location/remove',formValues)
+  686          .then( (response)=> {
+  687            // handle success
+  ...
+  690  
+  691                axios
+  692:               .get('/api/tgkSpecificcompanysettings/list')
+  693                .then(
+  694                  (res)=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyLocationList.js:
+   22  
+   23  // 		axios
+   24: // 			.get('/api/tgkSpecificcompanysettings/list')
+   25  // 			.then(
+   26  // 				(res)=>{
+   ..
+   78  // 			const token = '';
+   79  
+   80: // 			axios.patch('/api/tgkSpecificcompanysettings/location/remove',formValues)
+   81  // 		    .then( (response)=> {
+   82  // 		      // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyTaxDetails.js:
+   65        
+   66    
+   67:       axios.patch('/api/companysettings/tax/add',companytaxinfo)
+   68        .then(function (response) {
+   69          // handle success
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKIAssureTableUM/IAssureTable.jsx:
+  385  		 if(searchText && searchText.length != 0) {
+  386  					axios
+  387: 				      .post('/api/users/post/searchValue',formValues)
+  388  				      .then(
+  389  				        (res)=>{
+  ...
+  587  		// console.log("id",id);
+  588  		const token = '';
+  589: 		const url = '/api/users/delete/one/'+id ;
+  590  		const headers = {
+  591  			    "Authorization" : token,
+  ...
+  607  			            "limitRange"        : this.state.limitRange, 
+  608  					}
+  609: 					axios.post('/api/users/post/userslist', data)
+  610  					.then( (res)=>{      
+  611  						// console.log("herer",res);
+  ...
+  660  				if(password==conPassword){
+  661  					if(password.length >= 6){
+  662: 						axios.put('/api/users/put/one/resetpwd/'+ newID, formValues)
+  663  					      .then( (res)=>{
+  664  					      	console.log("response-------------",res);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/Roles/UMaddRoles.jsx:
+   16        }
+   17  
+   18:     axios.post('/api/roles', formValues)
+   19        .then( (res)=>{
+   20            console.log("submit ");
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/Roles/UMRolesList.js:
+   25  
+   26  		axios
+   27: 			.get('/api/roles/list')
+   28  			.then(
+   29  				(res)=>{
+   ..
+   58  			console.log("id",id);
+   59  			const token = '';
+   60: 			const url = '/api/role/'+id ;
+   61  			const headers = {
+   62  				    "Authorization" : token,
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/CreateUser.js:
+   89  
+   90        axios
+   91:       .get('/api/tgkSpecificcompanysettings/list')
+   92        .then(
+   93          (res)=>{
+   ..
+  114                                      "limitRange"        : this.state.limitRange, 
+  115                              }
+  116:                       axios.post('/api/users/post/userslist', data)
+  117                        .then( (res)=>{      
+  118                          // console.log("herer",res);
+  ...
+  165  
+  166          if(this.state.firstname!="" && this.state.lastname !="" && this.state.signupEmail && this.state.mobNumber && this.state.role != "--select--"){
+  167:            axios.post('/api/users/post', formValues)
+  168                  .then( (res)=>{
+  169                      swal("User added successfully", "", "success");
+  ...
+  231                                                               <i className="fa fa-user-circle fa "></i>
+  232                                                              </div>  
+  233:                                                               <input type="text" style={{textTransform:'capitalize'}}
+  234                                                                 className="form-control UMname inputText form-control  has-content"
+  235                                                                  id="firstname" ref="firstname" name="firstname" data-text="firstname" placeholder="First Name"  onChange={this.handleChange} 
+  ...
+  369                                                                      <label className="">First Name <label className="requiredsign">*</label></label>
+  370                                                                      <span className="blocking-span">
+  371:                                                                         <input type="text" style={{textTransform:'capitalize'}} className="form-control UMname inputText tmsUserAccForm has-content" id="firstname" ref="firstname" name="firstname"/>
+  372                                                                      </span>
+  373                                                                  </div>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/EditUserProfile.js:
+   39  		if(this.refs.firstName.value!= "" && this.refs.lastName.value != "" && this.state.mobNumber!= "" && this.state.role!= "" )
+   40  		{
+   41: 			axios.patch('/api/users/patch/one/'+userid, formvalues)
+   42  				.then((response)=> {		
+   43  					swal("User updated successfully","", "success");		
+   ..
+   50  				            "limitRange"        : this.state.limitRange, 
+   51  						}
+   52: 						axios.post('/api/users/post/userslist', data)
+   53  						.then( (res)=>{      
+   54  							console.log("here  list response==============",res);
+   ..
+  103  		var userid = this.state.UserId;
+  104  		console.log("userid-----------------------------------------",userid);
+  105: 		 axios.get('/api/users/get/one/'+ userid)
+  106  	      .then( (res)=>{
+  107  	        console.log("here data_______________",res.data);
+  ...
+  139  // for office data 
+  140  	       axios
+  141: 	      .get('/api/tgkSpecificcompanysettings/list')
+  142  	      .then(
+  143  	        (res)=>{
+  ...
+  196                                                               <i className="fa fa-user-circle fa "></i>
+  197                                                              </div>  
+  198:                                                               <input type="text" style={{textTransform:'capitalize'}}
+  199                                                                 className="form-control UMname inputText form-control  has-content"
+  200                                                                  id="firstName" ref="firstName" name="firstName" onChange={this.handleChange}  placeholder="First Name"/>
+  ...
+  227  	                                                            <i className="fa fa-mobile"></i>
+  228  	                                                            </div>  
+  229: 	                                                              <InputMask  mask="9999999999"  type="text" style={{textTransform:'capitalize'}}
+  230  	                                                               className="form-control UMname inputText form-control  has-content"
+  231  	                                                                id="mobNumber" ref="mobNumber" name="mobNumber" value={this.state.mobNumber} onChange={this.handleChange} placeholder="mobile number"/>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/OfficeEmpList.js:
+   30  
+   31        axios
+   32:       .get('/api/tgkSpecificcompanysettings/list')
+   33        .then(
+   34          (res)=>{
+   ..
+   68  		 if(selectOffice && selectOffice.length != 0) {
+   69  					axios
+   70: 				      .post('/api/users/post/officesearchValue',formValues)
+   71  				      .then(
+   72  				        (res)=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js:
+   72              "limitRange"        : this.state.limitRange, 
+   73  		}
+   74: 		axios.post('/api/users/post/userslist', data)
+   75  		.then( (res)=>{      
+   76  			console.log("herer=========================>>>>>>>>>>",res.data);
+   ..
+  115              "limitRange"        : limitRange, 
+  116  		}    
+  117:        axios.post('/api/users/post/userslist', data)
+  118          .then( (res)=>{  
+  119          	var tableData = res.data.map((a, i)=>{
+  ...
+  181  				  	// console.log("selected i",selectedId);
+  182  				  	 axios
+  183: 				      .post('/api/users/post/statusaction',formValues)
+  184  				      .then(
+  185  				        (res)=>{
+  ...
+  200  								            "limitRange"        : this.state.limitRange, 
+  201  										}
+  202: 										axios.post('/api/users/post/userslist', data)
+  203  										.then( (res)=>{      
+  204  											// console.log("herer",res);
+  ...
+  254  
+  255  				  	 axios
+  256: 				      .post('/api/users/post/statusaction',formValues)
+  257  				      .then(
+  258  				        (res)=>{
+  ...
+  270  								            "limitRange"        : this.state.limitRange, 
+  271  										}
+  272: 										axios.post('/api/users/post/userslist', data)
+  273  										.then( (res)=>{      
+  274  											// console.log("herer",res);
+  ...
+  329  
+  330  				  	 axios
+  331: 				      .post('/api/users/post/roleadd/',formValues)
+  332  				      .then(
+  333  				        (res)=>{
+  ...
+  349  								            "limitRange"        : this.state.limitRange, 
+  350  										}
+  351: 										axios.post('/api/users/post/userslist', data)
+  352  										.then( (res)=>{      
+  353  											// console.log("herer",res);
+  ...
+  404  			
+  405  				  	 axios
+  406: 				      .post('/api/users/post/roledelete/',formValues)
+  407  				      .then(
+  408  				        (res)=>{
+  ...
+  416  								            "limitRange"        : this.state.limitRange, 
+  417  										}
+  418: 										axios.post('/api/users/post/userslist', data)
+  419  										.then( (res)=>{      
+  420  											// console.log("herer",res);
+  ...
+  482  					            "limitRange"        : this.state.limitRange, 
+  483  							}
+  484: 							axios.post('/api/users/post/userslist', data)
+  485  							.then( (res)=>{      
+  486  								// console.log("herer",res);
+  ...
+  512  
+  513  						 axios
+  514: 					      .post('/api/users/post/searchValue',formValues)
+  515  					      .then(
+  516  					        (res)=>{
+  ...
+  561  					            "limitRange"        : this.state.limitRange, 
+  562  							}
+  563: 							axios.post('/api/users/post/userslist', data)
+  564  							.then( (res)=>{      
+  565  								// console.log("herer",res);
+  ...
+  592  
+  593  						 axios
+  594: 				      .post('/api/users/post/searchValue',formValues)
+  595  				      .then(
+  596  				        (res)=>{
+  ...
+  640  					  	// console.log("selected i",selectedId);
+  641  					  	const token = '';
+  642: 					  	const url = '/api/users/delete/one/'+selectedId ;
+  643  						const headers = {
+  644  							    "Authorization" : token,
+  ...
+  662  									            "limitRange"        : this.state.limitRange, 
+  663  											}
+  664: 											axios.post('/api/users/post/userslist', data)
+  665  											.then( (res)=>{      
+  666  												// console.log("herer",res);
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/UsereditModal.jsx:
+  140  				}
+  141  				
+  142: 				axios.patch('/api/masternotifications/'+editId, formValues)
+  143  				.then((response)=> {					
+  144  					
+  ...
+  231                                                               <i className="fa fa-user-circle fa "></i>
+  232                                                              </div>  
+  233:                                                               <input type="text" style={{textTransform:'capitalize'}}
+  234                                                                 className="form-control UMname inputText form-control  has-content"
+  235                                                                  id="firstname" ref="firstname" name="firstname" placeholder="First Name"/>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/userManagement.css:
+ 1134  }
+ 1135  .inputText title{
+ 1136:   text-transform: capitalize !important;
+ 1137  }
+ 1138  .examDateSpan{
+ ....
+ 1296  
+ 1297  .practiceExamDropDN{
+ 1298:   text-transform: capitalize;
+ 1299  }
+ 1300  .userListDropdown{
+ 1301:   /*text-transform: capitalize;*/
+ 1302  }
+ 1303  .defaultLabelOesE{
+ ....
+ 3014  }
+ 3015  .inputText title{
+ 3016:   text-transform: capitalize !important;
+ 3017  }
+ 3018  .examDateSpan{
+ ....
+ 3177  
+ 3178  .practiceExamDropDN{
+ 3179:   text-transform: capitalize;
+ 3180  }
+ 3181  .userListDropdown{
+ 3182:   /*text-transform: capitalize;*/
+ 3183  }
+ 3184  .defaultLabelOesE{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/UserManagementMaster.js:
+    5  import { check } from 'meteor/check';
+    6  import { Email } from 'meteor/email';
+    7: import {Orders}  from '/imports/StoreManagement/orders/api/orderMaster.js';
+    8: import {Cart}  from '/imports/StoreManagement/reports/api/ReportMaster.js';
+    9: import {Wishlist}  from '/imports/StoreManagement/reports/api/ReportMaster.js';
+   10  if (Meteor.isServer) {
+   11  
+
+184 matches across 54 files
+
+
+Searching 119 files for "../../../API"
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyInformation.js:
+    7  import InputMask  from 'react-input-mask';
+    8  
+    9: import "../../../API";
+   10  
+   11  const formValid = formerrors=>{
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyLocation.js:
+    6  import axios from 'axios';
+    7  
+    8: // import "../../../API";
+    9  const formValid = formerrors=>{
+   10    console.log("formerrors",formerrors);
+
+2 matches across 2 files
+
+
+Searching 119 files for "#dashbordid"
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/App.js:
+   29      $(document).ready(function () {
+   30         $('#sidebarCollapse').on('click', function () {
+   31:            // $('#dashbordid').toggleClass('dashboardeffect');
+   32         });
+   33      });
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/dashboard/Dashboard.css:
+  296  }
+  297  
+  298: #dashbordid{
+  299    position: absolute;
+  300    width: 83.8%;
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/Layout/Layout.js:
+   68      $(document).ready(function () {
+   69         $('#sidebarCollapse').on('click', function () {
+   70:            $('#dashbordid').toggleClass('dashboardeffect');
+   71         });
+   72      });
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/Layout/layoutPostLogin.js:
+   31  		    $(document).ready(function () {
+   32  		       $('#sidebarCollapse').on('click', function () {
+   33: 		           $('#dashbordid').toggleClass('dashboardeffect');
+   34  		       });
+   35  		    });
+
+4 matches across 4 files
+
+
+Searching 119 files for "noPad"
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/ListedProperties/ListedProperties.js:
+  252      render() {
+  253          return (
+  254:         	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+  255:                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center noPad">
+  256                      <h2>List of Listed Properties</h2>
+  257                  </div>
+  258:                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 dropHeader noPad">
+  259                      <div className="col-lg-6 col-lg-offset-3 col-md-12 col-xs-12 col-sm-12 pDrop">
+  260                  	   <div className="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+  261:                             <div className="dropdown col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+  262                                  <button className="btn dropdown-toggle pLabel bg-primary" type="button" data-toggle="dropdown">Property Type
+  263                                      <b className="caret pull-right"></b>
+  ...
+  270                          </div>
+  271                          <div className="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+  272:                             <div className="dropdown col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+  273                                  <button className="btn dropdown-toggle pLabel bg-primary" type="button" data-toggle="dropdown">Transaction Type
+  274                                      <b className="caret pull-right"></b>
+  ...
+  282                      </div>
+  283                  </div>
+  284:                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad listPadding">
+  285                       {this.state.inputData && this.state.inputData.length >0 ?
+  286                          this.state.inputData.map((result,index)=>{
+  ...
+  290                                  </div>  
+  291                                  <div className="row">
+  292:                                     <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">
+  293                                      {
+  294                                          result && result.gallery && result.gallery.Images && result.gallery.Images.length > 0 ?
+  ...
+  298                                      }                                                           
+  299                                  </div>
+  300:                                 <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">               
+  301                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">              
+  302                                          <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 propertySubText1">                
+  ...
+  330                                              </div>
+  331                                          
+  332:                                             <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 noPad pull-right">      
+  333                                                  {result.transactionType && result.transactionType === "Sell" ?
+  334:                                                     <span className="pull-right text-right col-lg-8  noPad transactionLabel">Sale</span>
+  335                                                      :
+  336                                                      result.transactionType ==="Rent" ?
+  337:                                                     <span className="pull-right text-right col-lg-8 noPad transactionLabel">{result.transactionType}</span>
+  338                                                      :
+  339                                                      null
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/masterData/masterData.js:
+  234  														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-rm`}  role="dialog">
+  235  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  236: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  237  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  238  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  239: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  240  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  241  																		          <span aria-hidden="true">&times;</span>
+  ...
+  263  										               <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-edit`}  role="dialog">
+  264  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  265: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  266  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  267  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  268: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  269  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  270  																		          <span aria-hidden="true">&times;</span>
+  ...
+  296  														<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  297  														  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  298: 														    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  299  														      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  300  														        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+  301: 														        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  302  									                              	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  303  									                            </div>
+  304  														      </div>
+  305: 														      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  306  																	<form className="editroles">
+  307  																		<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/PropertyList/propertyList.css:
+  122  }
+  123  
+  124: .noPad{
+  125  	padding-left: 0px !important;
+  126  	padding-right: 0px !important;
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/PropertyList/PropertyList.js:
+  252      render() {
+  253          return (
+  254:         	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+  255:                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 text-center noPad">
+  256                      <h2>List of Properties</h2>
+  257                  </div>
+  258:                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 dropHeader noPad">
+  259                      <div className="col-lg-6 col-lg-offset-3 col-md-12 col-xs-12 col-sm-12 pDrop">
+  260                  	   <div className="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+  261:                             <div className="dropdown col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+  262                                  <button className="btn dropdown-toggle pLabel bg-primary" type="button" data-toggle="dropdown">Property Type
+  263                                      <b className="caret pull-right"></b>
+  ...
+  270                          </div>
+  271                          <div className="col-lg-6 col-md-6 col-xs-12 col-sm-12">
+  272:                             <div className="dropdown col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
+  273                                  <button className="btn dropdown-toggle pLabel bg-primary" type="button" data-toggle="dropdown">Transaction Type
+  274                                      <b className="caret pull-right"></b>
+  ...
+  282                      </div>
+  283                  </div>
+  284:                 <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad listPadding">
+  285                       {this.state.inputData && this.state.inputData.length >0 ?
+  286                          this.state.inputData.map((result,index)=>{
+  ...
+  290                                  </div>  
+  291                                  <div className="row">
+  292:                                     <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 noPad">
+  293                                      {
+  294                                          result && result.gallery && result.gallery.Images && result.gallery.Images.length > 0 ?
+  ...
+  298                                      }                                                           
+  299                                  </div>
+  300:                                 <div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">               
+  301                                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">              
+  302                                          <div className="col-lg-3 col-md-3 col-sm-12 col-xs-12 propertySubText1">                
+  ...
+  330                                              </div>
+  331                                          
+  332:                                             <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2 noPad pull-right">      
+  333                                                  {result.transactionType && result.transactionType === "Sell" ?
+  334:                                                     <span className="pull-right text-right col-lg-8  noPad transactionLabel">Sale</span>
+  335                                                      :
+  336                                                      result.transactionType ==="Rent" ?
+  337:                                                     <span className="pull-right text-right col-lg-8 noPad transactionLabel">{result.transactionType}</span>
+  338                                                      :
+  339                                                      null
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/PropertyProfile/PropertyProfile.js:
+  125            <div className="">
+  126              <div className="formWrapper row">   
+  127:              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+  128                  <div className="row">
+  129                  <div className="col-lg-12 labalDiv"> 
+  ...
+  132                  </div>
+  133                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName"> 
+  134:                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameOfProperty noPad" >
+  135                      <div className="row">
+  136                        <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+  ...
+  165                    {
+  166                      this.state.propertyImages && this.state.propertyImages.length < 2 ?
+  167:                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
+  168:                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
+  169                        {console.log("this.state.propertyVideo",this.state.propertyVideo)}
+  170                            {
+  171                              this.state.propertyVideo ?
+  172                              <video width="100%" height="100%" className="video" controls>
+  173:                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
+  174                              </video>
+  175                              :
+  176:                             <img src="/images/videoDummy.jpg" className="col-lg-12 noPad"/>
+  177                            }
+  178                        </div>
+  179:                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty" >
+  180                            {this.state.propertyImages[0] ?
+  181:                             <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[0].imgPath} />
+  182                              :
+  183:                             <img src="/images/loading_img.jpg" className="col-lg-12 noPad"/>
+  184                            }
+  185                        </div>
+  186:                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
+  187                              {this.state.propertyImages[1] ?
+  188:                             <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[1].imgPath} />
+  189                              :
+  190:                             <img src="/images/loading_img.jpg" className="col-lg-12 noPad" />
+  191                            }
+  192                        </div>
+  ...
+  194                      :
+  195                      (this.state.propertyImages && this.state.propertyImages.length >=2) || (this.state.propertyVideo && this.state.propertyVideo.length === 0) ?
+  196:                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imagesOfProperty noPad" >
+  197                        <OwlCarousel
+  198                            className=" owl-theme "
+  ...
+  228                              this.state.propertyVideo ?
+  229                              <video width="100%" height="270" controls>
+  230:                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
+  231                              </video>
+  232                              :
+  233:                             <img src="/images/videoDummy.jpg" className="col-lg-12 noPad"/>
+  234                            }
+  235                        </OwlCarousel>  
+  ...
+  266                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  267                                  <ul className="col-lg-7 col-md-7 col-sm-12 col-xs-12 bolder">   
+  268:                                   <li className="col-lg-5 noPad">Property Type</li> <span className="col-lg-7 noPad"> : {this.state.propertySubType && this.state.propertySubType ? <b>{this.state.propertySubType} </b> : "-"}</span>
+  269:                                   <li className="col-lg-5 noPad">Furnished Status</li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> : "-"}</span>
+  270                                    {this.state.propertyType === "Commercial" ?
+  271                                        <b>
+  272:                                         <li className="col-lg-5 noPad">Washrooms    </li> 
+  273:                                         <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.washrooms : "-"}</b></span>
+  274:                                         <li className="col-lg-5 noPad">Personal WC </li> 
+  275:                                         <span className="col-lg-7 noPad"> : <b>{ this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.personal : "-"}</b></span>
+  276:                                         <li className="col-lg-5 noPad">Pantry  </li> 
+  277:                                         <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.pantry ? this.state.propertyFeatures.pantry : "-"}</b></span>
+  278                                        </b>
+  279                                      : 
+  280                                      <b>
+  281:                                         <li className="col-lg-5 noPad">Bedrooms    </li> 
+  282:                                         <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bedrooms ? this.state.propertyFeatures.bedrooms : "-"}</b></span>
+  283:                                         <li className="col-lg-5 noPad">Bathrooms    </li> 
+  284:                                         <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bathrooms ? this.state.propertyFeatures.bathrooms : "-"}</b></span>
+  285:                                         <li className="col-lg-5 noPad">Balconies    </li> 
+  286:                                         <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.balconies ? this.state.propertyFeatures.balconies : "-"}</b></span>
+  287                                        </b>
+  288                                    }
+  289:                                   <li className="col-lg-5 noPad">Available From  </li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.availableFrom   ? <b>{this.state.pricing.availableFrom}   </b> : "-"}</span>
+  290                                  </ul>
+  291                                  <ul className="col-lg-5 col-md-5 col-sm-12 col-xs-12 bolder">   
+  292:                                   <li className="col-lg-6 noPad">Facing          </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
+  293:                                   <li className="col-lg-6 noPad">Super Area      </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></span>
+  294:                                   <li className="col-lg-6 noPad">Built up Area   </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></span>
+  295:                                   <li className="col-lg-6 noPad">Floor           </li> <span className="col-lg-6 noPad"> : {this.state.floor ? <b>{this.state.floor}</b> : "-"}</span>
+  296:                                   <li className="col-lg-6 noPad">Total Floors     </li> <span className="col-lg-6 noPad"> : {this.state.totalFloor ? <b>{this.state.totalFloor}</b> : "-"}</span>
+  297:                                   <li className="col-lg-6 noPad">Age of Property </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty === "New" ? "0-1" : this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
+  298                                  </ul>
+  299                                </div>
+  ...
+  356                                       <div className="row">
+  357                                         <ul  className="bolder">
+  358:                                           <li className="col-lg-4 noPad">Include Charges</li> 
+  359:                                           <span className="col-lg-8 noPad"> : 
+  360                                            {this.state.pricing && this.state.pricing.includeCharges     ? 
+  361                                              <b>{
+  ...
+  379                                            {this.state.pricing && this.state.pricing.expectedRate ?
+  380                                              <b>
+  381:                                               <li className="col-lg-4 noPad">Expected Rate    </li> 
+  382:                                               <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
+  383                                              </b>
+  384                                            : 
+  385                                            <b>
+  386:                                               <li className="col-lg-4 noPad">Monthly Rent    </li> 
+  387:                                               <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+  388                                              </b>
+  389                                            }
+  390                                            {this.state.pricing && this.state.pricing.totalPrice ?
+  391                                              <b>
+  392:                                               <li className="col-lg-4 noPad">Total Price    </li> 
+  393:                                               <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
+  394                                              </b>
+  395                                            : 
+  396                                            <b>
+  397:                                               <li className="col-lg-4 noPad">Deposit Amount    </li>
+  398:                                               <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+  399                                              </b>
+  400                                            }
+  401:                                           <li className="col-lg-4 noPad">Maintainance Charges</li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
+  402:                                           <li className="col-lg-4 noPad">Maintainance Per    </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+  403                                          </ul>
+  404                                      </div>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/sell-o-meter/classRating.js:
+  242                                    <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${Data._id}-rm`}  role="dialog">
+  243                                          <div className=" modal-dialog adminModal adminModal-dialog">
+  244:                                              <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  245                                                      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  246                                            <h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  247:                                           <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  248                                              <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  249                                                <span aria-hidden="true">&times;</span>
+  ...
+  271                                     <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${Data._id}-edit`}  role="dialog">
+  272                                          <div className=" modal-dialog adminModal adminModal-dialog">
+  273:                                              <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  274                                                      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  275                                            <h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  276:                                           <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  277                                              <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  278                                                <span aria-hidden="true">&times;</span>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/adminTGK/sell-o-meter/sellOMeter.js:
+  295  														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${Data._id}-rm`}  role="dialog">
+  296  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  297: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  298  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  299  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  300: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  301  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  302  																		          <span aria-hidden="true">&times;</span>
+  ...
+  324  										               <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${Data._id}-edit`}  role="dialog">
+  325  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  326: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  327  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  328  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  329: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  330  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  331  																		          <span aria-hidden="true">&times;</span>
+  ...
+  394  														<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  395  														  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  396: 														    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  397  														      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  398  														        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Data</h4>
+  399: 														        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  400  									                              	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  401  									                            </div>
+  402  														      </div>
+  403: 														      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  404  																	<form className="editroles">
+  405  																		<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/common/header/Header.css:
+   43    background: none;
+   44  }
+   45: .nopadd{
+   46  padding: 5px 5px !important;
+   47  }
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyInformation.js:
+  328            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  329              <form id="companyInformationForm"  >
+  330:               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+  331                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
+  332                   
+  333  
+  334:                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12 noPadding">
+  335                      <h4 className="basicinfotxt"><i className="fa fa-info-circle fonticons" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Basic Info</h4>
+  336                    </div>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyLocation.js:
+  200              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  201                <form id="companyLocationForm" className="companyLocationForm">
+  202:               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+  203                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  compForm">
+  204:                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  205                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  206                          <div className="form-group margin15">
+  ...
+  214                    </div>
+  215                   
+  216:                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  217                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  218                          <div className="form-group margin15">
+  ...
+  232                  </div>
+  233                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
+  234:                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  235                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  236                          <div className="form-group margin15">
+  ...
+  244                    </div>
+  245  
+  246:                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  247                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  248                          <div className="form-group margin15">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanyLocationList.js:
+  131  														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${locData._id}-rm`}  role="dialog">
+  132  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  133: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  134  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  135  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  136: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  137  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  138  																		          <span aria-hidden="true">&times;</span>
+  ...
+  160  										               <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${locData._id}-edit`}  role="dialog">
+  161  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  162: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  163  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  164  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  165: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  166  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  167  																		          <span aria-hidden="true">&times;</span>
+  ...
+  191  														<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  192  														  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  193: 														    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  194  														      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  195  														        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+  196: 														        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  197  									                              	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  198  									                            </div>
+  199  														      </div>
+  200: 														      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  201  																	<form className="editroles">
+  202  																		<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/Components/CompanySetting.js:
+   58                            {/* <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact"> Company Settings </div>         */}
+   59  
+   60:                             <div  className="col-lg-12 col-md-12 col-xs-12 col-sm-12 companySettingMarginTop NOpadding-left">
+   61:                               <div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 noPadding"> 
+   62                                  <ul className="nav nav-tabs tabs-left sideways">
+   63                                      <li className="active  col-lg-12 col-md-12 col-xs-12 col-sm-12" onClick={this.clickLi.bind(this)}><a className="tabLeft tablefthr lettersp" href="#companyInformation" data-toggle="tab">Company Information</a></li>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/companysetting/css/CompanySetting.css:
+   29        min-height:  550px!important;
+   30    }
+   31:   .nopadding {
+   32      padding: 0 !important;
+   33   
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/IAssureTable/IAssureTable.jsx:
+  512          return (
+  513  	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
+  514: 	       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
+  515: 					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
+  516: 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  517: 						<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
+  518  							<option value="Not Selected" disabled>Select Limit</option>
+  519  							<option value={10}>10</option>
+  ...
+  525  					</div>
+  526  				</div>           
+  527: 				<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding">
+  528: 	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
+  529  	        		<div className="input-group">
+  530: 				        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
+  531  				    	<span className="input-group-addon"><i className="fa fa-search"></i></span>
+  532  				    </div>
+  533  	        	</div>		
+  534: 	            <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NOpadding marginTop17">			            	        
+  535  	                <div className="table-responsive">
+  536  						<table className="table iAssureITtable-bordered table-striped table-hover">
+  ...
+  610  														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal"+value.id} role="dialog">
+  611  	                                                        <div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  612: 	                                                          <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  613  	                                                            <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  614: 	                                                            <div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-11 col-md-1 col-md-offset-11 col-sm-1 col-sm-offset-11 col-xs-12 NOpadding-left NOpadding-right">
+  615  	                                                              <button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"#showDeleteModal"+value.id}>&times;</button>
+  616  	                                                            </div>
+  ...
+  660  				                    }
+  661  			                    </div>
+  662: 								<ol className="questionNumDiv paginationAdminOES col-lg-8 col-md-8 col-sm-8 col-xs-8 mainExamMinDeviceNoPad">										 
+  663  									{this.state.paginationArray}
+  664  								</ol>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/IAssureTableUM/IAssureTable.jsx:
+  640          return (
+  641  	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
+  642: 	       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
+  643: 					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Data Per Page</label>
+  644: 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  645: 						<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
+  646  							<option value="Not Selected" disabled>Select Limit</option>
+  647  							<option value={10}>10</option>
+  ...
+  653  					</div>
+  654  				</div>           
+  655: 				<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding">
+  656: 	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
+  657  	        		<div className="input-group">
+  658: 				        <input type="text" onChange={this.tableSearch.bind(this)} className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
+  659  				    	<span className="input-group-addon"><i className="fa fa-search"></i></span>
+  660  				    </div>
+  661  	        	</div>		
+  662: 	            <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NOpadding marginTop17">			            	        
+  663  	                <div className="table-responsive">
+  664  						<table className="table iAssureITtable-bordered table-striped table-hover">
+  ...
+  864  	                                                    <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${value._id}-rm`}  role="dialog">
+  865  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  866: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  867  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  868  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  869: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  870  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  871  																		          <span aria-hidden="true">&times;</span>
+  ...
+  920  				                    }
+  921  			                    </div>
+  922: 								<ol className="questionNumDiv paginationAdminOES col-lg-8 col-md-8 col-sm-8 col-xs-8 mainExamMinDeviceNoPad">										 
+  923  									{this.state.paginationArray}
+  924  								</ol>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/EditNotificationModal.jsx:
+  231  					<div className="modal fade modalHide" id={"editNotifyModal-"+this.props.emailNot} role="dialog">
+  232  					  	<div className="modal-dialog modal-lg" role="document">
+  233: 					    	<div className="modal-content modalContent col-lg-12 NOpadding">
+  234  					      		<div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  235  					        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel">Edit Template</h4>
+  236: 					        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  237  								        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  238  								          <span aria-hidden="true">&times;</span>
+  ...
+  244  							        <form className="newTemplateForm" id="editModal" >
+  245  							         	<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 forgtTextInp">
+  246: 											<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left">
+  247: 												<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding-left">
+  248  													<div className="form-group">
+  249  													 	<label className="label-category">Template Type <span className="astrick">*</span></label>     						
+  ...
+  293  												<div className="form-group">
+  294  												 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Message <span className="astrick">*</span></label> 
+  295: 												 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">  
+  296  												 	<CKEditor activeClass="p15" id="editor"  className="templateName" content={this.state.content} events={{"change": this.onChange}}/>
+  297  												 </div> 
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/emails/EmailTemplateRow.jsx:
+  121  					<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.emailtemplateValues._id}-rm`}  role="dialog">
+  122  	                    <div className=" modal-dialog adminModal adminModal-dialog">
+  123: 	                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  124  	                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  125  						        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  126: 						        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  127  									        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  128  									          <span aria-hidden="true">&times;</span>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/emails/TemplateRow.jsx:
+   39  						return (
+   40  							<li key={index} onClick={this.getTemplate.bind(this)} className="tempCategory col-lg-12" id={templateData._id}>
+   41: 								<span className="col-lg-2 NOpadding">
+   42  									<i className="fa fa-book iconCss " aria-hidden="true"></i>
+   43  								</span>  
+   ..
+   50  					:
+   51  					<li className="tempCategory col-lg-12">
+   52: 						<span className="col-lg-2 NOpadding">
+   53  							<i className="fa fa-book iconCss " aria-hidden="true"></i>
+   54  						</span>  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/notification.css:
+   36  }
+   37  
+   38: .NOpadding{
+   39      padding: 0px !important;
+   40  }
+   ..
+  852      color: #ea0202;
+  853    }
+  854:   .NOpadding-left{
+  855        padding-left: 0px;
+  856    }
+  857:   .NOpadding-right{
+  858        padding-right: 0px;
+  859    }
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/notifications/AllNotificationTemplateRow.jsx:
+   94  				<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.notificationtemplateValues._id}-rm`}  role="dialog">
+   95  	                    <div className=" modal-dialog adminModal adminModal-dialog">
+   96: 	                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+   97  	                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+   98  						        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+   99: 						        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  100  									        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  101  									          <span aria-hidden="true">&times;</span>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/notifications/NotificationTemplateRow.jsx:
+   44  								return (
+   45  									<li key={index} onClick={this.getnotifTemplate.bind(this)} className="tempCategory col-lg-12" id={templateData._id}>
+   46: 										<span className="col-lg-2 NOpadding">
+   47  											<i className="fa fa-book iconCss " aria-hidden="true"></i>
+   48  										</span>  
+   ..
+   57  					:
+   58  					<li className="tempCategory col-lg-12">
+   59: 						<span className="col-lg-2 NOpadding">
+   60  							<i className="fa fa-book iconCss " aria-hidden="true"></i>
+   61  						</span>  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/sms/AllSMSTemplateRow.jsx:
+   95  					<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${this.props.smstemplateValues._id}-rm`}  role="dialog">
+   96  	                    <div className=" modal-dialog adminModal adminModal-dialog">
+   97: 	                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+   98  	                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+   99  						        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  100: 						        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  101  									        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  102  									          <span aria-hidden="true">&times;</span>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/sms/SMSTemplateRow.jsx:
+   42  						return (
+   43  							<li key={index} onClick={this.getsmsTemplate.bind(this)} className="tempCategory col-lg-12" id={templateData._id}>
+   44: 								<span className="col-lg-2 NOpadding">
+   45  									<i className="fa fa-book iconCss " aria-hidden="true"></i>
+   46  								</span>  
+   ..
+   53  					:
+   54  					<li className="tempCategory col-lg-12">
+   55: 						<span className="col-lg-2 NOpadding">
+   56  							<i className="fa fa-book iconCss " aria-hidden="true"></i>
+   57  						</span>  
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/NotificationManagement/ViewTemplates.jsx:
+  486  				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border mrgntop">
+  487  
+  488: 						<div className="col-lg-4 col-md-3 col-sm-6 col-xs-12 UMtitle NOpadding-left">
+  489  							<h4 className="usrmgnttitle weighttitle">All Templates</h4>
+  490  						</div>
+  ...
+  495  					<div className="modal fade modalHide col-lg-12 col-md-12 col-sm-12 col-xs-12" id="createNotifyModal" tabIndex="-1" role="dialog" aria-labelledby="createNotifyModal" aria-hidden="true">
+  496  					  	<div className="modal-dialog modal-lg" role="document">
+  497: 					    	<div className="modal-content modalContent col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  498  					      		<div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  499  					        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel">Create Template</h4>
+  500: 					        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  501  								        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  502  								          <span aria-hidden="true">&times;</span>
+  ...
+  506  					     		<div className="modal-body adminModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  507  							        <form className="newTemplateForm col-lg-12 col-md-12 col-sm-12 col-xs-12" id="newTemplateForm">
+  508: 							        <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 forgtTextInp NOpadding-left">
+  509: 										<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 NOpadding-left">
+  510  
+  511  											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  ...
+  556  												<div className="form-group">
+  557  												 <label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 label-category">Message <span className="astrick">*</span></label> 
+  558: 												 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">  
+  559  													<CKEditor activeClass="p15" id="editor" data-text="message" className="templateName" content={this.state.content} events={{"change": this.onChange}}/>
+  560  													<label className="error">{this.state.contentError}</label>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/Roles/UMadd_role.jsx:
+  112  					<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  113  					  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  114: 					    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  115  					      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  116  					        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+  117: 					        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  118                                	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  119                              </div>
+  120  					      </div>
+  121: 					      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  122  								<form className="editroles">
+  123  									<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/Roles/UMRolesList.js:
+  124  														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-rm`}  role="dialog">
+  125  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  126: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  127  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  128  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  129: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  130  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  131  																		          <span aria-hidden="true">&times;</span>
+  ...
+  153  										               <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-edit`}  role="dialog">
+  154  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  155: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  156  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  157  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  158: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  159  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  160  																		          <span aria-hidden="true">&times;</span>
+  ...
+  184  														<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  185  														  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  186: 														    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  187  														      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  188  														        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+  189: 														        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  190  									                              	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  191  									                            </div>
+  192  														      </div>
+  193: 														      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  194  																	<form className="editroles">
+  195  																		<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/tableUM.js:
+   78  									                                <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal-"+usersData._id} role="dialog">
+   79  	                                                                <div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
+   80: 	                                                                  <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+   81  	                                                                    <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+   82: 	                                                                    <div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-11 col-md-1 col-md-offset-11 col-sm-1 col-sm-offset-11 col-xs-12 NOpadding-left NOpadding-right">
+   83  	                                                                      <button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"showDeleteModal-"+usersData._id}>&times;</button>
+   84  	                                                                    </div>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/UMListOfUsers.js:
+  124  							<div className="modal-bodyuser">
+  125  
+  126: 						        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border nopaddingum2">
+  127  
+  128  									<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12  paddingright">
+  ...
+  148  									<div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 usrmgnhead">
+  149  										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+  150: 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Action</label>
+  151: 											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" id="userListDropdownId" ref="userListDropdown" name="userListDropdown" >
+  152  												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" name="userListDDOption">-- Select --</option>	
+  153  												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="block_selected" name="userListDDOption">Block Selected</option>	
+  ...
+  169  										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+  170  											
+  171: 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
+  172: 											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="roleListDropdown" name="roleListDropdown" >
+  173  												<option name="roleListDDOption">-- Select --</option>
+  174  												<option value="all" name="roleListDDOption">Show All</option>		
+  ...
+  183  				
+  184  										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+  185: 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
+  186: 											<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive" value={this.state.blockActive} name="blockActive" onChange={this.handleChange}>
+  187  												<option>-- Select --</option>	
+  188  												<option value="all"	>Show All</option>	
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/coreAdmin/userManagement/UM/userManagement.css:
+   59   /*background: url('/images/Background.png');*/
+   60  }
+   61: .nopaddingum{
+   62    padding :0px;
+   63    padding-bottom: 12px;
+   ..
+  651    padding-top: 2px;
+  652  }
+  653: .nopadding{
+  654    padding: 0;
+  655  }
+  ...
+ 1952   /*background: url('/images/Background.png');*/
+ 1953  }
+ 1954: .nopaddingum{
+ 1955    padding :0px;
+ 1956    /*padding-bottom: 12px;*/
+ ....
+ 2537    padding-top: 2px;
+ 2538  }
+ 2539: .nopadding{
+ 2540    padding: 0;
+ 2541  }
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyInformation.js:
+  437            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  438              <form id="companyInformationForm"  >
+  439:               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+  440                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
+  441                   
+  442  
+  443:                   <div className="form-group formht col-lg-6 col-md-6 col-sm-12 col-xs-12 noPadding">
+  444                      <h4 className="basicinfotxt"><i className="fa fa-info-circle fonticons" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Basic Info</h4>
+  445                    </div>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyLocation.js:
+  758              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  759                <form id="companyLocationForm" className="companyLocationForm">
+  760:               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nopadding">
+  761                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  compForm">
+  762:                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  763                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  764                          <div className="form-group margin15">
+  ...
+  782                    
+  783                   
+  784:                     <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  785                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  786                          <div className="form-group margin15">
+  ...
+  797                  
+  798                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm">
+  799:                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  800                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  801                          <div className="form-group margin15">
+  ...
+  811  
+  812  
+  813:                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  814                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  815                          <div className="form-group margin15">
+  ...
+  828                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 compForm marbtm30">
+  829  
+  830:                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding">
+  831                      <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  832                          <div className="form-group margin15">
+  ...
+  838  
+  839  
+  840:                   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 nopadding  subjectRow  ">
+  841                        <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  842                          <div className="form-group margin15">
+  ...
+ 1113                                  <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${locData._id}-rm`}  role="dialog">
+ 1114                                              <div className=" modal-dialog adminModal adminModal-dialog">
+ 1115:                                                  <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+ 1116                                                          <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+ 1117                                                <h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+ 1118:                                               <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+ 1119                                                  <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+ 1120                                                    <span aria-hidden="true">&times;</span>
+ ....
+ 1142                                         <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${locData._id}-edit`}  role="dialog">
+ 1143                                              <div className=" modal-dialog adminModal adminModal-dialog">
+ 1144:                                                  <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+ 1145                                                          <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+ 1146                                                <h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+ 1147:                                               <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+ 1148                                                  <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+ 1149                                                    <span aria-hidden="true">&times;</span>
+ ....
+ 1173                                  <div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+ 1174                                    <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+ 1175:                                     <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+ 1176                                        <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+ 1177                                          <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+ 1178:                                         <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+ 1179                                                        <button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+ 1180                                                    </div>
+ 1181                                        </div>
+ 1182:                                       <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+ 1183                                        <form className="editroles">
+ 1184                                          <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanyLocationList.js:
+  161  // 																<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${locData._id}-rm`}  role="dialog">
+  162  // 												                    <div className=" modal-dialog adminModal adminModal-dialog">
+  163: // 												                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  164  // 												                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  165  // 																	        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  166: // 																	        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  167  // 																				        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  168  // 																				          <span aria-hidden="true">&times;</span>
+  ...
+  190  // 												               <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${locData._id}-edit`}  role="dialog">
+  191  // 												                    <div className=" modal-dialog adminModal adminModal-dialog">
+  192: // 												                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  193  // 												                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  194  // 																	        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  195: // 																	        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  196  // 																				        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  197  // 																				          <span aria-hidden="true">&times;</span>
+  ...
+  221  // 																<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  222  // 																  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  223: // 																    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  224  // 																      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  225  // 																        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+  226: // 																        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  227  // 											                              	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  228  // 											                            </div>
+  229  // 																      </div>
+  230: // 																      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  231  // 																			<form className="editroles">
+  232  // 																				<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/Components/CompanySetting.js:
+   58                            {/* <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 titleaddcontact"> Company Settings </div>         */}
+   59  
+   60:                             <div  className="col-lg-12 col-md-12 col-xs-12 col-sm-12 companySettingMarginTop NOpadding-left">
+   61:                               <div className="col-lg-3 col-md-3 col-xs-12 col-sm-12 noPadding"> 
+   62                                  <ul className="nav nav-tabs tabs-left sideways">
+   63                                      <li className="active  col-lg-12 col-md-12 col-xs-12 col-sm-12" onClick={this.clickLi.bind(this)}><a className="tabLeft tablefthr lettersp" href="#companyInformation" data-toggle="tab">Company Information</a></li>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKcompanysetting/css/CompanySetting.css:
+   32        min-height:  550px!important;
+   33    }
+   34:   .nopadding {
+   35      padding: 0 !important;
+   36   
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKIAssureTableUM/IAssureTable.jsx:
+  800          return (
+  801  	       	<div id="tableComponent" className="col-lg-12 col-sm-12 col-md-12 col-xs-12">	
+  802: 	       		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 NOpadding">
+  803: 					<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 marginTop17 NOpadding">Users Per Page</label>
+  804: 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  805: 						<select onChange={this.setLimit.bind(this)} value={this.state.limitRange} id="limitRange" ref="limitRange" name="limitRange" className="col-lg-12 col-md-12 col-sm-6 col-xs-12  noPadding  form-control">
+  806  							<option value="Not Selected" disabled>Select Limit</option>
+  807  							<option value={10}>10</option>
+  ...
+  813  					</div>
+  814  				</div>           
+  815: 				<div className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-xs-12 col-sm-12 marginTop17 NOpadding">
+  816: 	        		<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">Search</label>
+  817  	        		<div className="input-group">
+  818: 				        <input type="text" onChange={this.tableSearch.bind(this)} placeholder="Search by user name" className="NOpadding-right zzero form-control" ref="tableSearch" id="tableSearch" name="tableSearch"/>
+  819  				    	<span className="input-group-addon" onClick={this.finalSearch.bind(this)}><i className="fa fa-search"></i> </span>
+  820  				    </div>
+  821  	        	</div>		
+  822: 	            <div className="col-lg-12 col-sm-12 col-md-12 col-xs-12 NOpadding marginTop17">			            	        
+  823  	                <div className="table-responsive  ">
+  824  	                	<div className="scrolltbl">
+  ...
+ 1020  	                                                    <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${value._id}-rm`}  role="dialog">
+ 1021  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+ 1022: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+ 1023  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+ 1024  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+ 1025: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+ 1026  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+ 1027  																		          <span aria-hidden="true">&times;</span>
+ ....
+ 1077  				   //                  }
+ 1078  			    //                 </div>
+ 1079: 							// 	<ol className="questionNumDiv paginationAdminOES col-lg-8 col-md-8 col-sm-8 col-xs-8 mainExamMinDeviceNoPad">										 
+ 1080  							// 		{this.state.paginationArray}
+ 1081  							// 	</ol>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/Roles/UMadd_role.jsx:
+  112  					<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  113  					  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  114: 					    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  115  					      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  116  					        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+  117: 					        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  118                                	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  119                              </div>
+  120  					      </div>
+  121: 					      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  122  								<form className="editroles">
+  123  									<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/Roles/UMRolesList.js:
+  124  														<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-rm`}  role="dialog">
+  125  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  126: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  127  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  128  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  129: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  130  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  131  																		          <span aria-hidden="true">&times;</span>
+  ...
+  153  										               <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={`${roleData._id}-edit`}  role="dialog">
+  154  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  155: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  156  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  157  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  158: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  159  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" aria-label="Close">
+  160  																		          <span aria-hidden="true">&times;</span>
+  ...
+  184  														<div id="edit" className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" role="dialog">
+  185  														  <div className="modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12" role="document">
+  186: 														    <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+  187  														      <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  188  														        <h4 className="WightFont textAlignCenter col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel1">Edit Role</h4>
+  189: 														        <div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-12 NOpadding-left NOpadding-right">
+  190  									                              	<button type="button" className="adminCloseButton" data-dismiss="modal" data-target="edit">&times;</button>
+  191  									                            </div>
+  192  														      </div>
+  193: 														      <div className="modal-body addressModal-body col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  194  																	<form className="editroles">
+  195  																		<div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-xs-12 col-sm-12 paddingLeftz addRoleMarginBtm">
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/tableUM.js:
+   78  									                                <div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id={"showDeleteModal-"+usersData._id} role="dialog">
+   79  	                                                                <div className=" modal-dialog adminModal adminModal-dialog col-lg-12 col-md-12 col-sm-12 col-xs-12">
+   80: 	                                                                  <div className="modal-content adminModal-content col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-10 col-sm-offset-1 col-xs-12 noPadding">
+   81  	                                                                    <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+   82: 	                                                                    <div className="adminCloseCircleDiv pull-right  col-lg-1 col-lg-offset-11 col-md-1 col-md-offset-11 col-sm-1 col-sm-offset-11 col-xs-12 NOpadding-left NOpadding-right">
+   83  	                                                                      <button type="button" className="adminCloseButton" data-dismiss="modal" data-target={"showDeleteModal-"+usersData._id}>&times;</button>
+   84  	                                                                    </div>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js:
+  735  							<div className="modal-bodyuser">
+  736  
+  737: 						        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 box-header with-border nopaddingum2">
+  738  
+  739  									<div className="col-lg-3 col-md-3 col-sm-6 col-xs-12  paddingright">
+  ...
+  759  									<div className="col-lg-12  col-md-12 col-sm-12 col-xs-12 usrmgnhead">
+  760  										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+  761: 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Action</label>
+  762: 											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" id="userListDropdownId" ref="userListDropdown" name="userListDropdown" onChange={this.adminUserActions.bind(this)}>
+  763  												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="-" name="userListDDOption">-- Select --</option>	
+  764  												<option className="col-lg-12 col-md-12 col-sm-12 col-xs-12" data-limit='37' value="block_selected" name="userListDDOption">Block Selected</option>	
+  ...
+  780  										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+  781  											
+  782: 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Role</label>
+  783: 											<select className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPadding  form-control" ref="roleListDropdown" name="roleListDropdown" onChange={this.selectedRole.bind(this)} >
+  784  												<option name="roleListDDOption">-- Select --</option>
+  785  												<option value="all" name="roleListDDOption">Show All</option>		
+  ...
+  794  				
+  795  										<div className="form-group col-lg-4 col-md-4 col-sm-6 col-xs-6">
+  796: 											<label className="col-lg-12 col-md-12 col-xs-12 col-sm-12 NOpadding-left">Select Status</label>
+  797: 											<select className=" col-col-lg-12  col-md-12 col-sm-12 col-xs-12 noPadding  form-control " ref="blockActive"  name="blockActive" onChange={this.selectedStatus.bind(this)}>
+  798  												<option>-- Select --</option>	
+  799  												<option value="all"	>Show All</option>	
+  ...
+  818  									<div className="modal fade col-lg-12 col-md-12 col-sm-12 col-xs-12" id="deleteModal"  role="dialog">
+  819  										                    <div className=" modal-dialog adminModal adminModal-dialog">
+  820: 										                         <div className="modal-content adminModal-content col-lg-12 col-md-12 col-sm-12 col-xs-12 NOpadding">
+  821  										                                <div className="modal-header adminModal-header col-lg-12 col-md-12 col-sm-12 col-xs-12">
+  822  															        		<h4 className="CreateTempModal col-lg-11 col-md-11 col-sm-11 col-xs-11" id="exampleModalLabel"></h4>
+  823: 															        		<div className="adminCloseCircleDiv pull-right  col-lg-1 col-md-1 col-sm-1 col-xs-1 NOpadding-left NOpadding-right">
+  824  																		        <button type="button" className="adminCloseButton" data-dismiss="modal" onClick={this.closeModal.bind(this)} aria-label="Close">
+  825  																		          <span aria-hidden="true">&times;</span>
+
+/Users/iassureit/Public/React App/tgk3t/webapp/admin/src/TGKSpecific/TGKuserManagement/UM/userManagement.css:
+   74   /*background: url('/images/Background.png');*/
+   75  }
+   76: .nopaddingum{
+   77    padding :0px;
+   78    padding-bottom: 12px;
+   ..
+  666    padding-top: 2px;
+  667  }
+  668: .nopadding{
+  669    padding: 0;
+  670  }
+  ...
+ 1967   /*background: url('/images/Background.png');*/
+ 1968  }
+ 1969: .nopaddingum{
+ 1970    padding :0px;
+ 1971    /*padding-bottom: 12px;*/
+ ....
+ 2552    padding-top: 2px;
+ 2553  }
+ 2554: .nopadding{
+ 2555    padding: 0;
+ 2556  }
+
+289 matches across 40 files

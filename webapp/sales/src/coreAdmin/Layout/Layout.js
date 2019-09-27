@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 import $ from "jquery";
+import axios from 'axios';
 
 // Section: 1 - SystemSecurity ******************************************************
 import Login            from '../systemSecurity/Login.js';
@@ -27,10 +28,12 @@ import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
 // import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
 // import UMListOfEmp from '../../TGKSpecific/TGKuserManagement/UM/OfficeEmpList.js';
 
-
-import Operation from '../../salesAgent/operations/Operation.js';
-import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile.js';
-
+// import EditUserProfile from '../userManagement/UM/EditUserProfile.js';
+// import EditUserProfile from '../../TGKSpecific/TGKuserManagement/UM/EditUserProfile.js';
+// import UMRolesList from '../userManagement/Roles/UMRolesList.js';
+// import CompanySetting from '../companysetting/Components/CompanySetting.js';
+// import CompanySetting from '../../TGKSpecific/TGKcompanysetting/Components/CompanySetting.js';
+// import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 
 // section- admin operation
@@ -38,10 +41,12 @@ import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile
 // import MasterData from '../../adminTGK/masterData/masterData.js';
 // import SellOMeter from '../../adminTGK/sell-o-meter/sellOMeter.js';
 // import ClassRating from '../../adminTGK/sell-o-meter/classRating.js';
+// import PropertyList from '../../adminTGK/PropertyList/PropertyList.js';
+// import ListedProperties from '../../adminTGK/ListedProperties/ListedProperties.js';
+// import PropertyProfile from '../../adminTGK/PropertyProfile/PropertyProfile.js';
 
 
-
-class Layout extends Component{
+ class Layout extends Component{
   
   constructor(props) {
     super();
@@ -51,6 +56,9 @@ class Layout extends Component{
   }
    
 componentDidMount(){
+
+      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
     $(document).ready(function () {
        $('#sidebarCollapse').on('click', function () {
            $('#sidebar').toggleClass('active');
@@ -100,26 +108,25 @@ componentDidMount(){
 
 
   render(){
-
-
     // console.log("props = ",this.props);
     // {console.log("loggedIn status layput = ", this.state.loggedIn)}
     if(this.state.loggedIn===true){
       
-      window.onscroll = function() {scrollFunction()};
+      // window.onscroll = function() {scrollFunction()};
 
-      function scrollFunction() {
-        if( document.getElementById("mySidenav"))
-        {
-            if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
-              document.getElementById("mySidenav").style.top = "0";
-            } else {
-              document.getElementById("mySidenav").style.top = "50px";
-            }
+      // function scrollFunction() {
+      //   if( document.getElementById("mySidenav"))
+      //   {
+      //       if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
+      //         document.getElementById("mySidenav").style.top = "0";
+      //       } else {
+      //         document.getElementById("mySidenav").style.top = "50px";
+      //       }
 
-        }
+      //   }
         
-      }
+      // }
+
       return(
             <div className="App container-fluid">
             
@@ -139,27 +146,17 @@ componentDidMount(){
                            {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
                             */} <Router>
                                 <Switch>
-                                {/*<Route path="/umlistofusers" component={UMListOfUsers} exact />
-                                <Route path="/umlistofemp" component={UMListOfEmp} exact />
-
-                                <Route path="/umroleslist" component={UMRolesList} exact />
-                                <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
-
-                                <Route path="/ViewTemplates" component={ViewTemplates} exact />*/}
+                               
                                 <Route path="/dashboard" component={Dashboard} exact />
                                 <Route path="/" component={Dashboard} exact />
 
-                                {/*<Route path="/companysetting" component={CompanySetting} exact />
-                                */}
+                                
                                {/*----------------------------------------------*/}
 
-                                {/*<Route path="/masterdata" component={MasterData} exact />
-                                <Route path="/sellometer" component={SellOMeter} exact />
-                                <Route path="/classrating" component={ClassRating} exact />*/}
+                              
+                                <Route path="/login"          exact strict component={ Login } />
 
-                                <Route path="/operation" component={Operation} exact />
-                               <Route path="/profile/:id" component={Profile} exact />
-                       
+                                
 
                                 </Switch>        
                             </Router>
@@ -197,6 +194,5 @@ componentDidMount(){
       );
     }
   }
-}
 }
 export default Layout;

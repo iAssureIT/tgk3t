@@ -34,7 +34,7 @@ import './Properties.css';
 		}
 		console.log("formValues",formValues);
 	    axios
-	    .post('/api/properties/post/sa/displaylist'+formValues)
+	    .post('/api/properties/post/sa/displaylist',formValues)
 	    .then(
 	      (res)=>{
 	        console.log(res);

@@ -34,37 +34,17 @@ componentDidMount(){
             <div className="wrapper">
             <nav id="sidebar">
                 <div className="sidebar-header">
-                    <h4 className=" zeromargin"><img className="imgLogo " src="images/Logo.png"  alt="TGK" width="100%" height="45px" /></h4>
-                    <strong className="clspadding">  <img src="images/Keylogo.png"  alt="TGK" height="28px"/></strong>
+                    <h4 className=" zeromargin"><img className="imgLogo " src="/images/logo.png"  alt="TGK" width="100%" height="45px" /></h4>
+                    <strong className="clspadding">  <img src="/images/logo1.png"  alt="TGK" height="28px"/></strong>
                 </div>
 
                 <ul className="list-unstyled components">
                     <li className="active">
-                    <a href="#">
+                    <a href="/dashboard">
                             <i className="glyphicon glyphicon-briefcase"></i>
                             Dashboard
                      </a>
                     </li>
-<<<<<<< Updated upstream
-                    <li className="">
-                    <a href="/operation">
-                            <i className="glyphicon glyphicon-wrench" data-toggle="collapse" aria-expanded="false"></i>
-                            Operations
-                     </a>
-                    </li>
-                   { <li>
-                        <a href="#">
-                            <i className="glyphicon glyphicon-link"></i>
-                           Master Data
-                        </a>
-                    </li>}
-                   { <li>
-                        <a href="#">
-                            <i className="glyphicon glyphicon-paperclip"></i>
-                            Reports
-                        </a>
-                    </li>}
-=======
                     <li>
                         <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
                             <i className="glyphicon glyphicon-home"></i>
@@ -95,6 +75,14 @@ componentDidMount(){
                             <li><a href="#">Report 2</a></li>
                             <li><a href="#">Report 3</a></li>
                         </ul>
+                        <a href="/propertyList">
+                            <i className="glyphicon glyphicon-th-list"></i>
+                            Property List
+                        </a>
+                        <a href="/listedProperties">
+                            <i className="glyphicon glyphicon-th-list"></i>
+                            Listed Properties
+                        </a>
                         
                     </li>
                    {/* <li>
@@ -109,7 +97,6 @@ componentDidMount(){
                             Framework Management
                         </a>
                     </li>*/}
->>>>>>> Stashed changes
                     
                 </ul>
 

@@ -228,6 +228,10 @@ import './PropertyDetails.css';
               }
             })
             //
+
+				console.log("update fun");
+				var ov = this.state.originalValues;
+
 				console.log("update fun");
 				var ov = this.state.originalValues;
 				var allAmenitiesData = this.state.allAmenities;
@@ -374,7 +378,7 @@ import './PropertyDetails.css';
 	            // compare chcekbox data
 	            var eq =true;
 	            // console.log("this.state.furnishedOptions.length",this.state.furnishedOptions.length);
-	            if(furnishedOptionsDataList.length !== ov.propertyDetails.furnishedOptions.length)
+	            if(furnishedOptionsDataList.length !== this.state.furnishedOptions.length )
 	            {
 	              eq = false;
 	               console.log("equal not",eq);

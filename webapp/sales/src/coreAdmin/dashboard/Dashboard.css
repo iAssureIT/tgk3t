@@ -297,11 +297,7 @@ border-radius: 2px 0px 0px 2px;
 
 #dashbordid{
   position: absolute;
-<<<<<<< Updated upstream
-  width: 94.0%;
-=======
-  width: 82%;
->>>>>>> Stashed changes
+  width: 81.8%;
   right: 0px;
   transition: all 0.8s;
   top:50px;
