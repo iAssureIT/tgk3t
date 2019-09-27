@@ -426,7 +426,7 @@ class ListedProperties extends Component {
                                             <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">                
                                                 Super Area : <b>{result.propertyDetails ? result.propertyDetails.superArea : "-"}&nbsp;Sqft</b>
                                             </div>
-                                            <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">                
+                                            <div className="col-lg-3 col-md-4 col-sm-12 col-xs-12 noPad">                
                                                 Possession by : <span className="propertySubText2">{result.financial ? result.financial.availableFrom : "-"}</span>
                                             </div>
                                             <div className="col-lg-2 col-md-4 col-sm-12 col-xs-12">              

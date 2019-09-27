@@ -47,7 +47,7 @@ class Header extends Component {
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad  ">
 				<div className="col-lg-2 col-md-2 col-sm-7 col-xs-8 row   ">
-					<a href="/"><img alt=""  src="/images/new/logo.png" className="hImg pull-right"/></a>
+					<a href="/"><img alt=""  src="/images/new/logo.png" className="hImg pull-right" title="Go to Home Page"/></a>
 				</div>
 				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right headerMenu ">
 					<nav className="navbar  col-lg-12 col-xs-12">
