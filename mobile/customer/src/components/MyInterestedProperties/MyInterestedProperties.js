@@ -271,7 +271,7 @@ export default class PropertyList extends ValidationComponent{
           <Text style={styles.textCenter}>My Intereted Properties</Text>
             {this.state.searchResults && this.state.searchResults.length>0 ? 
               this.state.searchResults.map((prop,i)=>(
-              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('propertyDetailsPage',{propertyDetails:prop})}>
+              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
                   {
                   prop.gallery.Images && prop.gallery.Images.length>0 ?

@@ -41,14 +41,17 @@ export default class PropertyDetailsPage extends ValidationComponent{
         propertyProfile: "",
         uid:"",
         token:"",
+        property_id : "",
       },
     };
   }
 
   componentDidMount(){
     var propertyProfile = this.props.navigation.getParam('propertyDetails','No Result');
+    var property_id = propertyProfile._id;
     console.log("here data",propertyProfile);
-    this.setState({propertyProfile:propertyProfile})
+    this.setState({propertyProfile:propertyProfile,
+                   property_id:property_id})
     this._retrieveData();
   }
 
@@ -204,6 +207,16 @@ export default class PropertyDetailsPage extends ValidationComponent{
     
   }
 
+  editProp(){
+    console.log("here edit property");
+    var property_id = this.state.property_id;
+    console.log("here property_id in edit ",property_id);
+    if(property_id!=null)
+    {
+    this.props.navigation.navigate('BasicInfo',{property_id:property_id});          
+    }
+  }
+
   render(){
     const { navigation } = this.props;
     let propertyProfile = this.state.propertyProfile;
@@ -251,6 +264,17 @@ export default class PropertyDetailsPage extends ValidationComponent{
                             containerStyle  = {[styles.buttonContainer4]}
                           />
                         </View>
+
+                          <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
+                            <Button
+                              titleStyle      = {styles.buttonText}
+                              title           = {"Edit"}
+                              // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                              buttonStyle     = {styles.button4}
+                              onPress         = {this.editProp.bind(this)}
+                              containerStyle  = {[styles.buttonContainer4]}
+                            />
+                          </View>
                       </ImageBackground>
                   </View>
                 ))
@@ -269,6 +293,18 @@ export default class PropertyDetailsPage extends ValidationComponent{
                         containerStyle  = {[styles.buttonContainer4]}
                       />
                     </View>
+
+                    <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
+                      <Button
+                        titleStyle      = {styles.buttonText}
+                        title           = {"Edit"}
+                        // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                        buttonStyle     = {styles.button4}
+                        onPress         = {this.editProp.bind(this)}
+                        containerStyle  = {[styles.buttonContainer4]}
+                      />
+                    </View>
+
                   </ImageBackground>
 
                 }

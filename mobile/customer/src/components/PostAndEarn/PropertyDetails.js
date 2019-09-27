@@ -14,6 +14,7 @@ import {
 import axios          from 'axios';
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import CheckBox from 'react-native-check-box'
+import { NavigationActions, StackActions } from 'react-navigation';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -27,7 +28,20 @@ import DatePicker from "react-native-datepicker";
 
 const window = Dimensions.get('window');
 
+
+
+
 export default class PropertyDetails extends ValidationComponent{
+
+  navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
 
 	 constructor(props){
     super(props);
@@ -56,9 +70,9 @@ export default class PropertyDetails extends ValidationComponent{
                         { value: 3},
                         { value: 4}],
       
-      furnishedIndex : 0,
-      workStationIndex : 0,
-      personalIndex  : 0,
+      furnishedIndex      : 0,
+      workStationIndex    : 0,
+      personalIndex       : 0,
       pantryIndex         : 0,
       furnishpantryIndex  : 0,
       yearsData : [ {label:"Under Construction", value: 'Under Construction',},
@@ -77,8 +91,8 @@ export default class PropertyDetails extends ValidationComponent{
                             {label:"Southeast", value: 'Southeast',}, 
                             {label:"Southwest", value: 'Southwest',}],
       furnishedstatus : "fullFurnished",
-      superArea : '',
-      builtupArea : '',
+      superArea       : '',
+      builtupArea     : '',
       UnitData  : [{label:"Sq ft", value:"Sq ft"},
                   {label:"Sq Meter", value:"Sq Meter"},
                   {label:"Guntha", value:"Guntha"},
@@ -88,36 +102,86 @@ export default class PropertyDetails extends ValidationComponent{
                   {label:"Hectare", value:"Hectare"},
                   {label:"Marla", value:"Marla"},
                   {label:"Kanal", value:"Kanal"}],
-      superAreaUnit : 'Sq ft',
-      builtupAreaUnit : 'Sq ft',
-      floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
-      totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
-      floor: 'Basement',
-      totalFloor:'Total Floors',
+      superAreaUnit     : 'Sq ft',
+      builtupAreaUnit   : 'Sq ft',
+      floorData         :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      totalFloorData    :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      floor             : 'Basement',
+      totalFloor        :'Total Floors',
 
 
-      defaultIcon:'flag',
-      iconType: 'material-community',
-      allAmenities:[],
-      isChecked: true,
-      btnLoading : false,
+      defaultIcon       :'flag',
+      iconType          : 'material-community',
+      allAmenities      :[],
+      isChecked         : true,
+      btnLoading        : false,
 
-      furnishItem : [{label: 'Directors Cabin',checked: false},
-                     {label: 'Meeting Room',checked: false},
-                     {label: 'Reception',checked: false}],
-      propertyType : "",
-      transactionType : "",
-      mobile : '',
-      propertyId : "",
-      uid : "",
-      token : "",
-
+      furnishItem       : [ {label: 'Directors Cabin',checked: false},
+                            {label: 'Meeting Room',checked: false},
+                            {label: 'Reception',checked: false}],
+      propertyType      : "",
+      transactionType   : "",
+      mobile            : '',
+      propertyId        : "",
+      uid               : "",
+      token             : "",
+      originalValues    :"",
     };
+
+
+        var property_id = this.props.navigation.getParam('property_id','No property_id');
+      console.log("property_id in constructor property details",property_id);
+      if(property_id!=null)
+      {
+        console.log("here edit 2nd form");
+
+                 axios
+                  .get('/api/properties/'+property_id)
+                  .then( (response) =>{
+                    console.log("get property in property = ",response);
+
+                    this.setState({
+                        originalValues  : response.data.propertyDetails,
+                        bedrooms        : response.data.propertyDetails.bedrooms,
+                        balconies       : response.data.propertyDetails.balconies,
+                        washrooms       : response.data.propertyDetails.washrooms,
+                        furnishedstatus : response.data.propertyDetails.furnishedStatus,
+                        personal        : response.data.propertyDetails.personal,
+                        pantry          : response.data.propertyDetails.pantry,
+                        bathrooms       : response.data.propertyDetails.bathrooms,
+                        ageofproperty   : response.data.propertyDetails.ageofProperty,
+                        facing          : response.data.propertyDetails.facing,
+                        superArea       : response.data.propertyDetails.superArea,
+                        builtupArea     : response.data.propertyDetails.builtupArea,
+                        updateOperation : true,
+                        // amenity
+                        floor           : response.data.propertyDetails.floor,
+                        totalFloor      : response.data.propertyDetails.totalFloor,
+                        // prevAmenities   : response.data.propertyDetails.Amenities,
+                        superAreaUnit   : response.data.propertyDetails.superAreaUnit,
+                        builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
+                        prevCharges     : response.data.propertyDetails.furnishedOptions,
+                        workStation     : response.data.propertyDetails.workStation,
+                        furnishPantry   : response.data.propertyDetails.furnishPantry,
+
+                      });
+                  })
+                  .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             // swal("Your session is expired! Please login again.","", "error");
+                             // this.props.history.push("/");
+                        }
+                    });
+    }
+    
+
   }
 
    componentDidMount(){
       var token = this.props.navigation.getParam('token','No token');
-      // console.log("token",token);
+      console.log("token",token);
       var uid = this.props.navigation.getParam('uid','No uid');
       // console.log("uid",uid);
       var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
@@ -140,47 +204,47 @@ export default class PropertyDetails extends ValidationComponent{
         mobile:mobile,
       });
 
-    axios
-      .get('/api/masteramenities/list')
-      .then(
-        (res)=>{
-          console.log('res postdata', res);
-          const postsdata = res.data;
-          // console.log('postsdata',postsdata);
-          this.setState({
-            allAmenities : postsdata,
-          },()=>{
-            // console.log("data from admin side",this.state.allAmenities);
-            var allAmenitiesDataList = this.state.allAmenities.map((item,index)=>{
+    // axios
+    //   .get('/api/masteramenities/list')
+    //   .then(
+    //     (res)=>{
+    //       console.log('res postdata', res);
+    //       const postsdata = res.data;
+    //       // console.log('postsdata',postsdata);
+    //       this.setState({
+    //         allAmenities : postsdata,
+    //       },()=>{
+    //         // console.log("data from admin side",this.state.allAmenities);
+    //         var allAmenitiesDataList = this.state.allAmenities.map((item,index)=>{
 
-              var newObj = Object.assign({},item);
-                if(item.amenity){
-                  newObj.checked = false
-                }else{
-                  newObj.checked = true
-                }
-                // console.log("newObj",newObj);
-                return newObj;
+    //           var newObj = Object.assign({},item);
+    //             if(item.amenity){
+    //               newObj.checked = false
+    //             }else{
+    //               newObj.checked = true
+    //             }
+    //             // console.log("newObj",newObj);
+    //             return newObj;
 
-            });
+    //         });
 
-            this.setState({
-              allAmenities:allAmenitiesDataList,
-            });
-          });
-        }
-      )
-      .catch((error)=>{
+    //         this.setState({
+    //           allAmenities:allAmenitiesDataList,
+    //         });
+    //       });
+    //     }
+    //   )
+    //   .catch((error)=>{
 
-        console.log("error = ",error);
-        // if(error.message === "Request failed with status code 401")
-        //                   {
-        //                       Alert.alert("Your session is expired!"," Please login again.");
-        //                      this.props.navigation.navigate('MobileScreen');          
+    //     console.log("error = ",error);
+    //     // if(error.message === "Request failed with status code 401")
+    //     //                   {
+    //     //                       Alert.alert("Your session is expired!"," Please login again.");
+    //     //                      this.props.navigation.navigate('MobileScreen');          
                                
                                
-        //                   }
-         }); 
+    //     //                   }
+    //      }); 
      
   }
   onSelectFurnishStatus=(index,value)=>{
@@ -265,72 +329,208 @@ export default class PropertyDetails extends ValidationComponent{
 
  submitFun(){
 
-   console.log("here clicked");
+    if(this.state.updateOperation === true){
+      
 
-     var allAmenitiesData = this.state.allAmenities;
-        var allAmenitiesDataList =[];     
-            allAmenitiesData.map((item,index)=>{
+      var furnishedOptionsData = this.state.furnishItem;
+          var furnishedOptionsDataList =[];     
+            furnishedOptionsData.map((item,index)=>{
               if(item.checked == true)
               {
-               allAmenitiesDataList.push(item.label);
+                furnishedOptionsDataList.push(item.name);
               }
             })
 
-    console.log("here btn pressed");
-     const formValues = {
-      
-          // "unit1"             : this.state.unit1,
-          // "unit2"             : this.state.unit2,
-          "bedrooms"          : this.state.bedrooms,
-          "balconies"         : this.state.balconies,
-          "washrooms"         : this.state.washrooms,
-          "furnishedStatus"   : this.state.furnishedstatus,
-          // all radio
-          "personal"          : this.state.personal,
-          "pantry"            : this.state.pantry,
-          "workStation"       : this.state.workStation,
 
-          "bathrooms"         : this.state.bathrooms,
-          "ageofProperty"     : this.state.ageofproperty,
-          "facing"            : this.state.facing,
-          "superArea"         : this.state.superArea,
-          "builtupArea"       : this.state.builtupArea,
-          "property_id"       : this.state.propertyId,
-          "uid"               : this.state.uid,
+            console.log("update fun");
+            var ov = this.state.originalValues;
 
-          "Amenities"         : allAmenitiesDataList,
-          "floor"             : this.state.floor,
-          "totalFloor"        : this.state.totalFloor,
-          "superAreaUnit"     : this.state.superAreaUnit,
-          "builtupAreaUnit"   : this.state.builtupAreaUnit,
-          "furnishPantry"       : this.state.furnishpantry, 
-            // checkbox
-          //     "furnishedOptions"    : furnishedOptionsDataList,
 
-      };
-      console.log("formValues",formValues);
-            axios
-            .patch('/api/properties/patch/propertyDetails',formValues)
-            .then( (res) =>{
-              console.log(res);
-              if(res.status === 200){
-                console.log("PropertyDetails Res = ",res);
-               this.props.navigation.navigate('FinancialDetails',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+            var eq ="";
+            if(furnishedOptionsDataList.length != ov.propertyDetails.furnishedOptions.length )
+            {
+              eq = false;
+               console.log("equal not",eq);
+            }else{
+              
+              for (var i = 0; i < furnishedOptionsDataList.length; i++)
+              { 
+                  if (furnishedOptionsDataList[i] != ov.propertyDetails.furnishedOptions[i]){
+                  eq = false;
+                      }else{
+                  eq = true;  
+                      }
+              }
+              console.log("equal yes but same",eq); 
+            }
+            console.log("outside eq",eq);
+
+            if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
+                this.state.furnishedstatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
+                 this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing 
+                 && this.state.superArea === ov.superArea && this.state.builtupArea === ov.builtupArea &&
+                 eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry )
+              {
+                  console.log("same data");
+                  
+              }else{
+                  console.log("diff data");
+                  
+                  const formValues = {
+                  
+                  "bedrooms"          : this.state.bedrooms,
+                  "balconies"         : this.state.balconies,
+                  "washrooms"         : this.state.washrooms,
+                  "furnishedStatus"   : this.state.furnishedstatus,
+                  "personal"          : this.state.personal,
+                  "pantry"            : this.state.pantry,
+                  "workStation"       : this.state.workStation,
+
+                  "bathrooms"         : this.state.bathrooms,
+                  "ageofProperty"     : this.state.ageofproperty,
+                  "facing"            : this.state.facing,
+                  "superArea"         : this.state.superArea,
+                  "builtupArea"       : this.state.builtupArea,
+                  "property_id"       : this.state.propertyId,
+                  "uid"               : this.state.uid,
+
+                  // "Amenities"         : allAmenitiesDataList,
+                  "floor"             : this.state.floor,
+                  "totalFloor"        : this.state.totalFloor,
+                  "superAreaUnit"     : this.state.superAreaUnit,
+                  "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                  "furnishPantry"       : this.state.furnishpantry, 
+                  "furnishedOptions"    : furnishedOptionsDataList,
+                };
+
+                if( this.state.furnishedstatus!=="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!=="" && 
+                    this.state.floor!=="" &&  this.state.totalFloor!=="" ){
+
+
+                        axios
+                        .patch('/api/properties/patch/propertyDetails',formValues)
+                        .then( (res) =>{
+                          console.log(res);
+                          if(res.status === 200){
+                            console.log("PropertyDetails Res = ",res);
+                            this.navigateScreen('FinancialDetails',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                          }
+                        })
+                        .catch((error)=>{
+                                              console.log("error = ",error);
+                                              if(error.message === "Request failed with status code 401")
+                                              {
+                                                   // Alert.alert("Your session is expired!"," Please login again.");
+                                                  // this.props.navigation.navigate('MobileScreen');  
+                                              }
+                           });
+
+                      
+                    }else{
+                         Alert.alert("Please enter mandatory fields","warning");
+                    }
+
 
               }
-            })
-            .catch((error)=>{
-                                  console.log("error = ",error);
-                                  if(error.message === "Request failed with status code 401")
-                                  {
-                             //          Alert.alert("Your session is expired!"," Please login again.");
-                             // this.props.navigation.navigate('MobileScreen');          
-                                      
-                                       
-                                       
-                                  }
-                 });
 
+    }else{
+      console.log("submit func");
+
+      var ov = this.state.originalValues;
+        var furnishedOptionsData = this.state.furnishItem;
+            var furnishedOptionsDataList =[];     
+              furnishedOptionsData.map((item,index)=>{
+                if(item.checked == true)
+                {
+                  furnishedOptionsDataList.push(item.name);
+                }
+              })
+
+                var eq =true;
+                if(furnishedOptionsDataList.length !== ov.propertyDetails.furnishedOptions.length )
+                {
+                  eq = false;
+                   console.log("equal not",eq);
+                }else{
+                  for (var i = 0; i < furnishedOptionsDataList.length; i++)
+                  { 
+                          if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+                      eq = false;
+                          }else{
+                      eq = true;  
+                          }
+                     }
+                      console.log("equal yes but same",eq); 
+                }
+
+
+                const formValues = {
+                  
+                  "bedrooms"          : this.state.bedrooms,
+                  "balconies"         : this.state.balconies,
+                  "washrooms"         : this.state.washrooms,
+                  "furnishedStatus"   : this.state.furnishedstatus,
+                  "personal"          : this.state.personal,
+                  "pantry"            : this.state.pantry,
+                  "workStation"       : this.state.workStation,
+
+                  "bathrooms"         : this.state.bathrooms,
+                  "ageofProperty"     : this.state.ageofproperty,
+                  "facing"            : this.state.facing,
+                  "superArea"         : this.state.superArea,
+                  "builtupArea"       : this.state.builtupArea,
+                  "property_id"       : this.state.propertyId,
+                  "uid"               : this.state.uid,
+
+                  // "Amenities"         : allAmenitiesDataList,
+                  "floor"             : this.state.floor,
+                  "totalFloor"        : this.state.totalFloor,
+                  "superAreaUnit"     : this.state.superAreaUnit,
+                  "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                  "furnishPantry"       : this.state.furnishpantry, 
+                  "furnishedOptions"    : furnishedOptionsDataList,
+                };
+                console.log("formValues",formValues);
+
+                  if( this.state.furnishedstatus!="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!="" &&
+                    this.state.floor!=="" &&  this.state.totalFloor!=="" ){
+                    
+
+                         axios
+                        .patch('/api/properties/patch/propertyDetails',formValues)
+                        .then( (res) =>{
+                          console.log(res);
+                          if(res.status === 200){
+                            console.log("PropertyDetails Res = ",res);
+                           this.navigateScreen('FinancialDetails',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+
+                          }
+                        })
+                        .catch((error)=>{
+                                              console.log("error = ",error);
+                                              if(error.message === "Request failed with status code 401")
+                                              {
+                                         //          Alert.alert("Your session is expired!"," Please login again.");
+                                         // this.props.navigation.navigate('MobileScreen');          
+                                             }
+                             });
+
+                     }else{
+                            Alert.alert("Please enter mandatory fields","warning");
+                     }
+
+    }
+
+     // var allAmenitiesData = this.state.allAmenities;
+     //    var allAmenitiesDataList =[];     
+     //        allAmenitiesData.map((item,index)=>{
+     //          if(item.checked == true)
+     //          {
+     //           allAmenitiesDataList.push(item.label);
+     //          }
+     //        })
+
+   
  }
 
   render(){
@@ -353,7 +553,7 @@ export default class PropertyDetails extends ValidationComponent{
 
             <View style={styles.divider}></View>
 
-              <Text style={[styles.heading2,styles.marginBottom15]}>My Property is on</Text>
+              <Text style={[styles.heading2,styles.marginBottom15]}>My Property is on<Text style={[{color:"#f00"}]}>*</Text></Text>
              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
               <View style={[styles.inputWrapper2,{height:40}]}>
                 <View style={styles.inputImgWrapper2}>
@@ -589,7 +789,7 @@ export default class PropertyDetails extends ValidationComponent{
                   }
              
 
-            <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
+            <Text style={[styles.heading2,styles.marginBottom15]}>It is<Text style={[{color:"#f00"}]}>*</Text></Text>
             <View style={[styles.marginBottom15,{width:'100%'}]}>
               <RadioGroup
                 size={20}
@@ -822,7 +1022,7 @@ export default class PropertyDetails extends ValidationComponent{
               </View>
               <View style={styles.inputTextWrapper68}>
                 <TextField
-                  label                 = "Built Area"
+                  label                 = "Built Area*"
                   onChangeText          = {builtupArea => {this.setState({builtupArea})}}
                   lineWidth             = {1}
                   tintColor             = {colors.button}

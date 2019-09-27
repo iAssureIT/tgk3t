@@ -168,7 +168,6 @@ export default class Home extends Component{
 
             <View style={styles.headingView}>
               <Text style={styles.headingText}>
-                <Text style={{fontFamily:'Roboto-Regular',fontSize:5}}>{this.state.token}</Text>
                 <Text style={{fontFamily:'Roboto-Regular'}}>Every dream </Text>
                 <Text style={{fontFamily:'Roboto-Medium'}}>has a key</Text>
               </Text>

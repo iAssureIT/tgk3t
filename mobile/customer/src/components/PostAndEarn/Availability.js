@@ -13,6 +13,7 @@ import {
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import axios          from 'axios';
+import { NavigationActions, StackActions } from 'react-navigation';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
@@ -38,6 +39,9 @@ import {
 import SwitchToggle from 'react-native-switch-toggle';
 
 const window = Dimensions.get('window');
+
+
+
 const options = {
   title: 'Select Avatar',
   customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
@@ -49,6 +53,17 @@ const options = {
 };
 
 export default class Availability extends ValidationComponent{
+
+  navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
+
   constructor(props){
     super(props);
     this.state={
@@ -102,6 +117,48 @@ export default class Availability extends ValidationComponent{
       uid : '',
       token : '',
     };
+
+          var property_id = this.props.navigation.getParam('property_id','No property_id');
+      console.log("property_id in constructor property details",property_id);
+      if(property_id!=null)
+      {
+        console.log("here edit 4th form");
+
+
+          axios
+          .get('/api/properties/'+this.props.property_id)
+          .then( (response) =>{
+            // console.log("response in availability= ",response);
+            
+            this.setState({
+
+                originalValues          : response.data.avalibilityPlanVisit,
+                contactPersonMobile     : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : "",
+                contactPerson           : response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "Someone" ,
+                available               : response.data.avalibilityPlanVisit.available,
+                updateOperation         : true,
+                prevAvailable           : response.data.avalibilityPlanVisit.available,
+                originalValuesGallery   : response.data.gallery,
+                imgArrayWSaws           : response.data.gallery.Images,
+                singleVideo             : response.data.gallery.video ? response.data.gallery.video : "" ,
+               
+                // type            : response.data.contactPerson==="Someone" ? true : false,
+                
+            },()=>{
+              // console.log("here available in comp did mount",this.state.contactPerson);
+              });
+
+          })
+          .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             // swal("Your session is expired! Please login again.","", "error");
+                             // this.props.history.push("/");
+                        }
+                    });
+
+      }
   }
 
   validInput = () => {
@@ -251,7 +308,7 @@ handleOriginalMobileChange(value){
                         if(error.message === "Request failed with status code 401")
                           {
                                Alert.alert("Your session is expired! Please login again.","", "error");
-                               this.props.navigation.navigate('Home');          
+                               this.navigateScreen('Home');          
                                
                                
                           }
@@ -263,61 +320,131 @@ handleOriginalMobileChange(value){
   submitFun(){
 
     // if(this.validInput()){
-    let {
-       
-        someOnemobile,
-        mobile,
-       
-      } = this.state;
-     
 
-       var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
-       var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+       if(this.state.updateOperation === true){
+        // console.log("update fun");
+           var ov = this.state.originalValues;
 
-       console.log("someOnemobileNo",someOnemobileNo);
-       console.log("myMobileNo",myMobileNo);
+          let {
+             
+              someOnemobile,
+              mobile,
+             
+            } = this.state;
+           
 
-     
-        var mobNo = "";
-        if(this.state.contactPerson === "My Self"){
-          mobNo = myMobileNo;
-        }else{
-          mobNo = someOnemobileNo;
-        }
-      
+             var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
+             var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
 
-      const formValues = {
-     
-        "contactPersonMobile" : mobNo,
-        "contactPerson"       : this.state.contactPerson,
-        "available"           : this.state.available,
-        // "propertyImages"      : this.state.imgArrayWSaws,
-        // "video"               : this.state.singleVideo,
-        "status"              : "New",
-        "property_id"         : this.state.propertyId,
-        "uid"                 : this.state.uid,
-      };
-      console.log("formValues",formValues);
-      // this.props.navigation.navigate('PropertySuccess',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+             console.log("someOnemobileNo",someOnemobileNo);
+             console.log("myMobileNo",myMobileNo);
 
-
-            axios
-            .patch('/api/properties/patch/availabilityPlan',formValues)
-            .then( (res) =>{
-              console.log("availabilityPlan----------------",res);
-              if(res.status === 200){
-              this.props.navigation.navigate('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+           
+              var mobNo = "";
+              if(this.state.contactPerson === "My Self"){
+                mobNo = myMobileNo;
+              }else{
+                mobNo = someOnemobileNo;
               }
-            })
-            .catch((error)=>{
-                            console.log("error = ",error);
-                            if(error.message === "Request failed with status code 401")
-                            {
-                                 swal("Your session is expired! Please login again.","", "error");
-                                 this.props.history.push("/");
-                            }
-                    });
-    // }
+            
+              const formValues = {
+             
+                "contactPersonMobile" : mobNo,
+                "contactPerson"       : this.state.contactPerson,
+                "available"           : this.state.available,
+                // "propertyImages"      : this.state.imgArrayWSaws,
+                // "video"               : this.state.singleVideo,
+                "status"              : "New",
+                "property_id"         : this.state.propertyId,
+                "uid"                 : this.state.uid,
+              };
+
+              console.log("Availability req 1 = ",formValues);
+                    if(this.state.available.length!==0){
+                        
+                    axios
+                    .patch('/api/properties/patch/availabilityPlan',formValues)
+                    .then( (res) =>{
+                      console.log("availabilityPlan----------------",res);
+                      if(res.status === 200){
+                        this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                       }
+                    })
+                    .catch((error)=>{
+                                    console.log("error = ",error);
+                                    if(error.message === "Request failed with status code 401")
+                                    {
+                                         swal("Your session is expired! Please login again.","", "error");
+                                         this.props.history.push("/");
+                                    }
+                            });
+                  }else{
+                                 Alert.alert("Please enter mandatory fields","warning");
+                  }
+
+     }else{
+
+           console.log("submit function");
+           var ov = this.state.originalValues;
+
+          let {
+             
+              someOnemobile,
+              mobile,
+             
+            } = this.state;
+           
+
+             var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
+             var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+
+             console.log("someOnemobileNo",someOnemobileNo);
+             console.log("myMobileNo",myMobileNo);
+
+           
+              var mobNo = "";
+              if(this.state.contactPerson === "My Self"){
+                mobNo = myMobileNo;
+              }else{
+                mobNo = someOnemobileNo;
+              }
+            
+              const formValues = {
+             
+                "contactPersonMobile" : mobNo,
+                "contactPerson"       : this.state.contactPerson,
+                "available"           : this.state.available,
+                // "propertyImages"      : this.state.imgArrayWSaws,
+                // "video"               : this.state.singleVideo,
+                "status"              : "New",
+                "property_id"         : this.state.propertyId,
+                "uid"                 : this.state.uid,
+              };
+
+              console.log("Availability req 1 = ",formValues);
+                    if(this.state.available.length!==0){
+                        
+                    axios
+                    .patch('/api/properties/patch/availabilityPlan',formValues)
+                    .then( (res) =>{
+                      console.log("availabilityPlan----------------",res);
+                      if(res.status === 200){
+                         this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                       }
+                    })
+                    .catch((error)=>{
+                                    console.log("error = ",error);
+                                    if(error.message === "Request failed with status code 401")
+                                    {
+                                         swal("Your session is expired! Please login again.","", "error");
+                                         this.props.history.push("/");
+                                    }
+                            });
+                  }else{
+                                 Alert.alert("Please enter mandatory fields","warning");
+                  }
+
+     }
   }
 
 

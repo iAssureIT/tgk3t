@@ -242,6 +242,27 @@ export default class PropertyList extends ValidationComponent{
                           <Text style={styles.textSmallLight}>Washrooms</Text>
                         </View>
                       }
+
+                      <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
+                        <Button
+                          onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
+                          titleStyle      = {styles.buttonText2}
+                          title           = "Details"
+                          buttonStyle     = {styles.button3}
+                          containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
+                          iconRight
+                          icon = {
+                            <Image 
+                              source={require('../../images/key.png') }
+                            />
+                          }
+                        />
+                      </View>
+                    </View>
+                    <View style={styles.divider}></View>
+
+                    <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
+
                       {prop.propertyType === "Residential" ?
                         <View  style={{}}>
                           <View style={{flexDirection:'row'}}>

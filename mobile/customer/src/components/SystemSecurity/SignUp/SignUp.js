@@ -94,7 +94,7 @@ export default class SignUp extends ValidationComponent{
                 .patch('/api/usersotp/signup',formValues)
                 .then( (res) =>{
                   console.log("res in signup",res)
-                  this.props.navigation.navigate('PropertyDetails1',{mobile:this.state.mobile,token:this.state.token,uid:this.state.uid});
+                  this.props.navigation.navigate('BasicInfo',{mobile:this.state.mobile,token:this.state.token,uid:this.state.uid});
 
                   if(res.data.message === "USER-UPDATED"){
                           var sendDataToUser = {

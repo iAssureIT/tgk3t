@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import Hr from "react-native-hr-component";
 import { Dropdown }   from 'react-native-material-dropdown';
+import { NavigationActions, StackActions } from 'react-navigation';
 import axios          from 'axios';
 import {AsyncStorage} from 'react-native';
 import { Button,Icon, SearchBar } from 'react-native-elements';
@@ -38,7 +39,21 @@ const defaultOption = [
   },
 ];
 
+
+
+
+
 export default class BasicInfo extends ValidationComponent{
+  navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
+
   constructor(props){
     super(props);
     this.state={
@@ -135,8 +150,66 @@ export default class BasicInfo extends ValidationComponent{
       uid             : "",
       mobile          : '',
       // areaName        : '',
+      originalValues          : "",
+      originalValuesLocation  : "",
     };
 
+
+    // get propertyid 
+    
+
+      var property_id = this.props.navigation.getParam('property_id','No property_id');
+      console.log("property_id in constructor basicinfo",property_id);
+      if(property_id!=null)
+      {
+        console.log("here edit 1st form");
+    
+        axios
+          .get('/api/properties/'+property_id)
+          .then( (res) =>{
+            console.log("get property = ",res);
+            // console.log("get property transactionType = ",res.data.transactionType);
+            this.setState({
+                    originalValues            : res.data,
+                  
+                  // // floor      : res.data.floor,
+                  // // totalfloor     : res.data.totalFloor,
+                    fullPropertyType          : res.data.propertyType+'-'+res.data.propertySubType,
+                    updateOperation           : true,
+                    propertyCode              : res.data.propertyCode,
+
+                  // // location
+                    originalValuesLocation    : res.data.propertyLocation,
+                    districtName              : res.data.propertyLocation.district,
+                    blockName                 : res.data.propertyLocation.block,
+                    fullAddress               : res.data.propertyLocation.fullAddress,
+                    propertyHolder            : res.data.propertyHolder,
+                    transactionType           : res.data.transactionType,
+                    propertyType              : res.data.propertyType,
+                    propertySubType           : res.data.propertySubType,
+
+                    pincode                   : res.data.propertyLocation.pincode,
+                    stateCode                 : res.data.propertyLocation.state,
+                    cityName                  : res.data.propertyLocation.city,
+                    areaName                  : res.data.propertyLocation.area,
+                    subAreaName               : res.data.propertyLocation.subArea,
+                    societyName               : res.data.propertyLocation.society,
+                    address                   : res.data.propertyLocation.address,
+                    house                     : res.data.propertyLocation.address,
+                    landmark                  : res.data.propertyLocation.landmark,
+
+                })
+          })
+            .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             // swal("Your session is expired! Please login again.","", "error");
+                             // this.props.history.push("/");
+                        }
+                    });
+
+      }
   }
 
     componentDidMount(){
@@ -210,6 +283,8 @@ export default class BasicInfo extends ValidationComponent{
 
   submitFun(){
    var uid = this.state.uid;
+   var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
+
     const formValues = {
         // "activeTab"       : this.state.activeTab,
         "propertyHolder"  : this.state.propertyHolder,
@@ -232,13 +307,58 @@ export default class BasicInfo extends ValidationComponent{
         "uid"             : uid,
       };
       console.log("formValues",formValues);
-         axios
+
+      if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
+        this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!=="" && this.state.societyName!==""  ){
+        if(this.state.updateOperation === true){
+          console.log("update fun");
+          var ovLoc = this.state.originalValuesLocation;
+          var ov = this.state.originalValues;
+          if(this.state.propertyHolder === ov.propertyHolder && this.state.transactionType === ov.transactionType
+            && this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType && 
+            this.state.pincode === ovLoc.pincode && this.state.stateCode === ovLoc.state && this.state.cityName === ovLoc.city && 
+            this.state.areaName === ovLoc.area && this.state.subAreaName === ovLoc.subArea && this.state.societyName === ovLoc.society &&
+            this.state.house === ovLoc.address &&  this.state.landmark === ovLoc.landmark &&  this.state.fullAddress === ovLoc.fullAddress
+            )
+          {
+            console.log("same data");
+            this.navigateScreen('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:ov._id});          
+
+          }else{
+
+            console.log("diff data");
+
+            axios
+            .patch('/api/properties/patch/properties',formValues)
+            .then( (res) =>{
+              console.log("here updated data",res);
+              if(res.status === 200){
+                this.navigateScreen('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              }else{
+              }
+            })
+            .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                          {
+                               // swal("Your session is expired! Please login again.","", "error");
+                               // this.props.history.push("/");
+                          }
+                      });
+
+          }
+
+          // 2nd if
+        }else{
+
+          console.log("submit data");
+           axios
           .post('/api/properties',formValues)
           .then( (res) =>{
             console.log("here 1st form result",res.data);
             if(res.status === 200){
 
-              this.props.navigation.navigate('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
+              this.navigateScreen('PropertyDetails',{mobile:this.state.mobile,transactionType:this.state.transactionType,propertyType: this.state.propertyType,token:this.state.token,uid:this.state.uid,propertyId:res.data.property_id});          
             
             }else{
               // alert(" Please Fill all fields")
@@ -248,11 +368,25 @@ export default class BasicInfo extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             Alert.alert("Your session is expired!"," Please login again.");
-                             this.props.navigation.navigate('MobileScreen');          
+                             // Alert.alert("Your session is expired!"," Please login again.");
+                             // this.props.navigation.navigate('MobileScreen');          
                                
                         }
                     });
+
+        }
+
+        // 1st if
+      }else{
+        Alert.alert("Please enter mandatory fields","warning");
+      }
+
+
+
+
+
+
+        
 
 
   }
@@ -418,9 +552,6 @@ export default class BasicInfo extends ValidationComponent{
       fullPropertyType: value,
       propertyType : propertyType,
       propertySubType : propertySubType,
-    },()=>{
-      // console.log("propertyType",this.state.propertyType);
-      // console.log("propertySubType",this.state.propertySubType);
     });
   }
 
@@ -723,9 +854,6 @@ export default class BasicInfo extends ValidationComponent{
       color: '#9EA0A4',
     };
 
-
-
-    // console.log("this.props.navigation = ",this.props.navigation);
     return (
       <React.Fragment>
         <HeaderBar showBackBtn={true} navigation={navigation}/>
@@ -746,7 +874,7 @@ export default class BasicInfo extends ValidationComponent{
               />
             </View>
 
-            <Text style={styles.heading2}>I am</Text>
+            <Text style={styles.heading2}>I am<Text style={[{color:"#f00"}]}>*</Text></Text>
             <View style={[styles.tabWrap,styles.marginBottom15]}>
               <TouchableOpacity
                 onPress = {()=>this.setActive('owner')}
@@ -786,7 +914,7 @@ export default class BasicInfo extends ValidationComponent{
               </TouchableOpacity>
             </View>
 
-            <Text style={styles.heading2}>I would like to</Text>
+            <Text style={styles.heading2}>I would like to<Text style={[{color:"#f00"}]}>*</Text> </Text>
             <View style={[styles.marginBottom15,{width:'100%'}]}>
               <SwitchToggle
                 switchOn={this.state.toggle}
@@ -820,7 +948,7 @@ export default class BasicInfo extends ValidationComponent{
             </View>
 
             
-            <Text style={[styles.heading2,styles.marginBottom5]}>Property Type</Text>
+            <Text style={[styles.heading2,styles.marginBottom5]}>Property Type<Text style={[{color:"#f00"}]}>*</Text></Text>
 
                  <View style={[styles.inputWrapper,styles.marginBottom15]}>
                     <View style={styles.inputTextWrapperFull}>
@@ -848,7 +976,7 @@ export default class BasicInfo extends ValidationComponent{
                 </View>
             
        
-            <Text style={[styles.heading2,styles.marginBottom5]}>Pincode</Text>
+            <Text style={[styles.heading2,styles.marginBottom5]}>Pincode<Text style={[{color:"#f00"}]}>*</Text></Text>
             <View style={[styles.inputWrapper]}>
               <View style={styles.inputImgWrapper}>
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -887,7 +1015,7 @@ export default class BasicInfo extends ValidationComponent{
 
               <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
                 <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>State</Text>
+                  <Text style={[styles.heading2,styles.marginBottom5]}>State<Text style={[{color:"#f00"}]}>*</Text></Text>
                   <View style={[{borderColor: colors.black,
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                     <View style={styles.inputTextWrapperFull}>
@@ -945,7 +1073,7 @@ export default class BasicInfo extends ValidationComponent{
                   </View>
 
                   <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>City</Text>
+                  <Text style={[styles.heading2,styles.marginBottom5]}>City<Text style={[{color:"#f00"}]}>*</Text></Text>
                   <View style={[{borderColor: colors.black,
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                     <View style={styles.inputTextWrapperFull}>
@@ -982,7 +1110,7 @@ export default class BasicInfo extends ValidationComponent{
                           }
                           
                         </Picker>*/}
-                        {console.log("city name",this.state.cityName)}
+                        {/*console.log("city name",this.state.cityName)*/}
                          <RNPickerSelect
                             onValueChange={(cityName) =>
                             this.selectCity(cityName)
@@ -1003,7 +1131,7 @@ export default class BasicInfo extends ValidationComponent{
              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom20]}>
 
              <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>Area/Suburb</Text>
+                  <Text style={[styles.heading2,styles.marginBottom5]}>Area/Suburb<Text style={[{color:"#f00"}]}>*</Text></Text>
 
                   <View style={[{borderColor: colors.black,
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
@@ -1064,7 +1192,7 @@ export default class BasicInfo extends ValidationComponent{
                   </View>
 
                 <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area</Text>
+                  <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area<Text style={[{color:"#f00"}]}>*</Text></Text>
                   <View style={[{borderColor: colors.black,
                                  borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                     <View style={styles.inputTextWrapperFull}>
@@ -1145,7 +1273,7 @@ export default class BasicInfo extends ValidationComponent{
 
              {/*remaining items*/}
 
-            <Text style={[styles.heading2,styles.marginBottom5]}>Society</Text>
+            <Text style={[styles.heading2,styles.marginBottom5]}>Society<Text style={[{color:"#f00"}]}>*</Text></Text>
             <View style={[styles.inputWrapper,styles.marginBottom15]}>
               <View style={styles.inputImgWrapper}>
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -1252,10 +1380,6 @@ export default class BasicInfo extends ValidationComponent{
                   />
                 }*/}
 
-
-
-          {/* <TouchableOpacity >*/}
-                
             <Button
             
               onPress         = {this.submitFun.bind(this)}
@@ -1272,8 +1396,7 @@ export default class BasicInfo extends ValidationComponent{
                 color="white"
               />}
             />
-            {/* </TouchableOpacity>*/}
-
+      
           </View>
         </ScrollView>
      
