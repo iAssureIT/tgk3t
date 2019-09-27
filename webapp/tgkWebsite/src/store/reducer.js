@@ -1,4 +1,4 @@
-const initialState = {
+	const initialState = {
 	LoginMobNum 	: false,
 	LoginOtp 		: false,
 	WebSignupForm 	: false,
@@ -27,6 +27,7 @@ const initialState = {
 	fullName 		: 	"",
 	updateStatus 	: false,
 	showMeter 		: false,
+	propertyHolder  : ""
 }
 
 const reducer = (state = initialState,action) => {
@@ -314,6 +315,7 @@ const reducer = (state = initialState,action) => {
 	if(action.type === "PROPERTY_FLOW"){
 		newState.propertyType         	= action.propertyType;
 		newState.transactionType        = action.transactionType;
+		newState.propertyHolder         = action.propertyHolder;
 	}
 	if(action.type === "AVAILABLE_MOBILE"){
 		newState.availableMobile         = action.availableMobile;

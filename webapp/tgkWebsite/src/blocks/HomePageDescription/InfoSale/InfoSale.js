@@ -7,7 +7,7 @@ export default class InfoSale extends Component {
 
 	render() {
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt9">
+			<div className="col-lg-12 col-md-12 col-sm-6 col-xs-12 mt9">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 divContainer">
 					<div className="col-lg-3 col-md-3 col-sm-12 col-xs-12">
 						<img className="saleImg1" src="/images/new/e.png" />

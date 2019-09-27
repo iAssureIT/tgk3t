@@ -181,6 +181,7 @@ class BasicInfo extends Component{
 					                        {
 					                             swal("Your session is expired! Please login again.","", "error");
 					                             this.props.history.push("/");
+
 					                        }
 					                    });	
 					                    // close set state
@@ -367,7 +368,7 @@ class BasicInfo extends Component{
 					this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 					
 					// this.props.redirectToLocation(this.state.propertyCode, this.props.property_id,this.props.uid);						
-					this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
+					this.props.propertyFlow(this.state.transactionType, this.state.propertyType,this.state.propertyHolder);						
 						
 
 					}else{
@@ -383,7 +384,7 @@ class BasicInfo extends Component{
 
 								this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 								// this.props.redirectToLocation(this.state.propertyCode, this.props.property_id,this.props.uid);						
-								this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
+								this.props.propertyFlow(this.state.transactionType, this.state.propertyType,this.state.propertyHolder);						
 							}else{
 							}
 						})
@@ -416,7 +417,7 @@ class BasicInfo extends Component{
 							// this.props.prop_id = res.data.property_id;
 							this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 							// this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
-							this.props.propertyFlow(this.state.transactionType, this.state.propertyType);						
+							this.props.propertyFlow(this.state.transactionType, this.state.propertyType,this.state.propertyHolder);						
 						}else{
 							// alert(" Please Fill all fields")
 						}
@@ -445,30 +446,38 @@ class BasicInfo extends Component{
 		}
 		
       	handleToggle(event){
-      			event.preventDefault();
+      		event.preventDefault();
       		console.log("this.state.type",this.state.type)
-		    if (this.state.type===true){
-		      this.setState({
-		        type: false,
-		        transactionType:"Rent"
-		      },()=>{
-      				console.log("this.state.type",this.state.type)
+			if(this.state.propertyHolder !== "Flatmate"){
 
-		      })
-		    }
-		    else{
-		      this.setState({
-		        type: true,
-		        transactionType:"Sell"
+			  	if (this.state.type===true){
+			      this.setState({
+			        type: false,
+			        transactionType:"Rent"
+			      },()=>{
+	      				console.log("this.state.type",this.state.type)
 
-		      },()=>{
-      				console.log("this.state.type",this.state.type)
-		      })
-		    }   
+			      })
+			    }
+			    else{
+			      this.setState({
+			        type: true,
+			        transactionType:"Sell"
+
+			      },()=>{
+	      				console.log("this.state.type",this.state.type)
+			      })
+			    } 
+			}  
+		  
 		}
 	   radioChange(event) {
 	    	this.setState({
 	      	"propertyHolder": event.currentTarget.value,
+			    },()=>{
+			    	if(this.state.propertyHolder === "Flatmate"){
+				    	this.setState({type:false})
+			    	}
 			    });
 			
 				    $('#radio-example1 ').click(function(){
@@ -507,23 +516,7 @@ class BasicInfo extends Component{
  			propertySubType : propertySubType,
  		});
 	}
-	/*totalFloor(){
-		const floor      = parseInt(this.refs.floor.value);
-		const totalfloor = parseInt(this.refs.totalfloor.value);
-		if(floor > totalfloor){
-			swal("Floor should not be greater than Total Floors", "", "warning");
-		}
-
-		this.setState({totalfloor : totalfloor});
-
-	}*/
-
-	/*floorChange(event){
-		var floor = event.currentTarget.value;
-		this.setState({floor : floor});
-	}*/
-
-
+	
 	handleSociety(event){
 		var valSocietyName = event.currentTarget.value;
 		if(valSocietyName == ""){
@@ -869,7 +862,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-2 sellerType2"  >
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType2"  >
 						    <label className="radio-inline ">
 						      <input type="radio" 
 						      		 value="Care Taker" 
@@ -882,7 +875,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-2 sellerType3"   >
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType3"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Broker" 
@@ -895,7 +888,7 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					      {/*<div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType4"   >
+					      <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType4"   >
 						    <label className="radio-inline ">
 						      <input type="radio"
 						      		 value="Flatmate" 
@@ -904,17 +897,17 @@ class BasicInfo extends Component{
 						      		 checked={this.state.propertyHolder === "Flatmate"}
 	               					 onChange={this.radioChange} 
 						      		 />
-					  			<i className=" logo1"><img src="/images/broker.png" alt="" /></i>
+					  			<i className=" logo1"><img src="/images/careTaker.png" alt="" /></i>
 						    </label>
-					    </div>*/}
+					    </div>
 
 
 					</div>
-					  	<div className="col-lg-12 col-md-12 col-sm-9 col-xs-12 mb-30 noPad">
-					  			<span className="col-lg-4 col-xs-4 ownerLeft "> Owner</span>
-					  			<span className="col-lg-4 col-xs-4 noPad"> Caretaker</span>
+					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
+					  			<span className="col-lg-3 col-xs-3 ownerLeft "> Owner</span>
+					  			<span className="col-lg-3 col-xs-3 noPad"> Caretaker</span>
 					  			<span className="col-lg-3 col-xs-3 noPad">&nbsp; Broker</span>
-					  			{/*<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>*/}
+					  			{<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>}
 
 					  	</div>
          		
@@ -1260,9 +1253,10 @@ const mapDispatchToProps = (dispatch)=>{
 														uid:uid,
 														property_id : property_id
 									}),
-		propertyFlow  : (transactionType, propertyType)=> dispatch({type    : "PROPERTY_FLOW",
+		propertyFlow  : (transactionType, propertyType,propertyHolder)=> dispatch({type    : "PROPERTY_FLOW",
 																   transactionType	: transactionType,
 																   propertyType	    : propertyType,
+																   propertyHolder	: propertyHolder,
 																   
 																}),
 	}

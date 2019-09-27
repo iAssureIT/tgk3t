@@ -910,7 +910,7 @@ class BasicInfo extends Component{
 
 
 					</div>
-					  	<div className="col-lg-12 col-md-12 col-sm-9 col-xs-12 mb-30 noPad">
+					  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb-30 noPad">
 					  			<span className="col-lg-4 col-xs-4 ownerLeft "> Owner</span>
 					  			<span className="col-lg-4 col-xs-4 noPad"> Caretaker</span>
 					  			<span className="col-lg-3 col-xs-3 noPad">&nbsp; Broker</span>

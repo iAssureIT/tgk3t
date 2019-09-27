@@ -29,12 +29,25 @@ class Financials extends Component{
                           {name:"Club House",checked: false},
                         ],
       prevCharges     : "",
+      prevShareExp     : "",
       maintenancePer  : "Month",
       maintenanceCharges : "0",
       availableFrom: "",
       // startDate : new Date(),
       startDate : "",
       measurementUnit : "Sq Ft",
+      sharedExpenses    : [
+                          {name:"Internet/Broadband",checked: false},
+                          {name:"Wifi",checked: false},
+                          {name:"TV DTH,",checked: false},
+                          {name:"Electricity",checked: false},
+                          {name:"Maintenance",checked: false},
+                          {name:"Maid Charges",checked: false},
+                          {name:"Cook",checked: false},
+                          {name:"Common Ration (Grocery/Dairy etc)",checked: false},
+                        ],
+      leaseDuration     : "",
+      noticePeriod      : ""
       };
 
       // console.log("this.props.updateStatus",this.props.updateStatus);
@@ -52,10 +65,6 @@ class Financials extends Component{
               console.log('date',date);
                 availableFrom = new Date(date[2], date[1] - 1, date[0])
             }
-
-            
-
-
            this.setState({
                originalValues     : response.data.financial,
                expectedRate       : response.data.financial.expectedRate,
@@ -63,15 +72,19 @@ class Financials extends Component{
                monthlyRent        : response.data.financial.monthlyRent,
                depositAmount      : response.data.financial.depositAmount,
                prevCharges        : response.data.financial.includeCharges,
+               prevShareExp       : response.data.financial.sharedExpenses,
                updateOperation    : true,
                startDate          : availableFrom,
                description        : response.data.financial.description,
                maintenanceCharges : response.data.financial.maintenanceCharges,
                maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
                measurementUnit    : response.data.financial.measurementUnit ,
+               leaseDuration      : response.data.financial.leaseDuration ,
+               noticePeriod       : response.data.financial.noticePeriod ,
                availableFrom      : response.data.financial.availableFrom,
            },()=>{
                     });
+                    //========1===========//
                     var includeCharges = this.state.includeCharges;
                     console.log("here includeCharges", includeCharges);
                     var includeChargesList = includeCharges.map((item,index)=>{
@@ -95,14 +108,37 @@ class Financials extends Component{
                       console.log("here includeCharges in didmount after match result",this.state.includeCharges);
 
                     });
+                    //
 
+                    //====2=====//
+                    var sharedExpenses = this.state.sharedExpenses;
+                    console.log("here sharedExpenses", sharedExpenses);
+                    var sharedExpensesList = sharedExpenses.map((item,index)=>{
+                      var sharePropPresent = this.state.prevShareExp.find((obj)=>{
+                        return item.name === obj
+                      })
+                      console.log("here sharePropPresent ", sharePropPresent);
+                      var newObj = Object.assign({},item);
+                      if(sharePropPresent){
+                        newObj.checked = true
+                      }else{
+                        newObj.checked = false
+                      }
+                      return newObj;
 
+                   })
 
+                    this.setState({
+                      sharedExpenses : sharedExpensesList,
+                    },()=>{
+                      console.log("here sharedExpenses in didmount after match result",this.state.includeCharges);
+
+                    });
+                    //
            // this.refs.availableFrom.value = response.data.financial.availableFrom ;
            // this.refs.description.value   = response.data.financial.description ;
            // this.refs.maintenanceCharges.value = response.data.financial.maintenanceCharges;
            // this.refs.maintenancePer.value = response.data.financial.maintenancePer;
-
           })
           .catch((error)=>{
                           console.log("error = ",error);
@@ -112,10 +148,7 @@ class Financials extends Component{
                                this.props.history.push("/");
                           }
                       })
-
           }
-
-
 }
 componentDidMount(){
 
@@ -194,6 +227,7 @@ updateUser(event){
 
     if(this.state.updateOperation!=true)
     {
+      //==========1==========//
         var includeChargesData = this.state.includeCharges;
         var includeChargesDataList =[];     
             includeChargesData.map((item,index)=>{
@@ -207,7 +241,18 @@ updateUser(event){
             // console.log("this.state.availableFrom",this.state.availableFrom);
 
             // console.log("maintenanceCharges",this.state.maintenanceCharges);
+      //==============//
 
+      //=================2=================//
+        var sharedExpensesData = this.state.sharedExpenses;
+        var sharedExpensesDataList =[];     
+            sharedExpensesData.map((item,index)=>{
+              if(item.checked == true)
+              {
+                sharedExpensesDataList.push(item.name);
+              }
+            })
+      //==================================//
         const formValues = {
         "expectedRate"        : this.state.expectedRate.replace(/,/g, ''),
         "totalPrice"          : this.state.totalPrice.replace(/,/g, ''),
@@ -216,9 +261,12 @@ updateUser(event){
         "availableFrom"       : this.state.availableFrom,
         "description"         : this.state.description,
         "includeCharges"      : includeChargesDataList,
+        "sharedExpenses"      : sharedExpensesDataList,
         "maintenanceCharges"  : this.state.maintenanceCharges.replace(/,/g, ''),
         "maintenancePer"      : this.state.maintenancePer,
         "measurementUnit"     : this.state.measurementUnit,  
+        "leaseDuration"       : this.state.leaseDuration,  
+        "noticePeriod"        : this.state.noticePeriod,  
         "property_id"         : localStorage.getItem("propertyId"),
         "uid"                 : localStorage.getItem("uid"),
 
@@ -244,8 +292,7 @@ updateUser(event){
       }else{
         console.log("update fun");
         var ov = this.state.originalValues;
-
-
+        //========1==============//
         var includeChargesData = this.state.includeCharges;
         var includeChargesDataList =[];     
             includeChargesData.map((item,index)=>{
@@ -257,8 +304,22 @@ updateUser(event){
 
             // console.log("includeChargesDataList true",includeChargesDataList);
             // console.log("here result amenity",ov.includeCharges);
+        //======================//
+
+        //===========2===========//
+          var sharedExpensesData = this.state.sharedExpenses;
+          var sharedExpensesDataList =[];     
+            sharedExpensesData.map((item,index)=>{
+              if(item.checked == true)
+              {
+                sharedExpensesDataList.push(item.name);
+              }
+            })
+        //======================//
+
 
             // compare chcekbox data
+            //===============1=============//
             var eq =true;
             if(includeChargesDataList.length != ov.includeCharges.length )
             {
@@ -276,8 +337,29 @@ updateUser(event){
                  }
                   console.log("equal yes but same",eq); 
             }
-
             console.log("outside eq",eq);
+            //============================//
+
+            //=============2===============//
+               var eq =true;
+            if(sharedExpensesDataList.length != ov.sharedExpenses.length )
+            {
+              eq = false;
+               console.log("equal not",eq);
+            }else{
+              
+              for (var i = 0; i < sharedExpensesDataList.length; i++)
+              { 
+                      if (sharedExpensesDataList[i] != ov.sharedExpenses[i]){
+                  eq = false;
+                      }else{
+                  eq = true;  
+                      }
+                 }
+                  console.log("equal yes but same",eq); 
+            }
+            console.log("outside eq",eq);
+            //============================//
 
 
             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
@@ -363,9 +445,12 @@ updateUser(event){
                 "availableFrom"       : this.state.availableFrom,
                 "description"         : this.state.description,
                 "includeCharges"      : includeChargesDataList,
+                "sharedExpenses"      : sharedExpensesDataList,
                 "maintenanceCharges"  : maintenanceCharges,
                 "maintenancePer"      : this.state.maintenancePer,
                 "measurementUnit"     : this.state.measurementUnit,  
+                "leaseDuration"       : this.state.leaseDuration,  
+                "noticePeriod"        : this.state.noticePeriod,  
                 "property_id"         : localStorage.getItem("propertyId"),
                 "uid"                 : localStorage.getItem("uid"),
 
@@ -442,38 +527,59 @@ totalInclude(event){
       }
 
 }
-  // backToAmenities(){
-  //   // this.props.backToAmenities();
-  //   this.props.backToAmenities(this.props.uid,localStorage.getItem("propertyId"));
+sharedExpense(event){
 
-  // }
+  console.log("event.target.getAttribute('value')",event.target.getAttribute('value'));
+      var checkedPropShareExpense=[];
+      if(event.target.checked){
+        checkedPropShareExpense = event.target.getAttribute('value');
+      var sharedExpenses=this.state.sharedExpenses;
+      for(let i=0; i <sharedExpenses.length; i++){
+        for (let j=0; j < checkedPropShareExpense.length; j++) {
+          if(sharedExpenses[i].name === checkedPropShareExpense){
+            sharedExpenses[i].checked = true;
+          }
+        }
+      }
+      this.setState({
+        sharedExpenses : sharedExpenses,
+      },()=>{
+        console.log("here sharedExpenses in function check ", this.state.sharedExpenses);
+      });
+
+        
+      }else{
+
+        checkedPropShareExpense = event.target.getAttribute('value');
+        var sharedExpenses=this.state.sharedExpenses;
+        for(let i=0; i <sharedExpenses.length; i++){
+          for (let j=0; j < checkedPropShareExpense.length; j++){
+            if(sharedExpenses[i].name === checkedPropShareExpense){
+              sharedExpenses[i].checked = false;
+            }
+          }
+        }
+        this.setState({
+          sharedExpenses : sharedExpenses,
+        },()=>{
+          console.log("here sharedExpenses in function uncheck ", this.state.sharedExpenses);
+
+        });
+      }
+}
 
   backToPropertyDetails(){
-    // this.props.backToPropertyDetails();
     this.props.backToPropertyDetails(this.props.uid,localStorage.getItem("propertyId"));
 
   }
 
     handleChange(event){
-    // event.preventDefault();
-    // var monthlyRent = this.refs.monthlyRent.value;
-    // var depositAmount = this.refs.depositAmount.value;
-    // var monthlyRent = this.refs.monthlyRent.value;
-    // var totalAsk = this.refs.totalAsk.value;
-    // this.setState({
-     //  "monthlyRent"  : monthlyRent,
-     //  "depositAmount": depositAmount,
-     //  "monthlyRent": monthlyRent,
-     //  "totalAsk": totalAsk
-   //  });
       const target = event.target.value;
       const name   = event.target.name;
       console.log(name + "=" +target);
       this.setState({
       [name]       : target
       });
-
-   
     }
 
     handleDate = date => {
@@ -648,36 +754,108 @@ return (
 
         </div>
         }
-        
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
-              <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div className="form-group" id="">
-                  <span>Maintenance</span>
-                  <div className="input-group inputBox-main " id="">
-                                   <div className="input-group-addon inputIcon">
-                                     <i className="fa fa-rupee iconClr"></i>
-                                    </div>
-                      {/*<span className="asterisk">*</span>*/}
-                      <input type="" className="form-control" ref="maintenanceCharges" name="maintenanceCharges" value={this.state.maintenanceCharges} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="maintenanceCharges" placeholder="Maintenance Charge" min="0" />
-                    </div>
+
+        {
+          this.props.propertyHolder ==="Flatmate" ?
+            /*==========================flatmate================================*/
+            <div>
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                   <label>My Shared Expenses includes</label>
                   </div>
+                {this.state.sharedExpenses && this.state.sharedExpenses.length > 0 ?
+                  this.state.sharedExpenses.map((data,index)=>{
+                    return (
+                          <div className="col-lg-6 marTopBtm" key={index}>
+                            
+                            <label className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
+                            <input type="checkbox"
+                                value={data.name}
+                                id={index}
+                                name="userCheckbox"
+                                onChange={this.sharedExpense.bind(this)} 
+                                checked={data.checked}
+                               
+                                />
+                            <span className="checkmark1"></span>
+                            </label>
+
+                          </div>
+
+                      );
+                  })
+                  :
+                  null
+                }
+
+              </div>
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div className="form-group"  id="" >
+                       <span>Lease Duration Preferred:</span>
+                      <div className="input-group inputBox-main " id="">
+                        <div className="input-group-addon inputIcon">
+                           <i className="fa fa-building iconClr"></i>
+                          </div>
+                          <select className="custom-select form-control " name="leaseDuration" ref="leaseDuration" value={this.state.leaseDuration} onChange={this.handleChange.bind(this)} placeholder="select" >
+                              <option className="hidden" >--Select--</option>
+                              <option value="Short Term">Short Term (1-6 Months)</option>
+                              <option value="Mid Term">Mid Term</option>
+                              <option value="Long Term">Long Term</option>
+                          </select>
+                      </div>
+                    </div>
                 </div>
                 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div className="form-group"  id="" >
-                     <span>Per</span>
-                    <div className="input-group inputBox-main " id="">
-                      <div className="input-group-addon inputIcon">
-                         <i className="fa fa-building iconClr"></i>
-                        </div>
-                        <select className="custom-select form-control " name="maintenancePer" ref="maintenancePer" value={this.state.maintenancePer} onChange={this.handleChange.bind(this)} placeholder="select" >
-                            <option className="hidden" disabled>--Select--</option>
-                            <option value="Month">Month</option>
-                            <option value="Year">Year</option>
-                        </select>
-                  </div>
+                    <div className="form-group"  id="" >
+                       <span>Notice Period:</span>
+                      <div className="input-group inputBox-main " id="">
+                        <div className="input-group-addon inputIcon">
+                           <i className="fa fa-building iconClr"></i>
+                          </div>
+                          <select className="custom-select form-control " name="noticePeriod" ref="noticePeriod" value={this.state.noticePeriod} onChange={this.handleChange.bind(this)} placeholder="select" >
+                              <option className="hidden" >--Select--</option>
+                              <option value="2 Weeks">2 Weeks</option>
+                              <option value="1 Month">1 Month</option>
+                              <option value="Others">Others</option>
+                          </select>
+                      </div>
+                    </div>
                 </div>
+              </div>
             </div>
-          </div>
+          //*===================flatmate end================================*//
+            :
+            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
+                  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div className="form-group" id="">
+                      <span>Maintenance</span>
+                      <div className="input-group inputBox-main " id="">
+                                       <div className="input-group-addon inputIcon">
+                                         <i className="fa fa-rupee iconClr"></i>
+                                        </div>
+                          {/*<span className="asterisk">*</span>*/}
+                          <input type="" className="form-control" ref="maintenanceCharges" name="maintenanceCharges" value={this.state.maintenanceCharges} onChange={this.handleChange.bind(this)} onKeyDown={this.isNumberKey.bind(this)} id="maintenanceCharges" placeholder="Maintenance Charge" min="0" />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div className="form-group"  id="" >
+                         <span>Per</span>
+                          <div className="input-group inputBox-main " id="">
+                            <div className="input-group-addon inputIcon">
+                               <i className="fa fa-building iconClr"></i>
+                            </div>
+                            <select className="custom-select form-control " name="maintenancePer" ref="maintenancePer" value={this.state.maintenancePer} onChange={this.handleChange.bind(this)} placeholder="select" >
+                                <option className="hidden" disabled>--Select--</option>
+                                <option value="Month">Month</option>
+                                <option value="Year">Year</option>
+                            </select>
+                        </div>
+                      </div>
+                    </div>
+            </div>
+        }
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
             <b>My Apartment is Available From</b>

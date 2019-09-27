@@ -46,16 +46,16 @@ class Header extends Component {
 
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad  ">
-				<div className="col-lg-2 col-md-2 col-sm-8 col-xs-8 row   ">
+				<div className="col-lg-2 col-md-2 col-sm-7 col-xs-8 row   ">
 					<a href="/"><img alt=""  src="/images/new/logo.png" className="hImg pull-right"/></a>
 				</div>
 				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right headerMenu ">
 					<nav className="navbar  col-lg-12 col-xs-12">
-					    <ul className="nav navbar-nav customNav col-lg-12">
+					    <ul className="nav navbar-nav customNav col-lg-12 col-sm-12">
 					    	 <li className=" col-xs-6"><Link to="/AboutUs">ABOUT US</Link></li>
 					   
 					      {localStorage.getItem("token") ? (
-					      	<li className="dropdown col-xs-6"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">MY PROFILE <span className="caret"></span></a>
+					      	<li className="dropdown col-xs-6"><a className="dropdown-toggle" data-toggle="dropdown" href="#Profile">Hello {localStorage.getItem('userName')} <span className="caret"></span></a>
 						        <ul className="dropdown-menu">
 						          <li><Link to="/MyPostedProperties">My Listings</Link></li>
 						          <li><Link to="/MyInterestedProperties">My Interests</Link></li>
