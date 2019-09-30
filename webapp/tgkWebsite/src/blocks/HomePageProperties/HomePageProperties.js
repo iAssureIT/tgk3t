@@ -131,6 +131,8 @@ class HomePageProperties extends Component {
                             if(error.message === "Request failed with status code 401")
                             {
                                  swal("Your session is expired! Please login again.","", "error");
+                                localStorage.removeItem("uid");
+                                localStorage.removeItem("token");
                                  this.props.history.push("/");
                             }
                         })          
@@ -142,6 +144,8 @@ class HomePageProperties extends Component {
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+                            localStorage.removeItem("uid");
+                            localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     })
@@ -152,6 +156,8 @@ class HomePageProperties extends Component {
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+                            localStorage.removeItem("uid");
+                            localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
               })
@@ -170,6 +176,8 @@ class HomePageProperties extends Component {
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+                            localStorage.removeItem("uid");
+                            localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                 });
@@ -179,6 +187,8 @@ class HomePageProperties extends Component {
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+                            localStorage.removeItem("uid");
+                            localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
           });
@@ -217,6 +227,8 @@ class HomePageProperties extends Component {
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+                            localStorage.removeItem("uid");
+                            localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     });
@@ -227,6 +239,8 @@ class HomePageProperties extends Component {
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+                            localStorage.removeItem("uid");
+                            localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
         });
@@ -379,7 +393,7 @@ class HomePageProperties extends Component {
                                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                                     <div className="col-lg-5 col-md-5 col-sm-5 col-xs-5 noPad mt10">
                                         <i className="fa fa-inr pr8" aria-hidden="true"></i>
-                                        {console.log("exp rate",property.financial.expectedRate)}
+                                        {/*console.log("exp rate",property.financial.expectedRate)*/}
                                         {
                                           property.transactionType === "Sell" ?
                                           property.financial.expectedRate + '/'+ property.financial.measurementUnit 

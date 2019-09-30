@@ -96,6 +96,8 @@ import './CongratsPage.css';
 	                        if(error.message === "Request failed with status code 401")
 	                        {
 	                             swal("Your session is expired! Please login again.","", "error");
+								localStorage.removeItem("uid");
+								localStorage.removeItem("token");
 	                             this.props.history.push("/");
 	                        }
 	                    });          
@@ -107,6 +109,8 @@ import './CongratsPage.css';
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     });  
@@ -117,6 +121,8 @@ import './CongratsPage.css';
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     });
@@ -164,6 +170,8 @@ import './CongratsPage.css';
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                 });

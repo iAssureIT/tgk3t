@@ -122,26 +122,27 @@ import './PropertyDetails.css';
 
 											//furnishedOptions
 											var furnishedOptions = this.state.furnishedOptions;
-						                    // console.log("here furnishedOptions", furnishedOptions);
+						                    console.log("here furnishedOptions", furnishedOptions);
 						                    var furnishedOptionsList = furnishedOptions.map((item,index)=>{
-						                      var propPresent = this.state.prevCharges.find((obj)=>{
-						                        return item.name === obj
+						                      var propPresentFurnished = this.state.prevCharges.find((object)=>{
+						                        return item.name === object
 						                      })
-						                      // console.log("here propPresent ", propPresent);
-						                      var newObj = Object.assign({},item);
-						                      if(propPresent){
-						                        newObj.checked = true
+						                      // console.log("here propPresentFurnished ", propPresentFurnished);
+						                      var newObject = Object.assign({},item);
+						                      if(propPresentFurnished){
+						                        newObject.checked = true
 						                      }else{
-						                        newObj.checked = false
+						                        newObject.checked = false
 						                      }
-						                      return newObj;
+						                      return newObject;
 
 						                   })
 
 						                    this.setState({
 						                      furnishedOptions : furnishedOptionsList,
 						                    },()=>{
-						                      // console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
+						                      console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
+						                      console.log("here furnishedOptions furnishedOptionsList ",furnishedOptionsList);
 
 						                    });
 						                    //close
@@ -151,6 +152,8 @@ import './PropertyDetails.css';
 								                        if(error.message === "Request failed with status code 401")
 								                        {
 								                             swal("Your session is expired! Please login again.","", "error");
+															localStorage.removeItem("uid");
+															localStorage.removeItem("token");
 								                             this.props.history.push("/");
 								                        }
 								    });
@@ -164,6 +167,8 @@ import './PropertyDetails.css';
                         // if(error.message === "Request failed with status code 401")
                         // {
                         //      swal("Your session is expired! Please login again.","", "error");
+							// localStorage.removeItem("uid");
+							// localStorage.removeItem("token");
                         //      this.props.history.push("/");
                         // }
                     });	
@@ -207,12 +212,14 @@ import './PropertyDetails.css';
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
             });
-			console.log("this.props.updateStatus",this.props.updateStatus);
-			console.log("this.props.property_id",this.props.property_id);
-			console.log("all amenities for admin",this.state.allAmenities);
+			// console.log("this.props.updateStatus",this.props.updateStatus);
+			// console.log("this.props.property_id",this.props.property_id);
+			// console.log("all amenities for admin",this.state.allAmenities);
 		  }
 		updateUser(event){
 			event.preventDefault();
@@ -229,10 +236,10 @@ import './PropertyDetails.css';
             })
             //
 
-				console.log("update fun");
-				var ov = this.state.originalValues;
+				// console.log("update fun");
+				// var ov = this.state.originalValues;
 
-				console.log("update fun");
+				// console.log("update fun");
 				var ov = this.state.originalValues;
 				var allAmenitiesData = this.state.allAmenities;
 				var allAmenitiesDataList =[];			
@@ -242,9 +249,9 @@ import './PropertyDetails.css';
 								allAmenitiesDataList.push(item.amenity);
 							}
 						})
-						console.log("this.state.allAmenities",this.state.allAmenities);
-						console.log("allAmenitiesDataList true",allAmenitiesDataList);
-						console.log("here result amenity",ov.Amenities);
+						// console.log("this.state.allAmenities",this.state.allAmenities);
+						// console.log("allAmenitiesDataList true",allAmenitiesDataList);
+						// console.log("here result amenity",ov.Amenities);
 			
 				var eq ="";
 				if(allAmenitiesDataList.length != ov.Amenities.length )
@@ -263,6 +270,46 @@ import './PropertyDetails.css';
 			       }
 			        console.log("equal yes but same",eq);	
 				}
+				//============furnished==============//
+					//
+       		    // var ov = this.state.originalValues;
+				var furnishedOptionsData = this.state.furnishedOptions;
+        		var furnishedOptionsDataList =[];     
+	            furnishedOptionsData.map((item,index)=>{
+	              if(item.checked == true)
+	              {
+	                furnishedOptionsDataList.push(item.name);
+	              }
+	            })
+
+	            console.log("furnishedOptionsDataList true",furnishedOptionsDataList);
+	            console.log("this.state.furnishedOptions",this.state.furnishedOptions);
+
+	            // compare chcekbox data
+	            var equal ="";
+	            // console.log("this.state.furnishedOptions.length",this.state.furnishedOptions.length);
+	            if(furnishedOptionsDataList.length !== ov.furnishedOptions )
+	            {
+	              equal = false;
+	               console.log("equal not",equal);
+	            }else{
+	              
+	              for (var i = 0; i < furnishedOptionsDataList.length; i++)
+	              { 
+	                      if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+	                  equal = false;
+	                      }else{
+	                  equal = true;  
+	                      }
+	                 }
+	                  console.log("equal yes but same",equal); 
+	            }
+            		console.log("this.state.furnishedOptions",this.state.furnishedOptions);
+					console.log("furnishedOptionsDataList true",furnishedOptionsDataList);
+					console.log("here result furnishedOptions",ov.furnishedOptions);
+
+
+				//============furnished end==============//
 
 				console.log("outside eq",eq);
 
@@ -270,7 +317,9 @@ import './PropertyDetails.css';
 					this.state.furnishedstatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
 					 this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing 
 					 && this.state.superArea === ov.superArea && this.state.builtupArea === ov.builtupArea &&
-					 eq === true && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry )
+					 eq === true && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor &&
+					  this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && 
+					  this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry && this.state.furnishedOptions === ov.furnishedOptions )
 				{
 						console.log("same data");
 						this.props.redirectToFinancialDetails(this.props.uid,this.props.property_id);
@@ -344,6 +393,8 @@ import './PropertyDetails.css';
 					                        if(error.message === "Request failed with status code 401")
 					                        {
 					                             swal("Your session is expired! Please login again.","", "error");
+												localStorage.removeItem("uid");
+												localStorage.removeItem("token");
 					                             this.props.history.push("/");
 					                        }
 					     });
@@ -376,23 +427,23 @@ import './PropertyDetails.css';
 	            // console.log("this.state.furnishedOptions",this.state.furnishedOptions);
 
 	            // compare chcekbox data
-	            var eq =true;
+	            var equal =true;
 	            // console.log("this.state.furnishedOptions.length",this.state.furnishedOptions.length);
 	            if(furnishedOptionsDataList.length !== this.state.furnishedOptions.length )
 	            {
-	              eq = false;
-	               console.log("equal not",eq);
+	              equal = false;
+	               console.log("equal not",equal);
 	            }else{
 	              
 	              for (var i = 0; i < furnishedOptionsDataList.length; i++)
 	              { 
 	                      if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
-	                  eq = false;
+	                  equal = false;
 	                      }else{
-	                  eq = true;  
+	                  equal = true;  
 	                      }
 	                 }
-	                  console.log("equal yes but same",eq); 
+	                  console.log("equal yes but same",equal); 
 	            }
             //
 
@@ -462,6 +513,8 @@ import './PropertyDetails.css';
 					                        if(error.message === "Request failed with status code 401")
 					                        {
 					                             swal("Your session is expired! Please login again.","", "error");
+												localStorage.removeItem("uid");
+												localStorage.removeItem("token");
 					                             this.props.history.push("/");
 					                        }
 					       });

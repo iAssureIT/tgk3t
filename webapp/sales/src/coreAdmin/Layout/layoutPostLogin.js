@@ -18,9 +18,6 @@ import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
 		}
 		   
 		componentDidMount(){
-
-      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
-
 		    $(document).ready(function () {
 		       $('#sidebarCollapse').on('click', function () {
 		           $('#sidebar').toggleClass('active');

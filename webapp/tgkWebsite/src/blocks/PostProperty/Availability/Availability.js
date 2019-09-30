@@ -104,6 +104,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     });
@@ -130,6 +132,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     });
@@ -156,6 +160,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				                        if(error.message === "Request failed with status code 401")
 				                        {
 				                             swal("Your session is expired! Please login again.","", "error");
+											localStorage.removeItem("uid");
+											localStorage.removeItem("token");
 				                             this.props.history.push("/");
 				                        }
 				        });
@@ -231,6 +237,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		                        if(error.message === "Request failed with status code 401")
 		                        {
 		                             swal("Your session is expired! Please login again.","", "error");
+									localStorage.removeItem("uid");
+									localStorage.removeItem("token");
 		                             this.props.history.push("/");
 		                        }
 		                });
@@ -287,6 +295,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     });
@@ -448,6 +458,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                 });
@@ -551,6 +563,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
                     })
@@ -578,6 +592,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		                        if(error.message === "Request failed with status code 401")
 		                        {
 		                             swal("Your session is expired! Please login again.","", "error");
+									localStorage.removeItem("uid");
+									localStorage.removeItem("token");
 		                             this.props.history.push("/");
 		                        }
 		                    })
@@ -613,6 +629,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
+							localStorage.removeItem("uid");
+							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
             })

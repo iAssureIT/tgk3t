@@ -23,9 +23,6 @@ import $ from "jquery";
     }
   }
   componentDidMount(){
-
-      // axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
-
     const token = localStorage.getItem("token");
     console.log("Dashboard Token = ",token);
     if(token!==null){

@@ -33,6 +33,7 @@ import './HomePage.css';
 	componentDidMount(){
 		
     $("#place1").addClass("mT30");
+    $(".modal-backdrop").remove();
 	}
 	render() {
 		return (
