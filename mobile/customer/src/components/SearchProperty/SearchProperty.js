@@ -586,7 +586,11 @@ export default class SearchProperty extends ValidationComponent{
                <TouchableOpacity 
                   key={index}
                   onPress = {()=>this.setActive(data.name)}
-                  style={[(data.checked===true?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
+                  style={this.state.activeBtn === "Residential-Rent" || this.state.activeBtn === "Residential-Sell" ?
+                    [(data.checked===true?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]
+                    :
+                    [(data.checked===true?styles.activeTabViewAuto:styles.tabViewAuto),styles.paddLeft5,(index==0?styles.borderRadiusLeft2:(index==5)?styles.borderRadiusRight2:null),(index<7)?styles.tabBorder:null]
+                  }
                 >
                     <Icon
                       name={data.iconName} 
