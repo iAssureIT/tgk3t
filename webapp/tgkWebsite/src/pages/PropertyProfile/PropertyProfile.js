@@ -39,7 +39,7 @@ const OwlCarousel = Loadable({
 
 axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
-const AnyReactComponent = ({ text }) => <div><img src="../images/Location.png" style={{width:'47px',height:'47px'}} className="img-responsive " alt="loading"/></div>
+const Property = ({ text }) => <div><img src="../images/Location.png" style={{width:'47px',height:'47px'}} className="img-responsive " alt="loading"/></div>
 
 class PropertyProfile extends Component{
     static defaultProps = {
@@ -75,7 +75,8 @@ class PropertyProfile extends Component{
       "ownerId"           : "",
       "countno"           : 2,
       "callfun"           : 0,
-      "location"          :{latitude: 18.5184,longitude: 73.9343}
+      "location"          :{latitude: 18.5184,longitude: 73.9343},
+      "showMap"           : false
     }
   }
 
@@ -177,6 +178,12 @@ class PropertyProfile extends Component{
     
       $('#counter').html("Media "+item1+" of "+items)
 }
+  handleMap(){
+    this.setState({
+      showMap : true
+    })
+
+  }
 
   render() {
 
@@ -567,21 +574,28 @@ class PropertyProfile extends Component{
                     { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.subArea+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                       <div className="row">
-                      <div style={{ height: '500px', width: '100%',paddingTop:'15px' }}>
-                          <GoogleMapReact
-                            bootstrapURLKeys={{ key:"" }}
-                            defaultCenter={this.props.center}
-                            defaultZoom={this.props.zoom}
-                          >
-                            <AnyReactComponent
-                              lat={this.state.location.latitude}
-                              lng={this.state.location.longitude}
-                            />
-                          </GoogleMapReact>
+                      {
+                        this.state.showMap === true ? 
+                          <div style={{ height: '500px', width: '100%',paddingTop:'15px' }}>
+                              <GoogleMapReact
+                                bootstrapURLKeys={{ key:"" }}
+                                defaultCenter={this.props.center}
+                                defaultZoom={this.props.zoom}
+                              >
+                                <Property
+                                  lat={this.state.location.latitude}
+                                  lng={this.state.location.longitude}
+                                />
+                              </GoogleMapReact>
+                          </div>
+                        :
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                          <img src="/images/new/1.png" className="mapImg" />
+                          <div className="divAboveMap"></div> 
+                          <button onClick={this.handleMap.bind(this)}>Show Map</button>
                         </div>
-
-{/*                        <div className="mapouter"><div className="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Magarpatta&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
-*/}                      </div>
+                      }
+                   </div>
                     </div>              
                     </div>
                   </div>

@@ -5,7 +5,7 @@ import { Link } 			from 'react-router-dom';
 import {withRouter} 		from 'react-router-dom';
 import { connect }          from 'react-redux';
 import $                    from "jquery";
-import swal                     from 'sweetalert';
+import swal                 from 'sweetalert';
 import BasicInfo            from '../../PostProperty/BasicInfo/BasicInfo.js';
 import Location             from '../../PostProperty/Location/Location.js';
 import PropertyDetails      from '../../PostProperty/PropertyDetails/PropertyDetails.js';

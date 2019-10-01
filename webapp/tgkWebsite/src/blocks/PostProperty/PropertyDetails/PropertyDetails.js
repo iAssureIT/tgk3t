@@ -1,7 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import swal 					from 'sweetalert';		
-import $ 					  from "jquery";
+import $ 					    from "jquery";
 import { connect } 				from 'react-redux';
 import {  withRouter}    		from 'react-router-dom';
 
@@ -122,19 +122,19 @@ import './PropertyDetails.css';
 
 											//furnishedOptions
 											var furnishedOptions = this.state.furnishedOptions;
-						                    console.log("here furnishedOptions", furnishedOptions);
+						                    // console.log("here furnishedOptions", furnishedOptions);
 						                    var furnishedOptionsList = furnishedOptions.map((item,index)=>{
-						                      var propPresentFurnished = this.state.prevCharges.find((object)=>{
-						                        return item.name === object
+						                      var propPresent = this.state.prevCharges.find((obj)=>{
+						                        return item.name === obj
 						                      })
-						                      // console.log("here propPresentFurnished ", propPresentFurnished);
-						                      var newObject = Object.assign({},item);
-						                      if(propPresentFurnished){
-						                        newObject.checked = true
+						                      // console.log("here propPresent ", propPresent);
+						                      var newObj = Object.assign({},item);
+						                      if(propPresent){
+						                        newObj.checked = true
 						                      }else{
-						                        newObject.checked = false
+						                        newObj.checked = false
 						                      }
-						                      return newObject;
+						                      return newObj;
 
 						                   })
 
@@ -142,7 +142,6 @@ import './PropertyDetails.css';
 						                      furnishedOptions : furnishedOptionsList,
 						                    },()=>{
 						                      console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
-						                      console.log("here furnishedOptions furnishedOptionsList ",furnishedOptionsList);
 
 						                    });
 						                    //close
@@ -152,8 +151,6 @@ import './PropertyDetails.css';
 								                        if(error.message === "Request failed with status code 401")
 								                        {
 								                             swal("Your session is expired! Please login again.","", "error");
-															localStorage.removeItem("uid");
-															localStorage.removeItem("token");
 								                             this.props.history.push("/");
 								                        }
 								    });
@@ -167,8 +164,6 @@ import './PropertyDetails.css';
                         // if(error.message === "Request failed with status code 401")
                         // {
                         //      swal("Your session is expired! Please login again.","", "error");
-							// localStorage.removeItem("uid");
-							// localStorage.removeItem("token");
                         //      this.props.history.push("/");
                         // }
                     });	
@@ -212,34 +207,21 @@ import './PropertyDetails.css';
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
-							localStorage.removeItem("uid");
-							localStorage.removeItem("token");
                              this.props.history.push("/");
                         }
             });
-			// console.log("this.props.updateStatus",this.props.updateStatus);
-			// console.log("this.props.property_id",this.props.property_id);
-			// console.log("all amenities for admin",this.state.allAmenities);
+			console.log("this.props.updateStatus",this.props.updateStatus);
+			console.log("this.props.property_id",this.props.property_id);
+			console.log("all amenities for admin",this.state.allAmenities);
 		  }
 		updateUser(event){
 			event.preventDefault();
 
 			if(this.state.updateOperation === true){
-				//var furnishedOptionsData = this.state.furnishedOptions;
-			var furnishedOptionsData = this.state.furnishedOptions;
-        	var furnishedOptionsDataList =[];     
-            furnishedOptionsData.map((item,index)=>{
-              if(item.checked == true)
-              {
-                furnishedOptionsDataList.push(item.name);
-              }
-            })
-            //
+				console.log("update fun");
+				var ov = this.state.originalValues;
 
-				// console.log("update fun");
-				// var ov = this.state.originalValues;
-
-				// console.log("update fun");
+				console.log("update fun");
 				var ov = this.state.originalValues;
 				var allAmenitiesData = this.state.allAmenities;
 				var allAmenitiesDataList =[];			
@@ -255,26 +237,27 @@ import './PropertyDetails.css';
 			
 				var eq ="";
 				if(allAmenitiesDataList.length != ov.Amenities.length )
-				{
-					eq = false;
-					 console.log("equal not",eq);
+				{eq = false;
+				 console.log("equal not",eq);
+				 
 				}else{
-					
 					for (var i = 0; i < allAmenitiesDataList.length; i++)
-					{ 
-			            if (allAmenitiesDataList[i] != ov.Amenities[i]){
+					{ if (allAmenitiesDataList[i] != ov.Amenities[i]){
 							eq = false;
 			            }else{
 							eq = true;	
 			            }
-			       }
-			        console.log("equal yes but same",eq);	
+			       	}
+			        console.log("equal yes but same",eq);
 				}
-				//============furnished==============//
-					//
-       		    // var ov = this.state.originalValues;
+				console.log("outside eq",eq);
+
+
+				//----------------------------------------------------------------
+				
+
 				var furnishedOptionsData = this.state.furnishedOptions;
-        		var furnishedOptionsDataList =[];     
+	        	var furnishedOptionsDataList =[];     
 	            furnishedOptionsData.map((item,index)=>{
 	              if(item.checked == true)
 	              {
@@ -282,44 +265,44 @@ import './PropertyDetails.css';
 	              }
 	            })
 
-	            console.log("furnishedOptionsDataList true",furnishedOptionsDataList);
 	            console.log("this.state.furnishedOptions",this.state.furnishedOptions);
+				console.log("furnishedOptionsDataList ",furnishedOptionsDataList);
+				console.log("here result furnishedOptionsDataList",ov.furnishedOptions);
+            	
 
-	            // compare chcekbox data
-	            var equal ="";
-	            // console.log("this.state.furnishedOptions.length",this.state.furnishedOptions.length);
-	            if(furnishedOptionsDataList.length !== ov.furnishedOptions )
-	            {
-	              equal = false;
-	               console.log("equal not",equal);
-	            }else{
-	              
-	              for (var i = 0; i < furnishedOptionsDataList.length; i++)
-	              { 
-	                      if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
-	                  equal = false;
-	                      }else{
-	                  equal = true;  
-	                      }
-	                 }
-	                  console.log("equal yes but same",equal); 
-	            }
-            		console.log("this.state.furnishedOptions",this.state.furnishedOptions);
-					console.log("furnishedOptionsDataList true",furnishedOptionsDataList);
-					console.log("here result furnishedOptions",ov.furnishedOptions);
+				var equal ="";
+				if(furnishedOptionsDataList.length != ov.furnishedOptions.length )
+				{equal = false;
+				 console.log("equal not",equal);
+				 console.log("furnishedOptionsDataList.length",furnishedOptionsDataList.length);
+				 console.log("ov.furnishedOptions.length",ov.furnishedOptions.length);
+				}else{
+					for (var i = 0; i < furnishedOptionsDataList.length; i++)
+					{ if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+							equal = false;
+			            }else{
+							equal = true;	
+			            }
+			       	}
+			        console.log("equal yes but same",equal);
+			        console.log("furnishedOptionsDataList.length1",furnishedOptionsDataList.length);
+				 console.log("ov.furnishedOptions.length1",ov.furnishedOptions.length);	
+				}
+				console.log("outside equal",equal);
 
 
-				//============furnished end==============//
 
-				console.log("outside eq",eq);
+
+				//----------------------------------------------------------------
+
 
 				if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
 					this.state.furnishedstatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
 					 this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing 
 					 && this.state.superArea === ov.superArea && this.state.builtupArea === ov.builtupArea &&
-					 eq === true && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor &&
-					  this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && 
-					  this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry && this.state.furnishedOptions === ov.furnishedOptions )
+					 equal === true && eq === true && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor && 
+					 this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit
+					  && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry  )
 				{
 						console.log("same data");
 						this.props.redirectToFinancialDetails(this.props.uid,this.props.property_id);
@@ -393,8 +376,6 @@ import './PropertyDetails.css';
 					                        if(error.message === "Request failed with status code 401")
 					                        {
 					                             swal("Your session is expired! Please login again.","", "error");
-												localStorage.removeItem("uid");
-												localStorage.removeItem("token");
 					                             this.props.history.push("/");
 					                        }
 					     });
@@ -427,23 +408,23 @@ import './PropertyDetails.css';
 	            // console.log("this.state.furnishedOptions",this.state.furnishedOptions);
 
 	            // compare chcekbox data
-	            var equal =true;
+	            var eq =true;
 	            // console.log("this.state.furnishedOptions.length",this.state.furnishedOptions.length);
 	            if(furnishedOptionsDataList.length !== this.state.furnishedOptions.length )
 	            {
-	              equal = false;
-	               console.log("equal not",equal);
+	              eq = false;
+	               console.log("equal not",eq);
 	            }else{
 	              
 	              for (var i = 0; i < furnishedOptionsDataList.length; i++)
 	              { 
 	                      if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
-	                  equal = false;
+	                  eq = false;
 	                      }else{
-	                  equal = true;  
+	                  eq = true;  
 	                      }
 	                 }
-	                  console.log("equal yes but same",equal); 
+	                  console.log("equal yes but same",eq); 
 	            }
             //
 
@@ -513,8 +494,6 @@ import './PropertyDetails.css';
 					                        if(error.message === "Request failed with status code 401")
 					                        {
 					                             swal("Your session is expired! Please login again.","", "error");
-												localStorage.removeItem("uid");
-												localStorage.removeItem("token");
 					                             this.props.history.push("/");
 					                        }
 					       });
@@ -937,7 +916,7 @@ import './PropertyDetails.css';
 			            this.state.furnishedOptions.map((data,index)=>{
 			              return (
 			                    <div className="col-lg-4 marTopBtm" key={index}>
-			                      
+			                      {console.log("data in furnishedOptions",data)}
 			                      <label className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
 			                      <input type="checkbox"
 			                          value={data.name}
