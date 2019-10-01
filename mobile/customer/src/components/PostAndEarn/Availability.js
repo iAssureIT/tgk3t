@@ -30,6 +30,7 @@ import {request, PERMISSIONS, RESULTS}      from 'react-native-permissions';
 import SwitchToggle                         from 'react-native-switch-toggle';
 import ImagePicker                          from 'react-native-image-picker';
 import S3FileUpload                         from 'react-s3';
+import { RNS3 }                             from 'react-native-aws3';
 var Buffer = require('buffer/').Buffer
 import {
   Table,
@@ -196,39 +197,17 @@ export default class Availability extends ValidationComponent{
             }
 
         }
-      axios
-      .get('/api/projectSettings/get/one/S3')
-      .then((response)=>{
-        // console.log("s3_response.............",response);
-        const config = {
-            bucketName      : response.data.bucket,
-            dirName         : 'propertiesImages',
-            region          : response.data.region,
-            accessKeyId     : response.data.key,
-            secretAccessKey : response.data.secret,
-        }
-        this.setState({
-          config : config
-        })
-      })
-     .catch((error)=>{
-                console.log("error = ",error);
-                if(error.message === "Request failed with status code 401")
-                  {
-                       Alert.alert("Your session is expired! Please login again.","", "error");
-                       this.navigateScreen('Home');          
-                  }
-        });
      axios
       .get('/api/projectSettings/get/one/S3')
       .then((response)=>{
         console.log("s3_response.............",response);
         const config = {
-                          bucketName      : response.data.bucket,
-                          dirName         : 'propertiesImages',
-                          region          : response.data.region,
-                          accessKeyId     : response.data.key,
-                          secretAccessKey : response.data.secret,
+                          bucket              : response.data.bucket,
+                          keyPrefix           : 'propertiesImages',
+                          region              : response.data.region,
+                          accessKey           : response.data.key,
+                          secretKey           : response.data.secret,
+                          successActionStatus : 201
               // ACL        : 'public-read',
 
                        }
@@ -565,12 +544,12 @@ export default class Availability extends ValidationComponent{
                   if (file) {
                     console.log("file------>",file);
                     console.log("config-------->",this.state.config);
-                    S3FileUpload
-                    .uploadFile(file,this.state.config)
+                    RNS3
+                    .put(file,this.state.config)
                     .then((Data)=>{
                       console.log("Data = ",Data);
                         var obj1={
-                          imgPath : Data.location,
+                          imgPath : Data.body.postResponse.location,
                         }
                         var imgArrayWSaws = this.state.imgArrayWSaws;
                         imgArrayWSaws.push(obj1);
