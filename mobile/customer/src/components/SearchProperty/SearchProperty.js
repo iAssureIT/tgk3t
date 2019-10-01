@@ -64,10 +64,11 @@ export default class SearchProperty extends ValidationComponent{
 
   componentDidMount(){
    var searchResults = this.props.navigation.getParam('searchResults','No Result');
+   console.log("searchResults",searchResults)
    this._retrieveData();
    this.setState({
-      location :searchResults.location,
-      activeBtn:searchResults.property,
+      location :searchResults !== "No Result" ? searchResults.location : "",
+      activeBtn:searchResults !== "No Result" ? searchResults.property : 'Residential-Sell',
       roomsList : [ 
         {value: 1,  option: "1 BHK", checked:false},
         {value: 2,  option: "2 BHK", checked:false},

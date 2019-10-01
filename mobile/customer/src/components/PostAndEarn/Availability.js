@@ -11,23 +11,26 @@ import {
   Alert
 } from 'react-native';
 
-import { Button,Icon, SearchBar } from 'react-native-elements';
-import axios          from 'axios';
-import { NavigationActions, StackActions } from 'react-navigation';
-import AsyncStorage               from '@react-native-community/async-storage';
-
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-import CheckBox from 'react-native-check-box'
-
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
-import { Dropdown } from 'react-native-material-dropdown';
-import DatePicker from "react-native-datepicker";
-import TimePicker from "react-native-24h-timepicker";
-import Modal from "react-native-modal";
+import { Button,Icon, SearchBar }           from 'react-native-elements';
+import axios                                from 'axios';
+import { NavigationActions, StackActions }  from 'react-navigation';
+import AsyncStorage                         from '@react-native-community/async-storage';
+import ValidationComponent                  from "react-native-form-validator";
+import { TextField }                        from 'react-native-material-textfield';
+import { RadioGroup, RadioButton }          from 'react-native-flexi-radio-button';
+import CheckBox                             from 'react-native-check-box'
+import HeaderBar                            from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                               from './styles.js';
+import { colors,sizes }                     from '../../config/styles.js';
+import { Dropdown }                         from 'react-native-material-dropdown';
+import DatePicker                           from "react-native-datepicker";
+import TimePicker                           from "react-native-24h-timepicker";
+import Modal                                from "react-native-modal";
+import {request, PERMISSIONS, RESULTS}      from 'react-native-permissions';
+import SwitchToggle                         from 'react-native-switch-toggle';
+import ImagePicker                          from 'react-native-image-picker';
+import S3FileUpload                         from 'react-s3';
+var Buffer = require('buffer/').Buffer
 import {
   Table,
   TableWrapper,
@@ -37,26 +40,21 @@ import {
   Cols,
   Cell
 } from "react-native-table-component";
-import SwitchToggle from 'react-native-switch-toggle';
 
 const window = Dimensions.get('window');
 
-
-
-const options = {
-  title: 'Select Avatar',
-  customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-  storageOptions: {
-    skipBackup: true,
-    path: 'images',
-  },
-  
+ type Rationale = {
+  title: 'Cool Photo App Camera Permission',
+  message: 'Cool Photo App needs access to your camera ',
+  buttonPositive: 'OK',
+  buttonNegative: 'Cancel',
+  buttonNeutral: 'Ask Me Later',
 };
 
 export default class Availability extends ValidationComponent{
 
   navigateScreen=(route)=>{
-const navigateAction = StackActions.reset({
+  const navigateAction = StackActions.reset({
              index: 0,
             actions: [
             NavigationActions.navigate({ routeName: route}),
@@ -81,47 +79,176 @@ const navigateAction = StackActions.reset({
       available:[],
       openModal: false,
       dropdownData:[
-      {
-        value: 'Everyday(Mon-Sun)'
-      },
-      {
-        value: 'Weekdays(Mon-Fri)'
-      },
-      {
-        value: 'Weekdays(Sat-Sun)'
-      },
-      {
-        value: 'Monday'
-      },
-      {
-        value: 'Tuesday'
-      },
-      {
-        value: 'Wednesday'
-      },
-      {
-        value: 'Thursday'
-      },
-      {
-        value: 'Friday'
-      },
-      {
-        value: 'Saturday'
-      },
-      {
-        value: 'Sunday'
-      }],
-      toggle : false,
-      contactPerson:'My Self',
-      mobile:"",
-      propertyId : '',
-      uid : '',
-      token : '',
+        {
+          value: 'Everyday(Mon-Sun)'
+        },
+        {
+          value: 'Weekdays(Mon-Fri)'
+        },
+        {
+          value: 'Weekdays(Sat-Sun)'
+        },
+        {
+          value: 'Monday'
+        },
+        {
+          value: 'Tuesday'
+        },
+        {
+          value: 'Wednesday'
+        },
+        {
+          value: 'Thursday'
+        },
+        {
+          value: 'Friday'
+        },
+        {
+          value: 'Saturday'
+        },
+        {
+          value: 'Sunday'
+        }
+      ],
+      toggle            : false,
+      contactPerson     : 'My Self',
+      mobile            : "",
+      propertyId        : '',
+      uid               : '',
+      token             : '',
+      photo             : [],
+      config            : '',
+      "imageArray"      : [],
+      "imageTitleArray" : [],
+      "videoArray"      : [],
+      "S3url"           : [],
+      "imgArrayWSaws"   : [],
     };
 
-          var property_id = this.props.navigation.getParam('property_id','No property_id');
+      var property_id = this.props.navigation.getParam('property_id','No property_id');
       console.log("property_id in constructor property details",property_id);
      
+  }
+
+  componentDidMount(){
+    this._retrieveData();
+  }
+
+  _retrieveData = async () => {
+    try {
+      const uid        = await AsyncStorage.getItem('uid');
+      const token      = await AsyncStorage.getItem('token');
+      const mobile      = await AsyncStorage.getItem('mobile');
+      const propertyId      = await AsyncStorage.getItem('propertyId');
+      const propertyType      = await AsyncStorage.getItem('propertyType');
+      const transactionType      = await AsyncStorage.getItem('transactionType');
+
+      console.log("availability propertyId",propertyId);
+      console.log("availability mobile",mobile);
+      // if (uid !== null && token !== null) {
+        // We have data!!
+        this.setState({uid:uid})
+        this.setState({token:token})
+        this.setState({mobile:mobile})
+        this.setState({propertyId:propertyId})
+        this.setState({propertyType:propertyType})
+        this.setState({transactionType:transactionType})
+
+        if(token!="")
+        {
+           var property_id = propertyId;
+           console.log("property_id in constructor property details",property_id);
+
+            if(property_id!=null)
+            {
+              console.log("here edit 4th form");
+                axios
+                .get('/api/properties/'+property_id)
+                .then( (response) =>{
+                  this.setState({
+
+                      originalValues          : response.data.avalibilityPlanVisit,
+                      contactPersonMobile     : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : mobile,
+                      contactPerson           : response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "My Self" ,
+                      available               : response.data.avalibilityPlanVisit.available,
+                      updateOperation         : true,
+                      prevAvailable           : response.data.avalibilityPlanVisit.available,
+                      originalValuesGallery   : response.data.gallery,
+                      imgArrayWSaws           : response.data.gallery.Images,
+                      singleVideo             : response.data.gallery.video ? response.data.gallery.video : "" ,
+                     
+                      // type            : response.data.contactPerson==="Someone" ? true : false,
+                      
+                  },()=>{
+                    // console.log("here available in comp did mount",this.state.contactPerson);
+                    });
+
+                })
+                .catch((error)=>{
+                              console.log("error = ",error);
+                              if(error.message === "Request failed with status code 401")
+                              {
+                                  Alert.alert("Your session is expired! Please login again.","", "error");
+                                  this.navigateScreen('Home');    
+                              }
+                          });
+
+            }
+
+        }
+      axios
+      .get('/api/projectSettings/get/one/S3')
+      .then((response)=>{
+        // console.log("s3_response.............",response);
+        const config = {
+            bucketName      : response.data.bucket,
+            dirName         : 'propertiesImages',
+            region          : response.data.region,
+            accessKeyId     : response.data.key,
+            secretAccessKey : response.data.secret,
+        }
+        this.setState({
+          config : config
+        })
+      })
+     .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                  {
+                       Alert.alert("Your session is expired! Please login again.","", "error");
+                       this.navigateScreen('Home');          
+                  }
+        });
+     axios
+      .get('/api/projectSettings/get/one/S3')
+      .then((response)=>{
+        console.log("s3_response.............",response);
+        const config = {
+                          bucketName      : response.data.bucket,
+                          dirName         : 'propertiesImages',
+                          region          : response.data.region,
+                          accessKeyId     : response.data.key,
+                          secretAccessKey : response.data.secret,
+              // ACL        : 'public-read',
+
+                       }
+        this.setState({
+          config : config
+        })
+      })
+     .catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                  {
+                       Alert.alert("Your session is expired! Please login again.","", "error");
+                       this.navigateScreen('Home');          
+                  }
+        });
+
+
+  } catch (error) {
+      // Error retrieving data
+    }
   }
 
   validInput = () => {
@@ -168,61 +295,49 @@ const navigateAction = StackActions.reset({
   };
 
 
- validInputField = (stateName, stateErr) => {
-      const {
-      someOnemobile,
-      mobile,
-      } = this.state;
-      let valid = true;
+   validInputField = (stateName, stateErr) => {
+        const {
+          someOnemobile,
+          mobile,
+        } = this.state;
+        let valid = true;
 
-      this.validate({
-      [stateName]: {
-      required: true,
-      },
-      });
+        this.validate({
+        [stateName]: {
+          required: true,
+        },
+        });
 
-      if (this.isFieldInError(stateName)) {
-      let validinptError = this.getErrorsInField(stateName);
-      this.setState({ validinptError });
-      valid = false;
-      } else {
-      this.setState({ [stateErr]: "" });
-      }
+        if(this.isFieldInError(stateName)){
+          let validinptError = this.getErrorsInField(stateName);
+          this.setState({ validinptError });
+          valid = false;
+        }else{
+          this.setState({ [stateErr]: "" });
+        }
 
-      return valid;
-};
+        return valid;
+  };
 
 
-handleMobileChange(value){
-    // console.log("value = ",value);
+  handleMobileChange(value){
     if(value.startsWith && value.startsWith('+')){
       value = value.substr(3);
     }
     let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    // let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    // console.log("x value = ",x);
-    // let y = !x[2] ? x[1] : x[1]+'-'+x[2];
     let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
-    // let y = '+1 '+x[1]+'-'+x[2]+'-'+x[3];
-    // console.log("y value = ",y)
     this.setState({
       someOnemobile : y,
     });
   }
 
 
-handleOriginalMobileChange(value){
-    // console.log("value = ",value);
+  handleOriginalMobileChange(value){
     if(value.startsWith && value.startsWith('+')){
       value = value.substr(3);
     }
     let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    // let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
-    // console.log("x value = ",x);
-    // let y = !x[2] ? x[1] : x[1]+'-'+x[2];
     let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
-    // let y = '+1 '+x[1]+'-'+x[2]+'-'+x[3];
-    // console.log("y value = ",y)
     this.setState({
       mobile : y,
     });
@@ -231,141 +346,13 @@ handleOriginalMobileChange(value){
     this.setState({activeIndex:index});
   }
 
-  componentDidMount(){
-    //   var token = this.props.navigation.getParam('token','No token');
-    //   // console.log("token",token);
-    //   var uid = this.props.navigation.getParam('uid','No uid');
-    //   // console.log("uid",uid);
-    //   var propertyId = this.props.navigation.getParam('propertyId','No propertyId');
-    //   // console.log("propertyId",propertyId);
-    //   var mobile = this.props.navigation.getParam('mobile','No mobile'); 
-    // console.log("mobile in last screen",mobile);
-    //   axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
-
-    //   this.setState({
-    //     token : token,
-    //     uid   : uid,
-    //     propertyId : propertyId,
-    //     mobile: mobile,
-    //   });
-    this._retrieveData();
-
-       axios
-      .get('/api/projectSettings/get/one/S3')
-      .then((response)=>{
-        // console.log("s3_response.............",response);
-        const config = {
-                          bucketName      : response.data.bucket,
-                          dirName         : 'propertiesImages',
-                          region          : response.data.region,
-                          accessKeyId     : response.data.kS3ey,
-                          secretAccessKey : response.data.secret,
-              // ACL        : 'public-read',
-
-                       }
-        this.setState({
-          config : config
-        })
-      })
-     .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                          {
-                               Alert.alert("Your session is expired! Please login again.","", "error");
-                               this.navigateScreen('Home');          
-                               
-                               
-                          }
-        });
-
-
- }
-
- _retrieveData = async () => {
-    try {
-      const uid        = await AsyncStorage.getItem('uid');
-      const token      = await AsyncStorage.getItem('token');
-      const mobile      = await AsyncStorage.getItem('mobile');
-      const propertyId      = await AsyncStorage.getItem('propertyId');
-      const propertyType      = await AsyncStorage.getItem('propertyType');
-      const transactionType      = await AsyncStorage.getItem('transactionType');
-
-      console.log("availability propertyId",propertyId);
-      console.log("availability mobile",mobile);
-      // if (uid !== null && token !== null) {
-        // We have data!!
-        this.setState({uid:uid})
-        this.setState({token:token})
-        this.setState({mobile:mobile})
-        this.setState({propertyId:propertyId})
-        this.setState({propertyType:propertyType})
-        this.setState({transactionType:transactionType})
-
-
-        if(token!="")
-        {
-
-        axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
-
-           var property_id = propertyId;
-           console.log("property_id in constructor property details",property_id);
-
-            if(property_id!=null)
-            {
-              console.log("here edit 4th form");
-
-
-                axios
-                .get('/api/properties/'+property_id)
-                .then( (response) =>{
-                  this.setState({
-
-                      originalValues          : response.data.avalibilityPlanVisit,
-                      contactPersonMobile     : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : mobile,
-                      contactPerson           : response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "My Self" ,
-                      available               : response.data.avalibilityPlanVisit.available,
-                      updateOperation         : true,
-                      prevAvailable           : response.data.avalibilityPlanVisit.available,
-                      originalValuesGallery   : response.data.gallery,
-                      imgArrayWSaws           : response.data.gallery.Images,
-                      singleVideo             : response.data.gallery.video ? response.data.gallery.video : "" ,
-                     
-                      // type            : response.data.contactPerson==="Someone" ? true : false,
-                      
-                  },()=>{
-                    // console.log("here available in comp did mount",this.state.contactPerson);
-                    });
-
-                })
-                .catch((error)=>{
-                              console.log("error = ",error);
-                              if(error.message === "Request failed with status code 401")
-                              {
-                                   // swal("Your session is expired! Please login again.","", "error");
-                                   // this.props.history.push("/");
-                              }
-                          });
-
-            }
-
-        }
-
-
-  } catch (error) {
-      // Error retrieving data
-    }
-  }
-
   submitFun(){
-
     // if(this.validInput()){
-
        if(this.state.updateOperation === true){
         // console.log("update fun");
            var ov = this.state.originalValues;
 
           let {
-             
               someOnemobile,
               mobile,
              
@@ -377,7 +364,6 @@ handleOriginalMobileChange(value){
 
              console.log("someOnemobileNo",someOnemobileNo);
              console.log("myMobileNo",myMobileNo);
-
            
               var mobNo = "";
               if(this.state.contactPerson === "My Self"){
@@ -387,12 +373,10 @@ handleOriginalMobileChange(value){
               }
             
               const formValues = {
-             
                 "contactPersonMobile" : mobNo,
                 "contactPerson"       : this.state.contactPerson,
                 "available"           : this.state.available,
-                // "propertyImages"      : this.state.imgArrayWSaws,
-                // "video"               : this.state.singleVideo,
+                "propertyImages"      : this.state.imgArrayWSaws,
                 "status"              : "New",
                 "property_id"         : this.state.propertyId,
                 "uid"                 : this.state.uid,
@@ -410,12 +394,12 @@ handleOriginalMobileChange(value){
                        }
                     })
                     .catch((error)=>{
-                                    console.log("error = ",error);
-                                    if(error.message === "Request failed with status code 401")
-                                    {
-                                         swal("Your session is expired! Please login again.","", "error");
-                                         this.props.history.push("/");
-                                    }
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                  {
+                                       Alert.alert("Your session is expired! Please login again.","", "error");
+                                       this.navigateScreen('Home');          
+                                  }
                             });
                   }else{
                                  Alert.alert("Please enter mandatory fields","warning");
@@ -453,7 +437,7 @@ handleOriginalMobileChange(value){
                 "contactPersonMobile" : mobNo,
                 "contactPerson"       : this.state.contactPerson,
                 "available"           : this.state.available,
-                // "propertyImages"      : this.state.imgArrayWSaws,
+                "propertyImages"      : this.state.imgArrayWSaws,
                 // "video"               : this.state.singleVideo,
                 "status"              : "New",
                 "property_id"         : this.state.propertyId,
@@ -472,15 +456,15 @@ handleOriginalMobileChange(value){
                        }
                     })
                     .catch((error)=>{
-                                    console.log("error = ",error);
-                                    if(error.message === "Request failed with status code 401")
+                                  console.log("error = ",error);
+                                  if(error.message === "Request failed with status code 401")
                                     {
-                                         swal("Your session is expired! Please login again.","", "error");
-                                         this.props.history.push("/");
+                                         Alert.alert("Your session is expired! Please login again.","", "error");
+                                         this.navigateScreen('Home');          
                                     }
                             });
                   }else{
-                                 Alert.alert("Please enter mandatory fields","warning");
+                      Alert.alert("Please enter mandatory fields","warning");
                   }
 
      }
@@ -553,178 +537,77 @@ handleOriginalMobileChange(value){
   }
 
 
+  handleChoosePhoto = () => {
+    const options = {
+      noData: true,
+    };
+    request(PERMISSIONS.IOS.PHOTO_LIBRARY)
+    .then(result => {
+      console.log("result",result);
+      switch (result) {
+        case RESULTS.UNAVAILABLE:
+          console.log('This feature is not available (on this device / in this context)');
+          break;
 
-  async addCameraLocationImgs (){
-    // console.log('DocumentPicker =>',DocumentPicker);
-    var s3Data = this.props.s3Data;
-    // console.log('s3Data: ',s3Data);
-    // Pick multiple files
-    try {
-      const results = await DocumentPicker.pickMultiple({
-        type: [DocumentPicker.types.images],
-      });
-      // console.log('results=>', results);
-      for ( var i = 0; i < results.length ; i++ ) {
-          var res = results[i];
-          // console.log('res = >',res);
-          // var fileName = userId+'_'+Date.now()+'_'+res.fileName;
-          var fileName = new Date().getTime()+'-'+res.name;
-          var fileExt = fileName.split('.').pop();
+        case RESULTS.DENIED:
+          console.log('The permission has not been requested / is denied but requestable');
+          break;
 
-          var file = {
-            uri   : res.uri,
-            name  : fileName,
-            type  : res.type,
-          }
-        
-          // console.log("file obj => ",file);
-        
-          const options = {
-            keyPrefix           : "AttendanceCheckIn/",
-            bucket              : s3Data.bucket,
-            region              : s3Data.region,
-            accessKey           : s3Data.key,
-            secretKey           : s3Data.secret,
-          }
+        case RESULTS.GRANTED:
+          console.log('The permission is granted');
+          ImagePicker.launchImageLibrary(options, response => {
+          if (response.uri) {
+            var file = response;
+              if (file) {
+                var fileName = file.fileName; 
+                var ext = fileName.split('.').pop(); 
+                if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
+                  if (file) {
+                    console.log("file------>",file);
+                    console.log("config-------->",this.state.config);
+                    S3FileUpload
+                    .uploadFile(file,this.state.config)
+                    .then((Data)=>{
+                      console.log("Data = ",Data);
+                        var obj1={
+                          imgPath : Data.location,
+                        }
+                        var imgArrayWSaws = this.state.imgArrayWSaws;
+                        imgArrayWSaws.push(obj1);
+                        this.setState({
+                          imgArrayWSaws : imgArrayWSaws
+                        })
+                    })
+                    .catch((error)=>{
+                            console.log("error in catch = ",error);
+                            if(error.message === "Request failed with status code 401")
+                              {
+                                   Alert.alert("Your session is expired! Please login again.","", "error");
+                                   this.navigateScreen('Home');          
+                              }
+                    });
+                  }else{          
+                    Alert.alert("File not uploaded","Something went wrong","error");  
+                  }
+                }else{
+                  Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+                }
+              }
+            }
+          });
+          break;
 
-
-           RNS3.put(file, options).then((response) => {
-
-             if (response.status !== 201)
-              throw new Error("Failed to upload image to S3");
-
-             var link = response.body.postResponse.location;
-             var linkArrCount = link.split('AttendanceCheckIn%2F')[1].split('.').length;
-
-
-             var imgLink = {
-                "_id"       : "",
-                "userId"    : Meteor.userId(),
-                "imgLink"   : link,
-                "imgExt"    : link.split('AttendanceCheckIn%2F')[1].split('.')[linkArrCount-1],
-                "imgName"   : response.body.postResponse.key.split('AttendanceCheckIn/')[1],
-                "createdAt" : new Date() ,                                       
-              };
-              // console.log('imgLink: ',imgLink);
-              // console.log('link: ',link);
-             // console.log("---------  response.body  ------------------");
-          
-              this.setState({'images' : [ ...this.state.images , imgLink ] },
-                             ()=>{
-                              // console.log(this.state.cameraImgs);
-                             });
-
-          }).catch((error) => console.log("Handled Exceptions image ",error));
-      }//i loop end
-    } // try end
-    catch ( err ) {
-      // console.log('err => ',err);
-      if ( DocumentPicker.isCancel(err) ) {
-        // User cancelled the picker, exit any dialogs or menus and move on
-      } else {
-        // console.log('err1 => ',err);
-        throw err;
-      }
-    }
- 
+        case RESULTS.BLOCKED:
+          console.log('The permission is denied and not requestable anymore');
+          break;
+        }
+    })
+    .catch(error => {
+        console.log("error = ",error);
+    });
   }
 
-  async requestCameraPermission() {
-    var s3Data = this.props.s3Data;
-    try {
-      const granted = await PermissionsAndroid.request(
-        PermissionsAndroid.PERMISSIONS.CAMERA,
-        {
-          title          : 'Cool Photo App Camera Permission',
-          message        : 'Cool Photo App needs access to your camera ' +
-                           'so you can take awesome pictures.',
-          buttonNeutral  : 'Ask Me Later',
-          buttonNegative : 'Cancel',
-          buttonPositive : 'OK',
-        },
-      );
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        const options = {
-              title          : 'Photo Picker',
-              mediaType      : 'photo',
-              storageOptions : {
-                                skipBackup : true,
-                                path       : 'images'
-                               }
-        };
-
-        //Launch Camera
-        // ImagePicker.launchCamera(options, (response) => {
-
-        //   var image = response.data;
-
-        //   var fileName    = 'img-'+new Date().getTime()+'.jpeg';
-        //   const imageData = image;
-        //   const imagePath = RNFS.DocumentDirectoryPath+'/'+fileName;
-
-        //   RNFS.writeFile(imagePath, imageData, 'base64')
-        //       .then(() => {
-
-        //                     var fileExt = fileName.split('.').pop();
-        //                     var file = {
-        //                       uri   : 'file://'+imagePath,
-        //                       name  : fileName,
-        //                       type  : response.type,
-        //                     };
-        //                    // this.setState({ image : file.uri });
-        //                     // console.log("file obj => ",file);
-                          
-        //                     const options = {
-        //                       keyPrefix           : "AttendanceCheckIn/",
-        //                       bucket              : s3Data.bucket,
-        //                       region              : s3Data.region,
-        //                       accessKey           : s3Data.key,
-        //                       secretKey           : s3Data.secret,
-        //                     };
-
-        //                      RNS3.put(file, options).then((response) => {
-
-        //                        if (response.status !== 201)
-        //                         throw new Error("Failed to upload image to S3");
-
-        //                        var link = response.body.postResponse.location;
-        //                        var linkArrCount = link.split('AttendanceCheckIn%2F')[1].split('.').length;
-
-
-        //                        var imgLink = {
-        //                           "_id"       : "",
-        //                           "userId"    : Meteor.userId(),
-        //                           "imgLink"   : link,
-        //                           "imgExt"    : link.split('AttendanceCheckIn%2F')[1].split('.')[linkArrCount-1],
-        //                           "imgName"   : response.body.postResponse.key.split('AttendanceCheckIn/')[1],
-        //                           "createdAt" : new Date() ,                                       
-        //                         };
-        //                         // console.log('imgLink: ',imgLink);
-        //                        // console.log("---------  response.body  ------------------");
-                            
-        //                         this.setState({'images' : [ ...this.state.images , imgLink ] },
-        //                                        ()=>{
-        //                                         // console.log(this.state.cameraImgs);
-        //                                        });
-
-        //                     }).catch((error) => console.log("Handled Exceptions image ",error));
-        //                   })
-        //                   .catch((err) => {
-        //                     console.log('err => ',err.message);
-        //                   });
-
-        // });
-
-      } else {
-        console.log('Camera permission denied');
-      }
-    } catch (err) {
-      console.warn(err);
-    }
-  }
-
-
-removeImg = (imgIndex)=>{
+  removeImg = (imgIndex)=>{
     Alert.alert('Successfully deleted Image.');
     // console.log('imgIndex: ',imgIndex);
     var imgs = this.state.images;
@@ -735,18 +618,12 @@ removeImg = (imgIndex)=>{
     this.setState({images: imgs});
   }
 
-
-  uploadCameraLocationImgs = () =>{
-    this.requestCameraPermission();
-  }
-
   render(){
-
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
-    
     const { navigation } = this.props;
     let {activeIndex} = this.state;
     // let weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+    console.log("this.state.photo",this.state.photo);
 
      let properDetails = [
       {
@@ -998,19 +875,6 @@ removeImg = (imgIndex)=>{
             </View> 
           </View>
 
-           {/* <View style={[styles.marginBottom25,styles.weekWrap]}>
-            {weekDays.map((data,index)=>(
-              <TouchableOpacity 
-                onPress={()=>this.setActive(index)}
-                key={index} 
-                style={[(index==activeIndex?styles.activeWeekView:styles.weekView),(index==0?styles.borderRadiusLeft2:(index==6)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
-              >
-                <Text style={styles.tabText}>{data}</Text>
-              </TouchableOpacity>
-            ))
-            }
-            </View>*/}
-
             <View style={[styles.marginBottom25,{width:'100%'}]}>
               <Table borderStyle={{borderColor:'transparent'}} style={{ alignContent: "center"}}>
                 <Row
@@ -1040,99 +904,66 @@ removeImg = (imgIndex)=>{
 
             {/*form 7 fields*/}
 
-             <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
-                            <View style={{flex:1, paddingHorizontal:20}}>
-                             <Text style={[{fontSize:15,color:'#666',textAlign:'left',marginTop:10,marginBottom:10}]}>{'Upload Images :'}</Text>
-                            </View>
-                            <View style={{flexDirection:'row',marginTop:5,marginBottom:10}}>
-                              <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
-                                <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
-                                <TouchableOpacity  onPress = {this.addCameraLocationImgs}>
-                                  <Icon name    = "upload"
-                                        type    = "font-awesome"
-                                        color   = "#fff"
-                                        // onPress = {this.addCameraLocationImgs}
-                                        />
-                                </TouchableOpacity>
-                                </View>
-                              </View>
-                              <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
-                                <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
-                                <TouchableOpacity  onPress = {this.uploadCameraLocationImgs}>
-                                  <Icon name    = "camera"
-                                        type    = "antdesign"
-                                        color   = "#fff"
-                                        // onPress = {this.uploadCameraLocationImgs}
-                                        />
-                                </TouchableOpacity>
-                                </View>
-                              </View>
-                            </View>
+            <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
+                <View style={{flex:1, paddingHorizontal:20}}>
+                 <Text style={[{fontSize:15,color:'#666',textAlign:'left',marginTop:10,marginBottom:10}]}>{'Upload Images :'}</Text>
+                </View>
+                <View style={{flexDirection:'row',marginTop:5,marginBottom:10}}>
+                  <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
+                    <TouchableOpacity  onPress = {this.handleChoosePhoto}>
+                      <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
+                            <Icon    
+                              name    = "upload"
+                              type    = "antdesign"
+                              color   = "#fff"
+                            />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
+                    {this.state.imgArrayWSaws && this.state.imgArrayWSaws.length>0 ?
+                        this.state.imgArrayWSaws.map((photo,i)=>(
+                          <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
+                            <Image
+                              source={{ uri: photo.imgPath }}
+                              style={{width: 120, height: 100/*, marginRight:10*/ }}
+                            />  
                           </View>
+                        ))
+                        :
+                        null
+                      }
+                  </View>    
+            </View>
 
+            <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
+            {
+              properDetails.map((data,i)=>{
+                  <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{}:{marginLeft:'10%'})]}>
+                    <ImageBackground  
+                      source={data.imageSource}
+                      style={{width:"100%",height:80}}
+                    >
+                       <Button
+                        containerStyle  = {[{marginRight:10,width:'20%',position:'absolute'}]}
+                        iconRight
+                        icon = {<Icon
+                          name="times" 
+                          type="font-awesome"
+                          size={15}
+                          color={colors.white}
+                        />}
+                      />
 
-                            <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-                            {
-                              properDetails.map((data,i)=>{
-                                // return(
-                                  <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{}:{marginLeft:'10%'})]}>
-                                    <ImageBackground  
-                                    // source={require('../../images/p1.png')}
-                                      source={data.imageSource}
-                                      style={{width:"100%",height:80}}
-                                      // resizeMode="contain"
-                                      // imageStyle={{borderRadius:4}}
-                                    >
+                    </ImageBackground>
 
-                                     <Button
-                                      // onPress         = {()=>this.props.navigation.navigate('PropertySuccess')}
-                                      // titleStyle      = {styles.buttonText2}
-                                      // title           = "Interested"
-                                      // buttonStyle     = {styles.button2}
-                                      containerStyle  = {[{marginRight:10,width:'20%',position:'absolute'}]}
-                                      iconRight
-                                      icon = {<Icon
-                                        name="times" 
-                                        type="font-awesome"
-                                        size={15}
-                                        color={colors.white}
-                                      />}
-                                    />
+                  </View>
+                // );
+              }) 
+            }
 
-                                      </ImageBackground>
-
-                                  </View>
-                                // );
-                              }) 
-                            }
-                          {/*{properDetails.map((prop,i)=>( 
-                                   <Image 
-                                    // source={require('../../images/p1.png')}
-                                    source={prop.imageSource}
-                                    
-                                    resizeMode="contain"
-                                    imageStyle={{borderRadius:4}}
-                                  >
-                                    <Button
-                                      // onPress         = {()=>this.props.navigation.navigate('PropertySuccess')}
-                                      // titleStyle      = {styles.buttonText2}
-                                      // title           = "Interested"
-                                      // buttonStyle     = {styles.button2}
-                                      containerStyle  = {[{marginTop:10,marginRight:10}]}
-                                      iconRight
-                                      icon = {<Icon
-                                        name="times" 
-                                        type="font-awesome"
-                                        size={15}
-                                        color={colors.white}
-                                      />}
-                                    />
-
-                                   </Image>   
-                          ))
-                        }*/}
-
-                          </View>
+          </View>
 
             <Button
               onPress         = {this.submitFun.bind(this)}
@@ -1149,9 +980,6 @@ removeImg = (imgIndex)=>{
                 color="white"
               />}
             />
-
-            
-
           </View>
         </ScrollView>
         <Modal isVisible={this.state.openModal} 

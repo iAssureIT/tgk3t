@@ -309,7 +309,7 @@ const navigateAction = StackActions.reset({
                     // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
                     onPress         = {this.login.bind(this)}
                     titleStyle      = {styles.buttonText2}
-                    title           = "Post & Earn &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; "
+                    title           = "Post & Earn"
                     buttonStyle     = {styles.button2}
                     containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
                     iconRight
