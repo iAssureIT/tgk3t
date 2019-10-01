@@ -6,6 +6,7 @@ import SideMenuBeforeLogin from '../layouts/SideMenu/SideMenuBeforeLogin.js';
 import SignUp from '../components/SystemSecurity/SignUp/SignUp.js';
 import BasicInfo from '../components/PostAndEarn/BasicInfo.js';
 import PropertyDetails from '../components/PostAndEarn/PropertyDetails.js';
+import Amenities from '../components/PostAndEarn/Amenities.js';
 import FinancialDetails from '../components/PostAndEarn/FinancialDetails.js';
 import Availability from '../components/PostAndEarn/Availability.js';
 import Congratulation  from '../components/PostAndEarn/Congratulation.js';
@@ -46,6 +47,13 @@ const HomeStack = createStackNavigator({
 
   PropertyDetails:{
     screen: PropertyDetails,
+    navigationOptions: {
+      header: null
+    }
+  },
+  
+  Amenities:{
+    screen: Amenities,
     navigationOptions: {
       header: null
     }

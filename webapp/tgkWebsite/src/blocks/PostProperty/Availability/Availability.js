@@ -454,7 +454,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                   })
               })
               .catch((error)=>{
-                        console.log("error = ",error);
+                        console.log("error here--------------------- = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
@@ -465,6 +465,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                 });
 
             var objTitle={   
+            	
               fileInfo :file
             }
             // var imgTitleArrayWS = [];

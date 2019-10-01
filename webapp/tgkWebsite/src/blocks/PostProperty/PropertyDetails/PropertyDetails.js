@@ -218,8 +218,6 @@ import './PropertyDetails.css';
 			event.preventDefault();
 
 			if(this.state.updateOperation === true){
-				console.log("update fun");
-				var ov = this.state.originalValues;
 
 				console.log("update fun");
 				var ov = this.state.originalValues;

@@ -154,6 +154,8 @@ const navigateAction = StackActions.reset({
   login(){
     // const originPage = "post" ;
     console.log("token in home screen",this.state.token);
+    AsyncStorage.removeItem('propertyId');
+
     if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
        this.navigateScreen("MobileScreen");
     }else{

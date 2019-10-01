@@ -125,7 +125,7 @@ const navigateAction = StackActions.reset({
       propertyId        : "",
       uid               : "",
       token             : "",
-      originalValues    :"",
+      originalValues    : "",
       personal          : "",
       washrooms         : "",
       pantry            : "",
@@ -137,49 +137,9 @@ const navigateAction = StackActions.reset({
    componentDidMount(){
      
     this._retrieveData();
-    // axios
-    //   .get('/api/masteramenities/list')
-    //   .then(
-    //     (res)=>{
-    //       console.log('res postdata', res);
-    //       const postsdata = res.data;
-    //       // console.log('postsdata',postsdata);
-    //       this.setState({
-    //         allAmenities : postsdata,
-    //       },()=>{
-    //         // console.log("data from admin side",this.state.allAmenities);
-    //         var allAmenitiesDataList = this.state.allAmenities.map((item,index)=>{
-
-    //           var newObj = Object.assign({},item);
-    //             if(item.amenity){
-    //               newObj.checked = false
-    //             }else{
-    //               newObj.checked = true
-    //             }
-    //             // console.log("newObj",newObj);
-    //             return newObj;
-
-    //         });
-
-    //         this.setState({
-    //           allAmenities:allAmenitiesDataList,
-    //         });
-    //       });
-    //     }
-    //   )
-    //   .catch((error)=>{
-
-    //     console.log("error = ",error);
-    //     // if(error.message === "Request failed with status code 401")
-    //     //                   {
-    //     //                       Alert.alert("Your session is expired!"," Please login again.");
-    //     //                      this.props.navigation.navigate('MobileScreen');          
-                               
-                               
-    //     //                   }
-    //      }); 
-     
+    
   }
+
 
   _retrieveData = async () => {
     try {
@@ -246,8 +206,8 @@ const navigateAction = StackActions.reset({
 
                                 },()=>{
 
-                                  console.log("supeeeeeeerarea",this.state.superArea);
-                                  console.log("furnishedStatus",this.state.furnishedStatus);
+                                  // console.log("supeeeeeeerarea",this.state.superArea);
+                                  // console.log("furnishedStatus",this.state.furnishedStatus);
                                   if(this.state.furnishedStatus == "semiFurnished")
                                   {
                                     this.setState({furnishedIndex:1});
@@ -283,8 +243,8 @@ const navigateAction = StackActions.reset({
   }
 
   onSelectFurnishStatus=(index,value)=>{
-    console.log("here value",value);
-    console.log("here index",index);
+    // console.log("here value",value);
+    // console.log("here index",index);
 
     this.setState({
       furnishedIndex: index,
@@ -327,28 +287,11 @@ const navigateAction = StackActions.reset({
   }
 
 
-   handleOnClickInternal = (index)=>{
-    console.log("index",index);
-    var alldata = this.state.allAmenities;
-    var status = alldata[index].checked;
-    if(status===true){
-      alldata[index].checked = false;
-    }else{
-      alldata[index].checked = true;
-    }
-    this.setState({
-      allAmenities: alldata,
-    },()=>{
-      console.log("here new data of amenities",this.state.allAmenities);
-    });
-
-    console.log("current data status",status);
-
-  }
+  
 
   handleOnFurnish = (index)=>{
 
-     console.log("index",index);
+     // console.log("index",index);
     var alldata = this.state.furnishItem;
     var status = alldata[index].checked;
     if(status===true){
@@ -359,9 +302,9 @@ const navigateAction = StackActions.reset({
     this.setState({
       furnishItem: alldata,
     },()=>{
-      console.log("here new data of furnishItem",this.state.furnishItem);
+      // console.log("here new data of furnishItem",this.state.furnishItem);
     });
-    console.log("current data status",status);
+    // console.log("current data status",status);
   }
 
  submitFun(){
@@ -410,7 +353,7 @@ const navigateAction = StackActions.reset({
                  eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry )
               {
                   console.log("same data");
-                 this.navigateScreen('FinancialDetails');
+                 this.navigateScreen('Amenities');
                   
               }else{
                   console.log("diff data");
@@ -433,16 +376,16 @@ const navigateAction = StackActions.reset({
                   "property_id"       : this.state.propertyId,
                   "uid"               : this.state.uid,
 
-                  // "Amenities"         : allAmenitiesDataList,
+                  // "Amenities"         : [],
                   "floor"             : this.state.floor,
                   "totalFloor"        : this.state.totalFloor,
                   "superAreaUnit"     : this.state.superAreaUnit,
                   "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                  "furnishPantry"       : this.state.furnishpantry, 
-                  "furnishedOptions"    : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
+                  "furnishPantry"     : this.state.furnishpantry, 
+                  "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
                 };
 
-                if( this.state.furnishedStatus!=="" && this.state.furnishedStatus!==undefined &&  this.state.builtupArea.value!=="" && 
+                if( this.state.furnishedIndex!=="" &&  this.state.builtupArea.value!=="" && 
                     this.state.floor!=="" &&  this.state.totalFloor!=="" ){
 
 
@@ -452,7 +395,7 @@ const navigateAction = StackActions.reset({
                           console.log(res);
                           if(res.status === 200){
                             console.log("PropertyDetails Res = ",res);
-                            this.navigateScreen('FinancialDetails');
+                            this.navigateScreen('Amenities');
                           }
                         })
                         .catch((error)=>{
@@ -521,7 +464,7 @@ const navigateAction = StackActions.reset({
                   "property_id"       : this.state.propertyId,
                   "uid"               : this.state.uid,
 
-                  // "Amenities"         : allAmenitiesDataList,
+                  // "Amenities"         : [],
                   "floor"             : this.state.floor,
                   "totalFloor"        : this.state.totalFloor,
                   "superAreaUnit"     : this.state.superAreaUnit,
@@ -541,7 +484,7 @@ const navigateAction = StackActions.reset({
                           console.log(res);
                           if(res.status === 200){
                             console.log("PropertyDetails Res = ",res);
-                           this.navigateScreen('FinancialDetails',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                           this.navigateScreen('Amenities',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
 
                           }
                         })
@@ -832,7 +775,7 @@ const navigateAction = StackActions.reset({
 
             <Text style={[styles.heading2,styles.marginBottom15]}>It is<Text style={[{color:"#f00"}]}>*</Text></Text>
             <View style={[styles.marginBottom15,{width:'100%'}]}>
-            {console.log("here index render",this.state.furnishedIndex)}
+            
               <RadioGroup
                 size={20}
                 color={colors.grey}
@@ -1016,7 +959,7 @@ const navigateAction = StackActions.reset({
                 <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
               <View style={[styles.inputTextWrapper68,{}]}>
-              {console.log("here superArea",this.state.superArea)}
+              
                 <TextField
                   label                 = "Super Area"
                   lineWidth             = {1}
@@ -1113,45 +1056,7 @@ const navigateAction = StackActions.reset({
 
             {/*end*/}
 
-            {/* <View>
-              <Text style={styles.heading}>
-                My Apartment has following Amenities
-              </Text>
-            </View>
-
-            <View style={styles.divider}></View>
-
-            <View style={styles.amenitiesWrapper} >
-              <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
-              {this.state.allAmenities && this.state.allAmenities.length >0 ?
-                this.state.allAmenities.map((data,index)=>(
-                <React.Fragment key={index}>
-                  <CheckBox
-                    key={index}
-                    style={{marginBottom:10}}
-                    onClick={() => this.handleOnClickInternal(index)}
-                    isChecked={data.checked}
-                    rightTextStyle={{marginLeft:0}}
-                    checkBoxColor= {colors.grey}
-                    rightTextView = {
-                      <View style={{flexDirection:'row',flex:1}}>
-                        <Icon
-                          name={this.state.defaultIcon}
-                          type={this.state.iconType}
-                          size={18}
-                          color= {colors.button}
-                          containerStyle = {{marginHorizontal:10}}
-                        />
-                        <Text style={styles.inputText}>{data.amenity}</Text>
-                      </View>
-                    }
-                  />                 
-                </React.Fragment> 
-              ))
-                :
-                null
-              }          
-            </View>*/}
+          
 {/*
             <View>
               <Text style={styles.heading}>

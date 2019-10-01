@@ -5,7 +5,7 @@ const window = Dimensions.get('window');
 
 export default StyleSheet.create({
   amenitiesWrapper : {
-    backgroundColor: "#ff0",
+    // backgroundColor: "#ff0",
   },
   container:{
     backgroundColor: '#fff',
