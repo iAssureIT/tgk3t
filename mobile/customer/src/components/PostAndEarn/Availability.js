@@ -417,7 +417,7 @@ export default class Availability extends ValidationComponent{
                 "contactPerson"       : this.state.contactPerson,
                 "available"           : this.state.available,
                 "propertyImages"      : this.state.imgArrayWSaws,
-                // "video"               : this.state.singleVideo,
+                "video"               : this.state.singleVideo,
                 "status"              : "New",
                 "property_id"         : this.state.propertyId,
                 "uid"                 : this.state.uid,
@@ -518,8 +518,12 @@ export default class Availability extends ValidationComponent{
 
   handleChoosePhoto = () => {
     const options = {
-      noData: true,
-    };
+      title: 'Video Picker', 
+        storageOptions:{
+          skipBackup:true,
+          path:'images'
+        }
+  };
     request(PERMISSIONS.IOS.PHOTO_LIBRARY)
     .then(result => {
       console.log("result",result);
@@ -586,6 +590,81 @@ export default class Availability extends ValidationComponent{
     });
   }
 
+
+  handleChooseVideo = () => {
+    const options = {
+      title: 'Video Picker', 
+      mediaType: 'video', 
+        storageOptions:{
+          skipBackup:true,
+          path:'images'
+        }
+  };
+    request(PERMISSIONS.IOS.PHOTO_LIBRARY)
+    .then(result => {
+      console.log("result",result);
+      switch (result) {
+        case RESULTS.UNAVAILABLE:
+          console.log('This feature is not available (on this device / in this context)');
+          break;
+
+        case RESULTS.DENIED:
+          console.log('The permission has not been requested / is denied but requestable');
+          break;
+
+        case RESULTS.GRANTED:
+          console.log('The permission is granted');
+          ImagePicker.launchImageLibrary(options, response => {
+          if (response.uri) {
+            var file = response;
+              if (file) {
+                var fileName = file.fileName; 
+                var ext = fileName.split('.').pop(); 
+                if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
+                  if (file) {
+                    console.log("file------>",file);
+                    console.log("config-------->",this.state.config);
+                    RNS3
+                    .put(file,this.state.config)
+                    .then((Data)=>{
+                      console.log("Data = ",Data);
+                        var obj1={
+                          imgPath : Data.body.postResponse.location,
+                        }
+                        var imgArrayWSaws = this.state.imgArrayWSaws;
+                        imgArrayWSaws.push(obj1);
+                        this.setState({
+                          imgArrayWSaws : imgArrayWSaws
+                        })
+                    })
+                    .catch((error)=>{
+                            console.log("error in catch = ",error);
+                            if(error.message === "Request failed with status code 401")
+                              {
+                                   Alert.alert("Your session is expired! Please login again.","", "error");
+                                   this.navigateScreen('Home');          
+                              }
+                    });
+                  }else{          
+                    Alert.alert("File not uploaded","Something went wrong","error");  
+                  }
+                }else{
+                  Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+                }
+              }
+            }
+          });
+          break;
+
+        case RESULTS.BLOCKED:
+          console.log('The permission is denied and not requestable anymore');
+          break;
+        }
+    })
+    .catch(error => {
+        console.log("error = ",error);
+    });
+  }
   removeImg = (imgIndex)=>{
     Alert.alert('Successfully deleted Image.');
     // console.log('imgIndex: ',imgIndex);
@@ -906,13 +985,47 @@ export default class Availability extends ValidationComponent{
                           <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
                             <Image
                               source={{ uri: photo.imgPath }}
-                              style={{width: 120, height: 100/*, marginRight:10*/ }}
+                              style={{width: 120, height: 100}}
                             />  
                           </View>
                         ))
                         :
                         null
                       }
+                  </View>    
+            </View>
+
+            <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
+                <View style={{flex:1, paddingHorizontal:20}}>
+                 <Text style={[{fontSize:15,color:'#666',textAlign:'left',marginTop:10,marginBottom:10}]}>{'Upload Videos :'}</Text>
+                </View>
+                <View style={{flexDirection:'row',marginTop:5,marginBottom:10}}>
+                  <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
+                    <TouchableOpacity  onPress = {this.handleChooseVideo}>
+                      <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
+                            <Icon    
+                              name    = "upload"
+                              type    = "antdesign"
+                              color   = "#fff"
+                            />
+                      </View>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
+                    {this.state.singleVideo?
+                        <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
+                          <Video 
+                            source={{uri:this.state.singleVideo}}   // Can be a URL or a local file.
+                            repeats
+                            controls={true}
+                            resizeMode={"stretch"}
+                            style={{height:120,width:100}} 
+                          />
+                        </View>
+                      :
+                      null
+                    }
                   </View>    
             </View>
 
@@ -943,7 +1056,6 @@ export default class Availability extends ValidationComponent{
             }
 
           </View>
-
             <Button
               onPress         = {this.submitFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails7')}
