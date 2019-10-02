@@ -8,7 +8,8 @@ import {
   TouchableOpacity,
   ImageBackground,
   Image,TextInput,
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 
 import { Button,Icon, SearchBar }           from 'react-native-elements';
@@ -26,7 +27,7 @@ import { Dropdown }                         from 'react-native-material-dropdown
 import DatePicker                           from "react-native-datepicker";
 import TimePicker                           from "react-native-24h-timepicker";
 import Modal                                from "react-native-modal";
-import {request, PERMISSIONS, RESULTS}      from 'react-native-permissions';
+import {request, check, PERMISSIONS, RESULTS}      from 'react-native-permissions';
 import SwitchToggle                         from 'react-native-switch-toggle';
 import ImagePicker                          from 'react-native-image-picker';
 import S3FileUpload                         from 'react-s3';
@@ -518,76 +519,140 @@ export default class Availability extends ValidationComponent{
 
   handleChoosePhoto = () => {
     const options = {
-      title: 'Video Picker', 
-        storageOptions:{
-          skipBackup:true,
-          path:'images'
-        }
-  };
-    request(PERMISSIONS.IOS.PHOTO_LIBRARY)
-    .then(result => {
-      console.log("result",result);
-      switch (result) {
-        case RESULTS.UNAVAILABLE:
-          console.log('This feature is not available (on this device / in this context)');
-          break;
+      noData: true,
+    };
+    if(Platform.OS === 'android'){
+      request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
+      .then(result => {
+        console.log("result",result);
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
 
-        case RESULTS.DENIED:
-          console.log('The permission has not been requested / is denied but requestable');
-          break;
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            break;
 
-        case RESULTS.GRANTED:
-          console.log('The permission is granted');
-          ImagePicker.launchImageLibrary(options, response => {
-          if (response.uri) {
-            var file = response;
-              if (file) {
-                var fileName = file.fileName; 
-                var ext = fileName.split('.').pop(); 
-                if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
-                  if (file) {
-                    console.log("file------>",file);
-                    console.log("config-------->",this.state.config);
-                    RNS3
-                    .put(file,this.state.config)
-                    .then((Data)=>{
-                      console.log("Data = ",Data);
-                        var obj1={
-                          imgPath : Data.body.postResponse.location,
-                        }
-                        var imgArrayWSaws = this.state.imgArrayWSaws;
-                        imgArrayWSaws.push(obj1);
-                        this.setState({
-                          imgArrayWSaws : imgArrayWSaws
-                        })
-                    })
-                    .catch((error)=>{
-                            console.log("error in catch = ",error);
-                            if(error.message === "Request failed with status code 401")
-                              {
-                                   Alert.alert("Your session is expired! Please login again.","", "error");
-                                   this.navigateScreen('Home');          
-                              }
-                    });
-                  }else{          
-                    Alert.alert("File not uploaded","Something went wrong","error");  
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            ImagePicker.launchImageLibrary(options, response => {
+            if (response.uri) {
+              var file = response;
+                if (file) {
+                  var fileName = file.fileName; 
+                  var ext = fileName.split('.').pop(); 
+                  if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
+                    if (file) {
+                      console.log("file------>",file);
+                      console.log("config-------->",this.state.config);
+                      RNS3
+                      .put(file,this.state.config)
+                      .then((Data)=>{
+                        console.log("Data = ",Data);
+                          var obj1={
+                            imgPath : Data.body.postResponse.location,
+                          }
+                          var imgArrayWSaws = this.state.imgArrayWSaws;
+                          imgArrayWSaws.push(obj1);
+                          this.setState({
+                            imgArrayWSaws : imgArrayWSaws
+                          })
+                      })
+                      .catch((error)=>{
+                              console.log("error in catch = ",error);
+                              if(error.message === "Request failed with status code 401")
+                                {
+                                     Alert.alert("Your session is expired! Please login again.","", "error");
+                                     this.navigateScreen('Home');          
+                                }
+                      });
+                    }else{          
+                      Alert.alert("File not uploaded","Something went wrong","error");  
+                    }
+                  }else{
+                    Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
                   }
-                }else{
-                  Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
                 }
               }
-            }
-          });
-          break;
+            });
+            break;
 
-        case RESULTS.BLOCKED:
-          console.log('The permission is denied and not requestable anymore');
-          break;
-        }
-    })
-    .catch(error => {
-        console.log("error = ",error);
-    });
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+          }
+      })
+      .catch(error => {
+          console.log("error = ",error);
+      });
+    }else{
+      request(PERMISSIONS.IOS.PHOTO_LIBRARY)
+      .then(result => {
+        console.log("result",result);
+        switch (result) {
+          case RESULTS.UNAVAILABLE:
+            console.log('This feature is not available (on this device / in this context)');
+            break;
+
+          case RESULTS.DENIED:
+            console.log('The permission has not been requested / is denied but requestable');
+            break;
+
+          case RESULTS.GRANTED:
+            console.log('The permission is granted');
+            ImagePicker.launchImageLibrary(options, response => {
+            if (response.uri) {
+              var file = response;
+                if (file) {
+                  var fileName = file.fileName; 
+                  var ext = fileName.split('.').pop(); 
+                  if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
+                    if (file) {
+                      console.log("file------>",file);
+                      console.log("config-------->",this.state.config);
+                      RNS3
+                      .put(file,this.state.config)
+                      .then((Data)=>{
+                        console.log("Data = ",Data);
+                          var obj1={
+                            imgPath : Data.body.postResponse.location,
+                          }
+                          var imgArrayWSaws = this.state.imgArrayWSaws;
+                          imgArrayWSaws.push(obj1);
+                          this.setState({
+                            imgArrayWSaws : imgArrayWSaws
+                          })
+                      })
+                      .catch((error)=>{
+                              console.log("error in catch = ",error);
+                              if(error.message === "Request failed with status code 401")
+                                {
+                                     Alert.alert("Your session is expired! Please login again.","", "error");
+                                     this.navigateScreen('Home');          
+                                }
+                      });
+                    }else{          
+                      Alert.alert("File not uploaded","Something went wrong","error");  
+                    }
+                  }else{
+                    Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+                  }
+                }
+              }
+            });
+            break;
+
+          case RESULTS.BLOCKED:
+            console.log('The permission is denied and not requestable anymore');
+            break;
+          }
+      })
+      .catch(error => {
+          console.log("error = ",error);
+      });
+    }
+    
   }
 
 
@@ -677,7 +742,7 @@ export default class Availability extends ValidationComponent{
     const { navigation } = this.props;
     let {activeIndex} = this.state;
     // let weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-    console.log("this.state.photo",this.state.photo);
+    // console.log("this.state.photo",this.state.photo);
 
      let properDetails = [
       {
