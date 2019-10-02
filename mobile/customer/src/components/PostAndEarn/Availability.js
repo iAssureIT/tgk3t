@@ -30,8 +30,9 @@ import Modal                                from "react-native-modal";
 import {request, check, PERMISSIONS, RESULTS}      from 'react-native-permissions';
 import SwitchToggle                         from 'react-native-switch-toggle';
 import ImagePicker                          from 'react-native-image-picker';
-import S3FileUpload                         from 'react-s3';
 import { RNS3 }                             from 'react-native-aws3';
+import Video                                from 'react-native-video';
+import Dialog from "react-native-dialog";
 var Buffer = require('buffer/').Buffer
 import {
   Table,
@@ -52,6 +53,8 @@ const window = Dimensions.get('window');
   buttonNegative: 'Cancel',
   buttonNeutral: 'Ask Me Later',
 };
+
+var imgArrayWSaws = [];
 
 export default class Availability extends ValidationComponent{
 
@@ -125,6 +128,7 @@ export default class Availability extends ValidationComponent{
       "videoArray"      : [],
       "S3url"           : [],
       "imgArrayWSaws"   : [],
+      "dialogVisible"   : false,
     };
 
       var property_id = this.props.navigation.getParam('property_id','No property_id');
@@ -176,7 +180,7 @@ export default class Availability extends ValidationComponent{
                       updateOperation         : true,
                       prevAvailable           : response.data.avalibilityPlanVisit.available,
                       originalValuesGallery   : response.data.gallery,
-                      imgArrayWSaws           : response.data.gallery.Images,
+                      imgArrayWSaws           : response.data.gallery.Images ? response.data.gallery.Images : [],
                       singleVideo             : response.data.gallery.video ? response.data.gallery.video : "" ,
                      
                       // type            : response.data.contactPerson==="Someone" ? true : false,
@@ -358,6 +362,7 @@ export default class Availability extends ValidationComponent{
                 "available"           : this.state.available,
                 "propertyImages"      : this.state.imgArrayWSaws,
                 "status"              : "New",
+                "video"               : this.state.singleVideo,
                 "property_id"         : this.state.propertyId,
                 "uid"                 : this.state.uid,
               };
@@ -478,7 +483,7 @@ export default class Availability extends ValidationComponent{
     this.TimePicker2.close();
   }
 
-  handleAvailability(event){
+  handleAvailability(){
     console.log("Avialbaility",this.state.availability);
     console.log("From Time",this.state.time1);
     console.log("To Time",this.state.time2);
@@ -518,153 +523,14 @@ export default class Availability extends ValidationComponent{
 
 
   handleChoosePhoto = () => {
-    const options = {
-      noData: true,
-    };
-    if(Platform.OS === 'android'){
-      request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
-      .then(result => {
-        console.log("result",result);
-        switch (result) {
-          case RESULTS.UNAVAILABLE:
-            console.log('This feature is not available (on this device / in this context)');
-            break;
-
-          case RESULTS.DENIED:
-            console.log('The permission has not been requested / is denied but requestable');
-            break;
-
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
-            ImagePicker.launchImageLibrary(options, response => {
-            if (response.uri) {
-              var file = response;
-                if (file) {
-                  var fileName = file.fileName; 
-                  var ext = fileName.split('.').pop(); 
-                  if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
-                    if (file) {
-                      console.log("file------>",file);
-                      console.log("config-------->",this.state.config);
-                      RNS3
-                      .put(file,this.state.config)
-                      .then((Data)=>{
-                        console.log("Data = ",Data);
-                          var obj1={
-                            imgPath : Data.body.postResponse.location,
-                          }
-                          var imgArrayWSaws = this.state.imgArrayWSaws;
-                          imgArrayWSaws.push(obj1);
-                          this.setState({
-                            imgArrayWSaws : imgArrayWSaws
-                          })
-                      })
-                      .catch((error)=>{
-                              console.log("error in catch = ",error);
-                              if(error.message === "Request failed with status code 401")
-                                {
-                                     Alert.alert("Your session is expired! Please login again.","", "error");
-                                     this.navigateScreen('Home');          
-                                }
-                      });
-                    }else{          
-                      Alert.alert("File not uploaded","Something went wrong","error");  
-                    }
-                  }else{
-                    Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
-                  }
-                }
-              }
-            });
-            break;
-          case RESULTS.BLOCKED:
-            console.log('The permission is denied and not requestable anymore');
-            break;
-          }
-      })
-      .catch(error => {
-          console.log("error = ",error);
-      });
-    }else{
-      request(PERMISSIONS.IOS.PHOTO_LIBRARY)
-      .then(result => {
-        console.log("result",result);
-        switch (result) {
-          case RESULTS.UNAVAILABLE:
-            console.log('This feature is not available (on this device / in this context)');
-            break;
-
-          case RESULTS.DENIED:
-            console.log('The permission has not been requested / is denied but requestable');
-            break;
-
-          case RESULTS.GRANTED:
-            console.log('The permission is granted');
-            ImagePicker.launchImageLibrary(options, response => {
-            if (response.uri) {
-              var file = response;
-                if (file) {
-                  var fileName = file.fileName; 
-                  var ext = fileName.split('.').pop(); 
-                  if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
-                    if (file) {
-                      console.log("file------>",file);
-                      console.log("config-------->",this.state.config);
-                      RNS3
-                      .put(file,this.state.config)
-                      .then((Data)=>{
-                        console.log("Data = ",Data);
-                          var obj1={
-                            imgPath : Data.body.postResponse.location,
-                          }
-                          var imgArrayWSaws = this.state.imgArrayWSaws;
-                          imgArrayWSaws.push(obj1);
-                          this.setState({
-                            imgArrayWSaws : imgArrayWSaws
-                          })
-                      })
-                      .catch((error)=>{
-                              console.log("error in catch = ",error);
-                              if(error.message === "Request failed with status code 401")
-                                {
-                                     Alert.alert("Your session is expired! Please login again.","", "error");
-                                     this.navigateScreen('Home');          
-                                }
-                      });
-                    }else{          
-                      Alert.alert("File not uploaded","Something went wrong","error");  
-                    }
-                  }else{
-                    Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
-                  }
-                }
-              }
-            });
-            break;
-
-          case RESULTS.BLOCKED:
-            console.log('The permission is denied and not requestable anymore');
-            break;
-          }
-      })
-      .catch(error => {
-          console.log("error = ",error);
-      });
-    }
-    
-  }
-
-
-  handleChooseVideo = () => {
-    const options = {
+     const options = {
       title: 'Video Picker', 
-      mediaType: 'video', 
         storageOptions:{
           skipBackup:true,
           path:'images'
         }
-  };
-    request(PERMISSIONS.IOS.PHOTO_LIBRARY)
+    };
+    request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
     .then(result => {
       console.log("result",result);
       switch (result) {
@@ -680,9 +546,95 @@ export default class Availability extends ValidationComponent{
           console.log('The permission is granted');
           ImagePicker.launchImageLibrary(options, response => {
           if (response.uri) {
-            var file = response;
+            const file = {
+              uri  : response.uri,
+              name : response.fileName,
+              type : response.type,
+            }
               if (file) {
-                var fileName = file.fileName; 
+                var fileName = file.name; 
+                var ext = fileName.split('.').pop(); 
+                if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
+                  if (file) {
+                    console.log("file------>",file);
+                    console.log("config-------->",this.state.config);
+                    RNS3
+                    .put(file,this.state.config)
+                    .then((Data)=>{
+                      console.log("Data = ",Data);
+                        var obj1={
+                          imgPath : Data.body.postResponse.location,
+                        }
+                        var imgArrayWSaws = this.state.imgArrayWSaws;
+                        if(obj1!==null){
+                          imgArrayWSaws.push(obj1);
+                        }
+                        this.setState({
+                          imgArrayWSaws : imgArrayWSaws
+                        })
+                    })
+                    .catch((error)=>{
+                            console.log("error in catch = ",error);
+                            if(error.message === "Request failed with status code 401")
+                              {
+                                   Alert.alert("Your session is expired! Please login again.","", "error");
+                                   this.navigateScreen('Home');          
+                              }
+                    });
+                  }else{          
+                    Alert.alert("File not uploaded","Something went wrong","error");  
+                  }
+                }else{
+                  Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+                }
+              }
+            }
+          });
+          break;
+        case RESULTS.BLOCKED:
+          console.log('The permission is denied and not requestable anymore');
+          break;
+        }
+    })
+    .catch(error => {
+        console.log("error = ",error);
+    });    
+  }
+
+
+  handleChooseVideo = () => {
+    const options = {
+      title: 'Video Picker', 
+      mediaType: 'video', 
+        storageOptions:{
+          skipBackup:true,
+          path:'images'
+        }
+  };
+    request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
+    .then(result => {
+      console.log("result",result);
+      switch (result) {
+        case RESULTS.UNAVAILABLE:
+          console.log('This feature is not available (on this device / in this context)');
+          break;
+
+        case RESULTS.DENIED:
+          console.log('The permission has not been requested / is denied but requestable');
+          break;
+
+        case RESULTS.GRANTED:
+          console.log('The permission is granted');
+          ImagePicker.launchImageLibrary(options, response => {
+          if (response.uri) {
+            console.log("response",response);
+            const file = {
+                uri  : response.uri,
+                name : response.fileName,
+                type : "video"
+              }
+              if (file) {
+                var fileName = file.name; 
                 var ext = fileName.split('.').pop(); 
                 if(ext=="mp4" || ext=="avi" || ext=="ogv"){ 
                   if (file) {
@@ -725,16 +677,61 @@ export default class Availability extends ValidationComponent{
     });
   }
   
-  removeImg = (imgIndex)=>{
-    Alert.alert('Successfully deleted Image.');
-    // console.log('imgIndex: ',imgIndex);
-    var imgs = this.state.images;
-    // console.log('All=>',imgs);
-    // delete imgs[imgIndex];
-    imgs.splice(imgIndex, 1);
-    // console.log('All=>',imgs);
-    this.setState({images: imgs});
+  showDialog = () => {
+    this.setState({ dialogVisible: true });
+  };
+
+  deleteSingleVideoDirect = () => { 
+    this.setState({
+      singleVideo:"",
+      dialogVisible:false
+    }) 
+  };
+
+  handleCancel = () => {
+    this.setState({ dialogVisible: false });
+  };
+
+    deleteVideo = async () => {
+      console.log("inside delete")
+        this.setState({
+          singleVideo : ""
+          },()=>{
+            Alert.alert('Your video is deleted!')
+          })
+    }
+
+    deleteimageWS(e){
+    e.preventDefault();
+    var index = e.target.getAttribute('id');
+    var filePath = e.target.getAttribute('data-id');
+    var data = filePath.split("/");
+    var imageName = data[4];
+    console.log("imageName==",imageName);
+
+    if(index){
+      swal({
+            title: "Are you sure you want to delete this image?",
+            text: "Once deleted, you will not be able to recover this.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              var array = this.state.imgArrayWSaws; // make a separate copy of the array
+              array.splice(index, 1);
+              swal("Image deleted successfully");
+              this.setState({
+                imgArrayWSaws: array
+              });
+            }else {
+              swal("Your image is safe!");
+            }
+          });
+    }
   }
+
 
   render(){
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
@@ -1074,14 +1071,20 @@ export default class Availability extends ValidationComponent{
                 </View>
                 <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
                     {this.state.singleVideo?
-                        <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
+                        <View style={[{width:'45%',flexDirection:'row',marginBottom:30}]}>
                           <Video 
                             source={{uri:this.state.singleVideo}}   // Can be a URL or a local file.
                             repeats
                             controls={true}
                             resizeMode={"stretch"}
-                            style={{height:120,width:100}} 
+                            style={{height:150,width:250,marginLeft:20}} 
                           />
+                          <Icon    
+                              name    = "times"
+                              type    = 'font-awesome'
+                              color   = "#f00"
+                              onPress = {this.showDialog}
+                            />
                         </View>
                       :
                       null
@@ -1158,6 +1161,14 @@ export default class Availability extends ValidationComponent{
           </View>
         </View>
       </Modal>
+        <Dialog.Container visible={this.state.dialogVisible}>
+          <Dialog.Title>Are you sure?</Dialog.Title>
+          <Dialog.Description>
+            Once deleted, you will not be able to recover this Video!
+          </Dialog.Description>
+          <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+          <Dialog.Button label="Delete" onPress={this.deleteSingleVideoDirect} />
+        </Dialog.Container>
       </React.Fragment>
     );
     
