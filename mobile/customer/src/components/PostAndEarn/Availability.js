@@ -577,7 +577,6 @@ export default class Availability extends ValidationComponent{
               }
             });
             break;
-
           case RESULTS.BLOCKED:
             console.log('The permission is denied and not requestable anymore');
             break;
@@ -685,7 +684,7 @@ export default class Availability extends ValidationComponent{
               if (file) {
                 var fileName = file.fileName; 
                 var ext = fileName.split('.').pop(); 
-                if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
+                if(ext=="mp4" || ext=="avi" || ext=="ogv"){ 
                   if (file) {
                     console.log("file------>",file);
                     console.log("config-------->",this.state.config);
@@ -706,10 +705,10 @@ export default class Availability extends ValidationComponent{
                               }
                     });
                   }else{          
-                    Alert.alert("File not uploaded","Something went wrong","error");  
+                    Alert.alert("File not uploaded","Something went wrong");  
                   }
                 }else{
-                  Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+                  Alert.alert("Format is incorrect","Only Upload video format (mp4,avi,ogv)");   
                 }
               }
             }
