@@ -628,13 +628,8 @@ export default class Availability extends ValidationComponent{
                     .put(file,this.state.config)
                     .then((Data)=>{
                       console.log("Data = ",Data);
-                        var obj1={
-                          imgPath : Data.body.postResponse.location,
-                        }
-                        var imgArrayWSaws = this.state.imgArrayWSaws;
-                        imgArrayWSaws.push(obj1);
                         this.setState({
-                          imgArrayWSaws : imgArrayWSaws
+                          singleVideo : Data.body.postResponse.location,
                         })
                     })
                     .catch((error)=>{
@@ -665,6 +660,7 @@ export default class Availability extends ValidationComponent{
         console.log("error = ",error);
     });
   }
+  
   removeImg = (imgIndex)=>{
     Alert.alert('Successfully deleted Image.');
     // console.log('imgIndex: ',imgIndex);

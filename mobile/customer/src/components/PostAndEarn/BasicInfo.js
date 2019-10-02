@@ -1267,7 +1267,7 @@ const navigateAction = StackActions.reset({
                               containerStyle        = {styles.textContainer}
                               inputContainerStyle   = {styles.textInputContainer}
                               titleTextStyle        = {styles.textTitle}
-                              style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular"}]}
+                              style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                               labelTextStyle        = {styles.textLabel}
                               keyboardType          = "default"
                             />
