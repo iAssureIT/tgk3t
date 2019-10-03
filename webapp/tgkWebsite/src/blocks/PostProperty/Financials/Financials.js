@@ -49,7 +49,7 @@ class Financials extends Component{
             var availableFrom = new Date();
             if(response.data.financial.availableFrom!=="" & response.data.financial.availableFrom!==null && response.data.financial.availableFrom!==undefined){
               var date = response.data.financial.availableFrom.split("-")
-              console.log('date',date);
+              // console.log('date',date);
                 availableFrom = new Date(date[2], date[1] - 1, date[0])
             }
 
@@ -73,12 +73,12 @@ class Financials extends Component{
            },()=>{
                     });
                     var includeCharges = this.state.includeCharges;
-                    console.log("here includeCharges", includeCharges);
+                    // console.log("here includeCharges", includeCharges);
                     var includeChargesList = includeCharges.map((item,index)=>{
                       var propPresent = this.state.prevCharges.find((obj)=>{
                         return item.name === obj
                       })
-                      console.log("here propPresent ", propPresent);
+                      // console.log("here propPresent ", propPresent);
                       var newObj = Object.assign({},item);
                       if(propPresent){
                         newObj.checked = true
@@ -92,7 +92,7 @@ class Financials extends Component{
                     this.setState({
                       includeCharges : includeChargesList,
                     },()=>{
-                      console.log("here includeCharges in didmount after match result",this.state.includeCharges);
+                      // console.log("here includeCharges in didmount after match result",this.state.includeCharges);
 
                     });
 
@@ -246,7 +246,7 @@ updateUser(event){
                           }
                       })
       }else{
-        console.log("update fun");
+        // console.log("update fun");
         var ov = this.state.originalValues;
 
 
@@ -278,10 +278,10 @@ updateUser(event){
                   eq = true;  
                       }
                  }
-                  console.log("equal yes but same",eq); 
+                  // console.log("equal yes but same",eq); 
             }
 
-            console.log("outside eq",eq);
+            // console.log("outside eq",eq);
 
 
             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
@@ -289,13 +289,13 @@ updateUser(event){
               this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
                this.state.maintenanceCharges === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer)
             {
-              console.log("same data");
+              // console.log("same data");
               this.props.redirectToAvailability(this.props.uid,this.props.property_id);
 
             }else{
-              console.log("diff data");
+              // console.log("diff data");
                 // console.log("this.state.expectedRate",this.state.expectedRate);
-                console.log("this.state.expectedRate",this.state.expectedRate);
+                // console.log("this.state.expectedRate",this.state.expectedRate);
                 var expectedRate        = "";
                 var totalPrice          = "";
                 var monthlyRent         = "";
@@ -474,7 +474,7 @@ totalInclude(event){
    //  });
       const target = event.target.value;
       const name   = event.target.name;
-      console.log(name + "=" +target);
+      // console.log(name + "=" +target);
       this.setState({
       [name]       : target
       });
@@ -540,8 +540,8 @@ totalInclude(event){
 render() {
 
 return (
-  console.log("this.props.transactionType",this.props.transactionType),
-    console.log("this.props.propertyType",this.props.propertyType),
+  // console.log("this.props.transactionType",this.props.transactionType),
+    // console.log("this.props.propertyType",this.props.propertyType),
   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <form id="form">
         <div className=" row"></div>

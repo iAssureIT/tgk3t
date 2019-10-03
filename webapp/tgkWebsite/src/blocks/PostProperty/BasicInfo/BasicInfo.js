@@ -71,8 +71,8 @@ class BasicInfo extends Component{
 			this.handleChange = this.handleChange.bind(this);
 			this.radioChange = this.radioChange.bind(this);
 
-        	console.log("this.props.updateStatus inbasicinfo= ",this.props.updateStatus);
-        	console.log("this.props.property_id in basicinfo= ",this.props.property_id);
+        	// console.log("this.props.updateStatus inbasicinfo= ",this.props.updateStatus);
+        	// console.log("this.props.property_id in basicinfo= ",this.props.property_id);
 
         	if(this.props.updateStatus === true){
 
@@ -80,7 +80,7 @@ class BasicInfo extends Component{
 					.get('/api/properties/'+this.props.property_id)
 					.then( (res) =>{
 						console.log("get property = ",res);
-						console.log("get property transactionType = ",res.data.transactionType);
+						// console.log("get property transactionType = ",res.data.transactionType);
 						this.setState({
 									originalValues  : res.data,
 									propertyHolder  : res.data.propertyHolder,
@@ -111,11 +111,11 @@ class BasicInfo extends Component{
 
 								},()=>{
 										// location
-										console.log("cityName",this.state.cityName);
-										console.log("areaName",this.state.areaName);
-										console.log("subAreaName",this.state.subAreaName);
-										console.log("type2",this.state.type);
-										console.log("fullAddress",this.state.fullAddress);
+										// console.log("cityName",this.state.cityName);
+										// console.log("areaName",this.state.areaName);
+										// console.log("subAreaName",this.state.subAreaName);
+										// console.log("type2",this.state.type);
+										// console.log("fullAddress",this.state.fullAddress);
 
 										        //==================================================================
 										        // 			Get Cities
@@ -238,7 +238,7 @@ class BasicInfo extends Component{
 		}
 
 		componentDidMount(){	
-		console.log("here basic info");		
+		// console.log("here basic info");		
  
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
@@ -289,7 +289,7 @@ class BasicInfo extends Component{
 	    const {name,value} = event.target;
 	    let formerrors = this.state.formerrors;
 	    
-	    console.log("datatype",datatype);
+	    // console.log("datatype",datatype);
 	    switch (datatype){
 
 	     case 'pincode' : 
@@ -423,8 +423,8 @@ class BasicInfo extends Component{
 							localStorage.setItem('propertyId',res.data.property_id);
 							localStorage.setItem("index",this.state.index);
 
-							console.log("BasicInfo res = ",res);
-							console.log("propertyCode",res.data.propertyCode);
+							// console.log("BasicInfo res = ",res);
+							// console.log("propertyCode",res.data.propertyCode);
 							// this.props.prop_id = res.data.property_id;
 							this.props.redirectToPropertyDetails(this.props.uid,this.props.property_id);
 							// this.props.redirectToLocation(res.data.propertyCode, res.data.property_id,this.props.uid);						
@@ -552,7 +552,7 @@ class BasicInfo extends Component{
 		}
 		var url = "";
 
-		console.log("index = ",index);
+		// console.log("index = ",index);
 		if(index < 0){
 			const formValues ={
 				countryCode 	: "IN",
@@ -599,7 +599,7 @@ class BasicInfo extends Component{
 	         	listofCities : response.data,
 	        })
 	    }).catch((error)=>{
-                        console.log("error = ",error);
+                        // console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
                              swal("Your session is expired! Please login again.","", "error");
@@ -656,8 +656,8 @@ class BasicInfo extends Component{
           this.setState({ 
 	      [name]:target
 	    },()=>{
-	    	console.log('this name in area', name);
-	    	console.log('this target in area', target);
+	    	// console.log('this name in area', name);
+	    	// console.log('this target in area', target);
 
 	    })
 
@@ -769,14 +769,14 @@ class BasicInfo extends Component{
 			pincode : pincode,
 		});
 
-		console.log("pincode",pincode);
+		// console.log("pincode",pincode);
 		var url = 'http://locationapi.iassureit.com/api/areas/get/list/'+pincode;
 
 		axios({
 		  method: 'get',
 		  url: url,
 		}).then((response)=> {
-			console.log("area from pincode",response.data);
+			// console.log("area from pincode",response.data);
 			if(response.data){
 			    this.setState({
 			    	stateCode 		: response.data[0].stateCode,
@@ -862,10 +862,10 @@ class BasicInfo extends Component{
 
 
 	render() {
-		console.log("transactionType=>",this.state.transactionType);
-		console.log("type=>",this.state.type);
-		console.log("fullAddress",this.state.fullAddress);
-		console.log("CongratsPage",this.props.congratsPage)
+		// console.log("transactionType=>",this.state.transactionType);
+		// console.log("type=>",this.state.type);
+		// console.log("fullAddress",this.state.fullAddress);
+		// console.log("CongratsPage",this.props.congratsPage)
 		var cityName = this.state.cityName;
 	    var areaName = this.state.areaName;
 	    var subareaName = this.state.subAreaName;
@@ -879,7 +879,7 @@ class BasicInfo extends Component{
 	       var forth  = societyName.toUpperCase().slice(0,2);
 
 	       this.state.index = first+second+third+forth;
-	       console.log("index here", this.state.index);
+	       // console.log("index here", this.state.index);
 	    }
     return (
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -1266,7 +1266,7 @@ class BasicInfo extends Component{
 }
 
 const mapStateToProps = (state)=>{
-	console.log("bState===",state);
+	// console.log("bState===",state);
   return {
     uid             : state.uid,
     property_id     : state.property_id,

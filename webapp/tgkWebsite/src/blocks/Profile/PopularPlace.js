@@ -3,7 +3,7 @@ import { Link }                         from 'react-router-dom';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
 import axios                            from 'axios';
 import $                                from "jquery";
-import swal                     from 'sweetalert';
+import swal                             from 'sweetalert';
 import "./PopularPlace.css";
 
 class PopularPlaces extends Component{
@@ -87,8 +87,8 @@ class PopularPlaces extends Component{
                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 imgContainer pune Sm">
                     <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[0]?this.state.subAreaList[0]._id:null} onClick={this.getSubAreaName.bind(this)}>                     
-                        <h4>{this.state.subAreaList[0]?this.state.subAreaList[0]._id:null}</h4>
-                        <h4>{this.state.subAreaList[0]?this.state.subAreaList[0].count:null} Properties</h4>
+                        <span>{this.state.subAreaList[0]?this.state.subAreaList[0]._id:null}</span>
+                        <span>{this.state.subAreaList[0]?this.state.subAreaList[0].count:null} Properties</span>
                       </div>
                     </div>
                   </div>

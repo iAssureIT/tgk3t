@@ -45,8 +45,8 @@ import './PropertyDetails.css';
 			this.radioChange3 = this.radioChange3.bind(this);
 			this.radioChange4 = this.radioChange4.bind(this);
 
-			console.log("this.props.updateStatus",this.props.updateStatus);
-			console.log("this.props.property_id",this.props.property_id);
+			// console.log("this.props.updateStatus",this.props.updateStatus);
+			// console.log("this.props.property_id",this.props.property_id);
 			if(this.props.updateStatus === true){
 
 				axios
@@ -210,16 +210,16 @@ import './PropertyDetails.css';
                              this.props.history.push("/");
                         }
             });
-			console.log("this.props.updateStatus",this.props.updateStatus);
-			console.log("this.props.property_id",this.props.property_id);
-			console.log("all amenities for admin",this.state.allAmenities);
+			// console.log("this.props.updateStatus",this.props.updateStatus);
+			// console.log("this.props.property_id",this.props.property_id);
+			// console.log("all amenities for admin",this.state.allAmenities);
 		  }
 		updateUser(event){
 			event.preventDefault();
 
 			if(this.state.updateOperation === true){
 
-				console.log("update fun");
+				// console.log("update fun");
 				var ov = this.state.originalValues;
 				var allAmenitiesData = this.state.allAmenities;
 				var allAmenitiesDataList =[];			
@@ -236,7 +236,7 @@ import './PropertyDetails.css';
 				var eq ="";
 				if(allAmenitiesDataList.length != ov.Amenities.length )
 				{eq = false;
-				 console.log("equal not",eq);
+				 // console.log("equal not",eq);
 				 
 				}else{
 					for (var i = 0; i < allAmenitiesDataList.length; i++)
@@ -246,9 +246,9 @@ import './PropertyDetails.css';
 							eq = true;	
 			            }
 			       	}
-			        console.log("equal yes but same",eq);
+			        // console.log("equal yes but same",eq);
 				}
-				console.log("outside eq",eq);
+				// console.log("outside eq",eq);
 
 
 				//----------------------------------------------------------------
@@ -282,11 +282,11 @@ import './PropertyDetails.css';
 							equal = true;	
 			            }
 			       	}
-			        console.log("equal yes but same",equal);
-			        console.log("furnishedOptionsDataList.length1",furnishedOptionsDataList.length);
-				 console.log("ov.furnishedOptions.length1",ov.furnishedOptions.length);	
+			        // console.log("equal yes but same",equal);
+			        // console.log("furnishedOptionsDataList.length1",furnishedOptionsDataList.length);
+				 // console.log("ov.furnishedOptions.length1",ov.furnishedOptions.length);	
 				}
-				console.log("outside equal",equal);
+				// console.log("outside equal",equal);
 
 
 
@@ -308,7 +308,7 @@ import './PropertyDetails.css';
 						// this.props.redirectToAmenities(this.props.uid,this.props.property_id);
 				}else{
 
-					console.log("allAmenities in result",this.state.allAmenities);
+					// console.log("allAmenities in result",this.state.allAmenities);
 							var allAmenitiesData = this.state.allAmenities;
 								var allAmenitiesDataList =[];			
 										allAmenitiesData.map((item,index)=>{
@@ -318,7 +318,7 @@ import './PropertyDetails.css';
 											}
 										})
 
-										console.log("allAmenitiesDataList true",allAmenitiesDataList);
+										// console.log("allAmenitiesDataList true",allAmenitiesDataList);
 
 
 					// console.log("diff data");
@@ -426,7 +426,7 @@ import './PropertyDetails.css';
 	            }
             //
 
-				console.log("allAmenities in result",this.state.allAmenities);
+				// console.log("allAmenities in result",this.state.allAmenities);
 				var allAmenitiesData = this.state.allAmenities;
 					var allAmenitiesDataList =[];			
 							allAmenitiesData.map((item,index)=>{
@@ -436,7 +436,7 @@ import './PropertyDetails.css';
 								}
 							})
 
-							console.log("allAmenitiesDataList true",allAmenitiesDataList);
+							// console.log("allAmenitiesDataList true",allAmenitiesDataList);
 
 
 
@@ -545,8 +545,8 @@ import './PropertyDetails.css';
 
 		backToBasicInfo(){
 		this.props.backToBasicInfo();
-		console.log("this.props.uid",this.props.uid);
-		console.log("localStorage.getItem(propertyId)",localStorage.getItem("propertyId"));
+		// console.log("this.props.uid",this.props.uid);
+		// console.log("localStorage.getItem(propertyId)",localStorage.getItem("propertyId"));
 
 		this.props.backToBasicInfo(this.props.uid,localStorage.getItem("propertyId"));
 						
@@ -554,8 +554,8 @@ import './PropertyDetails.css';
 		builtArea(){
 			const builtArea=parseInt(this.refs.builtupArea.value);
 			const superArea=parseInt(this.refs.superArea.value);
-			console.log("builtArea",builtArea);
-			console.log("superArea",superArea);
+			// console.log("builtArea",builtArea);
+			// console.log("superArea",superArea);
 
 			if(builtArea >= superArea){
 				swal("Built Up Area should not be greater than Super Area", "", "warning");
@@ -607,7 +607,7 @@ import './PropertyDetails.css';
 	}
 
 	totalInclude(event){
-			console.log("event.target.getAttribute('value')",event.target.getAttribute('value'));
+			// console.log("event.target.getAttribute('value')",event.target.getAttribute('value'));
 		  var checkedPropAmenityType=[];
 		  if(event.target.checked){
 		  	checkedPropAmenityType = event.target.getAttribute('value');
@@ -622,7 +622,7 @@ import './PropertyDetails.css';
 			this.setState({
 				allAmenities : allAmenities,
 			},()=>{
-				console.log("here allAmenities in function check ", this.state.allAmenities);
+				// console.log("here allAmenities in function check ", this.state.allAmenities);
 			});
 
 			  // this.state.Amenities.push(e.target.getAttribute('value'));
@@ -641,7 +641,7 @@ import './PropertyDetails.css';
 				this.setState({
 					allAmenities : allAmenities,
 				},()=>{
-					console.log("here allAmenities in function uncheck ", this.state.allAmenities);
+					// console.log("here allAmenities in function uncheck ", this.state.allAmenities);
 
 				});
 
@@ -652,7 +652,7 @@ import './PropertyDetails.css';
 		}
 		totalInclude1(event){
 
-		  console.log("event.target.getAttribute('value')",event.target.getAttribute('value'));
+		  // console.log("event.target.getAttribute('value')",event.target.getAttribute('value'));
 		      var checkedPropAskType=[];
 		      if(event.target.checked){
 		        checkedPropAskType = event.target.getAttribute('value');
@@ -1240,7 +1240,7 @@ import './PropertyDetails.css';
 	}
 }
 const mapStateToProps = (state)=>{
-	console.log("pState===",state);
+	// console.log("pState===",state);
 
 	return {
 		property_id  	: state.property_id,

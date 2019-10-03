@@ -4,7 +4,7 @@ import { Link } 			from 'react-router-dom';
 import {withRouter} 		from 'react-router-dom';
 import { connect }          from 'react-redux';
 import $                    from "jquery";
-import swal                     from 'sweetalert';
+import swal                 from 'sweetalert';
 import BasicInfo            from '../../PostProperty/BasicInfo/BasicInfo.js';
 import Location             from '../../PostProperty/Location/Location.js';
 import PropertyDetails      from '../../PostProperty/PropertyDetails/PropertyDetails.js';
@@ -37,7 +37,7 @@ import './MyInterestedProperties.css';
 
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
-    	console.log("this.state.uid",this.state.uid)
+    	// console.log("this.state.uid",this.state.uid)
 		$(".modal-backdrop").remove();
 	     axios
 	    .get('/api/interestedProperties/list/'+this.state.uid)
@@ -233,7 +233,7 @@ import './MyInterestedProperties.css';
 
 											</div>
 											<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal mt20">				
-												<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
+												<div className="col-lg-3 col-md-4 col-sm-7 col-xs-7 ">				
 													{
 														myProperty.propertyType ==="Residential" ?
 														<span className="propertySubText1">
@@ -249,7 +249,7 @@ import './MyInterestedProperties.css';
 														</span>
 													}
 												</div>
-												<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">
+												<div className="col-lg-3 col-md-4 col-sm-4 col-xs-4 ">
 													{
 														myProperty.propertyType ==="Residential" ?
 														<span className="propertySubText1">
@@ -265,11 +265,11 @@ import './MyInterestedProperties.css';
 														</span>
 													}				
 												</div>
-												<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
+												<div className="col-lg-3 col-md-4 col-sm-7 col-xs-7 ">				
 													<img alt=""  src="/images/Icons/floor.png" className="imgIcon"/>&nbsp;
 													<span className="propertySubText1">{myProperty.propertyDetails.floor? myProperty.propertyDetails.floor :"-"}  /  {myProperty.propertyDetails.floor? myProperty.propertyDetails.totalFloor :"-"}</span><br/>Floor / Total Floors
 												</div>
-												<div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 ">				
+												<div className="col-lg-3 col-md-4 col-sm-4 col-xs-4 ">				
 													<img alt=""  src="/images/Icons/face.png" className="imgIcon"/>&nbsp;
 													<span className="propertySubText1">{myProperty.propertyDetails? myProperty.propertyDetails.facing :"-"}</span><br/>Facing
 												</div>
