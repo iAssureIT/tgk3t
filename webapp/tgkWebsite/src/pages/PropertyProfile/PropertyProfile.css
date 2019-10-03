@@ -490,9 +490,10 @@
   left: -18px
 }
 .mapImg{
-  width: 100%;
-  height:500px;
+  width: 97%;
+  height: 500px;
   z-index: 1;
+  position: absolute;
 }
 .divAboveMap{
   width: 100%;
@@ -500,6 +501,12 @@
   background-color: #605e5d;
   z-index: 2;
   position: relative;
-  top: -500px;
+  /* top: -500px; */
   opacity: 0.7;
+}
+.mapButton{
+  position: absolute;
+  top: 270px;
+  z-index: 3;
+  left: 46%;
 }

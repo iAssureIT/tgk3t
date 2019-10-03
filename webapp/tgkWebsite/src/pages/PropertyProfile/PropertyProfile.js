@@ -590,9 +590,9 @@ class PropertyProfile extends Component{
                           </div>
                         :
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                          <img src="/images/new/1.png" className="mapImg" />
+                          <img src="/images/new/hadapsarMap.png" className="mapImg" />
                           <div className="divAboveMap"></div> 
-                          <button onClick={this.handleMap.bind(this)}>Show Map</button>
+                          <button className="mapButton btn btn-primary" onClick={this.handleMap.bind(this)}>Show Map</button>
                         </div>
                       }
                    </div>
