@@ -185,7 +185,7 @@ export default class Congratulation extends ValidationComponent{
             </Text>
           </View>
 
-            <Button
+           {/* <Button
               onPress         = {this.submitFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails',{propertyId:this.state.propertyId,propertyDetails:this.state.propertyDetails})}
               titleStyle      = {styles.buttonText}
@@ -194,7 +194,16 @@ export default class Congratulation extends ValidationComponent{
               containerStyle  = {[styles.buttonContainer,styles.marginBottom15,{marginTop:20}]}
               iconRight
             
-            />
+            />*/}
+
+            <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
+                <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
+                   <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Property Details
+                   </Text>
+                </TouchableOpacity>
+            </View>
+
+
           </View>
         </ScrollView>
       

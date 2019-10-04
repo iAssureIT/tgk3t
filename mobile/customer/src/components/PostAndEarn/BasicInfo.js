@@ -1401,28 +1401,10 @@ export default class BasicInfo extends ValidationComponent{
                 </View>
               </View>
 
-            {/*here end*/}
+            
 
-                        {/*  {this.state.btnLoading
-                  ?
-                    <Button
-                      titleStyle      = {styles.buttonText}
-                      title           = "Processing"
-                      loading
-                      buttonStyle     = {styles.button}
-                      containerStyle  = {styles.buttonContainer}
-                    />
-                  :
-                    <Button
-                      onPress         ={this.login.bind(this)}
-       logout               titleStyle      = {styles.buttonText}
-                      title           = "Sign In"
-                      buttonStyle     = {styles.button}
-                      containerStyle  = {styles.buttonContainer}
-                    />
-                  }*/}
 
-              <Button
+              {/*<Button
               
                 onPress         = {this.submitFun.bind(this)}
                 // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
@@ -1437,8 +1419,15 @@ export default class BasicInfo extends ValidationComponent{
                   size={22}
                   color="white"
                 />}
-              />
+              />*/}
         
+                <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
+                    <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
+                       <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
+                       </Text>
+                    </TouchableOpacity>
+                </View>
+
             </View>
           </KeyboardAwareScrollView>
         </ScrollView>

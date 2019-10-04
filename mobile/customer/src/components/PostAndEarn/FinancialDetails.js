@@ -868,7 +868,7 @@ submitFun(){
                   />
               </View>
 
-              <Button
+             {/* <Button
                 onPress         = {this.submitFun.bind(this)}
                 titleStyle      = {styles.buttonText}
                 title           = "Save & Next"
@@ -881,7 +881,16 @@ submitFun(){
                   size={22}
                   color="white"
                 />}
-              />
+              />*/}
+
+              <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
+                  <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
+                     <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
+                     </Text>
+                  </TouchableOpacity>
+              </View>
+
+
 
             </View>
           </KeyboardAwareScrollView>  

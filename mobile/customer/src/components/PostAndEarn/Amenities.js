@@ -742,7 +742,7 @@ render(){
             </View>
 
 
-            <Button
+           {/* <Button
               onPress         = {this.submitFun.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
               titleStyle      = {styles.buttonText}
@@ -756,7 +756,15 @@ render(){
                 size={22}
                 color="white"
               />}
-            />
+            />*/}
+
+            <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
+                <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
+                   <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
+                   </Text>
+                </TouchableOpacity>
+            </View>
+
 
           </View>
          </ScrollView>

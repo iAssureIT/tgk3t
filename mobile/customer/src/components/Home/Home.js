@@ -153,6 +153,8 @@ const navigateAction = StackActions.reset({
 
   login(){
     // const originPage = "post" ;
+       // this.navigateScreen("PropertyDetails");
+
     console.log("token in home screen",this.state.token);
     AsyncStorage.removeItem('propertyId');
 

@@ -256,6 +256,9 @@ export default StyleSheet.create({
   },
   buttonContainer:{
     width:'100%',
+    // backgroundColor:"#aaa",
+    height:45,
+    borderRadius:3,
     ...Platform.select({
       ios:{
         justifyContent:'center',
@@ -274,6 +277,55 @@ export default StyleSheet.create({
       }
     })
   },
+  buttonContainerNextBTN:{
+    width:'100%',
+    color: "#fff",
+    backgroundColor: "#376bff",
+    borderColor: "#2e6da4",
+    borderRadius:5,
+    paddingTop:15,
+    paddingBottom:15,
+    textAlign: 'center',
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    },
+    ...Platform.select({
+      ios:{
+        justifyContent:'center',
+         shadowColor: "#000",
+        shadowOffset: {
+          width: 0,
+          height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+
+        elevation: 5,
+      },
+      android : {
+        alignItems:'center'
+      }
+    })
+  },
+// 286090
+  nextBtnhover:{
+    backgroundColor:"#337ab7",
+    borderColor: "#204d74",
+    color:"#fff",
+    borderRadius:5,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    },
+  },
+
   buttonContainer1:{
     width:'40%',
     ...Platform.select({
@@ -285,6 +337,10 @@ export default StyleSheet.create({
         alignItems:'center'
       }
     })
+  },
+  nextBtn:{
+    color:"#ff0",
+    paddingTop:15,
   },
   tabWrap:{
     width: '100%',
