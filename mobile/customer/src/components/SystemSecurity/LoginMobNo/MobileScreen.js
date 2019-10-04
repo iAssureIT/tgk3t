@@ -127,7 +127,7 @@ const navigateAction = StackActions.reset({
         axios
           .post('/api/usersotp/verify_mobile',formValues)
           .then((response)=>{
-              console.log("here response",response);
+              console.log("here response in mobilescreen",response.data.otp);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {

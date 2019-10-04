@@ -682,22 +682,22 @@ export default class PropertyDetails extends ValidationComponent{
   }
 
   totalFloor(){
-      const floor      = parseInt(this.state.floor);
-      const totalfloor = parseInt(this.state.totalfloor);
-      if(floor > totalfloor){
+      const floorValue      = parseInt(this.state.floor);
+      const totalfloorValue = parseInt(this.state.totalfloor);
+      if(floorValue > totalfloorValue){
         Alert.alert("Floor should not be greater than Total Floors");
       }
-      this.setState({totalfloor : totalfloor});
+      this.setState({totalfloor : totalfloorValue});
   }
 
   builtArea(){
-    const builtArea=parseInt(this.stateErr.builtupArea);
-    const superArea=parseInt(this.refs.superArea);
-    console.log("builtArea",builtArea);
-    console.log("superArea",superArea);
+    var builtAreaValue=parseInt(this.state.builtupArea);
+    var superAreaValue=parseInt(this.state.superArea);
+    console.log("builtArea",builtAreaValue);
+    console.log("superArea",superAreaValue);
 
-    if(builtArea >= superArea){
-      swal("Built Up Area should not be greater than Super Area");
+    if(builtAreaValue >= superAreaValue){
+      Alert.alert("Built Up Area should not be greater than Super Area");
       this.setState({builtupArea:""})
     }
   }
@@ -747,6 +747,7 @@ export default class PropertyDetails extends ValidationComponent{
                         data                = {this.state.floorData}
                         value               = {this.state.floor}
                         onChangeText        = {floor => {this.setState({floor});}}
+                        onBlur              = {()=>this.totalFloor()}
                       />
                       </View>
                     </View>
@@ -775,6 +776,7 @@ export default class PropertyDetails extends ValidationComponent{
                         data                = {this.state.totalFloorData}
                         value               = {this.state.totalFloor}
                         onChangeText        = {totalFloor => {this.setState({totalFloor});}}
+                        onBlur              = {()=>this.totalFloor()}
                         />
                       </View>
                     </View>
@@ -1134,6 +1136,7 @@ export default class PropertyDetails extends ValidationComponent{
                       <View style={[styles.inputTextWrapper68,{}]}>
                         <TextField
                           label                 = "Super Area"
+                          onBlur                = {() => this.builtArea()}
                           lineWidth             = {1}
                           tintColor             = {colors.button}
                           inputContainerPadding = {0}
@@ -1186,7 +1189,7 @@ export default class PropertyDetails extends ValidationComponent{
                         <TextField
                           label                 = "Built Area*"
                           onChangeText          = {builtupArea => {this.setState({builtupArea},() => { this.validInputField('builtupArea', 'builtupAreaError'); })}}
-                          onBlur                = {() => this.builtArea}
+                          onBlur                = {() => this.builtArea()}
                           lineWidth             = {1}
                           tintColor             = {colors.button}
                           inputContainerPadding = {0}
