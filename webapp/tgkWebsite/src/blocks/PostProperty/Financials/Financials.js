@@ -494,7 +494,7 @@ totalInclude(event){
     };
 
 
-    isNumberKey(event)
+   isNumberKey(event)
    {
 
    var charCode = (event.which) ? event.which : event.keyCode

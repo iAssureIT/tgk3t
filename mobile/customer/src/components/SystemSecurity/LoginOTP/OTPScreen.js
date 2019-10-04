@@ -178,7 +178,7 @@ _retrieveData = async () => {
                   titleTextStyle        = {styles.textTitle}
                   style                 = {styles.textStyle}
                   labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "default"
+                  keyboardType          = "number-pad"
                 />
               </View>
             </View>

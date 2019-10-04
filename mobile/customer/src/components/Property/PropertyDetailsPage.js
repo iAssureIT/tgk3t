@@ -277,18 +277,16 @@ const navigateAction = StackActions.reset({
                             buttonStyle     = {styles.button4}
                             containerStyle  = {[styles.buttonContainer4]}
                           />
+                           <Button
+                            titleStyle      = {styles.buttonText}
+                            title           = {"Edit"}
+                            // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                            buttonStyle     = {styles.button4}
+                            onPress         = {this.editProp.bind(this)}
+                            containerStyle  = {[styles.buttonContainer4]}
+                            style           = {{marginLeft:40}}
+                          />
                         </View>
-
-                          <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
-                            <Button
-                              titleStyle      = {styles.buttonText}
-                              title           = {"Edit"}
-                              // title           = {propertyProfile.gallery.Images.length+" Photos"}
-                              buttonStyle     = {styles.button4}
-                              onPress         = {this.editProp.bind(this)}
-                              containerStyle  = {[styles.buttonContainer4]}
-                            />
-                          </View>
                       </ImageBackground>
                   </View>
                 ))
@@ -665,8 +663,8 @@ const navigateAction = StackActions.reset({
               :
               null
             }
-            <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Location</Text>
-            {/*<MapView
+            {/*<Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Location</Text>
+            <MapView
               ref={map => this.map = map}
               provider={PROVIDER_GOOGLE}
               initialRegion={this.state.region}
@@ -681,7 +679,7 @@ const navigateAction = StackActions.reset({
               />
             </MapView>*/}
 
-            <View style={[styles.divider,styles.marginBottom15]}></View>
+            {/*<View style={[styles.divider,styles.marginBottom15]}></View>
 
             <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Similar Properties (4)</Text>
             
@@ -720,9 +718,7 @@ const navigateAction = StackActions.reset({
                 ))
                 }
                 </ScrollView>
-
-            </View>
-
+              </View>*/}
           </View>
         </ScrollView>
         :

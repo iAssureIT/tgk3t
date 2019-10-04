@@ -32,6 +32,8 @@ import SwitchToggle                         from 'react-native-switch-toggle';
 import ImagePicker                          from 'react-native-image-picker';
 import { RNS3 }                             from 'react-native-aws3';
 import Video                                from 'react-native-video';
+import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
+
 import Dialog from "react-native-dialog";
 var Buffer = require('buffer/').Buffer
 import {
@@ -129,6 +131,9 @@ export default class Availability extends ValidationComponent{
       "S3url"           : [],
       "imgArrayWSaws"   : [],
       "dialogVisible"   : false,
+      "dialogVisible1"  : false,
+      "imgPath"         : "",
+      "index"           : -1 
     };
 
       var property_id = this.props.navigation.getParam('property_id','No property_id');
@@ -368,40 +373,35 @@ export default class Availability extends ValidationComponent{
               };
 
               console.log("Availability req 1 = ",formValues);
-                    if(this.state.available.length!==0){
-                        
-                    axios
-                    .patch('/api/properties/patch/availabilityPlan',formValues)
-                    .then( (res) =>{
-                      console.log("availabilityPlan----------------",res);
-                      if(res.status === 200){
-                        this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
-                       }
-                    })
-                    .catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                  {
-                                       Alert.alert("Your session is expired! Please login again.","", "error");
-                                       this.navigateScreen('Home');          
-                                  }
-                            });
-                  }else{
-                                 Alert.alert("Please enter mandatory fields","warning");
-                  }
+              if(this.state.available.length!==0){
+                  
+              axios
+              .patch('/api/properties/patch/availabilityPlan',formValues)
+              .then( (res) =>{
+                console.log("availabilityPlan----------------",res);
+                if(res.status === 200){
+                  this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                 }
+              })
+              .catch((error)=>{
+                          console.log("error = ",error);
+                          if(error.message === "Request failed with status code 401")
+                            {
+                                 Alert.alert("Your session is expired! Please login again.","", "error");
+                                 this.navigateScreen('Home');          
+                            }
+                      });
+              }else{
+                             Alert.alert("Please enter mandatory fields","warning");
+              }
+          }else{
+            console.log("submit function");
+            var ov = this.state.originalValues;
 
-     }else{
-
-           console.log("submit function");
-           var ov = this.state.originalValues;
-
-          let {
-             
-              someOnemobile,
-              mobile,
-             
-            } = this.state;
-           
+            let {
+                someOnemobile,
+                mobile,
+              } = this.state;
 
              var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
              var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
@@ -409,48 +409,46 @@ export default class Availability extends ValidationComponent{
              console.log("someOnemobileNo",someOnemobileNo);
              console.log("myMobileNo",myMobileNo);
 
+            var mobNo = "";
+            if(this.state.contactPerson === "My Self"){
+              mobNo = myMobileNo;
+            }else{
+              mobNo = someOnemobileNo;
+            }
+          
+            const formValues = {
            
-              var mobNo = "";
-              if(this.state.contactPerson === "My Self"){
-                mobNo = myMobileNo;
-              }else{
-                mobNo = someOnemobileNo;
-              }
-            
-              const formValues = {
-             
-                "contactPersonMobile" : mobNo,
-                "contactPerson"       : this.state.contactPerson,
-                "available"           : this.state.available,
-                "propertyImages"      : this.state.imgArrayWSaws,
-                "video"               : this.state.singleVideo,
-                "status"              : "New",
-                "property_id"         : this.state.propertyId,
-                "uid"                 : this.state.uid,
-              };
+              "contactPersonMobile" : mobNo,
+              "contactPerson"       : this.state.contactPerson,
+              "available"           : this.state.available,
+              "propertyImages"      : this.state.imgArrayWSaws,
+              "video"               : this.state.singleVideo,
+              "status"              : "New",
+              "property_id"         : this.state.propertyId,
+              "uid"                 : this.state.uid,
+            };
 
-              console.log("Availability req 1 = ",formValues);
-                    if(this.state.available.length!==0){
-                        
-                    axios
-                    .patch('/api/properties/patch/availabilityPlan',formValues)
-                    .then( (res) =>{
-                      console.log("availabilityPlan----------------",res);
-                      if(res.status === 200){
-                         this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
-                       }
-                    })
-                    .catch((error)=>{
-                                  console.log("error = ",error);
-                                  if(error.message === "Request failed with status code 401")
-                                    {
-                                         Alert.alert("Your session is expired! Please login again.","", "error");
-                                         this.navigateScreen('Home');          
-                                    }
-                            });
-                  }else{
-                      Alert.alert("Please enter mandatory fields","warning");
-                  }
+            console.log("Availability req 1 = ",formValues);
+            if(this.state.available.length!==0){
+              axios
+              .patch('/api/properties/patch/availabilityPlan',formValues)
+              .then( (res) =>{
+                console.log("availabilityPlan----------------",res);
+                if(res.status === 200){
+                   this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                 }
+              })
+              .catch((error)=>{
+                            console.log("error = ",error);
+                            if(error.message === "Request failed with status code 401")
+                              {
+                                   Alert.alert("Your session is expired! Please login again.","", "error");
+                                   this.navigateScreen('Home');          
+                              }
+                      });
+            }else{
+              Alert.alert("Please enter mandatory fields","warning");
+          }
 
      }
   }
@@ -677,10 +675,6 @@ export default class Availability extends ValidationComponent{
     });
   }
   
-  showDialog = () => {
-    this.setState({ dialogVisible: true });
-  };
-
   deleteSingleVideoDirect = () => { 
     this.setState({
       singleVideo:"",
@@ -689,47 +683,24 @@ export default class Availability extends ValidationComponent{
   };
 
   handleCancel = () => {
-    this.setState({ dialogVisible: false });
+    this.setState({
+     dialogVisible: false ,
+     dialogVisible1: false 
+   });
   };
 
-    deleteVideo = async () => {
-      console.log("inside delete")
-        this.setState({
-          singleVideo : ""
-          },()=>{
-            Alert.alert('Your video is deleted!')
-          })
-    }
-
-    deleteimageWS(e){
-    e.preventDefault();
-    var index = e.target.getAttribute('id');
-    var filePath = e.target.getAttribute('data-id');
-    var data = filePath.split("/");
-    var imageName = data[4];
-    console.log("imageName==",imageName);
-
-    if(index){
-      swal({
-            title: "Are you sure you want to delete this image?",
-            text: "Once deleted, you will not be able to recover this.",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              var array = this.state.imgArrayWSaws; // make a separate copy of the array
-              array.splice(index, 1);
-              swal("Image deleted successfully");
-              this.setState({
-                imgArrayWSaws: array
-              });
-            }else {
-              swal("Your image is safe!");
-            }
-          });
-    }
+  deleteimageWS = async () => {
+      var index       = this.state.index;
+      var filePath    = this.state.imgPath;
+      var data        = filePath.split("/");
+      var imageName   = data[4];
+      console.log("imageName==",imageName);
+      var array = this.state.imgArrayWSaws; // make a separate copy of the array
+      array.splice(index, 1);
+      this.setState({
+        imgArrayWSaws  : array,
+        dialogVisible1 : false
+      });
   }
 
 
@@ -763,313 +734,318 @@ export default class Availability extends ValidationComponent{
         <HeaderBar showBackBtn={true} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
-          <View style={styles.formWrapper}>
-            <View>
-              <Text style={styles.heading}>
-                Please tell us your availability to plan visit
-              </Text>
-            </View>
-
-            <View style={styles.divider}></View>
-
-            <Text style={[styles.heading2,styles.marginBottom5]}>Who will show?</Text>
-            <View style={styles.marginBottom15}>
-              <SwitchToggle
-                switchOn={this.state.toggle}
-                onPress={()=>this.onToggle()}
-                circleColorOn={colors.button}
-                circleColorOff={colors.primary}
-                buttonText={this.state.contactPerson}
-                containerStyle={{
-                  width: 140,
-                  height: 38,
-                  borderRadius: 20,
-                  backgroundColor: '#fff',
-                  padding: 0,
-                  borderWidth:1,
-                  borderColor:'#ccc',
-                  padding:2
-                }}
-                circleStyle={{
-                  width: 100,
-                  height: 34,
-                  borderRadius: 20,
-                  justifyContent:'center',
-                  alignItems:'center',
-                }}
-                buttonTextStyle={{
-                  color:'#fff',
-                  fontFamily:'Roboto-Regular',
-                  fontSize: 13
-                }}
-              />
-            </View>
-
-            {this.state.contactPerson==="My Self" ?
-
-             <View style={[styles.formInputView,styles.marginBottom25]}>
-                  <View style={[styles.inputWrapper]}>
-                  <View style={styles.inputImgWrapper}>
-                      <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
-                    </View>
-                    <View style={styles.inputTextWrapper}>
-                      <TextField
-                        label                 = "Phone Number"
-                        onChangeText          = {(mobile) => {this.setState({ mobile },()=>{this.validInputField('mobile', 'mobileNumberError');}),this.handleOriginalMobileChange(mobile)}}
-                                                 // {mobileNumber => this.handleMobileChange(mobileNumber)}
-                        lineWidth             = {1}
-                        tintColor             = {colors.button}
-                        inputContainerPadding = {0}
-                        labelHeight           = {15}
-                        labelFontSize         = {sizes.label}
-                        titleFontSize         = {sizes.title}
-                        baseColor             = {'#666'}
-                        textColor             = {'#333'}
-                        value                 = {this.state.mobile}
-                        containerStyle        = {styles.textContainer}
-                        inputContainerStyle   = {styles.textInputContainer}
-                        titleTextStyle        = {styles.textTitle}
-                        style                 = {styles.textStyle}
-                        labelTextStyle        = {styles.textLabel}
-                        keyboardType          = "numeric"
-                      />
-                    </View>
-                  </View>
-                  {this.displayValidationError('mobileNumberError')}
-                </View>
-
-          :
-            
-           <View style={[styles.formInputView,styles.marginBottom25]}>
-                  <View style={[styles.inputWrapper]}>
-                  <View style={styles.inputImgWrapper}>
-                      <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
-                    </View>
-                    <View style={styles.inputTextWrapper}>
-                      <TextField
-                        label                 = "Phone Number"
-                        onChangeText          = {(someOnemobile) => {this.setState({ someOnemobile },()=>{this.validInputField('someOnemobile', 'mobileNumberError');}),this.handleMobileChange(someOnemobile)}}
-                                                 // {mobileNumber => this.handleMobileChange(mobileNumber)}
-                        lineWidth             = {1}
-                        tintColor             = {colors.button}
-                        inputContainerPadding = {0}
-                        labelHeight           = {15}
-                        labelFontSize         = {sizes.label}
-                        titleFontSize         = {sizes.title}
-                        baseColor             = {'#666'}
-                        textColor             = {'#333'}
-                        value                 = {this.state.someOnemobile}
-                        containerStyle        = {styles.textContainer}
-                        inputContainerStyle   = {styles.textInputContainer}
-                        titleTextStyle        = {styles.textTitle}
-                        style                 = {styles.textStyle}
-                        labelTextStyle        = {styles.textLabel}
-                        keyboardType          = "numeric"
-                      />
-                    </View>
-                  </View>
-                  {this.displayValidationError('mobileNumberError')}
-                </View>
-
-              }
-
-            <Text style={[styles.heading2,styles.marginBottom15]}>Visiting Schedule (Add as many as you like)</Text>
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="calendar" type="font-awesome" size={18}  color="#aaa" style={{}}/>
+          <KeyboardAwareScrollView>    
+            <View style={styles.formWrapper}>
+              <View>
+                <Text style={styles.heading}>
+                  Please tell us your availability to plan visit
+                </Text>
               </View>
-              <View style={styles.inputTextWrapper}>
-                <Dropdown
-                  label               = 'Availability'
-                  containerStyle      = {styles.ddContainer}
-                  dropdownOffset      = {{top:0, left: 0}}
-                  itemTextStyle       = {styles.ddItemText}
-                  inputContainerStyle = {styles.ddInputContainer}
-                  labelHeight         = {10}
-                  tintColor           = {colors.button}
-                  labelFontSize       = {sizes.label}
-                  fontSize            = {15}
-                  baseColor           = {'#666'}
-                  textColor           = {'#333'}
-                  labelTextStyle      = {styles.ddLabelText}
-                  style               = {styles.ddStyle}
-                  data                = {this.state.dropdownData}
-                  value               = {this.state.availability}
-                  onChangeText        = {availability => {this.setState({availability});}}
+
+              <View style={styles.divider}></View>
+
+              <Text style={[styles.heading2,styles.marginBottom5]}>Who will show?</Text>
+              <View style={styles.marginBottom15}>
+                <SwitchToggle
+                  switchOn={this.state.toggle}
+                  onPress={()=>this.onToggle()}
+                  circleColorOn={colors.button}
+                  circleColorOff={colors.primary}
+                  buttonText={this.state.contactPerson}
+                  containerStyle={{
+                    width: 140,
+                    height: 38,
+                    borderRadius: 20,
+                    backgroundColor: '#fff',
+                    padding: 0,
+                    borderWidth:1,
+                    borderColor:'#ccc',
+                    padding:2
+                  }}
+                  circleStyle={{
+                    width: 100,
+                    height: 34,
+                    borderRadius: 20,
+                    justifyContent:'center',
+                    alignItems:'center',
+                  }}
+                  buttonTextStyle={{
+                    color:'#fff',
+                    fontFamily:'Roboto-Regular',
+                    fontSize: 13
+                  }}
                 />
               </View>
-            </View>
 
-            <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+              {this.state.contactPerson==="My Self" ?
+
+               <View style={[styles.formInputView,styles.marginBottom25]}>
+                    <View style={[styles.inputWrapper]}>
+                    <View style={styles.inputImgWrapper}>
+                        <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
+                      </View>
+                      <View style={styles.inputTextWrapper}>
+                        <TextField
+                          label                 = "Phone Number"
+                          onChangeText          = {(mobile) => {this.setState({ mobile },()=>{this.validInputField('mobile', 'mobileNumberError');}),this.handleOriginalMobileChange(mobile)}}
+                                                   // {mobileNumber => this.handleMobileChange(mobileNumber)}
+                          lineWidth             = {1}
+                          tintColor             = {colors.button}
+                          inputContainerPadding = {0}
+                          labelHeight           = {15}
+                          labelFontSize         = {sizes.label}
+                          titleFontSize         = {sizes.title}
+                          baseColor             = {'#666'}
+                          textColor             = {'#333'}
+                          value                 = {this.state.mobile}
+                          containerStyle        = {styles.textContainer}
+                          inputContainerStyle   = {styles.textInputContainer}
+                          titleTextStyle        = {styles.textTitle}
+                          style                 = {styles.textStyle}
+                          labelTextStyle        = {styles.textLabel}
+                          keyboardType          = "numeric"
+                        />
+                      </View>
+                    </View>
+                    {this.displayValidationError('mobileNumberError')}
+                  </View>
+
+                  :
+                    
+                   <View style={[styles.formInputView,styles.marginBottom25]}>
+                    <View style={[styles.inputWrapper]}>
+                    <View style={styles.inputImgWrapper}>
+                        <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
+                      </View>
+                      <View style={styles.inputTextWrapper}>
+                        <TextField
+                          label                 = "Phone Number"
+                          onChangeText          = {(someOnemobile) => {this.setState({ someOnemobile },()=>{this.validInputField('someOnemobile', 'mobileNumberError');}),this.handleMobileChange(someOnemobile)}}
+                                                   // {mobileNumber => this.handleMobileChange(mobileNumber)}
+                          lineWidth             = {1}
+                          tintColor             = {colors.button}
+                          inputContainerPadding = {0}
+                          labelHeight           = {15}
+                          labelFontSize         = {sizes.label}
+                          titleFontSize         = {sizes.title}
+                          baseColor             = {'#666'}
+                          textColor             = {'#333'}
+                          value                 = {this.state.someOnemobile}
+                          containerStyle        = {styles.textContainer}
+                          inputContainerStyle   = {styles.textInputContainer}
+                          titleTextStyle        = {styles.textTitle}
+                          style                 = {styles.textStyle}
+                          labelTextStyle        = {styles.textLabel}
+                          keyboardType          = "numeric"
+                        />
+                      </View>
+                    </View>
+                    {this.displayValidationError('mobileNumberError')}
+                  </View>
+
+                }
+
+              <Text style={[styles.heading2,styles.marginBottom15]}>Visiting Schedule (Add as many as you like)</Text>
+              <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                <View style={styles.inputImgWrapper}>
+                  <Icon name="calendar" type="font-awesome" size={18}  color="#aaa" style={{}}/>
+                </View>
+                <View style={styles.inputTextWrapper}>
+                  <Dropdown
+                    label               = 'Availability'
+                    containerStyle      = {styles.ddContainer}
+                    dropdownOffset      = {{top:0, left: 0}}
+                    itemTextStyle       = {styles.ddItemText}
+                    inputContainerStyle = {styles.ddInputContainer}
+                    labelHeight         = {10}
+                    tintColor           = {colors.button}
+                    labelFontSize       = {sizes.label}
+                    fontSize            = {15}
+                    baseColor           = {'#666'}
+                    textColor           = {'#333'}
+                    labelTextStyle      = {styles.ddLabelText}
+                    style               = {styles.ddStyle}
+                    data                = {this.state.dropdownData}
+                    value               = {this.state.availability}
+                    onChangeText        = {availability => {this.setState({availability});}}
+                  />
+                </View>
+              </View>
+
+              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
                 {/*First View*/}
-              <View style={{width:'28%'}}>
-                <Text style={[styles.heading2,styles.marginBottom15]}>From Time</Text>
-                <View style={[styles.inputWrapper3]}>
-                  <View style={styles.inputImgWrapper2}>
-                    <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
-                  </View>
-                  <View style={styles.inputTextWrapper2}>
-                    <TouchableOpacity
-                        onPress={() => this.TimePicker1.open()}
-                      >
-                      <Text style={styles.timeSelect}>{this.state.time1}</Text>
-                      </TouchableOpacity>
+                <View style={{width:'28%'}}>
+                  <Text style={[styles.heading2,styles.marginBottom15]}>From Time</Text>
+                  <View style={[styles.inputWrapper3]}>
+                    <View style={styles.inputImgWrapper2}>
+                      <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper2}>
+                      <TouchableOpacity
+                          onPress={() => this.TimePicker1.open()}
+                        >
+                        <Text style={styles.timeSelect}>{this.state.time1}</Text>
+                        </TouchableOpacity>
 
-                      <TimePicker
-                        ref={ref => {
-                          this.TimePicker1 = ref;
-                        }}
-                        onCancel={() => this.onCancel1()}
-                        onConfirm={(hour, minute) => this.onConfirm1(hour, minute)}
-                        containerStyle        = {styles.textContainer}
-                        inputContainerStyle   = {styles.textInputContainer}
-                        titleTextStyle        = {styles.textTitle}
-                        style                 = {styles.textStyle}
-                        labelTextStyle        = {styles.textLabel}
-                      />
+                        <TimePicker
+                          ref={ref => {
+                            this.TimePicker1 = ref;
+                          }}
+                          onCancel={() => this.onCancel1()}
+                          onConfirm={(hour, minute) => this.onConfirm1(hour, minute)}
+                          containerStyle        = {styles.textContainer}
+                          inputContainerStyle   = {styles.textInputContainer}
+                          titleTextStyle        = {styles.textTitle}
+                          style                 = {styles.textStyle}
+                          labelTextStyle        = {styles.textLabel}
+                        />
+                    </View>
                   </View>
                 </View>
-              </View>
-              
-              
-              <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-                <Text style={styles.heading3}></Text>
-              </View>
+                
+                
+                <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                  <Text style={styles.heading3}></Text>
+                </View>
 
-               {/*Second View*/}
-              <View style={{width:'28%'}}>
-                <Text style={[styles.heading2,styles.marginBottom15]}>To Time</Text>
-                <View style={[styles.inputWrapper3]}>
-                  <View style={styles.inputImgWrapper2}>
-                    <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
-                  </View>
-                  <View style={styles.inputTextWrapper2}>
-                    <TouchableOpacity
-                        onPress={() => this.TimePicker2.open()}
-                      >
-                      <Text style={styles.timeSelect}>{this.state.time2}</Text>
-                      </TouchableOpacity>
+                {/*Second View*/}
+                <View style={{width:'28%'}}>
+                  <Text style={[styles.heading2,styles.marginBottom15]}>To Time</Text>
+                  <View style={[styles.inputWrapper3]}>
+                    <View style={styles.inputImgWrapper2}>
+                      <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper2}>
+                      <TouchableOpacity
+                          onPress={() => this.TimePicker2.open()}
+                        >
+                        <Text style={styles.timeSelect}>{this.state.time2}</Text>
+                        </TouchableOpacity>
 
-                      <TimePicker
-                        ref={ref => {
-                          this.TimePicker2 = ref;
-                        }}
-                        onCancel={() => this.onCancel2()}
-                        onConfirm={(hour, minute) => this.onConfirm2(hour, minute)}
-                        containerStyle        = {styles.textContainer}
-                        inputContainerStyle   = {styles.textInputContainer}
-                        titleTextStyle        = {styles.textTitle}
-                        style                 = {styles.textStyle}
-                        labelTextStyle        = {styles.textLabel}
-                      />
+                        <TimePicker
+                          ref={ref => {
+                            this.TimePicker2 = ref;
+                          }}
+                          onCancel={() => this.onCancel2()}
+                          onConfirm={(hour, minute) => this.onConfirm2(hour, minute)}
+                          containerStyle        = {styles.textContainer}
+                          inputContainerStyle   = {styles.textInputContainer}
+                          titleTextStyle        = {styles.textTitle}
+                          style                 = {styles.textStyle}
+                          labelTextStyle        = {styles.textLabel}
+                        />
+                    </View>
                   </View>
                 </View>
-              </View>
-              <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-                <Text style={styles.heading3}></Text>
-              </View>
-              <View style={[{width:'28%'},styles.marginBottom15]}>
-                <Text style={[styles.heading2,styles.marginBottom15]}></Text>
-                <Button 
-                  onPress         = {()=>this.handleAvailability()}
-                  titleStyle      = {styles.buttonSmallText}
-                  title           = "Add Slot"
-                  buttonStyle     = {styles.buttonSmall}
-                  containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-                  on
-                  iconRight
-                  icon = {
-                    <Icon
-                      name="plus" 
-                      type="material-community"
-                      size={20}
-                      color={colors.black}
+                <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                  <Text style={styles.heading3}></Text>
+                </View>
+                <View style={[{width:'28%'},styles.marginBottom15]}>
+                    <Text style={[styles.heading2,styles.marginBottom15]}></Text>
+                    <Button 
+                      onPress         = {()=>this.handleAvailability()}
+                      titleStyle      = {styles.buttonSmallText}
+                      title           = "Add Slot"
+                      buttonStyle     = {styles.buttonSmall}
+                      containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+                      on
+                      iconRight
+                      icon = {
+                        <Icon
+                          name="plus" 
+                          type="material-community"
+                          size={20}
+                          color={colors.black}
+                        />
+                      }
                     />
-                  }
-                />
-            </View> 
-          </View>
+                </View> 
+              </View>
 
-            <View style={[styles.marginBottom25,{width:'100%'}]}>
-              <Table borderStyle={{borderColor:'transparent'}} style={{ alignContent: "center"}}>
-                <Row
-                  data={["Availability","Time","Action"]}
-                  style={styles.tableHead}
-                  textStyle={styles.tableHeadText}
-                  flexArr={[2, 1, 1]}
-                />
-                {
-                  this.state.available.map((data,index)=>(
+              <View style={[styles.marginBottom25,{width:'100%'}]}>
+                <Table borderStyle={{borderColor:'transparent'}} style={{ alignContent: "center"}}>
                   <Row
-                    key={index}
-                    data={[data.availability,data.time,
-                      <TouchableOpacity>
-                        <Icon name="trash-can-outline" type="material-community" size={18} color="#dc3545" style={{fontWeight:'600'}}/>
-                      </TouchableOpacity>
-                    ]}
-                    style={[styles.tableRow, index%2 && {backgroundColor: '#f1f1f1'}]}
-                    textStyle={styles.tableText}
+                    data={["Availability","Time","Action"]}
+                    style={styles.tableHead}
+                    textStyle={styles.tableHeadText}
                     flexArr={[2, 1, 1]}
                   />
-                ))
-                }
-              </Table>
-            </View>
+                  {
+                    this.state.available.map((data,index)=>(
+                    <Row
+                      key={index}
+                      data={[data.availability,data.time,
+                        <TouchableOpacity>
+                          <Icon name="trash-can-outline" type="material-community" size={18} color="#dc3545" style={{fontWeight:'600'}}/>
+                        </TouchableOpacity>
+                      ]}
+                      style={[styles.tableRow, index%2 && {backgroundColor: '#f1f1f1'}]}
+                      textStyle={styles.tableText}
+                      flexArr={[2, 1, 1]}
+                    />
+                  ))
+                  }
+                </Table>
+              </View>
 
-
-            {/*form 7 fields*/}
-
-            <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
-                <View style={{flex:1, paddingHorizontal:20}}>
-                 <Text style={[{fontSize:15,color:'#666',textAlign:'left',marginTop:10,marginBottom:10}]}>{'Upload Images :'}</Text>
-                </View>
-                <View style={{flexDirection:'row',marginTop:5,marginBottom:10}}>
-                  <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
-                    <TouchableOpacity  onPress = {this.handleChoosePhoto}>
-                      <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
-                            <Icon    
-                              name    = "upload"
-                              type    = "antdesign"
-                              color   = "#fff"
-                            />
-                      </View>
-                    </TouchableOpacity>
+              {/*form 7 fields*/}
+              <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
+                  <View style={{flex:1, paddingHorizontal:20}}>
+                   <Text style={[{fontSize:15,color:'#666',textAlign:'left',marginTop:10,marginBottom:10}]}>{'Upload Images :'}</Text>
                   </View>
-                </View>
-                <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-                    {this.state.imgArrayWSaws && this.state.imgArrayWSaws.length>0 ?
-                        this.state.imgArrayWSaws.map((photo,i)=>(
-                          <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
-                            <Image
-                              source={{ uri: photo.imgPath }}
-                              style={{width: 120, height: 100}}
-                            />  
-                          </View>
-                        ))
-                        :
-                        null
-                      }
-                  </View>    
-            </View>
-
-            <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
-                <View style={{flex:1, paddingHorizontal:20}}>
-                 <Text style={[{fontSize:15,color:'#666',textAlign:'left',marginTop:10,marginBottom:10}]}>{'Upload Videos :'}</Text>
-                </View>
-                <View style={{flexDirection:'row',marginTop:5,marginBottom:10}}>
-                  <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
-                    <TouchableOpacity  onPress = {this.handleChooseVideo}>
-                      <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
-                            <Icon    
-                              name    = "upload"
-                              type    = "antdesign"
-                              color   = "#fff"
-                            />
-                      </View>
-                    </TouchableOpacity>
+                  <View style={{flexDirection:'row',marginTop:5,marginBottom:10}}>
+                    <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
+                      <TouchableOpacity  onPress = {this.handleChoosePhoto}>
+                        <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
+                              <Icon    
+                                name    = "upload"
+                                type    = "antdesign"
+                                color   = "#fff"
+                              />
+                        </View>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-                <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
+                  <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
+                  {this.state.imgArrayWSaws && this.state.imgArrayWSaws.length>0 ?
+                      this.state.imgArrayWSaws.map((photo,i)=>(
+                        <View key={i} style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
+                          <Image
+                            source={{ uri: photo.imgPath }}
+                            style={{width: 110, height: 100}}
+                          />
+                          <Icon    
+                            name    = "times"
+                            type    = 'font-awesome'
+                            color   = "#f00"
+                            onPress = {()=>this.setState({dialogVisible1:true,imgPath:photo.imgPath,index:i})}
+                        />  
+                        </View>
+                      ))
+                      :
+                      null
+                    }
+                </View>    
+              </View>
+
+              <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
+                  <View style={{flex:1, paddingHorizontal:20}}>
+                   <Text style={[{fontSize:15,color:'#666',textAlign:'left',marginTop:10,marginBottom:10}]}>{'Upload Videos :'}</Text>
+                  </View>
+                  <View style={{flexDirection:'row',marginTop:5,marginBottom:10}}>
+                    <View style={{flex:.25,justifyContent:'center',paddingHorizontal:20,}}>
+                      <TouchableOpacity  onPress = {this.handleChooseVideo}>
+                        <View style={{flex:.1,padding:10,borderWidth:1,backgroundColor:'#999',borderRadius:3,borderColor:'#999'}}>
+                              <Icon    
+                                name    = "upload"
+                                type    = "antdesign"
+                                color   = "#fff"
+                              />
+                        </View>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
                     {this.state.singleVideo?
                         <View style={[{width:'45%',flexDirection:'row',marginBottom:30}]}>
                           <Video 
@@ -1083,84 +1059,87 @@ export default class Availability extends ValidationComponent{
                               name    = "times"
                               type    = 'font-awesome'
                               color   = "#f00"
-                              onPress = {this.showDialog}
+                              onPress = {()=>this.setState({dialogVisible:true})}
                             />
                         </View>
                       :
                       null
                     }
                   </View>    
+              </View>
+
+              <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
+              {
+                properDetails.map((data,i)=>{
+                    <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{}:{marginLeft:'10%'})]}>
+                      <ImageBackground  
+                        source={data.imageSource}
+                        style={{width:"100%",height:80}}
+                      >
+                         <Button
+                          containerStyle  = {[{marginRight:10,width:'20%',position:'absolute'}]}
+                          iconRight
+                          icon = {<Icon
+                            name="times" 
+                            type="font-awesome"
+                            size={15}
+                            color={colors.white}
+                          />}
+                        />
+
+                      </ImageBackground>
+
+                    </View>
+                  // );
+                }) 
+              }
+
             </View>
-
-            <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-            {
-              properDetails.map((data,i)=>{
-                  <View style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{}:{marginLeft:'10%'})]}>
-                    <ImageBackground  
-                      source={data.imageSource}
-                      style={{width:"100%",height:80}}
-                    >
-                       <Button
-                        containerStyle  = {[{marginRight:10,width:'20%',position:'absolute'}]}
-                        iconRight
-                        icon = {<Icon
-                          name="times" 
-                          type="font-awesome"
-                          size={15}
-                          color={colors.white}
-                        />}
-                      />
-
-                    </ImageBackground>
-
-                  </View>
-                // );
-              }) 
-            }
-
-          </View>
-            <Button
-              onPress         = {this.submitFun.bind(this)}
-              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails7')}
-              titleStyle      = {styles.buttonText}
-              title           = "Save & Next"
-              buttonStyle     = {styles.button}
-              containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-              iconRight
-              icon = {<Icon
-                name="chevrons-right" 
-                type="feather"
-                size={22}
-                color="white"
-              />}
-            />
-          </View>
+              <Button
+                onPress         = {this.submitFun.bind(this)}
+                // onPress         = {()=>this.props.navigation.navigate('PropertyDetails7')}
+                titleStyle      = {styles.buttonText}
+                title           = "Save & Next"
+                buttonStyle     = {styles.button}
+                containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+                iconRight
+                icon = {<Icon
+                  name="chevrons-right" 
+                  type="feather"
+                  size={22}
+                  color="white"
+                />}
+              />
+            </View>
+           </KeyboardAwareScrollView>   
         </ScrollView>
-        <Modal isVisible={this.state.openModal} 
+
+          <Modal isVisible={this.state.openModal} 
              onBackdropPress={() => this.setState({ openModal: false })}
              coverScreen={true}
              hideModalContentWhileAnimating={true}
              style={{paddingHorizontal:'5%',zIndex:999}}
              animationOutTiming={500}>
-        <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
-          <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
-            <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
-          </View>
-          <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
-            Availability slot is sucessfully added.
-          </Text>
+            <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
+              <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
+                <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
+              </View>
+              <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
+                Availability slot is sucessfully added.
+              </Text>
 
-          <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
-            <Button
-              onPress         = {()=>this.setState({openModal:false})}
-              titleStyle      = {styles.buttonText}
-              title           = "OK"
-              buttonStyle     = {styles.buttonSignUp}
-              containerStyle  = {styles.buttonContainer}
-            />
-          </View>
-        </View>
-      </Modal>
+              <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
+                <Button
+                  onPress         = {()=>this.setState({openModal:false})}
+                  titleStyle      = {styles.buttonText}
+                  title           = "OK"
+                  buttonStyle     = {styles.buttonSignUp}
+                  containerStyle  = {styles.buttonContainer}
+                />
+              </View>
+            </View>
+        </Modal>
+
         <Dialog.Container visible={this.state.dialogVisible}>
           <Dialog.Title>Are you sure?</Dialog.Title>
           <Dialog.Description>
@@ -1168,6 +1147,15 @@ export default class Availability extends ValidationComponent{
           </Dialog.Description>
           <Dialog.Button label="Cancel" onPress={this.handleCancel} />
           <Dialog.Button label="Delete" onPress={this.deleteSingleVideoDirect} />
+        </Dialog.Container>
+
+        <Dialog.Container visible={this.state.dialogVisible1}>
+          <Dialog.Title>Are you sure?</Dialog.Title>
+          <Dialog.Description>
+            Once deleted, you will not be able to recover this Image!
+          </Dialog.Description>
+          <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+          <Dialog.Button label="Delete" onPress={this.deleteimageWS}/>
         </Dialog.Container>
       </React.Fragment>
     );

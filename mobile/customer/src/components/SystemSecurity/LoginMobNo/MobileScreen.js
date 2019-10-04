@@ -241,7 +241,7 @@ const navigateAction = StackActions.reset({
                         titleTextStyle        = {styles.textTitle}
                         style                 = {styles.textStyle}
                         labelTextStyle        = {styles.textLabel}
-                        keyboardType          = "numeric"
+                        keyboardType          = "number-pad"
                       />
                     </View>
                   </View>

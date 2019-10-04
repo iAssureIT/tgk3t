@@ -246,7 +246,7 @@ export default class SignUp extends ValidationComponent{
                   titleTextStyle        = {styles.textTitle}
                   style                 = {styles.textStyle}
                   labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "numeric"
+                  keyboardType          = "number-pad"
                   maxLength             = {10}
                 />
               </View>

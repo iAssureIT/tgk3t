@@ -436,33 +436,29 @@ import './PropertyDetails.css';
 								}
 							})
 
-							// console.log("allAmenitiesDataList true",allAmenitiesDataList);
-
-
-
 					const formValues = {
-					"bedrooms" 			: this.state.bedrooms,
-					"balconies" 		: this.state.balconies,
-					"washrooms" 		: this.state.washrooms,
-					"furnishedStatus"   : this.state.furnishedstatus,
-					"personal"		    : this.state.personal,
-					"pantry"		    : this.state.pantry,
-					"bathrooms" 		: this.state.bathrooms,
-					"ageofProperty" 	: this.state.ageofproperty,
-					"facing" 			: this.state.facing,
-					"superArea" 		: this.state.superArea,
-					"builtupArea" 		: this.state.builtupArea,
-					"property_id" 		: localStorage.getItem("propertyId"),
-					"uid" 				: localStorage.getItem("uid"),
+						"bedrooms" 			: this.state.bedrooms,
+						"balconies" 		: this.state.balconies,
+						"washrooms" 		: this.state.washrooms,
+						"furnishedStatus"   : this.state.furnishedstatus,
+						"personal"		    : this.state.personal,
+						"pantry"		    : this.state.pantry,
+						"bathrooms" 		: this.state.bathrooms,
+						"ageofProperty" 	: this.state.ageofproperty,
+						"facing" 			: this.state.facing,
+						"superArea" 		: this.state.superArea,
+						"builtupArea" 		: this.state.builtupArea,
+						"property_id" 		: localStorage.getItem("propertyId"),
+						"uid" 				: localStorage.getItem("uid"),
 
-					"Amenities"			: allAmenitiesDataList,
-					"floor"         	: this.state.floor,
-					"totalFloor"    	: this.state.totalfloor,
-					"superAreaUnit"    	: this.state.superAreaUnit,
-					"builtupAreaUnit"   : this.state.builtupAreaUnit,
-					"workStation"    	: this.state.workStation,
-					"furnishPantry"	    : this.state.furnishPantry,	
-                	"furnishedOptions"  : furnishedOptionsDataList,
+						"Amenities"			: allAmenitiesDataList,
+						"floor"         	: this.state.floor,
+						"totalFloor"    	: this.state.totalfloor,
+						"superAreaUnit"    	: this.state.superAreaUnit,
+						"builtupAreaUnit"   : this.state.builtupAreaUnit,
+						"workStation"    	: this.state.workStation,
+						"furnishPantry"	    : this.state.furnishPantry,	
+	                	"furnishedOptions"  : furnishedOptionsDataList,
 
 
                 	

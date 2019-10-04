@@ -12,24 +12,25 @@ import {
   StyleSheet,
   Picker
 } from 'react-native';
-import Hr from "react-native-hr-component";
-import { Dropdown }   from 'react-native-material-dropdown';
-import { NavigationActions, StackActions } from 'react-navigation';
-import axios          from 'axios';
-import AsyncStorage               from '@react-native-community/async-storage';
-import { Button,Icon, SearchBar } from 'react-native-elements';
+import Hr                                   from "react-native-hr-component";
+import { Dropdown }                         from 'react-native-material-dropdown';
+import { NavigationActions, StackActions }  from 'react-navigation';
+import axios                                from 'axios';
+import AsyncStorage                         from '@react-native-community/async-storage';
+import { Button,Icon, SearchBar }           from 'react-native-elements';
 
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
+import ValidationComponent                  from "react-native-form-validator";
+import { TextField }                        from 'react-native-material-textfield';
+import {RadioGroup, RadioButton}            from 'react-native-flexi-radio-button';
 
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
+import HeaderBar                            from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                               from './styles.js';
+import {colors,sizes}                       from '../../config/styles.js';
 // import { Dropdown } from 'react-native-material-dropdown';
-import SwitchToggle from 'react-native-switch-toggle';
-import RNPickerSelect from 'react-native-picker-select';
+import SwitchToggle                         from 'react-native-switch-toggle';
+import RNPickerSelect                       from 'react-native-picker-select';
 
+import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
 const window = Dimensions.get('window');
 
 const defaultOption = [
@@ -39,20 +40,16 @@ const defaultOption = [
   },
 ];
 
-
-
-
-
 export default class BasicInfo extends ValidationComponent{
   navigateScreen=(route)=>{
-const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            NavigationActions.navigate({ routeName: route}),
-            ],
-        });
-        this.props.navigation.dispatch(navigateAction);
-}
+  const navigateAction = StackActions.reset({
+        index: 0,
+        actions: [
+          NavigationActions.navigate({ routeName: route}),
+        ],
+    });
+    this.props.navigation.dispatch(navigateAction);
+  }
 
   constructor(props){
     super(props);
@@ -79,54 +76,33 @@ const navigateAction = StackActions.reset({
                          {label: 'Commercial Showroom',    value: 'Commercial-Commercial Showroom',     disabled : false},
                          {label: 'Warehouse/Godown',       value: 'Commercial-Warehouse/Godown',        disabled : false},
                          {label: 'Industrial Building',    value: 'Commercial-Industrial Building',     disabled : false}],
-      // floorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
-      // totalFloorData :[{label:'1', value : '1'},{label:'2', value:'2'}],
-      // floor: 'Basement',
-      // totalFloor:'Total Floors',
       propertyType    : '',
       propertySubType : '',
-      pincode        : '',
+      pincode         : '',
       stateData       : [
-                    {
-                      value: 'Maharashtra',
-                    },
-                    {
-                      value: 'Punjab',
-                    },
-                    {
-                      value: 'Delhi',
-                    },
-                    {
-                      value: 'Kerala',
-                    }],
+                          {value: 'Maharashtra',},
+                          {value: 'Punjab',},
+                          {value: 'Delhi',},
+                          {value: 'Kerala',}
+                        ],
+
       cityData        : [
-                    {
-                      value: 'Pune City',
-                    },
-                    {
-                      value: 'Pashan',
-                    },
-                    {
-                      value: 'Khanapur',
-                    }],
+                          {value: 'Pune City',},
+                          {value: 'Pashan',},
+                          {value: 'Khanapur',}
+                        ],
+
       areaData        : [
-                    {
-                      value: 'Hadapsar',
-                    },
-                    {
-                      value: 'Kharadi',
-                    }],
+                          {value: 'Hadapsar',},
+                          {value: 'Kharadi',}
+                        ],
+
       subAreaData     : [
-                    {
-                      value: 'Amanora Township',
-                    },
-                    {
-                      value: 'Bhosale Nagar',
-                    },
-                    {
-                      value: 'Gadital'
-                    }],
-      societyName         : '',
+                          {value: 'Amanora Township',},
+                          {value: 'Bhosale Nagar',},
+                          {value: 'Gadital'}
+                        ],
+      societyName     : '',
       house           : '',
       landmark        : '',
       listofStates    : '',
@@ -152,9 +128,9 @@ const navigateAction = StackActions.reset({
       // areaName        : '',
       originalValues          : "",
       originalValuesLocation  : "",
-    };
-
-      
+      pincodeError      : [],
+      societyError    : "", 
+    };      
   }
 
     componentDidMount(){
@@ -199,6 +175,75 @@ const navigateAction = StackActions.reset({
                           }
           });
     }
+
+
+  validInput = () => {
+    const {
+      pincode,
+      societyName
+    } = this.state;
+    let valid = true;
+
+    this.validate({
+      pincode: {
+        required: true,
+        numbers: true,
+        equalLength: 6
+      },
+      societyName: {
+        required: true,
+        letters: true,
+      },
+    });
+
+    if (this.isFieldInError("pincode")) {
+      this.setState({ pincodeError: this.getErrorsInField("pincode") });
+      valid = false;
+    } else {
+      this.setState({ pincodeError: "" });
+    }
+    if (this.isFieldInError("societyName")) {
+      this.setState({ societyError: this.getErrorsInField("societyName") });
+      valid = false;
+    } else {
+      this.setState({ societyError: "" });
+    }
+    return valid;
+  };
+  
+  validInputField = (stateName, stateErr) => {
+    const {
+      pincode
+    } = this.state;
+    let valid = true;
+
+    this.validate({
+      [stateName]: {
+        required: true,
+      }
+    });
+
+    if (this.isFieldInError(stateName)) {
+      let validinptError = this.getErrorsInField(stateName);
+      this.setState({ validinptError });
+      valid = false;
+    } else {
+      this.setState({ [stateErr]: "" });
+    }
+
+    return valid;
+  };
+
+
+  displayValidationError = (errorField) => {
+    let error = null;
+    if (this.state[errorField]) {
+      error = <View style={styles.errorWrapper}>
+        <Text style={styles.errorText}>{this.state[errorField][0]}</Text>
+      </View>;
+    }
+    return error;
+  }
 
  _retrieveData = async () => {
     try {
@@ -311,81 +356,82 @@ const navigateAction = StackActions.reset({
 
       if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
         this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!=="" && this.state.societyName!==""  ){
-        if(this.state.updateOperation === true){
-          console.log("update fun");
-          var ovLoc = this.state.originalValuesLocation;
-          var ov = this.state.originalValues;
-          if(this.state.propertyHolder === ov.propertyHolder && this.state.transactionType === ov.transactionType
-            && this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType && 
-            this.state.pincode === ovLoc.pincode && this.state.stateCode === ovLoc.state && this.state.cityName === ovLoc.city && 
-            this.state.areaName === ovLoc.area && this.state.subAreaName === ovLoc.subArea && this.state.societyName === ovLoc.society &&
-            this.state.house === ovLoc.address &&  this.state.landmark === ovLoc.landmark &&  this.state.fullAddress === ovLoc.fullAddress
-            )
-          {
-            console.log("same data");
-                AsyncStorage.setItem("propertyId",ov._id );
-                AsyncStorage.setItem("transactionType",this.state.transactionType);
-                AsyncStorage.setItem("propertyType",this.state.propertyType);
-                this.navigateScreen('PropertyDetails');          
+        if (this.validInput()) {
+          if(this.state.updateOperation === true){
+            console.log("update fun");
+            var ovLoc = this.state.originalValuesLocation;
+            var ov = this.state.originalValues;
+            if(this.state.propertyHolder === ov.propertyHolder && this.state.transactionType === ov.transactionType
+              && this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType && 
+              this.state.pincode === ovLoc.pincode && this.state.stateCode === ovLoc.state && this.state.cityName === ovLoc.city && 
+              this.state.areaName === ovLoc.area && this.state.subAreaName === ovLoc.subArea && this.state.societyName === ovLoc.society &&
+              this.state.house === ovLoc.address &&  this.state.landmark === ovLoc.landmark &&  this.state.fullAddress === ovLoc.fullAddress
+              )
+            {
+              console.log("same data");
+                  AsyncStorage.setItem("propertyId",ov._id );
+                  AsyncStorage.setItem("transactionType",this.state.transactionType);
+                  AsyncStorage.setItem("propertyType",this.state.propertyType);
+                  this.navigateScreen('PropertyDetails');          
 
+            }else{
+
+              console.log("diff data");
+
+              axios
+              .patch('/api/properties/patch/properties',formValues)
+              .then( (res) =>{
+                console.log("here updated data",res);
+                if(res.status === 200){
+                  console.log("res.data.property_id",res.data.property_id);
+                  AsyncStorage.setItem("propertyId",res.data.property_id);
+                  AsyncStorage.setItem("transactionType",this.state.transactionType);
+                  AsyncStorage.setItem("propertyType",this.state.propertyType);
+                  this.navigateScreen('PropertyDetails');          
+                }else{
+                }
+              })
+              .catch((error)=>{
+                            console.log("error = ",error);
+                            if(error.message === "Request failed with status code 401")
+                            {
+                                 // swal("Your session is expired! Please login again.","", "error");
+                                 // this.props.history.push("/");
+                            }
+                        });
+
+            }
+
+            // 2nd if
           }else{
 
-            console.log("diff data");
-
-            axios
-            .patch('/api/properties/patch/properties',formValues)
+            console.log("submit data");
+             axios
+            .post('/api/properties',formValues)
             .then( (res) =>{
-              console.log("here updated data",res);
+              console.log("here 1st form result",res.data);
               if(res.status === 200){
-                console.log("res.data.property_id",res.data.property_id);
-                AsyncStorage.setItem("propertyId",res.data.property_id);
-                AsyncStorage.setItem("transactionType",this.state.transactionType);
-                AsyncStorage.setItem("propertyType",this.state.propertyType);
-                this.navigateScreen('PropertyDetails');          
+                  AsyncStorage.setItem("propertyId",res.data.property_id);
+                  AsyncStorage.setItem("transactionType",this.state.transactionType);
+                  AsyncStorage.setItem("propertyType",this.state.propertyType);
+                  this.navigateScreen('PropertyDetails');          
+              
               }else{
+                // alert(" Please Fill all fields")
               }
             })
             .catch((error)=>{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                               // swal("Your session is expired! Please login again.","", "error");
-                               // this.props.history.push("/");
+                                Alert.alert("Your session is expired!"," Please login again.");
+                                 this.navigateScreen('MobileScreen');             
+                                 
                           }
                       });
 
           }
-
-          // 2nd if
-        }else{
-
-          console.log("submit data");
-           axios
-          .post('/api/properties',formValues)
-          .then( (res) =>{
-            console.log("here 1st form result",res.data);
-            if(res.status === 200){
-                AsyncStorage.setItem("propertyId",res.data.property_id);
-                AsyncStorage.setItem("transactionType",this.state.transactionType);
-                AsyncStorage.setItem("propertyType",this.state.propertyType);
-                this.navigateScreen('PropertyDetails');          
-            
-            }else{
-              // alert(" Please Fill all fields")
-            }
-          })
-          .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');             
-                               
-                        }
-                    });
-
-        }
-
+        }  
         // 1st if
       }else{
         Alert.alert("Please enter mandatory fields","warning");
@@ -445,14 +491,14 @@ const navigateAction = StackActions.reset({
 
                
             }).catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');             
-                               
-                        }
-                    });
+                    console.log("error = ",error);
+                    if(error.message === "Request failed with status code 401")
+                    {
+                          Alert.alert("Your session is expired!"," Please login again.");
+                           this.navigateScreen('MobileScreen');             
+                           
+                    }
+            });
 
 
             //========== Get Area List  =====================
@@ -483,15 +529,15 @@ const navigateAction = StackActions.reset({
                     })
                 })
             }).catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                            
-                                   Alert.alert("Your session is expired!"," Please login again.");
-                                   this.navigateScreen('MobileScreen');                
-                               
-                                }
-                 });
+                  console.log("error = ",error);
+                  if(error.message === "Request failed with status code 401")
+                  {
+              
+                     Alert.alert("Your session is expired!"," Please login again.");
+                     this.navigateScreen('MobileScreen');                
+                 
+                  }
+            });
 
             //========== Get SubArea List  =====================
           url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/' ;
@@ -522,33 +568,29 @@ const navigateAction = StackActions.reset({
                     })
                 })
           }).catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                           
-                                   Alert.alert("Your session is expired!"," Please login again.");
-                                   this.navigateScreen('MobileScreen');               
-                               
-                                }
-                });
-
+              console.log("error = ",error);
+              if(error.message === "Request failed with status code 401")
+              {
+         
+                 Alert.alert("Your session is expired!"," Please login again.");
+                 this.navigateScreen('MobileScreen');               
+             
+              }
           });
+        });
       }
     }).catch((error)=>{
-                                console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                             
-                                 Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');              
-                               
-                                }
+          console.log("error = ",error);
+          if(error.message === "Request failed with status code 401")
+          {
+            Alert.alert("Your session is expired!"," Please login again.");
+            this.navigateScreen('MobileScreen');              
+          }
       });
   }
 
   selectProp(value){
     // console.log("here selected value",value);
-
     var propertyTypeVal = value.split("-");
     var propertyType = propertyTypeVal[0];
     var propertySubType = propertyTypeVal[1];
@@ -595,14 +637,14 @@ const navigateAction = StackActions.reset({
                     })
                 })
       }).catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');        
-                               
-                        }
-            });
+            console.log("error = ",error);
+            if(error.message === "Request failed with status code 401")
+            {
+                  Alert.alert("Your session is expired!"," Please login again.");
+                   this.navigateScreen('MobileScreen');        
+                   
+            }
+      });
 
   }
 
@@ -691,32 +733,31 @@ const navigateAction = StackActions.reset({
         this.setState({
           subAreaList : response.data
         },()=>{
-                   var allSubAreaData= this.state.subAreaList;
+           var allSubAreaData= this.state.subAreaList;
 
-                    // cityname = allCityData.map(a=>a.cityName);
-                    var subareaList=[];
-                    for (var i = 0; i < allSubAreaData.length; i++) {
-                        var subarea = {
-                          label:allSubAreaData[i].subareaName,
-                          value:allSubAreaData[i].subareaName,
-                        }
-                       subareaList.push(subarea);
-                    }
-                    this.setState({
-                      onlySubArea : subareaList,
-                    },()=>{
-                    // console.log("onlySubArea name",this.state.onlySubArea);
-                    })
-                })
+            // cityname = allCityData.map(a=>a.cityName);
+            var subareaList=[];
+            for (var i = 0; i < allSubAreaData.length; i++) {
+                var subarea = {
+                  label:allSubAreaData[i].subareaName,
+                  value:allSubAreaData[i].subareaName,
+                }
+               subareaList.push(subarea);
+            }
+            this.setState({
+              onlySubArea : subareaList,
+            },()=>{
+            // console.log("onlySubArea name",this.state.onlySubArea);
+            })
+        })
     }).catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');             
-                               
-                        }
-            });
+          console.log("error = ",error);
+          if(error.message === "Request failed with status code 401")
+          {
+              Alert.alert("Your session is expired!"," Please login again.");
+              this.navigateScreen('MobileScreen');             
+          }
+    });
 
   }
 
@@ -748,44 +789,41 @@ const navigateAction = StackActions.reset({
       };
 
       url = 'http://locationapi.iassureit.com/api/subareas/post';
-
-        axios
-          .post(url, formValues)
-          .then((response)=> {
-            // console.log("subareas submitted = ",response);
-          }).catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');            
-                               
-                        }
-                    });
-
-    }else{
-      url = 'http://locationapi.iassureit.com/api/societies/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/'+valSubAreaName+'/' ;
-        // console.log("societies URL = ", url);
-        axios({
-          method: 'get',
-          url: url,
-        }).then((response)=> {
-          // console.log("societies = ", response.data);
-            this.setState({
-              societyList : response.data,
-            })
+      axios
+        .post(url, formValues)
+        .then((response)=> {
+          // console.log("subareas submitted = ",response);
         }).catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');           
-                               
-                        }
-                });   
-    }
+            console.log("error = ",error);
+            if(error.message === "Request failed with status code 401")
+            {
+                  Alert.alert("Your session is expired!"," Please login again.");
+                   this.navigateScreen('MobileScreen');            
+                   
+            }
+        });
 
-
+      }else{
+        url = 'http://locationapi.iassureit.com/api/societies/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/'+valSubAreaName+'/' ;
+          // console.log("societies URL = ", url);
+          axios({
+            method: 'get',
+            url: url,
+          }).then((response)=> {
+            // console.log("societies = ", response.data);
+              this.setState({
+                societyList : response.data,
+              })
+          }).catch((error)=>{
+                console.log("error = ",error);
+                if(error.message === "Request failed with status code 401")
+                {
+                      Alert.alert("Your session is expired!"," Please login again.");
+                       this.navigateScreen('MobileScreen');           
+                       
+                }
+          });   
+      }
   }
 
   handleSociety(){
@@ -823,14 +861,13 @@ const navigateAction = StackActions.reset({
           .then((response)=> {
             // console.log("societies submitted = ",response);
           }).catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');             
-                               
-                        }
-                    });
+            console.log("error = ",error);
+            if(error.message === "Request failed with status code 401")
+            {
+                 Alert.alert("Your session is expired!"," Please login again.");
+                   this.navigateScreen('MobileScreen');             
+            }
+        });
     }
   }
 
@@ -865,545 +902,545 @@ const navigateAction = StackActions.reset({
         <HeaderBar showBackBtn={true} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
-          <View style={styles.formWrapper}>
-            <View>
-              <Text style={styles.heading}>
-                Let’s provide details of your property for sell
-              </Text>
-            </View>
+          <KeyboardAwareScrollView>  
+            <View style={styles.formWrapper}>
+              <View>
+                <Text style={styles.heading}>
+                  Let’s provide details of your property for sell
+                </Text>
+              </View>
 
-            <View style={styles.divider}></View>
+              <View style={styles.divider}></View>
 
-            <View style={[styles.alignCenter,styles.marginBottom15]}>
-              <Image
-                source={require('../../images/property.png') }
-              />
-            </View>
+              <View style={[styles.alignCenter,styles.marginBottom15]}>
+                <Image
+                  source={require('../../images/property.png') }
+                />
+              </View>
 
-            <Text style={styles.heading2}>I am<Text style={[{color:"#f00"}]}>*</Text></Text>
-            <View style={[styles.tabWrap,styles.marginBottom15]}>
-              <TouchableOpacity
-                onPress = {()=>this.setActive('owner')}
-                style={[(propertyHolder=="owner"?styles.activeTabView:styles.tabView),styles.tabBorder,styles.borderRadiusLeft]}
-              >
+              <Text style={styles.heading2}>I am<Text style={[{color:"#f00"}]}>*</Text></Text>
+              <View style={[styles.tabWrap,styles.marginBottom15]}>
+                <TouchableOpacity
+                  onPress = {()=>this.setActive('owner')}
+                  style={[(propertyHolder=="owner"?styles.activeTabView:styles.tabView),styles.tabBorder,styles.borderRadiusLeft]}
+                >
+                    <Icon
+                      name="man"
+                      type="entypo"
+                      size={16}
+                      color="white"
+                    />
+                    <Text style={styles.tabText}>Owner</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress = {()=>this.setActive('careTaker')}
+                  style={[(propertyHolder=="careTaker"?styles.activeTabView:styles.tabView),styles.tabBorder]}
+                >
                   <Icon
-                    name="man"
-                    type="entypo"
+                    name="home-account"
+                    type="material-community"
+                    size={18}
+                    color="white"
+                  />
+                  <Text style={styles.tabText}>Care Taker</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress = {()=>this.setActive('builder')}
+                  style={[(propertyHolder=="builder"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
+                >
+                  <Icon
+                    name="home-city"
+                    type="material-community"
                     size={16}
                     color="white"
                   />
-                  <Text style={styles.tabText}>Owner</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress = {()=>this.setActive('careTaker')}
-                style={[(propertyHolder=="careTaker"?styles.activeTabView:styles.tabView),styles.tabBorder]}
-              >
-                <Icon
-                  name="home-account"
-                  type="material-community"
-                  size={18}
-                  color="white"
+                  <Text style={styles.tabText}>Builder</Text>
+                </TouchableOpacity>
+              </View>
+
+              <Text style={styles.heading2}>I would like to<Text style={[{color:"#f00"}]}>*</Text> </Text>
+              <View style={[styles.marginBottom15,{width:'100%'}]}>
+                <SwitchToggle
+                  switchOn={this.state.toggle}
+                  onPress={()=>this.onToggle()}
+                  circleColorOn={colors.button}
+                  circleColorOff={colors.primary}
+                  buttonText={this.state.transactionType}
+                  containerStyle={{
+                    width: 130,
+                    height: 38,
+                    borderRadius: 20,
+                    backgroundColor: '#fff',
+                    padding: 0,
+                    borderWidth:1,
+                    borderColor:'#ccc',
+                    padding:2,
+                  }}
+                  circleStyle={{
+                    width: 80,
+                    height: 34,
+                    borderRadius: 20,
+                    justifyContent:'center',
+                    alignItems:'center',
+                  }}
+                  buttonTextStyle={{
+                    color:'#fff',
+                    fontFamily:'Roboto-Regular',
+                    fontSize: 13
+                  }}
                 />
-                <Text style={styles.tabText}>Care Taker</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress = {()=>this.setActive('builder')}
-                style={[(propertyHolder=="builder"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
-              >
-                <Icon
-                  name="home-city"
-                  type="material-community"
-                  size={16}
-                  color="white"
-                />
-                <Text style={styles.tabText}>Builder</Text>
-              </TouchableOpacity>
-            </View>
+              </View>
 
-            <Text style={styles.heading2}>I would like to<Text style={[{color:"#f00"}]}>*</Text> </Text>
-            <View style={[styles.marginBottom15,{width:'100%'}]}>
-              <SwitchToggle
-                switchOn={this.state.toggle}
-                onPress={()=>this.onToggle()}
-                circleColorOn={colors.button}
-                circleColorOff={colors.primary}
-                buttonText={this.state.transactionType}
-                containerStyle={{
-                  width: 130,
-                  height: 38,
-                  borderRadius: 20,
-                  backgroundColor: '#fff',
-                  padding: 0,
-                  borderWidth:1,
-                  borderColor:'#ccc',
-                  padding:2,
-                }}
-                circleStyle={{
-                  width: 80,
-                  height: 34,
-                  borderRadius: 20,
-                  justifyContent:'center',
-                  alignItems:'center',
-                }}
-                buttonTextStyle={{
-                  color:'#fff',
-                  fontFamily:'Roboto-Regular',
-                  fontSize: 13
-                }}
-              />
-            </View>
+              <Text style={[styles.heading2,styles.marginBottom5]}>Property Type<Text style={[{color:"#f00"}]}>*</Text></Text>
+               <View style={[styles.inputWrapper,styles.marginBottom15]}>
+                  <View style={styles.inputTextWrapperFull}>
+                    <Dropdown
+                      // label               = 'Property Type'
+                      containerStyle      = {styles.ddContainer}
+                      dropdownOffset      = {{top:0, left: 0}}
+                      itemTextStyle       = {styles.ddItemText}
+                      inputContainerStyle = {styles.ddInputContainer}
+                      labelHeight         = {10}
+                      tintColor           = {colors.button}
+                      labelFontSize       = {sizes.label}
+                      fontSize            = {15}
+                      baseColor           = {'#666'}
+                      textColor           = {'#333'}
+                      labelTextStyle      = {styles.ddLabelTextFull}
+                      style               = {styles.ddStyle}
+                      data                = {this.state.propertyTypeList}
+                      value               = {this.state.fullPropertyType}
+                      onChangeText={ (fullPropertyType) => this.selectProp(fullPropertyType) } 
+                     />
 
-            
-            <Text style={[styles.heading2,styles.marginBottom5]}>Property Type<Text style={[{color:"#f00"}]}>*</Text></Text>
-
-                 <View style={[styles.inputWrapper,styles.marginBottom15]}>
-                    <View style={styles.inputTextWrapperFull}>
-                      <Dropdown
-                        // label               = 'Property Type'
-                        containerStyle      = {styles.ddContainer}
-                        dropdownOffset      = {{top:0, left: 0}}
-                        itemTextStyle       = {styles.ddItemText}
-                        inputContainerStyle = {styles.ddInputContainer}
-                        labelHeight         = {10}
-                        tintColor           = {colors.button}
-                        labelFontSize       = {sizes.label}
-                        fontSize            = {15}
-                        baseColor           = {'#666'}
-                        textColor           = {'#333'}
-                        labelTextStyle      = {styles.ddLabelTextFull}
-                        style               = {styles.ddStyle}
-                        data                = {this.state.propertyTypeList}
-                        value               = {this.state.fullPropertyType}
-                        onChangeText={ (fullPropertyType) => this.selectProp(fullPropertyType) } 
-                       />
-
-                      
-                    </View>
+                    
+                  </View>
+              </View>
+         
+              <Text style={[styles.heading2,styles.marginBottom5]}>Pincode<Text style={[{color:"#f00"}]}>*</Text></Text>
+              <View style={[styles.inputWrapper]}>
+                <View style={styles.inputImgWrapper}>
+                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                 </View>
-            
-       
-            <Text style={[styles.heading2,styles.marginBottom5]}>Pincode<Text style={[{color:"#f00"}]}>*</Text></Text>
-            <View style={[styles.inputWrapper]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                <View style={styles.inputTextWrapper}>
+                 <TextInput
+                    placeholder           = "Enter Pincode"
+                    // onBlur={() => console.log("here on blur pincode")}
+                    onChangeText          = {pincode => {this.setState({pincode},() => { this.validInputField('pincode', 'pincodeError'); })}}
+                    onBlur                = {()=> this.handlePincode()}
+                    lineWidth             = {1}
+                    tintColor             = {colors.button}
+                    inputContainerPadding = {0}
+                    labelHeight           = {15}
+                    labelFontSize         = {sizes.label}
+                    titleFontSize         = {10}
+                    baseColor             = {'#666'}
+                    textColor             = {'#666'}
+                    value                 = {this.state.pincode}
+                    containerStyle        = {styles.textContainer}
+                    inputContainerStyle   = {styles.textInputContainer}
+                    titleTextStyle        = {styles.textTitle}
+                    style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                    labelTextStyle        = {styles.textLabel}
+                    keyboardType          = 'number-pad'
+                />
+                </View>
               </View>
-              <View style={styles.inputTextWrapper}>
+              {this.displayValidationError('pincodeError')}
 
-               <TextInput
-                  placeholder           = "Enter Pincode"
-                  // onBlur={() => console.log("here on blur pincode")}
-                  onChangeText          = {pincode => {this.setState({pincode})}}
-                  onBlur                = {()=> this.handlePincode()}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {10}
-                  baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.pincode}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "default"
-              />
-                
-              </View>
-            </View>
+               <Hr lineColor="#666" width={1} text="OR" textStyles={styles.customStylesHere} />
 
-             <Hr lineColor="#666" width={1} text="OR" textStyles={styles.customStylesHere} />
-
-          {/*horizontal line*/}
+            {/*horizontal line*/}
 
 
-              <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
-                <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>State<Text style={[{color:"#f00"}]}>*</Text></Text>
-                  <View style={[{borderColor: colors.black,
-                                 borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
-                    <View style={styles.inputTextWrapperFull}>
-                        {/*<Picker
-                          selectedValue       ={this.state.stateCode}
-                          style               ={[styles.ddStyle,{height:40}]}
-                          placeholder         = "State"
-                          containerStyle      = {styles.ddContainer}
-                          dropdownOffset      = {{top:0, left: 0}}
-                          itemTextStyle       = {styles.ddItemText}
-                          inputContainerStyle = {styles.ddInputContainer}
-                          labelHeight         = {10}
-                          tintColor           = {colors.button}
-                          labelFontSize       = {sizes.label}
-                          fontSize            = {15}
-                          baseColor           = {'#666'}
-                          textColor           = {'#333'}
-                          labelTextStyle      = {styles.ddLabelText}
-                          onValueChange={(stateCode) =>
-                            this.selectState(stateCode)
-                          }
-                          >
+                <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+                  <View style={[{width:'46%'}]}>
+                    <Text style={[styles.heading2,styles.marginBottom5]}>State<Text style={[{color:"#f00"}]}>*</Text></Text>
+                    <View style={[{borderColor: colors.black,
+                                   borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
+                      <View style={styles.inputTextWrapperFull}>
+                          {/*<Picker
+                            selectedValue       ={this.state.stateCode}
+                            style               ={[styles.ddStyle,{height:40}]}
+                            placeholder         = "State"
+                            containerStyle      = {styles.ddContainer}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelText}
+                            onValueChange={(stateCode) =>
+                              this.selectState(stateCode)
+                            }
+                            >
 
-                          {this.state.listofStates ?
-                            this.state.listofStates.map((data, index)=>{
-                              return(
-                                       <Picker.Item key={index} value={data.stateCode} label={data.stateName} />
-                                     );
-                                   })
-                            :
-                            null
-                          }
+                            {this.state.listofStates ?
+                              this.state.listofStates.map((data, index)=>{
+                                return(
+                                         <Picker.Item key={index} value={data.stateCode} label={data.stateName} />
+                                       );
+                                     })
+                              :
+                              null
+                            }
+                            
+                          </Picker>*/}
+
                           
-                        </Picker>*/}
+
+                            <RNPickerSelect
+                              onValueChange={(stateCode) =>
+                              this.selectState(stateCode)
+                            }
+                            value                  = {this.state.stateCode}
+                            style                  = {pickerSelectStyles}
+                            placeholder            = {placeholderState}
+                            items                  = {this.state.onlyState.length>0 ? this.state.onlyState : defaultOption }
+                            />
 
                         
+                      </View>
+                    </View>
+                  </View>
+
+                    <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                     {/* <Text style={styles.heading3}>of</Text>*/}
+                    </View>
+
+                    <View style={[{width:'46%'}]}>
+                    <Text style={[styles.heading2,styles.marginBottom5]}>City<Text style={[{color:"#f00"}]}>*</Text></Text>
+                    <View style={[{borderColor: colors.black,
+                                   borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
+                      <View style={styles.inputTextWrapperFull}>
+                 
+                         {/*<Picker
+                            selectedValue       ={this.state.cityName}
+                            style               ={[styles.ddStyle,{height:40}]}
+                            placeholder         = "City"
+                            containerStyle      = {styles.ddContainer}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelText}
+                            onValueChange={(cityName) =>
+                              this.selectCity(cityName)
+                            }
+                            >
+
+                            {this.state.listofCities.length > 0  ?
+                              this.state.listofCities.map((data, index)=>{
+                                return(
+                                         <Picker.Item key={index} value={data.districtName+'-'+data.blockName+'-'+data.cityName} label={data.cityName} />
+                                       );
+                                     })
+
+                              :
+                              <Picker.Item label="Select State first" />
+                            }
+                            
+                          </Picker>*/}
+                          {/*console.log("city name",this.state.cityName)*/}
+                           <RNPickerSelect
+                              onValueChange={(cityName) =>
+                              this.selectCity(cityName)
+                            }
+                            value                  = {this.state.cityName}
+                            style                  = {pickerSelectStyles}
+                            placeholder            = {placeholderCity}
+                            items                  = {this.state.onlyCity.length>0 ? this.state.onlyCity : defaultOption }
+                            />
+                            
+                           
+
+                      </View>
+                    </View>
+                  </View>
+              </View>
+
+               <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom20]}>
+
+               <View style={[{width:'46%'}]}>
+                    <Text style={[styles.heading2,styles.marginBottom5]}>Area/Suburb<Text style={[{color:"#f00"}]}>*</Text></Text>
+
+                    <View style={[{borderColor: colors.black,
+                                   borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
+                      <View style={styles.inputTextWrapperFull}>
+                         
+  {/*
+                        <Picker
+                            selectedValue       ={this.state.areaName}
+                            style               ={[styles.ddStyle,{height:40}]}
+                            placeholder         = "Area/Suburb"
+                            containerStyle      = {styles.ddContainer}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelText}
+                            onValueChange={(areaName) =>
+                              this.selectArea(areaName)
+                            }
+                            >
+
+                            {this.state.listofAreas  && this.state.listofAreas.length > 0  ?
+                              this.state.listofAreas.map((data, index)=>{
+                                return(
+                                         <Picker.Item key={index} value={data.areaName} label={data.areaName} />
+                                       );
+                                     })
+                              :
+                              <Picker.Item label="Select State first" />
+                              
+                            }
+                            
+                          </Picker>*/}
+                          {/*console.log("this.state.onlyArea in render",this.state.onlyArea)*/}
+
 
                           <RNPickerSelect
-                            onValueChange={(stateCode) =>
-                            this.selectState(stateCode)
-                          }
-                          value                  = {this.state.stateCode}
-                          style                  = {pickerSelectStyles}
-                          placeholder            = {placeholderState}
-                          items                  = {this.state.onlyState.length>0 ? this.state.onlyState : defaultOption }
-                          />
+                              onValueChange={(areaName) =>
+                              this.selectArea(areaName)
+                            }
+                            value                  = {this.state.areaName}
+                            style                  = {pickerSelectStyles}
+                            placeholder            = {placeholderArea}
+                            items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : defaultOption }
+                            />
 
-                      
+                      </View>
                     </View>
                   </View>
-                </View>
 
-                  <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-                   {/* <Text style={styles.heading3}>of</Text>*/}
-                  </View>
+                    <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                     {/* <Text style={styles.heading3}>of</Text>*/}
+                    </View>
 
                   <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>City<Text style={[{color:"#f00"}]}>*</Text></Text>
-                  <View style={[{borderColor: colors.black,
-                                 borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
-                    <View style={styles.inputTextWrapperFull}>
-               
-                       {/*<Picker
-                          selectedValue       ={this.state.cityName}
-                          style               ={[styles.ddStyle,{height:40}]}
-                          placeholder         = "City"
-                          containerStyle      = {styles.ddContainer}
-                          dropdownOffset      = {{top:0, left: 0}}
-                          itemTextStyle       = {styles.ddItemText}
-                          inputContainerStyle = {styles.ddInputContainer}
-                          labelHeight         = {10}
-                          tintColor           = {colors.button}
-                          labelFontSize       = {sizes.label}
-                          fontSize            = {15}
-                          baseColor           = {'#666'}
-                          textColor           = {'#333'}
-                          labelTextStyle      = {styles.ddLabelText}
-                          onValueChange={(cityName) =>
-                            this.selectCity(cityName)
-                          }
-                          >
-
-                          {this.state.listofCities.length > 0  ?
-                            this.state.listofCities.map((data, index)=>{
-                              return(
-                                       <Picker.Item key={index} value={data.districtName+'-'+data.blockName+'-'+data.cityName} label={data.cityName} />
-                                     );
-                                   })
-
-                            :
-                            <Picker.Item label="Select State first" />
-                          }
-                          
-                        </Picker>*/}
-                        {/*console.log("city name",this.state.cityName)*/}
-                         <RNPickerSelect
-                            onValueChange={(cityName) =>
-                            this.selectCity(cityName)
-                          }
-                          value                  = {this.state.cityName}
-                          style                  = {pickerSelectStyles}
-                          placeholder            = {placeholderCity}
-                          items                  = {this.state.onlyCity.length>0 ? this.state.onlyCity : defaultOption }
-                          />
-                          
-                         
-
-                    </View>
-                  </View>
-                </View>
-            </View>
-
-             <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom20]}>
-
-             <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>Area/Suburb<Text style={[{color:"#f00"}]}>*</Text></Text>
-
-                  <View style={[{borderColor: colors.black,
-                                 borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
-                    <View style={styles.inputTextWrapperFull}>
-                       
-{/*
-                      <Picker
-                          selectedValue       ={this.state.areaName}
-                          style               ={[styles.ddStyle,{height:40}]}
-                          placeholder         = "Area/Suburb"
-                          containerStyle      = {styles.ddContainer}
-                          dropdownOffset      = {{top:0, left: 0}}
-                          itemTextStyle       = {styles.ddItemText}
-                          inputContainerStyle = {styles.ddInputContainer}
-                          labelHeight         = {10}
-                          tintColor           = {colors.button}
-                          labelFontSize       = {sizes.label}
-                          fontSize            = {15}
-                          baseColor           = {'#666'}
-                          textColor           = {'#333'}
-                          labelTextStyle      = {styles.ddLabelText}
-                          onValueChange={(areaName) =>
-                            this.selectArea(areaName)
-                          }
-                          >
-
-                          {this.state.listofAreas  && this.state.listofAreas.length > 0  ?
-                            this.state.listofAreas.map((data, index)=>{
-                              return(
-                                       <Picker.Item key={index} value={data.areaName} label={data.areaName} />
-                                     );
-                                   })
-                            :
-                            <Picker.Item label="Select State first" />
-                            
-                          }
-                          
-                        </Picker>*/}
-                        {/*console.log("this.state.onlyArea in render",this.state.onlyArea)*/}
-
-
-                        <RNPickerSelect
-                            onValueChange={(areaName) =>
-                            this.selectArea(areaName)
-                          }
-                          value                  = {this.state.areaName}
-                          style                  = {pickerSelectStyles}
-                          placeholder            = {placeholderArea}
-                          items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : defaultOption }
-                          />
-
-                    </View>
-                  </View>
-                </View>
-
-                  <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-                   {/* <Text style={styles.heading3}>of</Text>*/}
-                  </View>
-
-                <View style={[{width:'46%'}]}>
-                  <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area<Text style={[{color:"#f00"}]}>*</Text></Text>
-                  <View style={[{borderColor: colors.black,
-                                 borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
-                    <View style={styles.inputTextWrapperFull}>
-                    {/*console.log("onlySubArea in render",this.state.onlySubArea)*/}
-                      
-                       {/*<Picker
-                          selectedValue       ={this.state.subAreaName}
-                          style               ={[styles.ddStyle,{height:40}]}
-                          placeholder         = "Sub-Area"
-                          containerStyle      = {styles.ddContainer}
-                          dropdownOffset      = {{top:0, left: 0}}
-                          itemTextStyle       = {styles.ddItemText}
-                          inputContainerStyle = {styles.ddInputContainer}
-                          labelHeight         = {10}
-                          tintColor           = {colors.button}
-                          labelFontSize       = {sizes.label}
-                          fontSize            = {15}
-                          baseColor           = {'#666'}
-                          textColor           = {'#333'}
-                          labelTextStyle      = {styles.ddLabelText}
-                          onBlur              = {()=>this.handleSubarea()}
-                          onValueChange={(subAreaName) =>
-                            this.setState({subAreaName})
-                          }
-                          >
-
-                          {this.state.subAreaList.length>0 ?
-                            this.state.subAreaList.map((data, index)=>{
-                              return(
-                                       <Picker.Item key={index} value={data.subareaName} label={data.subareaName} />
-                                     );
-                                   })
-                            :
-                            <Picker.Item label="Select State first" />
-                            
-                          }
-                          
-                        </Picker>*/}
-
-                        { this.state.onlySubArea.length>0  ? 
-                         <RNPickerSelect
+                    <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area<Text style={[{color:"#f00"}]}>*</Text></Text>
+                    <View style={[{borderColor: colors.black,
+                                   borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
+                      <View style={styles.inputTextWrapperFull}>
+                      {/*console.log("onlySubArea in render",this.state.onlySubArea)*/}
+                        
+                         {/*<Picker
+                            selectedValue       ={this.state.subAreaName}
+                            style               ={[styles.ddStyle,{height:40}]}
+                            placeholder         = "Sub-Area"
+                            containerStyle      = {styles.ddContainer}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelText}
+                            onBlur              = {()=>this.handleSubarea()}
                             onValueChange={(subAreaName) =>
-                            this.setState({subAreaName})
-                          }
-                          onBlur                 = {()=>this.handleSubarea()}
-                          value                  = {this.state.subAreaName}
-                          style                  = {pickerSelectStyles}
-                          placeholder            = {placeholderSubarea}
-                          items                  = {this.state.onlySubArea}
-                          />
+                              this.setState({subAreaName})
+                            }
+                            >
 
-                          :
-                             <TextInput
-                              placeholder           = "Sub-Area"
-                              onChangeText          ={(subAreaName) => this.setState({subAreaName})}
-                              onBlur                 = {()=>this.handleSubarea()}
-                              lineWidth             = {1}
-                              tintColor             = {colors.button}
-                              inputContainerPadding = {0}
-                              labelHeight           = {15}
-                              labelFontSize         = {sizes.label}
-                              titleFontSize         = {10}
-                              baseColor             = {'#666'}
-                              textColor             = {'#666'}
-                              value                 = {this.state.subAreaName}
-                              containerStyle        = {styles.textContainer}
-                              inputContainerStyle   = {styles.textInputContainer}
-                              titleTextStyle        = {styles.textTitle}
-                              style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                              labelTextStyle        = {styles.textLabel}
-                              keyboardType          = "default"
+                            {this.state.subAreaList.length>0 ?
+                              this.state.subAreaList.map((data, index)=>{
+                                return(
+                                         <Picker.Item key={index} value={data.subareaName} label={data.subareaName} />
+                                       );
+                                     })
+                              :
+                              <Picker.Item label="Select State first" />
+                              
+                            }
+                            
+                          </Picker>*/}
+
+                          { this.state.onlySubArea.length>0  ? 
+                           <RNPickerSelect
+                              onValueChange={(subAreaName) =>
+                              this.setState({subAreaName})
+                            }
+                            onBlur                 = {()=>this.handleSubarea()}
+                            value                  = {this.state.subAreaName}
+                            style                  = {pickerSelectStyles}
+                            placeholder            = {placeholderSubarea}
+                            items                  = {this.state.onlySubArea}
                             />
-                          }
+
+                            :
+                               <TextInput
+                                placeholder           = "Sub-Area"
+                                onChangeText          ={(subAreaName) => this.setState({subAreaName})}
+                                onBlur                 = {()=>this.handleSubarea()}
+                                lineWidth             = {1}
+                                tintColor             = {colors.button}
+                                inputContainerPadding = {0}
+                                labelHeight           = {15}
+                                labelFontSize         = {sizes.label}
+                                titleFontSize         = {10}
+                                baseColor             = {'#666'}
+                                textColor             = {'#666'}
+                                value                 = {this.state.subAreaName}
+                                containerStyle        = {styles.textContainer}
+                                inputContainerStyle   = {styles.textInputContainer}
+                                titleTextStyle        = {styles.textTitle}
+                                style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                                labelTextStyle        = {styles.textLabel}
+                                keyboardType          = "default"
+                              />
+                            }
+                      </View>
                     </View>
                   </View>
+              </View>
+
+               {/*remaining items*/}
+               <View style={styles.marginBottom15}>
+                <Text style={[styles.heading2,styles.marginBottom5]}>Society<Text style={[{color:"#f00"}]}>*</Text></Text>
+                <View style={[styles.inputWrapper]}>
+                  <View style={styles.inputImgWrapper}>
+                    <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                  </View>
+                  <View style={styles.inputTextWrapper}>
+                    <TextInput
+                      placeholder           = "Enter Society"
+                      onBlur                = {()=>this.handleSociety()}
+                      onChangeText          = {societyName => {this.setState({societyName},() => { this.validInputField('society', 'societyError'); })}}
+                      lineWidth             = {1}
+                      tintColor             = {colors.button}
+                      inputContainerPadding = {0}
+                      labelHeight           = {15}
+                      labelFontSize         = {sizes.label}
+                      titleFontSize         = {10}
+                      baseColor             = {'#666'}
+                      textColor             = {'#666'}
+                      value                 = {this.state.societyName}
+                      containerStyle        = {styles.textContainer}
+                      inputContainerStyle   = {styles.textInputContainer}
+                      titleTextStyle        = {styles.textTitle}
+                      style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                      labelTextStyle        = {styles.textLabel}
+                      keyboardType          = "default"
+                    />
+                  </View>
                 </View>
-            </View>
-
-             {/*remaining items*/}
-
-            <Text style={[styles.heading2,styles.marginBottom5]}>Society<Text style={[{color:"#f00"}]}>*</Text></Text>
-            <View style={[styles.inputWrapper,styles.marginBottom15]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                {this.displayValidationError('societyError')}
               </View>
-              <View style={styles.inputTextWrapper}>
-                <TextInput
-                  placeholder           = "Enter Society"
-                  onBlur                = {()=>this.handleSociety()}
-                  onChangeText          = {societyName => {this.setState({societyName})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {10}
-                  baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.societyName}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "default"
-                />
-              </View>
-            </View>
 
-             <Text style={[styles.heading2,styles.marginBottom5]}>House/Building Number</Text>
-            <View style={[styles.inputWrapper,styles.marginBottom15]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <TextInput
-                  placeholder           = "Enter House Address"
-                  onChangeText          = {house => {this.setState({house})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {10}
-                  baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.house}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "default"
-                />
-              </View>
-            </View>
-
-
-             <Text style={[styles.heading2,styles.marginBottom5]}>Landmark</Text>
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputImgWrapper}>
-                <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-              </View>
-              <View style={styles.inputTextWrapper}>
-                <TextInput
-                  placeholder           = "Enter landmark"
-                  onChangeText          = {landmark => {this.setState({landmark})}}
-                  lineWidth             = {1}
-                  tintColor             = {colors.button}
-                  inputContainerPadding = {0}
-                  labelHeight           = {15}
-                  labelFontSize         = {sizes.label}
-                  titleFontSize         = {10}
-                  baseColor             = {'#666'}
-                  textColor             = {'#666'}
-                  value                 = {this.state.landmark}
-                  containerStyle        = {styles.textContainer}
-                  inputContainerStyle   = {styles.textInputContainer}
-                  titleTextStyle        = {styles.textTitle}
-                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                  labelTextStyle        = {styles.textLabel}
-                  keyboardType          = "default"
-                />
-              </View>
-            </View>
-
-          {/*here end*/}
-
-                      {/*  {this.state.btnLoading
-                ?
-                  <Button
-                    titleStyle      = {styles.buttonText}
-                    title           = "Processing"
-                    loading
-                    buttonStyle     = {styles.button}
-                    containerStyle  = {styles.buttonContainer}
+              <Text style={[styles.heading2,styles.marginBottom5]}>House/Building Number</Text>
+              <View style={[styles.inputWrapper,styles.marginBottom15]}>
+                <View style={styles.inputImgWrapper}>
+                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                </View>
+                <View style={styles.inputTextWrapper}>
+                  <TextInput
+                    placeholder           = "Enter House Address"
+                    onChangeText          = {house => {this.setState({house})}}
+                    lineWidth             = {1}
+                    tintColor             = {colors.button}
+                    inputContainerPadding = {0}
+                    labelHeight           = {15}
+                    labelFontSize         = {sizes.label}
+                    titleFontSize         = {10}
+                    baseColor             = {'#666'}
+                    textColor             = {'#666'}
+                    value                 = {this.state.house}
+                    containerStyle        = {styles.textContainer}
+                    inputContainerStyle   = {styles.textInputContainer}
+                    titleTextStyle        = {styles.textTitle}
+                    style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                    labelTextStyle        = {styles.textLabel}
+                    keyboardType          = "default"
                   />
-                :
-                  <Button
-                    onPress         ={this.login.bind(this)}
-     logout               titleStyle      = {styles.buttonText}
-                    title           = "Sign In"
-                    buttonStyle     = {styles.button}
-                    containerStyle  = {styles.buttonContainer}
-                  />
-                }*/}
+                </View>
+              </View>
 
-            <Button
-            
-              onPress         = {this.submitFun.bind(this)}
-              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
-              titleStyle      = {styles.buttonText}
-              title           = "Save & Next"
-              buttonStyle     = {styles.button}
-              containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-              iconRight
-              icon = {<Icon
-                name="chevrons-right"
-                type="feather"
-                size={22}
-                color="white"
-              />}
-            />
-      
-          </View>
+
+               <Text style={[styles.heading2,styles.marginBottom5]}>Landmark</Text>
+              <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                <View style={styles.inputImgWrapper}>
+                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                </View>
+                <View style={styles.inputTextWrapper}>
+                  <TextInput
+                    placeholder           = "Enter landmark"
+                    onChangeText          = {landmark => {this.setState({landmark})}}
+                    lineWidth             = {1}
+                    tintColor             = {colors.button}
+                    inputContainerPadding = {0}
+                    labelHeight           = {15}
+                    labelFontSize         = {sizes.label}
+                    titleFontSize         = {10}
+                    baseColor             = {'#666'}
+                    textColor             = {'#666'}
+                    value                 = {this.state.landmark}
+                    containerStyle        = {styles.textContainer}
+                    inputContainerStyle   = {styles.textInputContainer}
+                    titleTextStyle        = {styles.textTitle}
+                    style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                    labelTextStyle        = {styles.textLabel}
+                    keyboardType          = "default"
+                  />
+                </View>
+              </View>
+
+            {/*here end*/}
+
+                        {/*  {this.state.btnLoading
+                  ?
+                    <Button
+                      titleStyle      = {styles.buttonText}
+                      title           = "Processing"
+                      loading
+                      buttonStyle     = {styles.button}
+                      containerStyle  = {styles.buttonContainer}
+                    />
+                  :
+                    <Button
+                      onPress         ={this.login.bind(this)}
+       logout               titleStyle      = {styles.buttonText}
+                      title           = "Sign In"
+                      buttonStyle     = {styles.button}
+                      containerStyle  = {styles.buttonContainer}
+                    />
+                  }*/}
+
+              <Button
+              
+                onPress         = {this.submitFun.bind(this)}
+                // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
+                titleStyle      = {styles.buttonText}
+                title           = "Save & Next"
+                buttonStyle     = {styles.button}
+                containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+                iconRight
+                icon = {<Icon
+                  name="chevrons-right"
+                  type="feather"
+                  size={22}
+                  color="white"
+                />}
+              />
+        
+            </View>
+          </KeyboardAwareScrollView>
         </ScrollView>
      
       </React.Fragment>
@@ -1433,3 +1470,39 @@ const pickerSelectStyles = StyleSheet.create({
     color: '#333',
   },
 });
+
+BasicInfo.defaultProps = {
+  messages: {
+    en: {
+      numbers: 'This field must be a number.',
+      required: 'This field is required.',
+      letters: 'It should only contain letters.',
+      lettersOrEmpty: 'It should only contain letters.',
+      minlength: 'Length should be greater than {1}',
+      equalLength : 'Length should be equal to {1}'
+    }
+  },
+
+  rules: {
+    numbers        : /^(([0-9]*)|(([0-9]*)\.([0-9]*)))$/,
+    required       : /\S+/,
+    letters        : /^[a-zA-Z ]+$/,
+    lettersOrEmpty : /^[a-zA-Z ]+$|^$/,
+    minlength(length, value) {
+      if (length === void (0)) {
+        throw 'ERROR: It is not a valid length, checkout your minlength settings.';
+      } else if (value.length > length) {
+        return true;
+      }
+      return false;
+    },
+    equalLength(length, value) {
+      if (length === void (0)) {
+        throw 'ERROR: It is not a valid length, checkout your minlength settings.';
+      } else if (value.length === length) {
+        return true;
+      }
+      return false;
+    },
+  },
+}
