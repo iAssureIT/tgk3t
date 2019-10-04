@@ -138,8 +138,8 @@ const navigateAction = StackActions.reset({
                                           console.log("error = ",error);
                                           if(error.message === "Request failed with status code 401")
                                           {
-                                               swal("Your session is expired! Please login again.","", "error");
-                                               this.props.history.push("/");
+                                               // swal("Your session is expired! Please login again.","", "error");
+                                               // this.props.history.push("/");
                                           }
                       });
 
@@ -344,7 +344,7 @@ render(){
 
             <View style={styles.divider}></View>
 
-            <View style={styles.amenitiesWrapper} >
+            <View style={styles.amenitiesWrapper,styles.marginBottom25} >
               <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
               {this.state.allAmenities && this.state.allAmenities.length >0 ?
                 this.state.allAmenities.map((data,index)=>(

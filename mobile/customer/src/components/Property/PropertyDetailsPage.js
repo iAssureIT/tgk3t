@@ -430,7 +430,7 @@ const navigateAction = StackActions.reset({
                 </View>
                 :
 
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
                   <Icon
                     name="crosshairs" 
                     type="font-awesome"

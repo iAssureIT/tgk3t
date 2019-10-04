@@ -91,11 +91,8 @@ export default StyleSheet.create({
            marginLeft:"15%"
       },
       android : {
-        width:'70%',
-    alignItems: 'center',
-
+        width:150
       }
-     
     })
 
   },

@@ -24,7 +24,7 @@ import axios          from 'axios';
 
 
 
-export default class MobileScreen extends ValidationComponent {
+export default class OTPScreen extends ValidationComponent {
   navigateScreen=(route)=>{
 const navigateAction = StackActions.reset({
              index: 0,
@@ -48,8 +48,12 @@ const navigateAction = StackActions.reset({
           token     : "",
           mob:"",
           uid : '',
+          
 		    };
 	}
+
+
+  
 
   componentDidMount(){
                 
@@ -86,6 +90,9 @@ _retrieveData = async () => {
   }
 
   OTPfunction(){
+
+    
+
       var userOTP = this.state.otpcode;
  
        console.log("originalotp in otp screen after click",this.state.originalOTP);
@@ -119,7 +126,9 @@ _retrieveData = async () => {
       // swal("Please enter OTP", "", "warning");
 
     }
-  }    
+
+  }   
+
 
 	render() {
 		 const { navigation } = this.props;
@@ -181,6 +190,7 @@ _retrieveData = async () => {
                   keyboardType          = "number-pad"
                 />
               </View>
+            
             </View>
 
               <Modal isVisible={this.state.openModal1} 
@@ -251,13 +261,10 @@ _retrieveData = async () => {
               color="white"
               />}
             />
-
             
             <Text style={styles.text}>
               We charge tenants/buyers brokerage & share upto 50% with the property owners.
             </Text>
-
-
 
           </View>
         </ScrollView>
@@ -265,3 +272,5 @@ _retrieveData = async () => {
 		);
 	}
 }
+
+
