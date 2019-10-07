@@ -303,6 +303,9 @@ submitFun(){
                 "uid"               : this.state.uid,
                }
 
+
+              
+
             if(allAmenitiesDataList!=""){
 
               axios

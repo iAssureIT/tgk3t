@@ -402,9 +402,17 @@ submitFun(){
 
           console.log("outside eq",eq);
                // this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
-          if(eq === true && parseInt(this.state.expectedRate) === ov.expectedRate && parseInt(this.state.totalPrice) === ov.totalPrice &&
-           
-            this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
+         
+         
+          var expectedRateValue = this.state.expectedRate.length>0 ? parseInt(this.state.expectedRate) : null;
+          var totalPriceValue = this.state.totalPrice.length>0 ? parseInt(this.state.totalPrice) : null;
+
+          console.log("expectedRateValue=========================",expectedRateValue);
+          console.log("totalPriceValue===========================",totalPriceValue);
+
+
+           if(eq === true && expectedRateValue === ov.expectedRate && totalPriceValue === ov.totalPrice &&
+           this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
              parseInt(this.state.maintenanceCharges) === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer &&
              this.state.measurementUnit === ov.measurementUnit)
             {

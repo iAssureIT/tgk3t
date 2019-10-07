@@ -95,7 +95,7 @@ constructor(props){
                             {label:"Northwest", value: 'Northwest',},
                             {label:"Southeast", value: 'Southeast',},
                             {label:"Southwest", value: 'Southwest',}],
-      furnishedStatus : "Full Furnished",
+      furnishedStatus : "Fully Furnished",
       superArea       : '',
       builtupArea     : '',
       UnitData  : [{label:"Sq ft", value:"Sq ft"},
@@ -133,7 +133,7 @@ constructor(props){
       originalValues    : "",
       personal          : "",
       washrooms         : "",
-      pantry            : "dry",
+      furnishpantry     : "Dry",
       workStation       : "2",
       builtupAreaError  : "",
       superAreaError    : "",
@@ -272,10 +272,10 @@ constructor(props){
                                   builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
                                   prevCharges     : response.data.propertyDetails.furnishedOptions.length > 0 ? response.data.propertyDetails.furnishedOptions : "",
                                   workStation     : response.data.propertyDetails.workStation ? response.data.propertyDetails.workStation : "",
-                                  furnishPantry   : response.data.propertyDetails.furnishPantry,
+                                  furnishpantry   : response.data.propertyDetails.furnishPantry,
 
                                 },()=>{
-
+                                    console.log("here ov furnishpantry",this.state.furnishpantry);
                                     var furnishItemData = this.state.furnishItem;
                                     var furnishItemDataList = furnishItemData.map((item,index)=>{
                                     var propPresent = this.state.prevCharges.find((obj)=>{
@@ -302,7 +302,7 @@ constructor(props){
                                   {
                                     this.setState({furnishedIndex:1});
                                   }
-                                  if(this.state.furnishedStatus === "Full Furnished")
+                                  if(this.state.furnishedStatus === "Fully Furnished")
                                   {
                                     this.setState({furnishedIndex:0});
                                   }
@@ -310,6 +310,37 @@ constructor(props){
                                   {
                                     this.setState({furnishedIndex:2});
                                   }
+
+
+                                   if(this.state.furnishpantry === "Dry")
+                                  {
+                                    this.setState({furnishpantryIndex:0});
+                                  }
+                                  if(this.state.furnishpantry === "Wet")
+                                  {
+                                    this.setState({furnishpantryIndex:1});
+                                  }
+                                  if(this.state.furnishpantry === "Not available")
+                                  {
+                                    this.setState({furnishpantryIndex:2});
+                                  }
+
+
+                                  // /*furnish pantry*/
+                                  //  if(this.state.furnishpantry === "Not available" || this.state.furnishpantry === "not available" )
+                                  // {
+                                  //    this.setState({furnishpantry:"Not available",
+                                  //                   furnishpantryIndex:2});
+                                  // }
+                                  // if(this.state.furnishpantry === "Wet" || this.state.furnishpantry === "wet"){
+                                  //    this.setState({furnishpantry:"Wet",
+                                  //                   furnishpantryIndex:1});
+                                  // }
+                                  // if(this.state.furnishpantry === "Dry" || this.state.furnishpantry === "dry" || this.state.furnishpantry === null ){
+                                  //    this.setState({furnishpantry:"Dry",
+                                  //                   furnishpantryIndex:0});
+                                  // }
+
 
 
                                   /*pantry data*/
@@ -329,17 +360,7 @@ constructor(props){
                                      this.setState({personalIndex:0});
                                   }
 
-                                  /*furnish pantry*/
-                                   if(this.state.furnishpantry === "Not available" || this.state.furnishpantry === "not available" )
-                                  {
-                                     this.setState({furnishpantryIndex:2});
-                                  }
-                                  if(this.state.furnishpantry === "Wet" || this.state.furnishpantry === "wet"){
-                                     this.setState({furnishpantryIndex:1});
-                                  }
-                                  if(this.state.furnishpantry === "Dry" || this.state.furnishpantry === "dry"){
-                                     this.setState({furnishpantryIndex:0});
-                                  }
+                                  
 
 
                                   /*work station*/
@@ -355,6 +376,8 @@ constructor(props){
 
 
                                 });
+                            },()=>{
+                              console.log("selected index-----------------------------------------------------------------------------------------------------------------------",this.state.furnishpantryIndex);
                             })
                             .catch((error)=>{
                                   console.log("error = ",error);
@@ -417,18 +440,15 @@ constructor(props){
   }
 
   onFurnishpantry=(indexF,valueF)=>{
-    console.log("here index", indexF);
-    console.log("here valueF", valueF);
-    this.setState({
-    furnishpantryIndex : indexF,
-    furnishpantry : valueF,
-    },()=>{
-      console.log("here pantry data",this.state.furnishpantry);
-  });
+      console.log("here index", indexF);
+      console.log("here valueF", valueF);
+      this.setState({
+      furnishpantryIndex : indexF,
+      furnishpantry : valueF,
+      },()=>{
+        console.log("here pantry data",this.state.furnishpantry);
+    });
   }
-
-
- 
 
   handleOnFurnish = (index)=>{
 
@@ -450,7 +470,10 @@ constructor(props){
 
 
 submitFun(){
-  console.log("this.state.furnishedstatus",this.state.furnishedstatus)
+  var ov = this.state.originalValues;
+  console.log("this.state.furnishpantryIndex",this.state.furnishpantryIndex)
+  console.log("here state value",this.state.furnishpantry);
+  console.log("here ov furnishPantry value",ov.furnishPantry);
   if(this.state.builtupArea.value!=="" &&
         this.state.floor!=="" &&  this.state.totalfloor!=="" ){
       if (this.validInput()) {
@@ -488,13 +511,13 @@ submitFun(){
                   console.log("equal yes but same",eq);
                 }
                 console.log("outside eq",eq);
-                console.log("here state value",parseInt(this.state.superArea));
-                console.log("here ov value",ov.superArea);
+                
                 if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
                     this.state.furnishedStatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
                      this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing
                      && parseInt(this.state.superArea) === ov.superArea && this.state.builtupArea === ov.builtupArea &&
-                     eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry )
+                     eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation 
+                     && this.state.furnishpantry === ov.furnishPantry )
                   {
                       console.log("same data");
                      this.navigateScreen('Amenities');
@@ -969,8 +992,8 @@ submitFun(){
                       selectedIndex = {this.state.furnishedIndex}
                       onSelect = {(index, value) => this.onSelectFurnishStatus(index, value)}
                     >
-                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10}} value={'Full Furnished'} >
-                        <Text style={[styles.inputTextSmall,]}>Full furnished</Text>
+                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10}} value={'Fully Furnished'} >
+                        <Text style={[styles.inputTextSmall,]}>Fully furnished</Text>
                       </RadioButton>
 
                       <RadioButton style={{paddingHorizontal:0,marginLeft:5}} value={'Semi Furnished'}>
@@ -983,7 +1006,7 @@ submitFun(){
                     </RadioGroup>
                   </View>
 
-                   {(this.state.furnishedStatus==="Full Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
+                   {(this.state.furnishedStatus==="Fully Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
                        <View style={[styles.marginBottom15,{}]}>
                           {this.state.furnishItem && this.state.furnishItem.length >0 ?
                             this.state.furnishItem.map((data,index)=>(
@@ -1018,7 +1041,7 @@ submitFun(){
 
                       }
 
-                       {(this.state.furnishedStatus==="Full Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
+                       {(this.state.furnishedStatus==="Fully Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
                           <View>
                             <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
                               <View style={[styles.marginBottom15]}>
@@ -1048,7 +1071,10 @@ submitFun(){
                             null
                           }
                           {/*2nd*/}
-                           {(this.state.furnishedStatus==="Full Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
+
+                           {(this.state.furnishedStatus==="Fully Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
+                      
+
                               <View>
                                 <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
                                   <View style={[styles.marginBottom15]}>

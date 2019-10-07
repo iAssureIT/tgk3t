@@ -352,6 +352,11 @@ export default class BasicInfo extends ValidationComponent{
       "fullAddress": fullAddress,
     });
 
+    if(this.state.index.length>0)
+    {
+      AsyncStorage.setItem("index",this.state.index);
+    }
+
     const formValues = {
         "propertyHolder"  : this.state.propertyHolder,
         "transactionType" : this.state.transactionType,
@@ -374,9 +379,10 @@ export default class BasicInfo extends ValidationComponent{
         "property_id"     : this.state.propertyId,
       };
       console.log("formValues",formValues);
+      console.log("subAreaName",this.state.subAreaName);
 
       if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
-        this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!==""  && this.state.societyName!==""  ){
+        this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!==""  && this.state.subAreaName!== undefined && this.state.societyName!==""  ){
         if (this.validInput()) {
           if(this.state.updateOperation === true){
             console.log("update fun");
