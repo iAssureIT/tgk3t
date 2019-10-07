@@ -59,7 +59,7 @@ export default class NotificationHeader extends React.Component {
         leftComponent={
           this.props.showBackBtn
           ?
-            <TouchableOpacity onPress={()=>this.props.navigation.goBack()}>
+            <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
               <Icon size={28} name='chevrons-left' type='feather' color='#fff' />
             </TouchableOpacity>
           :

@@ -1203,18 +1203,12 @@ submitFun(){
                    <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
                    </Text>
                 </TouchableOpacity>
-            </View>
-
-
-           
-
-            
-            </View>
-          </KeyboardAwareScrollView>
-        </ScrollView>
-  </React.Fragment>
+            </View>    
+          </View>
+        </KeyboardAwareScrollView>
+      </ScrollView>
+    </React.Fragment>
     );
-   
   }
 }
 
