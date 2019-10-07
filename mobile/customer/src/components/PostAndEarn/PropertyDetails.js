@@ -1046,11 +1046,9 @@ submitFun(){
 
                             :
                             null
-
                           }
                           {/*2nd*/}
                            {(this.state.furnishedStatus==="Full Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
-                      
                               <View>
                                 <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
                                   <View style={[styles.marginBottom15]}>

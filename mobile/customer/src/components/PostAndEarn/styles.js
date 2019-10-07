@@ -542,7 +542,19 @@ export default StyleSheet.create({
 
  errorText:{
   color:"#f00"
- }
+ },
+
+ congratsContainer: {
+    flex: 1,
+  },
+  textInput: {
+    borderBottomWidth: 0.3,
+    borderBottomColor: 'black',
+    height: 25,
+    fontSize: 16,
+    marginVertical: 50,
+    marginHorizontal: 20,
+  },
 
  
 

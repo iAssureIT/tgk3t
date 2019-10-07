@@ -36,6 +36,7 @@ navigateScreen=(route)=>{
   this.props.navigation.dispatch(navigateAction);
 }
 
+
   constructor(props){
     super(props);
     // this.retrieveToken()
@@ -57,8 +58,8 @@ navigateScreen=(route)=>{
   componentDidMount(){
         // var uid = this.props.navigation.getParam('uid','No uid');
         // var token = this.props.navigation.getParam('token','No token');
-        this.retrieveToken();
-        console.log("token home componentDidMount",AsyncStorage.getItem('token'));
+      this.retrieveToken();
+      console.log("token home componentDidMount",AsyncStorage.getItem('token'));
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem('token');
   }
 
@@ -151,8 +152,7 @@ navigateScreen=(route)=>{
 
 
   login(){
-    // const originPage = "post" ;
-       // this.navigateScreen("PropertyDetails");
+    const originPage = "post" ;
 
     console.log("token in home screen",this.state.token);
     AsyncStorage.removeItem('propertyId');

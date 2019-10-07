@@ -11,16 +11,17 @@ import {
   Image,TextInput,
   Alert
 } from 'react-native';
-import styles from '../../PostAndEarn/styles.js';
-import {AsyncStorage} from 'react-native';
-import { Button,Icon, SearchBar } from 'react-native-elements';
-import { TextField } from 'react-native-material-textfield';
-import HeaderBar from '../../../layouts/HeaderBar/HeaderBar.js';
-import {colors,sizes} from '../../../config/styles.js';
-import { Dropdown } from 'react-native-material-dropdown';
-import Modal from "react-native-modal";
-import { NavigationActions, StackActions } from 'react-navigation';
-import axios          from 'axios';
+
+import styles                             from '../../PostAndEarn/styles.js';
+import {AsyncStorage}                     from 'react-native';
+import { Button,Icon, SearchBar }         from 'react-native-elements';
+import { TextField }                      from 'react-native-material-textfield';
+import HeaderBar                          from '../../../layouts/HeaderBar/HeaderBar.js';
+import {colors,sizes}                     from '../../../config/styles.js';
+import { Dropdown }                       from 'react-native-material-dropdown';
+import Modal                              from "react-native-modal";
+import { NavigationActions, StackActions }from 'react-navigation';
+import axios                              from 'axios';
 
 
 
@@ -44,6 +45,7 @@ navigateScreen=(route)=>{
   this.props.navigation.dispatch(navigateAction);
 }
 
+
 	
 	constructor(props) {
 		super(props);
@@ -65,25 +67,21 @@ navigateScreen=(route)=>{
   
 
   componentDidMount(){
-                
-
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
     this._retrieveData();
-
   }
 
-_retrieveData = async () => {
+  _retrieveData = async () => {
     try {
-      
-       const otp = await AsyncStorage.getItem('originalotp');
+      const otp = await AsyncStorage.getItem('originalotp');
       console.log("otp in otpscreen-----------------------------",otp);
       const msg = await AsyncStorage.getItem('message'); 
       console.log("message in otpscreen--------------",msg);
       const mob = await AsyncStorage.getItem('mobile'); 
       console.log("mobile in otpscreen---------------------",mob);
-       const uid = await AsyncStorage.getItem('uid');
+      const uid = await AsyncStorage.getItem('uid');
       console.log("uid in otpscreen--------------------",uid);
-       const token = await AsyncStorage.getItem('token');
+      const token = await AsyncStorage.getItem('token');
       console.log("token-------------------------------",token);
       // if (uid !== null && token !== null) {
        this.setState({
@@ -99,42 +97,32 @@ _retrieveData = async () => {
   }
 
   OTPfunction(){
+     var userOTP = this.state.otpcode;
+     console.log("originalotp in otp screen after click",this.state.originalOTP);
+     console.log("msg in otp screen after click",this.state.msg);
 
-    
-
-      var userOTP = this.state.otpcode;
- 
-       console.log("originalotp in otp screen after click",this.state.originalOTP);
-       console.log("msg in otp screen after click",this.state.msg);
-
-  if(userOTP!==""){
-      if(parseInt(userOTP) === parseInt(this.state.originalOTP)){
-               
-        
-        if(this.state.msg === "NEW-USER-CREATED"){
-                 this.navigateScreen('SignUp');
-                console.log("signup");
-        }else{
-
-          if(this.state.msg === "MOBILE-NUMBER-EXISTS")
-          {
-               this.navigateScreen('BasicInfo');
-              console.log("already");
+      if(userOTP!==""){
+        if(parseInt(userOTP) === parseInt(this.state.originalOTP)){
+          if(this.state.msg === "NEW-USER-CREATED"){
+                   this.navigateScreen('SignUp');
+                  console.log("signup");
+          }else{
+            if(this.state.msg === "MOBILE-NUMBER-EXISTS")
+            {
+                 this.navigateScreen('BasicInfo');
+                console.log("already");
+            }
           }
+        }else{
+          this.setState({
+              openModal: true,
+          });
         }
       }else{
-        this.setState({
-            openModal: true,
-        });
-        // swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
+         this.setState({
+              openModal1: true,
+          });
       }
-    }else{
-       this.setState({
-            openModal1: true,
-        });
-      // swal("Please enter OTP", "", "warning");
-
-    }
 
   }   
 
