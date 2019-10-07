@@ -50,6 +50,21 @@ export default class PropertyDetails extends ValidationComponent{
 
 constructor(props){
     super(props);
+
+    var floorList      =[];
+    var totalFloorList =[];
+    var obj  ={label : "Basement",value : "Basement"}
+    var obj1 ={label : "Ground"  ,value : "Ground"}
+    floorList.push(obj)
+    floorList.push(obj1)
+    for (var i=1;i<=60;i++){
+        var obj2 ={
+          label : i,
+          value : i,
+        }
+        floorList.push(obj2);
+        totalFloorList.push(obj2);
+    }
     this.state={
      bedroomData : [{ value: 1},
                      { value: 2},
@@ -109,8 +124,8 @@ constructor(props){
                   {label:"Kanal", value:"Kanal"}],
       superAreaUnit     : 'Sq ft',
       builtupAreaUnit   : 'Sq ft',
-      floorData         :[{label:'1', value : '1'},{label:'2', value:'2'}],
-      totalFloorData    :[{label:'1', value : '1'},{label:'2', value:'2'}],
+      floorData         :floorList,
+      totalFloorData    :totalFloorList,
       floor             : 'Basement',
       totalFloor        :'Total Floors',
 
@@ -1000,8 +1015,8 @@ submitFun(){
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,paddingBottom:0,marginLeft:5}} value={'Unfurnished'}>
-                        <Text style={styles.inputTextSmall,{marginTop: -5}}>Unfurnished</Text>
+                      <RadioButton style={{paddingHorizontal:0,marginLeft:5}} value={'Unfurnished'}>
+                        <Text style={styles.inputTextSmall}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
                   </View>
@@ -1262,12 +1277,7 @@ submitFun(){
                               {this.displayValidationError('builtupAreaError')}
                             </View>
                             {/*end*/}
-
-                         <View>
-                          <Text >-------------------------
-                             </Text>
-                         </View>
-                     </View>
+                      </View>
                     <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
                       <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
                          <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next

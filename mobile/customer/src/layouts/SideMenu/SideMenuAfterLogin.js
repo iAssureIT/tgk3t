@@ -20,15 +20,13 @@ import AsyncStorage 		from '@react-native-community/async-storage';
 export default class SideMenu extends React.Component {
 
 	navigateScreen=(route)=>{
-		const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            		NavigationActions.navigate({ routeName: route}),
-            	],
-        });
-        this.props.navigation.dispatch(navigateAction);
+	    const navigateAction = NavigationActions.navigate({
+	    routeName: route,
+	    params: {},
+	    action: NavigationActions.navigate({ routeName: route }),
+	  });
+	  this.props.navigation.dispatch(navigateAction);
 	}
-
 
   constructor(props){
     super(props);

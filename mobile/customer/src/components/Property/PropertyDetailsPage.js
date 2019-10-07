@@ -12,35 +12,35 @@ import {
   Animated,
 } from 'react-native';
 
-import moment from 'moment'
-import { Button,Icon, SearchBar } from 'react-native-elements';
-import { NavigationActions, StackActions } from 'react-navigation';
-import AsyncStorage               from '@react-native-community/async-storage';
+import moment                               from 'moment'
+import { Button,Icon, SearchBar }           from 'react-native-elements';
+import { NavigationActions, StackActions }  from 'react-navigation';
+import AsyncStorage                         from '@react-native-community/async-storage';
 
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
-import axios                              from 'axios';
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
-import CheckBox from 'react-native-check-box'
-import Video from 'react-native-video';
+import ValidationComponent                  from "react-native-form-validator";
+import { TextField }                        from 'react-native-material-textfield';
+import axios                                from 'axios';
+import HeaderBar                            from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                               from './styles.js';
+import {colors,sizes}                       from '../../config/styles.js';
+import CheckBox                             from 'react-native-check-box'
+import Video                                from 'react-native-video';
 // import MapView,{PROVIDER_GOOGLE} from 'react-native-maps';
-import Carousel from 'react-native-snap-carousel';
+import Carousel                             from 'react-native-snap-carousel';
 
 const window = Dimensions.get('window');
 
 export default class PropertyDetailsPage extends ValidationComponent{
 
    navigateScreen=(route)=>{
-const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            NavigationActions.navigate({ routeName: route}),
-            ],
-        });
-        this.props.navigation.dispatch(navigateAction);
-}
+  const navigateAction = StackActions.reset({
+               index: 0,
+              actions: [
+              NavigationActions.navigate({ routeName: route}),
+              ],
+          });
+          this.props.navigation.dispatch(navigateAction);
+  }
 
   constructor(props){
     super(props);

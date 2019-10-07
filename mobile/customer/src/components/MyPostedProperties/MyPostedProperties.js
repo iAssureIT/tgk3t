@@ -170,16 +170,29 @@ export default class MyPostedProperties extends ValidationComponent{
 
                       <View style={{flexDirection:'row',marginBottom:15}}>
                         <View style={{width:'50%'}}>
-                          <View style={{flexDirection:'row',alignItems:'center'}}>
-                            <Icon
-                              name="rupee" 
-                              type="font-awesome"
-                              size={18}
-                              color={colors.black}
-                              containerStyle={{marginRight:5}}
-                            />
-                            <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.totalPrice)}</Text>
-                          </View>
+                           {prop.transactionType === "Sell" ?
+                              <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Icon
+                                  name="rupee" 
+                                  type="font-awesome"
+                                  size={18}
+                                  color={colors.black}
+                                  containerStyle={{marginRight:5}}
+                                />
+                                <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.totalPrice)}</Text>
+                              </View>
+                            :
+                              <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Icon
+                                  name="rupee" 
+                                  type="font-awesome"
+                                  size={18}
+                                  color={colors.black}
+                                  containerStyle={{marginRight:5}}
+                                />
+                                <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.monthlyRent)}</Text>
+                              </View>
+                          }
 
                           <View style={{flexDirection:'row'}}>
                             <Icon

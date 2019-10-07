@@ -10,31 +10,31 @@ import {
   Image,TextInput,
   Alert,
   Platform
-} from 'react-native';
+} from 'react-native';  
 
-import { Button,Icon, SearchBar }           from 'react-native-elements';
-import axios                                from 'axios';
-import { NavigationActions, StackActions }  from 'react-navigation';
-import AsyncStorage                         from '@react-native-community/async-storage';
-import ValidationComponent                  from "react-native-form-validator";
-import { TextField }                        from 'react-native-material-textfield';
-import { RadioGroup, RadioButton }          from 'react-native-flexi-radio-button';
-import CheckBox                             from 'react-native-check-box'
-import HeaderBar                            from '../../layouts/HeaderBar/HeaderBar.js';
-import styles                               from './styles.js';
-import { colors,sizes }                     from '../../config/styles.js';
-import { Dropdown }                         from 'react-native-material-dropdown';
-import DatePicker                           from "react-native-datepicker";
-import TimePicker                           from "react-native-24h-timepicker";
-import Modal                                from "react-native-modal";
-import {request, check, PERMISSIONS, RESULTS}      from 'react-native-permissions';
-import SwitchToggle                         from 'react-native-switch-toggle';
-import ImagePicker                          from 'react-native-image-picker';
-import { RNS3 }                             from 'react-native-aws3';
-import Video                                from 'react-native-video';
-import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
-
-import Dialog from "react-native-dialog";
+import { Button,Icon, SearchBar }             from 'react-native-elements';
+import axios                                  from 'axios';
+import { NavigationActions, StackActions }    from 'react-navigation';
+import AsyncStorage                           from '@react-native-community/async-storage';
+import ValidationComponent                    from "react-native-form-validator";
+import { TextField }                          from 'react-native-material-textfield';
+import { RadioGroup, RadioButton }            from 'react-native-flexi-radio-button';
+import CheckBox                               from 'react-native-check-box'
+import HeaderBar                              from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                                 from './styles.js';
+import { colors,sizes }                       from '../../config/styles.js';
+import { Dropdown }                           from 'react-native-material-dropdown';
+import DatePicker                             from "react-native-datepicker";
+import TimePicker                             from "react-native-24h-timepicker";
+import Modal                                  from "react-native-modal";
+import {request, check, PERMISSIONS, RESULTS} from 'react-native-permissions';
+import SwitchToggle                           from 'react-native-switch-toggle';
+import ImagePicker                            from 'react-native-image-picker';
+import { RNS3 }                               from 'react-native-aws3';
+import Video                                  from 'react-native-video';
+import { KeyboardAwareScrollView }            from 'react-native-keyboard-aware-scroll-view';
+import Loading                                from '../../layouts/Loading/Loading.js'
+import Dialog                                 from "react-native-dialog";
 var Buffer = require('buffer/').Buffer
 import {
   Table,
@@ -143,7 +143,9 @@ navigateScreen=(route)=>{
       "dialogVisible"   : false,
       "dialogVisible1"  : false,
       "imgPath"         : "",
-      "index"           : -1 
+      "index"           : -1 ,
+      isLoading         :false,
+      isLoadingVideo    :false,
     };
 
       var property_id = this.props.navigation.getParam('property_id','No property_id');
@@ -538,6 +540,8 @@ navigateScreen=(route)=>{
           path:'images'
         }
     };
+
+    this.setState({isLoading:true})
     request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
     .then(result => {
       console.log("result",result);
@@ -578,7 +582,8 @@ navigateScreen=(route)=>{
                           imgArrayWSaws.push(obj1);
                         }
                         this.setState({
-                          imgArrayWSaws : imgArrayWSaws
+                          imgArrayWSaws : imgArrayWSaws,
+                          isLoading     : false
                         })
                     })
                     .catch((error)=>{
@@ -619,6 +624,7 @@ navigateScreen=(route)=>{
           path:'images'
         }
   };
+    this.setState({isLoadingVideo:true})
     request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
     .then(result => {
       console.log("result",result);
@@ -653,7 +659,8 @@ navigateScreen=(route)=>{
                     .then((Data)=>{
                       console.log("Data = ",Data);
                         this.setState({
-                          singleVideo : Data.body.postResponse.location,
+                          singleVideo        : Data.body.postResponse.location,
+                          isLoadingVideo     : false
                         })
                     })
                     .catch((error)=>{
@@ -694,8 +701,9 @@ navigateScreen=(route)=>{
 
   handleCancel = () => {
     this.setState({
-     dialogVisible: false ,
-     dialogVisible1: false 
+     dialogVisible  : false ,
+     dialogVisible1 : false ,
+     openModal      : false
    });
   };
 
@@ -1017,23 +1025,29 @@ navigateScreen=(route)=>{
                     </View>
                   </View>
                   <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-                  {this.state.imgArrayWSaws && this.state.imgArrayWSaws.length>0 ?
-                      this.state.imgArrayWSaws.map((photo,i)=>(
-                        <View key={i} style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
-                          <Image
-                            source={{ uri: photo.imgPath }}
-                            style={{width: 110, height: 100}}
-                          />
-                          <Icon    
-                            name    = "times"
-                            type    = 'font-awesome'
-                            color   = "#f00"
-                            onPress = {()=>this.setState({dialogVisible1:true,imgPath:photo.imgPath,index:i})}
-                        />  
-                        </View>
-                      ))
-                      :
-                      null
+                    {this.state.isLoading === false ?
+                      this.state.imgArrayWSaws && this.state.imgArrayWSaws.length>0 ?
+                        this.state.imgArrayWSaws.map((photo,i)=>(
+                          <View key={i} style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
+                            <Image
+                              source={{ uri: photo.imgPath }}
+                              style={{width: 110, height: 100}}
+                            />
+                            <Icon    
+                              name    = "times"
+                              type    = 'font-awesome'
+                              color   = "#f00"
+                              onPress = {()=>this.setState({dialogVisible1:true,imgPath:photo.imgPath,index:i})}
+                          />  
+                          </View>
+                        ))
+                        :
+                        null
+                        :
+                         <ImageBackground 
+                          source={require('../../images/loading.gif') }
+                          style={{width: "50%", height: 150,marginLeft:"40%"}}
+                        />
                     }
                 </View>    
               </View>
@@ -1056,7 +1070,8 @@ navigateScreen=(route)=>{
                     </View>
                   </View>
                   <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-                    {this.state.singleVideo?
+                    {this.state.isLoadingVideo === false ?
+                      this.state.singleVideo?
                         <View style={[{width:'45%',flexDirection:'row',marginBottom:30}]}>
                           <Video 
                             source={{uri:this.state.singleVideo}}   // Can be a URL or a local file.
@@ -1074,6 +1089,11 @@ navigateScreen=(route)=>{
                         </View>
                       :
                       null
+                      :
+                         <ImageBackground 
+                          source={require('../../images/loading.gif') }
+                          style={{width: "50%", height: 150,marginLeft:"40%"}}
+                        />
                     }
                   </View>    
               </View>
@@ -1101,25 +1121,10 @@ navigateScreen=(route)=>{
 
                     </View>
                   // );
-                }) 
-              }
+                  }) 
+                }
 
-            </View>
-              {/*<Button
-                onPress         = {this.submitFun.bind(this)}
-                // onPress         = {()=>this.props.navigation.navigate('PropertyDetails7')}
-                titleStyle      = {styles.buttonText}
-                title           = "Save & Next"
-                buttonStyle     = {styles.button}
-                containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-                iconRight
-                icon = {<Icon
-                  name="chevrons-right" 
-                  type="feather"
-                  size={22}
-                  color="white"
-                />}
-              />*/}
+              </View>
 
 
               <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
@@ -1128,38 +1133,16 @@ navigateScreen=(route)=>{
                      </Text>
                   </TouchableOpacity>
               </View>
-
-
-
+              
             </View>
            </KeyboardAwareScrollView>   
         </ScrollView>
 
-          <Modal isVisible={this.state.openModal} 
-             onBackdropPress={() => this.setState({ openModal: false })}
-             coverScreen={true}
-             hideModalContentWhileAnimating={true}
-             style={{paddingHorizontal:'5%',zIndex:999}}
-             animationOutTiming={500}>
-            <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
-              <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
-                <Icon size={30} name='check' type='fontAwesome5' color='#fff' style={{}}/>
-              </View>
-              <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
-                Availability slot is sucessfully added.
-              </Text>
+        <Dialog.Container visible={this.state.openModal}>
+          <Dialog.Title>Availability slot is sucessfully added.</Dialog.Title>
+          <Dialog.Button label="Ok" onPress={this.handleCancel} />
+        </Dialog.Container>
 
-              <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
-                <Button
-                  onPress         = {()=>this.setState({openModal:false})}
-                  titleStyle      = {styles.buttonText}
-                  title           = "OK"
-                  buttonStyle     = {styles.buttonSignUp}
-                  containerStyle  = {styles.buttonContainer}
-                />
-              </View>
-            </View>
-        </Modal>
 
         <Dialog.Container visible={this.state.dialogVisible}>
           <Dialog.Title>Are you sure?</Dialog.Title>

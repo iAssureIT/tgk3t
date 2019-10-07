@@ -240,7 +240,7 @@ class BasicInfo extends Component{
 		componentDidMount(){	
 		// console.log("here basic info");		
  
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+      		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
         	var message	= localStorage.getItem("message");
         	

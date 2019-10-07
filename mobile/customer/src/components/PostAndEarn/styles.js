@@ -42,6 +42,12 @@ export default StyleSheet.create({
     fontSize: 13,
     fontFamily: 'Roboto-Regular',
     color:colors.grey,
+    ...Platform.select({
+      ios:{
+        fontSize: 11,
+      },
+    })
+
   },
   heading3: {
     fontSize: 14,

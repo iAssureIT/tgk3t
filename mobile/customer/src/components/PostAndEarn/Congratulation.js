@@ -79,7 +79,6 @@ export default class Congratulation extends ValidationComponent{
 
         if(token!="")
         {
-
           axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
           var formvalues = {
              "index"      : prop_index
@@ -246,10 +245,7 @@ export default class Congratulation extends ValidationComponent{
                   
               }
            });
-
       }
-
-      
     }
 
   
