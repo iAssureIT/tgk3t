@@ -29,15 +29,24 @@ import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-sc
 const window = Dimensions.get('window');
  
 export default class PropertyDetails extends ValidationComponent{
+    // navigateScreen=(route)=>{
+    // const navigateAction = StackActions.reset({
+    //              index: 0,
+    //             actions: [
+    //             NavigationActions.navigate({ routeName: route}),
+    //             ],
+    //         });
+    //         this.props.navigation.dispatch(navigateAction);
+    // }
+
     navigateScreen=(route)=>{
-    const navigateAction = StackActions.reset({
-                 index: 0,
-                actions: [
-                NavigationActions.navigate({ routeName: route}),
-                ],
-            });
-            this.props.navigation.dispatch(navigateAction);
-    }
+          const navigateAction = NavigationActions.navigate({
+          routeName: route,
+          params: {},
+          action: NavigationActions.navigate({ routeName: route }),
+        });
+        this.props.navigation.dispatch(navigateAction);
+      }
 
 constructor(props){
     super(props);
@@ -86,7 +95,7 @@ constructor(props){
                             {label:"Northwest", value: 'Northwest',},
                             {label:"Southeast", value: 'Southeast',},
                             {label:"Southwest", value: 'Southwest',}],
-      furnishedStatus : "fullFurnished",
+      furnishedStatus : "Full Furnished",
       superArea       : '',
       builtupArea     : '',
       UnitData  : [{label:"Sq ft", value:"Sq ft"},
@@ -124,8 +133,8 @@ constructor(props){
       originalValues    : "",
       personal          : "",
       washrooms         : "",
-      pantry            : "",
-      workStation       : "",
+      pantry            : "dry",
+      workStation       : "2",
       builtupAreaError  : "",
       superAreaError    : "",
     };
@@ -267,20 +276,83 @@ constructor(props){
 
                                 },()=>{
 
-                                  // console.log("supeeeeeeerarea",this.state.superArea);
-                                  // console.log("furnishedStatus",this.state.furnishedStatus);
-                                  if(this.state.furnishedStatus == "semiFurnished")
+                                    var furnishItemData = this.state.furnishItem;
+                                    var furnishItemDataList = furnishItemData.map((item,index)=>{
+                                    var propPresent = this.state.prevCharges.find((obj)=>{
+                                    return item.label === obj;
+                                    })
+                                    var newObj = Object.assign({},item);
+                                    if(propPresent){
+                                      newObj.checked = true
+                                    }else{
+                                      newObj.checked = false
+                                    }
+                                    return newObj;
+                                  })
+
+                                  this.setState({
+                                      furnishItem : furnishItemDataList,
+                                    },()=>{
+                                      console.log("here furnishItem in didmount after match result",this.state.furnishItem);
+                                      });
+
+
+
+                                  if(this.state.furnishedStatus === "Semi Furnished")
                                   {
                                     this.setState({furnishedIndex:1});
                                   }
-                                  if(this.state.furnishedStatus == "fullFurnished")
+                                  if(this.state.furnishedStatus === "Full Furnished")
                                   {
                                     this.setState({furnishedIndex:0});
                                   }
-                                  if(this.state.furnishedStatus == "unfurnished")
+                                  if(this.state.furnishedStatus === "Unfurnished")
                                   {
                                     this.setState({furnishedIndex:2});
                                   }
+
+
+                                  /*pantry data*/
+
+                                  if(this.state.pantry === "no" || this.state.pantry === "No")
+                                  {
+                                    this.setState({pantryIndex:1});
+                                  }else{
+                                    this.setState({pantryIndex:0});
+                                  }
+
+                                  /*personal washroom*/
+                                  if(this.state.personal === "no" || this.state.personal === "No" )
+                                  {
+                                     this.setState({personalIndex:1});
+                                  }else{
+                                     this.setState({personalIndex:0});
+                                  }
+
+                                  /*furnish pantry*/
+                                   if(this.state.furnishpantry === "Not available" || this.state.furnishpantry === "not available" )
+                                  {
+                                     this.setState({furnishpantryIndex:2});
+                                  }
+                                  if(this.state.furnishpantry === "Wet" || this.state.furnishpantry === "wet"){
+                                     this.setState({furnishpantryIndex:1});
+                                  }
+                                  if(this.state.furnishpantry === "Dry" || this.state.furnishpantry === "dry"){
+                                     this.setState({furnishpantryIndex:0});
+                                  }
+
+
+                                  /*work station*/
+                                  if(this.state.workStation === 0 || this.state.workStation === "0"){
+                                     this.setState({workStationIndex:0});
+                                  }
+                                  if(this.state.workStation === 1 || this.state.workStation === "1"){
+                                     this.setState({workStationIndex:1});
+                                  }
+                                  if(this.state.workStation === 2 || this.state.workStation === "2"){
+                                     this.setState({workStationIndex:2});
+                                  }
+
 
                                 });
                             })
@@ -335,6 +407,7 @@ constructor(props){
     });
   }
 
+
   onPantry=(index,value)=>{
     this.setState({
     pantryIndex : index,
@@ -344,6 +417,8 @@ constructor(props){
   }
 
   onFurnishpantry=(indexF,valueF)=>{
+    console.log("here index", indexF);
+    console.log("here valueF", valueF);
     this.setState({
     furnishpantryIndex : indexF,
     furnishpantry : valueF,
@@ -373,66 +448,20 @@ constructor(props){
     // console.log("current data status",status);
   }
 
- /* submitFun(){
-
-    console.log("here all data");
-
-    var furnishedOptionsData = this.state.furnishItem;
-              var furnishedOptionsDataList =[];    
-                furnishedOptionsData.map((item,index)=>{
-                  if(item.checked == true)
-                  {
-                    furnishedOptionsDataList.push(item.name);
-                  }
-                })
-
-
-                     
-                      const formValues = {
-                     
-                      "bedrooms"          : this.state.bedrooms,
-                      "balconies"         : this.state.balconies,
-                      "washrooms"         : this.state.washrooms,
-                      "furnishedStatus"   : this.state.furnishedStatus,
-                      "personal"          : this.state.personal,
-                      "pantry"            : this.state.pantry,
-                      "workStation"       : this.state.workStation,
-
-                      "bathrooms"         : this.state.bathrooms,
-                      "ageofProperty"     : this.state.ageofproperty,
-                      "facing"            : this.state.facing,
-                      "superArea"         : parseInt(this.state.superArea),
-                      "builtupArea"       : this.state.builtupArea,
-                      "property_id"       : this.state.propertyId,
-                      "uid"               : this.state.uid,
-
-                      // "Amenities"         : [],
-                      "floor"             : this.state.floor,
-                      "totalFloor"        : this.state.totalFloor,
-                      "superAreaUnit"     : this.state.superAreaUnit,
-                      "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                      "furnishPantry"     : this.state.furnishpantry,
-                      "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
-                    };
-
-                    console.log("formValues",formValues);
-
-  }*/
 
 submitFun(){
-
-
   console.log("this.state.furnishedstatus",this.state.furnishedstatus)
   if(this.state.builtupArea.value!=="" &&
         this.state.floor!=="" &&  this.state.totalfloor!=="" ){
       if (this.validInput()) {
         if(this.state.updateOperation === true){
+
           var furnishedOptionsData = this.state.furnishItem;
               var furnishedOptionsDataList =[];    
                 furnishedOptionsData.map((item,index)=>{
                   if(item.checked == true)
                   {
-                    furnishedOptionsDataList.push(item.name);
+                    furnishedOptionsDataList.push(item.label);
                   }
                 })
 
@@ -472,8 +501,41 @@ submitFun(){
                      
                   }else{
                       console.log("diff data");
-                     
-                      const formValues = {
+
+                      var formValues ={}
+
+                      if(furnishedOptionsDataList.length>0)
+
+                      {
+                           var formValues = {
+                           
+                            "bedrooms"          : this.state.bedrooms,
+                            "balconies"         : this.state.balconies,
+                            "washrooms"         : this.state.washrooms,
+                            "furnishedStatus"   : this.state.furnishedStatus,
+                            "personal"          : this.state.personal,
+                            "pantry"            : this.state.pantry,
+                            "workStation"       : this.state.workStation,
+
+                            "bathrooms"         : this.state.bathrooms,
+                            "ageofProperty"     : this.state.ageofproperty,
+                            "facing"            : this.state.facing,
+                            "superArea"         : parseInt(this.state.superArea),
+                            "builtupArea"       : this.state.builtupArea,
+                            "property_id"       : this.state.propertyId,
+                            "uid"               : this.state.uid,
+
+                            // "Amenities"         : [],
+                            "floor"             : this.state.floor,
+                            "totalFloor"        : this.state.totalFloor,
+                            "superAreaUnit"     : this.state.superAreaUnit,
+                            "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                            "furnishPantry"     : this.state.furnishpantry,
+                            "furnishedOptions"  : furnishedOptionsDataList ,
+                          };
+                      }else{
+
+                         var formValues = {
                      
                       "bedrooms"          : this.state.bedrooms,
                       "balconies"         : this.state.balconies,
@@ -497,8 +559,13 @@ submitFun(){
                       "superAreaUnit"     : this.state.superAreaUnit,
                       "builtupAreaUnit"   : this.state.builtupAreaUnit,
                       "furnishPantry"     : this.state.furnishpantry,
-                      "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
+                      // "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : null ,
                     };
+
+
+                      }
+                     
+                      
 
                     console.log("formValues",formValues);
 
@@ -541,7 +608,7 @@ submitFun(){
                   furnishedOptionsData.map((item,index)=>{
                     if(item.checked == true)
                     {
-                      furnishedOptionsDataList.push(item.name);
+                      furnishedOptionsDataList.push(item.label);
                     }
                   })
 
@@ -623,14 +690,7 @@ submitFun(){
           Alert.alert("Please enter mandatory fields","warning");
         }
 
-         // var allAmenitiesData = this.state.allAmenities;
-         //    var allAmenitiesDataList =[];    
-         //        allAmenitiesData.map((item,index)=>{
-         //          if(item.checked == true)
-         //          {
-         //           allAmenitiesDataList.push(item.label);
-         //          }
-         //        })
+         
   }
 
   totalFloor(){
@@ -737,87 +797,85 @@ submitFun(){
                   {this.state.propertyType !== "Commercial" ?
 
                   <View>
+                      <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
+                      <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                        <View style={styles.inputImgWrapper}>
+                          <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                        </View>
+                        <View style={styles.inputTextWrapper}>
+                          <Dropdown
+                            label               = 'Bedrooms'
+                            containerStyle      = {styles.ddContainer}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelText}
+                            style               = {styles.ddStyle}
+                            data                = {this.state.bedroomData}
+                            value               = {this.state.bedrooms}
+                            onChangeText        = {bedrooms => {this.setState({bedrooms});}}
+                          />
+                        </View>
+                      </View>
 
-                          <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
-                          <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                            <View style={styles.inputImgWrapper}>
-                              <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
-                            </View>
-                            <View style={styles.inputTextWrapper}>
-                              <Dropdown
-                                label               = 'Bedrooms'
-                                containerStyle      = {styles.ddContainer}
-                                dropdownOffset      = {{top:0, left: 0}}
-                                itemTextStyle       = {styles.ddItemText}
-                                inputContainerStyle = {styles.ddInputContainer}
-                                labelHeight         = {10}
-                                tintColor           = {colors.button}
-                                labelFontSize       = {sizes.label}
-                                fontSize            = {15}
-                                baseColor           = {'#666'}
-                                textColor           = {'#333'}
-                                labelTextStyle      = {styles.ddLabelText}
-                                style               = {styles.ddStyle}
-                                data                = {this.state.bedroomData}
-                                value               = {this.state.bedrooms}
-                                onChangeText        = {bedrooms => {this.setState({bedrooms});}}
-                              />
-                            </View>
-                          </View>
+                      <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                        <View style={styles.inputImgWrapper}>
+                          <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                        </View>
+                        <View style={styles.inputTextWrapper}>
+                          <Dropdown
+                            label               = 'Balconies'
+                            containerStyle      = {styles.ddContainer}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelText}
+                            style               = {styles.ddStyle}
+                            data                = {this.state.balconieData}
+                            value               = {this.state.balconies}
+                            onChangeText        = {balconies => {this.setState({balconies});}}
+                          />
+                        </View>
+                      </View>
 
-                          <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                            <View style={styles.inputImgWrapper}>
-                              <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
-                            </View>
-                            <View style={styles.inputTextWrapper}>
-                              <Dropdown
-                                label               = 'Balconies'
-                                containerStyle      = {styles.ddContainer}
-                                dropdownOffset      = {{top:0, left: 0}}
-                                itemTextStyle       = {styles.ddItemText}
-                                inputContainerStyle = {styles.ddInputContainer}
-                                labelHeight         = {10}
-                                tintColor           = {colors.button}
-                                labelFontSize       = {sizes.label}
-                                fontSize            = {15}
-                                baseColor           = {'#666'}
-                                textColor           = {'#333'}
-                                labelTextStyle      = {styles.ddLabelText}
-                                style               = {styles.ddStyle}
-                                data                = {this.state.balconieData}
-                                value               = {this.state.balconies}
-                                onChangeText        = {balconies => {this.setState({balconies});}}
-                              />
-                            </View>
-                          </View>
-
-                          <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                            <View style={styles.inputImgWrapper}>
-                              <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
-                            </View>
-                            <View style={styles.inputTextWrapper}>
-                              <Dropdown
-                                label               = 'Bathrooms'
-                                containerStyle      = {styles.ddContainer}
-                                dropdownOffset      = {{top:0, left: 0}}
-                                itemTextStyle       = {styles.ddItemText}
-                                inputContainerStyle = {styles.ddInputContainer}
-                                labelHeight         = {10}
-                                tintColor           = {colors.button}
-                                labelFontSize       = {sizes.label}
-                                fontSize            = {15}
-                                baseColor           = {'#666'}
-                                textColor           = {'#333'}
-                                labelTextStyle      = {styles.ddLabelText}
-                                style               = {styles.ddStyle}
-                                data                = {this.state.bathroomData}
-                                value               = {this.state.bathrooms}
-                                onChangeText        = {bathrooms => {this.setState({bathrooms});}}
-                              />
-                            </View>
-                          </View>
-
-                    </View>
+                      <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                        <View style={styles.inputImgWrapper}>
+                          <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                        </View>
+                        <View style={styles.inputTextWrapper}>
+                          <Dropdown
+                            label               = 'Bathrooms'
+                            containerStyle      = {styles.ddContainer}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelText}
+                            style               = {styles.ddStyle}
+                            data                = {this.state.bathroomData}
+                            value               = {this.state.bathrooms}
+                            onChangeText        = {bathrooms => {this.setState({bathrooms});}}
+                          />
+                        </View>
+                      </View>
+                  </View>
 
                   :
                     <View>
@@ -850,64 +908,56 @@ submitFun(){
                       </View>
                         {/*2nd*/}
                          <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom15]}>
-                          <View style={[{width:'46%'}]}>
+                            <View style={[{width:'46%'}]}>
+                                <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
+                                <View style={[styles.marginBottom15]}>
+                                  <RadioGroup
+                                    size={20}
+                                    color={colors.grey}
+                                    thickness={2}
+                                    selectedIndex = {this.state.pantryIndex}
+                                    onSelect = {(index, value) => this.onPantry(index, value)}
+                                  >
+                                    <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'Yes'} >
+                                      <Text style={styles.inputText}>Yes</Text>
+                                    </RadioButton>
+                           
+                                    <RadioButton style={{paddingHorizontal:0}} value={'No'}>
+                                      <Text style={styles.inputText}>No</Text>
+                                    </RadioButton>
+                           
+                                  </RadioGroup>
+                                </View>
+                            </View>
 
-                                  <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
-                                  <View style={[styles.marginBottom15]}>
-                                    <RadioGroup
-                                      size={20}
-                                      color={colors.grey}
-                                      thickness={2}
-                                      selectedIndex = {this.state.pantryIndex}
-                                      onSelect = {(index, value) => this.onPantry(index, value)}
-                                    >
-                                      <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
-                                        <Text style={styles.inputText}>Yes</Text>
-                                      </RadioButton>
-                             
-                                      <RadioButton style={{paddingHorizontal:0}} value={'no'}>
-                                        <Text style={styles.inputText}>No</Text>
-                                      </RadioButton>
-                             
-                                    </RadioGroup>
-                                  </View>
+                            <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                               {/* <Text style={styles.heading3}>of</Text>*/}
+                            </View>
 
-                          </View>
-
-                          <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-                             {/* <Text style={styles.heading3}>of</Text>*/}
-                          </View>
-
-                           <View style={[{width:'46%'}]}>
-
-                                 <Text style={[styles.heading2,styles.marginBottom15]}>Personal Washroom</Text>
-                                  <View style={[styles.marginBottom15]}>
-                                    <RadioGroup
-                                      size={20}
-                                      color={colors.grey}
-                                      thickness={2}
-                                      selectedIndex = {this.state.personalIndex}
-                                      onSelect = {(index, value) => this.onPersonal(index, value)}
-                                    >
-                                      <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'yes'} >
-                                        <Text style={styles.inputText}>Yes</Text>
-                                      </RadioButton>
-                             
-                                      <RadioButton style={{paddingHorizontal:0}} value={'no'}>
-                                        <Text style={styles.inputText}>No</Text>
-                                      </RadioButton>
-                             
-                                    </RadioGroup>
-                                  </View>
-
-                          </View>
+                            <View style={[{width:'46%'}]}>
+                              <Text style={[styles.heading2,styles.marginBottom15]}>Personal Washroom</Text>
+                              <View style={[styles.marginBottom15]}>
+                                  <RadioGroup
+                                    size={20}
+                                    color={colors.grey}
+                                    thickness={2}
+                                    selectedIndex = {this.state.personalIndex}
+                                    onSelect = {(index, value) => this.onPersonal(index, value)}
+                                  >
+                                    <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'Yes'} >
+                                      <Text style={styles.inputText}>Yes</Text>
+                                    </RadioButton>
+                           
+                                    <RadioButton style={{paddingHorizontal:0}} value={'No'}>
+                                      <Text style={styles.inputText}>No</Text>
+                                    </RadioButton>
+                           
+                                  </RadioGroup>
+                              </View>
+                            </View>
                         </View>
-
-                      </View>
-
-                    }
-                  
-
+                    </View>
+                  }
                   <Text style={[styles.heading2,styles.marginBottom15]}>It is<Text style={[{color:"#f00"}]}>*</Text></Text>
                   <View style={[styles.marginBottom15,{width:'100%'}]}>
                  
@@ -919,47 +969,47 @@ submitFun(){
                       selectedIndex = {this.state.furnishedIndex}
                       onSelect = {(index, value) => this.onSelectFurnishStatus(index, value)}
                     >
-                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10}} value={'fullFurnished'} >
+                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10}} value={'Full Furnished'} >
                         <Text style={[styles.inputTextSmall,]}>Full furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,marginLeft:5}} value={'semiFurnished'}>
+                      <RadioButton style={{paddingHorizontal:0,marginLeft:5}} value={'Semi Furnished'}>
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,paddingBottom:0,marginLeft:5}} value={'unfurnished'}>
+                      <RadioButton style={{paddingHorizontal:0,paddingBottom:0,marginLeft:5}} value={'Unfurnished'}>
                         <Text style={styles.inputTextSmall,{marginTop: -5}}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
                   </View>
 
-                   {(this.state.furnishedStatus==="fullFurnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="semiFurnished" && this.state.propertyType ==="Commercial" ) ?
+                   {(this.state.furnishedStatus==="Full Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
                        <View style={[styles.marginBottom15,{}]}>
-                                  {this.state.furnishItem && this.state.furnishItem.length >0 ?
-                                    this.state.furnishItem.map((data,index)=>(
+                          {this.state.furnishItem && this.state.furnishItem.length >0 ?
+                            this.state.furnishItem.map((data,index)=>(
 
-                                    <View key={index}>
-                                      <CheckBox
-                                        key={index}
-                                        style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}
-                                        style={{marginBottom:10}}
-                                        onClick={() => this.handleOnFurnish(index)}
-                                        isChecked={data.checked}
-                                        rightTextStyle={{marginLeft:0}}
-                                        checkBoxColor= {colors.grey}
-                                        rightTextView = {
-                                          <View style={{flexDirection:'row',flex:1}}>
-                                            <Text style={styles.inputText}>{data.label}</Text>
-                                          </View>
-                                        }
-                                      />
-                                  
-                                    </View>
-                                  ))
+                            <View key={index}>
+                              <CheckBox
+                                key={index}
+                                style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}
+                                style={{marginBottom:10}}
+                                onClick={() => this.handleOnFurnish(index)}
+                                isChecked={data.checked}
+                                rightTextStyle={{marginLeft:0}}
+                                checkBoxColor= {colors.grey}
+                                rightTextView = {
+                                  <View style={{flexDirection:'row',flex:1}}>
+                                    <Text style={styles.inputText}>{data.label}</Text>
+                                  </View>
+                                }
+                              />
+                          
+                            </View>
+                          ))
 
-                                    :
-                                    null
-                                  }
+                            :
+                            null
+                          }
 
                         </View>
 
@@ -968,249 +1018,246 @@ submitFun(){
 
                       }
 
-                       {(this.state.furnishedStatus==="fullFurnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="semiFurnished" && this.state.propertyType ==="Commercial" ) ?
-                                  <View>
-                                    <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
-                                      <View style={[styles.marginBottom15]}>
-                                        <RadioGroup
-                                          size={20}
-                                          color={colors.grey}
-                                          thickness={2}
-                                          selectedIndex = {this.state.workStationIndex}
-                                          onSelect = {(indexW, valueW) => this.onWorkStation(indexW, valueW)}
-                                        >
-                                          <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
-                                            <Text style={styles.inputText}>0</Text>
-                                          </RadioButton>
-                                 
-                                          <RadioButton style={{paddingHorizontal:0}} value={1}>
-                                            <Text style={styles.inputText}>1</Text>
-                                          </RadioButton>
+                       {(this.state.furnishedStatus==="Full Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
+                          <View>
+                            <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
+                              <View style={[styles.marginBottom15]}>
+                                <RadioGroup
+                                  size={20}
+                                  color={colors.grey}
+                                  thickness={2}
+                                  selectedIndex = {this.state.workStationIndex}
+                                  onSelect = {(indexW, valueW) => this.onWorkStation(indexW, valueW)}
+                                >
+                                  <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
+                                    <Text style={styles.inputText}>0</Text>
+                                  </RadioButton>
+                         
+                                  <RadioButton style={{paddingHorizontal:0}} value={1}>
+                                    <Text style={styles.inputText}>1</Text>
+                                  </RadioButton>
 
-                                           <RadioButton style={{paddingHorizontal:0}} value={2}>
-                                            <Text style={styles.inputText}>2</Text>
-                                          </RadioButton>
-                                        </RadioGroup>
-                                      </View>
-                                      </View>
+                                   <RadioButton style={{paddingHorizontal:0}} value={2}>
+                                    <Text style={styles.inputText}>2</Text>
+                                  </RadioButton>
+                                </RadioGroup>
+                              </View>
+                              </View>
 
-                                    :
-                                    null
+                            :
+                            null
 
-                                  }
-
-                                        {/*2nd*/}
-
-                     {(this.state.furnishedStatus==="fullFurnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="semiFurnished" && this.state.propertyType ==="Commercial" ) ?
+                          }
+                          {/*2nd*/}
+                           {(this.state.furnishedStatus==="Full Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
                       
-                                        <View>
-                                        <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
-                                          <View style={[styles.marginBottom15]}>
-                                            <RadioGroup
-                                              size={20}
-                                              color={colors.grey}
-                                              thickness={2}
-                                              selectedIndex = {this.state.furnishpantryIndex}
-                                              onSelect = {(indexF, valueF) => this.onFurnishpantry(indexF, valueF)}
-                                            >
-                                              <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'dry'} >
-                                                <Text style={styles.inputText}>Dry</Text>
-                                              </RadioButton>
-                                     
-                                              <RadioButton style={{paddingHorizontal:0}} value={'wet'}>
-                                                <Text style={styles.inputText}>Wet</Text>
-                                              </RadioButton>
+                              <View>
+                                <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
+                                  <View style={[styles.marginBottom15]}>
+                                    <RadioGroup
+                                      size={20}
+                                      color={colors.grey}
+                                      thickness={2}
+                                      selectedIndex = {this.state.furnishpantryIndex}
+                                      onSelect = {(indexF, valueF) => this.onFurnishpantry(indexF, valueF)}
+                                    >
+                                      <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'Dry'} >
+                                        <Text style={styles.inputText}>Dry</Text>
+                                      </RadioButton>
+                             
+                                      <RadioButton style={{paddingHorizontal:0}} value={'Wet'}>
+                                        <Text style={styles.inputText}>Wet</Text>
+                                      </RadioButton>
 
-                                                <RadioButton style={{paddingHorizontal:0}} value={'not available'}>
-                                                <Text style={styles.inputText}>Not available</Text>
-                                              </RadioButton>
-                                     
-                                            </RadioGroup>
-                                          </View>
-                                          </View>
+                                        <RadioButton style={{paddingHorizontal:0}} value={'Not available'}>
+                                        <Text style={styles.inputText}>Not available</Text>
+                                      </RadioButton>
+                             
+                                    </RadioGroup>
+                                  </View>
+                                </View>
+                                :
+                                null
+                              }
 
-                                      :
+                             {/*here ends*/}
 
-                                      null
+                            <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
+                            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                              <View style={styles.inputImgWrapper}>
+                                <Icon name="home" type="feather" size={18}  color="#aaa" style={{}}/>
+                              </View>
+                              <View style={styles.inputTextWrapper}>
+                                <Dropdown
+                                  label               = 'Years old'
+                                  containerStyle      = {styles.ddContainer}
+                                  dropdownOffset      = {{top:0, left: 0}}
+                                  itemTextStyle       = {styles.ddItemText}
+                                  inputContainerStyle = {styles.ddInputContainer}
+                                  labelHeight         = {10}
+                                  tintColor           = {colors.button}
+                                  labelFontSize       = {sizes.label}
+                                  fontSize            = {15}
+                                  baseColor           = {'#666'}
+                                  textColor           = {'#333'}
+                                  labelTextStyle      = {styles.ddLabelText}
+                                  style               = {styles.ddStyle}
+                                  data                = {this.state.yearsData}
+                                  value               = {this.state.ageofproperty}
+                                  onChangeText        = {ageofproperty => {this.setState({ageofproperty});}}
+                                />
+                              </View>
+                            </View>
 
-                                    }
+                             <View style={[styles.inputWrapper,styles.marginBottom25]}>
+                              <View style={styles.inputImgWrapper}>
+                                <Icon name="crosshairs" type="font-awesome" size={20}  color="#aaa" style={{}}/>
+                              </View>
+                              <View style={styles.inputTextWrapper}>
+                                <Dropdown
+                                  label               = 'Property Facing'
+                                  containerStyle      = {styles.ddContainer}
+                                  dropdownOffset      = {{top:0, left: 0}}
+                                  itemTextStyle       = {styles.ddItemText}
+                                  inputContainerStyle = {styles.ddInputContainer}
+                                  labelHeight         = {10}
+                                  tintColor           = {colors.button}
+                                  labelFontSize       = {sizes.label}
+                                  fontSize            = {15}
+                                  baseColor           = {'#666'}
+                                  textColor           = {'#333'}
+                                  labelTextStyle      = {styles.ddLabelText}
+                                  style               = {styles.ddStyle}
+                                  data                = {this.state.propertyFacingData}
+                                  value               = {this.state.facing}
+                                  onChangeText        = {facing => {this.setState({facing});}}
+                                />
+                              </View>
+                            </View>
 
-                       
-                       
-                {/*here ends*/}
+                             <View style={[styles.marginBottom25]}>
+                              <View style={[styles.inputWrapper]}>
+                                <View style={styles.inputImgWrapper}>
+                                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                                </View>
+                                <View style={[styles.inputTextWrapper68,{}]}>
+                                  <TextField
+                                    label                 = "Super Area"
+                                    onBlur                = {() => this.builtArea()}
+                                    lineWidth             = {1}
+                                    tintColor             = {colors.button}
+                                    inputContainerPadding = {0}
+                                    labelHeight           = {15}
+                                    labelFontSize         = {sizes.label}
+                                    titleFontSize         = {15}
+                                    baseColor             = {'#666'}
+                                    textColor             = {'#333'}
+                                    value                 = {this.state.superArea}
+                                    containerStyle        = {styles.textContainer}
+                                    inputContainerStyle   = {styles.textInputContainer}
+                                    titleTextStyle        = {styles.textTitle}
+                                    style                 = {styles.textStyle}
+                                    labelTextStyle        = {styles.textLabel}
+                                    keyboardType          = "numeric"
+                                    maxLength             = {10}
+                                    onChangeText          = {superArea => {this.setState({superArea},() => { this.validInputField('superArea', 'superAreaError'); })}}
 
-                   <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
-                  <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                    <View style={styles.inputImgWrapper}>
-                      <Icon name="home" type="feather" size={18}  color="#aaa" style={{}}/>
+                                  />
+                                </View>
+                                <View style={[styles.inputRightWrapper1,{height:35}]}>
+                                  <Dropdown
+                                    containerStyle      = {styles.dropHeight,{paddingLeft:5}}
+                                    dropdownOffset      = {{top:0, left: 0}}
+                                    itemTextStyle       = {styles.ddItemText}
+                                    inputContainerStyle = {styles.ddInputContainer}
+                                    labelHeight         = {10}
+                                    tintColor           = {colors.button}
+                                    labelFontSize       = {sizes.label}
+                                    fontSize            = {15}
+                                    baseColor           = {'#666'}
+                                    textColor           = {'#333'}
+                                    labelTextStyle      = {styles.ddLabelTextFull}
+                                    style               = {styles.ddStyle}
+                                    data                = {this.state.UnitData}
+                                    value               = {this.state.superAreaUnit}
+                                    onChangeText        = {superAreaUnit => {this.setState({superAreaUnit});}}
+                                  />
+                                </View>
+                              </View>
+                              {this.displayValidationError('superAreaError')}
+                            </View>
+
+                            <View style={[styles.marginBottom25]}>
+                              <View style={[styles.inputWrapper]}>
+                                <View style={styles.inputImgWrapper}>
+                                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                                </View>
+                                <View style={styles.inputTextWrapper68}>
+                                  <TextField
+                                    label                 = "Built Area*"
+                                    onChangeText          = {builtupArea => {this.setState({builtupArea},() => { this.validInputField('builtupArea', 'builtupAreaError'); })}}
+                                    onBlur                = {() => this.builtArea()}
+                                    lineWidth             = {1}
+                                    tintColor             = {colors.button}
+                                    inputContainerPadding = {0}
+                                    labelHeight           = {15}
+                                    labelFontSize         = {sizes.label}
+                                    titleFontSize         = {15}
+                                    baseColor             = {'#666'}
+                                    textColor             = {'#333'}
+                                    value                 = {this.state.builtupArea}
+                                    containerStyle        = {styles.textContainer}
+                                    inputContainerStyle   = {styles.textInputContainer}
+                                    titleTextStyle        = {styles.textTitle}
+                                    style                 = {styles.textStyle}
+                                    labelTextStyle        = {styles.textLabel}
+                                    keyboardType          = "numeric"
+                                    maxLength             = {10}
+                                  />
+                                </View>
+                                <View style={[styles.inputRightWrapper1,{height:35}]}>
+                                  <Dropdown
+                                    containerStyle      = {styles.dropHeight,{paddingLeft:5}}
+                                    dropdownOffset      = {{top:0, left: 0}}
+                                    itemTextStyle       = {styles.ddItemText}
+                                    inputContainerStyle = {styles.ddInputContainer}
+                                    labelHeight         = {10}
+                                    tintColor           = {colors.button}
+                                    labelFontSize       = {sizes.label}
+                                    fontSize            = {15}
+                                    baseColor           = {'#666'}
+                                    textColor           = {'#333'}
+                                    labelTextStyle      = {styles.ddLabelTextFull}
+                                    style               = {styles.ddStyle}
+                                    data                = {this.state.UnitData}
+                                    value               = {this.state.builtupAreaUnit}
+                                    onChangeText        = {builtupAreaUnit => {this.setState({builtupAreaUnit});}}
+                                  />
+                                </View>
+                              </View>
+                              {this.displayValidationError('builtupAreaError')}
+                            </View>
+                            {/*end*/}
+
+                         <View>
+                          <Text >-------------------------
+                             </Text>
+                         </View>
+                     </View>
+                    <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
+                      <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
+                         <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
+                         </Text>
+                      </TouchableOpacity>
                     </View>
-                    <View style={styles.inputTextWrapper}>
-                      <Dropdown
-                        label               = 'Years old'
-                        containerStyle      = {styles.ddContainer}
-                        dropdownOffset      = {{top:0, left: 0}}
-                        itemTextStyle       = {styles.ddItemText}
-                        inputContainerStyle = {styles.ddInputContainer}
-                        labelHeight         = {10}
-                        tintColor           = {colors.button}
-                        labelFontSize       = {sizes.label}
-                        fontSize            = {15}
-                        baseColor           = {'#666'}
-                        textColor           = {'#333'}
-                        labelTextStyle      = {styles.ddLabelText}
-                        style               = {styles.ddStyle}
-                        data                = {this.state.yearsData}
-                        value               = {this.state.ageofproperty}
-                        onChangeText        = {ageofproperty => {this.setState({ageofproperty});}}
-                      />
-                    </View>
-                  </View>
+                  </KeyboardAwareScrollView>
+                </ScrollView>
+          </React.Fragment>
+        );
+       
+      }
+    }
 
-                   <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                    <View style={styles.inputImgWrapper}>
-                      <Icon name="crosshairs" type="font-awesome" size={20}  color="#aaa" style={{}}/>
-                    </View>
-                    <View style={styles.inputTextWrapper}>
-                      <Dropdown
-                        label               = 'Property Facing'
-                        containerStyle      = {styles.ddContainer}
-                        dropdownOffset      = {{top:0, left: 0}}
-                        itemTextStyle       = {styles.ddItemText}
-                        inputContainerStyle = {styles.ddInputContainer}
-                        labelHeight         = {10}
-                        tintColor           = {colors.button}
-                        labelFontSize       = {sizes.label}
-                        fontSize            = {15}
-                        baseColor           = {'#666'}
-                        textColor           = {'#333'}
-                        labelTextStyle      = {styles.ddLabelText}
-                        style               = {styles.ddStyle}
-                        data                = {this.state.propertyFacingData}
-                        value               = {this.state.facing}
-                        onChangeText        = {facing => {this.setState({facing});}}
-                      />
-                    </View>
-                  </View>
-
-                   <View style={[styles.marginBottom25]}>
-                    <View style={[styles.inputWrapper]}>
-                      <View style={styles.inputImgWrapper}>
-                        <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                      </View>
-                      <View style={[styles.inputTextWrapper68,{}]}>
-                        <TextField
-                          label                 = "Super Area"
-                          onBlur                = {() => this.builtArea()}
-                          lineWidth             = {1}
-                          tintColor             = {colors.button}
-                          inputContainerPadding = {0}
-                          labelHeight           = {15}
-                          labelFontSize         = {sizes.label}
-                          titleFontSize         = {15}
-                          baseColor             = {'#666'}
-                          textColor             = {'#333'}
-                          value                 = {this.state.superArea}
-                          containerStyle        = {styles.textContainer}
-                          inputContainerStyle   = {styles.textInputContainer}
-                          titleTextStyle        = {styles.textTitle}
-                          style                 = {styles.textStyle}
-                          labelTextStyle        = {styles.textLabel}
-                          keyboardType          = "numeric"
-                          maxLength             = {10}
-                          onChangeText          = {superArea => {this.setState({superArea},() => { this.validInputField('superArea', 'superAreaError'); })}}
-
-                        />
-                      </View>
-                      <View style={[styles.inputRightWrapper1,{height:35}]}>
-                        <Dropdown
-                          containerStyle      = {styles.dropHeight,{paddingLeft:5}}
-                          dropdownOffset      = {{top:0, left: 0}}
-                          itemTextStyle       = {styles.ddItemText}
-                          inputContainerStyle = {styles.ddInputContainer}
-                          labelHeight         = {10}
-                          tintColor           = {colors.button}
-                          labelFontSize       = {sizes.label}
-                          fontSize            = {15}
-                          baseColor           = {'#666'}
-                          textColor           = {'#333'}
-                          labelTextStyle      = {styles.ddLabelTextFull}
-                          style               = {styles.ddStyle}
-                          data                = {this.state.UnitData}
-                          value               = {this.state.superAreaUnit}
-                          onChangeText        = {superAreaUnit => {this.setState({superAreaUnit});}}
-                        />
-                      </View>
-                    </View>
-                    {this.displayValidationError('superAreaError')}
-                  </View>
-
-                  <View style={[styles.marginBottom25]}>
-                    <View style={[styles.inputWrapper]}>
-                      <View style={styles.inputImgWrapper}>
-                        <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                      </View>
-                      <View style={styles.inputTextWrapper68}>
-                        <TextField
-                          label                 = "Built Area*"
-                          onChangeText          = {builtupArea => {this.setState({builtupArea},() => { this.validInputField('builtupArea', 'builtupAreaError'); })}}
-                          onBlur                = {() => this.builtArea()}
-                          lineWidth             = {1}
-                          tintColor             = {colors.button}
-                          inputContainerPadding = {0}
-                          labelHeight           = {15}
-                          labelFontSize         = {sizes.label}
-                          titleFontSize         = {15}
-                          baseColor             = {'#666'}
-                          textColor             = {'#333'}
-                          value                 = {this.state.builtupArea}
-                          containerStyle        = {styles.textContainer}
-                          inputContainerStyle   = {styles.textInputContainer}
-                          titleTextStyle        = {styles.textTitle}
-                          style                 = {styles.textStyle}
-                          labelTextStyle        = {styles.textLabel}
-                          keyboardType          = "numeric"
-                          maxLength             = {10}
-                        />
-                      </View>
-                      <View style={[styles.inputRightWrapper1,{height:35}]}>
-                        <Dropdown
-                          containerStyle      = {styles.dropHeight,{paddingLeft:5}}
-                          dropdownOffset      = {{top:0, left: 0}}
-                          itemTextStyle       = {styles.ddItemText}
-                          inputContainerStyle = {styles.ddInputContainer}
-                          labelHeight         = {10}
-                          tintColor           = {colors.button}
-                          labelFontSize       = {sizes.label}
-                          fontSize            = {15}
-                          baseColor           = {'#666'}
-                          textColor           = {'#333'}
-                          labelTextStyle      = {styles.ddLabelTextFull}
-                          style               = {styles.ddStyle}
-                          data                = {this.state.UnitData}
-                          value               = {this.state.builtupAreaUnit}
-                          onChangeText        = {builtupAreaUnit => {this.setState({builtupAreaUnit});}}
-                        />
-                      </View>
-                    </View>
-                    {this.displayValidationError('builtupAreaError')}
-                  </View>
-            {/*end*/}
-               
-          
-
-            <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
-                <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
-                   <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
-                   </Text>
-                </TouchableOpacity>
-            </View>    
-          </View>
-        </KeyboardAwareScrollView>
-      </ScrollView>
-    </React.Fragment>
-    );
-  }
-}
 
 PropertyDetails.defaultProps = {
   messages: {
@@ -1241,80 +1288,3 @@ PropertyDetails.defaultProps = {
 }
 
 
- {/*<Button
-              onPress         = {this.submitFun.bind(this)}
-              // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
-              titleStyle      = {styles.buttonText}
-              title           = "Save & Next"
-              buttonStyle     = {styles.button}
-              containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-              iconRight
-              icon = {<Icon
-                name="chevrons-right"
-                type="feather"
-                size={22}
-                color="white"
-              />}
-            />*/}
-
-
-                                {/*<View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
-                                  <View style={[{width:'46%'}]}>
-                                    <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
-                                      <View style={[styles.marginBottom15]}>
-                                        <RadioGroup
-                                          size={20}
-                                          color={colors.grey}
-                                          thickness={2}
-                                          selectedIndex = {this.state.workStationIndex}
-                                          onSelect = {(index, value) => this.onWorkStation(index, value)}
-                                        >
-                                          <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
-                                            <Text style={styles.inputText}>0</Text>
-                                          </RadioButton>
-                                 
-                                          <RadioButton style={{paddingHorizontal:0}} value={1}>
-                                            <Text style={styles.inputText}>1</Text>
-                                          </RadioButton>
-
-                                           <RadioButton style={{paddingHorizontal:0}} value={2}>
-                                            <Text style={styles.inputText}>2</Text>
-                                          </RadioButton>
-                                        </RadioGroup>
-                                      </View>
-                                  </View>
-
-                                  <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
-                                    
-                                  </View>
-
-                                   <View style={[{width:'46%'}]}>
-
-
-                                         <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
-                                          <View style={[styles.marginBottom15]}>
-                                            <RadioGroup
-                                              size={20}
-                                              color={colors.grey}
-                                              thickness={2}
-                                              selectedIndex = {this.state.furnishpantryIndex}
-                                              onSelect = {(index, value) => this.onFurnishpantry(index, value)}
-                                            >
-                                              <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={'dry'} >
-                                                <Text style={styles.inputText}>Dry</Text>
-                                              </RadioButton>
-                                     
-                                              <RadioButton style={{paddingHorizontal:0}} value={'wet'}>
-                                                <Text style={styles.inputText}>Wet</Text>
-                                              </RadioButton>
-
-                                                <RadioButton style={{paddingHorizontal:0}} value={'not available'}>
-                                                <Text style={styles.inputText}>Not available</Text>
-                                              </RadioButton>
-                                     
-                                            </RadioGroup>
-                                          </View>
-
-
-                                   </View>
-                                </View>*/}

@@ -32,14 +32,23 @@ const window = Dimensions.get('window');
 
 
 export default class Amenities extends ValidationComponent{
- navigateScreen=(route)=>{
-const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            NavigationActions.navigate({ routeName: route}),
-            ],
-        });
-        this.props.navigation.dispatch(navigateAction);
+//  navigateScreen=(route)=>{
+// const navigateAction = StackActions.reset({
+//              index: 0,
+//             actions: [
+//             NavigationActions.navigate({ routeName: route}),
+//             ],
+//         });
+//         this.props.navigation.dispatch(navigateAction);
+// }
+
+navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
 }
 
    constructor(props){
@@ -60,10 +69,7 @@ const navigateAction = StackActions.reset({
   }
 
    componentDidMount(){
-     
     this._retrieveData();
-
-
     }
 
   _retrieveData = async () => {
@@ -86,12 +92,10 @@ const navigateAction = StackActions.reset({
         this.setState({propertyType:propertyType})
         this.setState({transactionType:transactionType})
 
-
         if(token!="")
         {
 
         axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
-
 
         axios
           .get('/api/masteramenities/list')
@@ -198,7 +202,7 @@ submitFun(){
                 allAmenitiesDataList.push(item.amenity);
               }
             })
-            console.log("this.state.allAmenities",this.state.allAmenities);
+            // console.log("this.state.allAmenities",this.state.allAmenities);
             console.log("allAmenitiesDataList true",allAmenitiesDataList);
             console.log("here result amenity",ov.Amenities);
       
@@ -254,13 +258,19 @@ submitFun(){
                         .patch('/api/properties/patch/amenities',formValues)
                         .then( (res) =>{
                           console.log(res);
-                          if(res.status === 200){
+                          if(res.status === 200 ){
                             console.log("amenity Res = ",res);
                             this.navigateScreen('FinancialDetails');
                           }
                         })
                         .catch((error)=>{
                                               console.log("error = ",error);
+
+                                              // if(error.response.data === "Amenities Not Updated")
+                                              // {
+                                              //    this.navigateScreen('FinancialDetails');
+                                              // }
+
                                               if(error.message === "Request failed with status code 401")
                                               {
                                                    // swal("Your session is expired! Please login again.","", "error");

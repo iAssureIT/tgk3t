@@ -41,12 +41,21 @@ const defaultOption = [
 ];
 
 export default class BasicInfo extends ValidationComponent{
+  // navigateScreen=(route)=>{
+  // const navigateAction = StackActions.reset({
+  //       index: 0,
+  //       actions: [
+  //         NavigationActions.navigate({ routeName: route}),
+  //       ],
+  //   });
+  //   this.props.navigation.dispatch(navigateAction);
+  // }
+
   navigateScreen=(route)=>{
-  const navigateAction = StackActions.reset({
-        index: 0,
-        actions: [
-          NavigationActions.navigate({ routeName: route}),
-        ],
+      const navigateAction = NavigationActions.navigate({
+      routeName: route,
+      params: {},
+      action: NavigationActions.navigate({ routeName: route }),
     });
     this.props.navigation.dispatch(navigateAction);
   }
@@ -106,7 +115,6 @@ export default class BasicInfo extends ValidationComponent{
       house           : '',
       landmark        : '',
       listofStates    : '',
-          
       listofBlocks    : "",
       listofCities    : "",
       onlyState       : "",
@@ -128,15 +136,15 @@ export default class BasicInfo extends ValidationComponent{
       // areaName        : '',
       originalValues          : "",
       originalValuesLocation  : "",
-      pincodeError      : [],
+      pincodeError    : [],
       societyError    : "", 
+      fullAddress     : ""
     };      
   }
 
     componentDidMount(){
       console.log("here token in form 1",this.state.token);
       // AsyncStorage.removeItem('propertyId');
-
       this._retrieveData();
        axios({
         method: 'get',
@@ -145,9 +153,7 @@ export default class BasicInfo extends ValidationComponent{
          this.setState({
               listofStates : response.data
             },()=>{
-
-
-                   var allStateData = this.state.listofStates;
+                    var allStateData = this.state.listofStates;
                     // cityname = allCityData.map(a=>a.cityName);
                     var stateList=[];
                     for (var i = 0; i < allStateData.length; i++) {
@@ -162,16 +168,13 @@ export default class BasicInfo extends ValidationComponent{
                     },()=>{
                       // console.log("onlyState",this.state.onlyState);
                     })
-
-
             })
         }).catch((error)=>{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
                                Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');          
-                               
+                               this.navigateScreen('MobileScreen');                                        
                           }
           });
     }
@@ -222,22 +225,20 @@ export default class BasicInfo extends ValidationComponent{
         required: true,
       }
     });
-
-    if (this.isFieldInError(stateName)) {
+    if(this.isFieldInError(stateName)) {
       let validinptError = this.getErrorsInField(stateName);
       this.setState({ validinptError });
       valid = false;
     } else {
       this.setState({ [stateErr]: "" });
     }
-
     return valid;
   };
 
 
   displayValidationError = (errorField) => {
     let error = null;
-    if (this.state[errorField]) {
+    if(this.state[errorField]) {
       error = <View style={styles.errorWrapper}>
         <Text style={styles.errorText}>{this.state[errorField][0]}</Text>
       </View>;
@@ -295,6 +296,23 @@ export default class BasicInfo extends ValidationComponent{
                           house                     : res.data.propertyLocation.address,
                           landmark                  : res.data.propertyLocation.landmark,
 
+                      },()=>{
+
+                        if(this.state.cityName != null &&  this.state.areaName != null && this.state.subAreaName != null && this.state.societyName != null)
+                        {
+                           var first  = this.state.cityName.toUpperCase().slice(0,2);
+                           var second = this.state.areaName.toUpperCase().slice(0,2);
+                           var third  = this.state.subAreaName.toUpperCase().slice(0,2);
+                           var forth  = this.state.societyName.toUpperCase().slice(0,2);
+
+                           var indexData = first+second+third+forth;
+
+                           this.setState({
+                            index : indexData,
+                           });
+                          
+                        }
+
                       })
                 })
                   .catch((error)=>{
@@ -305,7 +323,6 @@ export default class BasicInfo extends ValidationComponent{
                                     this.navigateScreen('MobileScreen');   
                               }
                           });
-
                 }
       }
     } catch (error) {
@@ -331,6 +348,10 @@ export default class BasicInfo extends ValidationComponent{
   submitFun(){
    var uid = this.state.uid;
    var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
+    this.setState({
+      "fullAddress": fullAddress,
+    });
+
     const formValues = {
         "propertyHolder"  : this.state.propertyHolder,
         "transactionType" : this.state.transactionType,
@@ -338,7 +359,6 @@ export default class BasicInfo extends ValidationComponent{
         "propertySubType" : this.state.propertySubType,
         "listing"         : false,
         "status"          : "WIP",
-
         "countryCode"     : "IN",
         "pincode"         : this.state.pincode,
         "stateCode"       : this.state.stateCode,
@@ -350,17 +370,19 @@ export default class BasicInfo extends ValidationComponent{
         "landmark"        : this.state.landmark,
         "index"           : this.state.index,
         "uid"             : uid,
+        "fullAddress"     : this.state.fullAddress,
         "property_id"     : this.state.propertyId,
       };
       console.log("formValues",formValues);
 
       if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
-        this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!=="" && this.state.societyName!==""  ){
+        this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!==""  && this.state.societyName!==""  ){
         if (this.validInput()) {
           if(this.state.updateOperation === true){
             console.log("update fun");
             var ovLoc = this.state.originalValuesLocation;
             var ov = this.state.originalValues;
+            console.log("here ov value",ov);
             if(this.state.propertyHolder === ov.propertyHolder && this.state.transactionType === ov.transactionType
               && this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType && 
               this.state.pincode === ovLoc.pincode && this.state.stateCode === ovLoc.state && this.state.cityName === ovLoc.city && 
@@ -896,6 +918,23 @@ export default class BasicInfo extends ValidationComponent{
       value: null,
       color: '#9EA0A4',
     };
+
+
+      var cityName = this.state.cityName;
+      var areaName = this.state.areaName;
+      var subareaName = this.state.subAreaName;
+      var societyName = this.state.societyName;
+
+      if(cityName != null &&  areaName != null && subareaName != null && societyName != null)
+      {
+         var first  = cityName.toUpperCase().slice(0,2);
+         var second = areaName.toUpperCase().slice(0,2);
+         var third  = subareaName.toUpperCase().slice(0,2);
+         var forth  = societyName.toUpperCase().slice(0,2);
+
+         this.state.index = first+second+third+forth;
+         // console.log("index here", this.state.index);
+      }
 
     return (
       <React.Fragment>

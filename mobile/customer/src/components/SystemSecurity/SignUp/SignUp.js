@@ -26,6 +26,16 @@ import Modal from "react-native-modal";
 const window = Dimensions.get('window');
 
 export default class SignUp extends ValidationComponent{
+
+  navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
+}
+
   constructor(props){
     super(props);
     this.state={
@@ -53,24 +63,49 @@ export default class SignUp extends ValidationComponent{
     this.setState({showPassword:!this.state.showPassword});
   }
   
-  componentDidMount(){
-      // console.log("here token in otp form ", AsyncStorage.getItem("token"));
-      var token = this.props.navigation.getParam('token','No token');
-      console.log("token",token);
+   componentDidMount(){
+      axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
+      this._retrieveData();
+    }
 
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
-
-     var uid = this.props.navigation.getParam('uid','No uid');
-    console.log("uid in signupscreen",uid);
-
-    var mobile = this.props.navigation.getParam('mobile','No mobile');
-    console.log("mobile in sign up screen",mobile);
-    this.setState({
-        mobile : mobile,
-        uid    : uid,
-        token   : token,
-    });
+    _retrieveData = async () => {
+    try {
+      
+      const mob = await AsyncStorage.getItem('mobile'); 
+      console.log("mobile in otpscreen---------------------",mob);
+       const uid = await AsyncStorage.getItem('uid');
+      console.log("uid in otpscreen--------------------",uid);
+       const token = await AsyncStorage.getItem('token');
+      console.log("token-------------------------------",token);
+      // if (uid !== null && token !== null) {
+       this.setState({
+                 mobile         : mob,
+                 uid            : uid,
+                 token          : token,
+               });
+      // }
+    } catch (error) {
+    }
   }
+
+  // componentDidMount(){
+  //     // console.log("here token in otp form ", AsyncStorage.getItem("token"));
+  //   //   var token = this.props.navigation.getParam('token','No token');
+  //   //   console.log("token",token);
+
+  //   //   axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
+  //   //  var uid = this.props.navigation.getParam('uid','No uid');
+  //   // console.log("uid in signupscreen",uid);
+
+  //   // var mobile = this.props.navigation.getParam('mobile','No mobile');
+  //   // console.log("mobile in sign up screen",mobile);
+  //   // this.setState({
+  //   //     mobile : mobile,
+  //   //     uid    : uid,
+  //   //     token   : token,
+  //   // });
+  // }
   signupUser(){
 
                var id = this.state.uid;
@@ -94,8 +129,8 @@ export default class SignUp extends ValidationComponent{
                 .patch('/api/usersotp/signup',formValues)
                 .then( (res) =>{
                   console.log("res in signup",res)
-                  this.props.navigation.navigate('BasicInfo',{mobile:this.state.mobile,token:this.state.token,uid:this.state.uid});
-
+                  // this.props.navigation.navigate('',{mobile:this.state.mobile,token:this.state.token,uid:this.state.uid});
+                  this.navigateScreen('BasicInfo');
                   if(res.data.message === "USER-UPDATED"){
                           var sendDataToUser = {
                               "templateName"  : "User - New Registration",

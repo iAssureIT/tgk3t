@@ -27,6 +27,16 @@ import {colors,sizes} from '../../config/styles.js';
 const window = Dimensions.get('window');
 
 export default class Congratulation extends ValidationComponent{
+
+  navigateScreen=(route)=>{
+      const navigateAction = NavigationActions.navigate({
+      routeName: route,
+      params: {},
+      action: NavigationActions.navigate({ routeName: route }),
+    });
+    this.props.navigation.dispatch(navigateAction);
+  }
+
   constructor(props){
     super(props);
     this.state={
@@ -34,7 +44,6 @@ export default class Congratulation extends ValidationComponent{
       uid : "",
       propertyId : "",
       allData : "",
-      
     };
   }
 

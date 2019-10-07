@@ -60,14 +60,24 @@ var imgArrayWSaws = [];
 
 export default class Availability extends ValidationComponent{
 
-  navigateScreen=(route)=>{
-  const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            NavigationActions.navigate({ routeName: route}),
-            ],
-        });
-        this.props.navigation.dispatch(navigateAction);
+//   navigateScreen=(route)=>{
+//   const navigateAction = StackActions.reset({
+//              index: 0,
+//             actions: [
+//             NavigationActions.navigate({ routeName: route}),
+//             ],
+//         });
+//         this.props.navigation.dispatch(navigateAction);
+// }
+
+
+navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
 }
 
   constructor(props){
@@ -380,7 +390,7 @@ export default class Availability extends ValidationComponent{
               .then( (res) =>{
                 console.log("availabilityPlan----------------",res);
                 if(res.status === 200){
-                  this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                  this.navigateScreen('Congratulation');
                  }
               })
               .catch((error)=>{

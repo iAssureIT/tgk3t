@@ -34,14 +34,23 @@ const window = Dimensions.get('window');
 
 export default class FinancialDetails extends ValidationComponent{
 
+  // navigateScreen=(route)=>{
+  // const navigateAction = StackActions.reset({
+  //              index: 0,
+  //             actions: [
+  //             NavigationActions.navigate({ routeName: route}),
+  //             ],
+  //         });
+  //         this.props.navigation.dispatch(navigateAction);
+  // }
+
   navigateScreen=(route)=>{
-  const navigateAction = StackActions.reset({
-               index: 0,
-              actions: [
-              NavigationActions.navigate({ routeName: route}),
-              ],
-          });
-          this.props.navigation.dispatch(navigateAction);
+      const navigateAction = NavigationActions.navigate({
+      routeName: route,
+      params: {},
+      action: NavigationActions.navigate({ routeName: route }),
+    });
+    this.props.navigation.dispatch(navigateAction);
   }
 
 
@@ -228,10 +237,10 @@ _retrieveData = async () => {
 
                     this.setState({
                        originalValues     : response.data.financial,
-                       expectedRate       : response.data.financial.expectedRate ? response.data.financial.expectedRate : "",
-                       totalPrice         : response.data.financial.totalPrice ? response.data.financial.totalPrice : "",
-                       monthlyRent        : response.data.financial.monthlyRent ? response.data.financial.monthlyRent : "",
-                       depositAmount      : response.data.financial.depositAmount ? response.data.financial.depositAmount : "",
+                       expectedRate       : response.data.financial.expectedRate ? response.data.financial.expectedRate.toString() : "",
+                       totalPrice         : response.data.financial.totalPrice ? response.data.financial.totalPrice.toString() : "",
+                       monthlyRent        : response.data.financial.monthlyRent ? response.data.financial.monthlyRent.toString() : "",
+                       depositAmount      : response.data.financial.depositAmount ? response.data.financial.depositAmount.toString() : "",
                        prevCharges        : response.data.financial.includeCharges,
                        updateOperation    : true,
                        // startDate          : availableFrom,
@@ -400,7 +409,7 @@ submitFun(){
              this.state.measurementUnit === ov.measurementUnit)
             {
             console.log("same data");
-              this.navigateScreen('Availability',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+              this.navigateScreen('Availability');
             }else{
               console.log("diff data");
               console.log("this.state.expectedRate",this.state.expectedRate);

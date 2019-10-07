@@ -27,17 +27,24 @@ import { NavigationActions, StackActions } from 'react-navigation';
 
 export default class MobileScreen extends ValidationComponent {
 
-  navigateScreen=(route)=>{
-const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            NavigationActions.navigate({ routeName: route}),
-            ],
-        });
-        this.props.navigation.dispatch(navigateAction);
+//   navigateScreen=(route)=>{
+// const navigateAction = StackActions.reset({
+//              index: 0,
+//             actions: [
+//             NavigationActions.navigate({ routeName: route}),
+//             ],
+//         });
+//         this.props.navigation.dispatch(navigateAction);
+// }
+navigateScreen=(route)=>{
+	  const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
 }
 
-	
 	constructor(props) {
 		super(props);
 		 this.state={
@@ -191,7 +198,7 @@ const navigateAction = StackActions.reset({
 	render() {
 		const { navigation } = this.props;
     	let {activeBtn} = this.state;
-
+     
 		return (
       <React.Fragment>
             
@@ -207,6 +214,8 @@ const navigateAction = StackActions.reset({
 
             <View style={styles.divider}></View>
 
+
+        
             <View style={styles.alignCenter}>
               <Image 
                 source={require('../../../images/1.png') }

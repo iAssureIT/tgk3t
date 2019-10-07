@@ -326,6 +326,22 @@ export default StyleSheet.create({
     },
   },
 
+  nextBtnhover1:{
+    backgroundColor:"#337ab7",
+    borderColor: "#204d74",
+    color:"#fff",
+    borderRadius:5,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    width:"80%",
+    marginLeft:40,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    },
+  },
+
   buttonContainer1:{
     width:'40%',
     ...Platform.select({
