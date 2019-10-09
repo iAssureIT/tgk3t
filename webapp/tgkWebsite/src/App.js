@@ -1,12 +1,9 @@
 import React 				from 'react';
-
 import Layout 				from './Layout/Layout.js';
 import axios 				from 'axios';
 
 import './App.css';
-
 import 'font-awesome/css/font-awesome.min.css';
-
 import './lib/router.js';
 
 

@@ -7,7 +7,7 @@ export default class Query extends Component {
 		return (
 			<div className="col-lg-12 qBoxSize pageBox noPad">
 				<div className="col-lg-2" >
-				<img src="images/profile.png" className="rounded-circle qImgSize" alt=""  /> 
+				<img src="/images/person.png" className="rounded-circle qImgSize" alt=""  /> 
 				</div>
 				<div className="col-lg-10" >
 					<div className="row mt-8">

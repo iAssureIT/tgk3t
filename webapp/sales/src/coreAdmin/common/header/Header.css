@@ -74,6 +74,10 @@ padding: 5px 5px !important;
 .profileTitle{
   cursor: pointer;
 }
+.profilebtn{
+  position: absolute;
+  right: 40px;
+}
 .headicon{
     font-size: 1.1vw;
     font-weight: bold;

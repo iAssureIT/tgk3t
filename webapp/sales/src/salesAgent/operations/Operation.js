@@ -1,8 +1,9 @@
 import React, { Component }   from 'react';
 import $ 					  from "jquery";
 import Query                  from './query/Query.js';
+import  Properties 			  from './Properties/Properties.js';
+
 import './Operation.css';
-import  Properties from './Properties/Properties.js';
 
 
 export default class Operation extends Component {
@@ -19,7 +20,6 @@ export default class Operation extends Component {
 		this.setState({
 			propertyStatus : $(event.target).attr('property-status'),
 		})
-
 	}
 
 	render() {
@@ -62,7 +62,7 @@ export default class Operation extends Component {
 					 </div>
 					  
 					  {/*<!-- Tab panes -->*/}
-					  <div className="tab-content col-lg-10 col-lg-offset-1 noPad ">
+					  <div className="tab-content  noPad ">
 						     <div id="propertyStatus" className="container active tab-pane ">
 						       <Properties status={this.state.propertyStatus} /> 
 						    </div>

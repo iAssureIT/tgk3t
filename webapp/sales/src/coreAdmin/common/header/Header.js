@@ -7,7 +7,6 @@ import $                     from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-
 import './Header.css';
 import Rightsidebar from '../rightSidebar/Rightsidebar.js';
 
@@ -20,11 +19,22 @@ export default class Header extends Component{
               showProfile: false,
     }
   }
-
    
   componentDidMount(){
      const token = localStorage.getItem("token");
      // console.log("Dashboard Token = ",token);
+
+     $(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+            $(this).toggleClass('open');
+            $('b', this).toggleClass("caret caret-up");                
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+            $(this).toggleClass('open');
+            $('b', this).toggleClass("caret caret-up");                
+        });
      
    
   }
@@ -43,7 +53,8 @@ closeNav() {
 
 }
 
-toggleNav(){
+toggleNav(event){
+  event.preventDefault();
 
   var currentWidth =  document.getElementById("mySidenav").style.width;
   console.log("currentWidth",currentWidth);
@@ -100,9 +111,9 @@ logout(){
                 </div>
                 <div className="col-lg-6 col-md-8 col-sm-8 col-xs-8 padd0">
                   <div className="">
-                   { <div onClick={this.toggleNav.bind(this)}className="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center pull-right hover">
+                   <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 text-center pull-right hover">
                     <i className="fa fa-cogs headicon "></i>
-                  </div>}
+                  </div>
                   <div className="col-lg-3 col-md-4 col-sm-6 col-xs-6 pull-right text-center padd0 hover">
                     <div className="row">
                      { /*<div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
@@ -118,7 +129,7 @@ logout(){
                          <span className="hidden-xs angleright"><i className="fa fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                         { this.state.showProfile == true ? 
-                        <div className="dropdown-content wid260 marTop"  >
+                        <div className="dropdown-menu wid260 marTop"  >
                             <ul className="paddleft nomargin">
                               <li className="user-header">
                                 <ul className="menu paddleft">
@@ -175,15 +186,10 @@ logout(){
                   <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 pull-right hover paddLeft5">
                     <i className="fa fa-bell  headicon "><span className="label label-warning labelhead ">10</span></i>
                   </div>
-                 
-
                 </div>
-                
-                
               </div>
             </div>
             </nav>
-
           <div id="mySidenav" className="sidenav">
          {/* <a href="javascript:void(0)" className="closebtn" onClick={this.toggleNav.bind(this)} >&times;</a>
          */}<Rightsidebar/>

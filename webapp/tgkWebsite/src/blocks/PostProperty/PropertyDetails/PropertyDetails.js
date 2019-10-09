@@ -263,17 +263,17 @@ import './PropertyDetails.css';
 	              }
 	            })
 
-	            console.log("this.state.furnishedOptions",this.state.furnishedOptions);
-				console.log("furnishedOptionsDataList ",furnishedOptionsDataList);
-				console.log("here result furnishedOptionsDataList",ov.furnishedOptions);
+	   //          console.log("this.state.furnishedOptions",this.state.furnishedOptions);
+				// console.log("furnishedOptionsDataList ",furnishedOptionsDataList);
+				// console.log("here result furnishedOptionsDataList",ov.furnishedOptions);
             	
 
 				var equal ="";
 				if(furnishedOptionsDataList.length != ov.furnishedOptions.length )
 				{equal = false;
 				 console.log("equal not",equal);
-				 console.log("furnishedOptionsDataList.length",furnishedOptionsDataList.length);
-				 console.log("ov.furnishedOptions.length",ov.furnishedOptions.length);
+				 // console.log("furnishedOptionsDataList.length",furnishedOptionsDataList.length);
+				 // console.log("ov.furnishedOptions.length",ov.furnishedOptions.length);
 				}else{
 					for (var i = 0; i < furnishedOptionsDataList.length; i++)
 					{ if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
@@ -282,11 +282,11 @@ import './PropertyDetails.css';
 							equal = true;	
 			            }
 			       	}
-			        // console.log("equal yes but same",equal);
+			        console.log("equal yes but same",equal);
 			        // console.log("furnishedOptionsDataList.length1",furnishedOptionsDataList.length);
 				 // console.log("ov.furnishedOptions.length1",ov.furnishedOptions.length);	
 				}
-				// console.log("outside equal",equal);
+				console.log("outside equal",equal);
 
 
 
@@ -298,7 +298,7 @@ import './PropertyDetails.css';
 					this.state.furnishedstatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
 					 this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing 
 					 && this.state.superArea === ov.superArea && this.state.builtupArea === ov.builtupArea &&
-					 equal === true && eq === true && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor && 
+					 (equal === true || eq === true) && this.state.floor === ov.floor && this.state.totalfloor === ov.totalFloor && 
 					 this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit
 					  && this.state.workStation === ov.workStation && this.state.furnishPantry === ov.furnishPantry  )
 				{
@@ -341,10 +341,10 @@ import './PropertyDetails.css';
 					"floor"         	: this.state.floor,
 					"totalFloor"    	: this.state.totalfloor,
 					"superAreaUnit"    	: this.state.superAreaUnit,
-					"builtupAreaUnit"    	: this.state.builtupAreaUnit,
+					"builtupAreaUnit"   : this.state.builtupAreaUnit,
 					"workStation"    	: this.state.workStation,
-					"furnishPantry"	    	: this.state.furnishPantry,	
-        			"furnishedOptions"    : furnishedOptionsDataList,
+					"furnishPantry"	    : this.state.furnishPantry,	
+        			"furnishedOptions"  : furnishedOptionsDataList,
 
 
 					// "property_id" 		: localStorage.getItem("propertyId"),

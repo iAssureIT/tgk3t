@@ -1,7 +1,6 @@
-import React,{Component} from 'react';
-// import TrackerReact from 'meteor/ultimatejs:tracker-react';
-import { render } from 'react-dom';
-import { Redirect } from 'react-router-dom';
+import React,{Component}  from 'react';
+import { render }         from 'react-dom';
+import { Redirect }       from 'react-router-dom';
 import { BrowserRouter as Router, Route,Switch } from 'react-router-dom';
 // import {browserHistory} from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -18,18 +17,18 @@ import VerifyAccount    from '../systemSecurity/VerifyAccount.js';
 // import CommonPage        from './components/layouts/CommonLayout.js';
 
 
-import Header from '../common/header/Header.js'
-import Footer from '../common/footer/Footer.js'
-import Dashboard from '../dashboard/Dashboard.js'
-import Leftsidebar from '../common/leftSidebar/Leftsidebar.js'
+import Header       from '../common/header/Header.js'
+import Footer       from '../common/footer/Footer.js'
+import Dashboard    from '../dashboard/Dashboard.js'
+import Leftsidebar  from '../common/leftSidebar/Leftsidebar.js'
 import Rightsidebar from '../common/rightSidebar/Rightsidebar.js'
 // import UMListOfUsers from '../userManagement/UM/UMListOfUsers.js';
 // import UMListOfUsers from '../../TGKSpecific/TGKuserManagement/UM/UMListOfUsers.js';
 // import UMListOfEmp from '../../TGKSpecific/TGKuserManagement/UM/OfficeEmpList.js';
 
 
-import Operation from '../../salesAgent/operations/Operation.js';
-import Profile from '../../salesAgent/operations/PropertyProfile/PropertyProfile.js';
+import Operation  from '../../salesAgent/operations/Operation.js';
+import Profile    from '../../salesAgent/operations/PropertyProfile/PropertyProfile.js';
 
 
 
@@ -78,10 +77,6 @@ componentDidMount(){
     }else{
       // console.log("token is not available");
     }
-
-    
-
-
               
   }
 
@@ -138,31 +133,13 @@ componentDidMount(){
                           <div id="dashbordid" className="">
                            {/* <button className="btn btn-primary pull-right" onClick={this.logout.bind(this)}>Logout</button>
                             */} <Router>
-                                <Switch>
-                                {/*<Route path="/umlistofusers" component={UMListOfUsers} exact />
-                                <Route path="/umlistofemp" component={UMListOfEmp} exact />
-
-                                <Route path="/umroleslist" component={UMRolesList} exact />
-                                <Route path="/edituserprofile/:id" component={EditUserProfile} exact />
-
-                                <Route path="/ViewTemplates" component={ViewTemplates} exact />*/}
-                                <Route path="/dashboard" component={Dashboard} exact />
-                                <Route path="/" component={Dashboard} exact />
-
-                                {/*<Route path="/companysetting" component={CompanySetting} exact />
-                                */}
-                               {/*----------------------------------------------*/}
-
-                                {/*<Route path="/masterdata" component={MasterData} exact />
-                                <Route path="/sellometer" component={SellOMeter} exact />
-                                <Route path="/classrating" component={ClassRating} exact />*/}
-
-                                <Route path="/operation" component={Operation} exact />
-                               <Route path="/profile/:id" component={Profile} exact />
-                       
-
-                                </Switch>        
-                            </Router>
+                                    <Switch>
+                                      <Route path="/dashboard"    component={Dashboard} exact />
+                                      <Route path="/"             component={Dashboard} exact />
+                                      <Route path="/operation"    component={Operation} exact />
+                                      <Route path="/profile/:id"  component={Profile}   exact />
+                                    </Switch>        
+                                </Router>
                           </div>
                         </div>
                         <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
@@ -172,8 +149,6 @@ componentDidMount(){
                             </div>
                           </div>
                         </div>
-
-                  
                 </div>
             </div> 
         );
@@ -189,8 +164,6 @@ componentDidMount(){
               <Route path="/reset-pwd"      exact strict component={ ResetPassword } />
               <Route path="/verify-account" exact strict component={ VerifyAccount } />
               <Route path="/confirm-otp"    exact strict component={ ConfirmOtp } />
-              
-             
             </Switch>        
           </Router>
         </div>

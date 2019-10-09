@@ -103,17 +103,17 @@ class SearchProperty extends Component {
 		var searchData = JSON.stringify(formValues);
 		localStorage.setItem("searchData",searchData);
 
-		// $(".dropdown").hover(            
-  //       function() {
-  //           $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
-  //           $(this).toggleClass('open');
-  //           $('b', this).toggleClass("caret caret-up");                
-  //       },
-  //       function() {
-  //           $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
-  //           $(this).toggleClass('open');
-  //           $('b', this).toggleClass("caret caret-up");                
-  //       });
+		$(".dropdown").hover(            
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+            $(this).toggleClass('open');
+            $('b', this).toggleClass("caret caret-up");                
+        },
+        function() {
+            $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+            $(this).toggleClass('open');
+            $('b', this).toggleClass("caret caret-up");                
+        });
 	}
 
 

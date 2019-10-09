@@ -45,58 +45,26 @@ componentDidMount(){
                             Dashboard
                      </a>
                     </li>
-                    <li>
-                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon glyphicon-home"></i>
-                            Master Data
-                        </a>
-                        <ul className="collapse list-unstyled" id="homeSubmenu">
-                            <li><a href="/masterdata">Amenities</a></li>
-                            {/*<li><a href="#">Data 2</a></li>
-                            <li><a href="#">Data 3</a></li>*/}
-                        </ul>
 
-                        <a href="#sell-o-meter" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon fa fa-star-half-o"></i>
-                            Sell-O-Meter
-                        </a>
-                        <ul className="collapse list-unstyled" id="sell-o-meter">
-                            <li><a href="/sellometer">Property Indexation</a></li>
-                            <li><a href="/classrating">Sell-O-Meter Rating</a></li>
-                            {/*<li><a href="#">Data 3</a></li>*/}
-                        </ul>
-
-                         <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false">
-                            <i className="glyphicon glyphicon-duplicate"></i>
-                            Reporting System
-                        </a>
-                        <ul className="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Report 1</a></li>
-                            <li><a href="#">Report 2</a></li>
-                            <li><a href="#">Report 3</a></li>
-                        </ul>
-                        <a href="/propertyList">
-                            <i className="glyphicon glyphicon-th-list"></i>
-                            Property List
-                        </a>
-                        <a href="/listedProperties">
-                            <i className="glyphicon glyphicon-th-list"></i>
-                            Listed Properties
-                        </a>
-                        
+                    <li className="">
+                    <a href="/operation">
+                            <i className="glyphicon glyphicon-wrench" data-toggle="collapse" aria-expanded="false"></i>
+                            Operations
+                     </a>
                     </li>
-                   {/* <li>
-                        <a href="/masterdata">
+                   { <li>
+                        <a href="#">
                             <i className="glyphicon glyphicon-link"></i>
                            Master Data
                         </a>
-                    </li>*/}
-                   {/* <li>
+                    </li>}
+                   { <li>
                         <a href="#">
                             <i className="glyphicon glyphicon-paperclip"></i>
-                            Framework Management
+                            Reports
                         </a>
-                    </li>*/}
+                    </li>}
+
                     
                 </ul>
 
