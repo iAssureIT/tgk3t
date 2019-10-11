@@ -152,17 +152,17 @@ navigateScreen=(route)=>{
 
 
   login(){
-    // const originPage = "post" ;
+    const originPage = "post" ;
 
-    // console.log("token in home screen",this.state.token);
-    // AsyncStorage.removeItem('propertyId');
+    console.log("token in home screen",this.state.token);
+    AsyncStorage.removeItem('propertyId');
 
-    // if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
-    //    this.navigateScreen("MobileScreen");
-    // }else{
-    //    this.navigateScreen("BasicInfo");
-    // }
-       this.navigateScreen("PropertyDetails");
+    if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
+       this.navigateScreen("MobileScreen");
+    }else{
+       this.navigateScreen("BasicInfo");
+    }
+       // this.navigateScreen("PropertyDetails");
 
   }
 
