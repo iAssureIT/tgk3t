@@ -202,7 +202,7 @@ navigateScreen=(route)=>{
 		return (
       <React.Fragment>
             
-        <HeaderBar showBackBtn={true} navigation={navigation}/>
+       {/* <HeaderBar showBackBtn={true} navigation={navigation}/>*/}
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={styles.formWrapper}>

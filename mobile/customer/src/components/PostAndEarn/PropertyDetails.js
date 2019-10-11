@@ -281,7 +281,7 @@ constructor(props){
                                          axios
                                           .get('/api/properties/'+property_id)
                                           .then( (response) =>{
-                                            console.log("get property in property = ",response);
+                                            console.log("get property in property in details = ",response);
                                             console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
 
                                             this.setState({
@@ -314,7 +314,7 @@ constructor(props){
                                                 // updateOperation : response.data.propertyDetails.Amenities.length >0 ? true : false,
                                    
                                               },()=>{
-                                                  console.log("here ov furnishpantry",this.state.furnishpantry);
+                                                  // console.log("here ov furnishpantry",this.state.furnishpantry);
                                                 
 
                                                     var allAmenitiesData = this.state.allAmenities;
@@ -333,7 +333,7 @@ constructor(props){
                                                   this.setState({
                                                       allAmenities : allAmenitiesDataList,
                                                     },()=>{
-                                                      console.log("here allAmenities in didmount after match result",this.state.allAmenities);
+                                                      // console.log("here allAmenities in didmount after match result",this.state.allAmenities);
                                                       });
 
 
@@ -354,7 +354,7 @@ constructor(props){
                                                 this.setState({
                                                     furnishItem : furnishItemDataList,
                                                   },()=>{
-                                                    console.log("here furnishItem in didmount after match result",this.state.furnishItem);
+                                                    // console.log("here furnishItem in didmount after match result",this.state.furnishItem);
                                                     });
 
 
@@ -420,14 +420,14 @@ constructor(props){
 
                                               });
                                           },()=>{
-                                            console.log("selected index-----------------------------------------------------------------------------------------------------------------------",this.state.furnishpantryIndex);
+                                            // console.log("selected index-----------------------------------------------------------------------------------------------------------------------",this.state.furnishpantryIndex);
                                           })
                                           .catch((error)=>{
                                                 console.log("error = ",error);
                                                 if(error.message === "Request failed with status code 401")
                                                 {
-                                                     // swal("Your session is expired! Please login again.","", "error");
-                                                     // this.props.history.push("/");
+                                                      Alert.alert("Your session is expired!"," Please login again.");
+                                                      this.navigateScreen('MobileScreen');  
                                                 }
                                             });
                             }
@@ -437,11 +437,11 @@ constructor(props){
               })
               .catch((error)=>{
                         console.log("error = ",error);
-                        // if(error.message === "Request failed with status code 401")
-                        // {
-                        //      swal("Your session is expired! Please login again.","", "error");
-                        //      this.props.history.push("/");
-                        // }
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             Alert.alert("Your session is expired!"," Please login again.");
+                               this.navigateScreen('MobileScreen');  
+                        }
                     });
 
              /*if token close*/
@@ -1380,13 +1380,13 @@ submitFun(){
 
 
 
-                              <View style={styles.amenitiesWrapper,styles.marginBottom25} >
+                              <View style={styles.amenitiesWrapper,styles.marginBottom25,{backgroundColor:"#ff0"}} >
                                   <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
                                   {console.log("here amenity",this.state.allAmenities)}
                                    { this.state.allAmenities && this.state.allAmenities.length >0 
                                     ?
                                     this.state.allAmenities.map((data,index)=>(
-                                    <React.Fragment key={index}>
+                                    <React.Fragment key={index} style={styles.marginBottom25}>
                                      
                                     {data.amenity==="AC" ?
 

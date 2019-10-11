@@ -17,10 +17,11 @@ export default StyleSheet.create({
   formWrapper: {
     width:'90%',
     // marginHorizontal:'5%',
-    backgroundColor:colors.white,
+    backgroundColor:"#fff",
     padding:'5%',
     margin:'5%',
-    height:"90%"
+    marginBottom:'1%',
+    height:"auto"
   },
   heading:{
     fontSize: 15,

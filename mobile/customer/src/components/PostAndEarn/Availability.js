@@ -1127,14 +1127,15 @@ navigateScreen=(route)=>{
               </View>
 
 
-              <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
+              
+            </View>
+              <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
                   <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
                      <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
                      </Text>
                   </TouchableOpacity>
               </View>
               
-            </View>
            </KeyboardAwareScrollView>   
         </ScrollView>
 

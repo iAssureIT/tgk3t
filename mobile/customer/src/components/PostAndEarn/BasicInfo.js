@@ -1419,7 +1419,7 @@ export default class BasicInfo extends ValidationComponent{
 
 
                <Text style={[styles.heading2,styles.marginBottom5]}>Landmark</Text>
-              <View style={[styles.inputWrapper,styles.marginBottom25]}>
+              <View style={[styles.inputWrapper,styles.marginBottom15]}>
                 <View style={styles.inputImgWrapper}>
                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                 </View>
@@ -1465,15 +1465,13 @@ export default class BasicInfo extends ValidationComponent{
                   color="white"
                 />}
               />*/}
-        
-                <View  style={[styles.marginBottom15,styles.nextBtnhover]}  onPress={this.submitFun.bind(this)}>
-                    <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
-                       <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
-                       </Text>
-                    </TouchableOpacity>
-                </View>
-
             </View>
+              <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
+                      <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
+                         <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
+                         </Text>
+                      </TouchableOpacity>
+                  </View>
           </KeyboardAwareScrollView>
         </ScrollView>
      
