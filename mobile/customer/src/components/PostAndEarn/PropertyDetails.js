@@ -616,7 +616,9 @@ submitFun(){
                      && this.state.furnishpantry === ov.furnishPantry )
                   {
                       console.log("same data");
-                     this.navigateScreen('Amenities');
+                     // this.navigateScreen('Amenities');
+              this.navigateScreen('FinancialDetails');
+
                      
                   }else{
                       console.log("diff data");
@@ -702,7 +704,10 @@ submitFun(){
                                                     console.log(res);
                                                     if(res.status === 200){
                                                       console.log("PropertyDetails Res = ",res);
-                                                      this.navigateScreen('Amenities');
+
+                                                      // this.navigateScreen('Amenities');
+                                                      this.navigateScreen('FinancialDetails');
+
                                                     }
                                                   })
                                                   .catch((error)=>{
@@ -798,7 +803,9 @@ submitFun(){
                           console.log(res);
                           if(res.status === 200){
                             console.log("PropertyDetails Res = ",res);
-                           this.navigateScreen('Amenities',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                                                      this.navigateScreen('FinancialDetails');
+                            
+                           // this.navigateScreen('Amenities',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
 
                           }
                         })
@@ -1392,13 +1399,7 @@ submitFun(){
                                         checkBoxColor= {colors.grey}
                                         rightTextView = {
                                           <View style={{flexDirection:'row',flex:1}}>
-                                            <Icon
-                                              name={this.state.defaultIcon}
-                                              type={this.state.iconType}
-                                              size={18}
-                                              color= {colors.button}
-                                              containerStyle = {{marginHorizontal:10}}
-                                            />
+                                           
                                              <Image 
                                               source={require('../../images/ac.png') }
                                               style={{width: 25, height:25, marginRight:7}}
@@ -1412,7 +1413,7 @@ submitFun(){
                                         :
 
 
-                                       /* data.amenity==="Swimming Pool" ?
+                                        data.amenity==="Swimming Pool" ?
                                          <CheckBox
                                             key={index}
                                             style={{marginBottom:10}}
@@ -1422,13 +1423,7 @@ submitFun(){
                                             checkBoxColor= {colors.grey}
                                             rightTextView = {
                                               <View style={{flexDirection:'row',flex:1}}>
-                                                <Icon
-                                                  name={this.state.defaultIcon}
-                                                  type={this.state.iconType}
-                                                  size={18}
-                                                  color= {colors.button}
-                                                  containerStyle = {{marginHorizontal:10}}
-                                                />
+                                                
                                                  <Image 
                                                   source={require('../../images/pool.png') }
                                                   style={{width: 25, height:25, marginRight:7}}
@@ -1453,13 +1448,7 @@ submitFun(){
                                               checkBoxColor= {colors.grey}
                                               rightTextView = {
                                                 <View style={{flexDirection:'row',flex:1}}>
-                                                  <Icon
-                                                    name={this.state.defaultIcon}
-                                                    type={this.state.iconType}
-                                                    size={18}
-                                                    color= {colors.button}
-                                                    containerStyle = {{marginHorizontal:10}}
-                                                  />
+                                                  
                                                    <Image 
                                                     source={require('../../images/gasPipe.png') }
                                                     style={{width: 25, height:25, marginRight:7}}
@@ -1483,13 +1472,7 @@ submitFun(){
                                               checkBoxColor= {colors.grey}
                                               rightTextView = {
                                                 <View style={{flexDirection:'row',flex:1}}>
-                                                  <Icon
-                                                    name={this.state.defaultIcon}
-                                                    type={this.state.iconType}
-                                                    size={18}
-                                                    color= {colors.button}
-                                                    containerStyle = {{marginHorizontal:10}}
-                                                  />
+                                                 
                                                    <Image 
                                                     source={require('../../images/water.png') }
                                                     style={{width: 25, height:25, marginRight:7}}
@@ -1513,13 +1496,7 @@ submitFun(){
                                               checkBoxColor= {colors.grey}
                                               rightTextView = {
                                                 <View style={{flexDirection:'row',flex:1}}>
-                                                  <Icon
-                                                    name={this.state.defaultIcon}
-                                                    type={this.state.iconType}
-                                                    size={18}
-                                                    color= {colors.button}
-                                                    containerStyle = {{marginHorizontal:10}}
-                                                  />
+                                                 
                                                    <Image 
                                                     source={require('../../images/lift.png') }
                                                     style={{width: 25, height:25, marginRight:7}}
@@ -1542,13 +1519,7 @@ submitFun(){
                                                 checkBoxColor= {colors.grey}
                                                 rightTextView = {
                                                   <View style={{flexDirection:'row',flex:1}}>
-                                                    <Icon
-                                                      name={this.state.defaultIcon}
-                                                      type={this.state.iconType}
-                                                      size={18}
-                                                      color= {colors.button}
-                                                      containerStyle = {{marginHorizontal:10}}
-                                                    />
+                                                    
                                                      <Image 
                                                       source={require('../../images/powerBk.png') }
                                                       style={{width: 25, height:25, marginRight:7}}
@@ -1571,13 +1542,7 @@ submitFun(){
                                                     checkBoxColor= {colors.grey}
                                                     rightTextView = {
                                                       <View style={{flexDirection:'row',flex:1}}>
-                                                        <Icon
-                                                          name={this.state.defaultIcon}
-                                                          type={this.state.iconType}
-                                                          size={18}
-                                                          color= {colors.button}
-                                                          containerStyle = {{marginHorizontal:10}}
-                                                        />
+                                                       
                                                          <Image 
                                                           source={require('../../images/shopping.png') }
                                                           style={{width: 25, height:25, marginRight:7}}
@@ -1601,13 +1566,7 @@ submitFun(){
                                                 checkBoxColor= {colors.grey}
                                                 rightTextView = {
                                                   <View style={{flexDirection:'row',flex:1}}>
-                                                    <Icon
-                                                      name={this.state.defaultIcon}
-                                                      type={this.state.iconType}
-                                                      size={18}
-                                                      color= {colors.button}
-                                                      containerStyle = {{marginHorizontal:10}}
-                                                    />
+                                                    
                                                      <Image 
                                                       source={require('../../images/playArea.png') }
                                                       style={{width: 25, height:25, marginRight:7}}
@@ -1631,13 +1590,7 @@ submitFun(){
                                             checkBoxColor= {colors.grey}
                                             rightTextView = {
                                               <View style={{flexDirection:'row',flex:1}}>
-                                                <Icon
-                                                  name={this.state.defaultIcon}
-                                                  type={this.state.iconType}
-                                                  size={18}
-                                                  color= {colors.button}
-                                                  containerStyle = {{marginHorizontal:10}}
-                                                />
+                                               
                                                  <Image 
                                                   source={require('../../images/gym.png') }
                                                   style={{width: 25, height:25, marginRight:7}}
@@ -1660,13 +1613,7 @@ submitFun(){
                                               checkBoxColor= {colors.grey}
                                               rightTextView = {
                                                 <View style={{flexDirection:'row',flex:1}}>
-                                                  <Icon
-                                                    name={this.state.defaultIcon}
-                                                    type={this.state.iconType}
-                                                    size={18}
-                                                    color= {colors.button}
-                                                    containerStyle = {{marginHorizontal:10}}
-                                                  />
+                                                
                                                    <Image 
                                                     source={require('../../images/park.png') }
                                                     style={{width: 25, height:25, marginRight:7}}
@@ -1690,13 +1637,7 @@ submitFun(){
                                             checkBoxColor= {colors.grey}
                                             rightTextView = {
                                               <View style={{flexDirection:'row',flex:1}}>
-                                                <Icon
-                                                  name={this.state.defaultIcon}
-                                                  type={this.state.iconType}
-                                                  size={18}
-                                                  color= {colors.button}
-                                                  containerStyle = {{marginHorizontal:10}}
-                                                />
+                                              
                                                  <Image 
                                                   source={require('../../images/internet.png') }
                                                   style={{width: 25, height:25, marginRight:7}}
@@ -1720,13 +1661,7 @@ submitFun(){
                                             checkBoxColor= {colors.grey}
                                             rightTextView = {
                                               <View style={{flexDirection:'row',flex:1}}>
-                                                <Icon
-                                                  name={this.state.defaultIcon}
-                                                  type={this.state.iconType}
-                                                  size={18}
-                                                  color= {colors.button}
-                                                  containerStyle = {{marginHorizontal:10}}
-                                                />
+                                               
                                                  <Image 
                                                   source={require('../../images/intercom.png') }
                                                   style={{width: 25, height:25, marginRight:7}}
@@ -1737,7 +1672,7 @@ submitFun(){
                                             }
                                             />
 
-                                          :*/
+                                          :
 
                                           <CheckBox
                                             key={index}
@@ -1748,13 +1683,7 @@ submitFun(){
                                             checkBoxColor= {colors.grey}
                                             rightTextView = {
                                               <View style={{flexDirection:'row',flex:1}}>
-                                                <Icon
-                                                  name={this.state.defaultIcon}
-                                                  type={this.state.iconType}
-                                                  size={18}
-                                                  color= {colors.button}
-                                                  containerStyle = {{marginHorizontal:10}}
-                                                />
+                                              
                                                  <Image 
                                                   source={require('../../images/flag.png') }
                                                   style={{width: 25, height:25, marginRight:7}}

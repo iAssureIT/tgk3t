@@ -22,12 +22,13 @@ import styles from '../../PostAndEarn/styles.js';
 import {colors,sizes} from '../../../config/styles.js';
 import { Dropdown } from 'react-native-material-dropdown';
 import Modal from "react-native-modal";
+import { NavigationActions, StackActions } from 'react-navigation';
 
 const window = Dimensions.get('window');
 
 export default class SignUp extends ValidationComponent{
 
-  navigateScreen=(route)=>{
+ navigateScreen=(route)=>{
     const navigateAction = NavigationActions.navigate({
     routeName: route,
     params: {},
@@ -42,7 +43,7 @@ export default class SignUp extends ValidationComponent{
       name : '',
       email : '',
       location : '',
-      mobile : '',
+      mobileNumber : '',
       codeData : [{ value: '+91'},
                      { value: '+82'},
                      { value: '+65'},
@@ -54,9 +55,81 @@ export default class SignUp extends ValidationComponent{
       openModal: false,
       uid : '',
       token : '',
+      mobileNumberError : [],
       
 
     };
+  }
+
+   validInput = () => {
+    const {
+      mobileNumber,
+    } = this.state;
+    let valid = true;
+
+    this.validate({
+      mobileNumber: { 
+        required: true, 
+        mobileNo: true,
+        // numbers: true, 
+        minlength: 9, 
+        maxlength: 10 
+      },
+    });
+
+    if (this.isFieldInError("mobileNumber")) {
+      this.setState({ mobileNumberError: this.getErrorsInField("mobileNumber") });
+      valid = false;
+    } else {
+      this.setState({ mobileNumberError: "" });
+      valid = true;
+    }
+
+    return  !this.isFieldInError("mobileNumber") ;
+  };
+
+
+  validInputField = (stateName, stateErr) => {
+    const {mobileNumber,} = this.state;
+    let valid = true;
+
+    this.validate({
+    [stateName]: {
+    required: true,
+    },
+    });
+
+    if (this.isFieldInError(stateName)) {
+    let validinptError = this.getErrorsInField(stateName);
+    this.setState({ validinptError });
+    valid = false;
+    } else {
+    this.setState({ [stateErr]: "" });
+    }
+
+      return valid;
+  };
+
+
+   handleMobileChange(value){
+    if(value.startsWith && value.startsWith('+')){
+      value = value.substr(3);
+    }
+    let x = value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+    let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
+    this.setState({
+      mobileNumber : y,
+    });
+  }
+
+  displayValidationError = (errorField) =>{
+    let error = null;
+    if(this.state[errorField]){
+      error = <View style={styles.errorWrapper}>
+                <Text style={styles.errorText}>{this.state[errorField][0]}</Text>
+              </View> ;
+    }
+    return error;
   }
 
   handleShowPassword = ()=>{
@@ -72,14 +145,14 @@ export default class SignUp extends ValidationComponent{
     try {
       
       const mob = await AsyncStorage.getItem('mobile'); 
-      console.log("mobile in otpscreen---------------------",mob);
+      console.log("mobile in signup---------------------",mob);
        const uid = await AsyncStorage.getItem('uid');
-      console.log("uid in otpscreen--------------------",uid);
+      // console.log("uid in otpscreen--------------------",uid);
        const token = await AsyncStorage.getItem('token');
-      console.log("token-------------------------------",token);
+      console.log("token signup-------------------------------",token);
       // if (uid !== null && token !== null) {
        this.setState({
-                 mobile         : mob,
+                 mobileNumber         : mob,
                  uid            : uid,
                  token          : token,
                });
@@ -115,7 +188,7 @@ export default class SignUp extends ValidationComponent{
                 "fullName"    : this.state.name,
                 "emailId"     : this.state.email,
                 "city"        : this.state.location,
-                "mobileNumber": this.state.mobile,
+                "mobileNumber": this.state.mobileNumber,
                 "countryCode" : this.state.unitCode,
                 "status"      : 'Active',
                 "roles"       : 'Client',
@@ -137,7 +210,7 @@ export default class SignUp extends ValidationComponent{
                               "toUserId"    : formValues.userID,
                               "variables"   : {
                                 "userName"    : this.state.name,
-                                "userMobile"  : this.refs.mobile.value,
+                                "userMobile"  : this.state.mobileNumber,
                               }
                           }
                           console.log("sendData",sendDataToUser);
@@ -146,7 +219,7 @@ export default class SignUp extends ValidationComponent{
                               "toUserId"    : "admin",
                               "variables"   : {
                                 "userName"    : this.state.name,
-                                "userMobile"  : this.refs.mobile.value,
+                                "userMobile"  : this.state.mobileNumber,
                                 "userEmail"   : this.state.email,
                               "userCity"    : this.state.city,
                               }
@@ -163,20 +236,20 @@ export default class SignUp extends ValidationComponent{
                             })
                             .catch((error)=>{
                                               console.log("error = ",error);
-                                              if(error.message === "Request failed with status code 401")
-                                              {
-                                                   swal("Your session is expired! Please login again.","", "error");
-                                                   this.props.history.push("/");
-                                              }
+                                              // if(error.message === "Request failed with status code 401")
+                                              // {
+                                              //      swal("Your session is expired! Please login again.","", "error");
+                                              //      this.props.history.push("/");
+                                              // }
                                   });         
                           })
                           .catch((error)=>{
                                               console.log("error = ",error);
-                                              if(error.message === "Request failed with status code 401")
-                                              {
-                                                   swal("Your session is expired! Please login again.","", "error");
-                                                   this.props.history.push("/");
-                                              }
+                                              // if(error.message === "Request failed with status code 401")
+                                              // {
+                                              //      swal("Your session is expired! Please login again.","", "error");
+                                              //      this.props.history.push("/");
+                                              // }
                                           });
                           console.log("BasicInfo res = ",res);
                           if(this.props.originPage === "header")
@@ -191,11 +264,11 @@ export default class SignUp extends ValidationComponent{
                 })
                 .catch((error)=>{
                                 console.log("error = ",error);
-                                if(error.message === "Request failed with status code 401")
-                                {
-                                     swal("Your session is expired! Please login again.","", "error");
-                                     this.props.history.push("/");
-                                }
+                                // if(error.message === "Request failed with status code 401")
+                                // {
+                                //      swal("Your session is expired! Please login again.","", "error");
+                                //      this.props.history.push("/");
+                                // }
                             });
 
 
@@ -240,7 +313,41 @@ export default class SignUp extends ValidationComponent{
               </Text>
             </View>
 
-            <View style={[styles.inputWrapper,styles.marginBottom25]}>
+
+             <View style={[styles.formInputView,styles.marginBottom25]}>
+                  <View style={[styles.inputWrapper]}>
+                  <View style={styles.inputImgWrapper}>
+                      <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper}>
+                      <TextField
+                        label                 = "Mobile"
+                        onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber },()=>{this.validInputField('mobileNumber', 'mobileNumberError');}),this.handleMobileChange(mobileNumber)}}
+                                                 // {mobileNumber => this.handleMobileChange(mobileNumber)}
+                        lineWidth             = {1}
+                        tintColor             = {colors.button}
+                        inputContainerPadding = {0}
+                        labelHeight           = {15}
+                        labelFontSize         = {sizes.label}
+                        titleFontSize         = {sizes.title}
+                        baseColor             = {'#666'}
+                        textColor             = {'#333'}
+                        value                 = {this.state.mobileNumber}
+                        containerStyle        = {styles.textContainer}
+                        inputContainerStyle   = {styles.textInputContainer}
+                        titleTextStyle        = {styles.textTitle}
+                        style                 = {styles.textStyle}
+                        labelTextStyle        = {styles.textLabel}
+                        keyboardType          = "number-pad"
+                      />
+                    </View>
+                  </View>
+                  {this.displayValidationError('mobileNumberError')}
+                </View>
+
+
+
+            {/*<View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>
                 <Icon name="mobile" type="font-awesome" size={16}  color="#aaa" style={{}}/>
               </View>
@@ -286,7 +393,7 @@ export default class SignUp extends ValidationComponent{
                 />
               </View>
               
-            </View>
+            </View>*/}
 
             <View style={[styles.inputWrapper,styles.marginBottom25]}>
               <View style={styles.inputImgWrapper}>

@@ -10,7 +10,8 @@ const HomeStackContainer = createAppContainer(HomeStack);
 
 
 // axios.defaults.baseURL = 'http://localhost:5018/';
-axios.defaults.baseURL = 'http://qalyvoapi.nurseryworld.in/';
+// axios.defaults.baseURL = 'http://qalyvoapi.nurseryworld.in/';
+axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 // axios.defaults.baseURL = 'http://uatapi.lyvo.in/';
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
