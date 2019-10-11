@@ -8,4 +8,4 @@ export default class RnrfDemo extends Component{
 		return (<App/>);
 	}
 }
-AppRegistry.registerComponent('theGoldenKey', () => RnrfDemo);
+AppRegistry.registerComponent('LYVO', () => RnrfDemo);
