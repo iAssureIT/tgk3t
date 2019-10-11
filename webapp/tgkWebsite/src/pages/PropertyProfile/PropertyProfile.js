@@ -37,8 +37,8 @@ const OwlCarousel = Loadable({
   }
 });
 
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 const Property = ({ text }) => <div><img src="../images/Location.png" style={{width:'47px',height:'47px'}} className="img-responsive " alt="loading"/></div>
 
 class PropertyProfile extends Component{

@@ -1,0 +1,214 @@
+.asterisk1{
+  color: #f00;
+}
+.marTopBtm{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+/*add this class next to form-control*/
+.inputBox{
+  font-family:'Montserrat',sans-serif;
+  height: 30px !important;
+  border: none !important;
+  border-left: 1px solid #979797 !important;
+  font-size: 12px !important;
+}
+.valid_box{
+  height: 60px;
+}
+.inputBox:hover{
+  border-left:1px solid #039BE5 !important;
+  box-shadow: none !important;
+}
+.title_pd{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/*.hr_border{
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 50px;
+  box-shadow: 0px 3px 2px -1px #ccc;
+}*/
+
+.margBtm{
+  margin-bottom: 10px;
+}
+.margBtm_30{
+  margin-bottom: 30px;
+}
+.margBtm_5{
+  margin-bottom: 5px;
+}
+
+.iconClr{
+  color: #ccc;  
+}
+/**********************/
+/*input icon*/
+/*input icon*/
+/*.inputIcon{
+  height: 30px !important;
+  font-size: 18px !important;
+  color: #979797 !important;
+  background-color: #ffffff !important;
+  border: none !important;
+}*/
+.inputIcon{
+	background: #fff;
+}
+
+/*************************************/
+/*Add this class next to input-group*/
+/*.inputBox-main{
+  border: 1px solid #979797 !important;
+  border-radius: 3px !important;
+  height: 30px !important;
+  font-size: 12px !important;
+}*/
+
+.radio_style{
+  margin-left: 15px !important;
+  height: 15px;
+  width: 15px;
+}
+
+.mrgBtm{
+  margin-bottom: 10px;
+  padding-top: 5px;
+}
+
+.back_btn:hover{
+  color: #666;
+}
+/************************************************/
+.ModalPd{
+  padding: 0px !important;
+}
+.dataLabels{
+  margin-left: 8px;
+  font-size: 13px;
+}
+.pl30{
+  padding-left: 30px;
+}
+.pl44{
+  padding-left: 44px;
+}
+.container1 {
+    display: block;
+    position: relative;
+    /* padding-left: 35px; */
+    /* margin-bottom: 12px; */
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    /* margin-top: 17px; */
+    /* margin-bottom: 15px; */
+}
+.container1 {
+  display: block;
+  position: relative;
+  /*padding-left: 35px;*/
+  /*margin-bottom: 12px;*/
+  cursor: pointer;
+  font-size: 16px;
+  user-select: none;
+  /*margin-top: 17px;*/
+  /*margin-bottom: 15px;*/
+}
+
+/* Hide the browser's default checkbox */
+.container1 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.checkmark1 {
+    position: absolute;
+    /* top: 3px; */
+    left: 14px;
+    height: 22px;
+    width: 22px;
+    /*background-color: #ccc;*/
+    border: 1px solid #ccc;
+
+}
+/* On mouse-over, add a grey background color */
+.container1:hover input ~ .checkmark1 {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container1 input:checked ~ .checkmark1 {
+  background-color: #1267ecd4;
+}
+
+/* Create the checkmark1/indicator (hidden when not checked) */
+.checkmark1:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark1 when checked */
+.container1 input:checked ~ .checkmark1:after {
+  display: block;
+}
+
+/* Style the checkmark1/indicator */
+.container1 .checkmark1:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+} 
+.fs1{
+  padding-left: 23px;
+    /* padding-top: 20px; */
+    margin-top: 7px;
+}
+.fs2{
+  padding-left: 22px;
+}
+
+
+.react-datepicker__input-container {
+    height: 29px !important;
+}
+
+.react-datepicker-wrapper {
+    width: 100%;
+}
+
+.react-datepicker {
+  font-size: 1.3rem !important;
+}
+
+.react-datepicker__current-month {
+  font-size: 1.5rem !important;
+}
+
+.react-datepicker__header {
+  padding-top: 6px !important;
+}
+
+.react-datepicker__navigation {
+  top: 13px !important;
+}
+
+.react-datepicker__day-name, .react-datepicker__day {
+  margin: 0.5rem !important;
+}
+.dateIndex{
+  z-index: 2;
+}

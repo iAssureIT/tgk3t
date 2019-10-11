@@ -19,8 +19,8 @@ const OwlCarousel = Loadable({
   }
 });
 
-axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
-axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
 class PropertyProfile extends Component{

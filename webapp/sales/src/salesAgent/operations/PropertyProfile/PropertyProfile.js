@@ -1,9 +1,25 @@
 import React, { Component }   from 'react';
 import axios                  from 'axios';
+import HomePageFooter         from '../../../blocks/Profile/HomePageFooter.js';
 // import RequestForm            from '../../blocks/RequestForm/RequestForm.js';
+import { connect }            from 'react-redux';
 import $                      from "jquery";
 import {withRouter}           from 'react-router-dom';
+
+import LoginMobNum            from '../../../blocks/WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+import LoginOtp               from '../../../blocks/WebsiteSecurity/LoginOtp/LoginOtp.js';
+import WebSignupForm          from '../../../blocks/WebsiteSecurity/WebSignup/WebSignupForm.js';
+
+import BasicInfo              from '../../../blocks/PostProperty/BasicInfo/BasicInfo.js';
+import Location               from '../../../blocks/PostProperty/Location/Location.js';
+import PropertyDetails        from '../../../blocks/PostProperty/PropertyDetails/PropertyDetails.js';
+import Amenities              from '../../../blocks/PostProperty/Amenities/Amenities.js';
+import Financials             from '../../../blocks/PostProperty/Financials/Financials.js';
+import Availability           from '../../../blocks/PostProperty/Availability/Availability.js';
+import CongratsPage           from '../../../blocks/PostProperty/CongratsPage/CongratsPage.js';
+import ImageUpload            from '../../../blocks/PostProperty/ImageUpload/ImageUpload.js';
 import Loadable               from 'react-loadable';
+import Header                 from "../../../blocks/common/Header/Header.js";
 import swal                   from 'sweetalert';
 import GoogleMapReact         from 'google-map-react';
 import "./PropertyProfile.css";
@@ -21,9 +37,11 @@ const OwlCarousel = Loadable({
   }
 });
 
+// axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
+// axios.defaults.headers.post['Content-Type'] = 'application/json';
 const Property = ({ text }) => <div><img src="../images/Location.png" style={{width:'47px',height:'47px'}} className="img-responsive " alt="loading"/></div>
 
-export default class PropertyProfile extends Component{
+class PropertyProfile extends Component{
     static defaultProps = {
       center: {
         lat: 18.5204,
@@ -68,11 +86,9 @@ export default class PropertyProfile extends Component{
     const prop_id  = this.state.prop_id;
     console.log("prop_id",prop_id);
     console.log("property id here",this.state.prop_id);
-    if(uid && prop_id){
-      this.props.already_loggedIn(originPage,uid,prop_id);
-    }else{
-      this.props.login_mobileNum(originPage);
-    }
+ 
+    this.props.already_loggedIn(originPage,uid,prop_id);
+   
   }
 
   removeBackdrop(){
@@ -195,11 +211,6 @@ export default class PropertyProfile extends Component{
 
       return (
         <div className="container-fluid ">
-          <div className="row"> 
-            <div className="headerDiv">
-              
-            </div>
-          </div>  
           <div className="">
             <div className="formWrapper row">   
              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"  >
@@ -234,13 +245,11 @@ export default class PropertyProfile extends Component{
                         </div>
                       </div>
 
-                     { localStorage.getItem("uid") === this.state.ownerId ?
+                     
                       <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
                         <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Edit Property </button> 
                       </div>
-                      :
-                      null
-                      }
+                      
                     </div>
                   </div>
                 </div>
@@ -585,7 +594,72 @@ export default class PropertyProfile extends Component{
                </div>
             </div>              
           </div>
+
+
+          {/*=== Modal starts here ===*/}
+          <div>
+            <div id="postPropertyModal" className="modal fade" role="dialog">
+              <div className="modal-dialog modal-lg">
+                <div className="modal-content "style={{marginTop:"52px"}}>
+                  <div className="modal-header">
+                    <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
+                    <h4 className="modal-title">
+                      <b style={{paddingLeft:"28px"}}> {header} </b>
+                    </h4>
+                  </div>
+                  <div className="modal-body col-lg-12">
+                      { this.props.LoginMobNum    ? <LoginMobNum />     : null }
+                      { this.props.LoginOtp       ? <LoginOtp />        : null }
+                      { this.props.WebSignupForm  ? <WebSignupForm />   : null }
+                      { this.props.BasicInfo      ? <BasicInfo />       : null }
+                      { this.props.PropertyDetails? <PropertyDetails /> : null }
+                      { this.props.Financials     ? <Financials />      : null }
+                      { this.props.Amenities      ? <Amenities />       : null }
+                      { this.props.Availability   ? <Availability />    : null }
+                      { this.props.Location       ? <Location />        : null }
+                      { this.props.CongratsPage   ? <CongratsPage />    : null }
+                      { this.props.ImageUpload    ? <ImageUpload />     : null }
+                  </div>
+                  <div className="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
   }
+
+const mapStateToProps = (state)=>{
+  // console.log("state",state)
+  return {
+    LoginMobNum     : state.LoginMobNum,
+    LoginOtp        : state.LoginOtp,
+    WebSignupForm   : state.WebSignupForm,
+    BasicInfo       : state.BasicInfo,
+    PropertyDetails : state.PropertyDetails,
+    Financials      : state.Financials,
+    Amenities       : state.Amenities,
+    Availability    : state.Availability,
+    Location        : state.Location,
+    ImageUpload     : state.ImageUpload,
+    CongratsPage    : state.CongratsPage,
+    formTitle       : state.formTitle
+  }
+};
+
+
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    setFormTitle  : (formTitle)=> dispatch({
+                          type      : "SET_FORM_TITLE",
+                          formTitle : formTitle,
+                        }),
+    login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
+    already_loggedIn : (originPage,uid,property_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, property_id:property_id}),
+
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(PropertyProfile));

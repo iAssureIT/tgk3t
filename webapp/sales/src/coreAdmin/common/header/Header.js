@@ -16,7 +16,7 @@ export default class Header extends Component{
    super(props);
     this.state = {
               loggedIn : false,
-              showProfile: false,
+              // showProfile: false,
     }
   }
    
@@ -24,20 +24,22 @@ export default class Header extends Component{
      const token = localStorage.getItem("token");
      // console.log("Dashboard Token = ",token);
 
-     $(".dropdown").hover(            
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
-            $(this).toggleClass('open');
-            $('b', this).toggleClass("caret caret-up");                
-        },
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
-            $(this).toggleClass('open');
-            $('b', this).toggleClass("caret caret-up");                
-        });
+     // $(".dropdown").hover(            
+     //    function() {
+     //        $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+     //        $(this).toggleClass('open');
+     //        $('b', this).toggleClass("caret caret-up");                
+     //    },
+     //    function() {
+     //        $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+     //        $(this).toggleClass('open');
+     //        $('b', this).toggleClass("caret caret-up");                
+     //    });
      
-   
-  }
+    $("#super").click(function(){
+      $("#admin").toggle();
+      });
+    }
     
   
 openNav() {
@@ -53,20 +55,20 @@ closeNav() {
 
 }
 
-toggleNav(event){
-  event.preventDefault();
+// toggleNav(event){
+//   event.preventDefault();
 
-  var currentWidth =  document.getElementById("mySidenav").style.width;
-  console.log("currentWidth",currentWidth);
+//   var currentWidth =  document.getElementById("mySidenav").style.width;
+//   console.log("currentWidth",currentWidth);
 
-  if(currentWidth == "230px")
-  {
-   document.getElementById("mySidenav").style.width = "0"; 
- }else{
-    document.getElementById("mySidenav").style.width = "230px";
- }
+//   if(currentWidth == "230px")
+//   {
+//    document.getElementById("mySidenav").style.width = "0"; 
+//  }else{
+//     document.getElementById("mySidenav").style.width = "230px";
+//  }
 
-}
+// }
 
 logout(){
     var token = localStorage.removeItem("token");
@@ -81,9 +83,10 @@ logout(){
   }
 
   showData(){
-    this.setState({
-      showProfile : true,
-    })
+    // this.setState({
+    //   showProfile : true,
+    // })
+   
   }
 
 
@@ -119,17 +122,17 @@ logout(){
                      { /*<div className="col-lg-2 col-md-2 col-sm-6 col-xs-6 ">
                       <img src="image/person.png" className="img "/>
                       </div>*/}
-                      <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6 dropdown " onClick={this.showData.bind(this)}>
-                      <span className="headicon">{localStorage.fullName ? localStorage.fullName : "Super Admin" } &nbsp; </span>
+                      <div className="col-lg-12 col-md-10 col-xs-6 col-sm-6 dropdown " >
+                      <span className="headicon"  >{localStorage.fullName ? localStorage.fullName : "Super Admin" } &nbsp; </span>
                       
 
                      
                      <span className=" topmargin ">
-                        <button className="dropbtn arrowbtn">
+                        <button className="dropbtn arrowbtn" id="super" >
                          <span className="hidden-xs angleright"><i className="fa fa-angle-down" aria-hidden="true"></i></span>
                         </button>
-                        { this.state.showProfile == true ? 
-                        <div className="dropdown-menu wid260 marTop"  >
+                        
+                        <div className="dropdown-menu wid260 marTop" id="admin"  >
                             <ul className="paddleft nomargin">
                               <li className="user-header">
                                 <ul className="menu paddleft">
@@ -169,9 +172,7 @@ logout(){
                             </ul>
                         </div>
 
-                        :
-                        null
-                      }
+                        
                     </span>
 
 

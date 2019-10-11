@@ -20,6 +20,13 @@ export default class Operation extends Component {
 		this.setState({
 			propertyStatus : $(event.target).attr('property-status'),
 		})
+
+
+		// if($(event.target).attr('property-status')==="New")
+		// {
+		// 	// post status=verify
+		// 	// axios
+		// }
 	}
 
 	render() {

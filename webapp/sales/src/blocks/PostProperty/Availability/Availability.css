@@ -1,0 +1,393 @@
+/*add this class next to form-control*/
+.inputBox{
+  font-family:'Montserrat',sans-serif;
+  height: 30px !important;
+  border: none !important;
+  border-left: 1px solid #979797 !important;
+  font-size: 12px !important;
+}
+.valid_box{
+  height: 60px;
+}
+.inputBox:hover{
+  border-left:1px solid #039BE5 !important;
+  box-shadow: none !important;
+}
+
+/*.hr_border{
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 50px;
+  box-shadow: 0px 3px 2px -1px #ccc;
+}*/
+.hr_border2{
+  margin-bottom: 30px;
+}
+.back_btn:hover{
+  color: #666;
+}
+.actionDiv{
+  cursor: pointer;
+}
+
+/**********************/
+/*input icon*/
+/*input icon*/
+/*.inputIcon{
+  height: 30px !important;
+  font-size: 18px !important;
+  color: #979797 !important;
+  background-color: #ffffff !important;
+  border: none !important;
+}*/
+.inputIcon{
+	background: #fff;
+}
+
+/*************************************/
+/*Add this class next to input-group*/
+/*.inputBox-main{
+  border: 1px solid #979797 !important;
+  border-radius: 3px !important;
+  height: 30px !important;
+  font-size: 12px !important;
+}*/
+.chkbx{
+  height: 18px;
+    /* position: absolute; */
+    width: 25px;
+    position: relative;
+    margin:0px !important;
+}
+
+.marg_left{
+  margin-left: 15px;
+}
+
+.ModalPd{
+  padding: 0px !important;
+}
+
+/***********************************************************************************************************
+*********************************************************************************************************/
+/*toggle button*/
+
+
+blockquote, q {
+  quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+
+.container5 {
+  position: absolute;
+  top: 10px;
+}
+
+
+.switch1 {
+  position: relative;
+  height: 26px;
+  width: 200px;
+  /*margin: 20px auto;*/
+  /*background: rgba(0, 0, 0, 0.25);*/
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px rgba(255, 255, 255, 0.1);
+}
+
+.switch1-label {
+  position: relative;
+  z-index: 2;
+  float: left;
+  width: 98px;
+  line-height: 26px;
+  color: #2e2b2b;
+  /*font-size: 11px;*/
+  text-align: center;
+  /*text-shadow: 0 1px 1px rgba(0, 0, 0, 0.45);*/
+  cursor: pointer;
+}
+.switch1-label:active {
+  font-weight: 100;
+}
+
+.switch1-label-off {
+  padding-left: 2px;
+}
+
+.switch1-label-on {
+  padding-right: 2px;
+}
+
+
+.switch1-input {
+  display: none;
+}
+.switch1-input:checked + .switch1-label {
+  font-weight: 100;
+  color: #fff;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.25);
+  -webkit-transition: 0.15s ease-out;
+  -moz-transition: 0.15s ease-out;
+  -ms-transition: 0.15s ease-out;
+  -o-transition: 0.15s ease-out;
+  transition: 0.15s ease-out;
+  -webkit-transition-property: color, text-shadow;
+  -moz-transition-property: color, text-shadow;
+  -ms-transition-property: color, text-shadow;
+  -o-transition-property: color, text-shadow;
+  transition-property: color, text-shadow;
+}
+.switch1-input:checked + .switch1-label-on ~ .switch1-selection {
+  left: 98px;
+  /* Note: left: 50%; doesn't transition in WebKit */
+}
+
+.switch1-selection {
+  position: absolute;
+  z-index: 1;
+  top: 2px;
+  left: 2px;
+  display: block;
+  width: 98px;
+  height: 22px;
+  border-radius: 10px;
+  background-color: #269be5;
+  box-shadow: inset 0 1px rgba(255, 255, 255, 0.5), 0 0 2px rgba(0, 0, 0, 0.2);
+  -webkit-transition: left 0.15s ease-out;
+  -moz-transition: left 0.15s ease-out;
+  -ms-transition: left 0.15s ease-out;
+  -o-transition: left 0.15s ease-out;
+  transition: left 0.15s ease-out;
+}
+.switch-blue .switch-selection {
+  background-color: #3aa2d0;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #4fc9ee), color-stop(100%, #3aa2d0));
+  background-image: -webkit-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: -moz-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: -ms-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: -o-linear-gradient(top, #4fc9ee, #3aa2d0);
+  background-image: linear-gradient(top, #4fc9ee, #3aa2d0);
+}
+.switch-yellow .switch-selection {
+  background-color: #c4bb61;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #e0dd94), color-stop(100%, #c4bb61));
+  background-image: -webkit-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: -moz-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: -ms-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: -o-linear-gradient(top, #e0dd94, #c4bb61);
+  background-image: linear-gradient(top, #e0dd94, #c4bb61);
+}
+
+
+
+/****************************************************************/
+.weekBtn {
+    margin-right: 17px;
+    padding: 10px 13px;
+    background: #eee;
+    border-radius: 5px;
+    border: none;
+    color: #666;
+    box-shadow: 0px 2px 2px 2px #ddd;
+}
+.weekMarg_btm{
+  margin-bottom: 30px;  
+}
+.weekBtn_lst{
+  margin-right: 0px !important;
+}
+
+.margBtm_30{
+  margin-bottom: 30px;
+}
+/*************************************************************/
+/**************************************************/
+/*React table css for all react tables*/
+.ReactTable .rt-thead.-header {
+  font-family:'Montserrat',sans-serif !important;
+  background-color: #039BE5 !important;
+  color      :#f2f2f2 !important;
+  font-size  : 14px !important;
+  height     : 40px !important;
+  text-align : right !important;
+  padding-top:5px;
+  border: 1px solid #eee;
+    text-align:center;
+}
+.ReactTable .rt .td{
+  font-family:'Montserrat',sans-serif;
+  padding: 10px;
+  text-align:center;
+}
+/*React Table End*/
+.ReactTable 
+{
+  text-align : center !important;
+}
+
+.rc-time-picker-input{
+  height: 35px !important;
+  border:1px solid #000;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  font-size: 16px !important;
+}
+
+.rc-time-picker{
+  width: 190% !important;
+}
+/*======================IMAGE UPLOAD==============================================*/
+.contentHolder{
+    background-color: #fff;
+    height:40%;
+    border-style: dotted;
+    border-color: #aaa;
+    border-width: 2px;
+    height: 293px;
+}
+.backGround{
+    margin-top: 30px
+}
+.autoHeight{
+    height: auto !important;
+}
+.uploadImg{
+    /*margin-bottom: 68px;*/
+    margin-top: 45px;
+}
+.uploadVideo{
+    margin-bottom: 20px;
+    margin-top: 45px;
+}
+.mt78{
+    margin-top: 78px;
+}
+
+.imgcss{
+   height: 50px;
+   margin-top: 20px;
+}
+.imgLabel{
+    position: absolute;
+    left: 172px;
+    top: -11px;
+}
+
+/*new css*/
+
+.custFaTimes{
+  position: absolute;
+  margin-top: -5px;
+  margin-left: 84%;
+  z-index: 1;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.clr_k{
+height:80px;
+background-color: #f2f2f2;
+/*font-family:'Montserrat-Regular';*/
+cursor: pointer;
+border: 2px dotted #ccc;
+}
+
+.hand_icon{
+margin-left: 38%;
+  margin-top: 10px;
+}
+
+.hand_icon2{
+margin-left: 28%;
+  margin-top: 10px;
+}
+
+.hand_icon1{
+  margin-left: 26%;
+  margin-top: 11px;
+}
+
+.click_input{
+width: 100%;
+  height: 100%;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  margin-left: -15px;
+}
+
+.containerC:hover .imagCe {
+  opacity: 0.3;
+}
+.containerC:hover .middleC {
+  opacity: 1;
+}
+
+.custFaTimes1 {
+    position: absolute;
+    margin-left: 86%;
+    margin-top: 23%;
+    z-index: 1;
+    font-size: 18px;
+    cursor: pointer;
+}
+.imageC {
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
+}
+
+.middleC {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+.textCA {
+  background-color: #666666;
+  color: white;
+  opacity: 0.5;
+  font-size: 16px;
+  padding: 16px 32px;
+}
+
+.marBtm{
+    margin-bottom:20px;
+}
+.under_ln{
+    font-family: sans-serif;
+    letter-spacing: 1px;
+}
+.tempL{
+  /*margin-left: -30px;
+  margin-top: 10px;*/
+  position: relative;
+  left: 0px;
+  top: 55px;
+}
+.format1{
+  font-size: 13px;
+   margin-top: 34px;
+}
+.format2{
+  font-size: 13px;
+   margin-top: 34px;
+}
+
+.imgHeight{
+  height: 130px !important;
+}
+.dotColor{
+  color: #fff;
+}

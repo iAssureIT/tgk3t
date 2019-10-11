@@ -6,7 +6,7 @@ export default class Progressbar extends Component {
     this.state = {
       progress: 0,
       limit: 0,
-      speed: 2,
+      speed: 4,
       color: "#ff0050"
     }
     this.frame = this.frame.bind(this);

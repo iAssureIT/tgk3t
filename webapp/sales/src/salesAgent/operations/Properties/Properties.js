@@ -23,7 +23,7 @@ import './Properties.css';
 		$(".individual").prop("checked",$(this).prop("checked"));
 		});
 		var formValues = {
-			/*user_id :"5d3ec084e7381f059964f5be",*/
+			// user_id :"5d9b017ac8be6c588004f09d",
 			status	:"WIP" ,
 		}
 		console.log("formValues",formValues);
@@ -33,10 +33,13 @@ import './Properties.css';
 	      (res)=>{
 	        console.log(res);
 	        const postsdata = res.data;
+	        const postDataLength1 = res.data.length;
+
+	        console.log("postDataLength1",postDataLength1);
 	        this.setState({
 	          propertiesData : postsdata,
 	        });
-	    console.log("PropertyDetails++++++++++++++++++",postsdata);   
+	    console.log("PropertyDetails Did mount++++++++++++++++++",postsdata);   
 	      }
 	    )
 	    .catch();
@@ -45,20 +48,25 @@ import './Properties.css';
    componentWillReceiveProps(nextProps){
     if(nextProps && nextProps.status){
       	var formValues = {
-			user_id :"5d3ec084e7381f059964f5be",
+			// user_id :"5d3ec084e7381f059964f5be",
 			status	:nextProps.status ? nextProps.status : "WIP" ,
 		}
-		console.log("formValues",formValues);
+		console.log("formValues receive",formValues);
 	    axios
 	    .post('/api/salesagent/post/displaylist',formValues)
 	    .then(
 	      (res)=>{
 	        console.log(res);
 	        const postsdata = res.data;
+	        const postDataLength2 = res.data.length;
+
+	        console.log("postDataLength2",postDataLength2);
+
 	        this.setState({
 	          propertiesData : postsdata,
 	        });
-	    console.log("PropertyDetails++++++++++++++++++",postsdata);   
+	    console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
+
 	      }
 	    )
 	    .catch();
@@ -71,6 +79,7 @@ import './Properties.css';
 		console.log("_id",id);
 		this.props.history.push('/profile/'+ id);
 	}
+	
 	render() {
 		return (
 			<div className="">
@@ -78,18 +87,18 @@ import './Properties.css';
 				{
 					this.state.propertiesData.map((property,index)=>{
 						return(
-							<div key={index} id={property._id} className="propertyBox" onClick={this.profileView.bind(this)}>
-								<div className="col-lg-1 check1">
+							<div className="propertyBox" >
+								<div className="col-lg-1 check1" >
 								    <input type="checkbox" id="cbtest"  className="check individual"/>
 								    <label htmlFor="cbtest" className="check-box"></label> 
 								</div>
-								<div className="col-lg-11 pBoxSize">
+								<div className="col-lg-11 pBoxSize" onClick={this.profileView.bind(this)}  key={index} id={property._id}>
 									<div className="col-lg-4">
 										<span className="mt-8">
 											Property ID: 
-									        <Link to="/propertyDetails"> {property.propertyCode}</Link><br/>
+									        <Link to="/propertyDetails" > {property.propertyCode}</Link><br/>
 											{property.propertyType ? property.propertyType : "Residential Property"}<br/>
-											<div>{property.propertyDetails&& property.propertyDetails.length >0 ?
+											<div>{property.propertyDetails && property.propertyDetails.length >0 ?
 												property.propertyDetails.map((data,index)=>{
 												return(
 														<span key="index">{data.bedrooms}&nbsp; BHK Flat on Rent</span>

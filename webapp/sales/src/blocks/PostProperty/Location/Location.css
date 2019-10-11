@@ -1,0 +1,30 @@
+.locSpan{
+   font-size: 18px;
+   text-align: center;
+   font-family: sans-serif;
+}
+.locH2{
+	text-align: center;
+}
+/*.orSeparatorLine{
+	text-align: center;
+	border-top: 1px solid #ddd;
+	margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.wordContainer{
+	margin-top: -10px;
+	background-color: #fff;
+}*/
+.actionArea{
+	margin-top: 100px;
+}
+.pt28{
+	padding-top: 28px;
+}
+/*.vl {
+  	border-left: 2px solid #c1c7c1;
+    height: 50px;
+    margin-left: 9px;
+}*/
