@@ -10,7 +10,8 @@ import {
   Image,
   Alert,
   SafeAreaView,
-  TextInput
+  TextInput,
+  Platform
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
@@ -319,7 +320,7 @@ export default class Congratulation extends ValidationComponent{
                     />
                 </SafeAreaView>
 
-                <View style={[styles.alignCenter,{paddingHorizontal:15},styles.marginBottom15]}>
+                <View style={[styles.alignCenter,{paddingHorizontal:15}, styles.marginTopSOM,styles.marginBottom15]}>
                   <Text style={[styles.heading4,{textAlign:'center'}]}>
                     Your property 
                       <Text style={{fontSize:16,fontWeight:'bold',fontStyle:'italic',color:colors.button}}> Successfully </Text> 

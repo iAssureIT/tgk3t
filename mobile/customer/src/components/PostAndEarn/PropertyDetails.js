@@ -132,7 +132,6 @@ constructor(props){
 
       defaultIcon       :'flag',
       iconType          : 'material-community',
-      allAmenities      :[],
       isChecked         : true,
       btnLoading        : false,
 
@@ -152,6 +151,17 @@ constructor(props){
       workStation       : "2",
       builtupAreaError  : "",
       superAreaError    : "",
+      // originalValues:"",
+      prevAmenities     : "",
+      allAmenities      : [],
+      // uid:"",
+      // token:"",
+      // mobile:"",
+      // propertyId:"",
+      // propertyType:"",
+      // transactionType:"",
+      // updateOperation: false,
+
     };
 
   }
@@ -246,164 +256,195 @@ constructor(props){
         this.setState({propertyType:propertyType})
         this.setState({transactionType:transactionType})
 
-
         if(token!="")
         {
 
         axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
            var property_id = propertyId;
-          console.log("property_id in constructor property details",property_id);
+           console.log("property_id in constructor property details",property_id);
 
-           if(property_id!=null)
-                {
-                  console.log("here edit 2nd form");
+          axios
+          .get('/api/masteramenities/list')
+          .then(
+            (res)=>{
+              // console.log('res postdata', res);
+              const postsdata = res.data;
+              console.log('postsdata',postsdata);
+              this.setState({
+                allAmenities : postsdata,
+              },()=>{
+                     if(property_id!=null)
+                              {
+                                console.log("here edit 2nd form");
 
-                           axios
-                            .get('/api/properties/'+property_id)
-                            .then( (response) =>{
-                              console.log("get property in property = ",response);
-                              console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
+                                         axios
+                                          .get('/api/properties/'+property_id)
+                                          .then( (response) =>{
+                                            console.log("get property in property = ",response);
+                                            console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
 
-                              this.setState({
-                                  originalValues  : response.data.propertyDetails,
-                                  bedrooms        : response.data.propertyDetails.bedrooms,
-                                  balconies       : response.data.propertyDetails.balconies,
-                                  washrooms       : response.data.propertyDetails.washrooms ? response.data.propertyDetails.washrooms : "",
-                                  furnishedStatus : response.data.propertyDetails.furnishedStatus,
-                                  personal        : response.data.propertyDetails.personal ? response.data.propertyDetails.personal : "",
-                                  pantry          : response.data.propertyDetails.pantry ? response.data.propertyDetails.pantry : "",
-                                  bathrooms       : response.data.propertyDetails.bathrooms,
-                                  ageofproperty   : response.data.propertyDetails.ageofProperty,
-                                  facing          : response.data.propertyDetails.facing,
-                                  superArea       : response.data.propertyDetails.superArea.toString(),
-                                  builtupArea     : response.data.propertyDetails.builtupArea,
-                                  updateOperation : true,
-                                  // amenity
-                                  floor           : response.data.propertyDetails.floor,
-                                  totalFloor      : response.data.propertyDetails.totalFloor,
-                                  // prevAmenities   : response.data.propertyDetails.Amenities,
-                                  superAreaUnit   : response.data.propertyDetails.superAreaUnit,
-                                  builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
-                                  prevCharges     : response.data.propertyDetails.furnishedOptions.length > 0 ? response.data.propertyDetails.furnishedOptions : "",
-                                  workStation     : response.data.propertyDetails.workStation ? response.data.propertyDetails.workStation : "",
-                                  furnishpantry   : response.data.propertyDetails.furnishPantry,
+                                            this.setState({
+                                                originalValues  : response.data.propertyDetails,
+                                                bedrooms        : response.data.propertyDetails.bedrooms,
+                                                balconies       : response.data.propertyDetails.balconies,
+                                                washrooms       : response.data.propertyDetails.washrooms ? response.data.propertyDetails.washrooms : "",
+                                                furnishedStatus : response.data.propertyDetails.furnishedStatus,
+                                                personal        : response.data.propertyDetails.personal ? response.data.propertyDetails.personal : "",
+                                                pantry          : response.data.propertyDetails.pantry ? response.data.propertyDetails.pantry : "",
+                                                bathrooms       : response.data.propertyDetails.bathrooms,
+                                                ageofproperty   : response.data.propertyDetails.ageofProperty,
+                                                facing          : response.data.propertyDetails.facing,
+                                                superArea       : response.data.propertyDetails.superArea.toString(),
+                                                builtupArea     : response.data.propertyDetails.builtupArea,
+                                                updateOperation : true,
+                                                // amenity
+                                                floor           : response.data.propertyDetails.floor,
+                                                totalFloor      : response.data.propertyDetails.totalFloor,
+                                                // prevAmenities   : response.data.propertyDetails.Amenities,
+                                                superAreaUnit   : response.data.propertyDetails.superAreaUnit,
+                                                builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
+                                                prevCharges     : response.data.propertyDetails.furnishedOptions.length > 0 ? response.data.propertyDetails.furnishedOptions : "",
+                                                workStation     : response.data.propertyDetails.workStation ? response.data.propertyDetails.workStation : "",
+                                                furnishpantry   : response.data.propertyDetails.furnishPantry,
 
-                                },()=>{
-                                    console.log("here ov furnishpantry",this.state.furnishpantry);
-                                    var furnishItemData = this.state.furnishItem;
-                                    var furnishItemDataList = furnishItemData.map((item,index)=>{
-                                    var propPresent = this.state.prevCharges.find((obj)=>{
-                                    return item.label === obj;
-                                    })
-                                    var newObj = Object.assign({},item);
-                                    if(propPresent){
-                                      newObj.checked = true
-                                    }else{
-                                      newObj.checked = false
-                                    }
-                                    return newObj;
-                                  })
+                                                /*----------------------------------------*/
+                                                // originalValues  : response.data.propertyDetails,
+                                                prevAmenities   : response.data.propertyDetails.Amenities,
+                                                // updateOperation : response.data.propertyDetails.Amenities.length >0 ? true : false,
+                                   
+                                              },()=>{
+                                                  console.log("here ov furnishpantry",this.state.furnishpantry);
+                                                
 
-                                  this.setState({
-                                      furnishItem : furnishItemDataList,
-                                    },()=>{
-                                      console.log("here furnishItem in didmount after match result",this.state.furnishItem);
-                                      });
-
-
-
-                                  if(this.state.furnishedStatus === "Semi Furnished")
-                                  {
-                                    this.setState({furnishedIndex:1});
-                                  }
-                                  if(this.state.furnishedStatus === "Fully Furnished")
-                                  {
-                                    this.setState({furnishedIndex:0});
-                                  }
-                                  if(this.state.furnishedStatus === "Unfurnished")
-                                  {
-                                    this.setState({furnishedIndex:2});
-                                  }
-
-
-                                   if(this.state.furnishpantry === "Dry")
-                                  {
-                                    this.setState({furnishpantryIndex:0});
-                                  }
-                                  if(this.state.furnishpantry === "Wet")
-                                  {
-                                    this.setState({furnishpantryIndex:1});
-                                  }
-                                  if(this.state.furnishpantry === "Not available")
-                                  {
-                                    this.setState({furnishpantryIndex:2});
-                                  }
+                                                    var allAmenitiesData = this.state.allAmenities;
+                                                    var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
+                                                    var propPresent = this.state.prevAmenities.find((obj)=>{
+                                                    return item.amenity === obj;
+                                                    })
+                                                    var newObj = Object.assign({},item);
+                                                    if(propPresent){
+                                                      newObj.checked = true
+                                                    }else{
+                                                      newObj.checked = false
+                                                    }
+                                                    return newObj;
+                                                  })
+                                                  this.setState({
+                                                      allAmenities : allAmenitiesDataList,
+                                                    },()=>{
+                                                      console.log("here allAmenities in didmount after match result",this.state.allAmenities);
+                                                      });
 
 
-                                  // /*furnish pantry*/
-                                  //  if(this.state.furnishpantry === "Not available" || this.state.furnishpantry === "not available" )
-                                  // {
-                                  //    this.setState({furnishpantry:"Not available",
-                                  //                   furnishpantryIndex:2});
-                                  // }
-                                  // if(this.state.furnishpantry === "Wet" || this.state.furnishpantry === "wet"){
-                                  //    this.setState({furnishpantry:"Wet",
-                                  //                   furnishpantryIndex:1});
-                                  // }
-                                  // if(this.state.furnishpantry === "Dry" || this.state.furnishpantry === "dry" || this.state.furnishpantry === null ){
-                                  //    this.setState({furnishpantry:"Dry",
-                                  //                   furnishpantryIndex:0});
-                                  // }
+                                                  var furnishItemData = this.state.furnishItem;
+                                                  var furnishItemDataList = furnishItemData.map((item,index)=>{
+                                                  var propPresent = this.state.prevCharges.find((obj)=>{
+                                                  return item.label === obj;
+                                                  })
+                                                  var newObj = Object.assign({},item);
+                                                  if(propPresent){
+                                                    newObj.checked = true
+                                                  }else{
+                                                    newObj.checked = false
+                                                  }
+                                                  return newObj;
+                                                })
+
+                                                this.setState({
+                                                    furnishItem : furnishItemDataList,
+                                                  },()=>{
+                                                    console.log("here furnishItem in didmount after match result",this.state.furnishItem);
+                                                    });
 
 
 
-                                  /*pantry data*/
-
-                                  if(this.state.pantry === "no" || this.state.pantry === "No")
-                                  {
-                                    this.setState({pantryIndex:1});
-                                  }else{
-                                    this.setState({pantryIndex:0});
-                                  }
-
-                                  /*personal washroom*/
-                                  if(this.state.personal === "no" || this.state.personal === "No" )
-                                  {
-                                     this.setState({personalIndex:1});
-                                  }else{
-                                     this.setState({personalIndex:0});
-                                  }
-
-                                  
+                                                if(this.state.furnishedStatus === "Semi Furnished")
+                                                {
+                                                  this.setState({furnishedIndex:1});
+                                                }
+                                                if(this.state.furnishedStatus === "Fully Furnished")
+                                                {
+                                                  this.setState({furnishedIndex:0});
+                                                }
+                                                if(this.state.furnishedStatus === "Unfurnished")
+                                                {
+                                                  this.setState({furnishedIndex:2});
+                                                }
 
 
-                                  /*work station*/
-                                  if(this.state.workStation === 0 || this.state.workStation === "0"){
-                                     this.setState({workStationIndex:0});
-                                  }
-                                  if(this.state.workStation === 1 || this.state.workStation === "1"){
-                                     this.setState({workStationIndex:1});
-                                  }
-                                  if(this.state.workStation === 2 || this.state.workStation === "2"){
-                                     this.setState({workStationIndex:2});
-                                  }
+                                                 if(this.state.furnishpantry === "Dry")
+                                                {
+                                                  this.setState({furnishpantryIndex:0});
+                                                }
+                                                if(this.state.furnishpantry === "Wet")
+                                                {
+                                                  this.setState({furnishpantryIndex:1});
+                                                }
+                                                if(this.state.furnishpantry === "Not available")
+                                                {
+                                                  this.setState({furnishpantryIndex:2});
+                                                }
+
+                                                /*pantry data*/
+
+                                                if(this.state.pantry === "no" || this.state.pantry === "No")
+                                                {
+                                                  this.setState({pantryIndex:1});
+                                                }else{
+                                                  this.setState({pantryIndex:0});
+                                                }
+
+                                                /*personal washroom*/
+                                                if(this.state.personal === "no" || this.state.personal === "No" )
+                                                {
+                                                   this.setState({personalIndex:1});
+                                                }else{
+                                                   this.setState({personalIndex:0});
+                                                }
+
+                                                
 
 
-                                });
-                            },()=>{
-                              console.log("selected index-----------------------------------------------------------------------------------------------------------------------",this.state.furnishpantryIndex);
-                            })
-                            .catch((error)=>{
-                                  console.log("error = ",error);
-                                  if(error.message === "Request failed with status code 401")
-                                  {
-                                       // swal("Your session is expired! Please login again.","", "error");
-                                       // this.props.history.push("/");
-                                  }
-                              });
-              }
+                                                /*work station*/
+                                                if(this.state.workStation === 0 || this.state.workStation === "0"){
+                                                   this.setState({workStationIndex:0});
+                                                }
+                                                if(this.state.workStation === 1 || this.state.workStation === "1"){
+                                                   this.setState({workStationIndex:1});
+                                                }
+                                                if(this.state.workStation === 2 || this.state.workStation === "2"){
+                                                   this.setState({workStationIndex:2});
+                                                }
 
+
+                                              });
+                                          },()=>{
+                                            console.log("selected index-----------------------------------------------------------------------------------------------------------------------",this.state.furnishpantryIndex);
+                                          })
+                                          .catch((error)=>{
+                                                console.log("error = ",error);
+                                                if(error.message === "Request failed with status code 401")
+                                                {
+                                                     // swal("Your session is expired! Please login again.","", "error");
+                                                     // this.props.history.push("/");
+                                                }
+                                            });
+                            }
+                            /*if prop id close*/
+
+                  });
+              })
+              .catch((error)=>{
+                        console.log("error = ",error);
+                        // if(error.message === "Request failed with status code 401")
+                        // {
+                        //      swal("Your session is expired! Please login again.","", "error");
+                        //      this.props.history.push("/");
+                        // }
+                    });
+
+             /*if token close*/
         }
 
 
@@ -466,8 +507,7 @@ constructor(props){
   }
 
   handleOnFurnish = (index)=>{
-
-     // console.log("index",index);
+    // console.log("index",index);
     var alldata = this.state.furnishItem;
     var status = alldata[index].checked;
     if(status===true){
@@ -477,15 +517,29 @@ constructor(props){
     }
     this.setState({
       furnishItem: alldata,
-    },()=>{
-      // console.log("here new data of furnishItem",this.state.furnishItem);
+    },()=>{   // console.log("here new data of furnishItem",this.state.furnishItem);
     });
-    // console.log("current data status",status);
+ }
+
+ handleOnClickInternal = (index)=>{
+    console.log("index",index);
+    var alldata = this.state.allAmenities;
+    var status = alldata[index].checked;
+    if(status===true){
+      alldata[index].checked = false;
+    }else{
+      alldata[index].checked = true;
+    }
+    this.setState({
+      allAmenities: alldata,
+    },()=>{      // console.log("here new data of amenities",this.state.allAmenities);
+    });
   }
 
 
 submitFun(){
   var ov = this.state.originalValues;
+
   console.log("this.state.furnishpantryIndex",this.state.furnishpantryIndex)
   console.log("here state value",this.state.furnishpantry);
   console.log("here ov furnishPantry value",ov.furnishPantry);
@@ -493,45 +547,72 @@ submitFun(){
         this.state.floor!=="" &&  this.state.totalfloor!=="" ){
       if (this.validInput()) {
         if(this.state.updateOperation === true){
+          console.log("update fun");
+          var ov = this.state.originalValues;
 
-          var furnishedOptionsData = this.state.furnishItem;
-              var furnishedOptionsDataList =[];    
-                furnishedOptionsData.map((item,index)=>{
-                  if(item.checked == true)
-                  {
-                    furnishedOptionsDataList.push(item.label);
-                  }
-                })
-
-
-                console.log("update fun");
-                var ov = this.state.originalValues;
-
-
-                var eq ="";
-                if(furnishedOptionsDataList.length != this.state.furnishItem.length )
+           var allAmenitiesData = this.state.allAmenities;
+           var allAmenitiesDataList =[];     
+              allAmenitiesData.map((item,index)=>{
+                if(item.checked == true)
                 {
-                  eq = true;
-                   console.log("equal not",eq);
-                }else{
-                 
-                  for (var i = 0; i < furnishedOptionsDataList.length; i++)
-                  {
-                      if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
-                      eq = false;
-                          }else{
-                      eq = true; 
-                          }
-                  }
-                  console.log("equal yes but same",eq);
+                  allAmenitiesDataList.push(item.amenity);
                 }
-                console.log("outside eq",eq);
+              })
+              var eqAmenity ="";
+                if(allAmenitiesDataList.length != ov.Amenities.length )
+                {
+                  eqAmenity = false;
+                   console.log("equal eqAmenity not",eqAmenity);
+                }else{
+                  
+                  for (var i = 0; i < allAmenitiesDataList.length; i++)
+                  { 
+                          if (allAmenitiesDataList[i] != ov.Amenities[i]){
+                      eqAmenity = false;
+                          }else{
+                      eqAmenity = true;  
+                          }
+                     }
+                      console.log("equal yes eqAmenity but same",eqAmenity); 
+                }
+
+              console.log("outside eqAmenity",eqAmenity);
+
+              /*-----------------------------*/
+
+              var furnishedOptionsData = this.state.furnishItem;
+              var furnishedOptionsDataList =[];    
+                    furnishedOptionsData.map((item,index)=>{
+                      if(item.checked == true)
+                      {
+                        furnishedOptionsDataList.push(item.label);
+                      }
+                    })
+
+                    var eq ="";
+                    if(furnishedOptionsDataList.length != this.state.furnishItem.length )
+                    {
+                      eq = true;
+                       console.log("equal not",eq);
+                    }else{
+                     
+                      for (var i = 0; i < furnishedOptionsDataList.length; i++)
+                      {
+                          if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+                          eq = false;
+                              }else{
+                          eq = true; 
+                              }
+                      }
+                      console.log("equal yes but same",eq);
+                    }
+                    console.log("outside eq",eq);
                 
                 if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
                     this.state.furnishedStatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
                      this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing
                      && parseInt(this.state.superArea) === ov.superArea && this.state.builtupArea === ov.builtupArea &&
-                     eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation 
+                      eqAmenity === true && eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation 
                      && this.state.furnishpantry === ov.furnishPantry )
                   {
                       console.log("same data");
@@ -539,6 +620,15 @@ submitFun(){
                      
                   }else{
                       console.log("diff data");
+                      console.log("allAmenities in result",this.state.allAmenities);
+                      var allAmenitiesData = this.state.allAmenities;
+                        var allAmenitiesDataList =[];     
+                            allAmenitiesData.map((item,index)=>{
+                              if(item.checked == true)
+                              {
+                                allAmenitiesDataList.push(item.amenity);
+                              }
+                            })
 
                       var formValues ={}
 
@@ -563,7 +653,7 @@ submitFun(){
                             "property_id"       : this.state.propertyId,
                             "uid"               : this.state.uid,
 
-                            // "Amenities"         : [],
+                            "Amenities"         : allAmenitiesDataList,
                             "floor"             : this.state.floor,
                             "totalFloor"        : this.state.totalFloor,
                             "superAreaUnit"     : this.state.superAreaUnit,
@@ -573,74 +663,78 @@ submitFun(){
                           };
                       }else{
 
-                         var formValues = {
-                     
-                      "bedrooms"          : this.state.bedrooms,
-                      "balconies"         : this.state.balconies,
-                      "washrooms"         : this.state.washrooms,
-                      "furnishedStatus"   : this.state.furnishedStatus,
-                      "personal"          : this.state.personal,
-                      "pantry"            : this.state.pantry,
-                      "workStation"       : this.state.workStation,
+                               var formValues = {                    
+                            "bedrooms"          : this.state.bedrooms,
+                            "balconies"         : this.state.balconies,
+                            "washrooms"         : this.state.washrooms,
+                            "furnishedStatus"   : this.state.furnishedStatus,
+                            "personal"          : this.state.personal,
+                            "pantry"            : this.state.pantry,
+                            "workStation"       : this.state.workStation,
 
-                      "bathrooms"         : this.state.bathrooms,
-                      "ageofProperty"     : this.state.ageofproperty,
-                      "facing"            : this.state.facing,
-                      "superArea"         : parseInt(this.state.superArea),
-                      "builtupArea"       : this.state.builtupArea,
-                      "property_id"       : this.state.propertyId,
-                      "uid"               : this.state.uid,
+                            "bathrooms"         : this.state.bathrooms,
+                            "ageofProperty"     : this.state.ageofproperty,
+                            "facing"            : this.state.facing,
+                            "superArea"         : parseInt(this.state.superArea),
+                            "builtupArea"       : this.state.builtupArea,
+                            "property_id"       : this.state.propertyId,
+                            "uid"               : this.state.uid,
 
-                      // "Amenities"         : [],
-                      "floor"             : this.state.floor,
-                      "totalFloor"        : this.state.totalFloor,
-                      "superAreaUnit"     : this.state.superAreaUnit,
-                      "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                      "furnishPantry"     : this.state.furnishpantry,
-                      // "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : null ,
-                    };
-
-
+                            "Amenities"         : allAmenitiesDataList,
+                            "floor"             : this.state.floor,
+                            "totalFloor"        : this.state.totalFloor,
+                            "superAreaUnit"     : this.state.superAreaUnit,
+                            "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                            "furnishPantry"     : this.state.furnishpantry,
+                            // "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : null ,
+                          };
                       }
-                     
-                      
-
                     console.log("formValues",formValues);
 
                     if( this.state.furnishedIndex!=="" &&  this.state.builtupArea.value!=="" &&
                         this.state.floor!=="" &&  this.state.totalFloor!=="" ){
 
+                      if(allAmenitiesDataList!=""){
 
-                            axios
-                            .patch('/api/properties/patch/propertyDetails',formValues)
-                            .then( (res) =>{
-                              console.log(res);
-                              if(res.status === 200){
-                                console.log("PropertyDetails Res = ",res);
-                                this.navigateScreen('Amenities');
-                              }
-                            })
-                            .catch((error)=>{
-                                                  console.log("error = ",error);
-                                                  if(error.message === "Request failed with status code 401")
-                                                  {
-                                                       // Alert.alert("Your session is expired!"," Please login again.");
-                                                      // this.props.navigation.navigate('MobileScreen'); 
-                                                  }
-                               });
+                                                  axios
+                                                  .patch('/api/properties/patch/propertyDetails',formValues)
+                                                  .then( (res) =>{
+                                                    console.log(res);
+                                                    if(res.status === 200){
+                                                      console.log("PropertyDetails Res = ",res);
+                                                      this.navigateScreen('Amenities');
+                                                    }
+                                                  })
+                                                  .catch((error)=>{
+                                                                        console.log("error = ",error);
+                                                                        if(error.message === "Request failed with status code 401")
+                                                                        {
+                                                                             // Alert.alert("Your session is expired!"," Please login again.");
+                                                                            // this.props.navigation.navigate('MobileScreen'); 
+                                                                        }
+                                                     });
 
+                                                }else{
+                                                       Alert.alert("Please select atleast one amenity","");
+                                                }
                          
                         }else{
                              Alert.alert("Please enter mandatory fields","warning");
                         }
-
-
                   }
 
         }else{
           console.log("submit func");
-
           var ov = this.state.originalValues;
+            var allAmenitiesData = this.state.allAmenities;
+              var allAmenitiesDataList =[];     
+              allAmenitiesData.map((item,index)=>{
+                if(item.checked == true)
+                {
+                  allAmenitiesDataList.push(item.amenity);
+                }
+              })
+
             var furnishedOptionsData = this.state.furnishItem;
                 var furnishedOptionsDataList =[];    
                   furnishedOptionsData.map((item,index)=>{
@@ -649,8 +743,7 @@ submitFun(){
                       furnishedOptionsDataList.push(item.label);
                     }
                   })
-
-                    var eq =true;
+                    var eq = true;
                     if(furnishedOptionsDataList.length !== this.state.furnishItem.length )
                     {
                       eq = false;
@@ -686,7 +779,7 @@ submitFun(){
                       "property_id"       : this.state.propertyId,
                       "uid"               : this.state.uid,
 
-                      // "Amenities"         : [],
+                      "Amenities"         : allAmenitiesDataList,
                       "floor"             : this.state.floor,
                       "totalFloor"        : this.state.totalFloor,
                       "superAreaUnit"     : this.state.superAreaUnit,
@@ -1276,6 +1369,412 @@ submitFun(){
                               </View>
                               {this.displayValidationError('builtupAreaError')}
                             </View>
+
+
+
+
+                              <View style={styles.amenitiesWrapper,styles.marginBottom25} >
+                                  <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
+                                  {console.log("here amenity",this.state.allAmenities)}
+                                   { this.state.allAmenities && this.state.allAmenities.length >0 
+                                    ?
+                                    this.state.allAmenities.map((data,index)=>(
+                                    <React.Fragment key={index}>
+                                     
+                                    {data.amenity==="AC" ?
+
+                                      <CheckBox
+                                        key={index}
+                                        style={{marginBottom:10}}
+                                        onClick={() => this.handleOnClickInternal(index)}
+                                        isChecked={data.checked}
+                                        rightTextStyle={{marginLeft:0}}
+                                        checkBoxColor= {colors.grey}
+                                        rightTextView = {
+                                          <View style={{flexDirection:'row',flex:1}}>
+                                            <Icon
+                                              name={this.state.defaultIcon}
+                                              type={this.state.iconType}
+                                              size={18}
+                                              color= {colors.button}
+                                              containerStyle = {{marginHorizontal:10}}
+                                            />
+                                             <Image 
+                                              source={require('../../images/ac.png') }
+                                              style={{width: 25, height:25, marginRight:7}}
+                                            />
+                                            <Text style={styles.inputText}>{data.amenity}</Text>
+                                          </View>
+
+                                        }
+                                        />
+
+                                        :
+
+
+                                       /* data.amenity==="Swimming Pool" ?
+                                         <CheckBox
+                                            key={index}
+                                            style={{marginBottom:10}}
+                                            onClick={() => this.handleOnClickInternal(index)}
+                                            isChecked={data.checked}
+                                            rightTextStyle={{marginLeft:0}}
+                                            checkBoxColor= {colors.grey}
+                                            rightTextView = {
+                                              <View style={{flexDirection:'row',flex:1}}>
+                                                <Icon
+                                                  name={this.state.defaultIcon}
+                                                  type={this.state.iconType}
+                                                  size={18}
+                                                  color= {colors.button}
+                                                  containerStyle = {{marginHorizontal:10}}
+                                                />
+                                                 <Image 
+                                                  source={require('../../images/pool.png') }
+                                                  style={{width: 25, height:25, marginRight:7}}
+                                                />
+                                                <Text style={styles.inputText}>{data.amenity}</Text>
+                                              </View>
+
+                                            }
+                                            />
+
+
+                                          :
+
+
+                                          data.amenity==="Gas Pipeline" ?
+                                           <CheckBox
+                                              key={index}
+                                              style={{marginBottom:10}}
+                                              onClick={() => this.handleOnClickInternal(index)}
+                                              isChecked={data.checked}
+                                              rightTextStyle={{marginLeft:0}}
+                                              checkBoxColor= {colors.grey}
+                                              rightTextView = {
+                                                <View style={{flexDirection:'row',flex:1}}>
+                                                  <Icon
+                                                    name={this.state.defaultIcon}
+                                                    type={this.state.iconType}
+                                                    size={18}
+                                                    color= {colors.button}
+                                                    containerStyle = {{marginHorizontal:10}}
+                                                  />
+                                                   <Image 
+                                                    source={require('../../images/gasPipe.png') }
+                                                    style={{width: 25, height:25, marginRight:7}}
+                                                  />
+                                                  <Text style={styles.inputText}>{data.amenity}</Text>
+                                                </View>
+
+                                              }
+                                              />
+
+                                          :
+
+
+                                           data.amenity==="24*7 Water" ?
+                                           <CheckBox
+                                              key={index}
+                                              style={{marginBottom:10}}
+                                              onClick={() => this.handleOnClickInternal(index)}
+                                              isChecked={data.checked}
+                                              rightTextStyle={{marginLeft:0}}
+                                              checkBoxColor= {colors.grey}
+                                              rightTextView = {
+                                                <View style={{flexDirection:'row',flex:1}}>
+                                                  <Icon
+                                                    name={this.state.defaultIcon}
+                                                    type={this.state.iconType}
+                                                    size={18}
+                                                    color= {colors.button}
+                                                    containerStyle = {{marginHorizontal:10}}
+                                                  />
+                                                   <Image 
+                                                    source={require('../../images/water.png') }
+                                                    style={{width: 25, height:25, marginRight:7}}
+                                                  />
+                                                  <Text style={styles.inputText}>{data.amenity}</Text>
+                                                </View>
+
+                                              }
+                                              />
+
+                                          :
+
+
+                                           data.amenity==="Lift" ?
+                                           <CheckBox
+                                              key={index}
+                                              style={{marginBottom:10}}
+                                              onClick={() => this.handleOnClickInternal(index)}
+                                              isChecked={data.checked}
+                                              rightTextStyle={{marginLeft:0}}
+                                              checkBoxColor= {colors.grey}
+                                              rightTextView = {
+                                                <View style={{flexDirection:'row',flex:1}}>
+                                                  <Icon
+                                                    name={this.state.defaultIcon}
+                                                    type={this.state.iconType}
+                                                    size={18}
+                                                    color= {colors.button}
+                                                    containerStyle = {{marginHorizontal:10}}
+                                                  />
+                                                   <Image 
+                                                    source={require('../../images/lift.png') }
+                                                    style={{width: 25, height:25, marginRight:7}}
+                                                  />
+                                                  <Text style={styles.inputText}>{data.amenity}</Text>
+                                                </View>
+
+                                              }
+                                              />
+
+                                          :
+
+                                           data.amenity==="Power Backup" ?
+                                            <CheckBox
+                                                key={index}
+                                                style={{marginBottom:10}}
+                                                onClick={() => this.handleOnClickInternal(index)}
+                                                isChecked={data.checked}
+                                                rightTextStyle={{marginLeft:0}}
+                                                checkBoxColor= {colors.grey}
+                                                rightTextView = {
+                                                  <View style={{flexDirection:'row',flex:1}}>
+                                                    <Icon
+                                                      name={this.state.defaultIcon}
+                                                      type={this.state.iconType}
+                                                      size={18}
+                                                      color= {colors.button}
+                                                      containerStyle = {{marginHorizontal:10}}
+                                                    />
+                                                     <Image 
+                                                      source={require('../../images/powerBk.png') }
+                                                      style={{width: 25, height:25, marginRight:7}}
+                                                    />
+                                                    <Text style={styles.inputText}>{data.amenity}</Text>
+                                                  </View>
+
+                                                }
+                                                />
+
+                                          :
+
+                                           data.amenity==="Shopping Center" ?
+                                             <CheckBox
+                                                    key={index}
+                                                    style={{marginBottom:10}}
+                                                    onClick={() => this.handleOnClickInternal(index)}
+                                                    isChecked={data.checked}
+                                                    rightTextStyle={{marginLeft:0}}
+                                                    checkBoxColor= {colors.grey}
+                                                    rightTextView = {
+                                                      <View style={{flexDirection:'row',flex:1}}>
+                                                        <Icon
+                                                          name={this.state.defaultIcon}
+                                                          type={this.state.iconType}
+                                                          size={18}
+                                                          color= {colors.button}
+                                                          containerStyle = {{marginHorizontal:10}}
+                                                        />
+                                                         <Image 
+                                                          source={require('../../images/shopping.png') }
+                                                          style={{width: 25, height:25, marginRight:7}}
+                                                        />
+                                                        <Text style={styles.inputText}>{data.amenity}</Text>
+                                                      </View>
+
+                                                    }
+                                                    />
+
+
+                                          :
+
+                                          data.amenity==="Children's Play Area" ?
+                                          <CheckBox
+                                                key={index}
+                                                style={{marginBottom:10}}
+                                                onClick={() => this.handleOnClickInternal(index)}
+                                                isChecked={data.checked}
+                                                rightTextStyle={{marginLeft:0}}
+                                                checkBoxColor= {colors.grey}
+                                                rightTextView = {
+                                                  <View style={{flexDirection:'row',flex:1}}>
+                                                    <Icon
+                                                      name={this.state.defaultIcon}
+                                                      type={this.state.iconType}
+                                                      size={18}
+                                                      color= {colors.button}
+                                                      containerStyle = {{marginHorizontal:10}}
+                                                    />
+                                                     <Image 
+                                                      source={require('../../images/playArea.png') }
+                                                      style={{width: 25, height:25, marginRight:7}}
+                                                    />
+                                                    <Text style={styles.inputText}>{data.amenity}</Text>
+                                                  </View>
+
+                                                }
+                                                />
+
+                                          :
+
+
+                                          data.amenity==="Internal Gym" ?
+                                          <CheckBox
+                                            key={index}
+                                            style={{marginBottom:10}}
+                                            onClick={() => this.handleOnClickInternal(index)}
+                                            isChecked={data.checked}
+                                            rightTextStyle={{marginLeft:0}}
+                                            checkBoxColor= {colors.grey}
+                                            rightTextView = {
+                                              <View style={{flexDirection:'row',flex:1}}>
+                                                <Icon
+                                                  name={this.state.defaultIcon}
+                                                  type={this.state.iconType}
+                                                  size={18}
+                                                  color= {colors.button}
+                                                  containerStyle = {{marginHorizontal:10}}
+                                                />
+                                                 <Image 
+                                                  source={require('../../images/gym.png') }
+                                                  style={{width: 25, height:25, marginRight:7}}
+                                                />
+                                                <Text style={styles.inputText}>{data.amenity}</Text>
+                                              </View>
+
+                                            }
+                                            />
+
+                                         :
+
+                                         data.amenity==="Park" ?
+                                          <CheckBox
+                                              key={index}
+                                              style={{marginBottom:10}}
+                                              onClick={() => this.handleOnClickInternal(index)}
+                                              isChecked={data.checked}
+                                              rightTextStyle={{marginLeft:0}}
+                                              checkBoxColor= {colors.grey}
+                                              rightTextView = {
+                                                <View style={{flexDirection:'row',flex:1}}>
+                                                  <Icon
+                                                    name={this.state.defaultIcon}
+                                                    type={this.state.iconType}
+                                                    size={18}
+                                                    color= {colors.button}
+                                                    containerStyle = {{marginHorizontal:10}}
+                                                  />
+                                                   <Image 
+                                                    source={require('../../images/park.png') }
+                                                    style={{width: 25, height:25, marginRight:7}}
+                                                  />
+                                                  <Text style={styles.inputText}>{data.amenity}</Text>
+                                                </View>
+
+                                              }
+                                              />
+
+                                          :
+
+
+                                          data.amenity==="Internet Services" ?
+                                           <CheckBox
+                                            key={index}
+                                            style={{marginBottom:10}}
+                                            onClick={() => this.handleOnClickInternal(index)}
+                                            isChecked={data.checked}
+                                            rightTextStyle={{marginLeft:0}}
+                                            checkBoxColor= {colors.grey}
+                                            rightTextView = {
+                                              <View style={{flexDirection:'row',flex:1}}>
+                                                <Icon
+                                                  name={this.state.defaultIcon}
+                                                  type={this.state.iconType}
+                                                  size={18}
+                                                  color= {colors.button}
+                                                  containerStyle = {{marginHorizontal:10}}
+                                                />
+                                                 <Image 
+                                                  source={require('../../images/internet.png') }
+                                                  style={{width: 25, height:25, marginRight:7}}
+                                                />
+                                                <Text style={styles.inputText}>{data.amenity}</Text>
+                                              </View>
+
+                                            }
+                                            />
+
+                                           :
+
+
+                                           data.amenity==="Intercom" ?
+                                            <CheckBox
+                                            key={index}
+                                            style={{marginBottom:10}}
+                                            onClick={() => this.handleOnClickInternal(index)}
+                                            isChecked={data.checked}
+                                            rightTextStyle={{marginLeft:0}}
+                                            checkBoxColor= {colors.grey}
+                                            rightTextView = {
+                                              <View style={{flexDirection:'row',flex:1}}>
+                                                <Icon
+                                                  name={this.state.defaultIcon}
+                                                  type={this.state.iconType}
+                                                  size={18}
+                                                  color= {colors.button}
+                                                  containerStyle = {{marginHorizontal:10}}
+                                                />
+                                                 <Image 
+                                                  source={require('../../images/intercom.png') }
+                                                  style={{width: 25, height:25, marginRight:7}}
+                                                />
+                                                <Text style={styles.inputText}>{data.amenity}</Text>
+                                              </View>
+
+                                            }
+                                            />
+
+                                          :*/
+
+                                          <CheckBox
+                                            key={index}
+                                            style={{marginBottom:10}}
+                                            onClick={() => this.handleOnClickInternal(index)}
+                                            isChecked={data.checked}
+                                            rightTextStyle={{marginLeft:0}}
+                                            checkBoxColor= {colors.grey}
+                                            rightTextView = {
+                                              <View style={{flexDirection:'row',flex:1}}>
+                                                <Icon
+                                                  name={this.state.defaultIcon}
+                                                  type={this.state.iconType}
+                                                  size={18}
+                                                  color= {colors.button}
+                                                  containerStyle = {{marginHorizontal:10}}
+                                                />
+                                                 <Image 
+                                                  source={require('../../images/flag.png') }
+                                                  style={{width: 25, height:25, marginRight:7}}
+                                                />
+                                                <Text style={styles.inputText}>{data.amenity}</Text>
+                                              </View>
+
+                                            }
+                                            />  
+
+                                    }
+
+                                   </React.Fragment> 
+
+                                  ))
+                                    :
+                                    null
+                                  }          
+                                </View>
+
                             {/*end*/}
                       </View>
                     <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>

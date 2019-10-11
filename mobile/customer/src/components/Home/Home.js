@@ -157,15 +157,15 @@ navigateScreen=(route)=>{
     console.log("token in home screen",this.state.token);
     AsyncStorage.removeItem('propertyId');
 
+
     if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
        this.navigateScreen("MobileScreen");
     }else{
        this.navigateScreen("BasicInfo");
     }
        // this.navigateScreen("PropertyDetails");
-
   }
-
+ 
   render(){
     const { navigation } = this.props;
     let {activeBtn} = this.state;

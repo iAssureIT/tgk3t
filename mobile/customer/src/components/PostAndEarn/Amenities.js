@@ -101,7 +101,7 @@ navigateScreen=(route)=>{
           .get('/api/masteramenities/list')
           .then(
             (res)=>{
-              console.log('res postdata', res);
+              console.log('res postdata------------------', res);
               const postsdata = res.data;
               // console.log('postsdata',postsdata);
               this.setState({
@@ -186,6 +186,7 @@ navigateScreen=(route)=>{
     // console.log("current data status",status);
 
   }
+
 
 
 submitFun(){
@@ -538,9 +539,7 @@ render(){
 
                                 }
                                 />
-
                       :
-
                               data.amenity==="Shopping Center" ?
                                <CheckBox
                                       key={index}
@@ -567,10 +566,7 @@ render(){
 
                                       }
                                       />
-
-
                       :
-
                                 data.amenity==="Children's Play Area" ?
                                 <CheckBox
                                       key={index}
@@ -597,9 +593,7 @@ render(){
 
                                       }
                                       />
-
                       :
-
                                   data.amenity==="Internal Gym" ?
                                     <CheckBox
                                       key={index}
@@ -626,9 +620,7 @@ render(){
 
                                       }
                                       />
-
                       :
-
                                      data.amenity==="Park" ?
                                       <CheckBox
                                           key={index}
@@ -655,9 +647,7 @@ render(){
 
                                           }
                                           />
-
                       :
-
                                        data.amenity==="Internet Services" ?
                                          <CheckBox
                                           key={index}
@@ -684,9 +674,7 @@ render(){
 
                                           }
                                           />
-
                         :
-
                                         data.amenity==="Intercom" ?
 
                                         <CheckBox
@@ -714,11 +702,7 @@ render(){
 
                                           }
                                           />
-
-
                         :
-
-
                                     <CheckBox
                                       key={index}
                                       style={{marginBottom:10}}

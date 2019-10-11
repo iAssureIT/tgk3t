@@ -282,8 +282,6 @@ updateUser(event){
             }
 
             // console.log("outside eq",eq);
-
-
             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
               this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
               this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
@@ -293,7 +291,7 @@ updateUser(event){
               this.props.redirectToAvailability(this.props.uid,this.props.property_id);
 
             }else{
-              // console.log("diff data");
+                // console.log("diff data");
                 // console.log("this.state.expectedRate",this.state.expectedRate);
                 // console.log("this.state.expectedRate",this.state.expectedRate);
                 var expectedRate        = "";

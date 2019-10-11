@@ -561,7 +561,16 @@ export default StyleSheet.create({
     marginVertical: 50,
     marginHorizontal: 20,
   },
-
+marginTopSOM:{
+    ...Platform.select({
+      ios:{
+        // marginTop: 0,
+      },
+      android : {
+        marginTop:50,
+      }
+    })
+} 
  
 
 });
