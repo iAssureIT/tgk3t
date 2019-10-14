@@ -144,8 +144,8 @@ navigateScreen=(route)=>{
       "dialogVisible1"  : false,
       "imgPath"         : "",
       "index"           : -1 ,
-      isLoading         :false,
-      isLoadingVideo    :false,
+      // isLoading         :false,
+      // isLoadingVideo    :false,
     };
 
       var property_id = this.props.navigation.getParam('property_id','No property_id');
@@ -541,7 +541,7 @@ navigateScreen=(route)=>{
         }
     };
 
-    this.setState({isLoading:true})
+    // this.setState({isLoading:true})
     request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
     .then(result => {
       console.log("result",result);
@@ -583,7 +583,7 @@ navigateScreen=(route)=>{
                         }
                         this.setState({
                           imgArrayWSaws : imgArrayWSaws,
-                          isLoading     : false
+                          // isLoading     : false
                         })
                     })
                     .catch((error)=>{
@@ -624,7 +624,7 @@ navigateScreen=(route)=>{
           path:'images'
         }
   };
-    this.setState({isLoadingVideo:true})
+    // this.setState({isLoadingVideo:true})
     request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
     .then(result => {
       console.log("result",result);
@@ -660,7 +660,7 @@ navigateScreen=(route)=>{
                       console.log("Data = ",Data);
                         this.setState({
                           singleVideo        : Data.body.postResponse.location,
-                          isLoadingVideo     : false
+                          // isLoadingVideo     : false
                         })
                     })
                     .catch((error)=>{
@@ -1025,7 +1025,7 @@ navigateScreen=(route)=>{
                     </View>
                   </View>
                   <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-                    {this.state.isLoading === false ?
+                    {
                       this.state.imgArrayWSaws && this.state.imgArrayWSaws.length>0 ?
                         this.state.imgArrayWSaws.map((photo,i)=>(
                           <View key={i} style={[{width:'45%',flexDirection:'row',marginBottom:30},(i%2==0?{marginLeft:'5%'}:{marginLeft:'5%'})]}>
@@ -1043,11 +1043,6 @@ navigateScreen=(route)=>{
                         ))
                         :
                         null
-                        :
-                         <ImageBackground 
-                          source={require('../../images/loading.gif') }
-                          style={{width: "50%", height: 150,marginLeft:"40%"}}
-                        />
                     }
                 </View>    
               </View>
@@ -1070,7 +1065,7 @@ navigateScreen=(route)=>{
                     </View>
                   </View>
                   <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
-                    {this.state.isLoadingVideo === false ?
+                    {
                       this.state.singleVideo?
                         <View style={[{width:'45%',flexDirection:'row',marginBottom:30}]}>
                           <Video 
@@ -1089,11 +1084,7 @@ navigateScreen=(route)=>{
                         </View>
                       :
                       null
-                      :
-                         <ImageBackground 
-                          source={require('../../images/loading.gif') }
-                          style={{width: "50%", height: 150,marginLeft:"40%"}}
-                        />
+                     
                     }
                   </View>    
               </View>

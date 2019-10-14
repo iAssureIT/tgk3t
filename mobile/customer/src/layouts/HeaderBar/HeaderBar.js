@@ -27,6 +27,8 @@ export default class NotificationHeader extends React.Component {
 
 
 
+
+
   constructor(props) {
     super(props);
     this.state={
@@ -48,6 +50,9 @@ export default class NotificationHeader extends React.Component {
       this.props.navigation.toggleDrawer(); 
   }
 
+  homescreen(){
+      this.navigateScreen('Home');
+  }
 
   render() {
     const { navigation } = this.props;
@@ -67,13 +72,14 @@ export default class NotificationHeader extends React.Component {
         }
 
         centerComponent={
-          <View>
+          <TouchableOpacity onPress={this.homescreen.bind(this)}>
             <Image 
               source={require('../../images/logo.png') }
               style={{ width: 70 }}
               resizeMode="contain"
+              onPress={this.homescreen.bind(this)}
             />
-          </View>
+          </TouchableOpacity>
         }
       
         rightComponent={

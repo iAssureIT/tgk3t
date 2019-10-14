@@ -126,7 +126,7 @@ constructor(props){
       builtupAreaUnit   : 'Sq ft',
       floorData         :floorList,
       totalFloorData    :totalFloorList,
-      floor             : 'Basement',
+      floor             : 'Floor',
       totalFloor        :'Total Floors',
 
 
@@ -432,7 +432,6 @@ constructor(props){
                                             });
                             }
                             /*if prop id close*/
-
                   });
               })
               .catch((error)=>{
@@ -1107,15 +1106,15 @@ submitFun(){
                       selectedIndex = {this.state.furnishedIndex}
                       onSelect = {(index, value) => this.onSelectFurnishStatus(index, value)}
                     >
-                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10}} value={'Fully Furnished'} >
+                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10,fontSize: 12}} value={'Fully Furnished'} >
                         <Text style={[styles.inputTextSmall,]}>Fully furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,marginLeft:5}} value={'Semi Furnished'}>
+                      <RadioButton style={{paddingHorizontal:0,marginLeft:10,fontSize: 12}} value={'Semi Furnished'}>
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,marginLeft:5}} value={'Unfurnished'}>
+                      <RadioButton style={{paddingHorizontal:0,marginLeft:0,fontSize: 12}} value={'Unfurnished'}>
                         <Text style={styles.inputTextSmall}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
@@ -1157,42 +1156,41 @@ submitFun(){
                       }
 
                        {(this.state.furnishedStatus==="Fully Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
-                          <View>
-                            <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
-                              <View style={[styles.marginBottom15]}>
-                                <RadioGroup
-                                  size={20}
-                                  color={colors.grey}
-                                  thickness={2}
-                                  selectedIndex = {this.state.workStationIndex}
-                                  onSelect = {(indexW, valueW) => this.onWorkStation(indexW, valueW)}
-                                >
-                                  <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
-                                    <Text style={styles.inputText}>0</Text>
-                                  </RadioButton>
                          
-                                  <RadioButton style={{paddingHorizontal:0}} value={1}>
-                                    <Text style={styles.inputText}>1</Text>
-                                  </RadioButton>
 
-                                   <RadioButton style={{paddingHorizontal:0}} value={2}>
-                                    <Text style={styles.inputText}>2</Text>
-                                  </RadioButton>
-                                </RadioGroup>
+                        <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom15]}>
+                            <View style={[{width:'46%'}]}>
+                                <Text style={[styles.heading2,styles.marginBottom15]}>Work Station</Text>
+                                <View style={[styles.marginBottom15]}>
+                                  <RadioGroup
+                                    size={20}
+                                    color={colors.grey}
+                                    thickness={2}
+                                    selectedIndex = {this.state.workStationIndex}
+                                    onSelect = {(indexW, valueW) => this.onWorkStation(indexW, valueW)}
+                                  >
+                                    <RadioButton style={{paddingHorizontal:0,paddingTop:0}} value={0} >
+                                      <Text style={styles.inputText}>0</Text>
+                                    </RadioButton>
+                           
+                                    <RadioButton style={{paddingHorizontal:0}} value={1}>
+                                      <Text style={styles.inputText}>1</Text>
+                                    </RadioButton>
+
+                                     <RadioButton style={{paddingHorizontal:0}} value={2}>
+                                      <Text style={styles.inputText}>2</Text>
+                                    </RadioButton>
+                                  </RadioGroup>
                               </View>
-                              </View>
+                            </View>
 
-                            :
-                            null
-                          }
-                          {/*2nd*/}
+                            <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                               {/* <Text style={styles.heading3}>of</Text>*/}
+                            </View>
 
-                           {(this.state.furnishedStatus==="Fully Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
-                      
-
-                              <View>
-                                <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
-                                  <View style={[styles.marginBottom15]}>
+                            <View style={[{width:'46%'}]}>
+                              <Text style={[styles.heading2,styles.marginBottom15]}>Pantry</Text>
+                               <View style={[styles.marginBottom15]}>
                                     <RadioGroup
                                       size={20}
                                       color={colors.grey}
@@ -1214,10 +1212,17 @@ submitFun(){
                              
                                     </RadioGroup>
                                   </View>
-                                </View>
-                                :
-                                null
-                              }
+                            </View>
+                        </View>
+
+
+                        /*end here*/
+
+
+
+                            :
+                            null
+                          }
 
                              {/*here ends*/}
 
@@ -1380,7 +1385,7 @@ submitFun(){
 
 
 
-                              <View style={styles.amenitiesWrapper,styles.marginBottom25,{backgroundColor:"#ff0"}} >
+                              <View style={styles.amenitiesWrapper,styles.marginBottom25} >
                                   <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
                                   {console.log("here amenity",this.state.allAmenities)}
                                    { this.state.allAmenities && this.state.allAmenities.length >0 
