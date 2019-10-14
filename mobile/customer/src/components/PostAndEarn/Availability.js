@@ -697,6 +697,18 @@ navigateScreen=(route)=>{
       singleVideo:"",
       dialogVisible:false
     }) 
+  }; 
+
+
+  deleteSlot(index){ 
+    var index = index;
+    console.log("this.state.available",this.state.available);
+    console.log("index",index);
+    // var array = this.state.available; // make a separate copy of the array
+    // array.splice(index, 1);
+    // // this.setState({
+    // //   available:array,
+    // }) 
   };
 
   handleCancel = () => {
@@ -728,7 +740,6 @@ navigateScreen=(route)=>{
     let {activeIndex} = this.state;
     // let weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
     // console.log("this.state.photo",this.state.photo);
-
      let properDetails = [
       {
         imageSource : require('../../images/p1.png'),
@@ -994,7 +1005,13 @@ navigateScreen=(route)=>{
                       key={index}
                       data={[data.availability,data.time,
                         <TouchableOpacity>
-                          <Icon name="trash-can-outline" type="material-community" size={18} color="#dc3545" style={{fontWeight:'600'}}/>
+                          <Icon 
+                            name="trash-can-outline"
+                            type="material-community"
+                            size={18} color="#dc3545" 
+                            style={{fontWeight:'600'}}
+                            onPress={this.deleteSlot(index)}
+                          />
                         </TouchableOpacity>
                       ]}
                       style={[styles.tableRow, index%2 && {backgroundColor: '#f1f1f1'}]}
@@ -1084,7 +1101,7 @@ navigateScreen=(route)=>{
                         </View>
                       :
                       null
-                     
+
                     }
                   </View>    
               </View>
