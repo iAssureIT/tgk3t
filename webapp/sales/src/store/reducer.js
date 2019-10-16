@@ -27,7 +27,8 @@
 	fullName 		: 	"",
 	updateStatus 	: false,
 	showMeter 		: false,
-	propertyHolder  : ""
+	propertyHolder  : "",
+	loader          : ""
 }
 
 const reducer = (state = initialState,action) => {
@@ -327,6 +328,10 @@ const reducer = (state = initialState,action) => {
 		newState.updateStatus = true;
 		newState.BasicInfo 	  = true;
 
+	}
+
+	if(action.type === "LOADER"){
+		newState.loader   	      = action.loader;
 	}
 
 	return newState;

@@ -1,7 +1,7 @@
 import React, { Component }   from 'react';
 import $ 					  from "jquery";
 import Query                  from './query/Query.js';
-import  Properties 			  from './Properties/Properties.js';
+import Properties 			  from './Properties/Properties.js';
 
 import './Operation.css';
 
@@ -12,7 +12,20 @@ export default class Operation extends Component {
 		// console.log("1 = ", props);
 		this.state = {
 			propertyStatus :"WIP",
+			badge1 :"",
+			badge2 :""
 		}
+
+	}
+	componentDidMount(){
+		const badge1 = localStorage.getItem('postDataLength1');
+		const badge2 = localStorage.getItem('postDataLength2');
+		console.log("badge1",badge1)
+		console.log("badge2",badge2)
+		this.setState({
+			badge1 : badge1,
+			badge2 : badge2
+		})
 	}
 
 	propertyStatus(event){
@@ -42,24 +55,24 @@ export default class Operation extends Component {
 						    <li className="nav-item col-lg-2 col-md-2 active navPillsMargin ">
 						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="WIP" onClick={this.propertyStatus.bind(this)}>WIP
 						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.badge1}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin ">
 						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="New" onClick={this.propertyStatus.bind(this)}>New
 						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.badge2}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="ReListing" onClick={this.propertyStatus.bind(this)}>Re-Listing </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						       <span className="badge badge-secondary label-warning badgeP">5</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Verified" onClick={this.propertyStatus.bind(this)}>Verified </a>
-						       <span className="badge badge-secondary label-warning badgeP">3</span>
+						       <span className="badge badge-secondary label-warning badgeP">1</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Listed" onClick={this.propertyStatus.bind(this)}>Listed </a>
-						       <span className="badge badge-secondary label-warning badgeP">9</span>
+						       <span className="badge badge-secondary label-warning badgeP">5</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#Query">Query </a>

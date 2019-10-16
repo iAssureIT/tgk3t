@@ -1,7 +1,8 @@
 .pBoxSize{
-	height: 80px;
-	border: 2px solid #f4f4f4;
-	margin-top: 10px;
+	height: 90px;
+  border: 2px solid #f4f4f4;
+  margin-top: 13px;
+  padding-top: 11px;
 }
 .imgSize{
 	height: 145px;
@@ -117,4 +118,15 @@ input[type=checkbox]:checked + .check-box::before,
 }
 .pBoxSize:hover{
   background-color: #eee !important;
+}
+.propBtn1{
+  position: relative;
+  left: 66px;
+}
+.propBtn2{
+  position: relative;
+  left: 77px;
+}
+.fSize13{
+  font-size: 13px;
 }

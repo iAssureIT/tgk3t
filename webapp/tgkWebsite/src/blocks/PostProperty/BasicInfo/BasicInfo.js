@@ -6,7 +6,6 @@ import { connect } 			  from 'react-redux';
 import { withRouter}  		  from 'react-router-dom';
 import Geocode                from "react-geocode";
 
-
 import './BasicInfo.css';
 
 
@@ -280,6 +279,12 @@ class BasicInfo extends Component{
 	                        }
 	        });
 
+		    /**/
+		    $(function(){
+			var n = $(':input').length;
+			console.log("n===",n)
+			});
+		    /**/
 		}
 
 	 handleChange(event){

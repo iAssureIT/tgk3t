@@ -182,7 +182,7 @@ import './CongratsPage.css';
 	}
 
  	redirectToProfile(){
- 			this.props.history.push("/PropertyProfile/"+this.props.property_id);
+ 			this.props.history.push("/Profile/"+this.props.property_id);
    			window.location.reload();
  	}
 

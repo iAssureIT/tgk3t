@@ -87,7 +87,15 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 							axios
 							.post('/api/masternotifications/post/sendNotification',sendDataToUser)
 							.then((res) =>{
-								console.log("SendEmailNotificationToUser",res);						
+								console.log("SendEmailNotificationToUser",res);	
+								console.log("BasicInfo res = ",res);
+									if(this.props.originPage === "header")
+									{
+										this.props.history.push("/");
+										window.location.reload();
+									}else{
+										this.props.redirectToBasicInfo(res.data.user_id);
+									}					
 							})
 							.catch((error)=>{
 				                        console.log("error = ",error);
@@ -110,14 +118,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				                             this.props.history.push("/");
 				                        }
 				                    });
-						console.log("BasicInfo res = ",res);
-						if(this.props.originPage === "header")
-						{
-							this.props.history.push("/");
-							window.location.reload();
-						}else{
-							this.props.redirectToBasicInfo(res.data.user_id);
-						}
+						
 					}
 				})
 				.catch((error)=>{

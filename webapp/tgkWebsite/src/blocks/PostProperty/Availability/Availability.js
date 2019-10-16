@@ -7,9 +7,9 @@ import { connect } 				from 'react-redux';
 import {withRouter}    			from 'react-router-dom';
 import S3FileUpload 			from 'react-s3';
 import Loader 					from 'react-loader-spinner'
-import ReactDom from 'react-dom';
-import moment from 'moment';
-import TimePicker from 'rc-time-picker';
+import ReactDom 				from 'react-dom';
+import moment 					from 'moment';
+import TimePicker 				from 'rc-time-picker';
 
 import 'react-table/react-table.css' //import css
 import './Availability.css';

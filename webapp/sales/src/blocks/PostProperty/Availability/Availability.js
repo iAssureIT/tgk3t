@@ -7,9 +7,9 @@ import { connect } 				from 'react-redux';
 import {withRouter}    			from 'react-router-dom';
 import S3FileUpload 			from 'react-s3';
 import Loader 					from 'react-loader-spinner'
-import ReactDom from 'react-dom';
-import moment from 'moment';
-import TimePicker from 'rc-time-picker';
+import ReactDom 				from 'react-dom';
+import moment 					from 'moment';
+import TimePicker 				from 'rc-time-picker';
 
 import 'react-table/react-table.css' //import css
 import './Availability.css';
@@ -82,7 +82,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						this.setState({
 
 								originalValues 				: response.data.avalibilityPlanVisit,
-								contactPersonMobile 		: response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : "",
 								contactPerson 				: response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "Someone" ,
 								available 					: response.data.avalibilityPlanVisit.available,
 								updateOperation 			: true,
@@ -97,6 +96,11 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						},()=>{
 							// console.log("here available in comp did mount",this.state.contactPerson);
 							});
+						if(response.data.contactPerson === "Someone"){
+							this.setState({contactPersonMobile 	 : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : ""});
+						}else{
+							this.setState({userMobile 		     : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : ""});
+						}
 
 					})
 					.catch((error)=>{
@@ -329,10 +333,16 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
       }*/
       handleToggle(event){
       		event.preventDefault();
+      		console.log("this.state.type====",this.state.type)
+
+
+
 		    if (this.state.type===true){
 		      this.setState({
 		        type: false,
 		        contactPerson:"Myself"
+		      },()=>{
+      				console.log("this.state.type1",this.state.type)
 		      })
 		    }
 		    else{
@@ -340,6 +350,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		        type: true,
 		        contactPerson:"Someone"
 
+		      },()=>{
+      				console.log("this.state.type2",this.state.type)
 		      })
 		    }   
 		}
@@ -715,13 +727,13 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			            </div>*/}
 
 			            {/*<div className="container5 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">*/}
-						        {this.state.type===true ?
+						        {this.state.type=== true ?
 
 						         <div className="switch1" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"  checked />
-						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
+						            <label htmlFor="week" className="switch1-label switch1-label-off">Someone Else</label>
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month"  />
-						            <label for="month" className="switch1-label switch1-label-on">Myself</label>
+						            <label htmlFor="month" className="switch1-label switch1-label-on">Myself</label>
 						            <span className="switch1-selection"></span>
 						          </div>
 
@@ -729,9 +741,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 						           <div className="switch1" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"   />
-						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
+						            <label htmlFor="week" className="switch1-label switch1-label-off">Someone Else</label>
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month" checked  />
-						            <label for="month" className="switch1-label switch1-label-on">Myself</label>
+						            <label htmlFor="month" className="switch1-label switch1-label-on">Myself</label>
 						            <span className="switch1-selection" ></span>
 						          </div>
 						       
