@@ -161,7 +161,7 @@ class CreateUser extends Component {
       const formValues = {
           "firstName"       : this.state.firstname,
           "lastName"        : this.state.lastname,
-          "emailId"         : this.state.signupEmail,
+          "email"         : this.state.signupEmail,
           "countryCode"     : "+91",
           "mobileNumber"    : this.state.mobNumber,
           "pwd"             : "user123",
@@ -170,7 +170,7 @@ class CreateUser extends Component {
           "roles"           :  this.state.role,
           "officeLocation"  : this.refs.office.value,
         }
-
+        console.log("formValues====",formValues)
         if(this.state.firstname!="" && this.state.lastname !="" && this.state.signupEmail && this.state.mobNumber && this.state.role != "--select--"){
            axios.post('/api/users/post', formValues)
                 .then( (res)=>{

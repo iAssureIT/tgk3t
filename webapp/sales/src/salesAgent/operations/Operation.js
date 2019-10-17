@@ -1,4 +1,5 @@
 import React, { Component }   from 'react';
+import axios                from 'axios';
 import $ 					  from "jquery";
 import Query                  from './query/Query.js';
 import Properties 			  from './Properties/Properties.js';
@@ -9,23 +10,36 @@ import './Operation.css';
 export default class Operation extends Component {
 	constructor(props){
 		super(props);
-		// console.log("1 = ", props);
 		this.state = {
 			propertyStatus :"WIP",
-			badge1 :"",
-			badge2 :""
+			propDataCount  : []
+			
 		}
+
+		this.getTotalCount = this.getTotalCount.bind(this);
 
 	}
 	componentDidMount(){
-		const badge1 = localStorage.getItem('postDataLength1');
-		const badge2 = localStorage.getItem('postDataLength2');
-		console.log("badge1",badge1)
-		console.log("badge2",badge2)
-		this.setState({
-			badge1 : badge1,
-			badge2 : badge2
-		})
+		this.getTotalCount();
+	}
+
+	getTotalCount(){
+		axios
+	    .get('/api/salesagent/get/gettotaldisplaylist')
+	    .then(
+	      (res)=>{
+	        console.log("aaaaa.....",res);
+	        const postCount = res.data;
+	        
+	        this.setState({
+	          propDataCount : postCount,
+	        },()=>{
+	        	
+	        });
+	      }
+	    )
+	    .catch();
+
 	}
 
 	propertyStatus(event){
@@ -55,24 +69,24 @@ export default class Operation extends Component {
 						    <li className="nav-item col-lg-2 col-md-2 active navPillsMargin ">
 						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="WIP" onClick={this.propertyStatus.bind(this)}>WIP
 						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">{this.state.badge1}</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.WIPCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin ">
 						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="New" onClick={this.propertyStatus.bind(this)}>New
 						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">{this.state.badge2}</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.NEWCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="ReListing" onClick={this.propertyStatus.bind(this)}>Re-Listing </a>
-						       <span className="badge badge-secondary label-warning badgeP">5</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.RELISTINGCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Verified" onClick={this.propertyStatus.bind(this)}>Verified </a>
-						       <span className="badge badge-secondary label-warning badgeP">1</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.VERIFIEDCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Listed" onClick={this.propertyStatus.bind(this)}>Listed </a>
-						       <span className="badge badge-secondary label-warning badgeP">5</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.LISTEDCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#Query">Query </a>
@@ -84,7 +98,7 @@ export default class Operation extends Component {
 					  {/*<!-- Tab panes -->*/}
 					  <div className="tab-content  noPad ">
 						     <div id="propertyStatus" className="container active tab-pane ">
-						       <Properties status={this.state.propertyStatus} /> 
+						       <Properties status={this.state.propertyStatus} getTotalTabCount={this.getTotalCount}/> 
 						    </div>
 						    <div id="Query" className="container tab-pane fade">
 						      <Query />

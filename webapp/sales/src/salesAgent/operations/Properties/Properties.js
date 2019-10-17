@@ -19,6 +19,8 @@ import './Properties.css';
 			propertiesData :[],
 			userData       :[],
 		}
+
+		// this.test=this.test.bind(this);
 	}
 	componentDidMount(){
 
@@ -29,26 +31,35 @@ import './Properties.css';
 			// user_id :"5d9b017ac8be6c588004f09d",
 			status	:"WIP" ,
 		}
-		console.log("formValues",formValues);
+		// console.log("formValues",formValues);
 	    axios
 	    .post('/api/salesagent/post/displaylist',formValues)
 	    .then(
 	      (res)=>{
 	        console.log(res);
 	        const postsdata = res.data;
-	        const postDataLength1 = res.data.length;
-	        localStorage.setItem('postDataLength1',postDataLength1);
-
-
-	        console.log("postDataLength1",postDataLength1);
+	        
 	        this.setState({
 	          propertiesData : postsdata,
+	        },()=>{
+	        	
 	        });
-	    // console.log("PropertyDetails Did mount++++++++++++++++++",postsdata);   
+	    console.log("PropertyDetails Did mount++++++++++++++++++",postsdata);   
 	      }
 	    )
 	    .catch();
 	}
+
+	// test(){
+	// 	var data = this.state.propertiesData[0];
+	// 	console.log("test data",data);
+	// 		    for(var key in data) {
+	// 		        if(data[key] === "") {
+	// 		           console.log(key + " is blank. ");
+			           
+	// 		        }
+	// 		    }
+	// }
 
    componentWillReceiveProps(nextProps){
     if(nextProps && nextProps.status){
@@ -56,7 +67,7 @@ import './Properties.css';
 			// user_id :"5d3ec084e7381f059964f5be",
 			status	:nextProps.status ? nextProps.status : "WIP" ,
 		}
-		console.log("formValues receive",formValues);
+		// console.log("formValues receive",formValues);
 	    axios
 	    .post('/api/salesagent/post/displaylist',formValues)
 	    .then(
@@ -70,8 +81,10 @@ import './Properties.css';
 
 	        this.setState({
 	          propertiesData : postsdata,
+	        },()=>{
+	        	// this.test();
 	        });
-	    console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
+	    // console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
 
 	      }
 	    )
@@ -103,7 +116,7 @@ import './Properties.css';
 		for (var i = this.state.userData.length - 1; i >= 0; i--) {
 			var formValues ={
 			property_id 	  : this.state.userData[i],
-			status 			  : "Verified",
+			status 			  : "Listed",
 			user_id			  : "5d600df1a4aa23a73b5b8fcd",
 			allocatedToUserId : "",
 			remark 			  : "ABC"
@@ -115,12 +128,17 @@ import './Properties.css';
 	    .then(
 	      (res)=>{
 	        console.log(res);
+	        this.props.getTotalTabCount();
 	      }
 	    )
 	    .catch();
 		}
+		this.uncheck().bind(this);
    		// window.location.reload();
 
+		
+	}
+	uncheck(){
 		
 	}
 	

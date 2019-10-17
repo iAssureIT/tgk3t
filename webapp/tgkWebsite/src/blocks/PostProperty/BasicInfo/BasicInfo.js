@@ -17,7 +17,7 @@ const formValid = formerrors=>{
   })
   return valid;
   }
-
+var count = 0;
 const companypincodeRegex = RegExp(/^[1-9][0-9]{5}$/);
 
 Geocode.setApiKey("");
@@ -280,11 +280,25 @@ class BasicInfo extends Component{
 	        });
 
 		    /**/
-		    $(function(){
-			var n = $(':input').length;
-			console.log("n===",n)
-			});
+		    var cntreq = 0;
+	        var cntvals = 0;
+	        $('input').each(function(i, val) {
+	            if($(this).attr('fCount') == 'fCount') {
+	                cntreq++;
+	                if($(this).val() != '') {
+	                    cntvals++;
+	                }
+	            }
+	        });
+	        var count = (cntvals/cntreq)*100;
+	        console.log("count=========",count)
 		    /**/
+		    /**/
+	    // if(this.state.transactionType !==""){
+	    // 	count+=1;
+	    // }
+	    // console.log("count>>>>>>>>>>",count)
+	    /**/
 		}
 
 	 handleChange(event){
@@ -309,6 +323,8 @@ class BasicInfo extends Component{
 	    this.setState({ formerrors,
 	      [name]:value
 	    } );
+	    
+	   
 	  }
 
 		insertProperty(event){
@@ -887,7 +903,7 @@ class BasicInfo extends Component{
 	       // console.log("index here", this.state.index);
 	    }
     return (
-          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <form className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  <div className="row"></div>
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  mt30">	
 				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad">
@@ -1229,7 +1245,7 @@ class BasicInfo extends Component{
 					                <i className="fa fa-building iconClr"></i>
 				                    </div>
 							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-							    <input type="text" className="form-control" ref="housebuilding" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} placeholder="Enter House Address"/>
+							    <input type="text" className="form-control" fCount="fCount" ref="housebuilding" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} placeholder="Enter House Address"/>
 							  
 							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 							  	</div>
@@ -1247,7 +1263,7 @@ class BasicInfo extends Component{
 					                <i className="fa fa-building iconClr"></i>
 				                    </div>
 							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
-							    <input type="text" className="form-control" name="landmark" value={this.state.landmark}  onChange={this.handleChange.bind(this)}ref="landmark"  placeholder="Landmark "/>
+							    <input type="text" className="form-control" fCount="fCount" name="landmark" value={this.state.landmark}  onChange={this.handleChange.bind(this)}ref="landmark"  placeholder="Landmark "/>
 							
 							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
 							  	</div>
@@ -1262,7 +1278,7 @@ class BasicInfo extends Component{
 		  	</div>
 		  </div>
 		  
-		</div>
+		</form>
 		);
 	}
 	
