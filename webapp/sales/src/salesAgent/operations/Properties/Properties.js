@@ -18,6 +18,8 @@ import './Properties.css';
 		this.state = {
 			propertiesData :[],
 			userData       :[],
+			setCount : "",
+			Tcount:"",
 		}
 
 		// this.test=this.test.bind(this);
@@ -40,23 +42,23 @@ import './Properties.css';
 
 	    .then(
 	      (res)=>{
-	        console.log(res);
+	        // console.log(res);
 	        const postsdata = res.data;
-	        
+
 	        this.setState({
 	          propertiesData : postsdata,
 	        },()=>{
 	        	
 	        });
-	    console.log("PropertyDetails Did mount++++++++++++++++++",postsdata);   
+
 	      }
 	    )
 	    .catch();
 	}
 
-   componentWillReceiveProps(nextProps){
-    if(nextProps && nextProps.status){
-      	var formValues = {
+  componentWillReceiveProps(nextProps){
+  	if(nextProps && nextProps.status){
+      var formValues = {
 			// user_id :"5d3ec084e7381f059964f5be",
 			status	:nextProps.status ? nextProps.status : "WIP" ,
 		}
@@ -71,33 +73,44 @@ import './Properties.css';
 
 		}
 		// console.log("formValues receive",formValues);
-	    axios
-	    .get(URL)
-	    // .get('/api/properties/list/salesagent/type/5d56b692b0c7a9b7c727ac13/WIP')
+    axios
+    .get(URL)
+    // .get('/api/properties/list/salesagent/type/5d56b692b0c7a9b7c727ac13/WIP')
 
-	    .then(
-	      (res)=>{
-	        console.log(res);
-	        const postsdata = res.data;
-	       
+    .then(
+      (res)=>{
+        console.log(res);
+        const postsdata = res.data;
+       
 
-	        this.setState({
-	          propertiesData : postsdata,
-	        },()=>{
-	        	
-	        });
-	    // console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
+        this.setState({
+          propertiesData : postsdata,
+        },()=>{
+        
+        });
+    // console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
 
-	      }
-	    )
-	    .catch();
+      }
+    )
+    .catch();
     }
+
   }
+
+  // setData(cnt,data){
+  // 	data.setCount = cnt;
+
+  // 	// console.log("setData",data);
+
+  // }
+
+
+ 
 
 	profileView(event){
 		event.preventDefault()
 		var id = event.currentTarget.id;
-		console.log("_id",id);
+		// console.log("_id",id);
 		this.props.history.push('/profile/'+ id);
 	}
 	handleData(event){
@@ -111,7 +124,7 @@ import './Properties.css';
 					}
 				}
 		  }
-		console.log("userData=====",this.state.userData)
+		// console.log("userData=====",this.state.userData)
 	}
 	handleVerify(event){
 		event.preventDefault()
@@ -124,7 +137,7 @@ import './Properties.css';
 			remark 			  : ""
 
 		}
-		console.log("formValues",formValues);
+		// console.log("formValues",formValues);
 		axios
 	    .patch('/api/salesagent/patch/approvedlist',formValues)
 	    .then(

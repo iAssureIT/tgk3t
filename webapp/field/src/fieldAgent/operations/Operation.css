@@ -1,0 +1,25 @@
+.textC{
+	text-align: center;
+	
+}
+.textB{
+	border:1px solid #aaa;
+}
+.badgeP{
+	position: relative;
+    top: -54px;
+    left: 64px;
+    color: #fff;
+}
+.noPad{
+	padding-left:0px !important;
+	padding-right:0px !important;
+}
+
+.mt19{
+	margin-top: 19px;
+}
+
+.navPillsMargin{
+	margin-left: 0px !important
+}

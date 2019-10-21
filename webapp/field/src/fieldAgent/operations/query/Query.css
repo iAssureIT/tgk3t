@@ -1,0 +1,36 @@
+.qBoxSize{
+	height: 88px;
+	border: 1px solid #ccc;
+	margin-bottom: 7px;
+}
+.qImgSize{
+	width: 80px;
+    height: 80px;
+    margin-top:3px;
+}
+.qImgSize1{
+	width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -29px;
+    left: 473px;
+}
+.notification{
+	width: 35px;
+	height: 35px;
+	margin-top: 12px;
+	padding-top: 6px;
+	border-radius: 50%;
+	background-color:#fbc130;
+	color: #fff;
+	text-align: center;
+	margin-right: 12px;
+}
+.headerBg{
+	background-color:#91A4F1;
+	color: #fff;
+}
+.textA{
+	margin-left: 40px;
+    margin-top: 90px;
+}
