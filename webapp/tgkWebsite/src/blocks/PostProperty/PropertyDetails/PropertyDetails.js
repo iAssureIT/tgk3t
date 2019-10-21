@@ -322,7 +322,7 @@ import './PropertyDetails.css';
 
 
 					// console.log("diff data");
-					const formValues = {
+					var formValues = {
 					"bedrooms" 			: this.state.bedrooms,
 					"balconies" 		: this.state.balconies,
 					"washrooms" 		: this.state.washrooms,
@@ -350,6 +350,40 @@ import './PropertyDetails.css';
 					// "property_id" 		: localStorage.getItem("propertyId"),
 					// "uid" 				: localStorage.getItem("uid"),
 				};
+
+				/*=================Count==========================*/
+        	var count = 0;
+            var Tcount = 0;
+            // var newData = formValues;
+            formValues = JSON.stringify(formValues, replaceUndefinedOrNull.bind(this));
+        	formValues = JSON.parse(formValues);
+            function replaceUndefinedOrNull(key, value) {    
+                Tcount = Tcount + 1;
+                 this.setState({
+                         Tcount  : Tcount
+                       },()=>{
+                        formValues.Fcount2 = this.state.Tcount;                                                        
+                 })
+                  if (value === ""){
+                  	console.log("key-====",key)
+                       count = count+1;
+                       this.setState({
+                         setCount  : count
+                       },()=>{
+                        formValues.setCount2 = this.state.setCount;
+                        var formFillPercentage = ((Tcount-this.state.setCount)/Tcount) * 100;
+                        formValues.formFillPercentage2 = (formFillPercentage).toFixed(2);                             
+                       })
+                        return count;
+                  }
+                  return value;
+            }
+
+
+            // console.log("formValues",formValues);
+
+
+        /*===========================================*/
 				console.log("PropertyDetails req = ",formValues);
 
 					

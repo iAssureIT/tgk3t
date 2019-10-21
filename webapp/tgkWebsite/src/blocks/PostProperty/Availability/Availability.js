@@ -208,7 +208,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				// console.log("mob no",mobNo);
 
 					// console.log("diff data");
-					const formValues = {
+					var formValues = {
 					"contactPersonMobile" : mobNo,
 	        		"contactPerson"       : this.state.contactPerson,
 					"property_id" 		  : localStorage.getItem("propertyId"),
@@ -219,6 +219,39 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					"status"			: "New"
 
 					};
+					/*=================Count==========================*/
+        	var count = 0;
+            var Tcount = 0;
+            // var newData = formValues;
+            formValues = JSON.stringify(formValues, replaceUndefinedOrNull.bind(this));
+        	formValues = JSON.parse(formValues);
+            function replaceUndefinedOrNull(key, value) {    
+                Tcount = Tcount + 1;
+                 this.setState({
+                         Tcount  : Tcount
+                       },()=>{
+                        formValues.Fcount4 = this.state.Tcount;                                                        
+                 })
+                  if (value === ""){
+                  	console.log("key-====",key)
+                       count = count+1;
+                       this.setState({
+                         setCount  : count
+                       },()=>{
+                        formValues.setCount4 = this.state.setCount;
+                        var formFillPercentage = ((Tcount-this.state.setCount)/Tcount) * 100;
+                        formValues.formFillPercentage4 = (formFillPercentage).toFixed(2);                             
+                       })
+                        return count;
+                  }
+                  return value;
+            }
+
+
+            // console.log("formValues",formValues);
+
+
+        /*===========================================*/
 					console.log("Availability req 1 = ",formValues);
 				    if(this.state.available.length!==0){
 				    		

@@ -1,8 +1,10 @@
 import React, { Component }   from 'react';
-import axios                from 'axios';
+import axios                  from 'axios';
 import $ 					  from "jquery";
 import Query                  from './query/Query.js';
 import Properties 			  from './Properties/Properties.js';
+import swal                   from 'sweetalert';
+
 
 import './Operation.css';
 
@@ -21,14 +23,38 @@ export default class Operation extends Component {
 	}
 	componentDidMount(){
 		this.getTotalCount();
+		
+      	axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
+		// axios
+	 //    .get('/api/properties/list/salesagent/type/5d56b692b0c7a9b7c727ac13/WIP')
+	 //    .then(
+	 //      (res)=>{
+	 //        console.log("aaaaa.....",res);
+	 //      }
+	 //    )
+	 //    .catch((error)=>{
+	 //    	console.log("error = ",error);
+	 //                        if(error.message === "Request failed with status code 401")
+	 //                        {
+	 //                             swal("Your session is expired! Please login again.","", "error");
+		// 						localStorage.removeItem("uid");
+		// 						localStorage.removeItem("token");
+	 //                             this.props.history.push("/login");
+	                             
+	 //                        }
+	 //    });
+        
+	 var userId = localStorage.getItem("admin_ID");
+	 console.log("userId",userId)
 	}
 
 	getTotalCount(){
 		axios
-	    .get('/api/salesagent/get/gettotaldisplaylist')
+	    .get('/api/salesagent/get/gettotaldisplaylist/5d56b692b0c7a9b7c727ac13')
 	    .then(
 	      (res)=>{
-	        console.log("aaaaa.....",res);
+	        // console.log("aaaaa.....",res);
 	        const postCount = res.data;
 	        
 	        this.setState({

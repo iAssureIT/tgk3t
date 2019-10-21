@@ -341,7 +341,7 @@ class BasicInfo extends Component{
           lattitude = lat;
           longitude = lng;	*/
 
-			const formValues = {
+			var formValues = {
 				"propertyHolder" 	: this.state.propertyHolder,
         		"transactionType"	: this.state.transactionType,
 				"propertyType"  	: this.state.propertyType,
@@ -373,6 +373,41 @@ class BasicInfo extends Component{
 				// "uid" 				: localStorage.getItem("uid"),		
 
 			};
+
+
+			 /*=================Count==========================*/
+        	var count = 0;
+            var Tcount = 0;
+            // var newData = formValues;
+            formValues = JSON.stringify(formValues, replaceUndefinedOrNull.bind(this));
+        	formValues = JSON.parse(formValues);
+            function replaceUndefinedOrNull(key, value) {    
+                Tcount = Tcount + 1;
+                 this.setState({
+                         Tcount  : Tcount
+                       },()=>{
+                        formValues.Fcount1 = this.state.Tcount;                                                        
+                 })
+                  if (value === ""){
+                  	console.log("key-====",key)
+                       count = count+1;
+                       this.setState({
+                         setCount  : count
+                       },()=>{
+                        formValues.setCount1 = this.state.setCount;
+                        var formFillPercentage = ((Tcount-this.state.setCount)/Tcount) * 100;
+                        formValues.formFillPercentage1 = (formFillPercentage).toFixed(2);                             
+                       })
+                        return count;
+                  }
+                  return value;
+            }
+
+
+            // console.log("formValues",formValues);
+
+
+        /*===========================================*/
 
 				
 			console.log("BasicInfo===",formValues);
@@ -434,6 +469,9 @@ class BasicInfo extends Component{
 
 				}else{
 					console.log("submit data");
+
+
+
 					axios
 					.post('/api/properties',formValues)
 					.then( (res) =>{
@@ -476,6 +514,7 @@ class BasicInfo extends Component{
             console.error("map key error = ",error);
           }
         );  */
+       
 			    
 		}
 		

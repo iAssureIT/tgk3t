@@ -23,6 +23,8 @@ import './Properties.css';
 		// this.test=this.test.bind(this);
 	}
 	componentDidMount(){
+		
+      	axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
 		$(".selectall").click(function(){
 		$(".individual").prop("checked",$(this).prop("checked"));
@@ -34,6 +36,8 @@ import './Properties.css';
 		// console.log("formValues",formValues);
 	    axios
 	    .post('/api/salesagent/post/displaylist',formValues)
+	    // .get('/api/properties/list/salesagent/type/5d56b692b0c7a9b7c727ac13/WIP')
+
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -50,39 +54,37 @@ import './Properties.css';
 	    .catch();
 	}
 
-	// test(){
-	// 	var data = this.state.propertiesData[0];
-	// 	console.log("test data",data);
-	// 		    for(var key in data) {
-	// 		        if(data[key] === "") {
-	// 		           console.log(key + " is blank. ");
-			           
-	// 		        }
-	// 		    }
-	// }
-
    componentWillReceiveProps(nextProps){
     if(nextProps && nextProps.status){
       	var formValues = {
 			// user_id :"5d3ec084e7381f059964f5be",
 			status	:nextProps.status ? nextProps.status : "WIP" ,
 		}
+
+		var role =localStorage.getItem('userRole');
+		console.log("role====",role);
+		// var URL;
+		if(role=="admin"){
+			var URL = '/api/salesagent/post/displaylist',formValues;			
+		}else if(role=="Sales Agent"){
+			var URL = "/api/properties/list/salesagent/type/5d56b692b0c7a9b7c727ac13/New";			
+
+		}
 		// console.log("formValues receive",formValues);
 	    axios
-	    .post('/api/salesagent/post/displaylist',formValues)
+	    .get(URL)
+	    // .get('/api/properties/list/salesagent/type/5d56b692b0c7a9b7c727ac13/WIP')
+
 	    .then(
 	      (res)=>{
 	        console.log(res);
 	        const postsdata = res.data;
-	        const postDataLength2 = res.data.length;
-	        localStorage.setItem('postDataLength2',postDataLength2);
-
-	        console.log("postDataLength2",postDataLength2);
+	       
 
 	        this.setState({
 	          propertiesData : postsdata,
 	        },()=>{
-	        	// this.test();
+	        	
 	        });
 	    // console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
 
@@ -117,9 +119,9 @@ import './Properties.css';
 			var formValues ={
 			property_id 	  : this.state.userData[i],
 			status 			  : "Listed",
-			user_id			  : "5d600df1a4aa23a73b5b8fcd",
-			allocatedToUserId : "",
-			remark 			  : "ABC"
+			user_id			  : "",
+			// allocatedToUserId : "",
+			remark 			  : ""
 
 		}
 		console.log("formValues",formValues);
@@ -133,15 +135,8 @@ import './Properties.css';
 	    )
 	    .catch();
 		}
-		this.uncheck().bind(this);
    		// window.location.reload();
-
-		
 	}
-	uncheck(){
-		
-	}
-	
 	render() {
 		return (
 			<div className="">

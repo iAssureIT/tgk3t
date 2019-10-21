@@ -210,7 +210,7 @@ updateUser(event){
 
             // console.log("maintenanceCharges",this.state.maintenanceCharges);
 
-        const formValues = {
+        var formValues = {
         "expectedRate"        : this.state.expectedRate.replace(/,/g, ''),
         "totalPrice"          : this.state.totalPrice.replace(/,/g, ''),
         "monthlyRent"         : this.state.monthlyRent.replace(/,/g, ''),
@@ -225,6 +225,39 @@ updateUser(event){
         "uid"                 : localStorage.getItem("uid"),
 
         };
+        /*=================Count==========================*/
+          var count = 0;
+            var Tcount = 0;
+            // var newData = formValues;
+            formValues = JSON.stringify(formValues, replaceUndefinedOrNull.bind(this));
+          formValues = JSON.parse(formValues);
+            function replaceUndefinedOrNull(key, value) {    
+                Tcount = Tcount + 1;
+                 this.setState({
+                         Tcount  : Tcount
+                       },()=>{
+                        formValues.Fcount3 = this.state.Tcount;                                                        
+                 })
+                  if (value === ""){
+                    console.log("key-====",key)
+                       count = count+1;
+                       this.setState({
+                         setCount  : count
+                       },()=>{
+                        formValues.setCount3 = this.state.setCount;
+                        var formFillPercentage = ((Tcount-this.state.setCount)/Tcount) * 100;
+                        formValues.formFillPercentage3 = (formFillPercentage).toFixed(2);                             
+                       })
+                        return count;
+                  }
+                  return value;
+            }
+
+
+            // console.log("formValues",formValues);
+
+
+        /*===========================================*/
 
         console.log("Financials formValues",formValues);
          axios
