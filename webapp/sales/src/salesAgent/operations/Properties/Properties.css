@@ -130,3 +130,10 @@ input[type=checkbox]:checked + .check-box::before,
 .fSize13{
   font-size: 13px;
 }
+.cancelImg{
+ width: 17px;
+ position: absolute;
+ top: -19px;
+ right: -26px;
+
+}

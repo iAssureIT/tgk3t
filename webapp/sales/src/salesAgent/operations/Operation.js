@@ -5,9 +5,7 @@ import Query                  from './query/Query.js';
 import Properties 			  from './Properties/Properties.js';
 import swal                   from 'sweetalert';
 
-
 import './Operation.css';
-
 
 export default class Operation extends Component {
 	constructor(props){
@@ -45,13 +43,16 @@ export default class Operation extends Component {
 	 //                        }
 	 //    });
         
-	 var userId = localStorage.getItem("admin_ID");
+	 var userId = localStorage.getItem("user_ID");
 	 console.log("userId",userId)
 	}
 
 	getTotalCount(){
+	 var userId = localStorage.getItem("user_ID");
+	 var userRole = localStorage.getItem("userRole");
+		
 		axios
-	    .get('/api/salesagent/get/gettotaldisplaylist/5d56b692b0c7a9b7c727ac13')
+	    .get('/api/salesagent/get/gettotaldisplaylist/'+userId+'/'+userRole)
 	    .then(
 	      (res)=>{
 	        // console.log("aaaaa.....",res);
@@ -73,13 +74,6 @@ export default class Operation extends Component {
 		this.setState({
 			propertyStatus : $(event.target).attr('property-status'),
 		})
-
-
-		// if($(event.target).attr('property-status')==="New")
-		// {
-		// 	// post status=verify
-		// 	// axios
-		// }
 	}
 
 	render() {

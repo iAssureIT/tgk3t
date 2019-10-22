@@ -34,10 +34,10 @@ class Login extends Component {
         var auth= {
           email       : this.refs.loginusername.value,
           password    : this.refs.loginpassword.value,
-          role        : 'Sales Agent'
+          // role        : 'Sales Agent'
         }
 
-        console.log("auth value",auth);
+        // console.log("auth value",auth);
 
     axios
       .post('/api/users/post/login/role',auth)
@@ -48,7 +48,7 @@ class Login extends Component {
         // });
         axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
         localStorage.setItem("token",response.data.token);
-        localStorage.setItem("admin_ID",response.data.user_ID);
+        localStorage.setItem("user_ID",response.data.user_ID);
         localStorage.setItem("userRole",(response.data.roles)[0]);
         // localStorage.setItem("admin_email",response.data.email);
         // localStorage.setItem("admin_fullName",response.data.fullName);

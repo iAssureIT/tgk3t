@@ -35,12 +35,12 @@ class Login extends Component {
           password    : this.refs.loginpassword.value,
         }
 
-        console.log("auth value",auth);
+        // console.log("auth value",auth);
 
     axios
       .post('/api/users/post/login',auth)
       .then((response)=> {
-        console.log("-------userData------>>",response);
+        // console.log("-------userData------>>",response);
         // this.setState({
         //   token : response.data.token
         // });
@@ -50,7 +50,7 @@ class Login extends Component {
         // localStorage.setItem("admin_email",response.data.email);
         // localStorage.setItem("admin_fullName",response.data.fullName);
 
-        console.log("localStorage =",localStorage);
+        // console.log("localStorage =",localStorage);
         // browserHistory.replace('/');
         // if(axios.defaults.headers.common.Authorization)
         //   {

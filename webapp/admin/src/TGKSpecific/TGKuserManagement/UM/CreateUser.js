@@ -332,7 +332,7 @@ class CreateUser extends Component {
                                                                     <option value="Sales Manager" > Sales Manager </option>
                                                                     <option value="Sales Agent" > Sales Agent </option>
                                                                     <option value="Field Manager" > Field Manager </option>
-                                                                    <option value=" Field Agent" >  Field Agent </option>
+                                                                    <option value="Field Agent" >  Field Agent </option>
                                                                     </select>
 
                                                               </span>
