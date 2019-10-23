@@ -151,7 +151,8 @@ const navigateAction = StackActions.reset({
             console.log("error = ",error);
             // if(error.message === "Request failed with status code 401")
             //                   {
-            //                       Alert.alert("Your session is expired!"," Please login again.");
+            //                       Alert.alert("Your session is expired!"," Please loginagain.");
+AsyncStorage.removeItem('token');
             //                      this.props.navigation.navigate('MobileScreen');          
                                    
                                    

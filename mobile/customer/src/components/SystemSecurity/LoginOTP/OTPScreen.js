@@ -59,7 +59,7 @@ navigateScreen=(route)=>{
           token     : "",
           mob:"",
           uid : '',
-          
+          originPage:'',
 		    };
 	}
 
@@ -74,15 +74,17 @@ navigateScreen=(route)=>{
   _retrieveData = async () => {
     try {
       const otp = await AsyncStorage.getItem('originalotp');
-      console.log("otp in otpscreen-----------------------------",otp);
+      // console.log("otp in otpscreen-----------------------------",otp);
       const msg = await AsyncStorage.getItem('message'); 
-      console.log("message in otpscreen--------------",msg);
+      // console.log("message in otpscreen--------------",msg);
       const mob = await AsyncStorage.getItem('mobile'); 
-      console.log("mobile in otpscreen---------------------",mob);
+      // console.log("mobile in otpscreen---------------------",mob);
       const uid = await AsyncStorage.getItem('uid');
-      console.log("uid in otpscreen--------------------",uid);
+      // console.log("uid in otpscreen--------------------",uid);
       const token = await AsyncStorage.getItem('token');
-      console.log("token-------------------------------",token);
+      // console.log("token-------------------------------",token);
+      const originPage = await AsyncStorage.getItem('originPage');
+      // console.log("originPage-------------------------------",originPage);
       // if (uid !== null && token !== null) {
        this.setState({
                  msg         : msg,
@@ -90,6 +92,7 @@ navigateScreen=(route)=>{
                  mob         : mob,
                  uid         : uid,
                  token       : token,
+                 originPage  : originPage,
                });
       // }
     } catch (error) {
@@ -98,19 +101,27 @@ navigateScreen=(route)=>{
 
   OTPfunction(){
      var userOTP = this.state.otpcode;
-     console.log("originalotp in otp screen after click",this.state.originalOTP);
-     console.log("msg in otp screen after click",this.state.msg);
+     // console.log("originalotp in otp screen after click",this.state.originalOTP);
+     // console.log("msg in otp screen after click",this.state.msg);
 
       if(userOTP!==""){
         if(parseInt(userOTP) === parseInt(this.state.originalOTP)){
           if(this.state.msg === "NEW-USER-CREATED"){
-                   this.navigateScreen('SignUp');
-                  console.log("signup");
+            this.navigateScreen('SignUp');
+            // console.log("signup");
           }else{
-            if(this.state.msg === "MOBILE-NUMBER-EXISTS")
+            if(this.state.msg === "MOBILE-NUMBER-EXISTS" && this.state.originPage === "post")
             {
-                 this.navigateScreen('BasicInfo');
-                console.log("already");
+              this.navigateScreen('BasicInfo');
+              // console.log("already");
+            }else if (this.state.originPage === "searchProp"){
+              this.navigateScreen('SearchProperty');
+            }else if (this.state.originPage === "myPostedProp"){
+              this.navigateScreen('MyPostedProperties');
+            }else if (this.state.originPage === "interestedProp"){
+              this.navigateScreen('MyInterestedProperties');
+            }else{
+              this.navigateScreen('Home');
             }
           }
         }else{
@@ -154,7 +165,7 @@ navigateScreen=(route)=>{
 
             <View style={{marginTop:15,marginBottom:10}}>
               <Text style={[styles.heading2,styles.marginBottom5]}>Welcome</Text>
-              <Text style={[styles.heading2,styles.marginBottom5]}>We have sent you an OTP for verification, please enter your OTP to continue</Text>
+              <Text style={[styles.heading2,styles.marginBottom5,{color:"#49AA3F"}]}>We have sent you an OTP on your mobile for verification, please enter your OTP to continue</Text>
 
             </View>
 
@@ -223,11 +234,11 @@ navigateScreen=(route)=>{
              style={{paddingHorizontal:'5%',zIndex:999}}
              animationOutTiming={500}>
                 <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
-                  <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
-                    <Icon size={30} name='window-close' type='fontAwesome5' color='#fff' style={{}}/>
-                  </View>
+                  {/*<View style={{justifyContent:'center',backgroundColor:"#fff",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
+                    <Icon size={30} name='close' type='material-community' color='#f00' style={{}}/>
+                  </View>*/}
                   <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
-                   Sorry, Your OTP is not Matching,Please try again!
+                   Sorry, you have entered invalid OTP. Please try again.
                   </Text>
 
                   <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
@@ -235,7 +246,7 @@ navigateScreen=(route)=>{
                       onPress         = {()=>this.setState({openModal:false})}
                       titleStyle      = {styles.buttonText}
                       title           = "OK"
-                      buttonStyle     = {styles.buttonSignUp}
+                      buttonStyle     = {[styles.buttonSignUp,{backgroundColor:"#f00",width:60}]}
                       containerStyle  = {styles.buttonContainer}
                     />
                   </View>

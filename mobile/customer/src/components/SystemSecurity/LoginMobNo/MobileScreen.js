@@ -125,16 +125,16 @@ navigateScreen=(route)=>{
         mobileNumber : mobileNo,
         countryCode  : this.state.unitCode
       };
-      console.log("LoginMobNum==",formValues);
+      // console.log("LoginMobNum==",formValues);
 
       if(this.state.mobileNumber!=""){
                 // this.props.navigation.navigate('PropertyDetails1');
 
-      console.log("here mobileNumber no",this.state.mobileNumber);        
+      // console.log("here mobileNumber no",this.state.mobileNumber);        
         axios
           .post('/api/usersotp/verify_mobile',formValues)
           .then((response)=>{
-              console.log("here response in mobilescreen",response.data.otp);
+              // console.log("here response in mobilescreen",response.data.otp);
               axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
               if(response.data.message === 'MOBILE-NUMBER-EXISTS')
               {
@@ -143,6 +143,7 @@ navigateScreen=(route)=>{
                 AsyncStorage.setItem("originalotp",response.data.otp.toString());
                 AsyncStorage.setItem("message",response.data.message);
                 AsyncStorage.setItem("mobile",this.state.mobileNumber);
+                AsyncStorage.setItem("fullName",response.data.fullName);
                 this.navigateScreen('OTPScreen');
           
               }else{
@@ -152,6 +153,7 @@ navigateScreen=(route)=>{
                 AsyncStorage.setItem("originalotp",response.data.otp);
                 AsyncStorage.setItem("message",response.data.message);
                 AsyncStorage.setItem("mobile",this.state.mobileNumber);
+                AsyncStorage.setItem("fullName",response.data.fullName);
 
                  this.navigateScreen('OTPScreen');
               }
@@ -198,7 +200,6 @@ navigateScreen=(route)=>{
 	render() {
 		const { navigation } = this.props;
     	let {activeBtn} = this.state;
-     
 		return (
       <React.Fragment>
             

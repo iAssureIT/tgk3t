@@ -51,7 +51,7 @@ export default StyleSheet.create({
 		shadowOpacity: 0.18,
 		shadowRadius: 1.00,
 
-		elevation: 7,
+		// elevation: 0.5,
   },
   menuText:{
   	color: colors.primary,

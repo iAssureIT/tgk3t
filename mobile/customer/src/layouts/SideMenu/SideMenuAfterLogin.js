@@ -11,28 +11,45 @@ import {
   Image
 } from 'react-native';
 
+import { 
+	NavigationActions,
+	StackActions, 
+	DrawerActions, 
+	withNavigationFocus 
+} from 'react-navigation';
+
 import { Icon } 			from 'react-native-elements';
-import { NavigationActions, StackActions } from 'react-navigation'
 import styles 				from './styles.js';
 import {colors} 			from '../../config/styles.js';
 import AsyncStorage 		from '@react-native-community/async-storage';
 
-export default class SideMenu extends React.Component {
+export default class SideMenuAfterLogin extends React.Component {
 
-	navigateScreen=(route)=>{
-	    const navigateAction = NavigationActions.navigate({
-	    routeName: route,
-	    params: {},
-	    action: NavigationActions.navigate({ routeName: route }),
-	  });
-	  this.props.navigation.dispatch(navigateAction);
-	}
+  navigateScreen=(route)=>{
+  const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+   }  
+
+   componentDidUpdate(prevProps) {
+   	console.log("this.props.isFocused",this.props.isFocused);
+    if (this.props.isFocused && !prevProps.isFocused) {
+      this._retrieveData();
+    }
+  }
+
+
 
   constructor(props){
     super(props);
     this.state={
       uid:"",
-      token:''
+      token:'',
+      fullName:""
     };
   }	
 
@@ -42,11 +59,13 @@ export default class SideMenu extends React.Component {
 
   _retrieveData = async () => {
     try {
-      const uid = await AsyncStorage.getItem('uid');
-      const token = await AsyncStorage.getItem('token');
+      const uid      = await AsyncStorage.getItem('uid');
+      const token    = await AsyncStorage.getItem('token');
+      const fullName = await AsyncStorage.getItem('fullName');
       // if (uid !== null && token !== null) {
         this.setState({uid:uid})
         this.setState({token:token})
+        this.setState({fullName:fullName})
       // }
     } catch (error) {
     }
@@ -62,9 +81,22 @@ export default class SideMenu extends React.Component {
 
   home(){
   	this.navigateScreen('Home')
-    this.props.navigation.closeDrawer();
   }
 
+ login(){
+    AsyncStorage.setItem("originPage","post");
+    // console.log("token in home screen",this.state.token);
+    AsyncStorage.removeItem('propertyId');
+
+
+    if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
+       this.navigateScreen("MobileScreen");
+    }else{
+       this.navigateScreen("BasicInfo");
+    }
+       // this.navigateScreen("Availability");
+  }
+ 
 
   render(){
 	  	return(
@@ -74,11 +106,14 @@ export default class SideMenu extends React.Component {
 		          style={styles.bgImage}
 		          resizeMode="cover"
 		        >
-		        	<Image
-		            style={styles.logoImage}
-		            source={require("../../images/logo.png")}
-		            resizeMode="contain"
-		          />
+			        <Image
+			            style={[styles.logoImage,{marginTop:80}]}
+			            source={require("../../images/logo.png")}
+			            resizeMode="contain"
+			         />
+			        <View style={{width:"100%",marginTop:80}}>
+			        	<Text style={{marginLeft:"10%",color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 18}}>{this.state.fullName}</Text>
+			        </View>
 		        </ImageBackground>
 
 		        <View style={styles.menuWrapper}>
@@ -106,7 +141,7 @@ export default class SideMenu extends React.Component {
 			        		<Text style={styles.menuText}>Search Property</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen')}>
+		        	<TouchableOpacity onPress={this.login.bind(this)}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={18} 
@@ -127,7 +162,7 @@ export default class SideMenu extends React.Component {
 			              color={colors.primary} 
 			              containerStyle={styles.iconContainer}
 			            />
-			        		<Text style={styles.menuText}>My Property</Text>
+			        		<Text style={styles.menuText}>My Properties</Text>
 			        	</View>
 		        	</TouchableOpacity>
 		        	<TouchableOpacity onPress={()=>this.navigateScreen('MyInterestedProperties')}>
@@ -139,10 +174,10 @@ export default class SideMenu extends React.Component {
 			              color={colors.primary} 
 			              containerStyle={styles.iconContainer}
 			            />
-			        		<Text style={styles.menuText}>My Interested</Text>
+			        		<Text style={styles.menuText}>My Interested Properties</Text>
 			        	</View>
 		        	</TouchableOpacity>
-			        {this.state.token ?
+			        {/*this.state.token ?*/
 			        	<TouchableOpacity onPress={this.logout.bind(this)}>
 				        	<View style={styles.menu}>
 				        		<Icon 
@@ -155,7 +190,7 @@ export default class SideMenu extends React.Component {
 				        		<Text style={styles.menuText}>Logout</Text>
 				        	</View>
 			        	</TouchableOpacity>
-			        	:
+			        	/*:
 			        	<TouchableOpacity onPress={()=>this.navigateScreen('MobileScreen')}>
 				        	<View style={styles.menu}>
 				        		<Icon 
@@ -167,7 +202,7 @@ export default class SideMenu extends React.Component {
 				            	/>
 				        		<Text style={styles.menuText}>Login</Text>
 				        	</View>
-			        	</TouchableOpacity>
+			        	</TouchableOpacity>*/
 			        }
 		        </View>
 	  		</ScrollView>
@@ -175,3 +210,4 @@ export default class SideMenu extends React.Component {
 	}
 
 }
+

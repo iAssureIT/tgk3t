@@ -16,7 +16,7 @@ import axios                      from 'axios';
 import ValidationComponent        from "react-native-form-validator";
 import { TextField }              from 'react-native-material-textfield';
 import CheckBox                   from 'react-native-check-box'
-import AsyncStorage     from '@react-native-community/async-storage';
+import AsyncStorage               from '@react-native-community/async-storage';
 
 import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
 import Loading                    from '../../layouts/Loading/Loading.js'
@@ -98,9 +98,9 @@ export default class MyInterestedProperties extends ValidationComponent{
         .get('/api/interestedProperties/list/'+uid)
         .then(
           (res)=>{
-            console.log(res);
+            // console.log(res);
             const postsdata = res.data;
-            console.log("postsdata",res);
+            // console.log("postsdata",res);
               // var city = postsdata[2].propertyLocation.city.split('|')[0];
 
             this.setState({
@@ -116,6 +116,7 @@ export default class MyInterestedProperties extends ValidationComponent{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
             {
+                  AsyncStorage.setItem("originPage","interestedProp");
                  // swal("Your session is expired! Please login again.","", "error");
                   Alert.alert("Your session is expired!","Please login again.")
                   this.props.navigation.navigate("MobileScreen");
@@ -273,6 +274,15 @@ export default class MyInterestedProperties extends ValidationComponent{
                     resizeMode="cover"
                     imageStyle={{borderRadius:4}}
                   >
+                  <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
+                     <Button
+                      titleStyle      = {styles.buttonText}
+                      title           = {"For " + prop.transactionType}
+                      // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                      buttonStyle     = {styles.button4}
+                      containerStyle  = {[styles.buttonContainer4]}
+                    />
+                  </View>  
                   </ImageBackground>
                    :
                    <ImageBackground 
@@ -281,6 +291,15 @@ export default class MyInterestedProperties extends ValidationComponent{
                       resizeMode="cover"
                       imageStyle={{borderRadius:4}}
                     >
+                    <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
+                       <Button
+                        titleStyle      = {styles.buttonText}
+                        title           = {"For " + prop.transactionType}
+                        // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                        buttonStyle     = {styles.button4}
+                        containerStyle  = {[styles.buttonContainer4]}
+                      />
+                    </View>  
                     </ImageBackground>
                   }
                   <View style={{width:'100%',padding:10}}>

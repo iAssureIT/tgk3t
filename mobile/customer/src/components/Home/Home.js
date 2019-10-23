@@ -59,7 +59,7 @@ navigateScreen=(route)=>{
         // var uid = this.props.navigation.getParam('uid','No uid');
         // var token = this.props.navigation.getParam('token','No token');
       this.retrieveToken();
-      console.log("token home componentDidMount",AsyncStorage.getItem('token'));
+      // console.log("token home componentDidMount",AsyncStorage.getItem('token'));
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem('token');
   }
 
@@ -123,12 +123,12 @@ navigateScreen=(route)=>{
 
   _selectedItem(item){
     this.setState({locSearchResults:""})
-    console.log("item",item);
+    // console.log("item",item);
     this.setState({'searchText':item,location : item,})
   }
 
    _renderList = ({ item }) => {
-    console.log("item",item)
+    // console.log("item",item)
     return (
      <TouchableWithoutFeedback onPress={()=>this._selectedItem(item)}>
        <View>
@@ -152,18 +152,17 @@ navigateScreen=(route)=>{
 
 
   login(){
-    // const originPage = "post" ;
-
+    AsyncStorage.setItem("originPage","post");
     // console.log("token in home screen",this.state.token);
-    // AsyncStorage.removeItem('propertyId');
+    AsyncStorage.removeItem('propertyId');
 
 
-    // if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
-    //    this.navigateScreen("MobileScreen");
-    // }else{
-    //    this.navigateScreen("BasicInfo");
-    // }
-       this.navigateScreen("Availability");
+    if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
+       this.navigateScreen("MobileScreen");
+    }else{
+       this.navigateScreen("BasicInfo");
+    }
+       // this.navigateScreen("Availability");
   }
  
   render(){

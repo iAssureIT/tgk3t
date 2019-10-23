@@ -98,9 +98,9 @@ export default class MyPostedProperties extends ValidationComponent{
         .get('/api/properties/mypropertylist/'+uid)
         .then(
           (searchResults)=>{
-            console.log(searchResults);
+            // console.log(searchResults);
             const postsdata = searchResults.data;
-            console.log("postsdata",postsdata);
+            // console.log("postsdata",postsdata);
             this.setState({
               searchResults : postsdata,
               isLoading     : false
@@ -114,6 +114,7 @@ export default class MyPostedProperties extends ValidationComponent{
               console.log("error = ",error.message);
               if(error.message === "Request failed with status code 401")
               {
+                  AsyncStorage.setItem("originPage","myPostedProp");
                   Alert.alert("Your session is expired!","Please login again.")
                   this.props.navigation.navigate("MobileScreen");
               }
@@ -151,6 +152,15 @@ export default class MyPostedProperties extends ValidationComponent{
                           resizeMode="cover"
                           imageStyle={{borderRadius:4}}
                         >
+                        <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
+                           <Button
+                            titleStyle      = {styles.buttonText}
+                            title           = {"For " + prop.transactionType}
+                            // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                            buttonStyle     = {styles.button4}
+                            containerStyle  = {[styles.buttonContainer4]}
+                          />
+                        </View>  
                         </ImageBackground>
                         :
                         <ImageBackground 
@@ -159,6 +169,15 @@ export default class MyPostedProperties extends ValidationComponent{
                           resizeMode="cover"
                           imageStyle={{borderRadius:4}}
                         >
+                        <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
+                           <Button
+                            titleStyle      = {styles.buttonText}
+                            title           = {"For " + prop.transactionType}
+                            // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                            buttonStyle     = {styles.button4}
+                            containerStyle  = {[styles.buttonContainer4]}
+                          />
+                        </View>  
                       </ImageBackground>
                      }
                     <View style={{width:'100%',padding:10}}>

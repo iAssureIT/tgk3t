@@ -28,9 +28,9 @@ class CreateUser extends Component {
     const formValues = {
         "firstName"    : this.refs.firstname.value,
         "lastName"     : this.refs.lastname.value,
-        "emailId"        : this.refs.signupEmail.value,
-        "countryCode"   : "+91",
-        "mobile"    : this.refs.mobNumber.value,
+        "emailId"      : this.refs.signupEmail.value,
+        "countryCode"  : "+91",
+        "mobile"       : this.refs.mobNumber.value,
         "pwd"          : "user123",
         "role"         : "User",
         "status"       : "Active"

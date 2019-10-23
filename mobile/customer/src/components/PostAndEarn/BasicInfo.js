@@ -18,7 +18,6 @@ import { NavigationActions, StackActions }  from 'react-navigation';
 import axios                                from 'axios';
 import AsyncStorage                         from '@react-native-community/async-storage';
 import { Button,Icon, SearchBar }           from 'react-native-elements';
-
 import ValidationComponent                  from "react-native-form-validator";
 import { TextField }                        from 'react-native-material-textfield';
 import {RadioGroup, RadioButton}            from 'react-native-flexi-radio-button';
@@ -138,12 +137,20 @@ export default class BasicInfo extends ValidationComponent{
       originalValuesLocation  : "",
       pincodeError    : [],
       societyError    : "", 
-      fullAddress     : ""
+      fullAddress     : "",
+      transactionTypeError:"",
+      stateCodeError  :"",
+      cityNameError   :"",
+      propertyTypeError:"",
+      subAreaNameError:"",
+      areaNameError   :"",
+      fullPropertyTypeError:"",
+      fullPropertyType:""
     };      
   }
 
     componentDidMount(){
-      console.log("here token in form 1",this.state.token);
+      // console.log("here token in form 1",this.state.token);
       // AsyncStorage.removeItem('propertyId');
       this._retrieveData();
        axios({
@@ -173,7 +180,8 @@ export default class BasicInfo extends ValidationComponent{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                               Alert.alert("Your session is expired!"," Please login again.");
+                               Alert.alert("Your session is expired!"," Please loginagain.");
+                                AsyncStorage.removeItem('token');
                                this.navigateScreen('MobileScreen');                                        
                           }
           });
@@ -183,7 +191,14 @@ export default class BasicInfo extends ValidationComponent{
   validInput = () => {
     const {
       pincode,
-      societyName
+      societyName,
+      transactionType,
+      propertyType,
+      stateCode,
+      areaName,
+      cityName,
+      fullPropertyType,
+      subAreaName
     } = this.state;
     let valid = true;
 
@@ -197,26 +212,97 @@ export default class BasicInfo extends ValidationComponent{
         required: true,
         letters: true,
       },
+       transactionType: {
+        required: true,
+      },
+      propertyType: {
+        required: true,
+      },
+      cityName: {
+        required: true,
+      },
+      stateCode: {
+        required: true,
+      },
+      subAreaName: {
+        required: true,
+      },
+      areaName: {
+        required: true,
+      },
+      fullPropertyType:{
+        required: true,
+      }
     });
 
-    if (this.isFieldInError("pincode")) {
+    if(this.isFieldInError("pincode")) {
       this.setState({ pincodeError: this.getErrorsInField("pincode") });
       valid = false;
-    } else {
+    }else{
       this.setState({ pincodeError: "" });
     }
-    if (this.isFieldInError("societyName")) {
+    if(this.isFieldInError("societyName")) {
       this.setState({ societyError: this.getErrorsInField("societyName") });
       valid = false;
-    } else {
+    }else {
       this.setState({ societyError: "" });
+    }
+     if(this.isFieldInError("transactionType")) {
+      this.setState({ transactionTypeError: this.getErrorsInField("transactionType") });
+      valid = false;
+    }else {
+      this.setState({ transactionTypeError: "" });
+    }
+     if(this.isFieldInError("propertyType")) {
+      this.setState({ propertyTypeError: this.getErrorsInField("propertyType") });
+      valid = false;
+    }else {
+      this.setState({ propertyTypeError: "" });
+    }
+     if(this.isFieldInError("stateCode")) {
+      this.setState({ stateCodeError: this.getErrorsInField("stateCode") });
+      valid = false;
+    }else {
+      this.setState({ stateCodeError: "" });
+    }
+    if(this.isFieldInError("subAreaName")) {
+      this.setState({ subAreaNameError: this.getErrorsInField("subAreaName") });
+      valid = false;
+    }else {
+      this.setState({ subAreaNameError: "" });
+    }
+    if(this.isFieldInError("cityName")) {
+      this.setState({ cityNameError: this.getErrorsInField("cityName") });
+      valid = false;
+    }else {
+      this.setState({ cityNameError: "" });
+    }
+    if(this.isFieldInError("areaName")) {
+      this.setState({ areaNameError: this.getErrorsInField("areaName") });
+      valid = false;
+    }else {
+      this.setState({ areaNameError: "" });
+    }
+    if(this.isFieldInError("fullPropertyType")) {
+      this.setState({ fullPropertyTypeError: this.getErrorsInField("fullPropertyType") });
+      valid = false;
+    }else {
+      this.setState({ fullPropertyTypeError: "" });
     }
     return valid;
   };
   
   validInputField = (stateName, stateErr) => {
     const {
-      pincode
+      pincode,
+      societyName,
+      transactionType,
+      propertyType,
+      stateCode,
+      areaName,
+      cityName,
+      fullPropertyType,
+      subAreaName
     } = this.state;
     let valid = true;
 
@@ -256,20 +342,20 @@ export default class BasicInfo extends ValidationComponent{
         this.setState({token:token})
         this.setState({mobile:mobile})
         this.setState({propertyId:propertyId})
-        console.log("here basic info token get",token);
+        // console.log("here basic info token get",token);
         if(token!=="")
         {
 
            var property_id = propertyId;
-            console.log("property_id in constructor basicinfo",property_id);
+            // console.log("property_id in constructor basicinfo",property_id);
             if(property_id!=null)
             {
-              console.log("here edit 1st form------------------------------");
+              // console.log("here edit 1st form------------------------------");
           
               axios
                 .get('/api/properties/'+property_id)
                 .then( (res) =>{
-                  console.log("get property = ",res);
+                  // console.log("get property = ",res);
                   this.setState({
                           originalValues            : res.data,
                           fullPropertyType          : res.data.propertyType+'-'+res.data.propertySubType,
@@ -319,8 +405,10 @@ export default class BasicInfo extends ValidationComponent{
                               console.log("error = ",error);
                               if(error.message === "Request failed with status code 401")
                               {
-                                    Alert.alert("Your session is expired!"," Please login again.");
-                                    this.navigateScreen('MobileScreen');   
+                                    Alert.alert("Your session is expired!"," Please loginagain.");
+                                    AsyncStorage.removeItem('token');
+                                    this.navigateScreen('MobileScreen');
+              
                               }
                           });
                 }
@@ -378,17 +466,17 @@ export default class BasicInfo extends ValidationComponent{
         "fullAddress"     : this.state.fullAddress,
         "property_id"     : this.state.propertyId,
       };
-      console.log("formValues",formValues);
-      console.log("subAreaName",this.state.subAreaName);
-
+      // console.log("formValues",formValues);
+      // console.log("subAreaName",this.state.subAreaName);
+      if (this.validInput()) {
       if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
         this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!==""  && this.state.subAreaName!== undefined && this.state.societyName!==""  ){
-        if (this.validInput()) {
+        
           if(this.state.updateOperation === true){
             console.log("update fun");
             var ovLoc = this.state.originalValuesLocation;
             var ov = this.state.originalValues;
-            console.log("here ov value",ov);
+            // console.log("here ov value",ov);
             if(this.state.propertyHolder === ov.propertyHolder && this.state.transactionType === ov.transactionType
               && this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType && 
               this.state.pincode === ovLoc.pincode && this.state.stateCode === ovLoc.state && this.state.cityName === ovLoc.city && 
@@ -409,9 +497,9 @@ export default class BasicInfo extends ValidationComponent{
               axios
               .patch('/api/properties/patch/properties',formValues)
               .then( (res) =>{
-                console.log("here updated data",res);
+                // console.log("here updated data",res);
                 if(res.status === 200){
-                  console.log("res.data.property_id",res.data.property_id);
+                  // console.log("res.data.property_id",res.data.property_id);
                   AsyncStorage.setItem("propertyId",res.data.property_id);
                   AsyncStorage.setItem("transactionType",this.state.transactionType);
                   AsyncStorage.setItem("propertyType",this.state.propertyType);
@@ -433,11 +521,11 @@ export default class BasicInfo extends ValidationComponent{
             // 2nd if
           }else{
 
-            console.log("submit data");
+            // console.log("submit data");
              axios
             .post('/api/properties',formValues)
             .then( (res) =>{
-              console.log("here 1st form result",res.data);
+              // console.log("here 1st form result",res.data);
               if(res.status === 200){
                   AsyncStorage.setItem("propertyId",res.data.property_id);
                   AsyncStorage.setItem("transactionType",this.state.transactionType);
@@ -452,8 +540,9 @@ export default class BasicInfo extends ValidationComponent{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                                Alert.alert("Your session is expired!"," Please login again.");
-                                 this.navigateScreen('MobileScreen');             
+                                Alert.alert("Your session is expired!"," Please loginagain.");
+                                AsyncStorage.removeItem('token');
+                                this.navigateScreen('MobileScreen');             
                                  
                           }
                       });
@@ -461,8 +550,6 @@ export default class BasicInfo extends ValidationComponent{
           }
         }  
         // 1st if
-      }else{
-        Alert.alert("Please enter mandatory fields","warning");
       }
 
   }
@@ -522,8 +609,9 @@ export default class BasicInfo extends ValidationComponent{
                     console.log("error = ",error);
                     if(error.message === "Request failed with status code 401")
                     {
-                          Alert.alert("Your session is expired!"," Please login again.");
-                           this.navigateScreen('MobileScreen');             
+                          Alert.alert("Your session is expired!"," Please loginagain.");
+                          AsyncStorage.removeItem('token');
+                          this.navigateScreen('MobileScreen');             
                            
                     }
             });
@@ -561,7 +649,8 @@ export default class BasicInfo extends ValidationComponent{
                   if(error.message === "Request failed with status code 401")
                   {
               
-                     Alert.alert("Your session is expired!"," Please login again.");
+                     Alert.alert("Your session is expired!"," Please loginagain.");
+                      AsyncStorage.removeItem('token');
                      this.navigateScreen('MobileScreen');                
                  
                   }
@@ -600,7 +689,8 @@ export default class BasicInfo extends ValidationComponent{
               if(error.message === "Request failed with status code 401")
               {
          
-                 Alert.alert("Your session is expired!"," Please login again.");
+                 Alert.alert("Your session is expired!"," Please loginagain.");
+                 AsyncStorage.removeItem('token');
                  this.navigateScreen('MobileScreen');               
              
               }
@@ -611,14 +701,15 @@ export default class BasicInfo extends ValidationComponent{
           console.log("error = ",error);
           if(error.message === "Request failed with status code 401")
           {
-            Alert.alert("Your session is expired!"," Please login again.");
+            Alert.alert("Your session is expired!"," Please loginagain.");
+            AsyncStorage.removeItem('token');
             this.navigateScreen('MobileScreen');              
           }
       });
   }
 
   selectProp(value){
-    // console.log("here selected value",value);
+    console.log("here selected value",value);
     var propertyTypeVal = value.split("-");
     var propertyType = propertyTypeVal[0];
     var propertySubType = propertyTypeVal[1];
@@ -668,8 +759,9 @@ export default class BasicInfo extends ValidationComponent{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
             {
-                  Alert.alert("Your session is expired!"," Please login again.");
-                   this.navigateScreen('MobileScreen');        
+                  Alert.alert("Your session is expired!"," Please loginagain.");
+                  AsyncStorage.removeItem('token');
+                  this.navigateScreen('MobileScreen');        
                    
             }
       });
@@ -723,8 +815,9 @@ export default class BasicInfo extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');               
+                              Alert.alert("Your session is expired!"," Please loginagain.");
+                              AsyncStorage.removeItem('token');
+                              this.navigateScreen('MobileScreen');               
                                
                         }
              });
@@ -782,7 +875,8 @@ export default class BasicInfo extends ValidationComponent{
           console.log("error = ",error);
           if(error.message === "Request failed with status code 401")
           {
-              Alert.alert("Your session is expired!"," Please login again.");
+              Alert.alert("Your session is expired!"," Please loginagain.");
+              AsyncStorage.removeItem('token');
               this.navigateScreen('MobileScreen');             
           }
     });
@@ -825,8 +919,9 @@ export default class BasicInfo extends ValidationComponent{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
             {
-                  Alert.alert("Your session is expired!"," Please login again.");
-                   this.navigateScreen('MobileScreen');            
+                  Alert.alert("Your session is expired!"," Please loginagain.");
+                  AsyncStorage.removeItem('token');
+                  this.navigateScreen('MobileScreen');            
                    
             }
         });
@@ -846,8 +941,9 @@ export default class BasicInfo extends ValidationComponent{
                 console.log("error = ",error);
                 if(error.message === "Request failed with status code 401")
                 {
-                      Alert.alert("Your session is expired!"," Please login again.");
-                       this.navigateScreen('MobileScreen');           
+                      Alert.alert("Your session is expired!"," Please loginagain.");
+                      AsyncStorage.removeItem('token');
+                      this.navigateScreen('MobileScreen');           
                        
                 }
           });   
@@ -892,8 +988,9 @@ export default class BasicInfo extends ValidationComponent{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
             {
-                 Alert.alert("Your session is expired!"," Please login again.");
-                   this.navigateScreen('MobileScreen');             
+                Alert.alert("Your session is expired!"," Please loginagain.");
+                AsyncStorage.removeItem('token');
+                this.navigateScreen('MobileScreen');             
             }
         });
     }
@@ -951,7 +1048,7 @@ export default class BasicInfo extends ValidationComponent{
             <View style={styles.formWrapper}>
               <View>
                 <Text style={styles.heading}>
-                  Let’s provide details of your property for sell
+                  Let's provide details of your property for Sell/Rent
                 </Text>
               </View>
 
@@ -963,7 +1060,7 @@ export default class BasicInfo extends ValidationComponent{
                 />
               </View>
 
-              <Text style={styles.heading2}>I am<Text style={[{color:"#f00"}]}>*</Text></Text>
+              <Text style={styles.heading2}>I am</Text>
               <View style={[styles.tabWrap,styles.marginBottom15]}>
                 <TouchableOpacity
                   onPress = {()=>this.setActive('owner')}
@@ -1003,7 +1100,7 @@ export default class BasicInfo extends ValidationComponent{
                 </TouchableOpacity>
               </View>
 
-              <Text style={styles.heading2}>I would like to<Text style={[{color:"#f00"}]}>*</Text> </Text>
+              <Text style={styles.heading2}>I would like to (Sell / Rent)</Text>
               <View style={[styles.marginBottom15,{width:'100%'}]}>
                 <SwitchToggle
                   switchOn={this.state.toggle}
@@ -1036,33 +1133,34 @@ export default class BasicInfo extends ValidationComponent{
                 />
               </View>
 
-              <Text style={[styles.heading2,styles.marginBottom5]}>Property Type<Text style={[{color:"#f00"}]}>*</Text></Text>
-               <View style={[styles.inputWrapper,styles.marginBottom15]}>
-                  <View style={styles.inputTextWrapperFull}>
-                    <Dropdown
-                      // label               = 'Property Type'
-                      containerStyle      = {styles.ddContainer}
-                      dropdownOffset      = {{top:0, left: 0}}
-                      itemTextStyle       = {styles.ddItemText}
-                      inputContainerStyle = {styles.ddInputContainer}
-                      labelHeight         = {10}
-                      tintColor           = {colors.button}
-                      labelFontSize       = {sizes.label}
-                      fontSize            = {15}
-                      baseColor           = {'#666'}
-                      textColor           = {'#333'}
-                      labelTextStyle      = {styles.ddLabelTextFull}
-                      style               = {styles.ddStyle}
-                      data                = {this.state.propertyTypeList}
-                      value               = {this.state.fullPropertyType}
-                      onChangeText={ (fullPropertyType) => this.selectProp(fullPropertyType) } 
-                     />
-
-                    
-                  </View>
-              </View>
-         
-              <Text style={[styles.heading2,styles.marginBottom5]}>Pincode<Text style={[{color:"#f00"}]}>*</Text></Text>
+              <Text style={[styles.heading2,styles.marginBottom5]}>Property Type</Text>
+                <View style={[,styles.marginBottom15]}>
+                  <View style={[styles.inputWrapper]}>
+                    <View style={styles.inputTextWrapperFull}>
+                      <Dropdown
+                        // label               = 'Property Type'
+                        containerStyle      = {styles.ddContainer}
+                        dropdownOffset      = {{top:0, left: 0}}
+                        itemTextStyle       = {styles.ddItemText}
+                        inputContainerStyle = {styles.ddInputContainer}
+                        labelHeight         = {10}
+                        tintColor           = {colors.button}
+                        labelFontSize       = {sizes.label}
+                        fontSize            = {15}
+                        baseColor           = {'#666'}
+                        textColor           = {'#333'}
+                        labelTextStyle      = {styles.ddLabelTextFull}
+                        style               = {styles.ddStyle}
+                        data                = {this.state.propertyTypeList}
+                        value               = {this.state.fullPropertyType}
+                        onChangeText        = {(fullPropertyType) => {this.selectProp(fullPropertyType),this.validInputField('fullPropertyType', 'fullPropertyTypeError');}} 
+                       />
+                    </View>
+                </View>
+              {this.displayValidationError('fullPropertyTypeError')}
+              </View>  
+              
+              <Text style={[styles.heading2,styles.marginBottom5]}>Pincode</Text>
               <View style={[styles.inputWrapper]}>
                 <View style={styles.inputImgWrapper}>
                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -1100,7 +1198,7 @@ export default class BasicInfo extends ValidationComponent{
 
                 <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
                   <View style={[{width:'46%'}]}>
-                    <Text style={[styles.heading2,styles.marginBottom5]}>State<Text style={[{color:"#f00"}]}>*</Text></Text>
+                    <Text style={[styles.heading2,styles.marginBottom5]}>State</Text>
                     <View style={[{borderColor: colors.black,
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
@@ -1147,7 +1245,6 @@ export default class BasicInfo extends ValidationComponent{
                             placeholder            = {placeholderState}
                             items                  = {this.state.onlyState.length>0 ? this.state.onlyState : defaultOption }
                             />
-
                         
                       </View>
                     </View>
@@ -1158,7 +1255,7 @@ export default class BasicInfo extends ValidationComponent{
                     </View>
 
                     <View style={[{width:'46%'}]}>
-                    <Text style={[styles.heading2,styles.marginBottom5]}>City<Text style={[{color:"#f00"}]}>*</Text></Text>
+                    <Text style={[styles.heading2,styles.marginBottom5]}>City</Text>
                     <View style={[{borderColor: colors.black,
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
@@ -1200,14 +1297,13 @@ export default class BasicInfo extends ValidationComponent{
                               onValueChange={(cityName) =>
                               this.selectCity(cityName)
                             }
-                            value                  = {this.state.cityName}
-                            style                  = {pickerSelectStyles}
-                            placeholder            = {placeholderCity}
-                            items                  = {this.state.onlyCity.length>0 ? this.state.onlyCity : defaultOption }
+                            value                       = {this.state.cityName}
+                            style                       = {pickerSelectStyles}
+                            placeholder                 = {placeholderCity}
+                            items                       = {this.state.onlyCity.length>0 ? this.state.onlyCity : defaultOption }
+                            useNativeAndroidPickerStyle = {false}
                             />
-                            
                            
-
                       </View>
                     </View>
                   </View>
@@ -1216,7 +1312,7 @@ export default class BasicInfo extends ValidationComponent{
                <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom20]}>
 
                <View style={[{width:'46%'}]}>
-                    <Text style={[styles.heading2,styles.marginBottom5]}>Area/Suburb<Text style={[{color:"#f00"}]}>*</Text></Text>
+                    <Text style={[styles.heading2,styles.marginBottom5]}>Area/Suburb</Text>
 
                     <View style={[{borderColor: colors.black,
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
@@ -1267,7 +1363,6 @@ export default class BasicInfo extends ValidationComponent{
                             placeholder            = {placeholderArea}
                             items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : defaultOption }
                             />
-
                       </View>
                     </View>
                   </View>
@@ -1277,7 +1372,7 @@ export default class BasicInfo extends ValidationComponent{
                     </View>
 
                   <View style={[{width:'46%'}]}>
-                    <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area<Text style={[{color:"#f00"}]}>*</Text></Text>
+                    <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area</Text>
                     <View style={[{borderColor: colors.black,
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
@@ -1318,22 +1413,19 @@ export default class BasicInfo extends ValidationComponent{
                           </Picker>*/}
 
                           { this.state.onlySubArea.length>0  ? 
-                           <RNPickerSelect
-                              onValueChange={(subAreaName) =>
-                              this.setState({subAreaName})
-                            }
-                            onBlur                 = {()=>this.handleSubarea()}
-                            value                  = {this.state.subAreaName}
-                            style                  = {pickerSelectStyles}
-                            placeholder            = {placeholderSubarea}
-                            items                  = {this.state.onlySubArea}
-                            />
-
-                            :
+                             <RNPickerSelect
+                                onValueChange          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError'); })}}
+                                onBlur                 = {()=>this.handleSubarea()}
+                                value                  = {this.state.subAreaName}
+                                style                  = {pickerSelectStyles}
+                                placeholder            = {placeholderSubarea}
+                                items                  = {this.state.onlySubArea}
+                              />
+                              :
                                <TextInput
                                 placeholder           = "Sub-Area"
-                                onChangeText          ={(subAreaName) => this.setState({subAreaName})}
-                                onBlur                 = {()=>this.handleSubarea()}
+                                onChangeText          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError'); })}}
+                                onBlur                = {()=>this.handleSubarea()}
                                 lineWidth             = {1}
                                 tintColor             = {colors.button}
                                 inputContainerPadding = {0}
@@ -1351,6 +1443,7 @@ export default class BasicInfo extends ValidationComponent{
                                 keyboardType          = "default"
                               />
                             }
+                            {this.displayValidationError('subAreaNameError')}
                       </View>
                     </View>
                   </View>
@@ -1358,7 +1451,7 @@ export default class BasicInfo extends ValidationComponent{
 
                {/*remaining items*/}
                <View style={styles.marginBottom15}>
-                <Text style={[styles.heading2,styles.marginBottom5]}>Society<Text style={[{color:"#f00"}]}>*</Text></Text>
+                <Text style={[styles.heading2,styles.marginBottom5]}>Society</Text>
                 <View style={[styles.inputWrapper]}>
                   <View style={styles.inputImgWrapper}>
                     <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -1389,7 +1482,7 @@ export default class BasicInfo extends ValidationComponent{
                 {this.displayValidationError('societyError')}
               </View>
 
-              <Text style={[styles.heading2,styles.marginBottom5]}>House/Building Number</Text>
+              <Text style={[styles.heading2,styles.marginBottom5]}>House/Building Number (Optional)</Text>
               <View style={[styles.inputWrapper,styles.marginBottom15]}>
                 <View style={styles.inputImgWrapper}>
                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -1418,7 +1511,7 @@ export default class BasicInfo extends ValidationComponent{
               </View>
 
 
-               <Text style={[styles.heading2,styles.marginBottom5]}>Landmark</Text>
+               <Text style={[styles.heading2,styles.marginBottom5]}>Landmark (Optional)</Text>
               <View style={[styles.inputWrapper,styles.marginBottom15]}>
                 <View style={styles.inputImgWrapper}>
                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>

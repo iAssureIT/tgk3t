@@ -148,6 +148,10 @@ export default StyleSheet.create({
     width:'75%',
     justifyContent:'center'
   },
+  inputTextWrapper3 : {
+    width:'100%',
+    justifyContent:'center'
+  },
   inputTextWrapperFull : {
     width:'100%',
     justifyContent:'center'
@@ -165,11 +169,11 @@ export default StyleSheet.create({
     justifyContent:'center'
   },
   inputTextWrapper68 : {
-    width:'68%',
+    width:'58%',
     justifyContent:'center'
   },
   inputRightWrapper1:{
-    width:'20%',
+    width:'30%',
     // justifyContent:'center',
     // alignItems:'center',
     borderLeftWidth:1,
@@ -571,6 +575,9 @@ marginTopSOM:{
         marginTop:50,
       }
     })
+}, 
+pickerSelectStyles:{
+    color:"#f00",
 } 
  
 

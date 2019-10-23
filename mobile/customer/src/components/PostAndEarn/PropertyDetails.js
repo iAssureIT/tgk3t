@@ -126,8 +126,8 @@ constructor(props){
       builtupAreaUnit   : 'Sq ft',
       floorData         :floorList,
       totalFloorData    :totalFloorList,
-      floor             : 'Floor',
-      totalFloor        :'Total Floors',
+      floor             : '',
+      totalFloor        :'',
 
 
       defaultIcon       :'flag',
@@ -154,6 +154,8 @@ constructor(props){
       // originalValues:"",
       prevAmenities     : "",
       allAmenities      : [],
+      floorError        : "",
+      totalFloorError   : "",
       // uid:"",
       // token:"",
       // mobile:"",
@@ -173,6 +175,8 @@ constructor(props){
     validInput = () => {
     const {
       builtupArea,
+      floor,
+      totalFloor
     } = this.state;
     let valid = true;
 
@@ -181,8 +185,11 @@ constructor(props){
         required: true,
         numbers: true,
       },
-       superArea: {
-        numbers: true,
+      floor: {
+        required: true,
+      },
+      totalFloor: {
+        required: true,
       },
     });
 
@@ -192,18 +199,26 @@ constructor(props){
     } else {
       this.setState({ builtupAreaError: "" });
     }
-    if (this.isFieldInError("superArea")) {
-      this.setState({ superAreaError: this.getErrorsInField("superArea") });
+    if (this.isFieldInError("floor")) {
+      this.setState({floorError: this.getErrorsInField("floor") });
       valid = false;
     } else {
-      this.setState({ superAreaError: "" });
+      this.setState({ floorError: "" });
+    }
+    if (this.isFieldInError("totalFloor")) {
+      this.setState({totalFloorError: this.getErrorsInField("totalFloor") });
+      valid = false;
+    } else {
+      this.setState({ totalFloorError: "" });
     }
     return valid;
   };
  
   validInputField = (stateName, stateErr) => {
     const {
-      pincode
+      builtupArea,
+      floor,
+      totalFloor
     } = this.state;
     let valid = true;
 
@@ -245,8 +260,8 @@ constructor(props){
       const propertyType      = await AsyncStorage.getItem('propertyType');
       const transactionType      = await AsyncStorage.getItem('transactionType');
 
-      console.log("token basicinfo",token);
-      console.log("propertyId basicinfo",propertyId);
+      // console.log("token basicinfo",token);
+      // console.log("propertyId basicinfo",propertyId);
       // if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
@@ -262,7 +277,7 @@ constructor(props){
         axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
            var property_id = propertyId;
-           console.log("property_id in constructor property details",property_id);
+           // console.log("property_id in constructor property details",property_id);
 
           axios
           .get('/api/masteramenities/list')
@@ -270,19 +285,19 @@ constructor(props){
             (res)=>{
               // console.log('res postdata', res);
               const postsdata = res.data;
-              console.log('postsdata',postsdata);
+              // console.log('postsdata',postsdata);
               this.setState({
                 allAmenities : postsdata,
               },()=>{
                      if(property_id!=null)
                               {
-                                console.log("here edit 2nd form");
+                                // console.log("here edit 2nd form");
 
                                          axios
                                           .get('/api/properties/'+property_id)
                                           .then( (response) =>{
-                                            console.log("get property in property in details = ",response);
-                                            console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
+                                            // console.log("get property in property in details = ",response);
+                                            // console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
 
                                             this.setState({
                                                 originalValues  : response.data.propertyDetails,
@@ -426,7 +441,8 @@ constructor(props){
                                                 console.log("error = ",error);
                                                 if(error.message === "Request failed with status code 401")
                                                 {
-                                                      Alert.alert("Your session is expired!"," Please login again.");
+                                                      Alert.alert("Your session is expired!"," Please loginagain.");
+                                                      AsyncStorage.removeItem('token');
                                                       this.navigateScreen('MobileScreen');  
                                                 }
                                             });
@@ -438,8 +454,9 @@ constructor(props){
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             Alert.alert("Your session is expired!"," Please login again.");
-                               this.navigateScreen('MobileScreen');  
+                             Alert.alert("Your session is expired!"," Please loginagain.");
+                             AsyncStorage.removeItem('token');
+                              this.navigateScreen('MobileScreen');  
                         }
                     });
 
@@ -474,7 +491,7 @@ constructor(props){
     workStationIndex   : indexW,
     workStation : valueW,
     },()=>{
-      console.log("here data",this.state.workStation);
+      // console.log("here data",this.state.workStation);
     });
   }
 
@@ -495,13 +512,13 @@ constructor(props){
   }
 
   onFurnishpantry=(indexF,valueF)=>{
-      console.log("here index", indexF);
-      console.log("here valueF", valueF);
+      // console.log("here index", indexF);
+      // console.log("here valueF", valueF);
       this.setState({
       furnishpantryIndex : indexF,
       furnishpantry : valueF,
       },()=>{
-        console.log("here pantry data",this.state.furnishpantry);
+        // console.log("here pantry data",this.state.furnishpantry);
     });
   }
 
@@ -521,7 +538,7 @@ constructor(props){
  }
 
  handleOnClickInternal = (index)=>{
-    console.log("index",index);
+    // console.log("index",index);
     var alldata = this.state.allAmenities;
     var status = alldata[index].checked;
     if(status===true){
@@ -539,295 +556,291 @@ constructor(props){
 submitFun(){
   var ov = this.state.originalValues;
 
-  console.log("this.state.furnishpantryIndex",this.state.furnishpantryIndex)
-  console.log("here state value",this.state.furnishpantry);
-  console.log("here ov furnishPantry value",ov.furnishPantry);
-  if(this.state.builtupArea.value!=="" &&
-        this.state.floor!=="" &&  this.state.totalfloor!=="" ){
-      if (this.validInput()) {
-        if(this.state.updateOperation === true){
-          console.log("update fun");
-          var ov = this.state.originalValues;
+  // console.log("this.state.furnishpantryIndex",this.state.furnishpantryIndex)
+  // console.log("here state value",this.state.furnishpantry);
+  // console.log("here ov furnishPantry value",ov.furnishPantry);
+  if (this.validInput()) {
+    if(this.state.builtupArea.value!=="" &&
+      this.state.floor!=="" &&  this.state.totalfloor!=="" ){
+      if(this.state.updateOperation === true){
+        // console.log("update fun");
+        var ov = this.state.originalValues;
 
-           var allAmenitiesData = this.state.allAmenities;
-           var allAmenitiesDataList =[];     
-              allAmenitiesData.map((item,index)=>{
-                if(item.checked == true)
-                {
-                  allAmenitiesDataList.push(item.amenity);
-                }
-              })
-              var eqAmenity ="";
-                if(allAmenitiesDataList.length != ov.Amenities.length )
-                {
-                  eqAmenity = false;
-                   console.log("equal eqAmenity not",eqAmenity);
-                }else{
-                  
-                  for (var i = 0; i < allAmenitiesDataList.length; i++)
-                  { 
-                          if (allAmenitiesDataList[i] != ov.Amenities[i]){
-                      eqAmenity = false;
-                          }else{
-                      eqAmenity = true;  
-                          }
-                     }
-                      console.log("equal yes eqAmenity but same",eqAmenity); 
-                }
-
-              console.log("outside eqAmenity",eqAmenity);
-
-              /*-----------------------------*/
-
-              var furnishedOptionsData = this.state.furnishItem;
-              var furnishedOptionsDataList =[];    
-                    furnishedOptionsData.map((item,index)=>{
-                      if(item.checked == true)
-                      {
-                        furnishedOptionsDataList.push(item.label);
-                      }
-                    })
-
-                    var eq ="";
-                    if(furnishedOptionsDataList.length != this.state.furnishItem.length )
-                    {
-                      eq = true;
-                       console.log("equal not",eq);
-                    }else{
-                     
-                      for (var i = 0; i < furnishedOptionsDataList.length; i++)
-                      {
-                          if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
-                          eq = false;
-                              }else{
-                          eq = true; 
-                              }
-                      }
-                      console.log("equal yes but same",eq);
-                    }
-                    console.log("outside eq",eq);
+         var allAmenitiesData = this.state.allAmenities;
+         var allAmenitiesDataList =[];     
+            allAmenitiesData.map((item,index)=>{
+              if(item.checked == true)
+              {
+                allAmenitiesDataList.push(item.amenity);
+              }
+            })
+            var eqAmenity ="";
+              if(allAmenitiesDataList.length != ov.Amenities.length )
+              {
+                eqAmenity = false;
+                 // console.log("equal eqAmenity not",eqAmenity);
+              }else{
                 
-                if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
-                    this.state.furnishedStatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
-                     this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing
-                     && parseInt(this.state.superArea) === ov.superArea && this.state.builtupArea === ov.builtupArea &&
-                      eqAmenity === true && eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation 
-                     && this.state.furnishpantry === ov.furnishPantry )
-                  {
-                      console.log("same data");
-                     // this.navigateScreen('Amenities');
-              this.navigateScreen('FinancialDetails');
-
-                     
-                  }else{
-                      console.log("diff data");
-                      console.log("allAmenities in result",this.state.allAmenities);
-                      var allAmenitiesData = this.state.allAmenities;
-                        var allAmenitiesDataList =[];     
-                            allAmenitiesData.map((item,index)=>{
-                              if(item.checked == true)
-                              {
-                                allAmenitiesDataList.push(item.amenity);
-                              }
-                            })
-
-                      var formValues ={}
-
-                      if(furnishedOptionsDataList.length>0)
-
-                      {
-                           var formValues = {
-                           
-                            "bedrooms"          : this.state.bedrooms,
-                            "balconies"         : this.state.balconies,
-                            "washrooms"         : this.state.washrooms,
-                            "furnishedStatus"   : this.state.furnishedStatus,
-                            "personal"          : this.state.personal,
-                            "pantry"            : this.state.pantry,
-                            "workStation"       : this.state.workStation,
-
-                            "bathrooms"         : this.state.bathrooms,
-                            "ageofProperty"     : this.state.ageofproperty,
-                            "facing"            : this.state.facing,
-                            "superArea"         : parseInt(this.state.superArea),
-                            "builtupArea"       : this.state.builtupArea,
-                            "property_id"       : this.state.propertyId,
-                            "uid"               : this.state.uid,
-
-                            "Amenities"         : allAmenitiesDataList,
-                            "floor"             : this.state.floor,
-                            "totalFloor"        : this.state.totalFloor,
-                            "superAreaUnit"     : this.state.superAreaUnit,
-                            "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                            "furnishPantry"     : this.state.furnishpantry,
-                            "furnishedOptions"  : furnishedOptionsDataList ,
-                          };
-                      }else{
-
-                               var formValues = {                    
-                            "bedrooms"          : this.state.bedrooms,
-                            "balconies"         : this.state.balconies,
-                            "washrooms"         : this.state.washrooms,
-                            "furnishedStatus"   : this.state.furnishedStatus,
-                            "personal"          : this.state.personal,
-                            "pantry"            : this.state.pantry,
-                            "workStation"       : this.state.workStation,
-
-                            "bathrooms"         : this.state.bathrooms,
-                            "ageofProperty"     : this.state.ageofproperty,
-                            "facing"            : this.state.facing,
-                            "superArea"         : parseInt(this.state.superArea),
-                            "builtupArea"       : this.state.builtupArea,
-                            "property_id"       : this.state.propertyId,
-                            "uid"               : this.state.uid,
-
-                            "Amenities"         : allAmenitiesDataList,
-                            "floor"             : this.state.floor,
-                            "totalFloor"        : this.state.totalFloor,
-                            "superAreaUnit"     : this.state.superAreaUnit,
-                            "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                            "furnishPantry"     : this.state.furnishpantry,
-                            // "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : null ,
-                          };
-                      }
-                    console.log("formValues",formValues);
-
-                    if( this.state.furnishedIndex!=="" &&  this.state.builtupArea.value!=="" &&
-                        this.state.floor!=="" &&  this.state.totalFloor!=="" ){
-
-                      if(allAmenitiesDataList!=""){
-
-                                                  axios
-                                                  .patch('/api/properties/patch/propertyDetails',formValues)
-                                                  .then( (res) =>{
-                                                    console.log(res);
-                                                    if(res.status === 200){
-                                                      console.log("PropertyDetails Res = ",res);
-
-                                                      // this.navigateScreen('Amenities');
-                                                      this.navigateScreen('FinancialDetails');
-
-                                                    }
-                                                  })
-                                                  .catch((error)=>{
-                                                                        console.log("error = ",error);
-                                                                        if(error.message === "Request failed with status code 401")
-                                                                        {
-                                                                             // Alert.alert("Your session is expired!"," Please login again.");
-                                                                            // this.props.navigation.navigate('MobileScreen'); 
-                                                                        }
-                                                     });
-
-                                                }else{
-                                                       Alert.alert("Please select atleast one amenity","");
-                                                }
-                         
+                for (var i = 0; i < allAmenitiesDataList.length; i++)
+                { 
+                        if (allAmenitiesDataList[i] != ov.Amenities[i]){
+                    eqAmenity = false;
                         }else{
-                             Alert.alert("Please enter mandatory fields","warning");
+                    eqAmenity = true;  
                         }
-                  }
+                   }
+                    // console.log("equal yes eqAmenity but same",eqAmenity); 
+              }
 
-        }else{
-          console.log("submit func");
-          var ov = this.state.originalValues;
-            var allAmenitiesData = this.state.allAmenities;
-              var allAmenitiesDataList =[];     
-              allAmenitiesData.map((item,index)=>{
-                if(item.checked == true)
-                {
-                  allAmenitiesDataList.push(item.amenity);
-                }
-              })
+            // console.log("outside eqAmenity",eqAmenity);
+
+            /*-----------------------------*/
 
             var furnishedOptionsData = this.state.furnishItem;
-                var furnishedOptionsDataList =[];    
+            var furnishedOptionsDataList =[];    
                   furnishedOptionsData.map((item,index)=>{
                     if(item.checked == true)
                     {
                       furnishedOptionsDataList.push(item.label);
                     }
                   })
-                    var eq = true;
-                    if(furnishedOptionsDataList.length !== this.state.furnishItem.length )
+
+                  var eq ="";
+                  if(furnishedOptionsDataList.length != this.state.furnishItem.length )
+                  {
+                    eq = true;
+                     // console.log("equal not",eq);
+                  }else{
+                   
+                    for (var i = 0; i < furnishedOptionsDataList.length; i++)
                     {
-                      eq = false;
-                       console.log("equal not",eq);
-                    }else{
-                      for (var i = 0; i < furnishedOptionsDataList.length; i++)
-                      {
-                              if (furnishedOptionsDataList[i] != this.state.furnishItem[i]){
-                          eq = false;
-                              }else{
-                          eq = true; 
-                              }
-                         }
-                          console.log("equal yes but same",eq);
+                        if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+                        eq = false;
+                            }else{
+                        eq = true; 
+                            }
                     }
+                    // console.log("equal yes but same",eq);
+                  }
+                  // console.log("outside eq",eq);
+              
+              if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
+                  this.state.furnishedStatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
+                   this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing
+                   && parseInt(this.state.superArea) === ov.superArea && this.state.builtupArea === ov.builtupArea &&
+                    eqAmenity === true && eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation 
+                   && this.state.furnishpantry === ov.furnishPantry )
+                {
+                    // console.log("same data");
+                   // this.navigateScreen('Amenities');
+                    this.navigateScreen('FinancialDetails');
 
+                   
+                }else{
+                    // console.log("diff data");
+                    // console.log("allAmenities in result",this.state.allAmenities);
+                    var allAmenitiesData = this.state.allAmenities;
+                      var allAmenitiesDataList =[];     
+                          allAmenitiesData.map((item,index)=>{
+                            if(item.checked == true)
+                            {
+                              allAmenitiesDataList.push(item.amenity);
+                            }
+                          })
 
-                    const formValues = {
-                     
-                      "bedrooms"          : this.state.bedrooms,
-                      "balconies"         : this.state.balconies,
-                      "washrooms"         : this.state.washrooms,
-                      "furnishedStatus"   : this.state.furnishedStatus,
-                      "personal"          : this.state.personal,
-                      "pantry"            : this.state.pantry,
-                      "workStation"       : this.state.workStation,
+                    var formValues ={}
 
-                      "bathrooms"         : this.state.bathrooms,
-                      "ageofProperty"     : this.state.ageofproperty,
-                      "facing"            : this.state.facing,
-                      "superArea"         : parseInt(this.state.superArea),
-                      "builtupArea"       : this.state.builtupArea,
-                      "property_id"       : this.state.propertyId,
-                      "uid"               : this.state.uid,
+                    if(furnishedOptionsDataList.length>0)
 
-                      "Amenities"         : allAmenitiesDataList,
-                      "floor"             : this.state.floor,
-                      "totalFloor"        : this.state.totalFloor,
-                      "superAreaUnit"     : this.state.superAreaUnit,
-                      "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                      "furnishPantry"       : this.state.furnishpantry,
-                      "furnishedOptions"    : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
-                    };
-                    console.log("formValues",formValues);
+                    {
+                         var formValues = {
+                         
+                          "bedrooms"          : this.state.bedrooms,
+                          "balconies"         : this.state.balconies,
+                          "washrooms"         : this.state.washrooms,
+                          "furnishedStatus"   : this.state.furnishedStatus,
+                          "personal"          : this.state.personal,
+                          "pantry"            : this.state.pantry,
+                          "workStation"       : this.state.workStation,
 
-                      if( this.state.furnishedStatus!="" && this.state.furnishedStatus!==undefined &&  this.state.builtupArea.value!="" &&
-                        this.state.floor!=="" &&  this.state.totalFloor!=="" ){
+                          "bathrooms"         : this.state.bathrooms,
+                          "ageofProperty"     : this.state.ageofproperty,
+                          "facing"            : this.state.facing,
+                          "superArea"         : parseInt(this.state.superArea),
+                          "builtupArea"       : this.state.builtupArea,
+                          "property_id"       : this.state.propertyId,
+                          "uid"               : this.state.uid,
 
-                         axios
-                        .patch('/api/properties/patch/propertyDetails',formValues)
-                        .then( (res) =>{
-                          console.log(res);
-                          if(res.status === 200){
-                            console.log("PropertyDetails Res = ",res);
-                                                      this.navigateScreen('FinancialDetails');
-                            
-                           // this.navigateScreen('Amenities',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                          "Amenities"         : allAmenitiesDataList,
+                          "floor"             : this.state.floor,
+                          "totalFloor"        : this.state.totalFloor,
+                          "superAreaUnit"     : this.state.superAreaUnit,
+                          "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                          "furnishPantry"     : this.state.furnishpantry,
+                          "furnishedOptions"  : furnishedOptionsDataList ,
+                        };
+                    }else{
 
+                        var formValues = {                    
+                          "bedrooms"          : this.state.bedrooms,
+                          "balconies"         : this.state.balconies,
+                          "washrooms"         : this.state.washrooms,
+                          "furnishedStatus"   : this.state.furnishedStatus,
+                          "personal"          : this.state.personal,
+                          "pantry"            : this.state.pantry,
+                          "workStation"       : this.state.workStation,
+
+                          "bathrooms"         : this.state.bathrooms,
+                          "ageofProperty"     : this.state.ageofproperty,
+                          "facing"            : this.state.facing,
+                          "superArea"         : parseInt(this.state.superArea),
+                          "builtupArea"       : this.state.builtupArea,
+                          "property_id"       : this.state.propertyId,
+                          "uid"               : this.state.uid,
+
+                          "Amenities"         : allAmenitiesDataList,
+                          "floor"             : this.state.floor,
+                          "totalFloor"        : this.state.totalFloor,
+                          "superAreaUnit"     : this.state.superAreaUnit,
+                          "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                          "furnishPantry"     : this.state.furnishpantry,
+                          // "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : null ,
+                        };
+                    }
+                  console.log("formValues",formValues);
+
+                  if( this.state.furnishedIndex!=="" &&  this.state.builtupArea.value!=="" &&
+                      this.state.floor!=="" &&  this.state.totalFloor!=="" ){
+                    // console.log("allAmenitiesDataList==================+++>>>>>>>>>>>>>.",allAmenitiesDataList);
+                    if(allAmenitiesDataList && allAmenitiesDataList.length >0){
+                            axios
+                            .patch('/api/properties/patch/propertyDetails',formValues)
+                            .then( (res) =>{
+                              // console.log(res);
+                              if(res.status === 200){
+                                // console.log("PropertyDetails Res = ",res);
+
+                                // this.navigateScreen('Amenities');
+                                this.navigateScreen('FinancialDetails');
+
+                              }
+                            })
+                            .catch((error)=>{
+                                      console.log("error = ",error);
+                                      if(error.message === "Request failed with status code 401")
+                                      {
+                                           // Alert.alert("Your session is expired!"," Please loginagain.");
+                                          AsyncStorage.removeItem('token');
+                                          // this.props.navigation.navigate('MobileScreen'); 
+                                      }
+                               });
+
+                          }else{
+                                 Alert.alert("Please select atleast one amenity");
                           }
-                        })
-                        .catch((error)=>{
-                                              console.log("error = ",error);
-                                              if(error.message === "Request failed with status code 401")
-                                              {
-                                         //          Alert.alert("Your session is expired!"," Please login again.");
-                                         // this.props.navigation.navigate('MobileScreen');         
-                                             }
-                             });
+                       
+                      }
+                }
 
-                     }else{
-                            Alert.alert("Please enter mandatory fields","warning");
-                     }
+          }else{
+            // console.log("submit func");
+            var ov = this.state.originalValues;
+              var allAmenitiesData = this.state.allAmenities;
+                var allAmenitiesDataList =[];     
+                allAmenitiesData.map((item,index)=>{
+                  if(item.checked == true)
+                  {
+                    allAmenitiesDataList.push(item.amenity);
+                  }
+                })
 
-              }
-            } 
-        }else{
-          Alert.alert("Please enter mandatory fields","warning");
-        }
+              var furnishedOptionsData = this.state.furnishItem;
+                  var furnishedOptionsDataList =[];    
+                    furnishedOptionsData.map((item,index)=>{
+                      if(item.checked == true)
+                      {
+                        furnishedOptionsDataList.push(item.label);
+                      }
+                    })
+                      var eq = true;
+                      if(furnishedOptionsDataList.length !== this.state.furnishItem.length )
+                      {
+                        eq = false;
+                         // console.log("equal not",eq);
+                      }else{
+                        for (var i = 0; i < furnishedOptionsDataList.length; i++)
+                        {
+                                if (furnishedOptionsDataList[i] != this.state.furnishItem[i]){
+                            eq = false;
+                                }else{
+                            eq = true; 
+                                }
+                           }
+                            // console.log("equal yes but same",eq);
+                      }
 
-         
+
+                      const formValues = {
+                       
+                        "bedrooms"          : this.state.bedrooms,
+                        "balconies"         : this.state.balconies,
+                        "washrooms"         : this.state.washrooms,
+                        "furnishedStatus"   : this.state.furnishedStatus,
+                        "personal"          : this.state.personal,
+                        "pantry"            : this.state.pantry,
+                        "workStation"       : this.state.workStation,
+
+                        "bathrooms"         : this.state.bathrooms,
+                        "ageofProperty"     : this.state.ageofproperty,
+                        "facing"            : this.state.facing,
+                        "superArea"         : parseInt(this.state.superArea),
+                        "builtupArea"       : this.state.builtupArea,
+                        "property_id"       : this.state.propertyId,
+                        "uid"               : this.state.uid,
+
+                        "Amenities"         : allAmenitiesDataList,
+                        "floor"             : this.state.floor,
+                        "totalFloor"        : this.state.totalFloor,
+                        "superAreaUnit"     : this.state.superAreaUnit,
+                        "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                        "furnishPantry"       : this.state.furnishpantry,
+                        "furnishedOptions"    : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
+                      };
+                      console.log("formValues",formValues);
+
+                        if( this.state.furnishedStatus!="" && this.state.furnishedStatus!==undefined &&  this.state.builtupArea.value!="" &&
+                          this.state.floor!=="" &&  this.state.totalFloor!=="" ){
+                          if(allAmenitiesDataList && allAmenitiesDataList.length >0){
+                           axios
+                          .patch('/api/properties/patch/propertyDetails',formValues)
+                          .then( (res) =>{
+                            // console.log(res);
+                            if(res.status === 200){
+                              // console.log("PropertyDetails Res = ",res);
+                                this.navigateScreen('FinancialDetails');
+                              
+                             // this.navigateScreen('Amenities',{mobile:this.state.mobile,propertyType:this.state.propertyType,transactionType:this.state.transactionType,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+
+                            }
+                          })
+                          .catch((error)=>{
+                                                console.log("error = ",error);
+                                                if(error.message === "Request failed with status code 401")
+                                                {
+                                           //          Alert.alert("Your session is expired!"," Please loginagain.");
+                                                  AsyncStorage.removeItem('token');
+                                           // this.props.navigation.navigate('MobileScreen');         
+                                               }
+                               });
+                            }else{
+                                     Alert.alert("Please select atleast one amenity");
+                              }
+
+                       }
+
+                }
+              } 
+          }
   }
 
   totalFloor(){
@@ -842,8 +855,8 @@ submitFun(){
   builtArea(){
     var builtAreaValue=parseInt(this.state.builtupArea);
     var superAreaValue=parseInt(this.state.superArea);
-    console.log("builtArea",builtAreaValue);
-    console.log("superArea",superAreaValue);
+    // console.log("builtArea",builtAreaValue);
+    // console.log("superArea",superAreaValue);
 
     if(builtAreaValue >= superAreaValue){
       Alert.alert("Built Up Area should not be greater than Super Area");
@@ -872,65 +885,69 @@ submitFun(){
 
                   <View style={styles.divider}></View>
 
-                    <Text style={[styles.heading2,styles.marginBottom15]}>My Property is on<Text style={[{color:"#f00"}]}>*</Text></Text>
-                   <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
-                    <View style={[styles.inputWrapper2,{height:40}]}>
-                      <View style={styles.inputImgWrapper2}>
-                        <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                  <Text style={[styles.heading2,styles.marginBottom15]}>My Property is on</Text>
+                  <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
+                    <View style={{width:'46%'}}>
+                      <View style={[styles.inputWrapper2,{height:40,width:'100%'}]}>
+                        <View style={styles.inputImgWrapper2}>
+                          <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                        </View>
+                        <View style={styles.inputTextWrapper2}>
+                         <Dropdown
+                          label               ='Floors'
+                          containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
+                          dropdownOffset      = {{top:0, left: 0}}
+                          itemTextStyle       = {styles.ddItemText}
+                          inputContainerStyle = {styles.ddInputContainer}
+                          labelHeight         = {10}
+                          tintColor           = {colors.button}
+                          labelFontSize       = {sizes.label}
+                          fontSize            = {15}
+                          baseColor           = {'#666'}
+                          textColor           = {'#333'}
+                          labelTextStyle      = {styles.ddLabelTextFull}
+                          style               = {styles.ddStyle}
+                          data                = {this.state.floorData}
+                          value               = {this.state.floor}
+                          onChangeText        = {floor => {this.setState({floor},() => { this.validInputField('floor', 'floorError'); })}}
+                          onBlur              = {()=>this.totalFloor()}
+                        />
+                        </View>
                       </View>
-                      <View style={styles.inputTextWrapper2}>
-                       <Dropdown
-                      
-                        containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
-                        dropdownOffset      = {{top:0, left: 0}}
-                        itemTextStyle       = {styles.ddItemText}
-                        inputContainerStyle = {styles.ddInputContainer}
-                        labelHeight         = {10}
-                        tintColor           = {colors.button}
-                        labelFontSize       = {sizes.label}
-                        fontSize            = {15}
-                        baseColor           = {'#666'}
-                        textColor           = {'#333'}
-                        labelTextStyle      = {styles.ddLabelTextFull}
-                        style               = {styles.ddStyle}
-                        data                = {this.state.floorData}
-                        value               = {this.state.floor}
-                        onChangeText        = {floor => {this.setState({floor});}}
-                        onBlur              = {()=>this.totalFloor()}
-                      />
-                      </View>
+                      {this.displayValidationError('floorError')}
                     </View>
                     <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
                     </View>
-                      <View style={[styles.inputWrapper2,{height:40}]}>
-                  
-                      <View style={styles.inputImgWrapper2}>
-                        <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                      <View style={{width:'46%'}}>
+                        <View style={[styles.inputWrapper2,{height:40,width:'100%'}]}>
+                          <View style={styles.inputImgWrapper2}>
+                            <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
+                          </View>
+                          <View style={[styles.inputTextWrapper2]}>
+                            <Dropdown
+                            label               = "Total Floors"
+                            containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
+                            dropdownOffset      = {{top:0, left: 0}}
+                            itemTextStyle       = {styles.ddItemText}
+                            inputContainerStyle = {styles.ddInputContainer}
+                            labelHeight         = {10}
+                            tintColor           = {colors.button}
+                            labelFontSize       = {sizes.label}
+                            fontSize            = {15}
+                            baseColor           = {'#666'}
+                            textColor           = {'#333'}
+                            labelTextStyle      = {styles.ddLabelTextFull}
+                            style               = {styles.ddStyle}
+                            data                = {this.state.totalFloorData}
+                            value               = {this.state.totalFloor}
+                            onChangeText        = {totalFloor => {this.setState({totalFloor},() => { this.validInputField('totalFloor', 'totalFloorError'); })}}
+                            onBlur              = {()=>this.totalFloor()}
+                            />
+                          </View>
                       </View>
-                      <View style={[styles.inputTextWrapper2]}>
-                        <Dropdown
-                      
-                        containerStyle      = {styles.ddContainer,styles.dropHeight,{paddingLeft:5}}
-                        dropdownOffset      = {{top:0, left: 0}}
-                        itemTextStyle       = {styles.ddItemText}
-                        inputContainerStyle = {styles.ddInputContainer}
-                        labelHeight         = {10}
-                        tintColor           = {colors.button}
-                        labelFontSize       = {sizes.label}
-                        fontSize            = {15}
-                        baseColor           = {'#666'}
-                        textColor           = {'#333'}
-                        labelTextStyle      = {styles.ddLabelTextFull}
-                        style               = {styles.ddStyle}
-                        data                = {this.state.totalFloorData}
-                        value               = {this.state.totalFloor}
-                        onChangeText        = {totalFloor => {this.setState({totalFloor});}}
-                        onBlur              = {()=>this.totalFloor()}
-                        />
-                      </View>
+                      {this.displayValidationError('totalFloorError')}
                     </View>
-                  </View>
-
+                  </View> 
                   {this.state.propertyType !== "Commercial" ?
 
                   <View>
@@ -1095,7 +1112,7 @@ submitFun(){
                         </View>
                     </View>
                   }
-                  <Text style={[styles.heading2,styles.marginBottom15]}>It is<Text style={[{color:"#f00"}]}>*</Text></Text>
+                  <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
                   <View style={[styles.marginBottom15,{width:'100%'}]}>
                  
                     <RadioGroup
@@ -1280,13 +1297,14 @@ submitFun(){
                             </View>
 
                              <View style={[styles.marginBottom25]}>
+                              <Text style={[styles.heading2,styles.marginBottom5]}>Super Area</Text>
                               <View style={[styles.inputWrapper]}>
                                 <View style={styles.inputImgWrapper}>
                                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                                 </View>
                                 <View style={[styles.inputTextWrapper68,{}]}>
-                                  <TextField
-                                    label                 = "Super Area"
+                                  <TextInput
+                                    placeholder           = "Enter Super Area"
                                     onBlur                = {() => this.builtArea()}
                                     lineWidth             = {1}
                                     tintColor             = {colors.button}
@@ -1300,11 +1318,11 @@ submitFun(){
                                     containerStyle        = {styles.textContainer}
                                     inputContainerStyle   = {styles.textInputContainer}
                                     titleTextStyle        = {styles.textTitle}
-                                    style                 = {styles.textStyle}
+                                    style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                                     labelTextStyle        = {styles.textLabel}
                                     keyboardType          = "numeric"
                                     maxLength             = {10}
-                                    onChangeText          = {superArea => {this.setState({superArea},() => { this.validInputField('superArea', 'superAreaError'); })}}
+                                    onChangeText          = {superArea => {this.setState({superArea})}}
 
                                   />
                                 </View>
@@ -1328,17 +1346,17 @@ submitFun(){
                                   />
                                 </View>
                               </View>
-                              {this.displayValidationError('superAreaError')}
                             </View>
 
                             <View style={[styles.marginBottom25]}>
+                             <Text style={[styles.heading2,styles.marginBottom5]}>Built-up Area</Text>
                               <View style={[styles.inputWrapper]}>
                                 <View style={styles.inputImgWrapper}>
                                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                                 </View>
                                 <View style={styles.inputTextWrapper68}>
-                                  <TextField
-                                    label                 = "Built Area*"
+                                  <TextInput
+                                    placeholder           = "Enter Built-up Area"
                                     onChangeText          = {builtupArea => {this.setState({builtupArea},() => { this.validInputField('builtupArea', 'builtupAreaError'); })}}
                                     onBlur                = {() => this.builtArea()}
                                     lineWidth             = {1}
@@ -1353,7 +1371,7 @@ submitFun(){
                                     containerStyle        = {styles.textContainer}
                                     inputContainerStyle   = {styles.textInputContainer}
                                     titleTextStyle        = {styles.textTitle}
-                                    style                 = {styles.textStyle}
+                                    style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                                     labelTextStyle        = {styles.textLabel}
                                     keyboardType          = "numeric"
                                     maxLength             = {10}
@@ -1386,8 +1404,8 @@ submitFun(){
 
 
                               <View style={styles.amenitiesWrapper,styles.marginBottom25} >
-                                  <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
-                                  {console.log("here amenity",this.state.allAmenities)}
+                                  <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities</Text>           
+                                  {/*console.log("here amenity",this.state.allAmenities)*/}
                                    { this.state.allAmenities && this.state.allAmenities.length >0 
                                     ?
                                     this.state.allAmenities.map((data,index)=>(

@@ -25,7 +25,7 @@ import styles                                 from './styles.js';
 import { colors,sizes }                       from '../../config/styles.js';
 import { Dropdown }                           from 'react-native-material-dropdown';
 import DatePicker                             from "react-native-datepicker";
-import TimePicker                             from "react-native-24h-timepicker";
+// import TimePicker                             from "react-native-24h-timepicker";
 import Modal                                  from "react-native-modal";
 import {request, check, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import SwitchToggle                           from 'react-native-switch-toggle';
@@ -35,6 +35,7 @@ import Video                                  from 'react-native-video';
 import { KeyboardAwareScrollView }            from 'react-native-keyboard-aware-scroll-view';
 import Loading                                from '../../layouts/Loading/Loading.js'
 import Dialog                                 from "react-native-dialog";
+import DateTimePicker                         from '@react-native-community/datetimepicker';
 var Buffer = require('buffer/').Buffer
 import {
   Table,
@@ -84,14 +85,12 @@ navigateScreen=(route)=>{
     super(props);
     this.state={
       someOnemobile : '',
-      mobileNumberError : [],
+      mobileNumberError : "",
       builtArea : '',
       expectedRate : '',
       totalAsk : '',
       activeIndex : 0,
       availableFromDate : '',
-      time1: "00:00",
-      time2: "00:00",
       availability:"",
       available:[],
       openModal: false,
@@ -144,12 +143,17 @@ navigateScreen=(route)=>{
       "dialogVisible1"  : false,
       "imgPath"         : "",
       "index"           : -1 ,
-      // isLoading         :false,
-      // isLoadingVideo    :false,
+      isLoading         :false,
+      isLoadingVideo    :false,
+      date: new Date(new Date().setHours(0,0,0,0)),
+      date1: new Date(new Date().setHours(0,0,0,0)),
+      mode: 'time',
+      show: false,
+      show1: false,
     };
 
       var property_id = this.props.navigation.getParam('property_id','No property_id');
-      console.log("property_id in constructor property details",property_id);
+      // console.log("property_id in constructor property details",property_id);
      
   }
 
@@ -166,8 +170,8 @@ navigateScreen=(route)=>{
       const propertyType      = await AsyncStorage.getItem('propertyType');
       const transactionType      = await AsyncStorage.getItem('transactionType');
 
-      console.log("availability propertyId",propertyId);
-      console.log("availability mobile",mobile);
+      // console.log("availability propertyId",propertyId);
+      // console.log("availability mobile",mobile);
       // if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
@@ -180,11 +184,11 @@ navigateScreen=(route)=>{
         if(token!="")
         {
            var property_id = propertyId;
-           console.log("property_id in constructor property details",property_id);
+           // console.log("property_id in constructor property details",property_id);
 
             if(property_id!=null)
             {
-              console.log("here edit 4th form");
+              // console.log("here edit 4th form");
                 axios
                 .get('/api/properties/'+property_id)
                 .then( (response) =>{
@@ -222,7 +226,7 @@ navigateScreen=(route)=>{
      axios
       .get('/api/projectSettings/get/one/S3')
       .then((response)=>{
-        console.log("s3_response.............",response);
+        // console.log("s3_response.............",response);
         const config = {
                           bucket              : response.data.bucket,
                           keyPrefix           : 'propertiesImages',
@@ -252,28 +256,89 @@ navigateScreen=(route)=>{
     }
   }
 
+ 
+ 
+
+  setDate = (event, date) => {
+    // console.log("inside show")
+
+    date = date || this.state.date;
+ 
+    this.setState({
+      show: Platform.OS === 'ios' ? true : false,
+      date,
+    });
+  }
+
+  setDate1 = (event, date1) => {
+    // console.log("inside show")
+
+    date1 = date1 || this.state.date1;
+ 
+    this.setState({
+      show1: Platform.OS === 'ios' ? true : false,
+      date1,
+    });
+  }
+ 
+  show = mode => {
+    this.setState({
+      show: true,
+      mode,
+    },()=>{
+      // console.log("show",this.state.show);
+    });
+  }
+  show1 = mode => {
+    this.setState({
+      show1: true,
+      mode,
+    },()=>{
+      // console.log("show",this.state.show1);
+    });
+  }
+ 
+  timepicker = () => {
+    this.show('time');
+  }
+
+  timepicker1 = () => {
+    this.show1('time');
+  }
+
+  formatAMPM(date) {
+      var hours = date.getHours();
+      var minutes = date.getMinutes();
+      var ampm = hours >= 12 ? 'pm' : 'am';
+      hours = hours % 12;
+      hours = hours ? hours : 12; // the hour '0' should be '12'
+      minutes = minutes < 10 ? '0'+minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
+      return strTime;
+}
+
   validInput = () => {
     const {
       someOnemobile,
-      mobile,
+      // mobile,
     } = this.state;
     let valid = true;
 
     this.validate({
       someOnemobile: { 
         required: true, 
-        mobileNo: true,
+        // mobileNo: true,
         // numbers: true, 
-        minlength: 9, 
-        maxlength: 10 
+        // minlength: 9, 
+        // maxlength: 10 
       },
-      mobile: { 
-        required: true, 
-        mobileNo: true,
-        // numbers: true, 
-        minlength: 9, 
-        maxlength: 10 
-      },
+      // mobile: { 
+      //   required: true, 
+      //   mobileNo: true,
+      //   // numbers: true, 
+      //   minlength: 9, 
+      //   maxlength: 10 
+      // },
     });
 
     if (this.isFieldInError("someOnemobile")) {
@@ -284,22 +349,22 @@ navigateScreen=(route)=>{
       valid = true;
     }
 
-     if (this.isFieldInError("mobile")) {
-      this.setState({ mobileNumberError: this.getErrorsInField("mobile") });
-      valid = false;
-    } else {
-      this.setState({ mobileNumberError: "" });
-      valid = true;
-    }
+    //  if (this.isFieldInError("mobile")) {
+    //   this.setState({ mobileNumberError: this.getErrorsInField("mobile") });
+    //   valid = false;
+    // } else {
+    //   this.setState({ mobileNumberError: "" });
+    //   valid = true;
+    // }
 
-    return  (!this.isFieldInError("someOnemobile") && !this.isFieldInError("mobile"))  ;
+    return valid;
   };
 
 
    validInputField = (stateName, stateErr) => {
         const {
           someOnemobile,
-          mobile,
+          // mobile,
         } = this.state;
         let valid = true;
 
@@ -348,7 +413,7 @@ navigateScreen=(route)=>{
   }
 
   submitFun(){
-    // if(this.validInput()){
+    if(this.validInput()){
        if(this.state.updateOperation === true){
         // console.log("update fun");
            var ov = this.state.originalValues;
@@ -363,8 +428,8 @@ navigateScreen=(route)=>{
              var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
              var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
 
-             console.log("someOnemobileNo",someOnemobileNo);
-             console.log("myMobileNo",myMobileNo);
+             // console.log("someOnemobileNo",someOnemobileNo);
+             // console.log("myMobileNo",myMobileNo);
            
               var mobNo = "";
               if(this.state.contactPerson === "My Self"){
@@ -384,13 +449,13 @@ navigateScreen=(route)=>{
                 "uid"                 : this.state.uid,
               };
 
-              console.log("Availability req 1 = ",formValues);
+              // console.log("Availability req 1 = ",formValues);
               if(this.state.available.length!==0){
                   
               axios
               .patch('/api/properties/patch/availabilityPlan',formValues)
               .then( (res) =>{
-                console.log("availabilityPlan----------------",res);
+                // console.log("availabilityPlan----------------",res);
                 if(res.status === 200){
                   this.navigateScreen('Congratulation');
                  }
@@ -399,15 +464,15 @@ navigateScreen=(route)=>{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                             {
-                                 Alert.alert("Your session is expired! Please login again.","", "error");
+                                 Alert.alert("Your session is expired! Please login again.");
                                  this.navigateScreen('Home');          
                             }
                       });
               }else{
-                             Alert.alert("Please enter mandatory fields","warning");
+                    Alert.alert("Please add at least one slot.");
               }
           }else{
-            console.log("submit function");
+            // console.log("submit function");
             var ov = this.state.originalValues;
 
             let {
@@ -418,8 +483,8 @@ navigateScreen=(route)=>{
              var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
              var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
 
-             console.log("someOnemobileNo",someOnemobileNo);
-             console.log("myMobileNo",myMobileNo);
+             // console.log("someOnemobileNo",someOnemobileNo);
+             // console.log("myMobileNo",myMobileNo);
 
             var mobNo = "";
             if(this.state.contactPerson === "My Self"){
@@ -440,12 +505,12 @@ navigateScreen=(route)=>{
               "uid"                 : this.state.uid,
             };
 
-            console.log("Availability req 1 = ",formValues);
+            // console.log("Availability req 1 = ",formValues);
             if(this.state.available.length!==0){
               axios
               .patch('/api/properties/patch/availabilityPlan',formValues)
               .then( (res) =>{
-                console.log("availabilityPlan----------------",res);
+                // console.log("availabilityPlan----------------",res);
                 if(res.status === 200){
                    this.navigateScreen('Congratulation',{propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
                  }
@@ -459,12 +524,12 @@ navigateScreen=(route)=>{
                               }
                       });
             }else{
-              Alert.alert("Please enter mandatory fields","warning");
+              Alert.alert("Please add at least one slot.");
           }
 
      }
   }
-
+}
 
   onToggle=()=>{
     let {toggle} = this.state;
@@ -476,44 +541,36 @@ navigateScreen=(route)=>{
     this.setState({toggle:!this.state.toggle});
   }
 
-  onCancel1() {
-    this.TimePicker1.close();
-  }
- 
-  onConfirm1(hour, minute) {
-    this.setState({ time1: `${hour}:${minute}` });
-    this.TimePicker1.close();
-  } 
-  onCancel2() {
-    this.TimePicker2.close();
-  }
- 
-  onConfirm2(hour, minute) {
-    this.setState({ time2: `${hour}:${minute}` });
-    this.TimePicker2.close();
-  }
+
 
   handleAvailability(){
-    console.log("Avialbaility",this.state.availability);
-    console.log("From Time",this.state.time1);
-    console.log("To Time",this.state.time2);
+    // console.log("Avialbaility",this.state.availability);
+    // console.log("From Time",this.formatAMPM(this.state.date));
+    // console.log("To Time",this.formatAMPM(this.state.date1));
     const availability = this.state.available;
     const day  = this.state.availability;
-    const time = this.state.time1 + ' - ' + this.state.time2;
-
+    const time = this.formatAMPM(this.state.date) + ' - ' + this.formatAMPM(this.state.date1);
+    // console.log("time",time);
     if(day!=="" && time!==""){
-      console.log("day",day);
-      console.log("time",time);
+      // console.log("day",day);
+      // console.log("time",time);
       availability.push({
       "availability" : day,
       "time" : time,
       });
+      // console.log("availability",availability);
+
       this.setState({
         "available" : availability,
         "openModal": true
       },()=>{
+        this.setState({
+          availability : "",
+          date         : new Date(new Date().setHours(0,0,0,0)),
+          date1        : new Date(new Date().setHours(0,0,0,0)),
+        })
 
-        console.log("available=>",this.state.available);
+        // console.log("available=>",this.state.available);
       });
     }else{
 
@@ -534,14 +591,13 @@ navigateScreen=(route)=>{
 
   handleChoosePhoto = () => {
      const options = {
-      title: 'Video Picker', 
+      title: 'Image Picker', 
         storageOptions:{
           skipBackup:true,
           path:'images'
         }
     };
 
-    // this.setState({isLoading:true})
     request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
     .then(result => {
       console.log("result",result);
@@ -557,6 +613,7 @@ navigateScreen=(route)=>{
         case RESULTS.GRANTED:
           console.log('The permission is granted');
           ImagePicker.launchImageLibrary(options, response => {
+            console.log("response",response);
           if (response.uri) {
             const file = {
               uri  : response.uri,
@@ -568,12 +625,13 @@ navigateScreen=(route)=>{
                 var ext = fileName.split('.').pop(); 
                 if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
                   if (file) {
+                    this.setState({isLoading:true})
                     console.log("file------>",file);
                     console.log("config-------->",this.state.config);
                     RNS3
                     .put(file,this.state.config)
                     .then((Data)=>{
-                      console.log("Data = ",Data);
+                      // console.log("Data = ",Data);
                         var obj1={
                           imgPath : Data.body.postResponse.location,
                         }
@@ -583,11 +641,11 @@ navigateScreen=(route)=>{
                         }
                         this.setState({
                           imgArrayWSaws : imgArrayWSaws,
-                          // isLoading     : false
+                          isLoading     : false
                         })
                     })
                     .catch((error)=>{
-                            console.log("error in catch = ",error);
+                            // console.log("error in catch = ",error);
                             if(error.message === "Request failed with status code 401")
                               {
                                    Alert.alert("Your session is expired! Please login again.","", "error");
@@ -598,7 +656,7 @@ navigateScreen=(route)=>{
                     Alert.alert("File not uploaded","Something went wrong","error");  
                   }
                 }else{
-                  Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
+                  Alert.alert("Please upload file","Only Upload  images format (jpg,png,jpeg)");   
                 }
               }
             }
@@ -624,7 +682,6 @@ navigateScreen=(route)=>{
           path:'images'
         }
   };
-    // this.setState({isLoadingVideo:true})
     request(Platform.OS === 'ios' ? PERMISSIONS.IOS.PHOTO_LIBRARY : PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
     .then(result => {
       console.log("result",result);
@@ -640,18 +697,24 @@ navigateScreen=(route)=>{
         case RESULTS.GRANTED:
           console.log('The permission is granted');
           ImagePicker.launchImageLibrary(options, response => {
-          if (response.uri) {
             console.log("response",response);
+          if (response.uri) {
+            // console.log("response",response);
+            var url = response.path;
+            var filename = url.substring(url.lastIndexOf('/')+1);
             const file = {
                 uri  : response.uri,
-                name : response.fileName,
-                type : "video"
+                name : filename,
+                type : 'image/jpeg',
               }
+              console.log("file",file);
               if (file) {
                 var fileName = file.name; 
                 var ext = fileName.split('.').pop(); 
+                console.log("ext",ext)
                 if(ext=="mp4" || ext=="avi" || ext=="ogv"){ 
                   if (file) {
+                    this.setState({isLoadingVideo:true})
                     console.log("file------>",file);
                     console.log("config-------->",this.state.config);
                     RNS3
@@ -660,7 +723,7 @@ navigateScreen=(route)=>{
                       console.log("Data = ",Data);
                         this.setState({
                           singleVideo        : Data.body.postResponse.location,
-                          // isLoadingVideo     : false
+                          isLoadingVideo          : false
                         })
                     })
                     .catch((error)=>{
@@ -700,21 +763,23 @@ navigateScreen=(route)=>{
   }; 
 
 
-  deleteSlot(index){ 
-    var index = index;
-    console.log("this.state.available",this.state.available);
-    console.log("index",index);
-    // var array = this.state.available; // make a separate copy of the array
-    // array.splice(index, 1);
-    // // this.setState({
-    // //   available:array,
-    // }) 
-  };
+  deleteSlot = async () =>{ 
+    var index = this.state.index;;
+    // console.log("this.state.available",this.state.available);
+    // console.log("index",index);
+    var array = this.state.available; // make a separate copy of the array
+    array.splice(index, 1);
+    this.setState({
+      available:array,
+      dialogVisible2:false
+    }) 
+  }
 
   handleCancel = () => {
     this.setState({
      dialogVisible  : false ,
      dialogVisible1 : false ,
+     dialogVisible2 : false ,
      openModal      : false
    });
   };
@@ -724,7 +789,7 @@ navigateScreen=(route)=>{
       var filePath    = this.state.imgPath;
       var data        = filePath.split("/");
       var imageName   = data[4];
-      console.log("imageName==",imageName);
+      // console.log("imageName==",imageName);
       var array = this.state.imgArrayWSaws; // make a separate copy of the array
       array.splice(index, 1);
       this.setState({
@@ -738,6 +803,7 @@ navigateScreen=(route)=>{
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
     const { navigation } = this.props;
     let {activeIndex} = this.state;
+    const { show, date, date1, show1, mode } = this.state;
     // let weekDays = ["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
     // console.log("this.state.photo",this.state.photo);
      let properDetails = [
@@ -758,6 +824,7 @@ navigateScreen=(route)=>{
       },
     ];
 
+    console.log("this.state.isLoading",this.state.isLoading);
     return (
       <React.Fragment>
         <HeaderBar showBackBtn={true} navigation={navigation}/>
@@ -826,6 +893,7 @@ navigateScreen=(route)=>{
                           titleFontSize         = {sizes.title}
                           baseColor             = {'#666'}
                           textColor             = {'#333'}
+                          editable              = {false}
                           value                 = {this.state.mobile}
                           containerStyle        = {styles.textContainer}
                           inputContainerStyle   = {styles.textInputContainer}
@@ -903,31 +971,25 @@ navigateScreen=(route)=>{
 
               <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom25]}>
                 {/*First View*/}
-                <View style={{width:'28%'}}>
+                <View style={{width:'30%'}}>
                   <Text style={[styles.heading2,styles.marginBottom15]}>From Time</Text>
                   <View style={[styles.inputWrapper3]}>
                     <View style={styles.inputImgWrapper2}>
                       <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
                     </View>
-                    <View style={styles.inputTextWrapper2}>
+                    <View style={styles.inputTextWrapper3}>
                       <TouchableOpacity
-                          onPress={() => this.TimePicker1.open()}
+                          onPress={this.timepicker}
+                          title="Show time picker!"
                         >
-                        <Text style={styles.timeSelect}>{this.state.time1}</Text>
+                        <Text style={styles.timeSelect}>{this.formatAMPM(this.state.date)}</Text>
                         </TouchableOpacity>
-
-                        <TimePicker
-                          ref={ref => {
-                            this.TimePicker1 = ref;
-                          }}
-                          onCancel={() => this.onCancel1()}
-                          onConfirm={(hour, minute) => this.onConfirm1(hour, minute)}
-                          containerStyle        = {styles.textContainer}
-                          inputContainerStyle   = {styles.textInputContainer}
-                          titleTextStyle        = {styles.textTitle}
-                          style                 = {styles.textStyle}
-                          labelTextStyle        = {styles.textLabel}
-                        />
+                         { show && <DateTimePicker value={date}
+                            mode={mode}
+                            is24Hour={false}
+                            display="default"
+                            onChange={this.setDate} />
+                        }
                     </View>
                   </View>
                 </View>
@@ -938,31 +1000,25 @@ navigateScreen=(route)=>{
                 </View>
 
                 {/*Second View*/}
-                <View style={{width:'28%'}}>
+                <View style={{width:'30%'}}>
                   <Text style={[styles.heading2,styles.marginBottom15]}>To Time</Text>
                   <View style={[styles.inputWrapper3]}>
                     <View style={styles.inputImgWrapper2}>
                       <Icon name="building" type="font-awesome" size={15}  color="#aaa" style={{}}/>
                     </View>
-                    <View style={styles.inputTextWrapper2}>
+                    <View style={styles.inputTextWrapper3}>
                       <TouchableOpacity
-                          onPress={() => this.TimePicker2.open()}
+                          onPress={this.timepicker1}
+                          title="Show time picker!"
                         >
-                        <Text style={styles.timeSelect}>{this.state.time2}</Text>
+                        <Text style={styles.timeSelect}>{this.formatAMPM(this.state.date1)}</Text>
                         </TouchableOpacity>
-
-                        <TimePicker
-                          ref={ref => {
-                            this.TimePicker2 = ref;
-                          }}
-                          onCancel={() => this.onCancel2()}
-                          onConfirm={(hour, minute) => this.onConfirm2(hour, minute)}
-                          containerStyle        = {styles.textContainer}
-                          inputContainerStyle   = {styles.textInputContainer}
-                          titleTextStyle        = {styles.textTitle}
-                          style                 = {styles.textStyle}
-                          labelTextStyle        = {styles.textLabel}
-                        />
+                         { show1 && <DateTimePicker value={date1}
+                            mode={mode}
+                            is24Hour={false}
+                            display="default"
+                            onChange={this.setDate1} />
+                        }
                     </View>
                   </View>
                 </View>
@@ -999,7 +1055,7 @@ navigateScreen=(route)=>{
                     textStyle={styles.tableHeadText}
                     flexArr={[2, 1, 1]}
                   />
-                  {
+                  {this.state.available && this.state.available.length>0 ?
                     this.state.available.map((data,index)=>(
                     <Row
                       key={index}
@@ -1010,15 +1066,24 @@ navigateScreen=(route)=>{
                             type="material-community"
                             size={18} color="#dc3545" 
                             style={{fontWeight:'600'}}
-                            onPress={this.deleteSlot(index)}
+                            // onPress={this.deleteSlot.bind(index)}
+                            onPress = {()=>this.setState({dialogVisible2:true,index:index})}
                           />
                         </TouchableOpacity>
                       ]}
                       style={[styles.tableRow, index%2 && {backgroundColor: '#f1f1f1'}]}
                       textStyle={styles.tableText}
-                      flexArr={[2, 1, 1]}
+                      flexArr={[2, 2, 1]}
                     />
                   ))
+                  :
+                 <Row
+                    data={[
+                      <View style={{width:"100%",alignItems:'center'}}>
+                        <Text>No slots are added yet.</Text>
+                      </View>  
+                      ]}
+                  />  
                   }
                 </Table>
               </View>
@@ -1041,6 +1106,7 @@ navigateScreen=(route)=>{
                       </TouchableOpacity>
                     </View>
                   </View>
+
                   <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
                     {
                       this.state.imgArrayWSaws && this.state.imgArrayWSaws.length>0 ?
@@ -1060,8 +1126,15 @@ navigateScreen=(route)=>{
                         ))
                         :
                         null
-                    }
-                </View>    
+                    }                            
+                 </View>
+                {this.state.isLoading?
+                  <View style={[{marginLeft:'5%'}]}>
+                    <Loading />
+                  </View>  
+                  :
+                   null
+                }  
               </View>
 
               <View style={{marginTop:0,marginBottom:20,borderColor:'#000',borderWidth:1,}}>
@@ -1103,7 +1176,12 @@ navigateScreen=(route)=>{
                       null
 
                     }
-                  </View>    
+                  </View> 
+                  {this.state.isLoadingVideo?
+                    <Loading />
+                  :
+                   null
+                }     
               </View>
 
               <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
@@ -1169,6 +1247,15 @@ navigateScreen=(route)=>{
           </Dialog.Description>
           <Dialog.Button label="Cancel" onPress={this.handleCancel} />
           <Dialog.Button label="Delete" onPress={this.deleteimageWS}/>
+        </Dialog.Container>
+
+        <Dialog.Container visible={this.state.dialogVisible2}>
+          <Dialog.Title>Are you sure?</Dialog.Title>
+          <Dialog.Description>
+            Once deleted, you will not be able to recover this slot!
+          </Dialog.Description>
+          <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+          <Dialog.Button label="Delete" onPress={this.deleteSlot}/>
         </Dialog.Container>
       </React.Fragment>
     );

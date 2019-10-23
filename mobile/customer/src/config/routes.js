@@ -1,22 +1,25 @@
-import {createStackNavigator, createAppContainer, createSwitchNavigator, createDrawerNavigator } from 'react-navigation';
-import AuthLoadingScreen from '../layouts/AuthLoading/AuthLoadingScreen.js' 
-import Home from '../components/Home/Home.js';
-import SideMenuAfterLogin from '../layouts/SideMenu/SideMenuAfterLogin.js';
-import SideMenuBeforeLogin from '../layouts/SideMenu/SideMenuBeforeLogin.js';
-import SignUp from '../components/SystemSecurity/SignUp/SignUp.js';
-import BasicInfo from '../components/PostAndEarn/BasicInfo.js';
-import PropertyDetails from '../components/PostAndEarn/PropertyDetails.js';
-import Amenities from '../components/PostAndEarn/Amenities.js';
-import FinancialDetails from '../components/PostAndEarn/FinancialDetails.js';
-import Availability from '../components/PostAndEarn/Availability.js';
-import Congratulation  from '../components/PostAndEarn/Congratulation.js';
-import SearchProperty   from '../components/SearchProperty/SearchProperty.js';
-import PropertyList     from '../components/Property/PropertyList.js';
-import PropertyDetailsPage  from '../components/Property/PropertyDetailsPage.js';
-import MyPostedProperties from '../components/MyPostedProperties/MyPostedProperties.js';
-import MyInterestedProperties from '../components/MyInterestedProperties/MyInterestedProperties.js';
-import MobileScreen from '../components/SystemSecurity/LoginMobNo/MobileScreen.js';
-import OTPScreen from '../components/SystemSecurity/LoginOTP/OTPScreen.js';
+import { createSwitchNavigator }  from 'react-navigation';
+import { createDrawerNavigator }  from 'react-navigation-drawer';
+import { createStackNavigator }   from 'react-navigation-stack';
+import { createAppContainer }     from '@react-navigation/native';
+import AuthLoadingScreen          from '../layouts/AuthLoading/AuthLoadingScreen.js' 
+import Home                       from '../components/Home/Home.js';
+import SideMenuAfterLogin         from '../layouts/SideMenu/SideMenuAfterLogin.js';
+import SideMenuBeforeLogin        from '../layouts/SideMenu/SideMenuBeforeLogin.js';
+import SignUp                     from '../components/SystemSecurity/SignUp/SignUp.js';
+import BasicInfo                  from '../components/PostAndEarn/BasicInfo.js';
+import PropertyDetails            from '../components/PostAndEarn/PropertyDetails.js';
+import Amenities                  from '../components/PostAndEarn/Amenities.js';
+import FinancialDetails           from '../components/PostAndEarn/FinancialDetails.js';
+import Availability               from '../components/PostAndEarn/Availability.js';
+import Congratulation             from '../components/PostAndEarn/Congratulation.js';
+import SearchProperty             from '../components/SearchProperty/SearchProperty.js';
+import PropertyList               from '../components/Property/PropertyList.js';
+import PropertyDetailsPage        from '../components/Property/PropertyDetailsPage.js';
+import MyPostedProperties         from '../components/MyPostedProperties/MyPostedProperties.js';
+import MyInterestedProperties     from '../components/MyInterestedProperties/MyInterestedProperties.js';
+import MobileScreen               from '../components/SystemSecurity/LoginMobNo/MobileScreen.js';
+import OTPScreen                  from '../components/SystemSecurity/LoginOTP/OTPScreen.js';
 
 const HomeStack = createStackNavigator({
 
@@ -118,7 +121,7 @@ const HomeStack = createStackNavigator({
     navigationOptions: {
       header: null
     }
-  },
+  }
   
 });
 
@@ -127,7 +130,8 @@ const drawer = createDrawerNavigator({
 		screen: HomeStack
 	}
 },{
-  contentComponent: SideMenuAfterLogin
+  drawerLockMode: 'locked-closed',
+  contentComponent: SideMenuAfterLogin,
 });
 
 
@@ -140,6 +144,7 @@ export default createAppContainer(createSwitchNavigator(
     // Auth: AuthStack,
   },
   {
+    unmountInactiveRoutes: true,
     initialRouteName: 'AuthLoading',
   }
 ));

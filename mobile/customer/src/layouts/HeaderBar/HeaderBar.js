@@ -6,10 +6,10 @@ import {
   Alert,
   Image
 } from "react-native";
-import { Header, Icon  } from 'react-native-elements';
-import ValidationComponent from "react-native-form-validator";
-import { NavigationActions, StackActions } from 'react-navigation'
-
+import { Header, Icon  }                   from 'react-native-elements';
+import ValidationComponent                 from "react-native-form-validator";
+import { NavigationActions, StackActions, } from 'react-navigation'
+import { DrawerActions } from 'react-navigation-drawer';
 import styles from "./styles.js";
 
 import AsyncStorage               from '@react-native-community/async-storage';
@@ -17,16 +17,14 @@ import AsyncStorage               from '@react-native-community/async-storage';
 export default class NotificationHeader extends React.Component {
 
   navigateScreen=(route)=>{
-      const navigateAction = NavigationActions.navigate({
-      routeName: route,
-      params: {},
-      action: NavigationActions.navigate({ routeName: route }),
-    });
-    this.props.navigation.dispatch(navigateAction);
-  }
-
-
-
+  const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
+}
 
 
   constructor(props) {
@@ -37,17 +35,21 @@ export default class NotificationHeader extends React.Component {
     }
   }
 
+  componentDidMount(){
+    this.retrieveToken();
+  }
+
 
   retrieveToken = async()=>{
     var token = await AsyncStorage.getItem('token')
     var uid = await AsyncStorage.getItem('uid')
-    // console.log('token',token)
-    // console.log('uid',uid)
-    this.setState({token:token})
+    if(token!==""){
+      this.setState({token:token})
+    }
   }
 
    toggleDrawer = () => {
-      this.props.navigation.toggleDrawer(); 
+      this.props.navigation.dispatch(DrawerActions.toggleDrawer());
   }
 
   homescreen(){
@@ -56,7 +58,7 @@ export default class NotificationHeader extends React.Component {
 
   render() {
     const { navigation } = this.props;
-    
+    console.log("this.state.token=>Header",this.state.token);
     return (
       <Header
         placement="center"
@@ -83,11 +85,12 @@ export default class NotificationHeader extends React.Component {
         }
       
         rightComponent={
-          
+          this.state.token ?
             <TouchableOpacity onPress={this.toggleDrawer}>
               <Icon size={28} name='menu' type='material-community' color='#fff' />
             </TouchableOpacity>
-
+            :
+            null
         }
         containerStyle={styles.container}
       />

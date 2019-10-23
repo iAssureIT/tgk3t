@@ -70,7 +70,7 @@ export default class Congratulation extends ValidationComponent{
       const transactionType = await AsyncStorage.getItem('transactionType');
       const prop_index      = await AsyncStorage.getItem('index');
 
-      console.log("Congratulation propertyId",propertyId);
+      // console.log("Congratulation propertyId",propertyId);
         this.setState({uid:uid})
         this.setState({token:token})
         this.setState({mobile:mobile})
@@ -85,17 +85,17 @@ export default class Congratulation extends ValidationComponent{
              "index"      : prop_index
           }
 
-          console.log("index",formvalues)
+          // console.log("index",formvalues)
           axios
             .post('/api/properties/post/findindexper',formvalues)
             .then( (res) =>{
-              console.log("resposnse here===================>",res);
+              // console.log("resposnse here===================>",res);
               var cash_per = res.data.data.earnings;
-              console.log("here earnings",cash_per);
+              // console.log("here earnings",cash_per);
               axios
               .get('/api/properties/'+this.props.property_id)
               .then((propertyData) =>{
-                console.log("propertiesData",propertyData.data);
+                // console.log("propertiesData",propertyData.data);
                 axios
                   .get('/api/users/get/one/'+localStorage.getItem("uid"))
                   .then((userData) =>{
@@ -115,7 +115,7 @@ export default class Congratulation extends ValidationComponent{
                             "state"             : propertyData.data.propertyLocation.state,
                         }
                     }
-                    console.log("sendData",sendDataToUser);
+                    // console.log("sendData",sendDataToUser);
                     var sendDataToAdmin = {
                         "templateName"        : "Admin - New Property Posted",
                         "toUserId"            : "admin",
@@ -135,21 +135,22 @@ export default class Congratulation extends ValidationComponent{
                             "state"             : propertyData.data.propertyLocation.state,
                         }
                     }
-                    console.log("sendData",sendDataToAdmin);
+                    // console.log("sendData",sendDataToAdmin);
                     axios
                     .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
                     .then((result) =>{
-                      console.log("SendEmailNotificationToAdmin",result);
+                      // console.log("SendEmailNotificationToAdmin",result);
                       axios
                       .post('/api/masternotifications/post/sendNotification',sendDataToUser)
                       .then((res) =>{
-                        console.log("SendEmailNotificationToUser",res);           
+                        // console.log("SendEmailNotificationToUser",res);           
                       })
                       .catch((error)=>{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                            Alert.alert("Your session is expired!"," Please login again.");
+                            Alert.alert("Your session is expired!"," Please loginagain.");
+                            AsyncStorage.removeItem('token');
                             this.props.navigation.navigate('MobileScreen'); 
                         }
                     });          
@@ -159,7 +160,8 @@ export default class Congratulation extends ValidationComponent{
                     console.log("error = ",error);
                     if(error.message === "Request failed with status code 401")
                     {
-                        Alert.alert("Your session is expired!"," Please login again.");
+                        Alert.alert("Your session is expired!"," Please loginagain.");
+                        AsyncStorage.removeItem('token');
                         this.props.navigation.navigate('MobileScreen'); 
                     }
                 });  
@@ -169,7 +171,8 @@ export default class Congratulation extends ValidationComponent{
                   console.log("error = ",error);
                   if(error.message === "Request failed with status code 401")
                   {
-                    Alert.alert("Your session is expired!"," Please login again.");
+                    Alert.alert("Your session is expired!"," Please loginagain.");
+                    AsyncStorage.removeItem('token');
                     this.props.navigation.navigate('MobileScreen'); 
                   }
               });
@@ -210,7 +213,8 @@ export default class Congratulation extends ValidationComponent{
                 console.log("error = ",error);
                   if(error.message === "Request failed with status code 401")
                   {
-                       Alert.alert("Your session is expired!"," Please login again.");
+                       Alert.alert("Your session is expired!"," Please loginagain.");
+                       AsyncStorage.removeItem('token');
                        this.props.navigation.navigate('MobileScreen'); 
                   }
               });
@@ -220,7 +224,7 @@ export default class Congratulation extends ValidationComponent{
 
     submitFun(){
       var id = this.state.propertyId;
-      console.log("id",id);
+      // console.log("id",id);
 
       if(id.length>0)
       {
@@ -228,7 +232,7 @@ export default class Congratulation extends ValidationComponent{
         axios
           .get('/api/properties/'+id)
           .then( (res) =>{
-              console.log("get property = ",res.data);
+              // console.log("get property = ",res.data);
               this.setState({
                 allData : res.data,
               },()=>{

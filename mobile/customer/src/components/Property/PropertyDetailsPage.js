@@ -243,7 +243,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
       {source:require('../../images/p8.png'),price:'46 Lacs',property:'2 BHK'},
       {source:require('../../images/p6.png'),price:'50 Lacs',property:'2 BHK'},
     ];
-    // console.log("propertyProfile.gallery.video",propertyProfile.gallery.video);
+    console.log("propertyProfile.propertyDetails.Pantry",propertyProfile);
     return (
       <React.Fragment>
         
@@ -270,14 +270,16 @@ export default class PropertyDetailsPage extends ValidationComponent{
                         style={styles.bgImage2}
                         resizeMode="cover"
                       >
-                        <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
+                      <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
+                         <Button
+                          titleStyle      = {styles.buttonText}
+                          title           = {"For " + propertyProfile.transactionType}
+                          // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                          buttonStyle     = {styles.button4}
+                          containerStyle  = {[styles.buttonContainer4]}
+                        />
+                        {this.state.uid === propertyProfile.owner_id ?
                           <Button
-                            titleStyle      = {styles.buttonText}
-                            title           = {propertyProfile.gallery.Images.length+" Photos"}
-                            buttonStyle     = {styles.button4}
-                            containerStyle  = {[styles.buttonContainer4]}
-                          />
-                           <Button
                             titleStyle      = {styles.buttonText}
                             title           = {"Edit"}
                             // title           = {propertyProfile.gallery.Images.length+" Photos"}
@@ -286,7 +288,10 @@ export default class PropertyDetailsPage extends ValidationComponent{
                             containerStyle  = {[styles.buttonContainer4]}
                             style           = {{marginLeft:40}}
                           />
-                        </View>
+                         :
+                         null 
+                        }
+                      </View>
                       </ImageBackground>
                   </View>
                 ))
@@ -299,14 +304,11 @@ export default class PropertyDetailsPage extends ValidationComponent{
                     <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
                       <Button
                         titleStyle      = {styles.buttonText}
-                        title           = {"Photos"}
+                        title           = {"For " + propertyProfile.transactionType}
                         // title           = {propertyProfile.gallery.Images.length+" Photos"}
                         buttonStyle     = {styles.button4}
                         containerStyle  = {[styles.buttonContainer4]}
                       />
-                    </View>
-
-                    <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
                       <Button
                         titleStyle      = {styles.buttonText}
                         title           = {"Edit"}
@@ -326,14 +328,20 @@ export default class PropertyDetailsPage extends ValidationComponent{
 
           <View style={styles.formWrapper}>
             <View style={{flexDirection:'row'}}>
-              <Text style={styles.textSmallLight}>{propertyProfile.propertyLocation.society}</Text>
-              <Text style={{marginLeft:15}}>{'\u2022' + " "}</Text>
-              <Text style={styles.textSmallLight}>New Proerty</Text>
+              <Icon
+                  name="marker" 
+                  type="foundation"
+                  size={20}
+                  color={colors.golden}
+                  containerStyle={{marginRight:5}}
+                />
+              <Text style={styles.textSmallLight}>{propertyProfile.propertyLocation.society+", "+propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
             </View>
 
             <View style={[{width:'100%'},styles.marginBottom15]}>
              {propertyProfile.transactionType === "Sell" ?
                   <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Text style={styles.textLarge}>Total Price : </Text>
                     <Icon
                       name="rupee" 
                       type="font-awesome"
@@ -345,6 +353,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
                   </View>
                 :
                   <View style={{flexDirection:'row',alignItems:'center'}}>
+                    <Text style={styles.textLarge}>Monthly Rent : </Text>
                     <Icon
                       name="rupee" 
                       type="font-awesome"
@@ -355,16 +364,6 @@ export default class PropertyDetailsPage extends ValidationComponent{
                     <Text style={styles.textLarge}>{this.convertNumberToRupees(propertyProfile.financial.monthlyRent)}</Text>
                   </View>
               }
-              <View style={{flexDirection:'row'}}>
-                <Icon
-                  name="marker" 
-                  type="foundation"
-                  size={20}
-                  color={colors.golden}
-                  containerStyle={{marginRight:5}}
-                />
-                <Text style={styles.textSmall}>{propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
-              </View>
              
             </View>
 
@@ -401,7 +400,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
                   containerStyle={{marginRight:6}}
                 />
                 <View>
-                  <Text style={styles.textSmallLight}>Builtup Area</Text>
+                  <Text style={styles.textSmallLight}>Built-up Area</Text>
                   <Text style={styles.textSmall}>{propertyProfile.propertyDetails.builtupArea} {propertyProfile.propertyDetails.builtupAreaUnit}</Text>
                 </View>
               </View>
@@ -463,7 +462,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
                   containerStyle={{marginRight:6}}
                 />
                 <View>
-                  <Text style={styles.textSmallLight}>Floor / Total Floor</Text>
+                  <Text style={styles.textSmallLight}>Floor / Total Floors</Text>
                   <Text style={styles.textSmall}>{propertyProfile.propertyDetails.floor}/{propertyProfile.propertyDetails.totalFloor}</Text>
                 </View>
               </View>
@@ -581,7 +580,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
                 />
                 <View>
                   <Text style={styles.textSmallLight}>Age of Property</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.ageofProperty}</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.ageofProperty === "New" ? "0-1" : propertyProfile.propertyDetails.ageofProperty} Years</Text>
                 </View>
               </View>
               <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
@@ -607,7 +606,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
                   containerStyle={{marginRight:6}}
                 />
                 <View>
-                  <Text style={styles.textSmallLight}>availableFrom</Text>
+                  <Text style={styles.textSmallLight}>Available From</Text>
                   <Text style={styles.textSmall}>{propertyProfile.financial.availableFrom}</Text>
                 </View>
               </View>

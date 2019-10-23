@@ -81,8 +81,8 @@ navigateScreen=(route)=>{
       const propertyType      = await AsyncStorage.getItem('propertyType');
       const transactionType      = await AsyncStorage.getItem('transactionType');
 
-      console.log("token basicinfo",token);
-      console.log("propertyId basicinfo",propertyId);
+      // console.log("token basicinfo",token);
+      // console.log("propertyId basicinfo",propertyId);
       // if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
@@ -101,7 +101,7 @@ navigateScreen=(route)=>{
           .get('/api/masteramenities/list')
           .then(
             (res)=>{
-              console.log('res postdata------------------', res);
+              // console.log('res postdata------------------', res);
               const postsdata = res.data;
               // console.log('postsdata',postsdata);
               this.setState({
@@ -111,7 +111,7 @@ navigateScreen=(route)=>{
                   axios
                   .get('/api/properties/'+propertyId)
                   .then( (response) =>{
-                    console.log("get property in property in amenitiees= ",response);
+                    // console.log("get property in property in amenitiees= ",response);
 
                     this.setState({
                         originalValues  : response.data.propertyDetails,
@@ -135,7 +135,7 @@ navigateScreen=(route)=>{
                       this.setState({
                           allAmenities : allAmenitiesDataList,
                         },()=>{
-                          console.log("here allAmenities in didmount after match result",this.state.allAmenities);
+                          // console.log("here allAmenities in didmount after match result",this.state.allAmenities);
                           });
                   })
                 .catch((error)=>{
@@ -155,7 +155,8 @@ navigateScreen=(route)=>{
             console.log("error = ",error);
             // if(error.message === "Request failed with status code 401")
             //                   {
-            //                       Alert.alert("Your session is expired!"," Please login again.");
+            //                       Alert.alert("Your session is expired!"," Please loginagain.");
+AsyncStorage.removeItem('token');
             //                      this.props.navigation.navigate('MobileScreen');          
                                    
                                    
@@ -169,7 +170,7 @@ navigateScreen=(route)=>{
 
 
  handleOnClickInternal = (index)=>{
-    console.log("index",index);
+    // console.log("index",index);
     var alldata = this.state.allAmenities;
     var status = alldata[index].checked;
     if(status===true){
@@ -193,7 +194,7 @@ submitFun(){
 
         if(this.state.updateOperation === true){
 
-          console.log("update fun");
+          // console.log("update fun");
           var ov = this.state.originalValues;
           var allAmenitiesData = this.state.allAmenities;
           var allAmenitiesDataList =[];     
@@ -204,14 +205,14 @@ submitFun(){
               }
             })
             // console.log("this.state.allAmenities",this.state.allAmenities);
-            console.log("allAmenitiesDataList true",allAmenitiesDataList);
-            console.log("here result amenity",ov.Amenities);
+            // console.log("allAmenitiesDataList true",allAmenitiesDataList);
+            // console.log("here result amenity",ov.Amenities);
       
               var eq ="";
               if(allAmenitiesDataList.length != ov.Amenities.length )
               {
                 eq = false;
-                 console.log("equal not",eq);
+                 // console.log("equal not",eq);
               }else{
                 
                 for (var i = 0; i < allAmenitiesDataList.length; i++)
@@ -222,10 +223,10 @@ submitFun(){
                     eq = true;  
                         }
                    }
-                    console.log("equal yes but same",eq); 
+                    // console.log("equal yes but same",eq); 
               }
 
-              console.log("outside eq",eq);
+              // console.log("outside eq",eq);
 
 
                const formValues = {
@@ -237,7 +238,7 @@ submitFun(){
 
             if( eq === true )
             {
-              console.log("same data");
+              // console.log("same data");
               this.navigateScreen('FinancialDetails');
             }else{
 
@@ -251,7 +252,7 @@ submitFun(){
                       }
                     })
 
-                    console.log("allAmenitiesDataList true",allAmenitiesDataList);
+                    // console.log("allAmenitiesDataList true",allAmenitiesDataList);
 
                       if(allAmenitiesDataList!=""){
 
@@ -286,7 +287,7 @@ submitFun(){
 
           }else{
 
-            console.log("allAmenities in result",this.state.allAmenities);
+            // console.log("allAmenities in result",this.state.allAmenities);
             var allAmenitiesData = this.state.allAmenities;
               var allAmenitiesDataList =[];     
               allAmenitiesData.map((item,index)=>{
@@ -296,7 +297,7 @@ submitFun(){
                 }
               })
 
-              console.log("allAmenitiesDataList true",allAmenitiesDataList);
+              // console.log("allAmenitiesDataList true",allAmenitiesDataList);
 
               const formValues = {
                 "Amenities"         : allAmenitiesDataList,
@@ -312,9 +313,9 @@ submitFun(){
               axios
               .patch('/api/properties/patch/amenities',formValues)
               .then( (res) =>{
-                console.log(res);
+                // console.log(res);
                 if(res.status === 200){
-                  console.log("amenity Res = ",res);
+                  // console.log("amenity Res = ",res);
                   this.navigateScreen('FinancialDetails');
                 }
               })

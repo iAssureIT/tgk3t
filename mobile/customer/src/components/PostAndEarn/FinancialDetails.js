@@ -117,40 +117,45 @@ export default class FinancialDetails extends ValidationComponent{
 
   validInput = () => {
     const {
-      totalAsk,
+      totalPrice,
       maintenanceCharges,
       expectedRate,
+      monthlyRent,
     } = this.state;
     let valid = true;
 
     this.validate({
       totalPrice: {
+        required: true,
         numbers: true,
       },
       monthlyRent: {
+        required: true,
         numbers: true,
       },
       expectedRate: {
+        required: true,
         numbers: true,
       },
       maintenanceCharges: {
+        required: true,
         numbers: true,
       },
     });
 
-    if (this.isFieldInError("totalPrice")) {
+    if (this.isFieldInError("totalPrice") && this.state.transactionType === "Sell") {
       this.setState({ totalPriceError: this.getErrorsInField("totalPrice") });
       valid = false;
     } else {
-      this.setState({ totalAsktotalPriceErrorError: "" });
+      this.setState({ totalPriceError: "" });
     }
-    if (this.isFieldInError("monthlyRent")) {
+    if (this.isFieldInError("monthlyRent") && this.state.transactionType === "Rent") {
       this.setState({ monthlyRentError: this.getErrorsInField("monthlyRent") });
       valid = false;
     } else {
       this.setState({ monthlyRentError: "" });
     }
-    if (this.isFieldInError("expectedRate")) {
+    if (this.isFieldInError("expectedRate") && this.state.transactionType === "Sell") {
       this.setState({ expectedRateError: this.getErrorsInField("expectedRate") });
       valid = false;
     } else {
@@ -167,7 +172,10 @@ export default class FinancialDetails extends ValidationComponent{
   
   validInputField = (stateName, stateErr) => {
     const {
-      pincode
+      totalPrice,
+      maintenanceCharges,
+      expectedRate,
+      monthlyRent,
     } = this.state;
     let valid = true;
 
@@ -209,7 +217,7 @@ _retrieveData = async () => {
       const propertyType      = await AsyncStorage.getItem('propertyType');
       const transactionType      = await AsyncStorage.getItem('transactionType');
 
-      console.log("token basicinfo",token);
+      // console.log("token basicinfo",token);
       // if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
@@ -226,14 +234,14 @@ _retrieveData = async () => {
         axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
            var property_id = propertyId;
-           console.log("property_id in constructor property details",property_id);
+           // console.log("property_id in constructor property details",property_id);
               if(property_id!=null)
               {
-                console.log("here edit 3rd form");
+                // console.log("here edit 3rd form");
                   axios
                   .get('/api/properties/'+property_id)
                   .then( (response) =>{
-                    console.log("get property in property = ",response);
+                    // console.log("get property in property = ",response);
 
                     this.setState({
                        originalValues     : response.data.financial,
@@ -251,15 +259,15 @@ _retrieveData = async () => {
                        availableFrom      : response.data.financial.availableFrom,
 
                       },()=>{
-                        console.log("prev charge",this.state.prevCharges);
+                        // console.log("prev charge",this.state.prevCharges);
 
                         var includeCharges = this.state.totalAskItem;
-                          console.log("here includeCharges", includeCharges);
+                          // console.log("here includeCharges", includeCharges);
                           var includeChargesList = includeCharges.map((item,index)=>{
                             var propPresent = this.state.prevCharges.find((obj)=>{
                               return item.label === obj
                             })
-                            console.log("here propPresent ", propPresent);
+                            // console.log("here propPresent ", propPresent);
                             var newObj = Object.assign({},item);
                             if(propPresent){
                               newObj.checked = true
@@ -273,7 +281,7 @@ _retrieveData = async () => {
                           this.setState({
                             totalAskItem : includeChargesList,
                           },()=>{
-                            console.log("here totalAskItem in didmount after match result",this.state.totalAskItem);
+                            // console.log("here totalAskItem in didmount after match result",this.state.totalAskItem);
 
                           });
 
@@ -297,15 +305,14 @@ _retrieveData = async () => {
     }
   }
 submitFun(){
-
-   // console.log("here btn pressed");
-  if( this.state.totalPrice!="" || this.state.monthlyRent!="" )
-  {
+  if(this.validInput()) {
     console.log("Inside validinput",this.validInput())
-    if (this.validInput()) {
-      console.log("Inside validinput")
+   // console.log("here btn pressed");
+    if( this.state.totalPrice!="" || this.state.monthlyRent!="" )
+    {
+    
+      // console.log("Inside validinput")
       if(this.state.updateOperation!=true){
-
          // var includeChargesData = this.state.includeCharges;
          //  var includeChargesDataList =[];     
          //      includeChargesData.map((item,index)=>{
@@ -340,11 +347,11 @@ submitFun(){
           "uid"                 : this.state.uid,
         };
 
-         console.log("Financials formValues",formValues);
+         // console.log("Financials formValues",formValues);
            axios
           .patch('/api/properties/patch/financials',formValues)
           .then( (res) =>{
-            console.log("Financials res = ",res);
+            // console.log("Financials res = ",res);
             if(res.status === 200){
            this.navigateScreen('Availability',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
             }
@@ -353,7 +360,8 @@ submitFun(){
               console.log("error = ",error);
               if(error.message === "Request failed with status code 401")
               {
-                   // Alert.alert("Your session is expired!"," Please login again.");
+                   // Alert.alert("Your session is expired!"," Please loginagain.");
+                    AsyncStorage.removeItem('token');
                    // this.navigateScreen('MobileScreen');          
                        
               }
@@ -361,7 +369,7 @@ submitFun(){
 
         }else{
 
-          console.log("update fun");
+          // console.log("update fun");
           var ov = this.state.originalValues;
 
 
@@ -387,7 +395,7 @@ submitFun(){
           var eq =true;
           if(totalAskItemDataList.length != ov.includeCharges.length ){
             eq = false;
-             console.log("equal not",eq);
+             // console.log("equal not",eq);
           }else{
             for (var i = 0; i < totalAskItemDataList.length; i++)
             { 
@@ -397,18 +405,18 @@ submitFun(){
                 eq = true;  
                     }
                }
-                console.log("equal yes but same",eq); 
+                // console.log("equal yes but same",eq); 
           }
 
-          console.log("outside eq",eq);
+          // console.log("outside eq",eq);
                // this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
          
          
           var expectedRateValue = this.state.expectedRate.length>0 ? parseInt(this.state.expectedRate) : null;
           var totalPriceValue = this.state.totalPrice.length>0 ? parseInt(this.state.totalPrice) : null;
 
-          console.log("expectedRateValue=========================",expectedRateValue);
-          console.log("totalPriceValue===========================",totalPriceValue);
+          // console.log("expectedRateValue=========================",expectedRateValue);
+          // console.log("totalPriceValue===========================",totalPriceValue);
 
 
            if(eq === true && expectedRateValue === ov.expectedRate && totalPriceValue === ov.totalPrice &&
@@ -416,11 +424,11 @@ submitFun(){
              parseInt(this.state.maintenanceCharges) === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer &&
              this.state.measurementUnit === ov.measurementUnit)
             {
-            console.log("same data");
+            // console.log("same data");
               this.navigateScreen('Availability');
             }else{
-              console.log("diff data");
-              console.log("this.state.expectedRate",this.state.expectedRate);
+              // console.log("diff data");
+              // console.log("this.state.expectedRate",this.state.expectedRate);
               var expectedRate        = "";
               var totalPrice          = "";
               var monthlyRent         = "";
@@ -500,12 +508,12 @@ submitFun(){
               };
 
 
-              console.log("Financials req updateFormValues= ",updateFormValues);
+              // console.log("Financials req updateFormValues= ",updateFormValues);
                 // console.log("update function");
               axios
               .patch('/api/properties/patch/financials',updateFormValues)
               .then( (res) =>{
-                console.log("Financials res = ",res);
+                // console.log("Financials res = ",res);
                 if(res.status === 200){
                 this.navigateScreen('Availability',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
                 }
@@ -514,7 +522,8 @@ submitFun(){
                   console.log("error = ",error);
                   if(error.message === "Request failed with status code 401")
                   {
-                     //  Alert.alert("Your session is expired!"," Please login again.");
+                     //  Alert.alert("Your session is expired!"," Please loginagain.");
+                        AsyncStorage.removeItem('token');
                      // this.navigateScreen('MobileScreen');          
                            
                   }
@@ -523,14 +532,12 @@ submitFun(){
             }
           }
         }
-      }else{
-        Alert.alert("Please enter mandatory fields","warning");
       }
     }
 
 
  handleOnItem = (index)=>{
-    console.log("index",index);
+    // console.log("index",index);
     var alldata = this.state.totalAskItem;
     var status = alldata[index].checked;
     if(status===true){
@@ -541,9 +548,9 @@ submitFun(){
     this.setState({
       totalAskItem: alldata,
     },()=>{
-      console.log("here new data of totalAskItem",this.state.totalAskItem);
+      // console.log("here new data of totalAskItem",this.state.totalAskItem);
     });
-    console.log("current data status",status);
+    // console.log("current data status",status);
   }
 
 
@@ -572,13 +579,14 @@ submitFun(){
               {this.state.transactionType === "Sell" ?
                 <View>
                   <View style={[styles.marginBottom25]}>
+                   <Text style={[styles.heading2,styles.marginBottom5]}>Expected Rate</Text>
                    <View style={[styles.inputWrapper]}>
                     <View style={styles.inputImgWrapper}>
                       <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                     </View>
                     <View style={styles.inputTextWrapper68}>
-                      <TextField
-                        label                 = "Expected Rate"
+                      <TextInput
+                        placeholder           = "Enter Expected Rate"
                         onChangeText          = {expectedRate => {this.setState({expectedRate},() => { this.validInputField('expectedRate', 'expectedRateError');})}}
                         lineWidth             = {1}
                         tintColor             = {colors.button}
@@ -592,7 +600,7 @@ submitFun(){
                         containerStyle        = {styles.textContainer}
                         inputContainerStyle   = {styles.textInputContainer}
                         titleTextStyle        = {styles.textTitle}
-                        style                 = {styles.textStyle}
+                        style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                         labelTextStyle        = {styles.textLabel}
                         keyboardType          = 'number-pad'
                         maxLength             = {10}
@@ -622,13 +630,14 @@ submitFun(){
                 </View>
 
                 <View style={[styles.marginBottom25]}>
+                  <Text style={[styles.heading2,styles.marginBottom5]}>Total Ask</Text>
                   <View style={[styles.inputWrapper]}>
                     <View style={styles.inputImgWrapper}>
                       <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                     </View>
-                    <View style={styles.inputTextWrapper}>
-                      <TextField
-                        label                 = "Total Ask"
+                    <View style={styles.inputTextWrapper68}>
+                      <TextInput
+                        placeholder           = "Enter Total Ask"
                         onChangeText          = {totalPrice => {this.setState({totalPrice},() => { this.validInputField('totalPrice', 'totalPriceError');})}}
                         lineWidth             = {1}
                         tintColor             = {colors.button}
@@ -642,9 +651,9 @@ submitFun(){
                         containerStyle        = {styles.textContainer}
                         inputContainerStyle   = {styles.textInputContainer}
                         titleTextStyle        = {styles.textTitle}
-                        style                 = {styles.textStyle}
+                        style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                         labelTextStyle        = {styles.textLabel}
-                        keyboardType          = 'number-pad'
+                        keyboardType          = "numeric"
                         maxLength             = {10}
                       />
                     </View>
@@ -655,13 +664,14 @@ submitFun(){
               :
               <View>
                 <View style={[styles.marginBottom25]}>
+                  <Text style={[styles.heading2,styles.marginBottom5]}>Monthly Rent</Text>
                   <View style={[styles.inputWrapper]}>
                     <View style={styles.inputImgWrapper}>
                       <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                     </View>
                     <View style={styles.inputTextWrapper}>
-                      <TextField
-                        label                 = "Monthly Rent"
+                      <TextInput
+                        placeholder           = "Enter Monthly Rent"
                         onChangeText          = {monthlyRent => {this.setState({monthlyRent},() => { this.validInputField('monthlyRent', 'monthlyRentError');})}}
                         lineWidth             = {1}
                         tintColor             = {colors.button}
@@ -675,7 +685,7 @@ submitFun(){
                         containerStyle        = {styles.textContainer}
                         inputContainerStyle   = {styles.textInputContainer}
                         titleTextStyle        = {styles.textTitle}
-                        style                 = {styles.textStyle}
+                        style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                         labelTextStyle        = {styles.textLabel}
                         keyboardType          = 'number-pad'
                         maxLength             = {10}
@@ -724,7 +734,7 @@ submitFun(){
               null
               :
               <View>
-                <Text style={[styles.heading2,styles.marginBottom15]}>My Property includes</Text>
+                <Text style={[styles.heading2,styles.marginBottom15]}>My Property includes (optional)</Text>
                 <View style={[styles.marginBottom25]}>
                  {this.state.totalAskItem && this.state.totalAskItem.length >0 ?
                     this.state.totalAskItem.map((data,index)=>(
@@ -810,7 +820,7 @@ submitFun(){
                 </View>
               </View> 
 
-              <Text style={[styles.heading2,styles.marginBottom15]}>My Apartment is available from</Text>
+              <Text style={[styles.heading2,styles.marginBottom15]}>My Apartment is available from (optional)</Text>
               <View style={[styles.inputWrapper,styles.marginBottom25]}>
                 <View style={styles.inputImgWrapper}>
                   <Icon name="calendar" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -853,7 +863,7 @@ submitFun(){
                 </View>
               </View>
 
-              <Text style={[styles.heading2,styles.marginBottom15]}>Description</Text>
+              <Text style={[styles.heading2,styles.marginBottom15]}>Description (optional)</Text>
               <View style={[styles.descriptionView,styles.marginBottom15]}>
                 {/*<Text style={styles.inputText}>
                   My property is a semi furnished 3 BHK flat in a
