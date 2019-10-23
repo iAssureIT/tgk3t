@@ -34,6 +34,7 @@ class CreateUser extends Component {
       lastname          :"",
       signupEmail       : "",
       mobNumber         : "",
+      officeId          : "",
       
       formerrors :{
          firstname    : "",
@@ -86,6 +87,7 @@ class CreateUser extends Component {
 
 
     componentDidMount() {
+
 
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
@@ -152,8 +154,8 @@ class CreateUser extends Component {
                      swal("Your session is expired! Please login again.","", "error");
                      this.props.history.push("/login");
                 }
-      });             
-
+      });
+      
     }  
 
     createUser(event){
@@ -168,7 +170,7 @@ class CreateUser extends Component {
           
           "status"          : "Active",
           "roles"           :  this.state.role,
-          "officeLocation"  : this.refs.office.value,
+          "officeLocation"  : this.state.officeId,
         }
         console.log("formValues====",formValues)
         if(this.state.firstname!="" && this.state.lastname !="" && this.state.signupEmail && this.state.mobNumber && this.state.role != "--select--"){
@@ -207,9 +209,26 @@ class CreateUser extends Component {
           console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
         }
     }
+    handleOffice(event){
+      event.preventDefault();
+      this.setState({
+        officeId : event.target.value ,
+      })
+
+     // var that=this;
+     //  $("#office").change(function() {
+     //   var id = $(this).children(":selected").attr("id");
+         
+     //      that.setState({
+     //          officeId : id ,
+     //      })
+     //  });
+       
+    }
 
     render() {
       const {formerrors} = this.state;
+     
       return (
             <div>
                         <div className="modal fade" id="CreateUserModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -344,14 +363,16 @@ class CreateUser extends Component {
                                                           <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
                                                               <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                    <select className="form-control" value={this.state.officeid} ref ="office" id="office" name="office" data-text="office">
+                                                                    <select className="form-control" value={this.state.officeid} onChange={this.handleOffice.bind(this)} id="office" name="office" data-text="office">
                                                                         <option hidden> --Select-- </option>
-                                                                        <option value="Head Office">  Head Office </option>
+                                                                        <option Value="Head Office">  Head Office </option>
                                                                         <option value="Sales Agent Office"> Sales Agent Office </option>
                                                                            {this.state.office && this.state.office.length > 0?
                                                                           this.state.office[0].map( (locData, index)=>{
+                                                                            
                                                                            return( 
-                                                                                 <option key={index} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+                                                                                 <option key={index} value={locData._id}> {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+                                                                                 /*<option key={index} id={locData._id} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>*/
                                                                               )}
                                                                            )
                                                                           :
