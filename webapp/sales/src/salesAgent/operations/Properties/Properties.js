@@ -36,14 +36,7 @@ import './Properties.css';
 		$(".selectall").click(function(){
 		$(".individual").prop("checked",$(this).prop("checked"));
 		});
-		// var formValues = {
-		// 	user_id :userId,
-		// 	status	:"WIP" ,
-		// }
-		// console.log("formValues",formValues);
-	    // axios
-	    // .post('/api/salesagent/post/displaylist',formValues)
-	    // .get('/api/properties/list/salesagent/type/5d56b692b0c7a9b7c727ac13/WIP')
+		
 	    var formValues = {
 			status	:"WIP" ,
 		}
@@ -150,21 +143,21 @@ import './Properties.css';
 
 		}
 		console.log("formValues",formValues);
-		// axios
-	 //    .patch('/api/salesagent/patch/approvedlist',formValues)
-	 //    .then(
-	 //      (res)=>{
-	 //        console.log(res);
-	 //       if(res.status == 200)
-  //       {
-  //       swal("Good job!", " Property Listed Successfully!", "success")
-  //  		window.location.reload();
+		axios
+	    .patch('/api/salesagent/patch/approvedlist',formValues)
+	    .then(
+	      (res)=>{
+	        console.log(res);
+	       if(res.status == 200)
+        {
+        swal("Good job!", " Property Listed Successfully!", "success")
+   		window.location.reload();
 
-  //        }
-	 //        this.props.getTotalTabCount();
-	 //      }
-	 //    )
-	 //    .catch();
+         }
+	        this.props.getTotalTabCount();
+	      }
+	    )
+	    .catch();
 		}
 	
 	}
@@ -223,16 +216,13 @@ import './Properties.css';
 		for (var i = this.state.userData.length - 1; i >= 0; i--) {
 		var formValues ={
 			property_id 	  : this.state.userData[i],
-			status 			  : "VerifyPending",
-			user_id			  : "",
-			// allocatedToUserId : "",
 			remark 			  : ""
 
 		}
 		console.log("formValues",formValues);
 
 			axios
-			    .patch('/api/salesagent/patch/approvedlist',formValues)
+			    .post('/api/properties/post/allocateTofieldAgent/'+formValues.property_id)
 			    .then(
 			      (res)=>{
 			        console.log(res);
