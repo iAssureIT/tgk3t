@@ -3,6 +3,7 @@
   border: 2px solid #f4f4f4;
   margin-top: 13px;
   padding-top: 11px;
+  z-index: 1;
 }
 .imgSize{
 	height: 145px;
@@ -132,8 +133,9 @@ input[type=checkbox]:checked + .check-box::before,
 }
 .cancelImg{
  width: 17px;
- position: absolute;
+/* position: absolute;
  top: -19px;
  right: -26px;
-
+ z-index: 2;*/
+margin-bottom: 87px;
 }
