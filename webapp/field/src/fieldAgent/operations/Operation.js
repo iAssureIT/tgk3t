@@ -11,7 +11,7 @@ export default class Operation extends Component {
 		super(props);
 		// console.log("1 = ", props);
 		this.state = {
-			propertyStatus :"New",
+			propertyStatus :"VerifyPending",
 			// propertyStatus :"assignedTo",
 		}
 
@@ -79,7 +79,13 @@ export default class Operation extends Component {
 						   
 						    <li className="nav-item col-lg-2 col-md-2 active navPillsMargin ">
 						      {/*<a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="assignedTo" onClick={this.propertyFieldStatus.bind(this)}>New*/}
-						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="New" onClick={this.propertyFieldStatus.bind(this)}>New
+						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="VerifyPending" onClick={this.propertyFieldStatus.bind(this)}>New SA
+						      </a>
+						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						    </li>
+						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin ">
+						      {/*<a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="assignedTo" onClick={this.propertyFieldStatus.bind(this)}>New*/}
+						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="New" onClick={this.propertyFieldStatus.bind(this)}>New Client
 						      </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>

@@ -1,0 +1,85 @@
+/*Popular Places Image Container*/
+.headText{
+	font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 31px;
+    font-weight: 600;
+    line-height: 3;
+    word-spacing: 1px;
+}
+.headText1{
+	font-family: 'Roboto', sans-serif;
+    text-align: center;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 3;
+    word-spacing: 1px;
+}
+.imgContainer{
+	height:300px;
+	
+}
+.mumbai{
+	height:300px;
+	background-image: url("/images/new/3.png");
+	background-size : 100% 100%;
+}
+.mumbai1{
+	height:300px;
+	background-image: url("/images/new/3.png");
+	background-size : 100% 100%;
+	margin-top: 30px;
+}
+.pune{
+	background-image: url("/images/new/2.png");
+	background-size : 100% 100%;
+}
+.aurangabad{
+	background-image: url("/images/new/4.png");
+	background-size : 100% 100%;	
+}
+.nashik{
+	background-image: url("/images/new/5.png");
+	background-size : 100% 100%;	
+}
+/*.Bg{
+	background-color: #aaa;
+}*/
+.mT30{
+	margin-top: 30px;
+}
+.minusLeftM{
+	margin-left: -15px;
+}
+.transDiv{
+	font-family: 'Roboto', sans-serif;
+	height: 300px;
+	text-align: center;
+	color:#fff;
+	padding-top: 122px;
+	cursor: pointer;
+	width: 100%;
+}
+.transDiv h4{
+	    font-family: 'Roboto', sans-serif;
+    font-size: 15px !important;
+    margin: 0 !important;
+    font-weight: bold;
+    margin-top: 5px !important;
+}
+.hrLine{
+	background-color: #333;
+	height: 2px;
+	margin-bottom: 20px;
+}
+.hrLineD{
+	margin-bottom: 60px;
+}
+
+.marginRight{
+	margin-right: -15px !important;
+}
+.mlDotp{
+	    margin-left: 498px;
+
+}

@@ -24,11 +24,15 @@ import './Properties.css';
 		var formValues = {
 			/*user_id :"5d3ec084e7381f059964f5be",*/
 			// status	:"assignedTo" ,
-			status	:"New" ,
+			status	:"VerifyPending" ,
 		}
+
+		var userId =localStorage.getItem('user_ID');
+		var role =localStorage.getItem('userRole');
+		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 		// console.log("formValues",formValues);
 	    axios
-	    .post('/api/salesagent/post/displaylist',formValues)
+	    .get('/api/fieldagent/get/type/'+ userId + '/'+formValues.status)
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -36,7 +40,7 @@ import './Properties.css';
 	        this.setState({
 	          propertiesData : postsdata,
 	        });
-	    console.log("PropertyDetails++++++++++++++++++",postsdata);   
+	    console.log("PropertyDetails++++++++field++++++++++",postsdata);   
 	      }
 	    )
 	    .catch();
@@ -44,13 +48,15 @@ import './Properties.css';
 
    componentWillReceiveProps(nextProps){
     if(nextProps && nextProps.status){
+    	var userId =localStorage.getItem('user_ID');
+		var role =localStorage.getItem('userRole');
       	var formValues = {
 			user_id :"5d3ec084e7381f059964f5be",
-			status	:nextProps.status ? nextProps.status : "New" ,
+			status	:nextProps.status ? nextProps.status : "VerifyPending" ,
 		}
-		console.log("formValues",formValues);
+		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 	    axios
-	    .post('/api/salesagent/post/displaylist',formValues)
+	   .get('/api/fieldagent/get/type/'+ userId + '/'+formValues.status)
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -58,7 +64,7 @@ import './Properties.css';
 	        this.setState({
 	          propertiesData : postsdata,
 	        });
-	    console.log("PropertyDetails++++++++++++++++++",postsdata);   
+	    console.log("fields  Details++++++++++++++++++",postsdata);   
 	      }
 	    )
 	    .catch();

@@ -1,0 +1,66 @@
+
+.personServices{
+    font-family: 'Roboto', sans-serif;
+    margin-top: -42px;
+    background-color: #fff;
+    box-shadow: 3px 3px 10px #aaa;
+    height: 225px;
+    padding-top:38px;
+    font-size: 11px;
+    line-height: 20px;
+    text-align: center;
+}
+.personServices i{
+    color: #678afa;
+    font-size: 40px;
+}
+.personServices label{
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+}
+
+/*.mt40{
+    margin-top: 60px;
+}*/
+.mt9{
+    margin-top: 9px;
+}
+.arrow-right {
+  width: 0; 
+  height: 0; 
+  border-top: 60px solid transparent;
+  border-bottom: 60px solid transparent;
+  
+  border-left: 60px solid green;
+}
+.sale1{
+    z-index: 1;
+}
+.sale2{
+    z-index: 2
+}
+.saleImg{
+    width: 359px;
+    position: absolute;
+    top: 48px;
+    left: -20px;
+}
+.saleImg1{
+    width: 359px;
+    position: absolute;
+    top: 41px;
+    left: -20px;
+}
+
+.sale{
+    margin-top: 65px;
+    font-size: 12px;
+    margin-left: 19%;
+    text-align: center;
+}
+.saleText{
+    font-size: 15px;
+}
+
