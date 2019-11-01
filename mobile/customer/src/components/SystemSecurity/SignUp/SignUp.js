@@ -175,12 +175,16 @@ export default class SignUp extends ValidationComponent{
     this.setState({showPassword:!this.state.showPassword});
   }
   
-   componentDidMount(){
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
-      this._retrieveData();
-    }
+  componentDidMount(){
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
+    this._retrieveData();
+  }
 
-    _retrieveData = async () => {
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
+  _retrieveData = async () => {
     try {
       
       const mob = await AsyncStorage.getItem('mobile'); 

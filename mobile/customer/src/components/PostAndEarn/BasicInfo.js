@@ -40,15 +40,6 @@ const defaultOption = [
 ];
 
 export default class BasicInfo extends ValidationComponent{
-  // navigateScreen=(route)=>{
-  // const navigateAction = StackActions.reset({
-  //       index: 0,
-  //       actions: [
-  //         NavigationActions.navigate({ routeName: route}),
-  //       ],
-  //   });
-  //   this.props.navigation.dispatch(navigateAction);
-  // }
 
   navigateScreen=(route)=>{
       const navigateAction = NavigationActions.navigate({
@@ -332,6 +323,11 @@ export default class BasicInfo extends ValidationComponent{
     return error;
   }
 
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
+
  _retrieveData = async () => {
     try {
       const uid        = await AsyncStorage.getItem('uid');
@@ -366,7 +362,7 @@ export default class BasicInfo extends ValidationComponent{
                           originalValuesLocation    : res.data.propertyLocation,
                           districtName              : res.data.propertyLocation.district,
                           blockName                 : res.data.propertyLocation.block,
-                          fullAddress               : res.data.propertyLocation.fullAddress,
+                          // fullAddress               : res.data.propertyLocation.fullAddress,
                           propertyHolder            : res.data.propertyHolder,
                           transactionType           : res.data.transactionType,
                           propertyType              : res.data.propertyType,
@@ -435,10 +431,10 @@ export default class BasicInfo extends ValidationComponent{
 
   submitFun(){
    var uid = this.state.uid;
-   var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
-    this.setState({
-      "fullAddress": fullAddress,
-    });
+   // var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
+   //  this.setState({
+   //    "fullAddress": fullAddress,
+   //  });
 
     if(this.state.index.length>0)
     {
@@ -463,10 +459,10 @@ export default class BasicInfo extends ValidationComponent{
         "landmark"        : this.state.landmark,
         "index"           : this.state.index,
         "uid"             : uid,
-        "fullAddress"     : this.state.fullAddress,
+        // "fullAddress"     : this.state.fullAddress,
         "property_id"     : this.state.propertyId,
       };
-      // console.log("formValues",formValues);
+      console.log("formValues",formValues);
       // console.log("subAreaName",this.state.subAreaName);
       if (this.validInput()) {
       if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
@@ -481,7 +477,7 @@ export default class BasicInfo extends ValidationComponent{
               && this.state.propertyType === ov.propertyType && this.state.propertySubType === ov.propertySubType && 
               this.state.pincode === ovLoc.pincode && this.state.stateCode === ovLoc.state && this.state.cityName === ovLoc.city && 
               this.state.areaName === ovLoc.area && this.state.subAreaName === ovLoc.subArea && this.state.societyName === ovLoc.society &&
-              this.state.house === ovLoc.address &&  this.state.landmark === ovLoc.landmark &&  this.state.fullAddress === ovLoc.fullAddress
+              this.state.house === ovLoc.address &&  this.state.landmark === ovLoc.landmark 
               )
             {
               console.log("same data");

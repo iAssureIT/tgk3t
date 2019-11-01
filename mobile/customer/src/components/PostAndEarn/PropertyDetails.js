@@ -29,15 +29,6 @@ import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-sc
 const window = Dimensions.get('window');
  
 export default class PropertyDetails extends ValidationComponent{
-    // navigateScreen=(route)=>{
-    // const navigateAction = StackActions.reset({
-    //              index: 0,
-    //             actions: [
-    //             NavigationActions.navigate({ routeName: route}),
-    //             ],
-    //         });
-    //         this.props.navigation.dispatch(navigateAction);
-    // }
 
     navigateScreen=(route)=>{
           const navigateAction = NavigationActions.navigate({
@@ -156,6 +147,7 @@ constructor(props){
       allAmenities      : [],
       floorError        : "",
       totalFloorError   : "",
+      prevCharges       : [],
       // uid:"",
       // token:"",
       // mobile:"",
@@ -168,11 +160,18 @@ constructor(props){
 
   }
 
-   componentDidMount(){
+  componentDidMount(){
+    this._retrieveData();
+  }
+  // componentDidUpdate(){
+  //   this._retrieveData();
+  // }
+
+  componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
-    validInput = () => {
+  validInput = () => {
     const {
       builtupArea,
       floor,
@@ -261,7 +260,7 @@ constructor(props){
       const transactionType      = await AsyncStorage.getItem('transactionType');
 
       // console.log("token basicinfo",token);
-      // console.log("propertyId basicinfo",propertyId);
+      console.log("propertyId basicinfo",propertyId);
       // if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
@@ -276,7 +275,7 @@ constructor(props){
 
         axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
 
-           var property_id = propertyId;
+          var property_id = propertyId;
            // console.log("property_id in constructor property details",property_id);
 
           axios
@@ -293,159 +292,160 @@ constructor(props){
                               {
                                 // console.log("here edit 2nd form");
 
-                                         axios
-                                          .get('/api/properties/'+property_id)
-                                          .then( (response) =>{
-                                            // console.log("get property in property in details = ",response);
-                                            // console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
+                                   axios
+                                    .get('/api/properties/'+property_id)
+                                    .then( (response) =>{
+                                      console.log("get property in property in details = ",response);
+                                      // console.log("response.data.propertyDetails.furnishedStatus in property = ",response.data.propertyDetails.furnishedStatus);
 
+                                      this.setState({
+                                          originalValues  : response.data.propertyDetails,
+                                          bedrooms        : response.data.propertyDetails.bedrooms,
+                                          balconies       : response.data.propertyDetails.balconies,
+                                          washrooms       : response.data.propertyDetails.washrooms ? response.data.propertyDetails.washrooms : "",
+                                          furnishedStatus : response.data.propertyDetails.furnishedStatus,
+                                          personal        : response.data.propertyDetails.personal ? response.data.propertyDetails.personal : "",
+                                          pantry          : response.data.propertyDetails.pantry ? response.data.propertyDetails.pantry : "",
+                                          bathrooms       : response.data.propertyDetails.bathrooms,
+                                          ageofproperty   : response.data.propertyDetails.ageofProperty,
+                                          facing          : response.data.propertyDetails.facing,
+                                          superArea       : response.data.propertyDetails.superArea.toString(),
+                                          builtupArea     : response.data.propertyDetails.builtupArea,
+                                          updateOperation : true,
+                                          // amenity
+                                          floor           : response.data.propertyDetails.floor,
+                                          totalFloor      : response.data.propertyDetails.totalFloor,
+                                          // prevAmenities   : response.data.propertyDetails.Amenities,
+                                          superAreaUnit   : response.data.propertyDetails.superAreaUnit,
+                                          builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
+                                          prevCharges     : response.data.propertyDetails.furnishedOptions!==null && response.data.propertyDetails.furnishedOptions.length > 0 ? response.data.propertyDetails.furnishedOptions : [],
+                                          workStation     : response.data.propertyDetails.workStation ? response.data.propertyDetails.workStation : "",
+                                          furnishpantry   : response.data.propertyDetails.furnishPantry,
+
+                                          /*----------------------------------------*/
+                                          // originalValues  : response.data.propertyDetails,
+                                          prevAmenities   : response.data.propertyDetails.Amenities,
+                                          // updateOperation : response.data.propertyDetails.Amenities.length >0 ? true : false,
+                             
+                                        },()=>{
+                                            // console.log("here ov furnishpantry",this.state.furnishpantry);
+                                            console.log("floor====================>>>>>>>>>>>>>>>>>>>>>>>",this.state.floor);
+                                            
+
+                                              var allAmenitiesData = this.state.allAmenities;
+                                              var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
+                                              var propPresent = this.state.prevAmenities.find((obj)=>{
+                                              return item.amenity === obj;
+                                              })
+                                              var newObj = Object.assign({},item);
+                                              if(propPresent){
+                                                newObj.checked = true
+                                              }else{
+                                                newObj.checked = false
+                                              }
+                                              return newObj;
+                                            })
                                             this.setState({
-                                                originalValues  : response.data.propertyDetails,
-                                                bedrooms        : response.data.propertyDetails.bedrooms,
-                                                balconies       : response.data.propertyDetails.balconies,
-                                                washrooms       : response.data.propertyDetails.washrooms ? response.data.propertyDetails.washrooms : "",
-                                                furnishedStatus : response.data.propertyDetails.furnishedStatus,
-                                                personal        : response.data.propertyDetails.personal ? response.data.propertyDetails.personal : "",
-                                                pantry          : response.data.propertyDetails.pantry ? response.data.propertyDetails.pantry : "",
-                                                bathrooms       : response.data.propertyDetails.bathrooms,
-                                                ageofproperty   : response.data.propertyDetails.ageofProperty,
-                                                facing          : response.data.propertyDetails.facing,
-                                                superArea       : response.data.propertyDetails.superArea.toString(),
-                                                builtupArea     : response.data.propertyDetails.builtupArea,
-                                                updateOperation : true,
-                                                // amenity
-                                                floor           : response.data.propertyDetails.floor,
-                                                totalFloor      : response.data.propertyDetails.totalFloor,
-                                                // prevAmenities   : response.data.propertyDetails.Amenities,
-                                                superAreaUnit   : response.data.propertyDetails.superAreaUnit,
-                                                builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
-                                                prevCharges     : response.data.propertyDetails.furnishedOptions.length > 0 ? response.data.propertyDetails.furnishedOptions : "",
-                                                workStation     : response.data.propertyDetails.workStation ? response.data.propertyDetails.workStation : "",
-                                                furnishpantry   : response.data.propertyDetails.furnishPantry,
-
-                                                /*----------------------------------------*/
-                                                // originalValues  : response.data.propertyDetails,
-                                                prevAmenities   : response.data.propertyDetails.Amenities,
-                                                // updateOperation : response.data.propertyDetails.Amenities.length >0 ? true : false,
-                                   
+                                                allAmenities : allAmenitiesDataList,
                                               },()=>{
-                                                  // console.log("here ov furnishpantry",this.state.furnishpantry);
-                                                
-
-                                                    var allAmenitiesData = this.state.allAmenities;
-                                                    var allAmenitiesDataList = allAmenitiesData.map((item,index)=>{
-                                                    var propPresent = this.state.prevAmenities.find((obj)=>{
-                                                    return item.amenity === obj;
-                                                    })
-                                                    var newObj = Object.assign({},item);
-                                                    if(propPresent){
-                                                      newObj.checked = true
-                                                    }else{
-                                                      newObj.checked = false
-                                                    }
-                                                    return newObj;
-                                                  })
-                                                  this.setState({
-                                                      allAmenities : allAmenitiesDataList,
-                                                    },()=>{
-                                                      // console.log("here allAmenities in didmount after match result",this.state.allAmenities);
-                                                      });
+                                                // console.log("here allAmenities in didmount after match result",this.state.allAmenities);
+                                                });
 
 
-                                                  var furnishItemData = this.state.furnishItem;
-                                                  var furnishItemDataList = furnishItemData.map((item,index)=>{
-                                                  var propPresent = this.state.prevCharges.find((obj)=>{
-                                                  return item.label === obj;
-                                                  })
-                                                  var newObj = Object.assign({},item);
-                                                  if(propPresent){
-                                                    newObj.checked = true
-                                                  }else{
-                                                    newObj.checked = false
-                                                  }
-                                                  return newObj;
-                                                })
-
-                                                this.setState({
-                                                    furnishItem : furnishItemDataList,
-                                                  },()=>{
-                                                    // console.log("here furnishItem in didmount after match result",this.state.furnishItem);
-                                                    });
-
-
-
-                                                if(this.state.furnishedStatus === "Semi Furnished")
-                                                {
-                                                  this.setState({furnishedIndex:1});
-                                                }
-                                                if(this.state.furnishedStatus === "Fully Furnished")
-                                                {
-                                                  this.setState({furnishedIndex:0});
-                                                }
-                                                if(this.state.furnishedStatus === "Unfurnished")
-                                                {
-                                                  this.setState({furnishedIndex:2});
-                                                }
-
-
-                                                 if(this.state.furnishpantry === "Dry")
-                                                {
-                                                  this.setState({furnishpantryIndex:0});
-                                                }
-                                                if(this.state.furnishpantry === "Wet")
-                                                {
-                                                  this.setState({furnishpantryIndex:1});
-                                                }
-                                                if(this.state.furnishpantry === "Not available")
-                                                {
-                                                  this.setState({furnishpantryIndex:2});
-                                                }
-
-                                                /*pantry data*/
-
-                                                if(this.state.pantry === "no" || this.state.pantry === "No")
-                                                {
-                                                  this.setState({pantryIndex:1});
-                                                }else{
-                                                  this.setState({pantryIndex:0});
-                                                }
-
-                                                /*personal washroom*/
-                                                if(this.state.personal === "no" || this.state.personal === "No" )
-                                                {
-                                                   this.setState({personalIndex:1});
-                                                }else{
-                                                   this.setState({personalIndex:0});
-                                                }
-
-                                                
-
-
-                                                /*work station*/
-                                                if(this.state.workStation === 0 || this.state.workStation === "0"){
-                                                   this.setState({workStationIndex:0});
-                                                }
-                                                if(this.state.workStation === 1 || this.state.workStation === "1"){
-                                                   this.setState({workStationIndex:1});
-                                                }
-                                                if(this.state.workStation === 2 || this.state.workStation === "2"){
-                                                   this.setState({workStationIndex:2});
-                                                }
-
-
-                                              });
-                                          },()=>{
-                                            // console.log("selected index-----------------------------------------------------------------------------------------------------------------------",this.state.furnishpantryIndex);
+                                            var furnishItemData = this.state.furnishItem;
+                                            var furnishItemDataList = furnishItemData.map((item,index)=>{
+                                            var propPresent = this.state.prevCharges.find((obj)=>{
+                                            return item.label === obj;
+                                            })
+                                            var newObj = Object.assign({},item);
+                                            if(propPresent){
+                                              newObj.checked = true
+                                            }else{
+                                              newObj.checked = false
+                                            }
+                                            return newObj;
                                           })
-                                          .catch((error)=>{
-                                                console.log("error = ",error);
-                                                if(error.message === "Request failed with status code 401")
-                                                {
-                                                      Alert.alert("Your session is expired!"," Please loginagain.");
-                                                      AsyncStorage.removeItem('token');
-                                                      this.navigateScreen('MobileScreen');  
-                                                }
-                                            });
+
+                                          this.setState({
+                                              furnishItem : furnishItemDataList,
+                                            },()=>{
+                                              // console.log("here furnishItem in didmount after match result",this.state.furnishItem);
+                                              });
+
+
+
+                                          if(this.state.furnishedStatus === "Semi Furnished")
+                                          {
+                                            this.setState({furnishedIndex:1});
+                                          }
+                                          if(this.state.furnishedStatus === "Fully Furnished")
+                                          {
+                                            this.setState({furnishedIndex:0});
+                                          }
+                                          if(this.state.furnishedStatus === "Unfurnished")
+                                          {
+                                            this.setState({furnishedIndex:2});
+                                          }
+
+
+                                           if(this.state.furnishpantry === "Dry")
+                                          {
+                                            this.setState({furnishpantryIndex:0});
+                                          }
+                                          if(this.state.furnishpantry === "Wet")
+                                          {
+                                            this.setState({furnishpantryIndex:1});
+                                          }
+                                          if(this.state.furnishpantry === "Not available")
+                                          {
+                                            this.setState({furnishpantryIndex:2});
+                                          }
+
+                                          /*pantry data*/
+
+                                          if(this.state.pantry === "no" || this.state.pantry === "No")
+                                          {
+                                            this.setState({pantryIndex:1});
+                                          }else{
+                                            this.setState({pantryIndex:0});
+                                          }
+
+                                          /*personal washroom*/
+                                          if(this.state.personal === "no" || this.state.personal === "No" )
+                                          {
+                                             this.setState({personalIndex:1});
+                                          }else{
+                                             this.setState({personalIndex:0});
+                                          }
+
+                                          
+
+
+                                          /*work station*/
+                                          if(this.state.workStation === 0 || this.state.workStation === "0"){
+                                             this.setState({workStationIndex:0});
+                                          }
+                                          if(this.state.workStation === 1 || this.state.workStation === "1"){
+                                             this.setState({workStationIndex:1});
+                                          }
+                                          if(this.state.workStation === 2 || this.state.workStation === "2"){
+                                             this.setState({workStationIndex:2});
+                                          }
+
+
+                                        });
+                                    },()=>{
+                                      // console.log("selected index-----------------------------------------------------------------------------------------------------------------------",this.state.furnishpantryIndex);
+                                    })
+                                    .catch((error)=>{
+                                          console.log("error = ",error);
+                                          if(error.message === "Request failed with status code 401")
+                                          {
+                                                Alert.alert("Your session is expired!"," Please loginagain.");
+                                                AsyncStorage.removeItem('token');
+                                                this.navigateScreen('MobileScreen');  
+                                          }
+                                      });
                             }
                             /*if prop id close*/
                   });
@@ -468,6 +468,7 @@ constructor(props){
     } catch (error) {
       // Error retrieving data
     }
+
   }
 
   onSelectFurnishStatus=(index,value)=>{
@@ -870,7 +871,6 @@ submitFun(){
    
     const { navigation } = this.props;
     let {activeTab} = this.state;
-
     return (
        <React.Fragment>
            <HeaderBar showBackBtn={true} navigation={navigation}/>

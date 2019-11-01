@@ -32,15 +32,16 @@ const window = Dimensions.get('window');
 
 export default class PropertyDetailsPage extends ValidationComponent{
 
-   navigateScreen=(route)=>{
-  const navigateAction = StackActions.reset({
-               index: 0,
-              actions: [
-              NavigationActions.navigate({ routeName: route}),
-              ],
-          });
-          this.props.navigation.dispatch(navigateAction);
-  }
+   
+navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
+}
+
 
   constructor(props){
     super(props);
@@ -59,11 +60,10 @@ export default class PropertyDetailsPage extends ValidationComponent{
   }
 
   componentDidMount(){
-    var propertyProfile = this.props.navigation.getParam('propertyDetails','No Result');
-    var property_id = propertyProfile._id;
-    console.log("here data",propertyProfile);
-    this.setState({propertyProfile:propertyProfile,
-                   property_id:property_id})
+    this._retrieveData();
+  }
+
+  componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -71,10 +71,34 @@ export default class PropertyDetailsPage extends ValidationComponent{
     try {
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
-      if (uid !== null && token !== null) {
+      const propertyId  = await AsyncStorage.getItem('propertyId');
+      console.log("get propertyId========>>>>>>======= = ",propertyId);
+
+      if (uid !== null && token !== null && propertyId!==null) {
         // We have data!!
         this.setState({uid:uid})
         this.setState({token:token})
+        this.setState({property_id:propertyId})
+          axios
+          .get('/api/properties/'+propertyId)
+          .then( (res) =>{
+              console.log("get propertydea=============== = ",res.data);
+              this.setState({
+                propertyProfile : res.data,
+              },()=>{
+                 AsyncStorage.removeItem('propertyId');
+
+              });
+
+            // console.log("get property transactionType = ",res.data.transactionType);
+          })
+          .catch((error)=>{
+              console.log("error = ",error);
+              if(error.message === "Request failed with status code 401")
+              {
+                  
+              }
+           });
       }
     } catch (error) {
       // Error retrieving data
@@ -244,9 +268,9 @@ export default class PropertyDetailsPage extends ValidationComponent{
       {source:require('../../images/p6.png'),price:'50 Lacs',property:'2 BHK'},
     ];
     console.log("propertyProfile.propertyDetails.Pantry",propertyProfile);
+
     return (
-      <React.Fragment>
-        
+      <React.Fragment>      
         <HeaderBar showBackBtn={true} navigation={navigation}/>
         {propertyProfile!=null ?  
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
@@ -337,11 +361,16 @@ export default class PropertyDetailsPage extends ValidationComponent{
                 />
               <Text style={styles.textSmallLight}>{propertyProfile.propertyLocation.society+", "+propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
             </View>
-
+            <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+              <Text style={styles.textSmallLight}>
+                Property Type :
+                <Text style={styles.textLarge}> {propertyProfile.propertyType} </Text>
+              </Text>
+            </View> 
             <View style={[{width:'100%'},styles.marginBottom15]}>
              {propertyProfile.transactionType === "Sell" ?
                   <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Text style={styles.textLarge}>Total Price : </Text>
+                    <Text style={styles.textSmallLight}>Total Price : </Text>
                     <Icon
                       name="rupee" 
                       type="font-awesome"
@@ -353,7 +382,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
                   </View>
                 :
                   <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Text style={styles.textLarge}>Monthly Rent : </Text>
+                    <Text style={styles.textSmallLight}>Monthly Rent : </Text>
                     <Icon
                       name="rupee" 
                       type="font-awesome"
@@ -387,7 +416,7 @@ export default class PropertyDetailsPage extends ValidationComponent{
                 />
                 <View>
                   <Text style={styles.textSmallLight}>Super Area</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.superArea} {propertyProfile.propertyDetails.superAreaUnit}</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.superArea ? propertyProfile.propertyDetails.superArea+" "+propertyProfile.propertyDetails.superAreaUnit : "-"}</Text>
                 </View>
               </View>
 

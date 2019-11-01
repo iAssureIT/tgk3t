@@ -28,8 +28,6 @@ import DatePicker from "react-native-datepicker";
 
 const window = Dimensions.get('window');
 
-  
-
 
 export default class Amenities extends ValidationComponent{
  navigateScreen=(route)=>{

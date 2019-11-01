@@ -26,15 +26,6 @@ import axios                              from 'axios';
 
 
 export default class OTPScreen extends ValidationComponent {
-//   navigateScreen=(route)=>{
-// const navigateAction = StackActions.reset({
-//              index: 0,
-//             actions: [
-//             NavigationActions.navigate({ routeName: route}),
-//             ],
-//         });
-//         this.props.navigation.dispatch(navigateAction);
-// }
 
 navigateScreen=(route)=>{
     const navigateAction = NavigationActions.navigate({
@@ -44,6 +35,7 @@ navigateScreen=(route)=>{
   });
   this.props.navigation.dispatch(navigateAction);
 }
+
 
 
 	
@@ -70,6 +62,11 @@ navigateScreen=(route)=>{
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
     this._retrieveData();
   }
+
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
 
   _retrieveData = async () => {
     try {

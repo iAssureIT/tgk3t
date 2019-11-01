@@ -17,6 +17,7 @@ import ValidationComponent        from "react-native-form-validator";
 import { TextField }              from 'react-native-material-textfield';
 import CheckBox                   from 'react-native-check-box'
 import AsyncStorage               from '@react-native-community/async-storage';
+import { NavigationActions, StackActions }  from 'react-navigation';
 
 import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
 import Loading                    from '../../layouts/Loading/Loading.js'
@@ -27,6 +28,14 @@ import {colors,sizes}             from '../../config/styles.js';
 const window = Dimensions.get('window');
 
 export default class MyInterestedProperties extends ValidationComponent{
+   navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
+}
   constructor(props){
     super(props);
     this.state={
@@ -42,6 +51,11 @@ export default class MyInterestedProperties extends ValidationComponent{
       isLoading :true,
     };
   }
+
+  componentWillReceiveProps(nextProps){
+        this._retrieveData();
+  }
+
 
   componentDidMount(){
     this._retrieveData();
@@ -100,9 +114,7 @@ export default class MyInterestedProperties extends ValidationComponent{
           (res)=>{
             // console.log(res);
             const postsdata = res.data;
-            // console.log("postsdata",res);
-              // var city = postsdata[2].propertyLocation.city.split('|')[0];
-
+            console.log("postsdata",res);
             this.setState({
               searchResults : postsdata,
               isLoading     : false
@@ -244,6 +256,11 @@ export default class MyInterestedProperties extends ValidationComponent{
     
   }
 
+  propertyProfile(propId){
+    AsyncStorage.setItem('propertyId',propId)
+    this.navigateScreen('PropertyDetailsPage')
+  }
+
 
   render(){
     
@@ -253,66 +270,175 @@ export default class MyInterestedProperties extends ValidationComponent{
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
 
     // console.log("this.props.navigation = ",this.props.navigation);
-    return (
+     return (
       <React.Fragment>
         <HeaderBar showBackBtn={true} navigation={navigation}/>
         {this.state.isLoading === false ?
-        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
-          <View style={styles.formWrapper}>
-          <Text style={styles.textCenter}>My Intereted Properties</Text>
-            {this.state.searchResults && this.state.searchResults.length>0 ? 
-              this.state.searchResults.map((prop,i)=>(
-              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}>
-                <View style={[styles.propertyWrap,styles.marginBottom20]}>
-                  {
-                  prop.gallery.Images && prop.gallery.Images.length>0 ?
-                  <ImageBackground 
-                    // source={require('../../images/p1.png')}
-                    // source={prop.gallery ? prop.gallery.Images[0].imgPath : null}
-                    source = {{uri:prop.gallery.Images[0].imgPath}}
-                    style={styles.bgImage}
-                    resizeMode="cover"
-                    imageStyle={{borderRadius:4}}
-                  >
-                  <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
-                     <Button
-                      titleStyle      = {styles.buttonText}
-                      title           = {"For " + prop.transactionType}
-                      // title           = {propertyProfile.gallery.Images.length+" Photos"}
-                      buttonStyle     = {styles.button4}
-                      containerStyle  = {[styles.buttonContainer4]}
-                    />
-                  </View>  
-                  </ImageBackground>
-                   :
-                   <ImageBackground 
-                      source={require('../../images/1.png') }
-                      style={styles.bgImage}
-                      resizeMode="cover"
-                      imageStyle={{borderRadius:4}}
-                    >
-                    <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
-                       <Button
-                        titleStyle      = {styles.buttonText}
-                        title           = {"For " + prop.transactionType}
-                        // title           = {propertyProfile.gallery.Images.length+" Photos"}
-                        buttonStyle     = {styles.button4}
-                        containerStyle  = {[styles.buttonContainer4]}
-                      />
-                    </View>  
-                    </ImageBackground>
-                  }
-                  <View style={{width:'100%',padding:10}}>
-                    <View style={{flexDirection:'row'}}>
-                      <Text style={styles.textSmallLight}>{prop.propertyLocation.society}</Text>
-                      <Text style={{marginLeft:15}}>{'\u2022' + " "}</Text>
-                      <Text style={styles.textSmallLight}>New Proerty</Text>
-                    </View>
-
-                    <View style={{flexDirection:'row',marginBottom:15}}>
-                      <View style={{width:'50%'}}>
-                        {prop.transactionType === "Sell" ?
+          <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
+            <View style={styles.formWrapper}>
+              <Text style={styles.textCenter}>My Interested Properties</Text>
+              {this.state.searchResults && this.state.searchResults.length>0 ? 
+                this.state.searchResults.map((prop,i)=>(
+                <TouchableOpacity key={i} onPress={()=>this.propertyProfile(prop._id)}>
+                  <View style={[styles.propertyWrap,styles.marginBottom20]}>
+                    {
+                      prop.gallery.Images && prop.gallery.Images.length>0 ?
+                        <ImageBackground 
+                          source = {{uri:prop.gallery.Images[0].imgPath}}
+                          style={styles.bgImage}
+                          resizeMode="cover"
+                          imageStyle={{borderRadius:4}}
+                        >
+                        <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
+                           <Button
+                            titleStyle      = {styles.buttonText}
+                            title           = {"For " + prop.transactionType}
+                            // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                            buttonStyle     = {styles.button4}
+                            containerStyle  = {[styles.buttonContainer4]}
+                          />
+                          {this.state.token?
+                            prop.isInterested ?
+                            <Button
+                              onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                              titleStyle      = {styles.buttonText2}
+                              title           = "Interest Shown"
+                              buttonStyle     = {styles.button3}
+                              containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                              iconLeft
+                              icon = {<Icon
+                                name="thumbs-up" 
+                                type="font-awesome"
+                                size={20}
+                                color={colors.white}
+                                containerStyle={{marginRight:5}}
+                              />}
+                              />
+                              :
+                              <Button
+                                  onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                                  titleStyle      = {styles.buttonText2}
+                                  title           = "Express Interest"
+                                  buttonStyle     = {styles.button2}
+                                  containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                                  iconLeft
+                                  icon = {<Icon
+                                    name="thumbs-o-up" 
+                                    type="font-awesome"
+                                    size={20}
+                                    color={colors.white}
+                                    containerStyle={{marginRight:5}}
+                              />}
+                          />
+                          :
+                        <Button
+                            onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                            titleStyle      = {styles.buttonText2}
+                            title           = "Express Interest"
+                            buttonStyle     = {styles.button2}
+                            containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                            iconLeft
+                            icon = {<Icon
+                              name="thumbs-o-up" 
+                              type="font-awesome"
+                              size={20}
+                              color={colors.white}
+                              containerStyle={{marginRight:5}}
+                            />}
+                          />
+                        }
+                        </View>  
+                        </ImageBackground>
+                        :
+                        <ImageBackground 
+                          source={require('../../images/1.png') }
+                          style={styles.bgImage}
+                          resizeMode="cover"
+                          imageStyle={{borderRadius:4}}
+                        >
+                        <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
+                           <Button
+                            titleStyle      = {styles.buttonText}
+                            title           = {"For " + prop.transactionType}
+                            // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                            buttonStyle     = {styles.button4}
+                            containerStyle  = {[styles.buttonContainer4]}
+                          />
+                          {this.state.token?
+                            prop.isInterested ?
+                            <Button
+                              onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                              titleStyle      = {styles.buttonText2}
+                              title           = "Interest Shown"
+                              buttonStyle     = {styles.button3}
+                              containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                              iconLeft
+                              icon = {<Icon
+                                name="thumbs-up" 
+                                type="font-awesome"
+                                size={20}
+                                color={colors.white}
+                                containerStyle={{marginRight:5}}
+                              />}
+                              />
+                              :
+                              <Button
+                                  onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                                  titleStyle      = {styles.buttonText2}
+                                  title           = "Express Interest"
+                                  buttonStyle     = {styles.button2}
+                                  containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                                  iconLeft
+                                  icon = {<Icon
+                                    name="thumbs-o-up" 
+                                    type="font-awesome"
+                                    size={20}
+                                    color={colors.white}
+                                    containerStyle={{marginRight:5}}
+                              />}
+                          />
+                          :
+                        <Button
+                            onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                            titleStyle      = {styles.buttonText2}
+                            title           = "Express Interest"
+                            buttonStyle     = {styles.button2}
+                            containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                            iconLeft
+                            icon = {<Icon
+                              name="thumbs-o-up" 
+                              type="font-awesome"
+                              size={20}
+                              color={colors.white}
+                              containerStyle={{marginRight:5}}
+                            />}
+                          />
+                        }
+                        </View>  
+                      </ImageBackground>
+                     }
+                    <View style={{width:'100%',padding:10}}>
+                      <View style={{flexDirection:'row'}}>
+                        <Icon
+                            name="marker" 
+                            type="foundation"
+                            size={20}
+                            color={colors.golden}
+                            containerStyle={{marginRight:5}}
+                          />
+                        <Text style={styles.textSmallLight}>{prop.propertyLocation.society+", "+prop.propertyLocation.area+", "+prop.propertyLocation.city}</Text>
+                      </View>
+                      <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                        <Text style={styles.textSmallLight}>
+                          Property Type :
+                          <Text style={styles.textLarge}> {prop.propertyType} </Text>
+                        </Text>
+                      </View> 
+                      <View style={{flexDirection:'row',marginBottom:15}}>
+                        <View style={{width:'50%'}}>
+                           {prop.transactionType === "Sell" ?
                               <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Text style={styles.textSmallLight}>Total Price : </Text>
                                 <Icon
                                   name="rupee" 
                                   type="font-awesome"
@@ -324,6 +450,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                               </View>
                             :
                               <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Text style={styles.textSmallLight}>Monthly Rent : </Text>
                                 <Icon
                                   name="rupee" 
                                   type="font-awesome"
@@ -334,142 +461,133 @@ export default class MyInterestedProperties extends ValidationComponent{
                                 <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.monthlyRent)}</Text>
                               </View>
                           }
-
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name="marker" 
-                            type="foundation"
-                            size={20}
-                            color={colors.golden}
-                            containerStyle={{marginRight:5}}
-                          />
-                          <Text style={styles.textSmall}>{prop.propertyLocation.area+", "+prop.propertyLocation.city}</Text>
+                          
                         </View>
-                        
-                      </View>
 
-                      <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
-                        <Button
-                          onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
-                          titleStyle      = {styles.buttonText2}
-                          title           = "Details"
-                          buttonStyle     = {styles.button3}
-                          containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
-                          iconRight
-                        />
+                        <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
+                          <Button
+                            onPress={()=>this.propertyProfile(prop._id)}
+                            titleStyle      = {styles.buttonText2}
+                            title           = "Details"
+                            buttonStyle     = {styles.button3}
+                            containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
+                            iconRight
+                          />
+                        </View>
                       </View>
-                    </View>
-                    <View style={styles.divider}></View>
+                      <View style={styles.divider}></View>
 
-                    <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
+                      <View style={{flexDirection:'row',paddingVertical:10,justifyContent:'space-between'}}>
+                        {prop.propertyType === "Residential" ?
+                          <View  style={{}}>
+                            <View style={{flexDirection:'row'}}>
+                              <Icon
+                                name={"bed-empty"} 
+                                type={'material-community'}
+                                size={20}
+                                color={colors.grey}
+                              />
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Bedrooms</Text>
+                        </View>
+                        :
+                        <View  style={{}}>
+                            <View style={{flexDirection:'row'}}>
+                              <Icon
+                                name={"bed-empty"} 
+                                type={'material-community'}
+                                size={20}
+                                color={colors.grey}
+                              />
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Washrooms</Text>
+                        </View>
+                      }
+
                       {prop.propertyType === "Residential" ?
                         <View  style={{}}>
                           <View style={{flexDirection:'row'}}>
                             <Icon
-                              name={"bed-empty"} 
-                              type={'material-community'}
+                              name={"bath"} 
+                              type={'font-awesome'}
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Baths</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>Bedrooms</Text>
-                      </View>
-                      :
-                      <View  style={{}}>
+                        :
+                        <View  style={{}}>
                           <View style={{flexDirection:'row'}}>
                             <Icon
-                              name={"bed-empty"} 
+                              name={"bath"} 
+                              type={'font-awesome'}
+                              size={20}
+                              color={colors.grey}
+                            />
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Pantry</Text>
+                        </View>
+                      }  
+                        <View  style={{}}>
+                          <View style={{flexDirection:'row'}}>
+                            <Icon
+                              name={"stairs"} 
                               type={'material-community'}
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Floor</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>Washrooms</Text>
-                      </View>
-                    }
-                    {prop.propertyType === "Residential" ?
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"bath"} 
-                            type={'font-awesome'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies}</Text>
+
+                        <View  style={{}}>
+                          <View style={{flexDirection:'row'}}>
+                            <Icon
+                              name={"compass"} 
+                              type={'font-awesome'}
+                              size={20}
+                              color={colors.grey}
+                            />
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing}</Text>
+                          </View>
+                          <Text style={styles.textSmallLight}>Facing</Text>
                         </View>
-                        <Text style={styles.textSmallLight}>Baths</Text>
-                      </View>
-                      :
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"bath"} 
-                            type={'font-awesome'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry}</Text>
-                        </View>
-                        <Text style={styles.textSmallLight}>Pantry</Text>
-                      </View>
-                    }  
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"stairs"} 
-                            type={'material-community'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
-                        </View>
-                        <Text style={styles.textSmallLight}>Floor</Text>
                       </View>
 
-                      <View  style={{}}>
-                        <View style={{flexDirection:'row'}}>
-                          <Icon
-                            name={"compass"} 
-                            type={'font-awesome'}
-                            size={20}
-                            color={colors.grey}
-                          />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing}</Text>
-                        </View>
-                        <Text style={styles.textSmallLight}>Facing</Text>
+                      <View style={[styles.divider,{marginBottom:10}]}></View>
+
+                      <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                        <Text style={styles.textSmallLight}>
+                          Super Area
+                          <Text style={styles.textLarge}> {prop.propertyDetails.superArea ? prop.propertyDetails.superArea+" "+prop.propertyDetails.superAreaUnit : "-"} </Text>
+                        </Text>
                       </View>
+
+                      <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                        <Text style={styles.textSmallLight}>
+                          Possession by
+                          <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
+                        </Text>
+                      </View> 
+
                     </View>
-
-                    <View style={[styles.divider,{marginBottom:10}]}></View>
-
-                    <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                      <Text style={styles.textSmallLight}>
-                        Super Area
-                        <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
-                        <Text style={styles.textLarge}> {prop.propertyDetails.superAreaUnit} </Text>
-                      </Text>
-                    </View>
-
-                    <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                      <Text style={styles.textSmallLight}>
-                        Possession by
-                        <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
-                      </Text>
-                    </View> 
-
                   </View>
-                </View>
-              </TouchableOpacity>
-            ))
-            :
-             <Text style={[styles.textLarge,{textAlign:'center'}]}> Your Interested Properties will be shown here. </Text>
-            }
-          </View>
-        </ScrollView>
-         :
+                </TouchableOpacity>
+              ))
+              :
+               <Text style={[styles.textLarge,{textAlign:'center'}]}> Posted properties will be shown here. </Text>
+              }
+                
+
+            </View>
+          </ScrollView>
+          :
          <Loading /> 
        }
       </React.Fragment>

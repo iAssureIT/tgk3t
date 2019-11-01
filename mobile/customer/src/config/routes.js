@@ -132,6 +132,7 @@ const drawer = createDrawerNavigator({
 },{
   drawerLockMode: 'locked-closed',
   contentComponent: SideMenuAfterLogin,
+  drawerPosition: 'right'
 });
 
 

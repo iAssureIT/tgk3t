@@ -27,16 +27,15 @@ import { NavigationActions, StackActions } from 'react-navigation';
 const window = Dimensions.get('window');
 
 export default class Home extends Component{
+
 navigateScreen=(route)=>{
-    const navigateAction = NavigationActions.navigate({
+    const navigateAction = StackActions.push({
     routeName: route,
     params: {},
     action: NavigationActions.navigate({ routeName: route }),
   });
   this.props.navigation.dispatch(navigateAction);
 }
-
-
   constructor(props){
     super(props);
     // this.retrieveToken()
@@ -45,8 +44,8 @@ navigateScreen=(route)=>{
       activeBtn       : 'Residential-Sell',
       location        :'',
       locSearchResults:'',
-      uid:"",
-      token:"",
+      uid             :"",
+      token           :"",
     };
   }
 
@@ -55,7 +54,12 @@ navigateScreen=(route)=>{
     this.setState({activeBtn:option});
   }
 
+  componentWillReceiveProps(nextProps){
+        this.retrieveToken();
+  }
+
   componentDidMount(){
+    // console.log("navigateScreen",this.navigateScreen);
         // var uid = this.props.navigation.getParam('uid','No uid');
         // var token = this.props.navigation.getParam('token','No token');
       this.retrieveToken();
@@ -71,6 +75,7 @@ navigateScreen=(route)=>{
 
   handleLocation(value){
     var location =value;
+    console.log("location",location);
     this.setState({
       searchText:value,
       location : location,
@@ -106,7 +111,7 @@ navigateScreen=(route)=>{
 
             var citiesAreas = cities.concat(areas);
             var citiesAreassubAreas = citiesAreas.concat(subareaName);
-
+            console.log("citiesAreassubAreas",citiesAreassubAreas);
 
             this.setState({
               locSearchResults : citiesAreassubAreas,

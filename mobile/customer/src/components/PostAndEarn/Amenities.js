@@ -32,15 +32,6 @@ const window = Dimensions.get('window');
 
 
 export default class Amenities extends ValidationComponent{
-//  navigateScreen=(route)=>{
-// const navigateAction = StackActions.reset({
-//              index: 0,
-//             actions: [
-//             NavigationActions.navigate({ routeName: route}),
-//             ],
-//         });
-//         this.props.navigation.dispatch(navigateAction);
-// }
 
 navigateScreen=(route)=>{
     const navigateAction = NavigationActions.navigate({
@@ -68,9 +59,14 @@ navigateScreen=(route)=>{
 
   }
 
-   componentDidMount(){
+  componentDidMount(){
     this._retrieveData();
-    }
+  }
+
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
 
   _retrieveData = async () => {
     try {

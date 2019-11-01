@@ -13,14 +13,13 @@ export default StyleSheet.create({
     width:null,
     height:window.height/3,
     justifyContent:'center',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     borderBottomWidth:2,
     borderColor:'#ff0'
   },
   logoImage:{
-  	width:70,
   	height:55,
-  	marginRight:40
+    marginLeft:5
   },
   menuWrapper:{
   	width:'100%',
@@ -52,6 +51,18 @@ export default StyleSheet.create({
 		shadowRadius: 1.00,
 
 		// elevation: 0.5,
+  },
+    iconContainer1:{
+    // backgroundColor:'#fff',
+    color:"#fff",
+    height: 35,
+    width: 15,
+    alignItems:'center',
+    justifyContent: 'center',
+    marginRight:5,
+    marginLeft:25,
+
+    // elevation: 0.5,
   },
   menuText:{
   	color: colors.primary,

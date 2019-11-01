@@ -27,23 +27,31 @@ import { NavigationActions, StackActions } from 'react-navigation';
 
 export default class MobileScreen extends ValidationComponent {
 
-//   navigateScreen=(route)=>{
-// const navigateAction = StackActions.reset({
-//              index: 0,
-//             actions: [
-//             NavigationActions.navigate({ routeName: route}),
-//             ],
-//         });
-//         this.props.navigation.dispatch(navigateAction);
-// }
-navigateScreen=(route)=>{
-	  const navigateAction = NavigationActions.navigate({
-    routeName: route,
-    params: {},
-    action: NavigationActions.navigate({ routeName: route }),
-  });
-  this.props.navigation.dispatch(navigateAction);
+  navigateScreen=(route)=>{
+const navigateAction = StackActions.reset({
+             index: 0,
+            actions: [
+            NavigationActions.navigate({ routeName: route}),
+            ],
+        });
+        this.props.navigation.dispatch(navigateAction);
 }
+  // navigateScreen=(route)=>{
+  //     const navigateAction = NavigationActions.navigate({
+  //     routeName: route,
+  //     params: {},
+  //     action: NavigationActions.navigate({ routeName: route }),
+  //   });
+  //   this.props.navigation.dispatch(navigateAction);
+  // }
+// navigateScreen=(route)=>{
+//     const navigateAction = StackActions.push({
+//     routeName: route,
+//     params: {},
+//     action: NavigationActions.navigate({ routeName: route }),
+//   });
+//   this.props.navigation.dispatch(navigateAction);
+// }
 
 	constructor(props) {
 		super(props);
@@ -203,7 +211,7 @@ navigateScreen=(route)=>{
 		return (
       <React.Fragment>
             
-        <HeaderBar navigation={navigation}/>
+        <HeaderBar showBackBtn={true} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={styles.formWrapper}>

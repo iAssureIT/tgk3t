@@ -34,16 +34,6 @@ const window = Dimensions.get('window');
 
 export default class FinancialDetails extends ValidationComponent{
 
-  // navigateScreen=(route)=>{
-  // const navigateAction = StackActions.reset({
-  //              index: 0,
-  //             actions: [
-  //             NavigationActions.navigate({ routeName: route}),
-  //             ],
-  //         });
-  //         this.props.navigation.dispatch(navigateAction);
-  // }
-
   navigateScreen=(route)=>{
       const navigateAction = NavigationActions.navigate({
       routeName: route,
@@ -110,10 +100,13 @@ export default class FinancialDetails extends ValidationComponent{
     });
   }
 
-   componentDidMount(){
-       this._retrieveData();
- }
+  componentDidMount(){
+    this._retrieveData();
+  }
 
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
 
   validInput = () => {
     const {
@@ -241,7 +234,7 @@ _retrieveData = async () => {
                   axios
                   .get('/api/properties/'+property_id)
                   .then( (response) =>{
-                    // console.log("get property in property = ",response);
+                    console.log("get property in financial = ",response);
 
                     this.setState({
                        originalValues     : response.data.financial,
@@ -347,7 +340,7 @@ submitFun(){
           "uid"                 : this.state.uid,
         };
 
-         // console.log("Financials formValues",formValues);
+         console.log("Financials formValues",formValues);
            axios
           .patch('/api/properties/patch/financials',formValues)
           .then( (res) =>{

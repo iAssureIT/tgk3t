@@ -133,12 +133,12 @@ export default StyleSheet.create({
     marginVertical:5,
   },
   inputImgWrapper2:{
-    width:'25%',
+    width:'20%',
     justifyContent:'center',
     alignItems:'center',
     borderRightWidth:1,
     borderColor: colors.black,
-    marginVertical:5,
+    marginVertical:3,
   },
   inputTextWrapper : {
     width:'88%',

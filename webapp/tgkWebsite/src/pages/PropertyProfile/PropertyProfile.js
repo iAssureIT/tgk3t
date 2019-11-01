@@ -104,7 +104,7 @@ class PropertyProfile extends Component{
   }
   componentDidMount() {
 
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+  axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
   axios
     .get('/api/properties/'+this.state.profileId)

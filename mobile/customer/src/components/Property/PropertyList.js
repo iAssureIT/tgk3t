@@ -16,6 +16,7 @@ import axios                              from 'axios';
 
 import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
+import { NavigationActions, StackActions }  from 'react-navigation';
 
 import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
@@ -26,6 +27,14 @@ import AsyncStorage     from '@react-native-community/async-storage';
 const window = Dimensions.get('window');
 
 export default class PropertyList extends ValidationComponent{
+navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
+}
   constructor(props){
     super(props);
     this.state={
@@ -48,6 +57,11 @@ export default class PropertyList extends ValidationComponent{
     this.setState({searchResults:searchResults})
     this._retrieveData();
   }
+
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
 
   searchUpdated=(searchText)=>{
     this.setState({searchText});
@@ -193,7 +207,7 @@ export default class PropertyList extends ValidationComponent{
            if(error.message === "Request failed with status code 401")
           {
             AsyncStorage.setItem("originPage","searchProp");
-            Alert.alert('Your session is expired!', 'Please login again.');
+            Alert.alert('Login', 'Sorry! You need to first Login to Express Interest to this property.');
               this.props.navigation.navigate('MobileScreen')
           }
       });
@@ -225,6 +239,10 @@ export default class PropertyList extends ValidationComponent{
     
   }
 
+   propertyProfile(propId){
+    AsyncStorage.setItem('propertyId',propId)
+    this.navigateScreen('PropertyDetailsPage')
+  }
 
   render(){
     
@@ -273,7 +291,7 @@ export default class PropertyList extends ValidationComponent{
             </View>
             {this.state.searchResults && this.state.searchResults.length>0 ? 
               this.state.searchResults.map((prop,i)=>(
-              <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}>
+              <TouchableOpacity key={i} onPress={()=>this.propertyProfile(prop._id)}>
                 <View style={[styles.propertyWrap,styles.marginBottom20]}>
                   {
                     prop.gallery.Images && prop.gallery.Images.length>0 ?
@@ -314,7 +332,7 @@ export default class PropertyList extends ValidationComponent{
                               titleStyle      = {styles.buttonText2}
                               title           = {"Express Interest"}
                               buttonStyle     = {styles.button2}
-                              containerStyle  = {[styles.buttonContainer2]}
+                              containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
                               iconLeft
                               icon = {<Icon
                                 name="thumbs-o-up" 
@@ -330,7 +348,7 @@ export default class PropertyList extends ValidationComponent{
                             titleStyle      = {styles.buttonText2}
                             title           = "Express Interest"
                             buttonStyle     = {styles.button2}
-                            containerStyle  = {[styles.buttonContainer2]}
+                            containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
                             iconLeft
                             icon = {<Icon
                               name="thumbs-o-up" 
@@ -350,37 +368,54 @@ export default class PropertyList extends ValidationComponent{
                       resizeMode="cover"
                       imageStyle={{borderRadius:4}}
                     >
-                    <Button
-                        titleStyle      = {styles.buttonText}
-                        title           = {"For " + prop.transactionType}
-                        // title           = {propertyProfile.gallery.Images.length+" Photos"}
-                        buttonStyle     = {styles.button4}
-                        containerStyle  = {[styles.buttonContainer4]}
-                      />
-                    {this.state.token?
-                    prop.isInterested ?
+                    <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
                       <Button
-                        onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
-                        titleStyle      = {styles.buttonText2}
-                        title           = "Interest Shown"
-                        buttonStyle     = {styles.button3}
-                        containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                        iconLeft
-                        icon = {<Icon
-                          name="thumbs-up" 
-                          type="font-awesome"
-                          size={20}
-                          color={colors.white}
-                          containerStyle={{marginRight:5}}
-                        />}
+                          titleStyle      = {styles.buttonText}
+                          title           = {"For " + prop.transactionType}
+                          // title           = {propertyProfile.gallery.Images.length+" Photos"}
+                          buttonStyle     = {styles.button4}
+                          containerStyle  = {[styles.buttonContainer4]}
                         />
-                        :
+                      {this.state.token?
+                      prop.isInterested ?
+                        <Button
+                          onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                          titleStyle      = {styles.buttonText2}
+                          title           = "Interest Shown"
+                          buttonStyle     = {styles.button3}
+                          containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                          iconLeft
+                          icon = {<Icon
+                            name="thumbs-up" 
+                            type="font-awesome"
+                            size={20}
+                            color={colors.white}
+                            containerStyle={{marginRight:5}}
+                          />}
+                          />
+                          :
+                          <Button
+                              onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
+                              titleStyle      = {styles.buttonText2}
+                              title           = "Express Interest"
+                              buttonStyle     = {styles.button2}
+                              containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
+                              iconLeft
+                              icon = {<Icon
+                                name="thumbs-o-up" 
+                                type="font-awesome"
+                                size={20}
+                                color={colors.white}
+                                containerStyle={{marginRight:5}}
+                          />}
+                          />
+                          :
                         <Button
                             onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
                             titleStyle      = {styles.buttonText2}
                             title           = "Express Interest"
                             buttonStyle     = {styles.button2}
-                            containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
+                            containerStyle  = {[styles.buttonContainer2,{marginRight:10}]}
                             iconLeft
                             icon = {<Icon
                               name="thumbs-o-up" 
@@ -388,25 +423,10 @@ export default class PropertyList extends ValidationComponent{
                               size={20}
                               color={colors.white}
                               containerStyle={{marginRight:5}}
-                        />}
-                        />
-                        :
-                      <Button
-                          onPress         = {()=>this.interestBtn(prop._id,prop.isInterested)}
-                          titleStyle      = {styles.buttonText2}
-                          title           = "Express Interest"
-                          buttonStyle     = {styles.button2}
-                          containerStyle  = {[styles.buttonContainer2,{marginTop:10,marginRight:10}]}
-                          iconLeft
-                          icon = {<Icon
-                            name="thumbs-o-up" 
-                            type="font-awesome"
-                            size={20}
-                            color={colors.white}
-                            containerStyle={{marginRight:5}}
-                          />}
-                        />
-                      }
+                            />}
+                          />
+                        }
+                    </View>  
                     </ImageBackground>
                   }
                   <View style={{width:'100%',padding:10}}>
@@ -420,12 +440,17 @@ export default class PropertyList extends ValidationComponent{
                       />
                       <Text style={styles.textSmallLight}>{prop.propertyLocation.society+", "+prop.propertyLocation.area+", "+prop.propertyLocation.city}</Text>
                     </View>
-
+                    <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                      <Text style={styles.textSmallLight}>
+                        Property Type :
+                        <Text style={styles.textLarge}> {prop.propertyType} </Text>
+                      </Text>
+                    </View> 
                     <View style={{flexDirection:'row',marginBottom:15}}>
                       <View style={{width:'50%'}}>
                         {prop.transactionType === "Sell" ?
                               <View style={{flexDirection:'row',alignItems:'center'}}>
-                                <Text style={styles.textLarge}>Total Price : </Text>
+                                <Text style={styles.textSmallLight}>Total Price : </Text>
                                 <Icon
                                   name="rupee" 
                                   type="font-awesome"
@@ -437,7 +462,7 @@ export default class PropertyList extends ValidationComponent{
                               </View>
                             :
                               <View style={{flexDirection:'row',alignItems:'center'}}>
-                                <Text style={styles.textLarge}>Monthly Rent : </Text>
+                                <Text style={styles.textSmallLight}>Monthly Rent : </Text>
                                 <Icon
                                   name="rupee" 
                                   type="font-awesome"
@@ -453,7 +478,7 @@ export default class PropertyList extends ValidationComponent{
 
                       <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
                         <Button
-                          onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
+                          onPress={()=>this.propertyProfile(prop._id)}
                           titleStyle      = {styles.buttonText2}
                           title           = "Details"
                           buttonStyle     = {styles.button3}
@@ -551,8 +576,7 @@ export default class PropertyList extends ValidationComponent{
                     <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
                       <Text style={styles.textSmallLight}>
                         Super Area :
-                        <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
-                        <Text style={styles.textLarge}> {prop.propertyDetails.superAreaUnit} </Text>
+                          <Text style={styles.textLarge}> {prop.propertyDetails.superArea ? prop.propertyDetails.superArea+" "+prop.propertyDetails.superAreaUnit : "-"} </Text>
                       </Text>
                     </View>
 

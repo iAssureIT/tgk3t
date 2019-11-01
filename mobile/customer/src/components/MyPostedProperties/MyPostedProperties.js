@@ -17,6 +17,7 @@ import ValidationComponent        from "react-native-form-validator";
 import { TextField }              from 'react-native-material-textfield';
 import CheckBox                   from 'react-native-check-box'
 import AsyncStorage               from '@react-native-community/async-storage';
+import { NavigationActions, StackActions }  from 'react-navigation';
 
 import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
 import Loading                    from '../../layouts/Loading/Loading.js'
@@ -27,6 +28,15 @@ import {colors,sizes}             from '../../config/styles.js';
 const window = Dimensions.get('window');
 
 export default class MyPostedProperties extends ValidationComponent{
+  navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
+}
+
   constructor(props){
     super(props);
     this.state={
@@ -42,6 +52,11 @@ export default class MyPostedProperties extends ValidationComponent{
       isLoading :true,
     };
   }
+
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
 
   componentDidMount(){
     this._retrieveData();
@@ -125,6 +140,11 @@ export default class MyPostedProperties extends ValidationComponent{
     }
   }
 
+  propertyProfile(propId){
+    AsyncStorage.setItem('propertyId',propId)
+    this.navigateScreen('PropertyDetailsPage')
+  }
+
   render(){
     
     const { navigation } = this.props;
@@ -142,7 +162,7 @@ export default class MyPostedProperties extends ValidationComponent{
               <Text style={styles.textCenter}>My Posted Properties</Text>
               {this.state.searchResults && this.state.searchResults.length>0 ? 
                 this.state.searchResults.map((prop,i)=>(
-                <TouchableOpacity key={i} onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}>
+                <TouchableOpacity key={i} onPress={()=>this.propertyProfile(prop._id)}>
                   <View style={[styles.propertyWrap,styles.marginBottom20]}>
                     {
                       prop.gallery.Images && prop.gallery.Images.length>0 ?
@@ -182,15 +202,26 @@ export default class MyPostedProperties extends ValidationComponent{
                      }
                     <View style={{width:'100%',padding:10}}>
                       <View style={{flexDirection:'row'}}>
-                        <Text style={styles.textSmallLight}>{prop.propertyLocation && prop.propertyLocation.society ? prop.propertyLocation.society : "-"}</Text>
-                        <Text style={{marginLeft:15}}>{'\u2022' + " "}</Text>
-                        <Text style={styles.textSmallLight}>New Proerty</Text>
+                        <Icon
+                            name="marker" 
+                            type="foundation"
+                            size={20}
+                            color={colors.golden}
+                            containerStyle={{marginRight:5}}
+                          />
+                        <Text style={styles.textSmallLight}>{prop.propertyLocation.society+", "+prop.propertyLocation.area+", "+prop.propertyLocation.city}</Text>
                       </View>
-
+                      <View style={{flexDirection:'row',justifyContent:'space-between'}}>
+                        <Text style={styles.textSmallLight}>
+                          Property Type :
+                          <Text style={styles.textLarge}> {prop.propertyType} </Text>
+                        </Text>
+                      </View> 
                       <View style={{flexDirection:'row',marginBottom:15}}>
                         <View style={{width:'50%'}}>
                            {prop.transactionType === "Sell" ?
                               <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Text style={styles.textSmallLight}>Total Price : </Text>
                                 <Icon
                                   name="rupee" 
                                   type="font-awesome"
@@ -202,6 +233,7 @@ export default class MyPostedProperties extends ValidationComponent{
                               </View>
                             :
                               <View style={{flexDirection:'row',alignItems:'center'}}>
+                                <Text style={styles.textSmallLight}>Monthly Rent : </Text>
                                 <Icon
                                   name="rupee" 
                                   type="font-awesome"
@@ -212,23 +244,12 @@ export default class MyPostedProperties extends ValidationComponent{
                                 <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.monthlyRent)}</Text>
                               </View>
                           }
-
-                          <View style={{flexDirection:'row'}}>
-                            <Icon
-                              name="marker" 
-                              type="foundation"
-                              size={20}
-                              color={colors.golden}
-                              containerStyle={{marginRight:5}}
-                            />
-                            <Text style={styles.textSmall}>{prop.propertyLocation && prop.propertyLocation.area && prop.propertyLocation.city? prop.propertyLocation.area+", "+prop.propertyLocation.city:"-"}</Text>
-                          </View>
                           
                         </View>
 
                         <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
                           <Button
-                            onPress={()=>this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:prop})}
+                            onPress={()=>this.propertyProfile(prop._id)}
                             titleStyle      = {styles.buttonText2}
                             title           = "Details"
                             buttonStyle     = {styles.button3}
@@ -327,8 +348,7 @@ export default class MyPostedProperties extends ValidationComponent{
                       <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
                         <Text style={styles.textSmallLight}>
                           Super Area
-                          <Text style={styles.textLarge}> {prop.propertyDetails.superArea} </Text>
-                          <Text style={styles.textLarge}> {prop.propertyDetails.superAreaUnit} </Text>
+                          <Text style={styles.textLarge}> {prop.propertyDetails.superArea ? prop.propertyDetails.superArea+" "+prop.propertyDetails.superAreaUnit : "-"} </Text>
                         </Text>
                       </View>
 

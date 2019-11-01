@@ -61,17 +61,6 @@ var imgArrayWSaws = [];
 
 export default class Availability extends ValidationComponent{
 
-//   navigateScreen=(route)=>{
-//   const navigateAction = StackActions.reset({
-//              index: 0,
-//             actions: [
-//             NavigationActions.navigate({ routeName: route}),
-//             ],
-//         });
-//         this.props.navigation.dispatch(navigateAction);
-// }
-
-
 navigateScreen=(route)=>{
     const navigateAction = NavigationActions.navigate({
     routeName: route,
@@ -160,6 +149,11 @@ navigateScreen=(route)=>{
   componentDidMount(){
     this._retrieveData();
   }
+
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
 
   _retrieveData = async () => {
     try {
@@ -551,7 +545,7 @@ navigateScreen=(route)=>{
     const day  = this.state.availability;
     const time = this.formatAMPM(this.state.date) + ' - ' + this.formatAMPM(this.state.date1);
     // console.log("time",time);
-    if(day!=="" && time!==""){
+    if(availability!=="" && day!=="" && time!==""){
       // console.log("day",day);
       // console.log("time",time);
       availability.push({
@@ -573,7 +567,7 @@ navigateScreen=(route)=>{
         // console.log("available=>",this.state.available);
       });
     }else{
-
+        Alert.alert("Please select visting schedule!")
     };  
   }
 
@@ -995,7 +989,7 @@ navigateScreen=(route)=>{
                 </View>
                 
                 
-                <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                <View style={{width:'6%',justifyContent:'center',alignItems:'center'}}>
                   <Text style={styles.heading3}></Text>
                 </View>
 
@@ -1022,7 +1016,7 @@ navigateScreen=(route)=>{
                     </View>
                   </View>
                 </View>
-                <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                <View style={{width:'6%',justifyContent:'center',alignItems:'center'}}>
                   <Text style={styles.heading3}></Text>
                 </View>
                 <View style={[{width:'28%'},styles.marginBottom15]}>

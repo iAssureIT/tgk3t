@@ -6,27 +6,33 @@ import {
   Alert,
   Image
 } from "react-native";
-import { Header, Icon  }                   from 'react-native-elements';
-import ValidationComponent                 from "react-native-form-validator";
-import { NavigationActions, StackActions, } from 'react-navigation'
-import { DrawerActions } from 'react-navigation-drawer';
-import styles from "./styles.js";
+import { Header, Icon  }                     from 'react-native-elements';
+import ValidationComponent                   from "react-native-form-validator";
+import { NavigationActions, StackActions, }  from 'react-navigation'
+import { DrawerActions }                     from 'react-navigation-drawer';
+import styles                                from "./styles.js";
 
-import AsyncStorage               from '@react-native-community/async-storage';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class NotificationHeader extends React.Component {
 
-  navigateScreen=(route)=>{
-  const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            NavigationActions.navigate({ routeName: route}),
-            ],
-        });
-        this.props.navigation.dispatch(navigateAction);
+navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
 }
 
-
+// navigateScreen=(route)=>{
+//     const navigateAction = StackActions.push({
+//     routeName: route,
+//     params: {},
+//     action: NavigationActions.navigate({ routeName: route }),
+//   });
+//   this.props.navigation.dispatch(navigateAction);
+// }
   constructor(props) {
     super(props);
     this.state={
@@ -56,8 +62,16 @@ export default class NotificationHeader extends React.Component {
       this.navigateScreen('Home');
   }
 
+  login(){
+    AsyncStorage.setItem("originPage","home");
+    // console.log("token in home screen",this.state.token);
+    this.navigateScreen("MobileScreen");
+ // this.navigateScreen("Availability");
+  }
+ 
+
   render() {
-    const { navigation } = this.props;
+    const { goBack } = this.props.navigation;
     console.log("this.state.token=>Header",this.state.token);
     return (
       <Header
@@ -66,7 +80,7 @@ export default class NotificationHeader extends React.Component {
         leftComponent={
           this.props.showBackBtn
           ?
-            <TouchableOpacity onPress={()=>this.props.navigation.pop()}>
+            <TouchableOpacity onPress={()=> goBack()}>
               <Icon size={28} name='chevrons-left' type='feather' color='#fff' />
             </TouchableOpacity>
           :
@@ -85,12 +99,14 @@ export default class NotificationHeader extends React.Component {
         }
       
         rightComponent={
-          this.state.token ?
+          // this.state.token ?
             <TouchableOpacity onPress={this.toggleDrawer}>
               <Icon size={28} name='menu' type='material-community' color='#fff' />
             </TouchableOpacity>
-            :
-            null
+            // :
+            //  <TouchableOpacity onPress={this.login.bind(this)}>
+            //   <Icon size={28} name='login' type='material-community' color='#fff' />
+            // </TouchableOpacity>
         }
         containerStyle={styles.container}
       />

@@ -97,9 +97,7 @@ export default StyleSheet.create({
   },
   searchInputWrapper:{
     width:'100%',
-    flexDirection:'row',
     borderRadius: 4,
-    elevation: 5
   },
   marginBottom25:{
     marginBottom:25
@@ -109,7 +107,8 @@ export default StyleSheet.create({
   },
   inputTextWrapper:{
     width:'100%',
-    justifyContent:'center'
+    justifyContent:'center',
+
   },
   searchContainer:{
     borderTopWidth:0,
@@ -134,7 +133,10 @@ export default StyleSheet.create({
   },
   searchInputContainer:{
     width:'100%',
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   searchInput:{
     backgroundColor:colors.white,

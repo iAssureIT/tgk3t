@@ -22,6 +22,7 @@ import ValidationComponent from "react-native-form-validator";
 import { TextField } from 'react-native-material-textfield';
 import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
 import CheckBox from 'react-native-check-box'
+import { NavigationActions, StackActions }  from 'react-navigation';
 
 import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
 import styles from './styles.js';
@@ -32,14 +33,15 @@ const window = Dimensions.get('window');
 
 export default class Congratulation extends ValidationComponent{
 
-  navigateScreen=(route)=>{
-      const navigateAction = NavigationActions.navigate({
-      routeName: route,
-      params: {},
-      action: NavigationActions.navigate({ routeName: route }),
-    });
-    this.props.navigation.dispatch(navigateAction);
-  }
+ navigateScreen=(route)=>{
+    const navigateAction = NavigationActions.navigate({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
+}
+
 
   constructor(props){
     super(props);
@@ -55,10 +57,13 @@ export default class Congratulation extends ValidationComponent{
   onChange = (value) => this.setState({ value: parseInt(value) });
 
 
-   componentDidMount(){
-      this._retrieveData();
-    }
+  componentDidMount(){
+    this._retrieveData();
+  }
 
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
 
   _retrieveData = async () => {
     try {
@@ -151,7 +156,7 @@ export default class Congratulation extends ValidationComponent{
                         {
                             Alert.alert("Your session is expired!"," Please loginagain.");
                             AsyncStorage.removeItem('token');
-                            this.props.navigation.navigate('MobileScreen'); 
+                            this.navigateScreen('MobileScreen'); 
                         }
                     });          
                   })
@@ -162,7 +167,7 @@ export default class Congratulation extends ValidationComponent{
                     {
                         Alert.alert("Your session is expired!"," Please loginagain.");
                         AsyncStorage.removeItem('token');
-                        this.props.navigation.navigate('MobileScreen'); 
+                        this.navigateScreen('MobileScreen'); 
                     }
                 });  
                              
@@ -173,7 +178,7 @@ export default class Congratulation extends ValidationComponent{
                   {
                     Alert.alert("Your session is expired!"," Please loginagain.");
                     AsyncStorage.removeItem('token');
-                    this.props.navigation.navigate('MobileScreen'); 
+                    this.navigateScreen('MobileScreen'); 
                   }
               });
 
@@ -215,7 +220,7 @@ export default class Congratulation extends ValidationComponent{
                   {
                        Alert.alert("Your session is expired!"," Please loginagain.");
                        AsyncStorage.removeItem('token');
-                       this.props.navigation.navigate('MobileScreen'); 
+                       this.navigateScreen('MobileScreen'); 
                   }
               });
           }
@@ -223,34 +228,7 @@ export default class Congratulation extends ValidationComponent{
     }
 
     submitFun(){
-      var id = this.state.propertyId;
-      // console.log("id",id);
-
-      if(id.length>0)
-      {
-
-        axios
-          .get('/api/properties/'+id)
-          .then( (res) =>{
-              // console.log("get property = ",res.data);
-              this.setState({
-                allData : res.data,
-              },()=>{
-                 AsyncStorage.removeItem('propertyId');
-                 this.props.navigation.navigate('PropertyDetailsPage',{propertyDetails:this.state.allData})
-
-              });
-
-            // console.log("get property transactionType = ",res.data.transactionType);
-          })
-          .catch((error)=>{
-              console.log("error = ",error);
-              if(error.message === "Request failed with status code 401")
-              {
-                  
-              }
-           });
-      }
+      this.navigateScreen('PropertyDetailsPage')
     }
 
   

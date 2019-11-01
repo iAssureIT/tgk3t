@@ -33,6 +33,8 @@ import AsyncStorage                       from '@react-native-community/async-st
 const window = Dimensions.get('window');
 
 export default class SearchProperty extends ValidationComponent{
+
+
   constructor(props){
     super(props);
     this.state={
@@ -67,7 +69,7 @@ export default class SearchProperty extends ValidationComponent{
    console.log("searchResults",searchResults)
    this._retrieveData();
    this.setState({
-      location :searchResults !== "No Result" ? searchResults.location : "",
+      searchText :searchResults !== "No Result" ? searchResults.location : "",
       activeBtn:searchResults !== "No Result" ? searchResults.property : 'Residential-Sell',
       roomsList : [ 
         {value: 1,  option: "1 BHK", checked:false},
@@ -123,6 +125,11 @@ export default class SearchProperty extends ValidationComponent{
       this.setState({propertyList:this.state.propertyList1})
     })
   }
+
+  componentWillReceiveProps(nextProps){
+    this._retrieveData();
+  }
+
 
    _retrieveData = async () => {
     try {
@@ -349,23 +356,24 @@ export default class SearchProperty extends ValidationComponent{
 
    _selectedItem(item){
     this.setState({locSearchResults:""})
-    console.log("item",item);
+    // console.log("item",item);
     this.setState({'searchText':item,location : item,})
   }
 
-   _renderList = ({ item }) => {
-    console.log("item",item)
+    _renderList = ({ item }) => {
+    // console.log("item",item)
     return (
-     <TouchableWithoutFeedback style={styles.flatList} onPress={()=>this._selectedItem(item)}>
+     <TouchableWithoutFeedback onPress={()=>this._selectedItem(item)}>
        <View>
-            <Text style={styles.item} >{item}</Text>
+            <Text style={styles.item}>{item}</Text>
         </View>
      </TouchableWithoutFeedback>
     );
-  }
+}
 
-   handleLocation(value){
+ handleLocation(value){
     var location =value;
+    console.log("location",location);
     this.setState({
       searchText:value,
       location : location,
@@ -401,7 +409,7 @@ export default class SearchProperty extends ValidationComponent{
 
             var citiesAreas = cities.concat(areas);
             var citiesAreassubAreas = citiesAreas.concat(subareaName);
-
+            console.log("citiesAreassubAreas",citiesAreassubAreas);
 
             this.setState({
               locSearchResults : citiesAreassubAreas,
@@ -416,8 +424,7 @@ export default class SearchProperty extends ValidationComponent{
     })
   }
 
-
-
+ 
 
   render(){
 
@@ -556,30 +563,37 @@ export default class SearchProperty extends ValidationComponent{
               }
 
               <View style={[styles.searchInputWrapper,styles.marginBottom25]}>
-              <View style={styles.inputTextWrapper}>
-                <SearchBar
-                searchIcon={
-                  <View>
-                    <Icon name="map-marker-radius" type="material-community" size={24}  color={colors.black} style={{}}/>
-                  </View>
-                }
-                containerStyle={styles.searchContainer}
-                inputContainerStyle={styles.searchInputContainer}
-                inputStyle={styles.searchInput}
-                placeholder='Enter city'
-                onChangeText = {(text) => this.handleLocation(text)}
-                value={this.state.location}
-                />
-             {/*   <View style={styles.flatList}>
+                <View style={styles.inputTextWrapper}>
+                  <SearchBar
+                  searchIcon={
+                    <View>
+                      <Icon name="map-marker-radius" type="material-community" size={24}  color={colors.black} style={{}}/>
+                    </View>
+                  }
+                  containerStyle={[styles.searchContainer]}
+                  inputContainerStyle={styles.searchInputContainer}
+                  inputStyle={styles.searchInput}
+                  placeholder='Enter Society, Location or Address'
+                  onChangeText = {(searchText) => this.handleLocation(searchText)}
+                  value={this.state.searchText}
+                  />
+               {/*   <View style={styles.flatList}>
+                      <FlatList
+                        data={this.state.locSearchResults}
+                        renderItem={this._renderList}
+                        // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
+                      />
+                  </View>*/}
+                </View>
+                <View style={[styles.flatList,{marginTop:50,marginLeft:'10%'}]}>
                     <FlatList
                       data={this.state.locSearchResults}
                       renderItem={this._renderList}
-                      // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
                     />
-                </View>*/}
+                </View>
               </View>
-            </View>
-            <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn!=='commertial'? "Residential" : "Commercial"}</Text>
+              
+            <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn === "Residential-Rent" ||  this.state.activeBtn === "Residential-Sell" ? "Residential" : "Commercial"}</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
                {this.state.propertyList.length && this.state.propertyList.length >0 ?
@@ -609,23 +623,27 @@ export default class SearchProperty extends ValidationComponent{
               }
               </ScrollView>
             </View>
-            <Text style={[styles.heading,styles.marginBottom5]}>Bedroom</Text>
-            <View style={[styles.tabWrap,styles.marginBottom25]}>
-              {this.state.roomsList && this.state.roomsList.length > 0 ?
-                this.state.roomsList.map((data,index)=>(
-                <TouchableOpacity 
-                  onPress={()=>this.setActiveRoom(data.value)}
-                  key={index} 
-                  style={[(data.checked==true?styles.activeTabView2:styles.tabView2),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<5)?styles.tabBorder:null]}
-                >
-                  <Text style={styles.tabText}>{data.option}</Text>
-                </TouchableOpacity>
-              ))
-              :
-              null
-              }
-            </View>
-
+            {this.state.activeBtn === "Residential-Rent" || this.state.activeBtn === "Residential-Sell" ?
+                <View>  
+                  <Text style={[styles.heading,styles.marginBottom5]}>Bedroom</Text>
+                  <View style={[styles.tabWrap,styles.marginBottom25]}>
+                    {this.state.roomsList && this.state.roomsList.length > 0 ?
+                      this.state.roomsList.map((data,index)=>(
+                      <TouchableOpacity 
+                        onPress={()=>this.setActiveRoom(data.value)}
+                        key={index} 
+                        style={[(data.checked==true?styles.activeTabView2:styles.tabView2),(index==0?styles.borderRadiusLeft2:(index==4)?styles.borderRadiusRight2:null),(index<5)?styles.tabBorder:null]}
+                      >
+                        <Text style={styles.tabText}>{data.option}</Text>
+                      </TouchableOpacity>
+                    ))
+                    :
+                    null
+                    }
+                  </View>
+                </View>
+              :null  
+            }
             <Text style={[styles.heading,styles.marginBottom5]}>Price Range</Text>
             <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
               <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -653,7 +671,7 @@ export default class SearchProperty extends ValidationComponent{
               <Slider
                 value={this.state.selectBudget}
                 animationType={"spring"}
-                minimumValue={this.state.activeBtn==="Residential-Rent" || this.state.activeBtn==="Commercial-Rent" ? 5000 : 1000000 }
+                minimumValue={this.state.activeBtn==="Residential-Rent" || this.state.activeBtn==="Commercial-Rent" ? 0 : 0 }
                 maximumValue={this.state.activeBtn==="Residential-Rent" || this.state.activeBtn==="Commercial-Rent" ? 1000000:  1000000000}
                 step={1}
                 minimumTrackTintColor={colors.golden}
