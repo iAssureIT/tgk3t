@@ -1403,7 +1403,7 @@ submitFun(){
 
 
 
-                              <View style={styles.amenitiesWrapper,styles.marginBottom25} >
+                              <View style={styles.amenitiesWrapper} >
                                   <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities</Text>           
                                   {/*console.log("here amenity",this.state.allAmenities)*/}
                                    { this.state.allAmenities && this.state.allAmenities.length >0 
@@ -1729,7 +1729,7 @@ submitFun(){
 
                             {/*end*/}
                       </View>
-                    <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
+                    <View  style={[styles.nextBtnhover1,styles.marginBottom15]}  onPress={this.submitFun.bind(this)}>
                       <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
                          <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
                          </Text>

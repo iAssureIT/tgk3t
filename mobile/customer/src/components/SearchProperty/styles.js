@@ -337,7 +337,12 @@ export default StyleSheet.create({
   },
    flatList: {
     position: 'absolute', 
-    zIndex: 2,
+    zIndex: 3,
+      ...Platform.select({
+      ios:{
+          top:75, 
+      }
+    })
   },
   marginTop20:{
     marginTop:20

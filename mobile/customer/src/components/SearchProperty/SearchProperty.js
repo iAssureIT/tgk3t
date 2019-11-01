@@ -13,6 +13,7 @@ import {
   ImageBackground,
   Image,TextInput,
   Alert,
+  Platform,
   // AsyncStorage,
  TouchableWithoutFeedback
 
@@ -584,15 +585,30 @@ export default class SearchProperty extends ValidationComponent{
                         // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
                       />
                   </View>*/}
-                </View>
-                <View style={[styles.flatList,{marginTop:50,marginLeft:'10%'}]}>
+              </View>
+              {
+                Platform.OS === 'android' ?
+                  <View style={[styles.flatList,{marginTop:50,marginLeft:'10%'}]}>
                     <FlatList
                       data={this.state.locSearchResults}
                       renderItem={this._renderList}
                     />
-                </View>
+                  </View>
+                  :
+                  null
+                }
               </View>
-              
+              {
+                Platform.OS === 'ios' ?
+                <View style={[styles.flatList,{marginTop:50,marginLeft:'10%'}]}>
+                  <FlatList
+                    data={this.state.locSearchResults}
+                    renderItem={this._renderList}
+                  />
+                </View>
+                :
+                null
+              }
             <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn === "Residential-Rent" ||  this.state.activeBtn === "Residential-Sell" ? "Residential" : "Commercial"}</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>

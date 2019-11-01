@@ -503,7 +503,7 @@ export default StyleSheet.create({
     color: colors.black,
   },
   timeSelect:{
-    paddingHorizontal:10,
+    paddingHorizontal:5,
   },
   needle:{
     position: 'absolute',
@@ -569,7 +569,7 @@ export default StyleSheet.create({
 marginTopSOM:{
     ...Platform.select({
       ios:{
-        // marginTop: 0,
+        marginTop: 50,
       },
       android : {
         marginTop:50,

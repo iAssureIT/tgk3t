@@ -14,21 +14,21 @@ import {
   Platform
 } from 'react-native';
 
-import { Button,Icon, SearchBar } from 'react-native-elements';
-import axios          from 'axios';
-import AsyncStorage               from '@react-native-community/async-storage';
+import { Button,Icon, SearchBar }           from 'react-native-elements';
+import axios                                from 'axios';
+import AsyncStorage                         from '@react-native-community/async-storage';
 
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
-import {RadioGroup, RadioButton} from 'react-native-flexi-radio-button';
-import CheckBox from 'react-native-check-box'
+import ValidationComponent                  from "react-native-form-validator";
+import { TextField }                        from 'react-native-material-textfield';
+import {RadioGroup, RadioButton}            from 'react-native-flexi-radio-button';
+import CheckBox                             from 'react-native-check-box'
 import { NavigationActions, StackActions }  from 'react-navigation';
 
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
+import HeaderBar                            from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                               from './styles.js';
+import {colors,sizes}                       from '../../config/styles.js';
 
-import RNSpeedometer from 'react-native-speedometer'
+import RNSpeedometer                        from 'react-native-speedometer'
 const window = Dimensions.get('window');
 
 export default class Congratulation extends ValidationComponent{
