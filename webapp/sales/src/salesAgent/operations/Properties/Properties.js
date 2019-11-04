@@ -6,7 +6,7 @@ import Progressbar          from '../progressBar/Progressbar.js';
 import {Router, withRouter} from 'react-router-dom';
 import Loader 				from 'react-loader-spinner';
 import moment               from 'moment';
-import swal                     from 'sweetalert';
+import swal                 from 'sweetalert';
 
 import '../progressBar/Progressbar.css';
 import './Properties.css';
@@ -294,8 +294,18 @@ import './Properties.css';
 											</span>
 										</div>
 										<div className="col-lg-3 pull-right fSize13">
-											{moment(property.propertyCreatedAt).format('MMMM Do YYYY')} &nbsp;
-											{moment(property.propertyCreatedAt).format('LT')} &nbsp;
+											{
+												this.props.status ==="WIP" ?
+												<div>
+													{moment(property.createdAt).format('MMMM Do YYYY')} &nbsp;
+													{moment(property.createdAt).format('LT')} &nbsp;
+												</div>
+												:
+												<div>
+													{moment(property.propertyCreatedAt).format('MMMM Do YYYY')} &nbsp;
+													{moment(property.propertyCreatedAt).format('LT')} &nbsp;
+												</div>
+											}
 											
 											<div id="myProgress">
 												<Progressbar data="80" />
