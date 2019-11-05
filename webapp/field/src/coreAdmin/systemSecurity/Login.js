@@ -46,7 +46,10 @@ class Login extends Component {
         // });
         axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
         localStorage.setItem("token",response.data.token);
-        localStorage.setItem("admin_ID",response.data.user_ID);
+        localStorage.setItem("user_ID",response.data.user_ID);
+        localStorage.setItem("userRole",(response.data.roles)[0]);
+        
+        // localStorage.setItem("admin_ID",response.data.user_ID);
         // localStorage.setItem("admin_email",response.data.email);
         // localStorage.setItem("admin_fullName",response.data.fullName);
 

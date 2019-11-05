@@ -102,7 +102,7 @@ export default class Operation extends Component {
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="VerifyPending" onClick={this.propertyStatus.bind(this)}>Verify Pending </a>
-						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.VERIFIEDCount}</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.VERIFYPENDINGCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Verified" onClick={this.propertyStatus.bind(this)}>Verified </a>

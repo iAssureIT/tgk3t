@@ -16,6 +16,7 @@ class EditUserProfile extends Component{
 	  		userProfile : "",
 	  		firstName : "",
 	  		lastName  : "",
+			officeId  : "",
 	  		role 	  : "",
 	  		office    : [],
 	  		allPosts   : [],
@@ -33,7 +34,7 @@ class EditUserProfile extends Component{
 			"emailId"  		: this.refs.username.value,
 			"mobileNumber"  : this.state.mobNumber,
 			"roles"         :  this.state.role,
-          "officeLocation"  : this.refs.office.value,
+          "officeLocation"  : this.state.officeId,
 		}
 		console.log("formvalues",formvalues);
 		if(this.refs.firstName.value!= "" && this.refs.lastName.value != "" && this.state.mobNumber!= "" && this.state.role!= "" )
@@ -187,7 +188,13 @@ class EditUserProfile extends Component{
       	 });  
 
 	}
-  	
+  	handleOffice(event){
+      event.preventDefault();
+      this.setState({
+        officeId : event.target.value ,
+      })
+  }
+
 	render(){      
 		return (
 				<div>
@@ -263,7 +270,7 @@ class EditUserProfile extends Component{
                                                                     <option value="Sales Manager" > Sales Manager </option>
                                                                     <option value="Sales Agent" > Sales Agent </option>
                                                                     <option value="Field Manager" > Field Manager </option>
-                                                                    <option value=" Field Agent" >  Field Agent </option>
+                                                                    <option value="Field Agent" > Field Agent </option>
                                                                     </select>
 
                                                               </span>
@@ -277,7 +284,7 @@ class EditUserProfile extends Component{
                                                           <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
                                                               <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                    <select className="form-control" value={this.state.officeid} ref ="office" id="office" name="office" data-text="office">
+                                                                    <select className="form-control" value={this.state.officeid}  onChange={this.handleOffice.bind(this)} ref ="office" id="office" name="office" data-text="office">
                                                                         <option hidden> --Select-- </option>
                                                                         <option value="Head Office">  Head Office </option>
                                                                         <option value="Sales Agent Office"> Sales Agent Office </option>
@@ -287,7 +294,8 @@ class EditUserProfile extends Component{
                                                                           // console.log('locData',locData);
                                                                            return( 
 
-                                                                                 <option key={index} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+                                                                                 // <option key={index} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+                                                                                 <option key={index} value={locData._id}> {locData.officeLocationid ? locData.officeLocationid : null}  </option>
 
 
                                                                                    )}
