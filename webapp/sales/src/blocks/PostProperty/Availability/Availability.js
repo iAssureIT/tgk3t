@@ -64,7 +64,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				isLoading			: true,
 				originalValues      : '',
 				tempLoader 			: false,
-				type 				: true
+				type 				: true,
+				status 				: ""
 
 			};
    			
@@ -91,6 +92,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 								singleVideo 	    		: response.data.gallery.video ? response.data.gallery.video : "" ,
 								updateOperation     		: true,
 								type 						: response.data.contactPerson==="Someone" ? true : false,
+								status 						: response.data.status,
 
 						 
 						},()=>{
@@ -218,9 +220,10 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					"property_id" 		  : localStorage.getItem("propertyId"),
 					"uid" 				  : localStorage.getItem("uid"),
 					"available"			  : this.state.available,
-					"propertyImages"	: this.state.imgArrayWSaws,
-					"video"				: this.state.singleVideo,
-					"status"			: "New"
+					"propertyImages"	  : this.state.imgArrayWSaws,
+					"video"				  : this.state.singleVideo,
+					"status"			  : this.state.status ==="WIP" ? "New" : this.state.status 
+					
 
 					};
 					console.log("Availability req 1 = ",formValues);
@@ -278,7 +281,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				"available"			  : this.state.available,
 				"propertyImages"	  : this.state.imgArrayWSaws,
 				"video"				  : this.state.singleVideo,
-				"status"			  : "New"
+				"status"			  : this.state.status ==="WIP" ? "New" : this.state.status 
 				};
 				console.log("Availability req 2 = ",formValues);
 			    if(this.state.available.length!==0){
@@ -718,15 +721,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  	<div className="form-group" id="">
 			  	 		<label className="">Who will show?</label>
-					 	{/*<div className="can-toggle1 genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
-				              <input id="d" type="checkbox"/>
-				              <label className="formLable" htmlFor="d">
-				             	 <div className="can-toggle1__switch" data-checked="Myself"  data-unchecked="Someone Else" ></div>
-				                <div className="can-toggle1__label-text"></div>
-				              </label>
-			            </div>*/}
-
-			            {/*<div className="container5 col-lg-6 col-md-12 col-sm-12 col-xs-12 noPad">*/}
+					 	
 						        {this.state.type=== true ?
 
 						         <div className="switch1" onClick={this.handleToggle.bind(this)} >
@@ -787,6 +782,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 			  	 	<label>Visit Schedule (Add as many as You Like)</label>
+			  	 	<label>{this.state.status}</label>
 			  	 </div>
 			  </div>
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">	

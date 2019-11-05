@@ -76,7 +76,8 @@ class PropertyProfile extends Component{
       "countno"           : 2,
       "callfun"           : 0,
       "location"          :{latitude: 18.5184,longitude: 73.9343},
-      "showMap"           : false
+      "showMap"           : false,
+      "status"            : ""
     }
   }
 
@@ -123,7 +124,8 @@ class PropertyProfile extends Component{
           floor               : postsdata.floor, 
           ownerId             : postsdata.owner_id,        
           totalFloor          : postsdata.totalFloor ,
-          propertySubType     : postsdata.propertySubType         
+          propertySubType     : postsdata.propertySubType ,       
+          status              : postsdata.status         
         },()=>{
 
         });
@@ -235,6 +237,7 @@ class PropertyProfile extends Component{
                             <div className="col-lg-3 col-md-2 col-sm-5 col-xs-5 text-center forSaleButton">
                               FOR {this.state.transactionType && this.state.transactionType==="Sell" ? "SALE" : "RENT"}
                             </div> 
+                            <span>{this.state.status}</span>
                             <br/>
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad"> 
                               <div className="row col-xs-12 ">

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import InputMask from 'react-input-mask';
-import axios 	 from 'axios';
-import swal      from 'sweetalert';
+import InputMask 			from 'react-input-mask';
+import axios 	 			from 'axios';
+import swal      			from 'sweetalert';
 import "./userManagement.css";
 class EditUserProfile extends Component{
 	constructor(props) {
@@ -284,7 +284,7 @@ class EditUserProfile extends Component{
                                                           <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
                                                               <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                    <select className="form-control" value={this.state.officeid}  onChange={this.handleOffice.bind(this)} ref ="office" id="office" name="office" data-text="office">
+                                                                    <select className="form-control" value={this.state.officeId}  onChange={this.handleOffice.bind(this)} ref ="office" id="office" name="office" data-text="office">
                                                                         <option hidden> --Select-- </option>
                                                                         <option value="Head Office">  Head Office </option>
                                                                         <option value="Sales Agent Office"> Sales Agent Office </option>

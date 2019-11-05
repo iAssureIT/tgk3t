@@ -113,7 +113,7 @@ import './Properties.css';
 	profileView(event){
 		event.preventDefault()
 		var id = event.currentTarget.id;
-		console.log("_id",id);
+		// console.log("_id",id);
 		this.props.history.push('/profile/'+ id);
 	}
 	handleData(event){

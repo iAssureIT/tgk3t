@@ -1,8 +1,7 @@
-
 import React, { Component }      from 'react';
 import InputMask                 from 'react-input-mask';
-import $ from "jquery";
-import axios from 'axios';
+import $                         from "jquery";
+import axios                     from 'axios';
 import swal                      from 'sweetalert';
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/js/modal.js';
@@ -21,7 +20,6 @@ const nameRegex     = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 const mobileRegex   = RegExp(/^[0-9][0-9]{9}$/);
 const emailRegex    = RegExp (/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 class CreateUser extends Component {
-
 
   constructor(props) {
     super(props);

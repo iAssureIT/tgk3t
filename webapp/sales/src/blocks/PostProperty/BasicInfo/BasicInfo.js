@@ -65,6 +65,7 @@ class BasicInfo extends Component{
       			type 					:true,
       			fullAddress             : "",
       			country             : "India",
+      			status 				: ""
 
 
 			};
@@ -94,6 +95,7 @@ class BasicInfo extends Component{
 									fullPropTtype 	: res.data.propertyType+'-'+res.data.propertySubType,
 									updateOperation : true,
 									propertyCode	: res.data.propertyCode,
+									status 			: res.data.status ,
 
 									// location
 									originalValuesLocation  : res.data.propertyLocation,
@@ -328,7 +330,7 @@ class BasicInfo extends Component{
 				// "floor"         	: this.state.floor,
 				// "totalFloor"    	: this.state.totalfloor,
 				"listing"       	: false,
-				"status"			: "WIP",
+				"status"			: this.state.status ? this.state.status : "WIP",
 				"uid" 				: localStorage.getItem("uid"),
 				"property_id"		: this.props.property_id,
 
@@ -888,6 +890,7 @@ class BasicInfo extends Component{
 				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				  	 	<label>I am</label>
+				  	 	<label>{this.state.status}</label>
 						<span className="astrick">*</span>
 				  	 </div>
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm noPad"   >
