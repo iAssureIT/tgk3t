@@ -237,7 +237,7 @@ class PropertyProfile extends Component{
                             <div className="col-lg-3 col-md-2 col-sm-5 col-xs-5 text-center forSaleButton">
                               FOR {this.state.transactionType && this.state.transactionType==="Sell" ? "SALE" : "RENT"}
                             </div> 
-                            <span>{this.state.status}</span>
+                            {/*<span>{this.state.status}</span>*/}
                             <br/>
                             <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad"> 
                               <div className="row col-xs-12 ">

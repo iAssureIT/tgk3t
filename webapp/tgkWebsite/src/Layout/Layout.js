@@ -9,6 +9,7 @@ import CommercialSell                            from '../blocks/PostProperty/Co
 import CommercialRent                            from '../blocks/PostProperty/Commercial/CommercialRent/CommercialRent.js';
 import SearchResultPage                          from '../pages/SearchResultPage/SearchResultPage.js';
 import AboutUs                                   from '../pages/AboutUs/AboutUs.js';
+import PrivacyPolicy                             from '../pages/PrivacyPolicy/PrivacyPolicy.js';
 
 import 'font-awesome/css/font-awesome.min.css';
 
@@ -29,6 +30,7 @@ import 'font-awesome/css/font-awesome.min.css';
               <Route path="/CommercialRent"               exact strict component={CommercialRent}  />
               <Route path="/SearchResults"                exact strict component={SearchResultPage}  />
               <Route path="/AboutUs"                      exact strict component={AboutUs}  />
+              <Route path="/PrivacyPolicy"                exact strict component={PrivacyPolicy}  />
 
             </Switch>        
           </Router>

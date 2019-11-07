@@ -229,7 +229,8 @@ class PropertyList extends Component {
             transactionType : this.state.transactionType,
             startRange      :0,
             limitRange      :100,
-            listing:false
+            listing         :false,
+            status          : "Listed"
         }
           console.log("listedData",listedData)
           console.log("formValues",formValues)

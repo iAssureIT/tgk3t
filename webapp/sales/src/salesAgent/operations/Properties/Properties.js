@@ -139,7 +139,9 @@ import './Properties.css';
 			status 			  : "Listed",
 			user_id			  : "",
 			// allocatedToUserId : "",
-			remark 			  : ""
+			remark 			  : "",
+            listing           :true,
+
 
 		}
 		console.log("formValues",formValues);
@@ -245,7 +247,7 @@ import './Properties.css';
 			<div className="">
 				<h1>{this.props.status}</h1>
 				{
-					this.props.status ==="New" ?
+					(this.props.status ==="New") || (this.props.status ==="Verified")?
 						<div>
 							<button className="btn btn-primary propBtn1" onClick={this.handleFieldAgent.bind(this)}>Assign To Field Agent</button>
 							<button className="btn btn-primary propBtn2" onClick={this.handleListed.bind(this)}>Verify & List</button>
@@ -259,7 +261,7 @@ import './Properties.css';
 
 							<div className="propertyBox" >
 								{
-									this.props.status ==="New" ?
+									(this.props.status ==="New") || (this.props.status ==="Verified") ?
 										<div className="col-lg-1 check1 inline row" >
 										    <input type="checkbox" id={property._id}  className="check individual  "  value={property._id} onClick={this.handleData.bind(this)}/>
 										    <label htmlFor={property._id} className="check-box"></label> 

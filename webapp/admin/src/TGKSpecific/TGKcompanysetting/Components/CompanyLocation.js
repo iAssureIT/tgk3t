@@ -43,6 +43,8 @@ class CompanyLocation extends Component{
       companyPincode        : "",
       submitVal             : true,
       pincodeArea           : "",
+      pincodeAreaArray      : [],
+
      
      companyArea1           : "",
 
@@ -224,12 +226,29 @@ class CompanyLocation extends Component{
   }
   submitCompanyLocation=(event)=>{
     event.preventDefault();
-    // var sessionVar = Session.get('location');
-   // var companyId : 5;
-
-
      
-      console.log("this.state.companyLocation",this.state.companyLocation);
+      // console.log("this.state.companyLocation",this.state.companyLocation);
+      // console.log("pincode area=============",this.refs.pincodeArea.value)
+      var pincodeCover = this.refs.pincodeArea.value.split(",");
+       if(pincodeCover[1] == undefined)
+       {
+        pincodeCover = this.refs.pincodeArea.value;
+        this.setState({
+          pincodeAreaArray : pincodeCover
+        }) 
+        console.log("pincodeCover inside if=============",pincodeCover);
+        console.log("pincodeAreaArray inside if=============",this.state.pincodeAreaArray);
+
+       }else{
+        console.log("pincodeCover=============",pincodeCover);
+        this.setState({
+          pincodeAreaArray : pincodeCover
+        })
+        console.log("pincodeCover else=============",pincodeCover);
+        console.log("pincodeAreaArray else=============",this.state.pincodeAreaArray);
+
+      }
+        // console.log("pincodeAreaArray",this.state.pincodeAreaArray);
 
 
     var companyLocationFormValue ={
@@ -247,7 +266,7 @@ class CompanyLocation extends Component{
       companyCity               : this.state.companyCity,
       companyPincode            : this.state.companyPincode,
       areaName                  : this.state.companyArea,
-      pincodesCovered           :  this.state.pincodeArea,
+      pincodesCovered           : pincodeCover,
       
     
     }//close array
@@ -268,12 +287,12 @@ class CompanyLocation extends Component{
       companyCity               : this.state.companyCity,
       companyPincode            : this.state.companyPincode,
       areaName                  : this.state.companyArea,
-      pincodesCovered           :  this.state.pincodeArea,
+      pincodesCovered           : pincodeCover,
       
     
     }
 
-    console.log("companyLocationFormValue ____________________",companyLocationFormValue);
+    console.log("companyLocationFormValue ____________________",companyLocationFormValueupdate);
     console.log("this.state.formerrors",formValid(this.state.formerrors));
 
   if(this.state.companycontact!="" && this.state.companyCountry!="" && this.state.companyState!= "" 
@@ -309,6 +328,7 @@ class CompanyLocation extends Component{
                   companyPincode          :"",
                   companyArea             :"",
                   pincodeArea             :"",
+                  pincodeAreaArray        :"",
                   areaName                :"",
                 });
 
@@ -389,6 +409,7 @@ class CompanyLocation extends Component{
                   companyPincode          :"",
                   companyArea             :"",
                   pincodeArea             :"",
+                  pincodeAreaArray        :"",
                   areaName                :"",
                 });
                         // here for table
@@ -468,6 +489,7 @@ class CompanyLocation extends Component{
             companyPincode          :"",
             companyArea             :"",
             pincodeArea             :"",
+            pincodeAreaArray        :"",
             areaName                :"",
             submitVal               : true,
           });
@@ -557,6 +579,7 @@ class CompanyLocation extends Component{
             companyPincode          :"",
             companyArea             :"",
             pincodeArea             :"",
+            pincodeAreaArray        :"",
             areaName                :"",
             submitVal               : true,
           });
@@ -797,8 +820,6 @@ selectType(event){
 
   render(){
     
-    
-    
     const {formerrors} = this.state;
     return(
         <div>
@@ -897,13 +918,13 @@ selectType(event){
                       <div className="form-group formht pdcls col-lg-12 col-md-12 col-sm-12 col-xs-12">
                         <div className="form-group margin15">
                          <label className="control-label statelabel locationlabel" >Pincodes Covered</label><span className="astrick">*</span>
-                           
-                       <textarea rows="2" cols="37" className="form-control" data-text="companyArea1" id="pincodeArea" name="pincodeArea" ref="pincodeArea" value={this.state.pincodeArea} onChange={this.handleChange}  >
-                        </textarea>
+                           <input type="text" className="form-control" data-text="companyArea1" id="pincodeArea" name="pincodeArea" ref="pincodeArea" value={this.state.pincodeArea} onChange={this.handleChange}/>
+                       {/*<textarea rows="2" cols="37" className="form-control" data-text="companyArea1" id="pincodeArea" name="pincodeArea" ref="pincodeArea" value={this.state.pincodeArea} onChange={this.handleChange}  >
+                        </textarea>*/}
                        {/* <input value={this.state.companyArea1} onChange={this.handleChange} type="text" data-text="companyArea1" id="companyArea" ref="companyArea" name="companyArea" className="form-control CLcompanylandmark inputValid" />
                         */}       
                          {/*this.state.formerrors.companyArea1 &&(*/
-                                        <span className="text-danger subjectRowError">Please enter at least one pincode</span> 
+                                        // <span className="text-danger subjectRowError">Please enter at least one pincode</span> 
                                       /*)*/}
                         </div>  
                       </div>

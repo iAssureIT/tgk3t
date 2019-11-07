@@ -2,6 +2,8 @@ import React, { Component }   from 'react';
 import axios                  from 'axios';
 import swal                   from 'sweetalert';
 import {withRouter}         from 'react-router-dom';
+import { Link }       from 'react-router-dom';
+
 
 import "./MainFooter.css";
 
@@ -291,7 +293,7 @@ class MainFooter extends Component{
                  <label className="pull-right">Version 2.2</label>
                   <label className="pull-right">Site Map</label>
                   <label className="pull-right">Terms of Use</label>
-                  <label className="pull-right">Privacy Policy</label>
+                  <label className="pull-right"><Link to="/PrivacyPolicy" className="policy">Privacy Policy </Link></label>
                 </div>
               </div>
             </div>
