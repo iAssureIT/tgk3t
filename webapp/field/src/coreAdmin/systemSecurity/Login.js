@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import { Link} from 'react-router-dom';
+import { Link}              from 'react-router-dom';
 // import {browserHistory} from 'react-router-dom';
-import { Redirect } from 'react-router';
-import swal from 'sweetalert';
-import $ from "jquery";
+import { Redirect }         from 'react-router';
+import swal                 from 'sweetalert';
+import $                    from "jquery";
+import axios                from 'axios';
 
 import 'font-awesome/css/font-awesome.min.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './SignUp.css';
 
-import axios from 'axios';
 
 
 class Login extends Component {
@@ -36,6 +36,8 @@ class Login extends Component {
         }
 
         console.log("auth value",auth);
+        
+        localStorage.setItem("loginUserEmail",this.refs.loginusername.value);
 
     axios
       .post('/api/users/post/login',auth)

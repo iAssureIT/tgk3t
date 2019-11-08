@@ -20,6 +20,8 @@ import './Properties.css';
 	}
 	componentDidMount(){
 
+		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
+
 		$(".selectall").click(function(){
 		$(".individual").prop("checked",$(this).prop("checked"));
 		});
@@ -32,7 +34,6 @@ import './Properties.css';
 		var userId =localStorage.getItem('user_ID');
 		var role =localStorage.getItem('userRole');
 
-		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 		// console.log("formValues",formValues);
 	    axios
 	    .get('/api/fieldagent/get/type/allocatedToFieldAgent/'+ userId + '/'+formValues.status)
@@ -57,9 +58,20 @@ import './Properties.css';
 			// user_id :"5d3ec084e7381f059964f5be",
 			status	:nextProps.status ? nextProps.status : "VerifyPending" ,
 		}
+        localStorage.setItem("interested_Status",formValues.status);
+
+		console.log("formValues......",formValues)
+
+		if(formValues.status==="VerifyPending"){
+			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/'+userId+'/'+(formValues.status);			
+		}
+		else{
+			var URL = '/api/fieldagent/get/transactionDetails/'+userId+'/'+(formValues.status);			
+			console.log("interestedProperties")
+		}
 		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 	    axios
-	   .get('/api/fieldagent/get/type/allocatedToFieldAgent/'+ userId + '/'+formValues.status)
+	   .get(URL,formValues)
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -71,55 +83,75 @@ import './Properties.css';
 	      }
 	    )
 	    .catch();
+      }
     }
 
-// ======================2 try==============
+	handleSetMeeting(event){
+		event.preventDefault()
+		console.log("this.state.userData",this.state.userData);
+		for (var i = this.state.userData.length - 1; i >= 0; i--) {
+		var formValues ={
+			property_id 	  : this.state.userData[i],
+			remark 			  : ""
 
+		}
+		console.log("formValues",formValues);
+
+			axios
+			    .patch('/api/fieldagent/patch/setUpMeeting/'+formValues.property_id)
+			    .then(
+			      (res)=>{
+			        console.log(res);
+			       if(res.status == 200)
+		        {
+		        // swal("Good job!", " Property Listed Successfully!", "success")
+		   		window.location.reload();
+		   		console.log("res=========",res)
+		         }
+			        this.props.getTotalTabCount();
+			      }
+			    )
+			    .catch();
+				}
+	}
+	handleUpdateMeeting(event){
+		event.preventDefault()
 		// var userId =localStorage.getItem('user_ID');
-   	
-  //   if(nextProps && nextProps.status){
-  //     	var formValues = {
-		// 	// user_id :"5d3ec084e7381f059964f5be",
-		// 	status	:nextProps.status ? nextProps.status : "VerifyPending" ,
-		// }
-		// var role =localStorage.getItem('userRole');
-		// var method;
-		// console.log("role====",role);
 
-		// if(role=="admin"){
-		// 	var URL = '/api/salesagent/post/displaylist';
-						
-		// }else if(role=="field Agent"){
-		// 	var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/'+userId+'/'+(formValues.status);			
-			
-		// }
-	 //    axios
-	 //    .get(URL,formValues)
+		for (var i = this.state.userData.length - 1; i >= 0; i--) {
+			var formValues ={
+			property_id 	  : this.state.userData[i],
+			// status 			  : "Listed",
+			user_id			  : "",
+			// allocatedToUserId : "",
+			remark 			  : "",
 
-	 //    .then(
-	 //      (res)=>{
-	 //        console.log(res);
-	 //        const postsdata = res.data;
-	       
 
-	 //        this.setState({
-	 //          propertiesData : postsdata,
-	 //        },()=>{
-	        	
-	 //        });
-	 //    console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
+		}
+		console.log("formValues",formValues);
+		axios
+	    .patch('/api/fieldagent/patch/updateMeeting',formValues)
+	    .then(
+	      (res)=>{
+	        console.log(res);
+	       if(res.status == 200)
+        {
+        // swal("Good job!", " Property Listed Successfully!", "success")
+   		window.location.reload();
 
-	 //      }
-	 //    )
-	 //    .catch();
-  //   }
-  
-  }
+         }
+	        this.props.getTotalTabCount();
+	      }
+	    )
+	    .catch();
+		}
+	
+	}
 
 	profileView(event){
 		event.preventDefault()
 		var id = event.currentTarget.id;
-		console.log("_id",id);
+		// console.log("_id",id);
 		this.props.history.push('/profile/'+ id);
 	}
 	handleDelete(event){
@@ -168,20 +200,47 @@ import './Properties.css';
 				 });
 		
 	}
+	handleData(event){
+		  if(event.target.checked){
+			this.state.userData.push(event.currentTarget.id);
+			// this.setState({userData:Data})
+		  }else{
+			  for (var i = this.state.userData.length - 1; i >= 0; i--) {
+					if(this.state.userData[i] === event.currentTarget.id){
+						this.state.userData.splice(i,1)
+					}
+				}
+		  }
+		console.log("userData=====",this.state.userData)
+	}
 	render() {
 		return (
 			<div className="">
 				<h1>{this.props.status}</h1>
 				{
+					(this.props.status ==="New") || (this.props.status ==="Meetings")?
+						<div>
+							<button className="btn btn-primary propBtn1"  data-toggle="modal" data-target="#myModal" onClick={this.handleSetMeeting.bind(this)}>Set Meeting</button>
+							<button className="btn btn-primary propBtn2" onClick={this.handleUpdateMeeting.bind(this)}>Update Meetings</button>
+						</div>
+					:
+					null	
+				}
+				{
 					this.state.propertiesData.length>0?
 						this.state.propertiesData.map((property,index)=>{
 							return(
-								<div key={index} id={property._id} className="propertyBox" onClick={this.profileView.bind(this)}>
-									<div className="col-lg-1 check1">
-									    <input type="checkbox" id="cbtest"  className="check individual"/>
-									    <label htmlFor="cbtest" className="check-box"></label> 
-									</div>
-									<div className="col-lg-11 pBoxSize">
+								<div key={index} id={property._id} className="propertyBox" >
+										{
+											(this.props.status ==="New") || (this.props.status ==="Meetings") ?
+												<div className="col-lg-1 check1 inline row" >
+												    <input type="checkbox" id={property._id}  className="check individual  "  value={property._id} onClick={this.handleData.bind(this)}/>
+												    <label htmlFor={property._id} className="check-box"></label> 
+												</div>
+											:
+											null
+										}
+									<div className="col-lg-11 pBoxSize" key={index} id={property._id}  onClick={this.profileView.bind(this)}>
 										<div className="col-lg-4">
 											<span className="mt-8">
 												Property ID: 
@@ -236,6 +295,24 @@ import './Properties.css';
 					</div>
 					
 				}
+			{/*modal=============*/}
+				 <div className="modal fade" id="myModal" role="dialog">
+				    <div className="modal-dialog">
+				      <div className="modal-content">
+				        <div className="modal-header">
+				          <button type="button" className="close" data-dismiss="modal">&times;</button>
+				          <h4 className="modal-title">Modal Header</h4>
+				        </div>
+				        <div className="modal-body">
+				          <p>Some text in the modal.</p>
+				        </div>
+				        <div className="modal-footer">
+				          <button type="button" className="btn btn-default" data-dismiss="modal">Close</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				{/*modal end==============*/}
 			</div>
 		)
 	}

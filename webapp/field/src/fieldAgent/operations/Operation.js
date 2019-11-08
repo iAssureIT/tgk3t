@@ -40,40 +40,6 @@ export default class Operation extends Component {
 					<div className="">
 					  <h2>Operations</h2>
 					  <br/>
-					 {/* <!-- Nav pills -->
-					 <div className=" col-lg-12 col-md-12">
-						  <ul className="nav nav-pills textC col-lg-12 col-md-12 noPad" role="tablist">
-						    <li className="nav-item col-lg-2 col-md-2 active navPillsMargin ">
-						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="WIP" onClick={this.propertyStatus.bind(this)}>WIP
-						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
-						    </li>
-						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin ">
-						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="New" onClick={this.propertyStatus.bind(this)}>New
-						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
-						    </li>
-						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="ReListing" onClick={this.propertyStatus.bind(this)}>Re-Listing </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
-						    </li>
-						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Verified" onClick={this.propertyStatus.bind(this)}>Verified </a>
-						       <span className="badge badge-secondary label-warning badgeP">3</span>
-						    </li>
-						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Listed" onClick={this.propertyStatus.bind(this)}>Listed </a>
-						       <span className="badge badge-secondary label-warning badgeP">9</span>
-						    </li>
-						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#Query">Query </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
-						    </li>		    
-						  </ul>
-					 </div>*/}
-
-
-
 					 <div className=" col-lg-12 col-md-12">
 						  <ul className="nav nav-pills textC col-lg-12 col-md-12 noPad" role="tablist">
 						   

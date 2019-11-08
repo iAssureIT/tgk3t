@@ -38,6 +38,7 @@ class Login extends Component {
         }
 
         // console.log("auth value",auth);
+        localStorage.setItem("loginUserEmail",this.refs.loginusername.value);
 
     axios
       .post('/api/users/post/login/role',auth)

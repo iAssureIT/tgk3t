@@ -9,7 +9,7 @@ import { connect }          from 'react-redux';
 import LoginMobNum          from '../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
 import LoginOtp             from '../WebsiteSecurity/LoginOtp/LoginOtp.js';
 import WebSignupForm        from '../WebsiteSecurity/WebSignup/WebSignupForm.js';
-import swal                     from 'sweetalert';
+import swal                 from 'sweetalert';
 
 
 import "./HomePageProperties.css";
@@ -56,6 +56,7 @@ class HomePageProperties extends Component {
     var formValues ={
       property_id : event.currentTarget.id,
       buyer_id    : localStorage.getItem('uid'),
+      
     }
     console.log("formValues",formValues);
 

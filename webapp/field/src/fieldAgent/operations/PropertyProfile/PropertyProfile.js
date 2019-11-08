@@ -76,7 +76,8 @@ class PropertyProfile extends Component{
       "countno"           : 2,
       "callfun"           : 0,
       "location"          :{latitude: 18.5184,longitude: 73.9343},
-      "showMap"           : false
+      "showMap"           : false,
+      "interestedStatus"  : "VerifyPending"
     }
   }
 
@@ -127,7 +128,7 @@ class PropertyProfile extends Component{
         },()=>{
 
         });
-        // console.log("postsdata.propertyDetails",res.data);
+        console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch((error)=>{
@@ -145,6 +146,12 @@ class PropertyProfile extends Component{
 
     $(".headerMenu").addClass("headerColor");
 
+    var interestedStatus =localStorage.getItem('interested_Status');
+    console.log("interestedStatus====",interestedStatus)
+
+    this.setState({
+      interestedStatus : interestedStatus
+    })
   }
 
   
@@ -244,11 +251,16 @@ class PropertyProfile extends Component{
                             </div>
                         </div>
                       </div>
+                      {
+                        this.state.interestedStatus === "New" ?
+                          null
+                        :
+                        <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
+                            <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Edit Property </button> 
+                        </div>
 
+                      }
                      
-                      <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
-                        <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Edit Property </button> 
-                      </div>
                       
                     </div>
                   </div>
@@ -652,11 +664,7 @@ const mapStateToProps = (state)=>{
 
 const mapDispatchToProps = (dispatch)=>{
   return {
-    setFormTitle  : (formTitle)=> dispatch({
-                          type      : "SET_FORM_TITLE",
-                          formTitle : formTitle,
-                        }),
-    login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
+   
     already_loggedIn : (originPage,uid,property_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, property_id:property_id}),
 
   }
