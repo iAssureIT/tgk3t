@@ -133,11 +133,13 @@ margin-bottom: 87px;
 /*==============================================*/
 
 .pBoxSize{
-  height: 90px;
+  /*height: 90px;*/
+  height: auto;
   border: 2px solid #f4f4f4;
   margin-top: 13px;
   padding-top: 11px;
   z-index: 1;
+  padding-bottom: 10px;
 }
 .imgSize{
   height: 145px;
@@ -252,11 +254,12 @@ input[type=checkbox]:checked + .check-box::before,
   cursor: pointer;
 }
 .pBoxSize:hover{
-  background-color: #eee !important;
+  /*background-color: #eee !important;*/
 }
 .propBtn1{
   position: relative;
-  left: 66px;
+  /*left: 66px;*/
+  margin-right: 10px;
 }
 .propBtn2{
   position: relative;
@@ -274,4 +277,9 @@ input[type=checkbox]:checked + .check-box::before,
     /* left: 139px; */
     z-index: 1;
     right: -21px;
+}
+.shortIcon{
+  width: 27px;
+  margin-top: 5px;
+  margin-right: 25px;
 }

@@ -1148,7 +1148,7 @@ import './PropertyDetails.css';
 		  	 	</div>*/}
 		  	 	
 		  	 	<div className = "container-fluid padd0 ">
-		  	 		{console.log("here amenity in map",this.state.allAmenities)}
+		  	 		{/*console.log("here amenity in map",this.state.allAmenities)*/}
 		  	 		{this.state.allAmenities && this.state.allAmenities.length > 0 ?
 		  	 			this.state.allAmenities.map((data,index)=>{
 		  	 				// console.log("data",data);

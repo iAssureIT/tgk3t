@@ -56,7 +56,7 @@ export default class Operation extends Component {
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>
 						     <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Meetings" onClick={this.propertyFieldStatus.bind(this)}>Meetings </a>
+						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="meetingSet" onClick={this.propertyFieldStatus.bind(this)}>Meetings </a>
 						       <span className="badge badge-secondary label-warning badgeP">6</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
