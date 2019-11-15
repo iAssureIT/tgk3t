@@ -5,7 +5,6 @@ import { createAppContainer }     from '@react-navigation/native';
 import AuthLoadingScreen          from '../layouts/AuthLoading/AuthLoadingScreen.js' 
 import Home                       from '../components/Home/Home.js';
 import SideMenuAfterLogin         from '../layouts/SideMenu/SideMenuAfterLogin.js';
-import SideMenuBeforeLogin        from '../layouts/SideMenu/SideMenuBeforeLogin.js';
 import SignUp                     from '../components/SystemSecurity/SignUp/SignUp.js';
 import BasicInfo                  from '../components/PostAndEarn/BasicInfo.js';
 import PropertyDetails            from '../components/PostAndEarn/PropertyDetails.js';
@@ -22,7 +21,6 @@ import MobileScreen               from '../components/SystemSecurity/LoginMobNo/
 import OTPScreen                  from '../components/SystemSecurity/LoginOTP/OTPScreen.js';
 
 const HomeStack = createStackNavigator({
-
   Home: {
     screen: Home,
     navigationOptions: {

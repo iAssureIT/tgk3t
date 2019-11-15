@@ -36,6 +36,7 @@ navigateScreen=(route)=>{
   });
   this.props.navigation.dispatch(navigateAction);
 }
+
   constructor(props){
     super(props);
     // this.retrieveToken()
@@ -70,7 +71,10 @@ navigateScreen=(route)=>{
   retrieveToken = async()=>{
     var token = await AsyncStorage.getItem('token')
     var uid = await AsyncStorage.getItem('uid')
-    this.setState({token:token})
+    this.setState({
+      token:token,
+      uid  :uid
+    })
   }
 
   handleLocation(value){
@@ -147,11 +151,24 @@ navigateScreen=(route)=>{
     var property      = this.state.activeBtn.split("-");
     var propertyType  = property[0];
     var transactionType = property[1];
+
     const formValues = {
-      property  : this.state.activeBtn,   
-      location  : this.state.location,
+      transactionType : transactionType,
+      propertyType    : propertyType,
+      location        : this.state.location,
+      budget          : "",
+      propertySubType : "",
+      floor           : "",
+      furnishedStatus : "",
+      flatType        : "",
+      propertyAge     : "",
+      availability    : "",
+      uid             : this.state.uid,
     }
-   this.props.navigation.navigate('SearchProperty',{searchResults : formValues})
+    console.log("formValues=>",formValues);
+    var searchData = JSON.stringify(formValues);
+    AsyncStorage.setItem("searchData",searchData);
+    this.navigateScreen('PropertyList')
   }
 
 
@@ -167,7 +184,7 @@ navigateScreen=(route)=>{
     }else{
        this.navigateScreen("BasicInfo");
     }
-       // this.navigateScreen("Availability");
+       // this.navigateScreen("PropertyDetails");
   }
  
   render(){
@@ -187,8 +204,7 @@ navigateScreen=(route)=>{
 
             <View style={styles.headingView}>
               <Text style={styles.headingText}>
-                <Text style={{fontFamily:'Roboto-Regular'}}>Every dream </Text>
-                <Text style={{fontFamily:'Roboto-Medium'}}>has a key</Text>
+                Every dream has a key
               </Text>
             </View>
 

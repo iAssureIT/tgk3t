@@ -19,6 +19,7 @@ export const colors = {
   textLight : '#666666',
   textDark : '#333333',
   border: '#989898',
+  danger: "#e25e77"
 };
 
 export const sizes = {

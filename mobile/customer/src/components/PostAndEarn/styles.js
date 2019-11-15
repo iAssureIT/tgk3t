@@ -38,7 +38,7 @@ export default StyleSheet.create({
     fontSize: 14,
     fontFamily: 'Roboto-Regular',
     color:colors.grey,
-  },
+    },
   inputTextSmall:{
     fontSize: 13,
     fontFamily: 'Roboto-Regular',
@@ -234,6 +234,15 @@ export default StyleSheet.create({
   },
   marginBottom15:{
     marginBottom: 15
+  },
+  marginTop25:{
+    marginTop: 25
+  },
+  marginTop15:{
+    marginTop: 15
+  },
+  marginTop5:{
+    marginTop: 5
   },
   marginBottom5:{
     marginBottom: 5
@@ -440,7 +449,7 @@ export default StyleSheet.create({
     // left:5,
     fontFamily:"Roboto-Regular",
     fontSize:15,
-    paddingHorizontal:2
+    paddingHorizontal:2,
   },
   ddLabelTextFull:{
     backgroundColor:'#fff',
@@ -451,7 +460,7 @@ export default StyleSheet.create({
     // paddingHorizontal:2
   },
   ddStyle:{
-    fontFamily:"Roboto-Regular"
+    fontFamily:"Roboto-Regular",
   },
   descriptionView:{
     borderWidth:1,
@@ -543,7 +552,7 @@ export default StyleSheet.create({
     // backgroundColor :"#f00",
  },
  dropHeight:{
-  height:40,
+  height:10,
  },
 
  propImage:{
@@ -569,10 +578,10 @@ export default StyleSheet.create({
 marginTopSOM:{
     ...Platform.select({
       ios:{
-        marginTop: 50,
+        marginTop: 80,
       },
       android : {
-        marginTop:50,
+        marginTop:80,
       }
     })
 }, 

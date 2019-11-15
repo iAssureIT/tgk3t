@@ -71,7 +71,7 @@ navigateScreen=(route)=>{
  
 
   render() {
-    const { goBack } = this.props.navigation;
+    // const { goBack } = this.props.navigation;
     console.log("this.state.token=>Header",this.state.token);
     return (
       <Header
@@ -80,11 +80,11 @@ navigateScreen=(route)=>{
         leftComponent={
           this.props.showBackBtn
           ?
-            <TouchableOpacity onPress={()=> goBack()}>
-              <Icon size={28} name='chevrons-left' type='feather' color='#fff' />
-            </TouchableOpacity>
-          :
-            null
+              <TouchableOpacity onPress={()=> this.props.navigation.dispatch(NavigationActions.back())}>
+                <Icon size={28} name='chevrons-left' type='feather' color='#fff' />
+              </TouchableOpacity>
+            :
+          null
         }
 
         centerComponent={

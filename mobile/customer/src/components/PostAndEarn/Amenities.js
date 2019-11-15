@@ -152,7 +152,7 @@ navigateScreen=(route)=>{
             // if(error.message === "Request failed with status code 401")
             //                   {
             //                       Alert.alert("Your session is expired!"," Please loginagain.");
-AsyncStorage.removeItem('token');
+            AsyncStorage.removeItem('token');
             //                      this.props.navigation.navigate('MobileScreen');          
                                    
                                    
@@ -356,7 +356,7 @@ render(){
             <View style={styles.divider}></View>
 
             <View style={styles.amenitiesWrapper,styles.marginBottom25} >
-              <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities </Text>           
+              <Text style={[styles.heading3,styles.marginBottom5,{fontWeight:'bold'}]}> All Amenities </Text>           
               {this.state.allAmenities && this.state.allAmenities.length >0 ?
                 this.state.allAmenities.map((data,index)=>(
                 <React.Fragment key={index}>

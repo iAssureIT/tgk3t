@@ -74,7 +74,16 @@ export default StyleSheet.create({
     width:'40%',
   },
   buttonContainer3:{
-    width:'70%',
+    width:'40%',
+    backgroundColor: colors.primary,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius:4,
+    elevation: 5,
+    marginTop:10,
+    marginLeft:20,
+    flexDirection:"row"
   },
   buttonContainer4:{
     width:'30%',
@@ -165,5 +174,10 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom :15,
     fontSize :25 
+  },
+   buttonIcon:{
+    height:15,
+    width:30,
+    marginLeft:10
   }
 });

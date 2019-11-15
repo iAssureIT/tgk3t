@@ -83,6 +83,7 @@ navigateScreen=(route)=>{
       // console.log("token-------------------------------",token);
       const originPage = await AsyncStorage.getItem('originPage');
       // console.log("originPage-------------------------------",originPage);
+      const fullName = await AsyncStorage.getItem('fullName');
       // if (uid !== null && token !== null) {
        this.setState({
                  msg         : msg,
@@ -91,6 +92,7 @@ navigateScreen=(route)=>{
                  uid         : uid,
                  token       : token,
                  originPage  : originPage,
+                 fullName    : fullName,
                });
       // }
     } catch (error) {
@@ -113,7 +115,7 @@ navigateScreen=(route)=>{
               this.navigateScreen('BasicInfo');
               // console.log("already");
             }else if (this.state.originPage === "searchProp"){
-              this.navigateScreen('SearchProperty');
+              this.navigateScreen('PropertyList');
             }else if (this.state.originPage === "myPostedProp"){
               this.navigateScreen('MyPostedProperties');
             }else if (this.state.originPage === "interestedProp"){
@@ -164,7 +166,7 @@ navigateScreen=(route)=>{
               </View>
 
               <View style={{marginTop:15,marginBottom:10}}>
-                <Text style={[styles.heading2,styles.marginBottom5]}>Welcome</Text>
+                <Text style={[styles.heading2,styles.marginBottom5]}>Welcome {this.state.fullName}</Text>
                 <Text style={[styles.heading2,styles.marginBottom5,{color:"#49AA3F"}]}>We have sent you an OTP on your mobile for verification, please enter your OTP to continue</Text>
 
               </View>
@@ -208,9 +210,9 @@ navigateScreen=(route)=>{
                style={{paddingHorizontal:'5%',zIndex:999}}
                animationOutTiming={500}>
                   <View style={{backgroundColor:"#fff",alignItems:'center',borderRadius:20,paddingVertical:30,paddingHorizontal:10}}>
-                    <View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
-                      <Icon size={30} name='window-close' type='fontAwesome5' color='#fff' style={{}}/>
-                    </View>
+                    {/*<View style={{justifyContent:'center',backgroundColor:"#34be34",width:60,height:60,borderRadius:30,overflow:'hidden'}}>
+                      <Icon size={30} name='window-close' type='fontAwesome' color='#fff' style={{}}/>
+                    </View>*/}
                     <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
                      Please enter OTP
                     </Text>
@@ -220,7 +222,7 @@ navigateScreen=(route)=>{
                         onPress         = {()=>this.setState({openModal1:false})}
                         titleStyle      = {styles.buttonText}
                         title           = "OK"
-                        buttonStyle     = {styles.buttonSignUp}
+                        buttonStyle     = {[styles.buttonSignUp,{backgroundColor:"#E25E77",width:60,color:"#fff"}]}
                         containerStyle  = {styles.buttonContainer}
                       />
                     </View>
@@ -238,7 +240,7 @@ navigateScreen=(route)=>{
                       <Icon size={30} name='close' type='material-community' color='#f00' style={{}}/>
                     </View>*/}
                     <Text style={{fontSize:15,textAlign:'center',marginTop:20}}>
-                     Sorry, you have entered invalid OTP. Please try again.
+                     Sorry, you have entered an invalid OTP. Please try again.
                     </Text>
 
                     <View style={{width:'100%',borderBottomRightRadius:500,marginTop:15}}>
@@ -246,7 +248,7 @@ navigateScreen=(route)=>{
                         onPress         = {()=>this.setState({openModal:false})}
                         titleStyle      = {styles.buttonText}
                         title           = "OK"
-                        buttonStyle     = {[styles.buttonSignUp,{backgroundColor:"#f00",width:60}]}
+                        buttonStyle     = {[styles.buttonSignUp,{backgroundColor:"#E25E77",width:60,color:"#fff"}]}
                         containerStyle  = {styles.buttonContainer}
                       />
                     </View>

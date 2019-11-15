@@ -16,9 +16,11 @@ export default StyleSheet.create({
     height:window.height,
   },
   headingText:{
-    fontSize: 28,
+    fontSize: 26,
     textTransform: 'uppercase',
-    color: colors.white
+    color: colors.white,
+    fontFamily:'Roboto-Regular',
+    textAlign: 'center'
   },
   headingView:{
     alignItems: 'center',

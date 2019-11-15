@@ -10,7 +10,7 @@ import {
   Image,TextInput,
   Alert,
   StyleSheet,
-  Picker
+  // Picker
 } from 'react-native';
 import Hr                                   from "react-native-hr-component";
 import { Dropdown }                         from 'react-native-material-dropdown';
@@ -30,6 +30,7 @@ import SwitchToggle                         from 'react-native-switch-toggle';
 import RNPickerSelect                       from 'react-native-picker-select';
 
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
+import {Picker}                             from '@react-native-community/picker';
 const window = Dimensions.get('window');
 
 const defaultOption = [
@@ -54,7 +55,7 @@ export default class BasicInfo extends ValidationComponent{
     super(props);
     this.state={
       // activeTab        : 'owner',
-      propertyHolder   : "owner",
+      propertyHolder   : "Owner",
       fullPropertyType : 'Select Property Type',
       propertyLocation : '',
       toggle           : false,
@@ -78,29 +79,29 @@ export default class BasicInfo extends ValidationComponent{
       propertyType    : '',
       propertySubType : '',
       pincode         : '',
-      stateData       : [
-                          {value: 'Maharashtra',},
-                          {value: 'Punjab',},
-                          {value: 'Delhi',},
-                          {value: 'Kerala',}
-                        ],
+      // stateData       : [
+      //                     {value: 'Maharashtra',},
+      //                     {value: 'Punjab',},
+      //                     {value: 'Delhi',},
+      //                     {value: 'Kerala',}
+      //                   ],
 
-      cityData        : [
-                          {value: 'Pune City',},
-                          {value: 'Pashan',},
-                          {value: 'Khanapur',}
-                        ],
+      // cityData        : [
+      //                     {value: 'Pune City',},
+      //                     {value: 'Pashan',},
+      //                     {value: 'Khanapur',}
+      //                   ],
 
-      areaData        : [
-                          {value: 'Hadapsar',},
-                          {value: 'Kharadi',}
-                        ],
+      // areaData        : [
+      //                     {value: 'Hadapsar',},
+      //                     {value: 'Kharadi',}
+      //                   ],
 
-      subAreaData     : [
-                          {value: 'Amanora Township',},
-                          {value: 'Bhosale Nagar',},
-                          {value: 'Gadital'}
-                        ],
+      // subAreaData     : [
+      //                     {value: 'Amanora Township',},
+      //                     {value: 'Bhosale Nagar',},
+      //                     {value: 'Gadital'}
+      //                   ],
       societyName     : '',
       house           : '',
       landmark        : '',
@@ -119,16 +120,19 @@ export default class BasicInfo extends ValidationComponent{
       societyList     : "",
       blockName       : "",
       cityName        : "",
-      stateCode       : "State",
+      // stateCode       : "State",
       token           : "",
       uid             : "",
       mobile          : '',
-      // areaName        : '',
+      // areaName        : 'Hadapsar',
       originalValues          : "",
       originalValuesLocation  : "",
       pincodeError    : [],
       societyError    : "", 
       fullAddress     : "",
+      subAreaName     : "",
+      stateCode       : "",
+      areaName        : "",
       transactionTypeError:"",
       stateCodeError  :"",
       cityNameError   :"",
@@ -137,7 +141,7 @@ export default class BasicInfo extends ValidationComponent{
       areaNameError   :"",
       fullPropertyTypeError:"",
       fullPropertyType:""
-    };      
+    }; 
   }
 
     componentDidMount(){
@@ -201,7 +205,7 @@ export default class BasicInfo extends ValidationComponent{
       },
       societyName: {
         required: true,
-        letters: true,
+        societyRegx: true,
       },
        transactionType: {
         required: true,
@@ -284,6 +288,7 @@ export default class BasicInfo extends ValidationComponent{
   };
   
   validInputField = (stateName, stateErr) => {
+    console.log("Inside");
     const {
       pincode,
       societyName,
@@ -293,7 +298,7 @@ export default class BasicInfo extends ValidationComponent{
       areaName,
       cityName,
       fullPropertyType,
-      subAreaName
+      subAreaName,
     } = this.state;
     let valid = true;
 
@@ -377,9 +382,78 @@ export default class BasicInfo extends ValidationComponent{
                           address                   : res.data.propertyLocation.address,
                           house                     : res.data.propertyLocation.address,
                           landmark                  : res.data.propertyLocation.landmark,
-
+                          toggle                    : res.data.transactionType=== "Sell" ? false : true 
                       },()=>{
+                          //==================================================================
+                            //      Get Cities
+                            //==================================================================
 
+                          axios({
+                              method: 'get',
+                              url: 'http://locationapi.iassureit.com/api/cities/get/citiesByState/IN/'+res.data.propertyLocation.state,
+                          }).then((response1)=> {
+                              this.setState({
+                                listofCities : response1.data,
+                              })
+
+                            //==================================================================
+                            //      Get Areas
+                            //==================================================================
+
+                        var url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+res.data.propertyLocation.state+'/'+res.data.propertyLocation.district+'/'+res.data.propertyLocation.block+'/'+res.data.propertyLocation.city+'/' ;
+                          axios({
+                            method: 'get',
+                            url: url,
+                          }).then((response2)=> {
+                              this.setState({
+                                listofAreas : response2.data
+                              })
+                              console.log("listofAreas=======>",response2.data)
+
+                            //==================================================================
+                            //      Get SubAreas
+                            //==================================================================
+                        var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+res.data.propertyLocation.state+'/'+res.data.propertyLocation.district+'/'+res.data.propertyLocation.block+'/'+res.data.propertyLocation.city+'/'+res.data.propertyLocation.area+'/' ;
+
+                        axios({
+                          method: 'get',
+                          url: url,
+                        }).then((response3)=> {
+                            this.setState({
+                              "subAreaList" : response3.data
+                            })
+                          }).catch((error)=>{
+                                      console.log("error = ",error);
+                                      if(error.message === "Request failed with status code 401")
+                                      {
+                                          Alert.alert("Your session is expired!"," Please loginagain.");
+                                          AsyncStorage.removeItem('token');
+                                          this.navigateScreen('MobileScreen');
+                                      }
+                                  });
+
+
+                                }).catch((error)=>{
+                                    console.log("error = ",error);
+                                    if(error.message === "Request failed with status code 401")
+                                    {
+                                        Alert.alert("Your session is expired!"," Please loginagain.");
+                                        AsyncStorage.removeItem('token');
+                                        this.navigateScreen('MobileScreen');
+                                    }
+                                });
+
+
+
+                              }).catch((error)=>{
+                                  console.log("error = ",error);
+                                  if(error.message === "Request failed with status code 401")
+                                  {
+                                      Alert.alert("Your session is expired!"," Please loginagain.");
+                                      AsyncStorage.removeItem('token');
+                                      this.navigateScreen('MobileScreen');
+                                  }
+                              }); 
                         if(this.state.cityName != null &&  this.state.areaName != null && this.state.subAreaName != null && this.state.societyName != null)
                         {
                            var first  = this.state.cityName.toUpperCase().slice(0,2);
@@ -453,6 +527,8 @@ export default class BasicInfo extends ValidationComponent{
         "stateCode"       : this.state.stateCode,
         "cityName"        : this.state.cityName,
         "areaName"        : this.state.areaName,
+        "districtName"    : this.state.districtName,
+        "blockName"       : this.state.blockName,
         "subAreaName"     : this.state.subAreaName,
         "societyName"     : this.state.societyName,
         "address"         : this.state.house,
@@ -462,7 +538,7 @@ export default class BasicInfo extends ValidationComponent{
         // "fullAddress"     : this.state.fullAddress,
         "property_id"     : this.state.propertyId,
       };
-      console.log("formValues",formValues);
+      // console.log("formValues",formValues);
       // console.log("subAreaName",this.state.subAreaName);
       if (this.validInput()) {
       if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
@@ -571,6 +647,7 @@ export default class BasicInfo extends ValidationComponent{
             cityName      : response.data[0].cityName,
             areaName      : response.data[0].areaName,
           },()=>{
+            this.validInputField('stateCode', 'stateCodeError');
             //========== Get City List  =====================
             url = 'http://locationapi.iassureit.com/api/cities/get/citiesByState/IN/'+this.state.stateCode;
             axios({
@@ -581,23 +658,25 @@ export default class BasicInfo extends ValidationComponent{
                 this.setState({
                   listofCities : response.data,
                 },()=>{
+                  this.validInputField('cityName', 'cityNameError');
                    var allCityData = this.state.listofCities;
-                    // cityname = allCityData.map(a=>a.cityName);
+                    cityname = allCityData.map(a=>a.cityName);
+                    // console.log("cityname========.",cityname)
                     var cityList=[];
                     for (var i = 0; i < allCityData.length; i++) {
                         var city = {
                           label:allCityData[i].cityName,
-                          value:allCityData[i].cityName,
-                          // value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
+                          // value:allCityData[i].cityName,
+                          value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
                         }
                        cityList.push(city);
                     }
-                    this.setState({
-                      onlyCity : cityList,
-                    },()=>{
+                    // this.setState({
+                    //   onlyCity : cityList,
+                    // },()=>{
                     // console.log("only city name",this.state.onlyCity);
 
-                    })
+                    // })
                 })
 
                
@@ -623,6 +702,7 @@ export default class BasicInfo extends ValidationComponent{
                 this.setState({
                   listofAreas : response.data
                 },()=>{
+                  this.validInputField('areaName', 'areaNameError');
                    var allAreaData = this.state.listofAreas;
                     // cityname = allCityData.map(a=>a.cityName);
                     var areaList=[];
@@ -633,12 +713,12 @@ export default class BasicInfo extends ValidationComponent{
                         }
                        areaList.push(area);
                     }
-                    this.setState({
-                      onlyArea : areaList,
-                    },()=>{
-                    // console.log("onlyArea name",this.state.onlyArea);
+                    // this.setState({
+                    //   onlyArea : areaList,
+                    // },()=>{
+                    // // console.log("onlyArea name",this.state.onlyArea);
 
-                    })
+                    // })
                 })
             }).catch((error)=>{
                   console.log("error = ",error);
@@ -662,6 +742,7 @@ export default class BasicInfo extends ValidationComponent{
               this.setState({
                 subAreaList : response.data
               },()=>{
+                  this.validInputField('subAreaName', 'subAreaNameError');
                    var allSubAreaData= this.state.subAreaList;
 
                     // cityname = allCityData.map(a=>a.cityName);
@@ -719,7 +800,7 @@ export default class BasicInfo extends ValidationComponent{
 
   selectState(stateCode){
     var selectedState = stateCode;
-    // console.log("selectedState",selectedState);
+    console.log("selectedState",selectedState);
     this.setState({
         stateCode : selectedState,
       });
@@ -737,9 +818,9 @@ export default class BasicInfo extends ValidationComponent{
                     var cityList=[];
                     for (var i = 0; i < allCityData.length; i++) {
                         var city = {
-                          label:allCityData[i].cityName,
-                          value:allCityData[i].cityName,
-                          // value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
+                          // label:allCityData[i].cityName,
+                          // value:allCityData[i].cityName,
+                          value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
 
                         }
                        cityList.push(city);
@@ -773,6 +854,9 @@ export default class BasicInfo extends ValidationComponent{
       var blockName    = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[1] : "Haveli";
       var cityName   = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[2] : "Pune City";
 
+      console.log("districtName",districtName);
+      console.log("blockName",blockName);
+      console.log("cityName",cityName);
     var url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+this.state.stateCode+'/'+districtName+'/'+blockName+'/'+cityName+'/' ;
 
       this.setState({
@@ -804,44 +888,42 @@ export default class BasicInfo extends ValidationComponent{
                       onlyArea : areaList,
                     },()=>{
                     // console.log("onlyArea name",this.state.onlyArea);
-
                     })
                 })
       }).catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                              Alert.alert("Your session is expired!"," Please loginagain.");
-                              AsyncStorage.removeItem('token');
-                              this.navigateScreen('MobileScreen');               
-                               
-                        }
-             });
-
+              console.log("error = ",error);
+              if(error.message === "Request failed with status code 401")
+              {
+                    Alert.alert("Your session is expired!"," Please loginagain.");
+                    AsyncStorage.removeItem('token');
+                    this.navigateScreen('MobileScreen');               
+                     
+              }
+         });
   }
 
   selectArea(areaName){
     // console.log("areaName",areaName);
 
     // event.preventDefault();
-    var areaName = areaName;
-    // console.log("var areaName ",areaName);
+    console.log("var areaName ",areaName);
     // var data = "411028";
-    if(this.state.listofAreas.length > 0){
+    if(this.state.listofAreas && this.state.listofAreas.length > 0){
       // console.log("all area data",this.state.listofAreas);
       var index = this.state.listofAreas.findIndex( x => x.areaName === areaName);
-      // console.log("here index",index);
+      console.log("here index",index);
 
-       this.setState({
+    this.setState({
       areaName : areaName,
-      // pincode : this.state.listofAreas[index].pincode,
+      pincode : index===-1 ? null: this.state.listofAreas[index].pincode,
+      subAreaName:"",
     })
     
     }
 
     
 
-  var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/' ;
+  var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+areaName+'/' ;
 
     axios({
       method: 'get',
@@ -851,7 +933,7 @@ export default class BasicInfo extends ValidationComponent{
           subAreaList : response.data
         },()=>{
            var allSubAreaData= this.state.subAreaList;
-
+           console.log("subareaList=>>>>>>>>>>",response.data)
             // cityname = allCityData.map(a=>a.cityName);
             var subareaList=[];
             for (var i = 0; i < allSubAreaData.length; i++) {
@@ -1044,7 +1126,7 @@ export default class BasicInfo extends ValidationComponent{
             <View style={styles.formWrapper}>
               <View>
                 <Text style={styles.heading}>
-                  Let's provide details of your property for Sell/Rent
+                  Please provide location of your property for Sell/Rent
                 </Text>
               </View>
 
@@ -1056,11 +1138,11 @@ export default class BasicInfo extends ValidationComponent{
                 />
               </View>
 
-              <Text style={styles.heading2}>I am</Text>
+              <Text style={[styles.heading2,styles.marginBottom5]}>I am</Text>
               <View style={[styles.tabWrap,styles.marginBottom15]}>
                 <TouchableOpacity
-                  onPress = {()=>this.setActive('owner')}
-                  style={[(propertyHolder=="owner"?styles.activeTabView:styles.tabView),styles.tabBorder,styles.borderRadiusLeft]}
+                  onPress = {()=>this.setActive('Owner')}
+                  style={[(propertyHolder=="Owner"?styles.activeTabView:styles.tabView),styles.tabBorder,styles.borderRadiusLeft]}
                 >
                     <Icon
                       name="man"
@@ -1071,8 +1153,8 @@ export default class BasicInfo extends ValidationComponent{
                     <Text style={styles.tabText}>Owner</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress = {()=>this.setActive('careTaker')}
-                  style={[(propertyHolder=="careTaker"?styles.activeTabView:styles.tabView),styles.tabBorder]}
+                  onPress = {()=>this.setActive('Care Taker')}
+                  style={[(propertyHolder=="Care Taker"?styles.activeTabView:styles.tabView),styles.tabBorder]}
                 >
                   <Icon
                     name="home-account"
@@ -1083,8 +1165,8 @@ export default class BasicInfo extends ValidationComponent{
                   <Text style={styles.tabText}>Care Taker</Text>
                 </TouchableOpacity>
                 <TouchableOpacity
-                  onPress = {()=>this.setActive('builder')}
-                  style={[(propertyHolder=="builder"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
+                  onPress = {()=>this.setActive('Builder')}
+                  style={[(propertyHolder=="Builder"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
                 >
                   <Icon
                     name="home-city"
@@ -1096,7 +1178,7 @@ export default class BasicInfo extends ValidationComponent{
                 </TouchableOpacity>
               </View>
 
-              <Text style={styles.heading2}>I would like to (Sell / Rent)</Text>
+              <Text style={[styles.heading2,styles.marginBottom5]}>I would like to (Sell / Rent)</Text>
               <View style={[styles.marginBottom15,{width:'100%'}]}>
                 <SwitchToggle
                   switchOn={this.state.toggle}
@@ -1182,6 +1264,7 @@ export default class BasicInfo extends ValidationComponent{
                     style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                     labelTextStyle        = {styles.textLabel}
                     keyboardType          = 'number-pad'
+                    maxLength             = {6}
                 />
                 </View>
               </View>
@@ -1198,7 +1281,7 @@ export default class BasicInfo extends ValidationComponent{
                     <View style={[{borderColor: colors.black,
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
-                          {/*<Picker
+                          {<Picker
                             selectedValue       ={this.state.stateCode}
                             style               ={[styles.ddStyle,{height:40}]}
                             placeholder         = "State"
@@ -1213,11 +1296,9 @@ export default class BasicInfo extends ValidationComponent{
                             baseColor           = {'#666'}
                             textColor           = {'#333'}
                             labelTextStyle      = {styles.ddLabelText}
-                            onValueChange={(stateCode) =>
-                              this.selectState(stateCode)
-                            }
+                            onValueChange={stateCode => {this.setState({stateCode},()=> {this.validInputField('stateCode', 'stateCodeError');this.selectState(stateCode);})}}
                             >
-
+                            <Picker.Item value="" label="Select State" color={colors.textLight}/>
                             {this.state.listofStates ?
                               this.state.listofStates.map((data, index)=>{
                                 return(
@@ -1228,22 +1309,25 @@ export default class BasicInfo extends ValidationComponent{
                               null
                             }
                             
-                          </Picker>*/}
+                          </Picker>}
 
                           
 
-                            <RNPickerSelect
+                           {/* <RNPickerSelect
                               onValueChange={(stateCode) =>
                               this.selectState(stateCode)
+                              // {this.selectState(stateCode),this.validInputField('stateCode', 'stateCodeError'); }}
+                              
                             }
                             value                  = {this.state.stateCode}
                             style                  = {pickerSelectStyles}
                             placeholder            = {placeholderState}
                             items                  = {this.state.onlyState.length>0 ? this.state.onlyState : defaultOption }
-                            />
+                            />*/}
                         
                       </View>
                     </View>
+                    {this.displayValidationError('stateCodeError')}
                   </View>
 
                     <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
@@ -1256,7 +1340,7 @@ export default class BasicInfo extends ValidationComponent{
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
                  
-                         {/*<Picker
+                         {<Picker
                             selectedValue       ={this.state.cityName}
                             style               ={[styles.ddStyle,{height:40}]}
                             placeholder         = "City"
@@ -1271,15 +1355,13 @@ export default class BasicInfo extends ValidationComponent{
                             baseColor           = {'#666'}
                             textColor           = {'#333'}
                             labelTextStyle      = {styles.ddLabelText}
-                            onValueChange={(cityName) =>
-                              this.selectCity(cityName)
-                            }
+                            onValueChange={cityName => {this.setState({cityName},()=> {this.validInputField('cityName', 'cityNameError');this.selectCity(cityName);})}}
                             >
-
+                            <Picker.Item value="" label="Select City" color={colors.textLight}/>
                             {this.state.listofCities.length > 0  ?
                               this.state.listofCities.map((data, index)=>{
                                 return(
-                                         <Picker.Item key={index} value={data.districtName+'-'+data.blockName+'-'+data.cityName} label={data.cityName} />
+                                         <Picker.Item key={index} value={data.cityName} label={data.cityName} />
                                        );
                                      })
 
@@ -1287,9 +1369,9 @@ export default class BasicInfo extends ValidationComponent{
                               <Picker.Item label="Select State first" />
                             }
                             
-                          </Picker>*/}
+                          </Picker>}
                           {/*console.log("city name",this.state.cityName)*/}
-                           <RNPickerSelect
+                           {/*<RNPickerSelect
                               onValueChange={(cityName) =>
                               this.selectCity(cityName)
                             }
@@ -1298,10 +1380,11 @@ export default class BasicInfo extends ValidationComponent{
                             placeholder                 = {placeholderCity}
                             items                       = {this.state.onlyCity.length>0 ? this.state.onlyCity : defaultOption }
                             useNativeAndroidPickerStyle = {false}
-                            />
+                            />*/}
                            
                       </View>
                     </View>
+                    {this.displayValidationError('cityNameError')}
                   </View>
               </View>
 
@@ -1314,7 +1397,7 @@ export default class BasicInfo extends ValidationComponent{
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
                          
-  {/*
+  {
                         <Picker
                             selectedValue       ={this.state.areaName}
                             style               ={[styles.ddStyle,{height:40}]}
@@ -1330,11 +1413,9 @@ export default class BasicInfo extends ValidationComponent{
                             baseColor           = {'#666'}
                             textColor           = {'#333'}
                             labelTextStyle      = {styles.ddLabelText}
-                            onValueChange={(areaName) =>
-                              this.selectArea(areaName)
-                            }
+                            onValueChange={areaName => {this.setState({areaName},()=> {this.validInputField('areaName', 'areaNameError');this.selectArea(areaName);})}}
                             >
-
+                            <Picker.Item value="" label="Select Area" color={colors.textLight}/>
                             {this.state.listofAreas  && this.state.listofAreas.length > 0  ?
                               this.state.listofAreas.map((data, index)=>{
                                 return(
@@ -1346,11 +1427,11 @@ export default class BasicInfo extends ValidationComponent{
                               
                             }
                             
-                          </Picker>*/}
+                          </Picker>}
                           {/*console.log("this.state.onlyArea in render",this.state.onlyArea)*/}
 
 
-                          <RNPickerSelect
+                          {/*<RNPickerSelect
                               onValueChange={(areaName) =>
                               this.selectArea(areaName)
                             }
@@ -1358,9 +1439,10 @@ export default class BasicInfo extends ValidationComponent{
                             style                  = {pickerSelectStyles}
                             placeholder            = {placeholderArea}
                             items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : defaultOption }
-                            />
+                            />*/}
                       </View>
                     </View>
+                    {this.displayValidationError('areaNameError')}
                   </View>
 
                     <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
@@ -1373,8 +1455,9 @@ export default class BasicInfo extends ValidationComponent{
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
                       {/*console.log("onlySubArea in render",this.state.onlySubArea)*/}
-                        
-                         {/*<Picker
+                       { this.state.onlySubArea.length>0  ? 
+                      
+                         <Picker
                             selectedValue       ={this.state.subAreaName}
                             style               ={[styles.ddStyle,{height:40}]}
                             placeholder         = "Sub-Area"
@@ -1390,11 +1473,9 @@ export default class BasicInfo extends ValidationComponent{
                             textColor           = {'#333'}
                             labelTextStyle      = {styles.ddLabelText}
                             onBlur              = {()=>this.handleSubarea()}
-                            onValueChange={(subAreaName) =>
-                              this.setState({subAreaName})
-                            }
+                            onValueChange       ={subAreaName => {this.setState({subAreaName},()=> {this.validInputField('subAreaName', 'subAreaNameError');})}}
                             >
-
+                            <Picker.Item value="" label="Select Subarea" color={colors.textLight}/>
                             {this.state.subAreaList.length>0 ?
                               this.state.subAreaList.map((data, index)=>{
                                 return(
@@ -1406,9 +1487,32 @@ export default class BasicInfo extends ValidationComponent{
                               
                             }
                             
-                          </Picker>*/}
+                          </Picker>
+                          :
+                               <TextInput
+                                  placeholder           = "Sub-Area"
+                                  onChangeText          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError'); })}}
+                                  onBlur                = {()=>this.handleSubarea()}
+                                  lineWidth             = {1}
+                                  tintColor             = {colors.button}
+                                  inputContainerPadding = {0}
+                                  labelHeight           = {15}
+                                  labelFontSize         = {sizes.label}
+                                  titleFontSize         = {10}
+                                  baseColor             = {'#666'}
+                                  textColor             = {'#666'}
+                                  value                 = {this.state.subAreaName}
+                                  containerStyle        = {styles.textContainer}
+                                  inputContainerStyle   = {styles.textInputContainer}
+                                  titleTextStyle        = {styles.textTitle}
+                                  style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                                  labelTextStyle        = {styles.textLabel}
+                                  keyboardType          = "default"
+                              />
+                        }
 
-                          { this.state.onlySubArea.length>0  ? 
+
+                          { /*this.state.onlySubArea.length>0  ? 
                              <RNPickerSelect
                                 onValueChange          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError'); })}}
                                 onBlur                 = {()=>this.handleSubarea()}
@@ -1438,10 +1542,10 @@ export default class BasicInfo extends ValidationComponent{
                                 labelTextStyle        = {styles.textLabel}
                                 keyboardType          = "default"
                               />
-                            }
-                            {this.displayValidationError('subAreaNameError')}
+                            */}
                       </View>
                     </View>
+                    {this.displayValidationError('subAreaNameError')}
                   </View>
               </View>
 
@@ -1598,6 +1702,7 @@ BasicInfo.defaultProps = {
       numbers: 'This field must be a number.',
       required: 'This field is required.',
       letters: 'It should only contain letters.',
+      societyRegx: 'It should contain letters, numbers and some special characters.',
       lettersOrEmpty: 'It should only contain letters.',
       minlength: 'Length should be greater than {1}',
       equalLength : 'Length should be equal to {1}'
@@ -1609,6 +1714,7 @@ BasicInfo.defaultProps = {
     required       : /\S+/,
     letters        : /^[a-zA-Z ]+$/,
     lettersOrEmpty : /^[a-zA-Z ]+$|^$/,
+    societyRegx    : /^[a-zA-Z0-9-. ]+$/,
     minlength(length, value) {
       if (length === void (0)) {
         throw 'ERROR: It is not a valid length, checkout your minlength settings.';

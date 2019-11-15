@@ -11,9 +11,9 @@ export default StyleSheet.create({
   },
   bgImage: {
     width:null,
-    height:window.height/3,
-    justifyContent:'center',
-    alignItems: 'flex-start',
+    height:250,
+    // justifyContent:'center',
+    // alignItems: 'flex-start',
     borderBottomWidth:2,
     borderColor:'#ff0'
   },
@@ -68,6 +68,10 @@ export default StyleSheet.create({
   	color: colors.primary,
   	fontFamily: 'Roboto-Regular',
   	fontSize: 14
+  },
+  sliderCrossIcon:{
+    marginLeft:"85%",
+    marginTop:10
   }
 })
 

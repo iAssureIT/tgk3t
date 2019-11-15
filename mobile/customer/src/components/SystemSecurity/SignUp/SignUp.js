@@ -221,6 +221,7 @@ export default class SignUp extends ValidationComponent{
       "status"      : 'Active',
       "roles"       : 'Client',
     };
+    AsyncStorage.setItem("fullName",this.state.name);
 
     // console.log("mobileSignupForm==",formValues);
 
@@ -228,7 +229,7 @@ export default class SignUp extends ValidationComponent{
         axios
         .patch('/api/usersotp/signup',formValues)
         .then( (res) =>{
-          // console.log("res in signup",res)
+          console.log("res in signup",res)
           // this.props.navigation.navigate('',{mobile:this.state.mobile,token:this.state.token,uid:this.state.uid});
           if(this.state.originPage=== "post"){
               this.navigateScreen('BasicInfo');
@@ -338,134 +339,135 @@ export default class SignUp extends ValidationComponent{
               />
             </View>
 
-            <View style={{marginTop:15,marginBottom:10}}>
-              <Text style={styles.text}>
+            <View style={styles.marginTop25}>
+              <Text style={{fontSize:13,fontWeight:'bold'}}>
                 Let us know you to sell or rent your property faster.
               </Text>
             </View>
 
-            <View style={[styles.marginBottom25]}>
-              <View style={[styles.formInputView]}>
+            <View style={[styles.formInputView]}>
+              <View style={[styles.marginTop25]}>
                 <View style={[styles.inputWrapper]}>
-                <View style={styles.inputImgWrapper}>
+                  <View style={styles.inputImgWrapper}>
                     <Icon name="mobile" type="entypo" size={18}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper}>
+                      <TextField
+                        label                 = "Mobile"
+                        onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber },()=>{this.validInputField('mobileNumber', 'mobileNumberError');}),this.handleMobileChange(mobileNumber)}}
+                        lineWidth             = {1}
+                        tintColor             = {colors.button}
+                        inputContainerPadding = {0}
+                        labelHeight           = {15}
+                        labelFontSize         = {sizes.label}
+                        titleFontSize         = {sizes.title}
+                        baseColor             = {'#666'}
+                        textColor             = {'#333'}
+                        value                 = {this.state.mobileNumber}
+                        containerStyle        = {styles.textContainer}
+                        inputContainerStyle   = {styles.textInputContainer}
+                        titleTextStyle        = {styles.textTitle}
+                        style                 = {styles.textStyle}
+                        labelTextStyle        = {styles.textLabel}
+                        keyboardType          = "number-pad"
+                        editable              = {false}
+                      />
+                    </View>
                   </View>
-                  <View style={styles.inputTextWrapper}>
-                    <TextField
-                      label                 = "Mobile"
-                      onChangeText          = {(mobileNumber) => {this.setState({ mobileNumber },()=>{this.validInputField('mobileNumber', 'mobileNumberError');}),this.handleMobileChange(mobileNumber)}}
-                                               // {mobileNumber => this.handleMobileChange(mobileNumber)}
-                      lineWidth             = {1}
-                      tintColor             = {colors.button}
-                      inputContainerPadding = {0}
-                      labelHeight           = {15}
-                      labelFontSize         = {sizes.label}
-                      titleFontSize         = {sizes.title}
-                      baseColor             = {'#666'}
-                      textColor             = {'#333'}
-                      value                 = {this.state.mobileNumber}
-                      containerStyle        = {styles.textContainer}
-                      inputContainerStyle   = {styles.textInputContainer}
-                      titleTextStyle        = {styles.textTitle}
-                      style                 = {styles.textStyle}
-                      labelTextStyle        = {styles.textLabel}
-                      keyboardType          = "number-pad"
-                      editable              = {false}
-                    />
+                  {this.displayValidationError('mobileNumberError')}
+                </View>
+               { <View style={{marginTop:10}}>
+                  <Text style={{fontSize:13,fontWeight:'bold'}}>To complete Sign Up, Please enter following Data:</Text>
+                </View>}
+                <View style={[styles.marginTop5]}>
+                  <View style={[styles.inputWrapper]}>
+                    <View style={styles.inputImgWrapper}>
+                      <Icon name="user-o" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper}>
+                      <TextField
+                        label                 = "Name"
+                        onChangeText          = {name => {this.setState({name},() => { this.validInputField('name', 'nameError'); })}}
+                        lineWidth             = {1}
+                        tintColor             = {colors.button}
+                        inputContainerPadding = {0}
+                        labelHeight           = {15}
+                        labelFontSize         = {sizes.label}
+                        titleFontSize         = {10}
+                        baseColor             = {'#666'}
+                        textColor             = {'#666'}
+                        value                 = {this.state.name}
+                        containerStyle        = {styles.textContainer}
+                        inputContainerStyle   = {styles.textInputContainer}
+                        titleTextStyle        = {styles.textTitle}
+                        style                 = {styles.textStyle}
+                        labelTextStyle        = {styles.textLabel}
+                        keyboardType          = "default"
+                      />
+                    </View>
                   </View>
+                  {this.displayValidationError('nameError')}
                 </View>
-              </View>
-              {this.displayValidationError('mobileNumberError')}
+                <View style={[styles.marginTop25]}>
+                  <View style={[styles.inputWrapper]}>
+                    <View style={styles.inputImgWrapper}>
+                      <Icon name="email-outline" type="material-community" size={18}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper}>
+                      <TextField
+                        label                 = "Email"
+                        onChangeText          = {email => {this.setState({email},() => { this.validInputField('email', 'emailError'); });}}
+                        lineWidth             = {1}
+                        tintColor             = {colors.button}
+                        inputContainerPadding = {0}
+                        labelHeight           = {15}
+                        labelFontSize         = {sizes.label}
+                        titleFontSize         = {sizes.title}
+                        baseColor             = {'#666'}
+                        textColor             = {'#333'}
+                        value                 = {this.state.email}
+                        containerStyle        = {styles.textContainer}
+                        inputContainerStyle   = {styles.textInputContainer}
+                        titleTextStyle        = {styles.textTitle}
+                        style                 = {styles.textStyle}
+                        labelTextStyle        = {styles.textLabel}
+                        keyboardType          = "email-address"
+                        autoCapitalize        = 'none'
+                      />
+                    </View>
+                  </View>
+                  {this.displayValidationError('emailError')}
+                </View>
+                <View style={[styles.marginTop25]}>
+                  <View style={[styles.inputWrapper]}>
+                    <View style={styles.inputImgWrapper}>
+                        <Icon name="map-marker" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                    </View>
+                    <View style={styles.inputTextWrapper}>
+                      <TextField
+                        label                 = "City"
+                        onChangeText          = {location => {this.setState({location},() => { this.validInputField('location', 'locationError'); });}}
+                        lineWidth             = {1}
+                        tintColor             = {colors.button}
+                        inputContainerPadding = {0}
+                        labelHeight           = {15}
+                        labelFontSize         = {sizes.label}
+                        titleFontSize         = {sizes.title}
+                        baseColor             = {'#666'}
+                        textColor             = {'#333'}
+                        value                 = {this.state.location}
+                        containerStyle        = {styles.textContainer}
+                        inputContainerStyle   = {styles.textInputContainer}
+                        titleTextStyle        = {styles.textTitle}
+                        style                 = {styles.textStyle}
+                        labelTextStyle        = {styles.textLabel}
+                        keyboardType          = "default"
+                      />
+                    </View>
+                  </View>
+                  {this.displayValidationError('locationError')}  
+                </View>
             </View>
-
-            <View style={[styles.marginBottom25]}>
-              <View style={[styles.inputWrapper]}>
-                <View style={styles.inputImgWrapper}>
-                  <Icon name="user-o" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper}>
-                  <TextField
-                    label                 = "Name"
-                    onChangeText          = {name => {this.setState({name},() => { this.validInputField('name', 'nameError'); })}}
-                    lineWidth             = {1}
-                    tintColor             = {colors.button}
-                    inputContainerPadding = {0}
-                    labelHeight           = {15}
-                    labelFontSize         = {sizes.label}
-                    titleFontSize         = {10}
-                    baseColor             = {'#666'}
-                    textColor             = {'#666'}
-                    value                 = {this.state.name}
-                    containerStyle        = {styles.textContainer}
-                    inputContainerStyle   = {styles.textInputContainer}
-                    titleTextStyle        = {styles.textTitle}
-                    style                 = {styles.textStyle}
-                    labelTextStyle        = {styles.textLabel}
-                    keyboardType          = "default"
-                  />
-                </View>
-              </View>
-              {this.displayValidationError('nameError')}
-            </View>
-            <View style={[styles.marginBottom25]}>
-              <View style={[styles.inputWrapper]}>
-                <View style={styles.inputImgWrapper}>
-                  <Icon name="email-outline" type="material-community" size={18}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper}>
-                  <TextField
-                    label                 = "Email"
-                    onChangeText          = {email => {this.setState({email},() => { this.validInputField('email', 'emailError'); });}}
-                    lineWidth             = {1}
-                    tintColor             = {colors.button}
-                    inputContainerPadding = {0}
-                    labelHeight           = {15}
-                    labelFontSize         = {sizes.label}
-                    titleFontSize         = {sizes.title}
-                    baseColor             = {'#666'}
-                    textColor             = {'#333'}
-                    value                 = {this.state.email}
-                    containerStyle        = {styles.textContainer}
-                    inputContainerStyle   = {styles.textInputContainer}
-                    titleTextStyle        = {styles.textTitle}
-                    style                 = {styles.textStyle}
-                    labelTextStyle        = {styles.textLabel}
-                    keyboardType          = "email-address"
-                    autoCapitalize        = 'none'
-                  />
-                </View>
-              </View>
-              {this.displayValidationError('emailError')}
-            </View>
-            <View style={[styles.marginBottom25]}>
-              <View style={[styles.inputWrapper]}>
-                <View style={styles.inputImgWrapper}>
-                    <Icon name="map-marker" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper}>
-                  <TextField
-                    label                 = "City"
-                    onChangeText          = {location => {this.setState({location},() => { this.validInputField('location', 'locationError'); });}}
-                    lineWidth             = {1}
-                    tintColor             = {colors.button}
-                    inputContainerPadding = {0}
-                    labelHeight           = {15}
-                    labelFontSize         = {sizes.label}
-                    titleFontSize         = {sizes.title}
-                    baseColor             = {'#666'}
-                    textColor             = {'#333'}
-                    value                 = {this.state.location}
-                    containerStyle        = {styles.textContainer}
-                    inputContainerStyle   = {styles.textInputContainer}
-                    titleTextStyle        = {styles.textTitle}
-                    style                 = {styles.textStyle}
-                    labelTextStyle        = {styles.textLabel}
-                    keyboardType          = "default"
-                  />
-                </View>
-              </View>
-              {this.displayValidationError('locationError')}  
-            </View>  
             <Modal isVisible={this.state.openModal} 
              onBackdropPress={() => this.setState({ openModal: false })}
              coverScreen={true}
@@ -499,7 +501,7 @@ export default class SignUp extends ValidationComponent{
               titleStyle      = {styles.buttonText}
               title           = "Post & Earn"
               buttonStyle     = {styles.button}
-              containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+              containerStyle  = {[styles.buttonContainer,styles.marginTop25]}
               iconRight
               icon = {<Icon
               name="chevrons-right" 
@@ -509,7 +511,7 @@ export default class SignUp extends ValidationComponent{
               />}
             />
 
-            <Text style={styles.text}>
+            <Text style={[styles.text,styles.marginTop5]}>
               We charge tenants/buyers brokerage & share upto 50% with the property owners.
             </Text>
 

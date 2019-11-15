@@ -27,7 +27,7 @@ import {colors,sizes}                      from '../../config/styles.js';
 import { Dropdown }                        from 'react-native-material-dropdown';
 import DatePicker                          from "react-native-datepicker";
 import { KeyboardAwareScrollView }         from 'react-native-keyboard-aware-scroll-view';
-
+import NumberFormat                        from 'react-number-format';
 const window = Dimensions.get('window');
 
 
@@ -56,23 +56,23 @@ export default class FinancialDetails extends ValidationComponent{
       description   :'2 BHK beautiful, tastefully decorated and well maintained flat with 2 attached bathrooms located in Sylvania, Magarpatta City, Pune. The society is gated, extremely safe and boasts a number of key amenities like Seasons Mall, Amanora Mall, Gold’s Gym, ABS Gym. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.',
       dropdownData:[
       {
-        value: 'Monthly'
+        value: 'Month'
       },
       {
-        value: 'Yearly'
+        value: 'Year'
       }],
        UnitData  : [
-                    {label:"Sq ft", value:"Sq ft"},
-                    {label:"Sq Meter", value:"Sq Meter"},
-                    {label:"Guntha", value:"Guntha"},
-                    {label:"Acre", value:"Acre"},
-                    {label:"Sq-Yrd", value:"Sq-Yrd"},
-                    {label:"Bigha", value:"Bigha"},
-                    {label:"Hectare", value:"Hectare"},
-                    {label:"Marla", value:"Marla"},
-                    {label:"Kanal", value:"Kanal"}
+                    {label:"/Sq ft", value:"/Sq ft"},
+                    {label:"/Sq Meter", value:"/Sq Meter"},
+                    {label:"/Guntha", value:"/Guntha"},
+                    {label:"/Acre", value:"/Acre"},
+                    {label:"/Sq-Yrd", value:"/Sq-Yrd"},
+                    {label:"/Bigha", value:"/Bigha"},
+                    {label:"/Hectare", value:"/Hectare"},
+                    {label:"/Marla", value:"/Marla"},
+                    {label:"/Kanal", value:"/Kanal"}
                   ],
-      measurementUnit           : 'Sq ft',
+      measurementUnit           : '/Sq ft',
       uid                       : "",
       token                     : '',
       propertyId                : "",
@@ -82,14 +82,15 @@ export default class FinancialDetails extends ValidationComponent{
                                       {label: 'Car Park',checked: false},
                                       {label: 'One Time Maintenance',checked: false},
                                       {label: 'Stamp Duty & Registration',checked: false},
-                                      {label: 'Clubhouse',checked: false}
+                                      {label: 'Club House',checked: false}
                                   ],
       mobile                    : "",
       expectedRateError         : "",
       totalPriceError           : "",
       monthlyRentError          : "",
       maintenanceChargesError   : "",
-      monthlyRent               : 0,
+      monthlyRent               :"",
+      maintenanceCharges        : "0",
     };
 
   }
@@ -117,24 +118,35 @@ export default class FinancialDetails extends ValidationComponent{
     } = this.state;
     let valid = true;
 
-    this.validate({
-      totalPrice: {
-        required: true,
-        numbers: true,
-      },
-      monthlyRent: {
-        required: true,
-        numbers: true,
-      },
-      expectedRate: {
-        required: true,
-        numbers: true,
-      },
-      maintenanceCharges: {
-        required: true,
-        numbers: true,
-      },
-    });
+
+    if(this.state.transactionType==="Sell"){
+      this.validate({
+        totalPrice: {
+          required: true,
+          numbers: true,
+        },
+        expectedRate: {
+          required: true,
+          numbers: true,
+        },
+        maintenanceCharges: {
+          required: true,
+          numbers: true,
+        },
+      });
+    }else{
+      this.validate({
+        monthlyRent: {
+          required: true,
+          numbers: true,
+        },
+        maintenanceCharges: {
+          required: true,
+          numbers: true,
+        },
+      });
+    }
+      
 
     if (this.isFieldInError("totalPrice") && this.state.transactionType === "Sell") {
       this.setState({ totalPriceError: this.getErrorsInField("totalPrice") });
@@ -246,8 +258,8 @@ _retrieveData = async () => {
                        updateOperation    : true,
                        // startDate          : availableFrom,
                        description        : response.data.financial.description ? response.data.financial.description : this.state.description,
-                       maintenanceCharges : response.data.financial.maintenanceCharges ? response.data.financial.maintenanceCharges.toString() : "" ,
-                       maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Monthly",
+                       maintenanceCharges : response.data.financial.maintenanceCharges ? response.data.financial.maintenanceCharges.toString() : "0" ,
+                       maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
                        measurementUnit    : response.data.financial.measurementUnit ? response.data.financial.measurementUnit : this.state.measurementUnit,
                        availableFrom      : response.data.financial.availableFrom,
 
@@ -326,14 +338,14 @@ submitFun(){
 
 
         const formValues = {
-          "expectedRate"        : this.state.expectedRate,
-          "totalPrice"          : this.state.totalPrice,
-          "monthlyRent"         : this.state.monthlyRent,
-          "depositAmount"       : this.state.depositAmount,
+          "expectedRate"        : parseInt(this.state.expectedRate),
+          "totalPrice"          : parseInt(this.state.totalPrice),
+          "monthlyRent"         : parseInt(this.state.monthlyRent),
+          "depositAmount"       : parseInt(this.state.depositAmount),
           "includeCharges"      : totalAskItemDataList,
           "description"         : this.state.description,
           "availableFrom"       : this.state.availableFrom,
-          "maintenanceCharges"  : this.state.maintenanceCharges,
+          "maintenanceCharges"  : parseInt(this.state.maintenanceCharges),
           "maintenancePer"      : this.state.maintenancePer,
           "measurementUnit"     : this.state.measurementUnit,  
           "property_id"         : this.state.propertyId,
@@ -407,20 +419,26 @@ submitFun(){
          
           var expectedRateValue = this.state.expectedRate.length>0 ? parseInt(this.state.expectedRate) : null;
           var totalPriceValue = this.state.totalPrice.length>0 ? parseInt(this.state.totalPrice) : null;
+          var monthlyRentValue = this.state.monthlyRent.length>0 ? parseInt(this.state.monthlyRent) : null;
+          var depositAmountValue = this.state.depositAmount.length>0 ? parseInt(this.state.depositAmount) : null;
+          var maintenanceChargesValue = this.state.maintenanceCharges.length>0 ? parseInt(this.state.maintenanceCharges) : null;
 
-          // console.log("expectedRateValue=========================",expectedRateValue);
-          // console.log("totalPriceValue===========================",totalPriceValue);
+          console.log("expectedRateValue=========================",expectedRateValue);
+          console.log("totalPriceValue===========================",totalPriceValue);
+          console.log("monthlyRentValue===========================",monthlyRentValue);
+          console.log("depositAmountValue===========================",depositAmountValue);
+          console.log("maintenanceChargesValue===========================",maintenanceChargesValue);
 
-
+          console.log("ov==============>",ov);
            if(eq === true && expectedRateValue === ov.expectedRate && totalPriceValue === ov.totalPrice &&
-           this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
-             parseInt(this.state.maintenanceCharges) === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer &&
+           this.state.availableFrom === ov.availableFrom && monthlyRentValue === ov.monthlyRent && depositAmountValue === ov.depositAmount&& this.state.description === ov.description &&
+             maintenanceChargesValue === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer &&
              this.state.measurementUnit === ov.measurementUnit)
             {
-            // console.log("same data");
+            console.log("same data");
               this.navigateScreen('Availability');
             }else{
-              // console.log("diff data");
+              console.log("diff data");
               // console.log("this.state.expectedRate",this.state.expectedRate);
               var expectedRate        = "";
               var totalPrice          = "";
@@ -486,14 +504,14 @@ submitFun(){
 
 
               const updateFormValues = {
-                "expectedRate"        : expectedRate ,
-                "totalPrice"          : totalPrice,
-                "monthlyRent"         : monthlyRent ,
-                "depositAmount"       : depositAmount ,
+                "expectedRate"        : parseInt(expectedRate),
+                "totalPrice"          : parseInt(totalPrice),
+                "monthlyRent"         : parseInt(monthlyRent),
+                "depositAmount"       : parseInt(depositAmount),
                 "availableFrom"       : this.state.availableFrom,
                 "description"         : this.state.description,
                 "includeCharges"      : totalAskItemDataList,
-                "maintenanceCharges"  : maintenanceCharges,
+                "maintenanceCharges"  : parseInt(maintenanceCharges),
                 "maintenancePer"      : this.state.maintenancePer,
                 "measurementUnit"     : this.state.measurementUnit,
                 "property_id"         : this.state.propertyId,
@@ -501,14 +519,14 @@ submitFun(){
               };
 
 
-              // console.log("Financials req updateFormValues= ",updateFormValues);
+              console.log("Financials req updateFormValues= ",updateFormValues);
                 // console.log("update function");
               axios
               .patch('/api/properties/patch/financials',updateFormValues)
               .then( (res) =>{
                 // console.log("Financials res = ",res);
                 if(res.status === 200){
-                this.navigateScreen('Availability',{mobile:this.state.mobile,propertyId:this.state.propertyId,token:this.state.token,uid:this.state.uid});
+                this.navigateScreen('Availability');
                 }
               })
               .catch((error)=>{
@@ -563,7 +581,7 @@ submitFun(){
             <View style={styles.formWrapper}>
               <View>
                 <Text style={styles.heading}>
-                  My Apartment size and Financial Details
+                  Please provide financial details of your property.
                 </Text>
               </View>
 
@@ -575,7 +593,7 @@ submitFun(){
                    <Text style={[styles.heading2,styles.marginBottom5]}>Expected Rate</Text>
                    <View style={[styles.inputWrapper]}>
                     <View style={styles.inputImgWrapper}>
-                      <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                      <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
                     </View>
                     <View style={styles.inputTextWrapper68}>
                       <TextInput
@@ -605,7 +623,7 @@ submitFun(){
                         dropdownOffset      = {{top:0, left: 0}}
                         itemTextStyle       = {styles.ddItemText}
                         inputContainerStyle = {styles.ddInputContainer}
-                        labelHeight         = {10}
+                        labelHeight         = {5}
                         tintColor           = {colors.button}
                         labelFontSize       = {sizes.label}
                         fontSize            = {15}
@@ -626,10 +644,10 @@ submitFun(){
                   <Text style={[styles.heading2,styles.marginBottom5]}>Total Ask</Text>
                   <View style={[styles.inputWrapper]}>
                     <View style={styles.inputImgWrapper}>
-                      <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                      <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
                     </View>
                     <View style={styles.inputTextWrapper68}>
-                      <TextInput
+                     { <TextInput
                         placeholder           = "Enter Total Ask"
                         onChangeText          = {totalPrice => {this.setState({totalPrice},() => { this.validInputField('totalPrice', 'totalPriceError');})}}
                         lineWidth             = {1}
@@ -648,7 +666,7 @@ submitFun(){
                         labelTextStyle        = {styles.textLabel}
                         keyboardType          = "numeric"
                         maxLength             = {10}
-                      />
+                      />}
                     </View>
                   </View>
                   {this.displayValidationError('totalPriceError')}
@@ -660,7 +678,7 @@ submitFun(){
                   <Text style={[styles.heading2,styles.marginBottom5]}>Monthly Rent</Text>
                   <View style={[styles.inputWrapper]}>
                     <View style={styles.inputImgWrapper}>
-                      <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                      <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
                     </View>
                     <View style={styles.inputTextWrapper}>
                       <TextInput
@@ -690,7 +708,7 @@ submitFun(){
 
                 <View style={[styles.inputWrapper,styles.marginBottom25]}>
                 <View style={styles.inputImgWrapper}>
-                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                  <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
                 </View>
                 <View style={styles.inputTextWrapper}>
                   <TextField
@@ -727,7 +745,7 @@ submitFun(){
               null
               :
               <View>
-                <Text style={[styles.heading2,styles.marginBottom15]}>My Property includes (optional)</Text>
+                <Text style={[styles.heading2,styles.marginBottom15]}>{this.state.transactionType==="Sell" ?"Total Ask Includes (optional)":"Monthly Rent Includes (optional)"}</Text>
                 <View style={[styles.marginBottom25]}>
                  {this.state.totalAskItem && this.state.totalAskItem.length >0 ?
                     this.state.totalAskItem.map((data,index)=>(
@@ -742,7 +760,7 @@ submitFun(){
                           checkBoxColor= {colors.grey}
                           rightTextView = {
                             <View style={{flexDirection:'row',flex:1}}>
-                              <Text style={styles.inputText}>{data.label}</Text>
+                              <Text style={[styles.inputText,{marginLeft:2}]}>{data.label}</Text>
                             </View>
                           }
                         />

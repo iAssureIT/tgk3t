@@ -102,6 +102,11 @@ export default StyleSheet.create({
   marginBottom25:{
     marginBottom:25
   },
+  resetBtn:{
+    marginBottom:15,
+    marginLeft:"67%",
+    flexDirection:"row"
+  },
   marginBottom5:{
     marginBottom:5
   },

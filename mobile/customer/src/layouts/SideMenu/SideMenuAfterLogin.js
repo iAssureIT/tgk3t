@@ -21,7 +21,8 @@ import { DrawerActions }    from 'react-navigation-drawer';
 import { Icon } 			from 'react-native-elements';
 import styles 				from './styles.js';
 import {colors} 			from '../../config/styles.js';
-import AsyncStorage 		from '@react-native-community/async-storage';
+import AsyncStorage         from '@react-native-community/async-storage';
+
 
 export default class SideMenuAfterLogin extends React.Component {
 
@@ -87,6 +88,11 @@ export default class SideMenuAfterLogin extends React.Component {
  // this.navigateScreen("Availability");
   }
 
+  postPrpoperty(){
+     AsyncStorage.removeItem('propertyId');
+     this.state.token ? this.navigateScreen("BasicInfo") :this.navigateScreen("MobileScreen"); 
+  }
+
   render(){
   	// this._retrieveData();
 	  	return(
@@ -96,23 +102,30 @@ export default class SideMenuAfterLogin extends React.Component {
 		          style={styles.bgImage}
 		          resizeMode="cover"
 		        >
-			        
-			    	<View style={{width:"100%",marginTop:90}}>
+			        <Icon 
+			          onPress={()=>this.props.navigation.dispatch(DrawerActions.closeDrawer())}
+		              size={25} 
+		              name='close' 
+		              type='font-awesome' 
+		              color={colors.white} 
+		              containerStyle={styles.sliderCrossIcon}
+		            />
+			    	<View style={{width:"100%",marginTop:80}}>
 				        <Image
 				            style={[styles.logoImage]}
 				            source={require("../../images/logo.png")}
 				            resizeMode="contain"
 				         />
 					    {this.state.fullName ?
-					    <View style={{width:"100%",flexDirection:'row',marginTop:55}}>     
+					    <View style={{width:"100%",flexDirection:'row',marginTop:45}}>     
 					        <Icon 
-				              size={18} 
+				              size={15} 
 				              name='user' 
 				              type='font-awesome' 
 				              color={colors.white} 
 				              containerStyle={styles.iconContainer1}
 				            />
-					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 16,paddingTop:6}}>{"Welcome "+this.state.fullName}</Text>
+					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 14,paddingTop:7}}>{"Welcome "+this.state.fullName}</Text>
 				        </View>
 				        :
 				        null
@@ -145,7 +158,7 @@ export default class SideMenuAfterLogin extends React.Component {
 			        		<Text style={styles.menuText}>Search Property</Text>
 			        	</View>
 		        	</TouchableOpacity>
-		        	<TouchableOpacity onPress={this.login.bind(this)}>
+		        	<TouchableOpacity onPress={()=>this.postPrpoperty()}>
 			        	<View style={styles.menu}>
 			        		<Icon 
 			              size={18} 

@@ -12,29 +12,31 @@ import {
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
-import axios                              from 'axios';
+import axios                      from 'axios';
 
-import ValidationComponent from "react-native-form-validator";
-import { TextField } from 'react-native-material-textfield';
+import ValidationComponent        from "react-native-form-validator";
+import { TextField }              from 'react-native-material-textfield';
 import { NavigationActions, StackActions }  from 'react-navigation';
 
-import HeaderBar from '../../layouts/HeaderBar/HeaderBar.js';
-import styles from './styles.js';
-import {colors,sizes} from '../../config/styles.js';
-import CheckBox from 'react-native-check-box'
-import AsyncStorage     from '@react-native-community/async-storage';
+import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
+import styles                     from './styles.js';
+import {colors,sizes}             from '../../config/styles.js';
+import CheckBox                   from 'react-native-check-box'
+import AsyncStorage               from '@react-native-community/async-storage';
+import Loading                    from '../../layouts/Loading/Loading.js'
 
 const window = Dimensions.get('window');
 
 export default class PropertyList extends ValidationComponent{
 navigateScreen=(route)=>{
-    const navigateAction = NavigationActions.navigate({
+    const navigateAction = StackActions.push({
     routeName: route,
     params: {},
     action: NavigationActions.navigate({ routeName: route }),
   });
   this.props.navigation.dispatch(navigateAction);
 }
+
   constructor(props){
     super(props);
     this.state={
@@ -47,15 +49,14 @@ navigateScreen=(route)=>{
       uid:"",
       token:"",
       searchData:"",
+      isLoading :true,
     };
   }
 
 
   componentDidMount(){
-    var searchResults = this.props.navigation.getParam('searchResults','No Result')
-    // console.log("searchResults=>",searchResults);
-    this.setState({searchResults:searchResults})
-    this._retrieveData();
+    
+  this._retrieveData();
   }
 
   componentWillReceiveProps(nextProps){
@@ -94,7 +95,7 @@ navigateScreen=(route)=>{
 
       : Math.abs(Number(totalPrice)) >= 1.0e+3
 
-      ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+      ? Math.abs(Number(totalPrice)) / 1.0e+3 + "k"
 
       : Math.abs(Number(totalPrice));
     }
@@ -103,18 +104,38 @@ navigateScreen=(route)=>{
     try {
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
-      const searchData = await AsyncStorage.getItem('searchData');
-      console.log("searchData",searchData);
-      if (uid !== null && token !== null) {
-        // We have data!!
+      const tempSearchData      = await AsyncStorage.getItem('searchData');
+      if (uid !== null && token !== null || tempSearchData!== null) {
         this.setState({uid:uid})
         this.setState({token:token})
-        this.setState({searchData:searchData})
+        this.setState({isLoading:true})
+        var searchData = JSON.parse(tempSearchData);
+              console.log("searchData>>>>>>>>>>>>>",searchData)
+              this.setState({searchData:searchData});
+        axios
+          .post("/api/search/properties/", searchData)
+          .then((searchResults) => {
+            this.setState({
+              isLoading:false,
+              searchResults:searchResults.data,
+            })
+
+          })
+           .catch((error)=>{
+                console.log("error = ",error);
+                    this.setState({btnLoading:false})
+                if(error.message === "Request failed with status code 401")
+                {
+                     Alert.alert("Your session is expired! Please login again.","", "error");
+                    this.navigateScreen('MobileScreen');
+                }
+          });
       }
-    } catch (error) {
-      // Error retrieving data
+
+      } catch (error) {
+        // Error retrieving data
+      }
     }
-  }
 
   interestBtn(property_id,isInterested){
       
@@ -122,21 +143,33 @@ navigateScreen=(route)=>{
       property_id : property_id,
       buyer_id    : this.state.uid,
     }
+        console.log("formValues",formValues);
+
 
     if(isInterested == false){
      axios
       .post('/api/interestedProperties/',formValues)
       .then(res=>{
+        console.log("First work");
          //After Express Interest, again get all properties
           axios
             .post('/api/search/properties/',this.state.searchData)
             .then(resultData =>{
+              console.log("second work");
+              // this.setState({
+              //   searchResults:resultData.data,
+              // })
+              console.log("resultData.data",resultData.data)
               axios
                 .get('/api/properties/'+property_id)
                 .then((propertyData) =>{
+                   console.log("third work");
+
                   axios
                     .get('/api/users/get/one/'+this.state.uid)
                     .then((userData) =>{
+                      console.log("fourth work");
+
                           var sendDataToUser = {
                           "templateName"  : "User - Express Interest",
                           "toUserId"      : userData.data._id,
@@ -175,9 +208,13 @@ navigateScreen=(route)=>{
                       axios
                       .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
                       .then((result) =>{
+                      console.log("fifth work");
+
                         axios
                         .post('/api/masternotifications/post/sendNotification',sendDataToUser)
                         .then((res) =>{
+                          console.log("sixth work");
+
                         })
                        .catch((error)=>{
                             console.log("error = ",error);
@@ -208,7 +245,7 @@ navigateScreen=(route)=>{
           {
             AsyncStorage.setItem("originPage","searchProp");
             Alert.alert('Login', 'Sorry! You need to first Login to Express Interest to this property.');
-              this.props.navigation.navigate('MobileScreen')
+              this.navigateScreen('MobileScreen')
           }
       });
     }else{
@@ -240,8 +277,21 @@ navigateScreen=(route)=>{
   }
 
    propertyProfile(propId){
-    AsyncStorage.setItem('propertyId',propId)
-    this.navigateScreen('PropertyDetailsPage')
+    if(this.state.token!==null){
+      AsyncStorage.setItem('propertyId',propId)
+      this.navigateScreen('PropertyDetailsPage')
+    }else{
+        AsyncStorage.setItem("originPage","searchProp");
+        this.setState({searchResults:""})
+        Alert.alert('Login', 'Sorry! You need to first login to view this property profile.');
+        this.navigateScreen('MobileScreen')
+    }
+    
+  }
+
+  filterProp(){
+    this.navigateScreen('SearchProperty')
+    // this.setState({searchResults:""})
   }
 
   render(){
@@ -255,17 +305,17 @@ navigateScreen=(route)=>{
     return (
       <React.Fragment>
         <HeaderBar showBackBtn={true} navigation={navigation}/>
-
+        {this.state.isLoading === false ?
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={styles.formWrapper}>
             
             <View style={[styles.btnWrapper,styles.marginBottom20]}>
               <Button
-                onPress         = {()=>this.props.navigation.navigate('SearchProperty')}
+                onPress         = {()=>this.filterProp()}
                 titleStyle      = {styles.buttonText}
                 title           = "Sort"
                 buttonStyle     = {styles.button}
-                containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
+                containerStyle  = {[styles.buttonContainer,styles.marginBottom5,{width:"30%",marginLeft:"70%"}]}
                 iconLeft
                 icon = {<Icon
                   name="sort" 
@@ -274,8 +324,8 @@ navigateScreen=(route)=>{
                   color={colors.black}
                 />}
               />
-              <Button
-                onPress         = {()=>this.props.navigation.navigate('SearchProperty')}
+              {/*<Button
+                onPress         = {()=>this.filterProp()}
                 titleStyle      = {styles.buttonText}
                 title           = "Budget"
                 buttonStyle     = {styles.button}
@@ -287,7 +337,7 @@ navigateScreen=(route)=>{
                   size={22}
                   color={colors.bla}
                 />}
-              />
+              />*/}
             </View>
             {this.state.searchResults && this.state.searchResults.length>0 ? 
               this.state.searchResults.map((prop,i)=>(
@@ -304,7 +354,7 @@ navigateScreen=(route)=>{
                     <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
                       <Button
                           titleStyle      = {styles.buttonText}
-                          title           = {"For " + prop.transactionType}
+                          title           = {prop.transactionType === "Sell" ? "For Sale"  : 'For Rent'}
                           // title           = {propertyProfile.gallery.Images.length+" Photos"}
                           buttonStyle     = {styles.button4}
                           containerStyle  = {[styles.buttonContainer4]}
@@ -371,7 +421,7 @@ navigateScreen=(route)=>{
                     <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
                       <Button
                           titleStyle      = {styles.buttonText}
-                          title           = {"For " + prop.transactionType}
+                          title           = {prop.transactionType === "Sell" ? "For Sale"  : 'For Rent'}
                           // title           = {propertyProfile.gallery.Images.length+" Photos"}
                           buttonStyle     = {styles.button4}
                           containerStyle  = {[styles.buttonContainer4]}
@@ -429,7 +479,7 @@ navigateScreen=(route)=>{
                     </View>  
                     </ImageBackground>
                   }
-                  <View style={{width:'100%',padding:10}}>
+                  <View style={{width:'100%',padding:10,backgroundColor:"#fff"}}>
                     <View style={{flexDirection:'row'}}>
                       <Icon
                         name="marker" 
@@ -443,7 +493,7 @@ navigateScreen=(route)=>{
                     <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                       <Text style={styles.textSmallLight}>
                         Property Type :
-                        <Text style={styles.textLarge}> {prop.propertyType} </Text>
+                        <Text style={styles.textLarge}> {prop.propertyType+", "+prop.propertySubType} </Text>
                       </Text>
                     </View> 
                     <View style={{flexDirection:'row',marginBottom:15}}>
@@ -476,16 +526,15 @@ navigateScreen=(route)=>{
                         
                       </View>
 
-                      <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
-                        <Button
+                      {/*  <Button
                           onPress={()=>this.propertyProfile(prop._id)}
                           titleStyle      = {styles.buttonText2}
                           title           = "Details"
                           buttonStyle     = {styles.button3}
                           containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
                           iconRight
-                        />
-                      </View>
+                        />*/}
+                        
                     </View>
                     <View style={styles.divider}></View>
 
@@ -565,7 +614,7 @@ navigateScreen=(route)=>{
                             size={20}
                             color={colors.grey}
                           />
-                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing}</Text>
+                          <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing ? prop.propertyDetails.facing : "--"}</Text>
                         </View>
                         <Text style={styles.textSmallLight}>Facing</Text>
                       </View>
@@ -573,32 +622,45 @@ navigateScreen=(route)=>{
 
                     <View style={[styles.divider,{marginBottom:10}]}></View>
 
-                    <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                      <Text style={styles.textSmallLight}>
-                        Super Area :
-                          <Text style={styles.textLarge}> {prop.propertyDetails.superArea ? prop.propertyDetails.superArea+" "+prop.propertyDetails.superAreaUnit : "-"} </Text>
-                      </Text>
-                    </View>
+                    <View style={{flexDirection:'row'}}>
+                        <View style={{width:'55%'}}>
+                          <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                            <Text style={styles.textSmallLight}>
+                              Super Area
+                              <Text style={styles.textLarge}> {prop.propertyDetails.superArea ? prop.propertyDetails.superArea+" "+prop.propertyDetails.superAreaUnit : "-"} </Text>
+                            </Text>
+                          </View>
 
-                    <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                      <Text style={styles.textSmallLight}>
-                        Possession by :
-                        <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
-                      </Text>
-                    </View>  
+                          <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                            <Text style={styles.textSmallLight}>
+                              Possession by
+                              <Text style={styles.textLarge}> {prop.financial.availableFrom ? prop.financial.availableFrom : "Not specified" } </Text>
+                            </Text>
+                          </View> 
+                        </View>
+                        <TouchableOpacity onPress={()=>this.propertyProfile(prop._id)} style={[styles.buttonContainer3,{marginTop:15}]} >
+                              <Text style={styles.buttonText2}>Details</Text>
+                              <Image
+                               source={require('../../images/logo1.png')}
+                               style={styles.buttonIcon}
+                              />
+                        </TouchableOpacity>
+                      </View>  
 
                   </View>
                 </View>
               </TouchableOpacity>
             ))
             :
-             <Text style={styles.textLarge}> No Data Found </Text>
+             <Text style={[styles.textLarge,{textAlign:"center"}]}> No Data Found </Text>
             }
               
 
           </View>
         </ScrollView>
-      
+        :
+         <Loading /> 
+       }
       </React.Fragment>
     );
     

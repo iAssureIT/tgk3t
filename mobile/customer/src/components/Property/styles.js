@@ -14,7 +14,8 @@ export default StyleSheet.create({
   formWrapper: {
     width:'100%',
     backgroundColor:colors.white,
-    padding:'5%',
+    paddingHorizontal:'5%',
+    paddingVertical:'5%',
   },
   btnWrapper:{
     width:'100%',
@@ -82,7 +83,16 @@ export default StyleSheet.create({
     width:'40%',
   },
   buttonContainer3:{
-    width:'70%',
+    width:'40%',
+    backgroundColor: colors.primary,
+    height: 35,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius:4,
+    elevation: 5,
+    marginTop:10,
+    marginLeft:20,
+    flexDirection:"row"
   },
   buttonContainer4:{
     width:'30%',
@@ -116,11 +126,11 @@ export default StyleSheet.create({
        borderWidth:1,
        borderRadius:4,
        borderColor:'#ccc',
-        elevation:5,
+        elevation:3,
       },
       android : {
         borderRadius:4,
-        elevation:5,
+        elevation:3,
       }
     })
   },
@@ -163,4 +173,9 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     // marginVertical:'5%'
   },
+  buttonIcon:{
+    height:15,
+    width:30,
+    marginLeft:10
+  }
 });

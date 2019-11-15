@@ -93,7 +93,7 @@ export default class MyPostedProperties extends ValidationComponent{
 
       : Math.abs(Number(totalPrice)) >= 1.0e+3
 
-      ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+      ? Math.abs(Number(totalPrice)) / 1.0e+3 + "k"
 
       : Math.abs(Number(totalPrice));
     }
@@ -103,6 +103,8 @@ export default class MyPostedProperties extends ValidationComponent{
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
       const searchData = await AsyncStorage.getItem('searchData');
+      AsyncStorage.setItem('newProp',false);
+      
       if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
@@ -175,7 +177,7 @@ export default class MyPostedProperties extends ValidationComponent{
                         <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
                            <Button
                             titleStyle      = {styles.buttonText}
-                            title           = {"For " + prop.transactionType}
+                            title           = {prop.transactionType === "Sell" ? "For Sale"  : "For Rent"}
                             // title           = {propertyProfile.gallery.Images.length+" Photos"}
                             buttonStyle     = {styles.button4}
                             containerStyle  = {[styles.buttonContainer4]}
@@ -192,7 +194,7 @@ export default class MyPostedProperties extends ValidationComponent{
                         <View style={{flexDirection:'row',width:"100%",justifyContent:'space-between',padding:10}}>
                            <Button
                             titleStyle      = {styles.buttonText}
-                            title           = {"For " + prop.transactionType}
+                            title           = {prop.transactionType === "Sell" ? "For Sale"  : 'For Rent'}
                             // title           = {propertyProfile.gallery.Images.length+" Photos"}
                             buttonStyle     = {styles.button4}
                             containerStyle  = {[styles.buttonContainer4]}
@@ -200,7 +202,7 @@ export default class MyPostedProperties extends ValidationComponent{
                         </View>  
                       </ImageBackground>
                      }
-                    <View style={{width:'100%',padding:10}}>
+                    <View style={{width:'100%',padding:10,"backgroundColor":"#fff"}}>
                       <View style={{flexDirection:'row'}}>
                         <Icon
                             name="marker" 
@@ -214,7 +216,7 @@ export default class MyPostedProperties extends ValidationComponent{
                       <View style={{flexDirection:'row',justifyContent:'space-between'}}>
                         <Text style={styles.textSmallLight}>
                           Property Type :
-                          <Text style={styles.textLarge}> {prop.propertyType} </Text>
+                          <Text style={styles.textLarge}> {prop.propertyType+", "+prop.propertySubType} </Text>
                         </Text>
                       </View> 
                       <View style={{flexDirection:'row',marginBottom:15}}>
@@ -222,41 +224,40 @@ export default class MyPostedProperties extends ValidationComponent{
                            {prop.transactionType === "Sell" ?
                               <View style={{flexDirection:'row',alignItems:'center'}}>
                                 <Text style={styles.textSmallLight}>Total Price : </Text>
-                                <Icon
-                                  name="rupee" 
-                                  type="font-awesome"
-                                  size={18}
-                                  color={colors.black}
-                                  containerStyle={{marginRight:5}}
-                                />
-                                <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.totalPrice)}</Text>
+                                {prop.financial.totalPrice ?
+                                    <Icon
+                                    name="rupee" 
+                                    type="font-awesome"
+                                    size={14}
+                                    color={colors.grey}
+                                    containerStyle={{marginRight:2}}
+                                  />
+                                  :
+                                  null
+                                }
+                                <Text style={styles.textLarge}>{prop.financial.totalPrice ? this.convertNumberToRupees(prop.financial.totalPrice): "--"}</Text>
                               </View>
                             :
                               <View style={{flexDirection:'row',alignItems:'center'}}>
                                 <Text style={styles.textSmallLight}>Monthly Rent : </Text>
-                                <Icon
-                                  name="rupee" 
-                                  type="font-awesome"
-                                  size={18}
-                                  color={colors.black}
-                                  containerStyle={{marginRight:5}}
-                                />
-                                <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.monthlyRent)}</Text>
+                                {prop.financial.monthlyRent ?
+                                    <Icon
+                                    name="rupee" 
+                                    type="font-awesome"
+                                    size={14}
+                                    color={colors.grey}
+                                    containerStyle={{marginRight:2}}
+                                  />
+                                  :
+                                  null
+                                }
+                                <Text style={styles.textLarge}>{prop.financial.monthlyRent ? this.convertNumberToRupees(prop.financial.monthlyRent): "--"}</Text>
                               </View>
                           }
                           
                         </View>
 
-                        <View style={{width:'50%',alignItems:'flex-end',justifyContent:'center'}}>
-                          <Button
-                            onPress={()=>this.propertyProfile(prop._id)}
-                            titleStyle      = {styles.buttonText2}
-                            title           = "Details"
-                            buttonStyle     = {styles.button3}
-                            containerStyle  = {[styles.buttonContainer3,{marginTop:10,marginRight:10}]}
-                            iconRight
-                          />
-                        </View>
+                        
                       </View>
                       <View style={styles.divider}></View>
 
@@ -270,7 +271,7 @@ export default class MyPostedProperties extends ValidationComponent{
                                 size={20}
                                 color={colors.grey}
                               />
-                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms ? prop.propertyDetails.bedrooms : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Bedrooms</Text>
                         </View>
@@ -283,7 +284,7 @@ export default class MyPostedProperties extends ValidationComponent{
                                 size={20}
                                 color={colors.grey}
                               />
-                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms}</Text>
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms ? prop.propertyDetails.washrooms : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Washrooms</Text>
                         </View>
@@ -298,7 +299,7 @@ export default class MyPostedProperties extends ValidationComponent{
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies ? prop.propertyDetails.balconies : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Baths</Text>
                         </View>
@@ -311,7 +312,7 @@ export default class MyPostedProperties extends ValidationComponent{
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry ? prop.propertyDetails.Pantry : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Pantry</Text>
                         </View>
@@ -324,7 +325,7 @@ export default class MyPostedProperties extends ValidationComponent{
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor ? prop.propertyDetails.floor : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Floor</Text>
                         </View>
@@ -337,28 +338,37 @@ export default class MyPostedProperties extends ValidationComponent{
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.facing ? prop.propertyDetails.facing : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Facing</Text>
                         </View>
                       </View>
 
                       <View style={[styles.divider,{marginBottom:10}]}></View>
+                      <View style={{flexDirection:'row'}}>
+                        <View style={{width:'55%'}}>
+                          <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                            <Text style={styles.textSmallLight}>
+                              Super Area
+                              <Text style={styles.textLarge}> {prop.propertyDetails.superArea ? prop.propertyDetails.superArea+" "+prop.propertyDetails.superAreaUnit : "--"} </Text>
+                            </Text>
+                          </View>
 
-                      <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                        <Text style={styles.textSmallLight}>
-                          Super Area
-                          <Text style={styles.textLarge}> {prop.propertyDetails.superArea ? prop.propertyDetails.superArea+" "+prop.propertyDetails.superAreaUnit : "-"} </Text>
-                        </Text>
-                      </View>
-
-                      <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
-                        <Text style={styles.textSmallLight}>
-                          Possession by
-                          <Text style={styles.textLarge}> {prop.financial.availableFrom} </Text>
-                        </Text>
-                      </View> 
-
+                          <View style={{flexDirection:'row',justifyContent:'space-between',marginBottom:10}}>
+                            <Text style={styles.textSmallLight}>
+                              Possession by
+                              <Text style={styles.textLarge}> {prop.financial.availableFrom ? prop.financial.availableFrom : "Not specified" } </Text>
+                            </Text>
+                          </View> 
+                        </View>
+                        <TouchableOpacity onPress={()=>this.propertyProfile(prop._id)} style={[styles.buttonContainer3,{marginTop:15}]} >
+                              <Text style={styles.buttonText2}>Details</Text>
+                              <Image
+                               source={require('../../images/logo1.png')}
+                               style={styles.buttonIcon}
+                              />
+                        </TouchableOpacity>
+                      </View>  
                     </View>
                   </View>
                 </TouchableOpacity>

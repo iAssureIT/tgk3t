@@ -133,7 +133,7 @@ class BannerwithModal extends Component {
                         }
             });
 	}
-
+	
 	inputData(inputData){
 		this.setState({
 			propertyType    : inputData.propertyType,

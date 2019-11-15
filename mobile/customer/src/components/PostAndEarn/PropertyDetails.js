@@ -25,6 +25,7 @@ import {colors,sizes}                       from '../../config/styles.js';
 import { Dropdown }                         from 'react-native-material-dropdown';
 import DatePicker                           from "react-native-datepicker";
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
+import Dialog                                 from "react-native-dialog";
 
 const window = Dimensions.get('window');
  
@@ -44,13 +45,13 @@ constructor(props){
 
     var floorList      =[];
     var totalFloorList =[];
-    var obj  ={label : "Basement",value : "Basement"}
-    var obj1 ={label : "Ground"  ,value : "Ground"}
+    var obj  ={name : "Basement",value : "Basement"}
+    var obj1 ={name : "Ground"  ,value : "Ground"}
     floorList.push(obj)
     floorList.push(obj1)
     for (var i=1;i<=60;i++){
         var obj2 ={
-          label : i,
+          name : i,
           value : i,
         }
         floorList.push(obj2);
@@ -81,38 +82,39 @@ constructor(props){
                         { value: 3},
                         { value: 4}],
      
-      furnishedIndex      : 0,
-      workStationIndex    : 0,
-      personalIndex       : 0,
-      pantryIndex         : 0,
-      furnishpantryIndex  : 0,
-      yearsData : [ {label:"Under Construction", value: 'Under Construction',},
-                    {label:"new", value: 'New(Less than a year)',},
-                    {label:"1-2 Years", value: '1-2',},
-                    {label:"2-5 Years", value: '2-5',},
-                    {label:"5-8 Years", value: '5-8',},
-                    {label:">8 Years", value: '>8',}],
+      furnishedIndex      : -1,
+      workStationIndex    : -1,
+      personalIndex       : -1,
+      pantryIndex         : -1,
+      furnishpantryIndex  : -1,
+      yearsData : [ {name:"Under Construction", value: 'Under Construction',},
+                    {name:"Newly Built", value: 'New',},
+                    {name:"Less than 4 Years", value: '<4',},
+                    {name:"4-8 Years", value: '4-8',},
+                    {name:"8-12 Years", value: '8-12',},
+                    {name:"Above 12 Years", value: '12',}],
 
-      propertyFacingData : [{label:"East", value: 'East',},
-                            {label:"West", value: 'West',},
-                            {label:"North", value: 'North',},
-                            {label:"South", value: 'South',},
-                            {label:"Northeast", value: 'Northeast',},
-                            {label:"Northwest", value: 'Northwest',},
-                            {label:"Southeast", value: 'Southeast',},
-                            {label:"Southwest", value: 'Southwest',}],
-      furnishedStatus : "Fully Furnished",
+      propertyFacingData : [{name:"East", value: 'East',},
+                            {name:"West", value: 'West',},
+                            {name:"North", value: 'North',},
+                            {name:"South", value: 'South',},
+                            {name:"Northeast", value: 'Northeast',},
+                            {name:"Northwest", value: 'Northwest',},
+                            {name:"Southeast", value: 'Southeast',},
+                            {name:"Southwest", value: 'Southwest',},
+                            {name:"Don't Know", value: "Don't Know",}],
+      furnishedStatus : "",
       superArea       : '',
       builtupArea     : '',
-      UnitData  : [{label:"Sq ft", value:"Sq ft"},
-                  {label:"Sq Meter", value:"Sq Meter"},
-                  {label:"Guntha", value:"Guntha"},
-                  {label:"Acre", value:"Acre"},
-                  {label:"Sq-Yrd", value:"Sq-Yrd"},
-                  {label:"Bigha", value:"Bigha"},
-                  {label:"Hectare", value:"Hectare"},
-                  {label:"Marla", value:"Marla"},
-                  {label:"Kanal", value:"Kanal"}],
+      UnitData  : [{name:"Sq ft", value:"Sq ft"},
+                  {name:"Sq Meter", value:"Sq Meter"},
+                  {name:"Guntha", value:"Guntha"},
+                  {name:"Acre", value:"Acre"},
+                  {name:"Sq-Yrd", value:"Sq-Yrd"},
+                  {name:"Bigha", value:"Bigha"},
+                  {name:"Hectare", value:"Hectare"},
+                  {name:"Marla", value:"Marla"},
+                  {name:"Kanal", value:"Kanal"}],
       superAreaUnit     : 'Sq ft',
       builtupAreaUnit   : 'Sq ft',
       floorData         :floorList,
@@ -120,15 +122,11 @@ constructor(props){
       floor             : '',
       totalFloor        :'',
 
-
+      furnishedStatus   :"",
       defaultIcon       :'flag',
       iconType          : 'material-community',
       isChecked         : true,
       btnLoading        : false,
-
-      furnishItem       : [ {label: 'Directors Cabin',checked: false},
-                            {label: 'Meeting Room',checked: false},
-                            {label: 'Reception',checked: false}],
       propertyType      : "",
       transactionType   : "",
       mobile            : '',
@@ -136,10 +134,13 @@ constructor(props){
       uid               : "",
       token             : "",
       originalValues    : "",
+      bedrooms          : "",
+      balconies         : "",
+      bathrooms         : "",
       personal          : "",
       washrooms         : "",
-      furnishpantry     : "Dry",
-      workStation       : "2",
+      furnishpantry     : "",
+      workStation       : "",
       builtupAreaError  : "",
       superAreaError    : "",
       // originalValues:"",
@@ -148,6 +149,14 @@ constructor(props){
       floorError        : "",
       totalFloorError   : "",
       prevCharges       : [],
+      selectAmenity     : false,
+      checkArea         : false,
+      checkFloor        : false,
+      furnishedOptions    : [
+          {name:"Directors Cabin",checked: false},
+          {name:"Meeting Room",checked: false},
+          {name:"Reception",checked: false},
+        ],
       // uid:"",
       // token:"",
       // mobile:"",
@@ -175,28 +184,80 @@ constructor(props){
     const {
       builtupArea,
       floor,
-      totalFloor
+      totalFloor,
+      superArea,
+      bedrooms,
+      balconies,
+      bathrooms,
+      washrooms,
+      // furnishedStatus,
     } = this.state;
     let valid = true;
 
-    this.validate({
-      builtupArea: {
-        required: true,
-        numbers: true,
-      },
-      floor: {
-        required: true,
-      },
-      totalFloor: {
-        required: true,
-      },
-    });
+    if(this.state.propertyType === "Residential"){
+        this.validate({
+          builtupArea: {
+            required: true,
+            numbers: true,
+          },
+          superArea: {
+            numbers: true,
+          },
+          floor: {
+            required: true,
+          },
+          totalFloor: {
+            required: true,
+          },
+          bedrooms: {
+            required: true,
+          },
+          bathrooms: {
+            required: true,
+          },
+          balconies: {
+            required: true,
+          }, 
+          furnishedStatus: {
+            required: true,
+          },
+        });
+    }else{
+      this.validate({
+          builtupArea: {
+            required: true,
+            numbers: true,
+          },
+          superArea: {
+            numbers: true,
+          },
+          floor: {
+            required: true,
+          },
+          totalFloor: {
+            required: true,
+          },
+          washrooms: {
+            required: true,
+          },
+          furnishedStatus: {
+            required: true,
+          },
+        });
+    }
+    
 
     if (this.isFieldInError("builtupArea")) {
       this.setState({ builtupAreaError: this.getErrorsInField("builtupArea") });
       valid = false;
     } else {
       this.setState({ builtupAreaError: "" });
+    }
+    if (this.isFieldInError("superArea")) {
+      this.setState({ superAreaError: this.getErrorsInField("superArea") });
+      valid = false;
+    } else {
+      this.setState({ superAreaError: "" });
     }
     if (this.isFieldInError("floor")) {
       this.setState({floorError: this.getErrorsInField("floor") });
@@ -210,6 +271,36 @@ constructor(props){
     } else {
       this.setState({ totalFloorError: "" });
     }
+    if (this.isFieldInError("bedrooms")) {
+      this.setState({bedroomsError: this.getErrorsInField("bedrooms") });
+      valid = false;
+    } else {
+      this.setState({bedroomsError: "" });
+    }
+    if (this.isFieldInError("bathrooms")) {
+      this.setState({bathroomsError: this.getErrorsInField("bathrooms") });
+      valid = false;
+    } else {
+      this.setState({bathroomsError: "" });
+    }
+    if (this.isFieldInError("balconies")) {
+      this.setState({balconiesError: this.getErrorsInField("balconies") });
+      valid = false;
+    } else {
+      this.setState({balconiesError: "" });
+    }
+    if (this.isFieldInError("washrooms")) {
+      this.setState({washroomsError: this.getErrorsInField("washrooms") });
+      valid = false;
+    } else {
+      this.setState({washroomsError: "" });
+    }
+    if (this.isFieldInError("furnishedStatus")) {
+      this.setState({furnishedStatusError: this.getErrorsInField("furnishedStatus") });
+      valid = false;
+    } else {
+      this.setState({furnishedStatusError: "" });
+    }
     return valid;
   };
  
@@ -217,7 +308,13 @@ constructor(props){
     const {
       builtupArea,
       floor,
-      totalFloor
+      totalFloor,
+      superArea,
+      bedrooms,
+      balconies,
+      bathrooms,
+      washrooms,
+      furnishedStatus,
     } = this.state;
     let valid = true;
 
@@ -302,10 +399,10 @@ constructor(props){
                                           originalValues  : response.data.propertyDetails,
                                           bedrooms        : response.data.propertyDetails.bedrooms,
                                           balconies       : response.data.propertyDetails.balconies,
-                                          washrooms       : response.data.propertyDetails.washrooms ? response.data.propertyDetails.washrooms : "",
-                                          furnishedStatus : response.data.propertyDetails.furnishedStatus,
-                                          personal        : response.data.propertyDetails.personal ? response.data.propertyDetails.personal : "",
-                                          pantry          : response.data.propertyDetails.pantry ? response.data.propertyDetails.pantry : "",
+                                          washrooms       : response.data.propertyDetails.washrooms,
+                                          furnishedStatus : response.data.propertyDetails.furnishedStatus?response.data.propertyDetails.furnishedStatus:"Fully furnished",
+                                          personal        : response.data.propertyDetails.personal,
+                                          pantry          : response.data.propertyDetails.pantry,
                                           bathrooms       : response.data.propertyDetails.bathrooms,
                                           ageofproperty   : response.data.propertyDetails.ageofProperty,
                                           facing          : response.data.propertyDetails.facing,
@@ -316,10 +413,10 @@ constructor(props){
                                           floor           : response.data.propertyDetails.floor,
                                           totalFloor      : response.data.propertyDetails.totalFloor,
                                           // prevAmenities   : response.data.propertyDetails.Amenities,
-                                          superAreaUnit   : response.data.propertyDetails.superAreaUnit,
-                                          builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
-                                          prevCharges     : response.data.propertyDetails.furnishedOptions!==null && response.data.propertyDetails.furnishedOptions.length > 0 ? response.data.propertyDetails.furnishedOptions : [],
-                                          workStation     : response.data.propertyDetails.workStation ? response.data.propertyDetails.workStation : "",
+                                          superAreaUnit   : response.data.propertyDetails.superAreaUnit ? response.data.propertyDetails.superAreaUnit : "Sq ft",
+                                          builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit ? response.data.propertyDetails.builtupAreaUnit : "Sq ft",
+                                          prevCharges     : response.data.propertyDetails.furnishedOptions,
+                                          workStation     : response.data.propertyDetails.workStation,
                                           furnishpantry   : response.data.propertyDetails.furnishPantry,
 
                                           /*----------------------------------------*/
@@ -352,10 +449,10 @@ constructor(props){
                                                 });
 
 
-                                            var furnishItemData = this.state.furnishItem;
-                                            var furnishItemDataList = furnishItemData.map((item,index)=>{
+                                            var furnishedOptionsData = this.state.furnishedOptions;
+                                            var furnishedOptionsDataList = furnishedOptionsData.map((item,index)=>{
                                             var propPresent = this.state.prevCharges.find((obj)=>{
-                                            return item.label === obj;
+                                            return item.name === obj;
                                             })
                                             var newObj = Object.assign({},item);
                                             if(propPresent){
@@ -367,18 +464,18 @@ constructor(props){
                                           })
 
                                           this.setState({
-                                              furnishItem : furnishItemDataList,
+                                              furnishedOptions : furnishedOptionsDataList,
                                             },()=>{
-                                              // console.log("here furnishItem in didmount after match result",this.state.furnishItem);
+                                              console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
                                               });
 
 
 
-                                          if(this.state.furnishedStatus === "Semi Furnished")
+                                          if(this.state.furnishedStatus === "Semi furnished")
                                           {
                                             this.setState({furnishedIndex:1});
                                           }
-                                          if(this.state.furnishedStatus === "Fully Furnished")
+                                          if(this.state.furnishedStatus === "Fully furnished")
                                           {
                                             this.setState({furnishedIndex:0});
                                           }
@@ -441,7 +538,7 @@ constructor(props){
                                           console.log("error = ",error);
                                           if(error.message === "Request failed with status code 401")
                                           {
-                                                Alert.alert("Your session is expired!"," Please loginagain.");
+                                                Alert.alert("Your session is expired!"," Please login again.");
                                                 AsyncStorage.removeItem('token');
                                                 this.navigateScreen('MobileScreen');  
                                           }
@@ -454,7 +551,7 @@ constructor(props){
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             Alert.alert("Your session is expired!"," Please loginagain.");
+                             Alert.alert("Your session is expired!"," Please login again.");
                              AsyncStorage.removeItem('token');
                               this.navigateScreen('MobileScreen');  
                         }
@@ -484,6 +581,8 @@ constructor(props){
       // furnishedValue: value,
       //   totalAskIndex: index,
       //   furnishpantry: index,
+    },()=>{
+      this.validInputField('furnishedStatus', 'furnishedStatusError');
     });
   }
 
@@ -525,7 +624,7 @@ constructor(props){
 
   handleOnFurnish = (index)=>{
     // console.log("index",index);
-    var alldata = this.state.furnishItem;
+    var alldata = this.state.furnishedOptions;
     var status = alldata[index].checked;
     if(status===true){
       alldata[index].checked = false;
@@ -533,8 +632,9 @@ constructor(props){
       alldata[index].checked = true;
     }
     this.setState({
-      furnishItem: alldata,
-    },()=>{   // console.log("here new data of furnishItem",this.state.furnishItem);
+      furnishedOptions: alldata,
+    },()=>{  
+      console.log("here new data of furnishedOptions",this.state.furnishedOptions);
     });
  }
 
@@ -553,6 +653,13 @@ constructor(props){
     });
   }
 
+  handleCancel = () => {
+    this.setState({
+     selectAmenity:false,
+     checkArea:false,
+     checkFloor:false,
+   });
+  };
 
 submitFun(){
   var ov = this.state.originalValues;
@@ -597,17 +704,16 @@ submitFun(){
 
             /*-----------------------------*/
 
-            var furnishedOptionsData = this.state.furnishItem;
+            var furnishedOptionsData = this.state.furnishedOptions;
             var furnishedOptionsDataList =[];    
                   furnishedOptionsData.map((item,index)=>{
-                    if(item.checked == true)
+                    if(item.checked === true)
                     {
-                      furnishedOptionsDataList.push(item.label);
+                      furnishedOptionsDataList.push(item.name);
                     }
                   })
-
                   var eq ="";
-                  if(furnishedOptionsDataList.length != this.state.furnishItem.length )
+                  if(furnishedOptionsDataList.length !== this.state.furnishedOptions.length )
                   {
                     eq = true;
                      // console.log("equal not",eq);
@@ -615,7 +721,7 @@ submitFun(){
                    
                     for (var i = 0; i < furnishedOptionsDataList.length; i++)
                     {
-                        if (furnishedOptionsDataList[i] != ov.furnishedOptions[i]){
+                        if (furnishedOptionsDataList[i] !== ov.furnishedOptions[i]){
                         eq = false;
                             }else{
                         eq = true; 
@@ -624,7 +730,6 @@ submitFun(){
                     // console.log("equal yes but same",eq);
                   }
                   // console.log("outside eq",eq);
-              
               if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
                   this.state.furnishedStatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
                    this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing
@@ -705,7 +810,7 @@ submitFun(){
                           "superAreaUnit"     : this.state.superAreaUnit,
                           "builtupAreaUnit"   : this.state.builtupAreaUnit,
                           "furnishPantry"     : this.state.furnishpantry,
-                          // "furnishedOptions"  : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : null ,
+                          "furnishedOptions"  : furnishedOptionsDataList ,
                         };
                     }
                   console.log("formValues",formValues);
@@ -730,14 +835,14 @@ submitFun(){
                                       console.log("error = ",error);
                                       if(error.message === "Request failed with status code 401")
                                       {
-                                           // Alert.alert("Your session is expired!"," Please loginagain.");
+                                           // Alert.alert("Your session is expired!"," Please login again.");
                                           AsyncStorage.removeItem('token');
                                           // this.props.navigation.navigate('MobileScreen'); 
                                       }
                                });
 
                           }else{
-                                 Alert.alert("Please select atleast one amenity");
+                                 this.setState({selectAmenity:true})
                           }
                        
                       }
@@ -755,23 +860,23 @@ submitFun(){
                   }
                 })
 
-              var furnishedOptionsData = this.state.furnishItem;
+              var furnishedOptionsData = this.state.furnishedOptions;
                   var furnishedOptionsDataList =[];    
                     furnishedOptionsData.map((item,index)=>{
                       if(item.checked == true)
                       {
-                        furnishedOptionsDataList.push(item.label);
+                        furnishedOptionsDataList.push(item.name);
                       }
                     })
                       var eq = true;
-                      if(furnishedOptionsDataList.length !== this.state.furnishItem.length )
+                      if(furnishedOptionsDataList.length !== this.state.furnishedOptions.length )
                       {
                         eq = false;
                          // console.log("equal not",eq);
                       }else{
                         for (var i = 0; i < furnishedOptionsDataList.length; i++)
                         {
-                                if (furnishedOptionsDataList[i] != this.state.furnishItem[i]){
+                                if (furnishedOptionsDataList[i] != this.state.furnishedOptions[i]){
                             eq = false;
                                 }else{
                             eq = true; 
@@ -805,7 +910,7 @@ submitFun(){
                         "superAreaUnit"     : this.state.superAreaUnit,
                         "builtupAreaUnit"   : this.state.builtupAreaUnit,
                         "furnishPantry"       : this.state.furnishpantry,
-                        "furnishedOptions"    : furnishedOptionsDataList.length>0 ? furnishedOptionsDataList : "" ,
+                        "furnishedOptions"    : furnishedOptionsDataList,
                       };
                       console.log("formValues",formValues);
 
@@ -828,13 +933,13 @@ submitFun(){
                                                 console.log("error = ",error);
                                                 if(error.message === "Request failed with status code 401")
                                                 {
-                                           //          Alert.alert("Your session is expired!"," Please loginagain.");
+                                           //          Alert.alert("Your session is expired!"," Please login again.");
                                                   AsyncStorage.removeItem('token');
                                            // this.props.navigation.navigate('MobileScreen');         
                                                }
                                });
                             }else{
-                                     Alert.alert("Please select atleast one amenity");
+                                 this.setState({selectAmenity:true})
                               }
 
                        }
@@ -846,11 +951,15 @@ submitFun(){
 
   totalFloor(){
       const floorValue      = parseInt(this.state.floor);
-      const totalfloorValue = parseInt(this.state.totalfloor);
+      const totalfloorValue = parseInt(this.state.totalFloor);
+      console.log("floorValue",floorValue)
+      console.log("totalfloorValue",totalfloorValue)
       if(floorValue > totalfloorValue){
-        Alert.alert("Floor should not be greater than Total Floors");
+        this.setState({
+          checkFloor : true,
+          totalFloor : "",
+        })
       }
-      this.setState({totalfloor : totalfloorValue});
   }
 
   builtArea(){
@@ -860,8 +969,10 @@ submitFun(){
     // console.log("superArea",superAreaValue);
 
     if(builtAreaValue >= superAreaValue){
-      Alert.alert("Built Up Area should not be greater than Super Area");
-      this.setState({builtupArea:""})
+      this.setState({
+        builtupArea : "",
+        checkArea   : true
+      })
     }
   }
 
@@ -879,7 +990,7 @@ submitFun(){
                 <View style={styles.formWrapper}>
                   <View>
                     <Text style={styles.heading}>
-                     Let's provide details of your property
+                     Please provide details of your property
                     </Text>
                   </View>
 
@@ -917,6 +1028,7 @@ submitFun(){
                       {this.displayValidationError('floorError')}
                     </View>
                     <View style={{width:'8%',justifyContent:'center',alignItems:'center'}}>
+                      <Text>OF</Text>
                     </View>
                       <View style={{width:'46%'}}>
                         <View style={[styles.inputWrapper2,{height:40,width:'100%'}]}>
@@ -952,114 +1064,126 @@ submitFun(){
 
                   <View>
                       <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
-                      <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                        <View style={styles.inputImgWrapper}>
-                          <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                      <View style={[styles.marginBottom25]}>  
+                        <View style={[styles.inputWrapper]}>
+                          <View style={styles.inputImgWrapper}>
+                            <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                          </View>
+                          <View style={styles.inputTextWrapper}>
+                            <Dropdown
+                              label               = 'Bedrooms'
+                              containerStyle      = {styles.ddContainer}
+                              dropdownOffset      = {{top:0, left: 0}}
+                              itemTextStyle       = {styles.ddItemText}
+                              inputContainerStyle = {styles.ddInputContainer}
+                              labelHeight         = {5}
+                              tintColor           = {colors.button}
+                              labelFontSize       = {sizes.label}
+                              fontSize            = {15}
+                              baseColor           = {'#666'}
+                              textColor           = {'#333'}
+                              labelTextStyle      = {styles.ddLabelText}
+                              style               = {styles.ddStyle}
+                              data                = {this.state.bedroomData}
+                              value               = {this.state.bedrooms}
+                              onChangeText        = {bedrooms => {this.setState({bedrooms},() => { this.validInputField('bedrooms', 'bedroomsError'); })}}
+                            />
+                          </View>
                         </View>
-                        <View style={styles.inputTextWrapper}>
-                          <Dropdown
-                            label               = 'Bedrooms'
-                            containerStyle      = {styles.ddContainer}
-                            dropdownOffset      = {{top:0, left: 0}}
-                            itemTextStyle       = {styles.ddItemText}
-                            inputContainerStyle = {styles.ddInputContainer}
-                            labelHeight         = {10}
-                            tintColor           = {colors.button}
-                            labelFontSize       = {sizes.label}
-                            fontSize            = {15}
-                            baseColor           = {'#666'}
-                            textColor           = {'#333'}
-                            labelTextStyle      = {styles.ddLabelText}
-                            style               = {styles.ddStyle}
-                            data                = {this.state.bedroomData}
-                            value               = {this.state.bedrooms}
-                            onChangeText        = {bedrooms => {this.setState({bedrooms});}}
-                          />
-                        </View>
+                        {this.displayValidationError('bedroomsError')}
                       </View>
 
-                      <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                        <View style={styles.inputImgWrapper}>
-                          <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                      <View style={[styles.marginBottom25]}>  
+                        <View style={[styles.inputWrapper]}>
+                          <View style={styles.inputImgWrapper}>
+                            <Icon name="office-building" type="material-community" size={18}  color="#aaa" style={{}}/>
+                          </View>
+                          <View style={styles.inputTextWrapper}>
+                            <Dropdown
+                              label               = 'Balconies'
+                              containerStyle      = {styles.ddContainer}
+                              dropdownOffset      = {{top:0, left: 0}}
+                              itemTextStyle       = {styles.ddItemText}
+                              inputContainerStyle = {styles.ddInputContainer}
+                              labelHeight         = {5}
+                              tintColor           = {colors.button}
+                              labelFontSize       = {sizes.label}
+                              fontSize            = {15}
+                              baseColor           = {'#666'}
+                              textColor           = {'#333'}
+                              labelTextStyle      = {styles.ddLabelText}
+                              style               = {styles.ddStyle}
+                              data                = {this.state.balconieData}
+                              value               = {this.state.balconies}
+                              onChangeText        = {balconies => {this.setState({balconies},() => { this.validInputField('balconies', 'balconiesError'); })}}
+                            />
+                          </View>
                         </View>
-                        <View style={styles.inputTextWrapper}>
-                          <Dropdown
-                            label               = 'Balconies'
-                            containerStyle      = {styles.ddContainer}
-                            dropdownOffset      = {{top:0, left: 0}}
-                            itemTextStyle       = {styles.ddItemText}
-                            inputContainerStyle = {styles.ddInputContainer}
-                            labelHeight         = {10}
-                            tintColor           = {colors.button}
-                            labelFontSize       = {sizes.label}
-                            fontSize            = {15}
-                            baseColor           = {'#666'}
-                            textColor           = {'#333'}
-                            labelTextStyle      = {styles.ddLabelText}
-                            style               = {styles.ddStyle}
-                            data                = {this.state.balconieData}
-                            value               = {this.state.balconies}
-                            onChangeText        = {balconies => {this.setState({balconies});}}
-                          />
-                        </View>
+                        {this.displayValidationError('balconiesError')}
                       </View>
 
-                      <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                        <View style={styles.inputImgWrapper}>
-                          <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                      <View style={[styles.marginBottom25]}>  
+                        <View style={[styles.inputWrapper]}>
+                          <View style={styles.inputImgWrapper}>
+                            <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                          </View>
+                          <View style={styles.inputTextWrapper}>
+                            <Dropdown
+                              label               = 'Bathrooms'
+                              containerStyle      = {styles.ddContainer}
+                              dropdownOffset      = {{top:0, left: 0}}
+                              itemTextStyle       = {styles.ddItemText}
+                              inputContainerStyle = {styles.ddInputContainer}
+                              labelHeight         = {5}
+                              tintColor           = {colors.button}
+                              labelFontSize       = {sizes.label}
+                              fontSize            = {15}
+                              baseColor           = {'#666'}
+                              textColor           = {'#333'}
+                              labelTextStyle      = {styles.ddLabelText}
+                              style               = {styles.ddStyle}
+                              data                = {this.state.bathroomData}
+                              value               = {this.state.bathrooms}
+                              onChangeText        = {bathrooms => {this.setState({bathrooms},() => { this.validInputField('bathrooms', 'bathroomsError'); })}}
+                            />
+                          </View>
                         </View>
-                        <View style={styles.inputTextWrapper}>
-                          <Dropdown
-                            label               = 'Bathrooms'
-                            containerStyle      = {styles.ddContainer}
-                            dropdownOffset      = {{top:0, left: 0}}
-                            itemTextStyle       = {styles.ddItemText}
-                            inputContainerStyle = {styles.ddInputContainer}
-                            labelHeight         = {10}
-                            tintColor           = {colors.button}
-                            labelFontSize       = {sizes.label}
-                            fontSize            = {15}
-                            baseColor           = {'#666'}
-                            textColor           = {'#333'}
-                            labelTextStyle      = {styles.ddLabelText}
-                            style               = {styles.ddStyle}
-                            data                = {this.state.bathroomData}
-                            value               = {this.state.bathrooms}
-                            onChangeText        = {bathrooms => {this.setState({bathrooms});}}
-                          />
-                        </View>
-                      </View>
+                        {this.displayValidationError('bathroomsError')}
+                      </View>  
                   </View>
 
                   :
                     <View>
                       {/*washrooms*/}
                       <Text style={[styles.heading2,styles.marginBottom15]}>My Property has</Text>
-                      <View style={[styles.inputWrapper,styles.marginBottom25]}>
-                        <View style={styles.inputImgWrapper}>
-                          <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                      <View style={[styles.marginBottom25]}>  
+                        <View style={[styles.inputWrapper]}>
+                          <View style={styles.inputImgWrapper}>
+                            <Icon name="bath" type="font-awesome" size={17}  color="#aaa" style={{}}/>
+                          </View>
+                          <View style={styles.inputTextWrapper}>
+                            <Dropdown
+                              label               = 'Washrooms'
+                              containerStyle      = {styles.ddContainer}
+                              dropdownOffset      = {{top:0, left: 0}}
+                              labelTextStyle       = {styles.ddItemText}
+                              inputContainerStyle = {styles.ddInputContainer}
+                              labelHeight         = {5}
+                              tintColor           = {colors.button}
+                              labelFontSize       = {sizes.label}
+                              fontSize            = {15}
+                              baseColor           = {'#666'}
+                              textColor           = {'#333'}
+                              labelTextStyle      = {styles.ddLabelText}
+                              style               = {styles.ddStyle}
+                              data                = {this.state.washroomData}
+                              value               = {this.state.washrooms}
+                               onChangeText        = {washrooms => {this.setState({washrooms},() => { this.validInputField('washrooms', 'washroomsError'); })}}
+                              />
+                            </View>
+                          </View>
+                          {this.displayValidationError('washroomsError')}
                         </View>
-                        <View style={styles.inputTextWrapper}>
-                          <Dropdown
-                            label               = 'Washrooms'
-                            containerStyle      = {styles.ddContainer}
-                            dropdownOffset      = {{top:0, left: 0}}
-                            itemTextStyle       = {styles.ddItemText}
-                            inputContainerStyle = {styles.ddInputContainer}
-                            labelHeight         = {10}
-                            tintColor           = {colors.button}
-                            labelFontSize       = {sizes.label}
-                            fontSize            = {15}
-                            baseColor           = {'#666'}
-                            textColor           = {'#333'}
-                            labelTextStyle      = {styles.ddLabelText}
-                            style               = {styles.ddStyle}
-                            data                = {this.state.washroomData}
-                            value               = {this.state.washrooms}
-                            onChangeText        = {washrooms => {this.setState({washrooms});}}
-                          />
-                        </View>
-                      </View>
                         {/*2nd*/}
                          <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom15]}>
                             <View style={[{width:'46%'}]}>
@@ -1112,7 +1236,7 @@ submitFun(){
                         </View>
                     </View>
                   }
-                  <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
+                  <Text style={[styles.heading2,styles.marginBottom5]}>It is </Text>
                   <View style={[styles.marginBottom15,{width:'100%'}]}>
                  
                     <RadioGroup
@@ -1123,11 +1247,11 @@ submitFun(){
                       selectedIndex = {this.state.furnishedIndex}
                       onSelect = {(index, value) => this.onSelectFurnishStatus(index, value)}
                     >
-                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10,fontSize: 12}} value={'Fully Furnished'} >
+                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10,fontSize: 12}} value={'Fully furnished'} >
                         <Text style={[styles.inputTextSmall,]}>Fully furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,marginLeft:10,fontSize: 12}} value={'Semi Furnished'}>
+                      <RadioButton style={{paddingHorizontal:0,marginLeft:10,fontSize: 12}} value={'Semi furnished'}>
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
@@ -1135,12 +1259,12 @@ submitFun(){
                         <Text style={styles.inputTextSmall}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
+                    {this. displayValidationError('furnishedStatusError')}
                   </View>
-
-                   {(this.state.furnishedStatus==="Fully Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
+                   {(this.state.furnishedStatus==="Fully furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi furnished" && this.state.propertyType ==="Commercial" ) ?
                        <View style={[styles.marginBottom15,{}]}>
-                          {this.state.furnishItem && this.state.furnishItem.length >0 ?
-                            this.state.furnishItem.map((data,index)=>(
+                          {this.state.furnishedOptions && this.state.furnishedOptions.length >0 ?
+                            this.state.furnishedOptions.map((data,index)=>(
 
                             <View key={index}>
                               <CheckBox
@@ -1153,11 +1277,10 @@ submitFun(){
                                 checkBoxColor= {colors.grey}
                                 rightTextView = {
                                   <View style={{flexDirection:'row',flex:1}}>
-                                    <Text style={styles.inputText}>{data.label}</Text>
+                                    <Text style={styles.inputText}>{data.name}</Text>
                                   </View>
                                 }
                               />
-                          
                             </View>
                           ))
 
@@ -1172,7 +1295,7 @@ submitFun(){
 
                       }
 
-                       {(this.state.furnishedStatus==="Fully Furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi Furnished" && this.state.propertyType ==="Commercial" ) ?
+                       {(this.state.furnishedStatus==="Fully furnished" && this.state.propertyType === "Commercial") || (this.state.furnishedStatus==="Semi furnished" && this.state.propertyType ==="Commercial" ) ?
                          
 
                         <View style={[{width:'100%',flexDirection:'row'},styles.marginBottom15]}>
@@ -1243,14 +1366,34 @@ submitFun(){
 
                              {/*here ends*/}
 
-                            <Text style={[styles.heading2,styles.marginBottom15]}>It is</Text>
+                            <Text style={[styles.heading2,styles.marginBottom15]}>It is (optional)</Text>
                             <View style={[styles.inputWrapper,styles.marginBottom25]}>
                               <View style={styles.inputImgWrapper}>
                                 <Icon name="home" type="feather" size={18}  color="#aaa" style={{}}/>
                               </View>
                               <View style={styles.inputTextWrapper}>
-                                <Dropdown
+                                {/*<Dropdown
                                   label               = 'Years old'
+                                  containerStyle      = {styles.ddContainer}
+                                  dropdownOffset      = {{top:0, left: 0}}
+                                  itemTextStyle       = {styles.ddItemText}
+                                  inputContainerStyle = {styles.ddInputContainer}
+                                  labelHeight         = {5}
+                                  tintColor           = {colors.button}
+                                  labelFontSize       = {sizes.label}
+                                  fontSize            = {15}
+                                  baseColor           = {'#666'}
+                                  textColor           = {'#333'}
+                                  labelTextStyle      = {styles.ddLabelText}
+                                  style               = {styles.ddStyle}
+                                  data                = {this.state.yearsData}
+                                  value               = {this.state.ageofproperty}
+                                  onChangeText        = {ageofproperty => {this.setState({ageofproperty});}}
+                                />*/}
+                                <Picker
+                                  selectedValue       ={this.state.ageofproperty}
+                                  style               ={[styles.ddStyle,{height:40}]}
+                                  placeholder         = "Years old"
                                   containerStyle      = {styles.ddContainer}
                                   dropdownOffset      = {{top:0, left: 0}}
                                   itemTextStyle       = {styles.ddItemText}
@@ -1262,11 +1405,20 @@ submitFun(){
                                   baseColor           = {'#666'}
                                   textColor           = {'#333'}
                                   labelTextStyle      = {styles.ddLabelText}
-                                  style               = {styles.ddStyle}
-                                  data                = {this.state.yearsData}
-                                  value               = {this.state.ageofproperty}
-                                  onChangeText        = {ageofproperty => {this.setState({ageofproperty});}}
-                                />
+                                  onValueChange       = {ageofproperty => {this.setState({ageofproperty});}}
+                                  >
+                                  <Picker.Item value="" label="Years old" color={colors.textLight} />
+                                  {this.state.yearsData ?
+                                    this.state.yearsData.map((data, index)=>{
+                                      return(
+                                               <Picker.Item key={index} value={data.value} label={data.name} />
+                                             );
+                                           })
+                                    :
+                                    null
+                                  }
+                                  
+                                </Picker>
                               </View>
                             </View>
 
@@ -1281,7 +1433,7 @@ submitFun(){
                                   dropdownOffset      = {{top:0, left: 0}}
                                   itemTextStyle       = {styles.ddItemText}
                                   inputContainerStyle = {styles.ddInputContainer}
-                                  labelHeight         = {10}
+                                  labelHeight         = {5}
                                   tintColor           = {colors.button}
                                   labelFontSize       = {sizes.label}
                                   fontSize            = {15}
@@ -1297,7 +1449,7 @@ submitFun(){
                             </View>
 
                              <View style={[styles.marginBottom25]}>
-                              <Text style={[styles.heading2,styles.marginBottom5]}>Super Area</Text>
+                              <Text style={[styles.heading2,styles.marginBottom5]}>Super Area (optional)</Text>
                               <View style={[styles.inputWrapper]}>
                                 <View style={styles.inputImgWrapper}>
                                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -1322,7 +1474,7 @@ submitFun(){
                                     labelTextStyle        = {styles.textLabel}
                                     keyboardType          = "numeric"
                                     maxLength             = {10}
-                                    onChangeText          = {superArea => {this.setState({superArea})}}
+                                    onChangeText          = {superArea => {this.setState({superArea},() => { this.validInputField('superArea', 'superAreaError'); })}}
 
                                   />
                                 </View>
@@ -1332,13 +1484,13 @@ submitFun(){
                                     dropdownOffset      = {{top:0, left: 0}}
                                     itemTextStyle       = {styles.ddItemText}
                                     inputContainerStyle = {styles.ddInputContainer}
-                                    labelHeight         = {10}
+                                    labelHeight         = {5}
                                     tintColor           = {colors.button}
                                     labelFontSize       = {sizes.label}
                                     fontSize            = {15}
                                     baseColor           = {'#666'}
                                     textColor           = {'#333'}
-                                    labelTextStyle      = {styles.ddLabelTextFull}
+                                    labelTextStyle      = {styles.ddnlabelTextFull}
                                     style               = {styles.ddStyle}
                                     data                = {this.state.UnitData}
                                     value               = {this.state.superAreaUnit}
@@ -1346,6 +1498,7 @@ submitFun(){
                                   />
                                 </View>
                               </View>
+                              {this.displayValidationError('superAreaError')}
                             </View>
 
                             <View style={[styles.marginBottom25]}>
@@ -1372,7 +1525,7 @@ submitFun(){
                                     inputContainerStyle   = {styles.textInputContainer}
                                     titleTextStyle        = {styles.textTitle}
                                     style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                                    labelTextStyle        = {styles.textLabel}
+                                    labelTextStyle        = {styles.textlabel}
                                     keyboardType          = "numeric"
                                     maxLength             = {10}
                                   />
@@ -1383,7 +1536,7 @@ submitFun(){
                                     dropdownOffset      = {{top:0, left: 0}}
                                     itemTextStyle       = {styles.ddItemText}
                                     inputContainerStyle = {styles.ddInputContainer}
-                                    labelHeight         = {10}
+                                    labelHeight         = {5}
                                     tintColor           = {colors.button}
                                     labelFontSize       = {sizes.label}
                                     fontSize            = {15}
@@ -1404,7 +1557,7 @@ submitFun(){
 
 
                               <View style={styles.amenitiesWrapper} >
-                                  <Text style={[styles.heading3,styles.marginBottom5]}> All Amenities</Text>           
+                                  <Text style={[styles.heading3,styles.marginBottom5,{fontWeight:"bold"}]}> All Amenities</Text>           
                                   {/*console.log("here amenity",this.state.allAmenities)*/}
                                    { this.state.allAmenities && this.state.allAmenities.length >0 
                                     ?
@@ -1456,11 +1609,7 @@ submitFun(){
 
                                             }
                                             />
-
-
                                           :
-
-
                                           data.amenity==="Gas Pipeline" ?
                                            <CheckBox
                                               key={index}
@@ -1552,9 +1701,7 @@ submitFun(){
 
                                                 }
                                                 />
-
-                                          :
-
+                                           :
                                            data.amenity==="Shopping Center" ?
                                              <CheckBox
                                                     key={index}
@@ -1737,6 +1884,18 @@ submitFun(){
                     </View>
                   </KeyboardAwareScrollView>
                 </ScrollView>
+                 <Dialog.Container visible={this.state.selectAmenity}>
+                  <Dialog.Title>Please select atleast one amenity</Dialog.Title>
+                  <Dialog.Button label="Ok" onPress={this.handleCancel} />
+                </Dialog.Container>
+                <Dialog.Container visible={this.state.checkFloor}>
+                  <Dialog.Title>Floor should not be greater than Total Floors</Dialog.Title>
+                  <Dialog.Button label="Ok" onPress={this.handleCancel} />
+                </Dialog.Container>
+                <Dialog.Container visible={this.state.checkArea}>
+                  <Dialog.Title>Built Up Area should not be greater than Super Area</Dialog.Title>
+                  <Dialog.Button label="Ok" onPress={this.handleCancel} />
+                </Dialog.Container>
           </React.Fragment>
         );
        
@@ -1757,7 +1916,7 @@ PropertyDetails.defaultProps = {
   },
 
   rules: {
-    numbers        : /^(([0-9]*)|(([0-9]*)\.([0-9]*)))$/,
+    numbers        : /^[0-9\s]*$/,
     required       : /\S+/,
     letters        : /^[a-zA-Z ]+$/,
     lettersOrEmpty : /^[a-zA-Z ]+$|^$/,

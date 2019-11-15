@@ -30,12 +30,21 @@ import {colors,sizes}                     from '../../config/styles.js';
 import CheckBox                           from 'react-native-check-box';
 import { Dropdown }                       from 'react-native-material-dropdown';
 import AsyncStorage                       from '@react-native-community/async-storage';
+import { NavigationActions, StackActions } from 'react-navigation';
+import Loading                    from '../../layouts/Loading/Loading.js'
 
 const window = Dimensions.get('window');
 
 export default class SearchProperty extends ValidationComponent{
 
-
+navigateScreen=(route)=>{
+    const navigateAction = StackActions.push({
+    routeName: route,
+    params: {},
+    action: NavigationActions.navigate({ routeName: route }),
+  });
+  this.props.navigation.dispatch(navigateAction);
+}
   constructor(props){
     super(props);
     this.state={
@@ -43,7 +52,7 @@ export default class SearchProperty extends ValidationComponent{
       activeBtn             : 'Residential-Sell',
       includeNearby         : false,
       activePropType        : [],
-      selectBudget          : 0,
+      selectBudget          : "",
       activeRoom            : [],
       activeFloor           : "",
       activeAge             : "",
@@ -59,19 +68,22 @@ export default class SearchProperty extends ValidationComponent{
       furnishList           : [],
       uid                   : "",
       token                 : "",
-      btnLoading            : false,
+      // btnLoading            : false,
       locSearchResults      : "",
+      budgetList            : [],
+      budgetList1           : [],
+      budgetList2           : [],
+      isLoading :true,
     };
   }
 
 
   componentDidMount(){
-   var searchResults = this.props.navigation.getParam('searchResults','No Result');
-   console.log("searchResults",searchResults)
-   this._retrieveData();
-   this.setState({
-      searchText :searchResults !== "No Result" ? searchResults.location : "",
-      activeBtn:searchResults !== "No Result" ? searchResults.property : 'Residential-Sell',
+
+
+      this.setState({
+      // searchText :searchResults !== "No Result" ? searchResults.location : "",
+      // activeBtn:searchResults !== "No Result" ? searchResults.property : 'Residential-Sell',
       roomsList : [ 
         {value: 1,  option: "1 BHK", checked:false},
         {value: 2,  option: "2 BHK", checked:false},
@@ -84,7 +96,7 @@ export default class SearchProperty extends ValidationComponent{
         {name:'Residential House',     checked:false, iconName:"home",            type:"material-community", size:18},
         {name:'Studio Apartment',      checked:false, iconName:"office-building", type:"material-community", size:16},
         {name:'Villa',                 checked:false, iconName:"home",            type:"material-community", size:16},
-        {name:'Penthouse',             checked:false, iconName:"office-building", type:"font-awesome",       size:16}
+        {name:'Penthouse',             checked:false, iconName:"office-building", type:"material-community",       size:16}
       ],
       propertyList2 : [
         {name:'Office in IT Park/SEZ',    checked:false, iconName:"building-o",      type:"font-awesome",       size:12},
@@ -93,6 +105,38 @@ export default class SearchProperty extends ValidationComponent{
         {name:'Commercial Shop',          checked:false, iconName:"office-building", type:"material-community", size:16},
         {name:'Industrial Building',      checked:false, iconName:"office-building", type:"material-community", size:16},
         {name:'Warehouse/Godown',         checked:false, iconName:"office-building", type:"material-community", size:16}
+      ],
+      budgetList1 : [
+        {value: 1000000, option: "Upto 10 Lac", checked:false},
+        {value: 2000000, option: "Upto 20 Lac", checked:false},
+        {value: 3000000, option: "Upto 30 Lac", checked:false},
+        {value: 4000000, option: "Upto 40 Lac", checked:false},
+        {value: 5000000, option: "Upto 50 Lac", checked:false},
+        {value: 6000000, option: "Upto 60 Lac", checked:false},
+        {value: 7000000, option: "Upto 70 Lac", checked:false},
+        {value: 8000000, option: "Upto 80 Lac",checked:false},
+        {value: 9000000, option: "Upto 90 Lac",checked:false},
+        {value: 10000000, option: "Upto 1 Cr",checked:false},
+        {value: 20000000, option: "Upto 2 Cr",checked:false},
+        {value: 30000000, option: "Upto 3 Cr",checked:false},
+        {value: 50000000, option: "Upto 5 Cr",checked:false},
+        {value: 100000000, option: "Upto 10 Cr",checked:false},
+      ],
+
+      budgetList2 : [
+        {value: 5000,  option: "Upto 5,000",checked:false},
+        {value: 10000, option: "Upto 10,000",checked:false},
+        {value: 15000, option: "Upto 15,000",checked:false},
+        {value: 20000, option: "Upto 20,000",checked:false},
+        {value: 25000, option: "Upto 25,000",checked:false},
+        {value: 30000, option: "Upto 30,000",checked:false},
+        {value: 40000, option: "Upto 40,000",checked:false},
+        {value: 50000, option: "Upto 50,000",checked:false},
+        {value: 60000, option: "Upto 60,000",checked:false},
+        {value: 70000, option: "Upto 70,000",checked:false},
+        {value: 80000, option: "Upto 80,000",checked:false},
+        {value: 90000, option: "Upto 90,000",checked:false},
+        {value: 100000, option: "Upto 1 Lac",checked:false},
       ],
 
       furnishList : [
@@ -117,14 +161,17 @@ export default class SearchProperty extends ValidationComponent{
         {value: ">12",                option: "Above 12 Years",     checked:false},
       ],
       availableList : [
-        {value:"Immediate",     checked:false},
-        {value:"2 Weeks",       checked:false},
-        {value:"2-4 Weeks",     checked:false},
-        {value:"After a month", checked:false},
+        {value:"0",   option:"Immediate",  checked:false},
+        {value:"14",  option:"2 Weeks",  checked:false},
+        {value:"30",  option:"2-4 Weeks",  checked:false},
+        {value:"31",  option:"After a month", checked:false},
       ],
     },()=>{
-      this.setState({propertyList:this.state.propertyList1})
+      this._retrieveData();
     })
+   // var searchResults = this.props.navigation.getParam('searchResults','No Result');
+   // console.log("searchResults",searchResults)
+   
   }
 
   componentWillReceiveProps(nextProps){
@@ -136,10 +183,33 @@ export default class SearchProperty extends ValidationComponent{
     try {
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
-      if (uid !== null && token !== null ) {
-        // We have data!!
-        this.setState({uid:uid})
-        this.setState({token:token})
+      const tempSearchData      = await AsyncStorage.getItem('searchData');
+      AsyncStorage.setItem('newProp',false);
+      if (uid !== null && token !== null || tempSearchData!== null) {
+          // We have data!!
+          this.setState({uid:uid})
+          this.setState({token:token})
+          var searchData = JSON.parse(tempSearchData);
+          console.log("searchData1=>",searchData);
+          var activeBtn=searchData.propertyType+"-"+searchData.transactionType;
+          this.setState({
+            isLoading  :false,
+            searchText :searchData.location ? searchData.location : "",
+            location   :searchData.location ? searchData.location : "",
+            activeBtn  :activeBtn ? activeBtn : 'Residential-Sell',
+          })
+
+        if(searchData.propertyType === "Residential"){
+          this.setState({propertyList:this.state.propertyList1})
+        }else{
+          this.setState({propertyList:this.state.propertyList2})
+        }
+
+        if(searchData.transactionType === "Sell"){
+          this.setState({budgetList:this.state.budgetList1})
+        }else{
+          this.setState({budgetList:this.state.budgetList2})
+        }
       }
     } catch (error) {
       // Error retrieving data
@@ -151,12 +221,28 @@ export default class SearchProperty extends ValidationComponent{
     this.setState({
       activeBtn:option
     },()=>{
-      this.setState({selectBudget:0})
       var propertyList = [];
       if(this.state.activeBtn === "Commercial-Sell" || this.state.activeBtn === "Commercial-Rent"){
-        this.setState({propertyList:this.state.propertyList2,activePropType:[]})
+        this.setState({
+          propertyList:this.state.propertyList2,
+          activePropType:[],
+        })
       }else{
-        this.setState({propertyList:this.state.propertyList1,activePropType:[]})
+        this.setState({
+          propertyList:this.state.propertyList1,
+          activePropType:[],
+        })
+      }
+      if(this.state.activeBtn === "Residential-Sell" || this.state.activeBtn === "Commercial-Sell"){
+        this.setState({
+          budgetList : this.state.budgetList1,
+          selectBudget: "",
+        })
+      }else{
+        this.setState({
+          budgetList : this.state.budgetList2,
+          selectBudget: "",
+        })
       }
     });
   }
@@ -165,7 +251,19 @@ export default class SearchProperty extends ValidationComponent{
     this.setState({
       activeBtn: value
     },()=>{
-      this.setState({selectBudget:0})
+      var budget = [];
+      console.log("activeBtn",this.state.activeBtn)
+      if(this.state.activeBtn === "Residential-Sell" || this.state.activeBtn === "Commercial-Sell"){
+        this.setState({
+          budgetList : this.state.budgetList1,
+          selectBudget: "",
+        });
+      }else{
+        this.setState({
+          budgetList : this.state.budgetList2,
+          selectBudget:"",
+        });
+      }
     })
 
   }
@@ -175,7 +273,25 @@ export default class SearchProperty extends ValidationComponent{
   }
 
   selectBudget = (value)=>{
-    this.setState({selectBudget:value})
+    var budgetList =this.state.budgetList;
+    for (var i =budgetList.length - 1; i >= 0; i--){
+      if(budgetList[i].value === value){
+        if(budgetList[i].checked === true){
+          budgetList[i].checked = false;
+            this.setState({selectBudget:""})
+        }else{
+          for (var j =budgetList.length - 1; j >= 0; j--){
+            budgetList[j].checked = false;
+            this.setState({selectBudget:""})
+          }
+          budgetList[i].checked = true;
+        }
+      }
+    }
+    this.setState({
+      budgetList:budgetList,
+      selectBudget:value
+    });
   }
 
   setActive = (name)=>{
@@ -319,8 +435,8 @@ export default class SearchProperty extends ValidationComponent{
     : Math.floor(Number(totalPrice));
   }
 
-  handleSearch = (event)=>{
-    this.setState({btnLoading:true})
+  handleSearch = (value)=>{
+    // this.setState({btnLoading:true})
     var property      = this.state.activeBtn.split("-");
     var propertyType  = property[0];
     var transactionType = property[1];
@@ -339,20 +455,21 @@ export default class SearchProperty extends ValidationComponent{
     }
     var searchData = JSON.stringify(formValues);
     AsyncStorage.setItem("searchData",searchData);
-    axios
-      .post("/api/search/properties/", formValues)
-      .then((searchResults) => {
-        this.setState({btnLoading:false})
-        this.props.navigation.navigate('PropertyList',{searchResults : searchResults.data })
-      })
-       .catch((error)=>{
-            console.log("error = ",error);
-                this.setState({btnLoading:false})
-            if(error.message === "Request failed with status code 401")
-            {
-                 swal("Your session is expired! Please login again.","", "error");
-            }
-      });
+    this.navigateScreen('PropertyList')
+
+    // axios
+    //   .post("/api/search/properties/", formValues)
+    //   .then((searchResults) => {
+    //     this.setState({btnLoading:false})
+    //   })
+    //    .catch((error)=>{
+    //         console.log("error = ",error);
+    //             this.setState({btnLoading:false})
+    //         if(error.message === "Request failed with status code 401")
+    //         {
+    //              swal("Your session is expired! Please login again.","", "error");
+    //         }
+    //   });
   }
 
    _selectedItem(item){
@@ -360,6 +477,8 @@ export default class SearchProperty extends ValidationComponent{
     // console.log("item",item);
     this.setState({'searchText':item,location : item,})
   }
+
+  
 
     _renderList = ({ item }) => {
     // console.log("item",item)
@@ -425,7 +544,62 @@ export default class SearchProperty extends ValidationComponent{
     })
   }
 
- 
+ resetSearchData(){
+    var ageList =this.state.ageList;
+    for (var i =ageList.length - 1; i >= 0; i--){
+      ageList[i].checked = false;
+      this.setState({activeAge:""})
+    }
+    this.setState({ageList:ageList});
+
+    var propertyList =this.state.propertyList;
+    for (var i =propertyList.length - 1; i >= 0; i--){
+      propertyList[i].checked = false;
+      this.setState({activePropType:[]})
+    }
+    this.setState({propertyList:propertyList});
+
+    var roomsList =this.state.roomsList;
+    for (var i =roomsList.length - 1; i >= 0; i--){
+      roomsList[i].checked = false;
+      this.setState({activeRoom:[]})
+    }
+    this.setState({roomsList:roomsList});
+
+    var floorsList =this.state.floorsList;
+    for (var i =floorsList.length - 1; i >= 0; i--){
+      floorsList[i].checked = false;
+      this.setState({activeFloor:""})
+    }
+    this.setState({floorsList:floorsList});
+
+     var availableList =this.state.availableList;
+    for (var i =availableList.length - 1; i >= 0; i--){
+      availableList[i].checked = false;
+      this.setState({activeAvailabe:""})
+    }
+    this.setState({availableList:availableList});
+
+    var furnishList =this.state.furnishList;
+    for (var i =furnishList.length - 1; i >= 0; i--){
+      furnishList[i].checked = false;
+      this.setState({activeFurnishedStatus:""})
+    }
+    this.setState({furnishList:furnishList});
+
+     var budgetList =this.state.budgetList;
+    for (var i =budgetList.length - 1; i >= 0; i--){
+      budgetList[i].checked = false;
+      this.setState({selectBudget:""})
+    }
+    this.setState({budgetList:budgetList});
+    this.setState({
+      activeBtn:"Residential-Sell",
+      searchText: "",
+      budgetList:this.state.budgetList1,
+    });
+  }
+
 
   render(){
 
@@ -435,18 +609,42 @@ export default class SearchProperty extends ValidationComponent{
   
     
     // var value =this.state.value;
-    var budget=this.convertNumberToRupees(this.state.selectBudget)
+    // var budget=this.convertNumberToRupees(this.state.selectBudget)
 
     
     // console.log("this.props.navigation = ",this.props.navigation);
     return (
       <React.Fragment>
         <HeaderBar showBackBtn={true} navigation={navigation}/>
-
+        {this.state.isLoading === false ?
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
             
             <View style={styles.formWrapper}>
-            
+             {/* <Button
+                onPress         = {()=>this.resetSearchData()}
+                titleStyle      = {styles.buttonSubmitText}
+                title           = "Reset"
+                buttonStyle     = {[styles.buttonSubmit,{backgroundColor:"#e25e77"}]}
+                containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15,{marginTop:15,marginLeft:2}]}
+                iconRight
+                icon = {<Icon
+                  name="sync" 
+                  type="rotate-ccw"
+                  size={22}
+                  color="white"
+                />}
+            />*/}
+              <View style={styles.resetBtn} >
+                 <Icon 
+                  name="sync" 
+                  type="rotate-ccw" 
+                  size={22}  
+                  color={colors.danger} 
+                  style={{}}
+                  onPress= {()=>this.resetSearchData()}
+                />
+                <Text style={{color:"#e25e77",paddingHorizontal:5,fontSize:15}} onPress= {()=>this.resetSearchData()}>Reset Filters</Text>
+              </View>  
               <View style={styles.optionsWrapper}>
                 <View style={styles.buttonContainer}>
                   {
@@ -661,7 +859,7 @@ export default class SearchProperty extends ValidationComponent{
               :null  
             }
             <Text style={[styles.heading,styles.marginBottom5]}>Price Range</Text>
-            <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
+           {/* <View style={{width:'100%',flexDirection:'row',justifyContent:'space-between'}}>
               <View style={{flexDirection:'row',alignItems:'center'}}>
                 <Icon
                   name="rupee" 
@@ -695,6 +893,20 @@ export default class SearchProperty extends ValidationComponent{
                 trackStyle={{height:10,borderColor:'#ccc',borderWidth:1}}
                 onValueChange={selectBudget => this.setState({ selectBudget })}
               />
+            </View>*/}
+            <View style={[styles.tabWrap,styles.marginBottom25]}>
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
+            {this.state.budgetList.map((data,index)=>(
+              <TouchableOpacity 
+                onPress={()=>this.selectBudget(data.value)}
+                key={index} 
+                style={[(data.checked===true?styles.activeTabViewAge:styles.tabViewAge),(index<6)?styles.tabBorder:null]}
+              >
+                <Text style={styles.tabText}>{data.option}</Text>
+              </TouchableOpacity>
+            ))
+            }
+            </ScrollView>
             </View>
 
             <Text style={[styles.heading,styles.marginBottom5]}>Furnish Status</Text>
@@ -756,42 +968,32 @@ export default class SearchProperty extends ValidationComponent{
                   key={index} 
                   style={[(data.checked=== true?styles.activeTabViewAvl:styles.tabViewAvl),(index==0?styles.borderRadiusLeft2:(index==3)?styles.borderRadiusRight2:null),(index<6)?styles.tabBorder:null]}
                 >
-                  <Text style={styles.tabText}>{data.value}</Text>
+                  <Text style={styles.tabText}>{data.option}</Text>
                 </TouchableOpacity>
               ))
               }
               
               </View>
-            {
-              this.state.btnLoading ? 
-                <Button
-                  titleStyle      = {styles.buttonSubmitText}
-                  title           = "Loading..."
-                  buttonStyle     = {styles.buttonSubmit}
-                  containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15]}
-                  loading
-                />
-              :
-                <Button
-                  onPress         = {this.handleSearch.bind(this)}
-                  titleStyle      = {styles.buttonSubmitText}
-                  title           = "Search"
-                  buttonStyle     = {styles.buttonSubmit}
-                  containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15]}
-                  iconRight
-                  icon = {<Icon
-                    name="chevrons-right" 
-                    type="feather"
-                    size={22}
-                    color="white"
-                  />}
-                />              
-            }
-
-
+              <Button
+                onPress         = {this.handleSearch.bind(this)}
+                titleStyle      = {styles.buttonSubmitText}
+                title           = "Search"
+                buttonStyle     = {styles.buttonSubmit}
+                containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15]}
+                iconRight
+                icon = {<Icon
+                  name="chevrons-right" 
+                  type="feather"
+                  size={24}
+                  color="white"
+                />}
+              />              
+            
           </View>
         </ScrollView>
-      
+        :
+         <Loading /> 
+       }
       </React.Fragment>
     );
     

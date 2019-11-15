@@ -85,13 +85,13 @@ navigateScreen=(route)=>{
       openModal: false,
       dropdownData:[
         {
-          value: 'Everyday(Mon-Sun)'
+          value: 'Everyday (Mon-Sun)'
         },
         {
-          value: 'Weekdays(Mon-Fri)'
+          value: 'Weekdays (Mon-Fri)'
         },
         {
-          value: 'Weekdays(Sat-Sun)'
+          value: 'Weekends (Sat-Sun)'
         },
         {
           value: 'Monday'
@@ -116,7 +116,7 @@ navigateScreen=(route)=>{
         }
       ],
       toggle            : false,
-      contactPerson     : 'My Self',
+      contactPerson     : 'Myself',
       mobile            : "",
       propertyId        : '',
       uid               : '',
@@ -139,6 +139,9 @@ navigateScreen=(route)=>{
       mode: 'time',
       show: false,
       show1: false,
+      visitSlot : false,
+      visitSchedule : false,
+      singleVideo:"",
     };
 
       var property_id = this.props.navigation.getParam('property_id','No property_id');
@@ -189,18 +192,30 @@ navigateScreen=(route)=>{
                   this.setState({
 
                       originalValues          : response.data.avalibilityPlanVisit,
-                      contactPersonMobile     : response.data.avalibilityPlanVisit.contactPersonMobile ? response.data.avalibilityPlanVisit.contactPersonMobile : mobile,
-                      contactPerson           : response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "My Self" ,
+                      // someOnemobile           : response.data.avalibilityPlanVisit.contactPerson === "Someone else" ? response.data.avalibilityPlanVisit.contactPersonMobile : "",
+                      // mobile                  : response.data.avalibilityPlanVisit.contactPerson === "My Self" ? response.data.avalibilityPlanVisit.contactPersonMobile : "",
+                      contactPerson           : response.data.avalibilityPlanVisit.contactPerson ?  response.data.avalibilityPlanVisit.contactPerson : "Myself" ,
                       available               : response.data.avalibilityPlanVisit.available,
                       updateOperation         : true,
                       prevAvailable           : response.data.avalibilityPlanVisit.available,
                       originalValuesGallery   : response.data.gallery,
                       imgArrayWSaws           : response.data.gallery.Images ? response.data.gallery.Images : [],
                       singleVideo             : response.data.gallery.video ? response.data.gallery.video : "" ,
-                     
+                      // toggle                  : response.data.avalibilityPlanVisit.contactPerson === "Someone" ? false : true,
                       // type            : response.data.contactPerson==="Someone" ? true : false,
                       
                   },()=>{
+                      if(response.data.avalibilityPlanVisit.contactPerson === "Someone"){
+                        this.setState({
+                          someOnemobile:response.data.avalibilityPlanVisit.contactPersonMobile,
+                          toggle:true
+                        })
+                      }else{
+                        this.setState({
+                          mobile:mobile,
+                          toggle:false
+                        })
+                      }
                     // console.log("here available in comp did mount",this.state.contactPerson);
                     });
 
@@ -417,20 +432,17 @@ navigateScreen=(route)=>{
               mobile,
              
             } = this.state;
-           
+           console.log("mobile=====>",mobile)
+           console.log("someOnemobile=====>",someOnemobile)
 
-             var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
-             var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
-
-             // console.log("someOnemobileNo",someOnemobileNo);
-             // console.log("myMobileNo",myMobileNo);
+            
            
               var mobNo = "";
-              if(this.state.contactPerson === "My Self"){
-                mobNo = myMobileNo;
-              }else{
-                mobNo = someOnemobileNo;
-              }
+           if(this.state.contactPerson === "Myself"){
+              mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+            }else{
+              mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+            }    
             
               const formValues = {
                 "contactPersonMobile" : mobNo,
@@ -443,7 +455,7 @@ navigateScreen=(route)=>{
                 "uid"                 : this.state.uid,
               };
 
-              // console.log("Availability req 1 = ",formValues);
+              console.log("Availability req 1 = ",formValues);
               if(this.state.available.length!==0){
                   
               axios
@@ -463,7 +475,7 @@ navigateScreen=(route)=>{
                             }
                       });
               }else{
-                    Alert.alert("Please add at least one slot.");
+               this.setState({visitSlot:true})
               }
           }else{
             // console.log("submit function");
@@ -474,19 +486,18 @@ navigateScreen=(route)=>{
                 mobile,
               } = this.state;
 
-             var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
-             var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+             // var someOnemobileNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
+             // var myMobileNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
 
              // console.log("someOnemobileNo",someOnemobileNo);
              // console.log("myMobileNo",myMobileNo);
 
             var mobNo = "";
-            if(this.state.contactPerson === "My Self"){
-              mobNo = myMobileNo;
+           if(this.state.contactPerson === "Myself"){
+              mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
             }else{
-              mobNo = someOnemobileNo;
-            }
-          
+              mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+            }          
             const formValues = {
            
               "contactPersonMobile" : mobNo,
@@ -499,7 +510,7 @@ navigateScreen=(route)=>{
               "uid"                 : this.state.uid,
             };
 
-            // console.log("Availability req 1 = ",formValues);
+            console.log("Availability req 2 = ",formValues);
             if(this.state.available.length!==0){
               axios
               .patch('/api/properties/patch/availabilityPlan',formValues)
@@ -518,7 +529,7 @@ navigateScreen=(route)=>{
                               }
                       });
             }else{
-              Alert.alert("Please add at least one slot.");
+               this.setState({visitSlot:true})
           }
 
      }
@@ -528,9 +539,12 @@ navigateScreen=(route)=>{
   onToggle=()=>{
     let {toggle} = this.state;
     if(toggle){
-      this.setState({contactPerson:'My Self'})
+      this.setState({
+        contactPerson :'Myself',
+        mobile        : this.state.mobile
+      })
     }else{
-      this.setState({contactPerson:'Someone else'})
+      this.setState({contactPerson:'Someone'})
     }
     this.setState({toggle:!this.state.toggle});
   }
@@ -567,7 +581,7 @@ navigateScreen=(route)=>{
         // console.log("available=>",this.state.available);
       });
     }else{
-        Alert.alert("Please select visting schedule!")
+      this.setState({visitSchedule:true})
     };  
   }
 
@@ -612,11 +626,15 @@ navigateScreen=(route)=>{
             const file = {
               uri  : response.uri,
               name : response.fileName,
-              type : response.type,
+              type : 'image/jpeg',
             }
+                console.log("file",file);
+
               if (file) {
                 var fileName = file.name; 
-                var ext = fileName.split('.').pop(); 
+                // var ext = fileName.split('.').pop(); 
+                var ext = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2); 
+                console.log("ext",ext);
                 if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
                   if (file) {
                     this.setState({isLoading:true})
@@ -690,53 +708,57 @@ navigateScreen=(route)=>{
 
         case RESULTS.GRANTED:
           console.log('The permission is granted');
-          ImagePicker.launchImageLibrary(options, response => {
-            console.log("response",response);
-          if (response.uri) {
-            // console.log("response",response);
-            var url = response.path;
-            var filename = url.substring(url.lastIndexOf('/')+1);
-            const file = {
-                uri  : response.uri,
-                name : filename,
-                type : 'image/jpeg',
-              }
-              console.log("file",file);
-              if (file) {
-                var fileName = file.name; 
-                var ext = fileName.split('.').pop(); 
-                console.log("ext",ext)
-                if(ext=="mp4" || ext=="avi" || ext=="ogv"){ 
-                  if (file) {
-                    this.setState({isLoadingVideo:true})
-                    console.log("file------>",file);
-                    console.log("config-------->",this.state.config);
-                    RNS3
-                    .put(file,this.state.config)
-                    .then((Data)=>{
-                      console.log("Data = ",Data);
-                        this.setState({
-                          singleVideo        : Data.body.postResponse.location,
-                          isLoadingVideo          : false
-                        })
-                    })
-                    .catch((error)=>{
-                            console.log("error in catch = ",error);
-                            if(error.message === "Request failed with status code 401")
-                              {
-                                   Alert.alert("Your session is expired! Please login again.","", "error");
-                                   this.navigateScreen('Home');          
-                              }
-                    });
-                  }else{          
-                    Alert.alert("File not uploaded","Something went wrong");  
+          if(this.state.singleVideo === ""){
+            ImagePicker.launchImageLibrary(options, response => {
+              console.log("response",response);
+            if (response.uri) {
+              // console.log("response",response);
+              var url = response.path;
+              var filename = url.substring(url.lastIndexOf('/')+1);
+              const file = {
+                  uri  : response.uri,
+                  name : filename,
+                  type : 'image/jpeg',
+                }
+                console.log("file",file);
+                if (file) {
+                  var fileName = file.name; 
+                  var ext = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2); ; 
+                  console.log("ext",ext)
+                  if(ext=="mp4" || ext=="avi" || ext=="ogv"){ 
+                    if (file) {
+                      this.setState({isLoadingVideo:true})
+                      console.log("file------>",file);
+                      console.log("config-------->",this.state.config);
+                      RNS3
+                      .put(file,this.state.config)
+                      .then((Data)=>{
+                        console.log("Data = ",Data);
+                          this.setState({
+                            singleVideo        : Data.body.postResponse.location,
+                            isLoadingVideo          : false
+                          })
+                      })
+                      .catch((error)=>{
+                              console.log("error in catch = ",error);
+                              if(error.message === "Request failed with status code 401")
+                                {
+                                     Alert.alert("Your session is expired! Please login again.","", "error");
+                                     this.navigateScreen('Home');          
+                                }
+                      });
+                    }else{          
+                      Alert.alert("File not uploaded","Something went wrong");  
+                    }
+                  }else{
+                    Alert.alert("Format is incorrect","Only Upload video format (mp4,avi,ogv)");   
                   }
-                }else{
-                  Alert.alert("Format is incorrect","Only Upload video format (mp4,avi,ogv)");   
                 }
               }
-            }
-          });
+            });
+          }else{
+             Alert.alert("","You can upload only one video.");   
+          }
           break;
 
         case RESULTS.BLOCKED:
@@ -774,7 +796,9 @@ navigateScreen=(route)=>{
      dialogVisible  : false ,
      dialogVisible1 : false ,
      dialogVisible2 : false ,
-     openModal      : false
+     openModal      : false,
+     visitSlot      : false,
+     visitSchedule  : false,
    });
   };
 
@@ -867,7 +891,7 @@ navigateScreen=(route)=>{
                 />
               </View>
 
-              {this.state.contactPerson==="My Self" ?
+              {this.state.contactPerson==="Myself" ?
 
                <View style={[styles.formInputView,styles.marginBottom25]}>
                     <View style={[styles.inputWrapper]}>
@@ -948,7 +972,7 @@ navigateScreen=(route)=>{
                     dropdownOffset      = {{top:0, left: 0}}
                     itemTextStyle       = {styles.ddItemText}
                     inputContainerStyle = {styles.ddInputContainer}
-                    labelHeight         = {10}
+                    labelHeight         = {5}
                     tintColor           = {colors.button}
                     labelFontSize       = {sizes.label}
                     fontSize            = {15}
@@ -1218,6 +1242,16 @@ navigateScreen=(route)=>{
               
            </KeyboardAwareScrollView>   
         </ScrollView>
+
+        <Dialog.Container visible={this.state.visitSchedule}>
+          <Dialog.Title>Please select visiting schedule!</Dialog.Title>
+          <Dialog.Button label="Ok" onPress={this.handleCancel} />
+        </Dialog.Container>
+
+        <Dialog.Container visible={this.state.visitSlot}>
+          <Dialog.Title>Please add at least one slot.</Dialog.Title>
+          <Dialog.Button label="Ok" onPress={this.handleCancel} />
+        </Dialog.Container>
 
         <Dialog.Container visible={this.state.openModal}>
           <Dialog.Title>Availability slot is sucessfully added.</Dialog.Title>

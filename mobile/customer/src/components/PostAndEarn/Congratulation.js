@@ -96,7 +96,7 @@ export default class Congratulation extends ValidationComponent{
             .then( (res) =>{
               // console.log("resposnse here===================>",res);
               var cash_per = res.data.data.earnings;
-              // console.log("here earnings",cash_per);
+              console.log("here earnings",cash_per);
               axios
               .get('/api/properties/'+this.props.property_id)
               .then((propertyData) =>{
@@ -210,7 +210,7 @@ export default class Congratulation extends ValidationComponent{
 
                 console.log("data",data);
                 console.log("per",per);
-                this.setState({value:per})
+                this.setState({value:data})
               });
               
             })
@@ -228,7 +228,7 @@ export default class Congratulation extends ValidationComponent{
     }
 
     submitFun(){
-      this.navigateScreen('PropertyDetailsPage')
+      this.navigateScreen('PropertyDetailsPage');
     }
 
   
@@ -302,7 +302,7 @@ export default class Congratulation extends ValidationComponent{
                     />
                 </SafeAreaView>
 
-                <View style={[styles.alignCenter,{paddingHorizontal:15}, styles.marginTopSOM,styles.marginBottom15]}>
+                <View style={[styles.alignCenter,{paddingHorizontal:15,marginTop:70}, styles.marginTopSOM,styles.marginBottom15]}>
                   <Text style={[styles.heading4,{textAlign:'center'}]}>
                     Your property 
                       <Text style={{fontSize:16,fontWeight:'bold',fontStyle:'italic',color:colors.button}}> Successfully </Text> 

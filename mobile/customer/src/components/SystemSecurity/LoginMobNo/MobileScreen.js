@@ -28,23 +28,23 @@ import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-sc
 
 export default class MobileScreen extends ValidationComponent {
 
+//   navigateScreen=(route)=>{
+// const navigateAction = StackActions.reset({
+//              index: 0,
+//             actions: [
+//             NavigationActions.navigate({ routeName: route}),
+//             ],
+//         });
+//         this.props.navigation.dispatch(navigateAction);
+// }
   navigateScreen=(route)=>{
-const navigateAction = StackActions.reset({
-             index: 0,
-            actions: [
-            NavigationActions.navigate({ routeName: route}),
-            ],
-        });
-        this.props.navigation.dispatch(navigateAction);
-}
-  // navigateScreen=(route)=>{
-  //     const navigateAction = NavigationActions.navigate({
-  //     routeName: route,
-  //     params: {},
-  //     action: NavigationActions.navigate({ routeName: route }),
-  //   });
-  //   this.props.navigation.dispatch(navigateAction);
-  // }
+      const navigateAction = NavigationActions.navigate({
+      routeName: route,
+      params: {},
+      action: NavigationActions.navigate({ routeName: route }),
+    });
+    this.props.navigation.dispatch(navigateAction);
+  }
 // navigateScreen=(route)=>{
 //     const navigateAction = StackActions.push({
 //     routeName: route,

@@ -25,7 +25,7 @@ import styles                               from './styles.js';
 import {colors,sizes}                       from '../../config/styles.js';
 import CheckBox                             from 'react-native-check-box'
 import Video                                from 'react-native-video';
-// import MapView,{PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView,{PROVIDER_GOOGLE}            from 'react-native-maps';
 import Carousel                             from 'react-native-snap-carousel';
 
 const window = Dimensions.get('window');
@@ -47,8 +47,8 @@ navigateScreen=(route)=>{
     super(props);
     this.state={
       region: {
-        latitude: 45.52220671242907,
-        longitude: -122.6653281029795,
+        latitude: 18.5089,
+        longitude: 73.9259,
         latitudeDelta: 0.04864195044303443,
         longitudeDelta: 0.040142817690068,
         propertyProfile: "",
@@ -73,7 +73,7 @@ navigateScreen=(route)=>{
       const token      = await AsyncStorage.getItem('token');
       const propertyId  = await AsyncStorage.getItem('propertyId');
       console.log("get propertyId========>>>>>>======= = ",propertyId);
-
+      console.log("get token========>>>>>>======= = ",token);
       if (uid !== null && token !== null && propertyId!==null) {
         // We have data!!
         this.setState({uid:uid})
@@ -96,7 +96,8 @@ navigateScreen=(route)=>{
               console.log("error = ",error);
               if(error.message === "Request failed with status code 401")
               {
-                  
+                  Alert.alert("Your session is expired! Please login again.","", "error");
+                    this.navigateScreen('MobileScreen');
               }
            });
       }
@@ -125,7 +126,7 @@ navigateScreen=(route)=>{
 
       : Math.abs(Number(totalPrice)) >= 1.0e+3
 
-      ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+      ? Math.abs(Number(totalPrice)) / 1.0e+3 + "k"
 
       : Math.abs(Number(totalPrice));
     }
@@ -257,6 +258,7 @@ navigateScreen=(route)=>{
 
   render(){
     const { navigation } = this.props;
+    
     let propertyProfile = this.state.propertyProfile;
     let {activeBtn,activePropType,activeRoomIndex} = this.state;
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
@@ -271,10 +273,9 @@ navigateScreen=(route)=>{
 
     return (
       <React.Fragment>      
-        <HeaderBar showBackBtn={true} navigation={navigation}/>
+        <HeaderBar showBackBtn={true}  navigation={navigation}/>
         {propertyProfile!=null ?  
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
-
           <View style={{width:'100%'}}>
             <View style={{width:'100%',backgroundColor:'#fff'}}>
               
@@ -297,7 +298,7 @@ navigateScreen=(route)=>{
                       <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
                          <Button
                           titleStyle      = {styles.buttonText}
-                          title           = {"For " + propertyProfile.transactionType}
+                          title           = {propertyProfile.transactionType === "Sell" ? "For Sale"  : 'For Rent'}
                           // title           = {propertyProfile.gallery.Images.length+" Photos"}
                           buttonStyle     = {styles.button4}
                           containerStyle  = {[styles.buttonContainer4]}
@@ -305,7 +306,7 @@ navigateScreen=(route)=>{
                         {this.state.uid === propertyProfile.owner_id ?
                           <Button
                             titleStyle      = {styles.buttonText}
-                            title           = {"Edit"}
+                            title           = {"Edit Property"}
                             // title           = {propertyProfile.gallery.Images.length+" Photos"}
                             buttonStyle     = {styles.button4}
                             onPress         = {this.editProp.bind(this)}
@@ -328,14 +329,14 @@ navigateScreen=(route)=>{
                     <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
                       <Button
                         titleStyle      = {styles.buttonText}
-                        title           = {"For " + propertyProfile.transactionType}
+                        title           = {propertyProfile.transactionType === "Sell" ? "For Sale"  : 'For Rent'}
                         // title           = {propertyProfile.gallery.Images.length+" Photos"}
                         buttonStyle     = {styles.button4}
                         containerStyle  = {[styles.buttonContainer4]}
                       />
                       <Button
                         titleStyle      = {styles.buttonText}
-                        title           = {"Edit"}
+                        title           = {"Edit Property"}
                         // title           = {propertyProfile.gallery.Images.length+" Photos"}
                         buttonStyle     = {styles.button4}
                         onPress         = {this.editProp.bind(this)}
@@ -359,38 +360,46 @@ navigateScreen=(route)=>{
                   color={colors.golden}
                   containerStyle={{marginRight:5}}
                 />
-              <Text style={styles.textSmallLight}>{propertyProfile.propertyLocation.society+", "+propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
+              <Text style={styles.textSmallLight}>{propertyProfile.propertyLocation.society+", "+propertyProfile.propertyLocation.subArea+", "+propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
             </View>
             <View style={{flexDirection:'row',justifyContent:'space-between'}}>
               <Text style={styles.textSmallLight}>
                 Property Type :
-                <Text style={styles.textLarge}> {propertyProfile.propertyType} </Text>
+                <Text style={styles.textLarge}> {propertyProfile.propertyType+", "+propertyProfile.propertySubType} </Text>
               </Text>
             </View> 
             <View style={[{width:'100%'},styles.marginBottom15]}>
              {propertyProfile.transactionType === "Sell" ?
                   <View style={{flexDirection:'row',alignItems:'center'}}>
-                    <Text style={styles.textSmallLight}>Total Price : </Text>
-                    <Icon
-                      name="rupee" 
-                      type="font-awesome"
-                      size={18}
-                      color={colors.black}
-                      containerStyle={{marginRight:5}}
-                    />
-                    <Text style={styles.textLarge}>{this.convertNumberToRupees(propertyProfile.financial.totalPrice)}</Text>
+                    <Text style={styles.textSmallLight}>Total Ask : </Text>
+                    {propertyProfile.financial.totalPrice ?
+                        <Icon
+                        name="rupee" 
+                        type="font-awesome"
+                        size={14}
+                        color={colors.grey}
+                        containerStyle={{marginRight:2}}
+                      />
+                      :
+                      null
+                    }
+                    <Text style={styles.textLarge}>{propertyProfile.financial.totalPrice ? this.convertNumberToRupees(propertyProfile.financial.totalPrice) : "--"}</Text>
                   </View>
                 :
                   <View style={{flexDirection:'row',alignItems:'center'}}>
                     <Text style={styles.textSmallLight}>Monthly Rent : </Text>
-                    <Icon
-                      name="rupee" 
-                      type="font-awesome"
-                      size={18}
-                      color={colors.black}
-                      containerStyle={{marginRight:5}}
-                    />
-                    <Text style={styles.textLarge}>{this.convertNumberToRupees(propertyProfile.financial.monthlyRent)}</Text>
+                    {propertyProfile.financial.monthlyRent ?
+                        <Icon
+                        name="rupee" 
+                        type="font-awesome"
+                        size={14}
+                        color={colors.grey}
+                        containerStyle={{marginRight:2}}
+                      />
+                      :
+                      null
+                    }
+                    <Text style={styles.textLarge}>{propertyProfile.financial.monthlyRent ? this.convertNumberToRupees(propertyProfile.financial.monthlyRent) : "--"}</Text>
                   </View>
               }
              
@@ -403,7 +412,7 @@ navigateScreen=(route)=>{
 
             <View style={[styles.divider,styles.marginBottom15]}></View>
 
-            <Text style={[styles.textHeading,styles.marginBottom5]}>Overview</Text>
+            <Text style={[styles.textHeading,styles.marginBottom5]}>Key Features</Text>
 
             <View style={[{width:'100%',flexDirection:'row',flexWrap:'wrap'}]}>
               <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
@@ -416,7 +425,7 @@ navigateScreen=(route)=>{
                 />
                 <View>
                   <Text style={styles.textSmallLight}>Super Area</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.superArea ? propertyProfile.propertyDetails.superArea+" "+propertyProfile.propertyDetails.superAreaUnit : "-"}</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.superArea ? propertyProfile.propertyDetails.superArea+" "+propertyProfile.propertyDetails.superAreaUnit : "--"}</Text>
                 </View>
               </View>
 
@@ -433,56 +442,9 @@ navigateScreen=(route)=>{
                   <Text style={styles.textSmall}>{propertyProfile.propertyDetails.builtupArea} {propertyProfile.propertyDetails.builtupAreaUnit}</Text>
                 </View>
               </View>
-              {propertyProfile.transactionType === "Sell" ?
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Expected Rate</Text>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                      <Icon
-                        name="rupee" 
-                        type="font-awesome"
-                        size={14}
-                        color={colors.grey}
-                        containerStyle={{marginRight:2}}
-                      />
-                     <Text style={styles.textSmall}>{propertyProfile.financial.expectedRate} / {propertyProfile.financial.measurementUnit}</Text>
-                    </View>  
-                  </View>
-                </View>
-                :
+            
 
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Deposit</Text>
-                    <View style={{flexDirection:'row',alignItems:'center'}}>
-                      <Icon
-                        name="rupee" 
-                        type="font-awesome"
-                        size={14}
-                        color={colors.grey}
-                        containerStyle={{marginRight:2}}
-                      />
-                     <Text style={styles.textSmall}>{propertyProfile.financial.depositAmount}</Text>
-                    </View>  
-                  </View>
-                </View>
-              }  
-
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,}]}>
                 <Icon
                   name="crosshairs" 
                   type="font-awesome"
@@ -492,126 +454,10 @@ navigateScreen=(route)=>{
                 />
                 <View>
                   <Text style={styles.textSmallLight}>Floor / Total Floors</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.floor}/{propertyProfile.propertyDetails.totalFloor}</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.floor ? propertyProfile.propertyDetails.floor : "--"}/{propertyProfile.propertyDetails.totalFloor ? propertyProfile.propertyDetails.totalFloor : "--"}</Text>
                 </View>
               </View>
 
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                <Icon
-                  name="crosshairs" 
-                  type="font-awesome"
-                  size={20}
-                  color={colors.button}
-                  containerStyle={{marginRight:6}}
-                />
-                <View>
-                  <Text style={styles.textSmallLight}>Furnish Status</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.furnishedStatus}</Text>
-                </View>
-              </View>
-
-              {propertyProfile.propertyType === "Residential" ?
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Bedrooms</Text>
-                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bedrooms ? propertyProfile.propertyDetails.bedrooms : "-"}</Text>
-                  </View>
-                </View>
-                :
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Washrooms</Text>
-                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.washrooms ? propertyProfile.propertyDetails.washrooms : "-"}</Text>
-                  </View>
-                </View>
-              }
-
-              {propertyProfile.propertyType === "Residential" ?
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Balconies</Text>
-                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.balconies}</Text>
-                  </View>
-                </View>
-                :
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Pantry</Text>
-                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.pantry}</Text>
-                  </View>
-                </View>
-              } 
-
-              {propertyProfile.propertyType === "Residential" ?
-                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Bathrooms</Text>
-                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bathrooms ? propertyProfile.propertyDetails.bathrooms : "-"}</Text>
-                  </View>
-                </View>
-                :
-                 <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
-                  <Icon
-                    name="crosshairs" 
-                    type="font-awesome"
-                    size={20}
-                    color={colors.button}
-                    containerStyle={{marginRight:6}}
-                  />
-                  <View>
-                    <Text style={styles.textSmallLight}>Personal</Text>
-                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.personal ? propertyProfile.propertyDetails.personal : "-"}</Text>
-                  </View>
-                </View>
-              }
-              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
-                <Icon
-                  name="crosshairs" 
-                  type="font-awesome"
-                  size={20}
-                  color={colors.button}
-                  containerStyle={{marginRight:6}}
-                />
-                <View>
-                  <Text style={styles.textSmallLight}>Age of Property</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.ageofProperty === "New" ? "0-1" : propertyProfile.propertyDetails.ageofProperty} Years</Text>
-                </View>
-              </View>
               <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
                 <Icon
                   name="crosshairs" 
@@ -621,11 +467,127 @@ navigateScreen=(route)=>{
                   containerStyle={{marginRight:6}}
                 />
                 <View>
-                  <Text style={styles.textSmallLight}>Facing</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.facing}</Text>
+                  <Text style={styles.textSmallLight}>Furnished Status</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.furnishedStatus ? propertyProfile.propertyDetails.furnishedStatus : "Not specified"}</Text>
                 </View>
               </View>
 
+              {propertyProfile.propertyType === "Residential" ?
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Bedrooms</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bedrooms ? propertyProfile.propertyDetails.bedrooms : "--"}</Text>
+                  </View>
+                </View>
+                :
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Washrooms</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.washrooms ? propertyProfile.propertyDetails.washrooms : "--"}</Text>
+                  </View>
+                </View>
+              }
+
+              {propertyProfile.propertyType === "Residential" ?
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Balconies</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.balconies ? propertyProfile.propertyDetails.balconies : "--"}</Text>
+                  </View>
+                </View>
+                :
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Pantry</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.pantry ? propertyProfile.propertyDetails.pantry : "--"}</Text>
+                  </View>
+                </View>
+              } 
+
+              {propertyProfile.propertyType === "Residential" ?
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Bathrooms</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.bathrooms ? propertyProfile.propertyDetails.bathrooms : "--"}</Text>
+                  </View>
+                </View>
+                :
+                 <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Personal</Text>
+                    <Text style={styles.textSmall}>{propertyProfile.propertyDetails.personal ? propertyProfile.propertyDetails.personal : "--"}</Text>
+                  </View>
+                </View>
+              }
+              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                <Icon
+                  name="crosshairs" 
+                  type="font-awesome"
+                  size={20}
+                  color={colors.button}
+                  containerStyle={{marginRight:6}}
+                />
+                <View>
+                  <Text style={styles.textSmallLight}>Age of Property</Text>
+                  <Text style={styles.textSmall}>{
+                    propertyProfile.propertyDetails.ageofProperty ?
+                      propertyProfile.propertyDetails.ageofProperty === "New" ?
+                      "0-1" 
+                      : 
+                      propertyProfile.propertyDetails.ageofProperty
+                      :
+                      ""
+                    } 
+                    {propertyProfile.propertyDetails.ageofProperty ? 
+                      propertyProfile.propertyDetails.ageofProperty==="Under Construction" ? 
+                      ""
+                      :" Years" 
+                    : "--" 
+                  }</Text>
+                </View>
+              </View>
               <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
                 <Icon
                   name="crosshairs" 
@@ -635,17 +597,201 @@ navigateScreen=(route)=>{
                   containerStyle={{marginRight:6}}
                 />
                 <View>
+                  <Text style={styles.textSmallLight}>Facing</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.facing ? propertyProfile.propertyDetails.facing : "--"}</Text>
+                </View>
+              </View>
+
+              <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10,paddingLeft:'10%'}]}>
+                <Icon
+                  name="crosshairs" 
+                  type="font-awesome"
+                  size={20}
+                  color={colors.button}
+                  containerStyle={{marginRight:6}}
+                />
+                <View>
                   <Text style={styles.textSmallLight}>Available From</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.financial.availableFrom}</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.financial.availableFrom ? propertyProfile.financial.availableFrom : "Not specified" }</Text>
                 </View>
               </View>
             </View>
+            <View style={[{width:'100%',marginTop:10}]}>
+              <Text style={[styles.textHeading,styles.marginBottom5]}>Financials</Text>
+              {propertyProfile.transactionType === "Sell" ?
+                  <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                    <Icon
+                      name="crosshairs" 
+                      type="font-awesome"
+                      size={20}
+                      color={colors.button}
+                      containerStyle={{marginRight:6}}
+                    />
+                    <View>
+                      <Text style={styles.textSmallLight}>Total Ask</Text>
+                      <View style={{flexDirection:'row',alignItems:'center'}}>
+                        {propertyProfile.financial.totalPrice ?
+                            <Icon
+                            name="rupee" 
+                            type="font-awesome"
+                            size={14}
+                            color={colors.grey}
+                            containerStyle={{marginRight:2}}
+                          />
+                          :
+                          null
+                        }
+                       <Text style={styles.textSmall}>{propertyProfile.financial.totalPrice ? this.convertNumberToRupees(propertyProfile.financial.totalPrice) : "--"}</Text>
+                      </View>  
+                    </View>
+                  </View>
+                  :
+
+                  <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                    <Icon
+                      name="crosshairs" 
+                      type="font-awesome"
+                      size={20}
+                      color={colors.button}
+                      containerStyle={{marginRight:6}}
+                    />
+                    <View>
+                      <Text style={styles.textSmallLight}>Monthly Rent</Text>
+                      <View style={{flexDirection:'row',alignItems:'center'}}>
+                        {propertyProfile.financial.monthlyRent ?
+                            <Icon
+                            name="rupee" 
+                            type="font-awesome"
+                            size={14}
+                            color={colors.grey}
+                            containerStyle={{marginRight:2}}
+                          />
+                          :
+                          null
+                        }
+                       <Text style={styles.textSmall}>{propertyProfile.financial.monthlyRent ? this.convertNumberToRupees(propertyProfile.financial.monthlyRent) : "--"}</Text>
+                      </View>  
+                    </View>
+                  </View>
+                }  
+                <View  style={[{width:'100%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>{propertyProfile.transactionType==="Sell" ? "Charges Included in Total Ask" : "Charges Included in Monthly Rent"}</Text>
+                    <Text style={styles.textSmall}>
+                     {propertyProfile.financial.includeCharges && propertyProfile.financial.includeCharges.length > 0?
+                       propertyProfile.financial.includeCharges.map((includeCharges,index)=>{
+                          var comma = ", ";
+                          var i = index;
+                          if(index >= (propertyProfile.financial.includeCharges.length-1) ){
+                            comma = "";
+                          }
+                          return(
+                              <Text key={i++}>
+                                  {""+includeCharges+comma}
+                              </Text>                  
+                            )
+                          })
+                       :
+                       "--"
+                     }
+                    </Text>
+                  </View>
+                </View>
+
+                {propertyProfile.transactionType === "Sell" ?
+                  <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                    <Icon
+                      name="crosshairs" 
+                      type="font-awesome"
+                      size={20}
+                      color={colors.button}
+                      containerStyle={{marginRight:6}}
+                    />
+                    <View>
+                      <Text style={styles.textSmallLight}>Expected Rate</Text>
+                      <View style={{flexDirection:'row',alignItems:'center'}}>
+                        {propertyProfile.financial.expectedRate ?
+                            <Icon
+                            name="rupee" 
+                            type="font-awesome"
+                            size={14}
+                            color={colors.grey}
+                            containerStyle={{marginRight:2}}
+                          />:
+                          null
+                        }
+                       <Text style={styles.textSmall}>{propertyProfile.financial.expectedRate}{propertyProfile.financial.measurementUnit}</Text>
+                      </View>  
+                    </View>
+                  </View>
+                  :
+
+                  <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                    <Icon
+                      name="crosshairs" 
+                      type="font-awesome"
+                      size={20}
+                      color={colors.button}
+                      containerStyle={{marginRight:6}}
+                    />
+                    <View>
+                      <Text style={styles.textSmallLight}>Deposit</Text>
+                      <View style={{flexDirection:'row',alignItems:'center'}}>
+                       {propertyProfile.financial.depositAmount ?
+                            <Icon
+                            name="rupee" 
+                            type="font-awesome"
+                            size={14}
+                            color={colors.grey}
+                            containerStyle={{marginRight:2}}
+                          />:
+                          null
+                        }
+                       <Text style={styles.textSmall}>{propertyProfile.financial.depositAmount? propertyProfile.financial.depositAmount:"--"}</Text>
+                      </View>  
+                    </View>
+                  </View>
+                }  
+
+                <View  style={[{width:'50%',flexDirection:'row',paddingVertical:10}]}>
+                  <Icon
+                    name="crosshairs" 
+                    type="font-awesome"
+                    size={20}
+                    color={colors.button}
+                    containerStyle={{marginRight:6}}
+                  />
+                  <View>
+                    <Text style={styles.textSmallLight}>Maintenance Charges</Text>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                      {propertyProfile.financial.maintenanceCharges ?
+                        <Icon
+                        name="rupee" 
+                        type="font-awesome"
+                        size={14}
+                        color={colors.grey}
+                        containerStyle={{marginRight:2}}
+                      />:
+                      null
+                    }
+                     <Text style={styles.textSmall}>{propertyProfile.financial.maintenanceCharges ? propertyProfile.financial.maintenanceCharges : "--"}/{propertyProfile.financial.maintenancePer ? propertyProfile.financial.maintenancePer : "--"}</Text>
+                    </View>  
+                  </View>
+                </View>
+              </View>
 
             <View style={[styles.divider,styles.marginBottom15]}></View>
 
-            <Text style={[styles.textHeading,styles.marginBottom5]}>Description</Text>
+            <Text style={[styles.textHeading,styles.marginBottom5]}>Property Description</Text>
             <Text style={[styles.textSmall,styles.marginBottom5]}>
-              {propertyProfile.financial.description}
+              {propertyProfile.financial.description ? propertyProfile.financial.description : "--"}
             </Text>
 
             <View style={[styles.divider,styles.marginBottom15]}></View>
@@ -667,9 +813,8 @@ navigateScreen=(route)=>{
                   <Text style={[styles.textSmall,{textAlign:'center'}]}>{data}</Text>
                 </View>  
               ))
-
                 :
-                null
+                "--"
               }
             </View>
 
@@ -683,7 +828,8 @@ navigateScreen=(route)=>{
                     repeats
                     controls={true}
                     resizeMode={"stretch"}
-                    style={{height:150,width:'100%'}} 
+                    style={{height:150,width:'100%'}}
+                    paused={true} 
                   />
                 </View>
                 <View style={[styles.divider,styles.marginBottom15]}></View>
@@ -691,7 +837,18 @@ navigateScreen=(route)=>{
               :
               null
             }
-            {/*<Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Location</Text>
+
+            <Text style={[styles.textHeadingSmall,styles.marginBottom5]}>Location</Text>
+            <View style={[{flexDirection:'row'},styles.marginBottom5]}>
+              <Icon
+                  name="marker" 
+                  type="foundation"
+                  size={20}
+                  color={colors.golden}
+                  containerStyle={{marginRight:5}}
+                />
+              <Text style={styles.textSmallLight}>{propertyProfile.propertyLocation.society+", "+propertyProfile.propertyLocation.subArea+", "+propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
+            </View>
             <MapView
               ref={map => this.map = map}
               provider={PROVIDER_GOOGLE}
@@ -701,11 +858,11 @@ navigateScreen=(route)=>{
             >
               <MapView.Marker 
                 coordinate={{
-                  latitude: 45.524698,
-                  longitude: -122.6655507,
+                  latitude: 18.5089,
+                  longitude: 73.9259,
                 }}
               />
-            </MapView>*/}
+            </MapView>
 
             {/*<View style={[styles.divider,styles.marginBottom15]}></View>
 
