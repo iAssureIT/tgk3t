@@ -437,7 +437,7 @@ class PropertyProfile extends Component{
                               </div>
                               <div>
                                  <ul  className="bolder">
-                                    {this.state.pricing && this.state.pricing.totalPrice ?
+                                    {this.state.transactionType  ==="Sell" && this.state.transactionType ==="Sell"?
                                       <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Total Ask    </li> 
                                         <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
@@ -449,7 +449,7 @@ class PropertyProfile extends Component{
                                       </b>
                                     }
 
-                                    {this.state.pricing && this.state.pricing.expectedRate ?
+                                    {this.state.transactionType  ==="Sell" && this.state.transactionType ==="Sell"?
                                       <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
                                         <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>

@@ -12,10 +12,18 @@ export default class Operation extends Component {
 		// console.log("1 = ", props);
 		this.state = {
 			propertyStatus :"VerifyPending",
+			userRole 	   : ""
 			// propertyStatus :"assignedTo",
 		}
 
 		this.propertyFieldStatus=this.propertyFieldStatus.bind(this);
+	}
+	componentDidMount() {
+		var userRole = localStorage.getItem('userRole')
+		this.setState({
+			userRole : userRole
+		})
+		console.log("userRole===",this.state.userRole)
 	}
 
 	propertyStatus(event){
@@ -68,11 +76,15 @@ export default class Operation extends Component {
 						       <span className="badge badge-secondary label-warning badgeP">3</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Token Recd" onClick={this.propertyFieldStatus.bind(this)}>Token Recd </a>
+						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="TokenReceived" onClick={this.propertyFieldStatus.bind(this)}>Token Recd </a>
 						       <span className="badge badge-secondary label-warning badgeP">9</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
-						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Contract Due" onClick={this.propertyFieldStatus.bind(this)}>Contract Due </a>
+						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="ContractDue" onClick={this.propertyFieldStatus.bind(this)}>Contract Due </a>
+						       <span className="badge badge-secondary label-warning badgeP">9</span>
+						    </li>
+						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
+						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Discarded" onClick={this.propertyFieldStatus.bind(this)}>Discarded </a>
 						       <span className="badge badge-secondary label-warning badgeP">9</span>
 						    </li>
 						    {/*<li className="nav-item col-lg-2 col-md-2 navPillsMargin">
@@ -84,8 +96,8 @@ export default class Operation extends Component {
 
 					  
 					  {/*<!-- Tab panes -->*/}
-					  <div className="tab-content  noPad ">
-						     <div id="propertyStatus" className="container active tab-pane ">
+					  <div className="tab-content container noPad ">
+						     <div id="propertyStatus" className="container-fluid active tab-pane ">
 						       <Properties status={this.state.propertyStatus} /> 
 						    </div>
 						    <div id="Query" className="container tab-pane fade">

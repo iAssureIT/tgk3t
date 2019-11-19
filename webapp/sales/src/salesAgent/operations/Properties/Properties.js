@@ -10,7 +10,7 @@ import swal                 from 'sweetalert';
 
 import '../progressBar/Progressbar.css';
 import './Properties.css';
-
+var nextProps1;
  class Properties extends Component {
 	constructor(props){
 		super(props);
@@ -18,16 +18,12 @@ import './Properties.css';
 		this.state = {
 			propertiesData :[],
 			userData       :[],
+			nextProps 	   :""
 		}
-
-		// this.test=this.test.bind(this);
 	}
 	componentDidMount(){
-		
       	axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
-
 		// var salesAgentId =  localStorage.setItem("salesAgentId",(propertiesData.salesAgent[0].agentID))
-
 		var userId =localStorage.getItem('user_ID');
 		var role =localStorage.getItem('userRole');
 
@@ -54,9 +50,7 @@ import './Properties.css';
 	      (res)=>{
 	        console.log(res);
 	        // localStorage.setItem("salesAgentId",(res.data.salesAgent[0].agentID)
-
 	        const postsdata = res.data;
-
 	        
 	        this.setState({
 	          propertiesData : postsdata,
@@ -72,14 +66,16 @@ import './Properties.css';
 
    componentWillReceiveProps(nextProps){
 		var userId =localStorage.getItem('user_ID');
+		var role =localStorage.getItem('userRole');
+		var method;
    	
     if(nextProps && nextProps.status){
       	var formValues = {
 			// user_id :"5d3ec084e7381f059964f5be",
 			status	:nextProps.status ? nextProps.status : "WIP" ,
 		}
-		var role =localStorage.getItem('userRole');
-		var method;
+		 nextProps1 = nextProps.status
+		
 		console.log("role====",role);
 		if(role=="admin"){
 			var URL = '/api/salesagent/post/displaylist';
@@ -129,40 +125,7 @@ import './Properties.css';
 		  }
 		console.log("userData=====",this.state.userData)
 	}
-	handleListed(event){
-		event.preventDefault()
-		// var userId =localStorage.getItem('user_ID');
-
-		for (var i = this.state.userData.length - 1; i >= 0; i--) {
-			var formValues ={
-			property_id 	  : this.state.userData[i],
-			status 			  : "Listed",
-			user_id			  : "",
-			// allocatedToUserId : "",
-			remark 			  : "",
-            listing           :true,
-
-
-		}
-		console.log("formValues",formValues);
-		axios
-	    .patch('/api/salesagent/patch/approvedlist',formValues)
-	    .then(
-	      (res)=>{
-	        console.log(res);
-	       if(res.status == 200)
-        {
-        swal("Good job!", " Property Listed Successfully!", "success")
-   		window.location.reload();
-
-         }
-	        this.props.getTotalTabCount();
-	      }
-	    )
-	    .catch();
-		}
 	
-	}
 	handleDelete(event){
 		event.preventDefault()
 		var userId =localStorage.getItem('user_ID');
@@ -214,7 +177,10 @@ import './Properties.css';
 	}
 	handleFieldAgent(event){
 		event.preventDefault()
-		console.log("this.state.userData",this.state.userData);
+
+
+		var userId =localStorage.getItem('user_ID');
+		
 		for (var i = this.state.userData.length - 1; i >= 0; i--) {
 		var formValues ={
 			property_id 	  : this.state.userData[i],
@@ -222,6 +188,7 @@ import './Properties.css';
 
 		}
 		console.log("formValues",formValues);
+		console.log("this.state.userData",this.state.userData);
 
 			axios
 			    .post('/api/properties/post/allocateTofieldAgent/'+formValues.property_id)
@@ -231,7 +198,20 @@ import './Properties.css';
 			       if(res.status == 200)
 		        {
 		        swal("Good job!", " Property Listed Successfully!", "success")
-		   		window.location.reload();
+		   		// window.location.reload();
+		   		axios
+			    .get('/api/properties/list/salesagent/type/'+userId+'/New')
+			    .then(
+			      (res)=>{
+			        console.log(res);
+			        const postsdata = res.data;
+			        this.setState({
+			          propertiesData : postsdata,
+			        });
+			    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+			      }
+			    )
+			    .catch();
 
 		         }
 			        this.props.getTotalTabCount();
@@ -240,12 +220,114 @@ import './Properties.css';
 			    .catch();
 				}
 	}
+	handleListed(event){
+		event.preventDefault()
+		var userId =localStorage.getItem('user_ID');
+		// ===============================================================
+		// swal({
+	 //           title: "Are you sure ?",
+	 //           text: "You want to shortlist this property!",
+	 //           icon: "warning",
+	 //          buttons: [
+	 //            'No, cancel it!',
+	 //            'Yes, I am sure!'
+	 //        ],
+	 //        }).then((option)=> {
+	 //          if(option){
+	 //          	for (var i = this.state.userData.length - 1; i >= 0; i--) {
+		// 				var formValues ={
+		// 				property_id 	  : this.state.userData[i],
+		// 				status 			  : "Listed",
+		// 				user_id			  : "",
+		// 				remark 			  : "",
+		// 	            listing           :true,
+
+		// 			}
+		// 			console.log("next props===0",nextProps1)
+		// 			console.log("formValues",formValues);
+		// 			axios
+		// 		    .patch('/api/salesagent/patch/approvedlist',formValues)
+		// 		    .then(
+		// 		      (res)=>{
+		// 		        console.log(res);
+		// 		       if(res.status == 200)
+		// 	        {
+		// 	        swal("Good job!", " Property Listed Successfully!", "success")
+		// 	   		// window.location.reload();
+		// 	   		axios
+		// 				    .get('/api/properties/list/salesagent/type/'+userId+'/'+nextProps1)
+		// 				    .then(
+		// 				      (res)=>{
+		// 				        console.log(res);
+		// 				        const postsdata = res.data;
+		// 				        this.setState({
+		// 				          propertiesData : postsdata,
+		// 				        });
+		// 				    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+		// 				      }
+		// 				    )
+		// 				    .catch();
+
+		// 	         }
+		// 		        this.props.getTotalTabCount();
+		// 		      }
+		// 		    )
+		// 		    .catch();
+		// 		}}
+		// 					else {
+		// 			              swal("Your Property is safe!");
+		// 			            }
+		// 					 });
+// ==========================================================================
+
+		for (var i = this.state.userData.length - 1; i >= 0; i--) {
+				var formValues ={
+				property_id 	  : this.state.userData[i],
+				status 			  : "Listed",
+				user_id			  : "",
+				remark 			  : "",
+	            listing           :true,
+
+			}
+			console.log("next props===0",nextProps1)
+			console.log("formValues",formValues);
+			axios
+		    .patch('/api/salesagent/patch/approvedlist',formValues)
+		    .then(
+		      (res)=>{
+		        console.log(res);
+		       if(res.status == 200)
+	        {
+	        swal("Good job!", " Property Listed Successfully!", "success")
+	   		window.location.reload();
+	   		axios
+				    .get('/api/properties/list/salesagent/type/'+userId+'/'+nextProps1)
+				    .then(
+				      (res)=>{
+				        console.log(res);
+				        const postsdata = res.data;
+				        this.setState({
+				          propertiesData : postsdata,
+				        });
+				    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+				      }
+				    )
+				    .catch();
+
+	         }
+		        this.props.getTotalTabCount();
+		      }
+		    )
+		    .catch();
+		}
+	
+	}
 		
 	render() {
 
 		return (
 			<div className="">
-				<h1>{this.props.status}</h1>
+				{/*<h1>{this.props.status}</h1>*/}
 				{
 					(this.props.status ==="New") || (this.props.status ==="Verified")?
 						<div>

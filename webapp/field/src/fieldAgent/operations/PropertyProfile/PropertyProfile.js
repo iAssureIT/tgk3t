@@ -77,7 +77,8 @@ class PropertyProfile extends Component{
       "callfun"           : 0,
       "location"          :{latitude: 18.5184,longitude: 73.9343},
       "showMap"           : false,
-      "interestedStatus"  : "VerifyPending"
+      "interestedStatus"  : "VerifyPending",
+      "status"            : ""
     }
   }
 
@@ -124,7 +125,8 @@ class PropertyProfile extends Component{
           floor               : postsdata.floor, 
           ownerId             : postsdata.owner_id,        
           totalFloor          : postsdata.totalFloor ,
-          propertySubType     : postsdata.propertySubType         
+          propertySubType     : postsdata.propertySubType,
+          status              : postsdata.status         
         },()=>{
 
         });
@@ -146,6 +148,7 @@ class PropertyProfile extends Component{
 
     $(".headerMenu").addClass("headerColor");
 
+    localStorage.removeItem('interested_Status');
     var interestedStatus =localStorage.getItem('interested_Status');
     console.log("interestedStatus====",interestedStatus)
 
@@ -252,12 +255,13 @@ class PropertyProfile extends Component{
                         </div>
                       </div>
                       {
-                        this.state.interestedStatus === "New" ?
-                          null
-                        :
+                        this.state.status ==="VerifyPending" ?
                         <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
                             <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Edit Property </button> 
                         </div>
+                        :
+                          null
+                        
 
                       }
                      
@@ -446,7 +450,7 @@ class PropertyProfile extends Component{
                               </div>
                               <div>
                                  <ul  className="bolder">
-                                    {this.state.pricing && this.state.pricing.totalPrice ?
+                                    {this.state.transactionType  ==="Sell" && this.state.transactionType ==="Sell"?
                                       <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Total Ask    </li> 
                                         <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
@@ -458,7 +462,7 @@ class PropertyProfile extends Component{
                                       </b>
                                     }
 
-                                    {this.state.pricing && this.state.pricing.expectedRate ?
+                                    {this.state.transactionType  ==="Sell" && this.state.transactionType ==="Sell"?
                                       <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
                                         <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>

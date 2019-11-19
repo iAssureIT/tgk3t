@@ -25,12 +25,15 @@ var updateMeetingId = "";
 			startDate      : "",
 			now            : moment().hour(0).minute(0),
       		availableFrom  : "",
-      		startDate      : "",
+      		availableEnd   : "",
+      		endDate        : "",
       		setUpMeetingId : "",
       		meetingStatus  : "",
       		updateMeetingId: "",
       		Properties_id  : "",
-      		meeting_id 	   : ""
+      		meeting_id 	   : "",
+      		tokenRemark    : "",
+      		tokenAmount    : ""
 		}
 	}
 	componentDidMount(){
@@ -49,9 +52,16 @@ var updateMeetingId = "";
 		var userId =localStorage.getItem('user_ID');
 		var role =localStorage.getItem('userRole');
 
-		// console.log("formValues",formValues);
+		if(role=="admin"){
+			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/all/'+(formValues.status);
+						
+		}else if(role=="Field Agent"){
+			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/'+ userId + '/'+(formValues.status)
+			
+		}
+		console.log("URL===",URL);
 	    axios
-	    .get('/api/fieldagent/get/type/allocatedToFieldAgent/'+ userId + '/'+formValues.status)
+	    .get(URL,formValues)
 	    .then(
 	      (res)=>{
 	        console.log(res);
@@ -77,14 +87,27 @@ var updateMeetingId = "";
         localStorage.setItem("interested_Status",formValues.status);
 
 		console.log("formValues......",formValues)
-
-		if(formValues.status==="VerifyPending"){
+		if(role=="admin"){
+			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/all/'+(formValues.status);			
+						
+		}else if(role=="Field Agent"){
+			if(formValues.status==="VerifyPending"){
 			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/'+userId+'/'+(formValues.status);			
+			}
+			else{
+				var URL = '/api/fieldagent/get/transactionDetails/'+userId+'/'+(formValues.status);			
+				console.log("interestedProperties")
+			}			
+			
 		}
-		else{
-			var URL = '/api/fieldagent/get/transactionDetails/'+userId+'/'+(formValues.status);			
-			console.log("interestedProperties")
-		}
+
+		// if(formValues.status==="VerifyPending"){
+		// 	var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/'+userId+'/'+(formValues.status);			
+		// }
+		// else{
+		// 	var URL = '/api/fieldagent/get/transactionDetails/'+userId+'/'+(formValues.status);			
+		// 	console.log("interestedProperties")
+		// }
 		console.log("url",URL)
 		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 	    axios
@@ -150,8 +173,8 @@ var updateMeetingId = "";
 
 		var formValues ={
 			interestedProperties_id  :this.state.interestedProperties_id ,
-			meetingDate :this.state.availableFrom,
-			meetingStartTime: this.state.fromTime,
+			meetingDate 			 :this.state.availableFrom,
+			meetingStartTime 		 : this.state.fromTime,
 			// meetingStatus: "scheduled",
 
 		}
@@ -177,12 +200,32 @@ var updateMeetingId = "";
 	    	    $("body").removeClass("modal-open");
 
 		   		console.log("res=========",res)
+		   		axios
+			    .get('/api/fieldagent/get/transactionDetails/'+userId+'/New')
+			    .then(
+			      (res)=>{
+			        console.log(res);
+			        const postsdata = res.data;
+			        this.setState({
+			          propertiesData : postsdata,
+			        });
+			    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+			      }
+			    )
+			    .catch();
+
 		         }
 			        // this.props.getTotalTabCount();
 			      }
 			    )
 			    .catch();
+
+			    
+				}
+		else{
+	        swal(" Please select meeting Date and Time.","", "error");
 		}
+
 		
 			
 		    	
@@ -219,6 +262,19 @@ var updateMeetingId = "";
 					$(".modal-backdrop").remove();
 	        	    $("body").removeClass("modal-open");	
 
+	        	    axios
+				    .get('/api/fieldagent/get/transactionDetails/'+userId+'/meetingSet')
+				    .then(
+				      (res)=>{
+				        console.log(res);
+				        const postsdata = res.data;
+				        this.setState({
+				          propertiesData : postsdata,
+				        });
+				    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+				      }
+				    )
+				    .catch();
 
 		         }
 		         
@@ -232,10 +288,6 @@ var updateMeetingId = "";
 		}
 		
 		    console.log("setUpMeetingId"+formValues.interestedProperties_id);
-		  
-
-
-		
 	
 	}
 
@@ -314,6 +366,17 @@ var updateMeetingId = "";
         startDate    : date
       });
     };
+    handleDateEnd = date => {
+      var newDate = new Date(date),
+      mnth = ("0" + (newDate.getMonth() + 1)).slice(-2),
+      day = ("0" + newDate.getDate()).slice(-2);
+      var availableEnd = [newDate.getFullYear(), mnth, day].join("-");
+      // console.log("availableEnd",availableEnd)
+      this.setState({
+        availableEnd: availableEnd,
+        endDate    : date
+      })
+    };
     fromTime(value){
 			// console.log('value',value)
            if(value){
@@ -337,9 +400,10 @@ var updateMeetingId = "";
 	 	event.preventDefault()
 		var interestedProperties_id = event.target.getAttribute('data-value');
 		var shownStatus = event.target.getAttribute('get-value');
+		var userId =localStorage.getItem('user_ID');
 
 		console.log("interestedProperties_id",interestedProperties_id)
-		console.log("shownStatus",shownStatus)
+		// console.log("shownStatus",shownStatus)
 		if(shownStatus==="Shortlisted"){
 			swal({
 	           title: "Are you sure ?",
@@ -366,7 +430,20 @@ var updateMeetingId = "";
 				        if(res.status == 200)
 				        {
 				        swal( " Property Shortlisted Successfully!", "success")
-				   		window.location.reload();
+				   		// window.location.reload();
+				   		axios
+						    .get('/api/fieldagent/get/transactionDetails/'+userId+'/Shown')
+						    .then(
+						      (res)=>{
+						        console.log(res);
+						        const postsdata = res.data;
+						        this.setState({
+						          propertiesData : postsdata,
+						        });
+						    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+						      }
+						    )
+						    .catch();
 				        
 				         }
 				        this.props.getTotalTabCount();
@@ -382,7 +459,7 @@ var updateMeetingId = "";
 		else{
 			swal({
 	           title: "Are you sure?",
-	           text: "Once deleted, you will not be able to recover this Property!",
+	           text: "Once discarded, you will not be able to recover this Property!",
 	           icon: "warning",
 	          buttons: [
 	            'No, cancel it!',
@@ -405,7 +482,20 @@ var updateMeetingId = "";
 				        if(res.status == 200)
 				        {
 				        swal( " Property Shortlisted Successfully!", "success")
-				   		window.location.reload();
+				   		// window.location.reload();
+				   		axios
+						    .get('/api/fieldagent/get/transactionDetails/'+userId+'/Shown')
+						    .then(
+						      (res)=>{
+						        console.log(res);
+						        const postsdata = res.data;
+						        this.setState({
+						          propertiesData : postsdata,
+						        });
+						    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+						      }
+						    )
+						    .catch();
 				        
 				         }
 				        this.props.getTotalTabCount();
@@ -421,10 +511,213 @@ var updateMeetingId = "";
 
 
 	 }
+	 handleBookNowId(event){
+	 	event.preventDefault()
+		var interestedProperties_id = event.target.getAttribute('data-value');
+		console.log("interestedProperties_id",interestedProperties_id)
+		this.setState({
+			interestedProperties_id:interestedProperties_id,
+		})
+	 }
+	 handleBookNow(event){
+	 	event.preventDefault()
+	 	var tokenRemark = this.refs.tokenRemark.value
+	 	var tokenAmount = this.refs.tokenAmount.value
+		var userId =localStorage.getItem('user_ID');
+
+	 	// console.log("tokenRemark",tokenRemark)
+	 	// console.log("tokenAmount",tokenAmount)
+	 	// this.setState({
+	 	// 	tokenRemark : tokenRemark,
+	 	// 	tokenAmount : tokenAmount
+	 	// },()=>{
+	 	// 	console.log("tokenRemark---",this.state.tokenRemark)
+	 	// console.log("tokenAmount---",this.state.tokenAmount)	
+	 	// })
+	 	
+		var formValues ={
+			interestedProperties_id  :this.state.interestedProperties_id ,
+			tokenDate 				 :this.state.availableFrom,
+			tokenRemark 			 : tokenRemark,
+			tokenAmount 			 : tokenAmount,
+			status 					 : "TokenReceived",
+
+		}
+		console.log("formValues=====",formValues)
+		if(tokenAmount !==""){
+			axios
+			    .patch('/api/fieldagent/patch/transactionUpdate',formValues)
+			    .then(
+			      (res)=>{
+			        console.log(res);
+			    if(res.status == 200)
+		        {
+			   		this.setState({
+			   			interestedProperties_id  :"",
+						tokenDate : "",
+				   	})
+
+		   		    $("#bookNow").hide();
+	       			$("#bookNow").removeClass('in');
+					$(".modal-backdrop").remove();
+	        	    $("body").removeClass("modal-open");
+	        	    axios
+					    .get('/api/fieldagent/get/transactionDetails/'+userId+'/Shortlisted')
+					    .then(
+					      (res)=>{
+					        console.log(res);
+					        const postsdata = res.data;
+					        this.setState({
+					          propertiesData : postsdata,
+					        });
+					    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+					      }
+					    )
+					    .catch();	
+
+		         }
+		         
+			        // this.props.getTotalTabCount();
+			      }
+			    )
+			    .catch();
+		}else{
+	        swal(" Please Fill Token Amount","", "error");
+
+		}
+	 }
+	 handleContractId(event){
+	 	event.preventDefault()
+		var interestedProperties_id = event.target.getAttribute('data-value');
+		console.log("interestedProperties_id",interestedProperties_id)
+		this.setState({
+			interestedProperties_id:interestedProperties_id,
+		})
+
+	 }
+	 handleContract(event){
+	 	event.preventDefault()
+	 	var contractRemark = this.refs.contractRemark.value
+		var userId =localStorage.getItem('user_ID');
+	 	var formValues ={
+			interestedProperties_id  : this.state.interestedProperties_id ,
+			contractDate 			 : this.state.availableFrom,
+			contractEndDate 		 : this.state.availableEnd,
+			contractTime			 : this.state.fromTime,
+			contractRemark 			 : contractRemark,
+			status 					 : "ContractDue",
+
+		}
+		console.log("formValues=====",formValues)
+		if( this.state.availableFrom!==""){
+			axios
+			    .patch('/api/fieldagent/patch/transactionUpdate',formValues)
+			    .then(
+			      (res)=>{
+			        console.log(res);
+			    if(res.status == 200)
+		        {
+			   		this.setState({
+			   			interestedProperties_id  :"",
+						contractDate : "",
+						contractTime : "",
+				   	})
+
+
+		   		    $("#contract").hide();
+	       			$("#contract").removeClass('in');
+					$(".modal-backdrop").remove();
+	        	    $("body").removeClass("modal-open");
+
+	        	    axios
+					    .get('/api/fieldagent/get/transactionDetails/'+userId+'/TokenReceived')
+					    .then(
+					      (res)=>{
+					        console.log(res);
+					        const postsdata = res.data;
+					        this.setState({
+					          propertiesData : postsdata,
+					        });
+					    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+					      }
+					    )
+					    .catch();	
+
+
+		         }
+		         
+			        // this.props.getTotalTabCount();
+			      }
+			    )
+			    .catch();
+		}else{
+	        swal(" Please Fill Token Amount","", "error");
+
+		}
+	 }
+	 handleContractCompleted(event){
+	 	event.preventDefault()
+	 	var interestedProperties_id = event.target.getAttribute('data-value');
+		var userId =localStorage.getItem('user_ID');
+		console.log("interestedProperties_id",interestedProperties_id)
+		this.setState({
+			interestedProperties_id:interestedProperties_id,
+		})
+		swal({
+	           title: "Are you sure ?",
+	           text: "Property contract is Completed ?",
+	           icon: "warning",
+	          buttons: [
+	            'No, cancel it!',
+	            'Yes, I am sure!'
+	        ],
+	        })
+		.then((option)=> {
+	          if(option){
+				var formValues ={
+				interestedProperties_id 	  : interestedProperties_id,
+				status 			 			  :"ContractCompleted" ,
+
+				}
+				console.log("formValues",formValues);
+				axios
+				    .patch('/api/fieldagent/patch/transactionUpdate',formValues)
+				    .then(
+				      (res)=>{
+				        console.log(res);
+				        if(res.status == 200)
+				        {
+				        swal( " Property Contract Completed Successfully!", "success")
+				   		// window.location.reload();
+				   		axios
+					    .get('/api/fieldagent/get/transactionDetails/'+userId+'/ContractDue')
+					    .then(
+					      (res)=>{
+					        console.log(res);
+					        const postsdata = res.data;
+					        this.setState({
+					          propertiesData : postsdata,
+					        });
+					    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+					      }
+					    )
+					    .catch();
+				        
+				         }
+				        this.props.getTotalTabCount();
+				      }
+				    )
+				    .catch();
+					}
+					else {
+			              swal("Your Property is safe!");
+			            }
+					 });
+	 }
 	render() {
 		return (
 			<div className="">
-				<h1>{this.props.status}</h1>
+				{/*<h1>{this.props.status}</h1>*/}
 				
 				{
 					this.state.propertiesData.length>0?
@@ -432,17 +725,19 @@ var updateMeetingId = "";
 							return(
 								<div key={index} id={property.property._id} className="propertyBox" >
 										{
-											(this.props.status ==="New") || (this.props.status ==="Meetings") ?
-												<div className="col-lg-1 check1 inline row" >
-												    <input type="checkbox" id={property.property._id}  className="check individual  "  value={property.property._id} onClick={this.handleData.bind(this)}/>
-												    <label htmlFor={property.property._id} className="check-box"></label> 
-												</div>
-											:
-											null
+											// (this.props.status ==="New") || (this.props.status ==="Meetings") ?
+											// 	<div className="col-lg-1 check1 inline row" >
+											// 	    <input type="checkbox" id={property.property._id}  className="check individual  "  value={property.property._id} onClick={this.handleData.bind(this)}/>
+											// 	    <label htmlFor={property.property._id} className="check-box"></label> 
+											// 	</div>
+											// :
+											// null
 										}
 									<div className="col-lg-11 pBoxSize" >
+										
 										<div className="col-lg-4">
-											<span className="mt-8">
+											<label>Property Info</label>
+											<span className="col-lg-12 row">
 												Property ID: 
 										        <Link to="/propertyDetails"> {property.property.propertyCode}</Link><br/>
 												{property.property.propertyType ? property.property.propertyType : "Residential Property"}<br/>
@@ -458,33 +753,48 @@ var updateMeetingId = "";
 											</span>
 											{/*<span>{property.interestedProperties_id}</span>*/}
 										</div>
-										<div className="col-lg-5">
-											<span className="mt-8">
-												{property.property.ownerDetails.userName? property.property.ownerDetails.userName: "Rushikesh " }<br/>
-												{property.property.ownerDetails.emailId ? property.property.ownerDetails.emailId : "rushikesh.salunkhe101@gmail.com"}<br/>
-												{property.property.ownerDetails.mobileNumber ? property.property.ownerDetails.mobileNumber : "*** **** *** "}
-												
-											</span>
-										</div>
+										{
+											this.props.status === "VerifyPending" ?
+												<div className="col-lg-4">
+													<label>Owner Info</label>
+													<span className="">
+														{property.property.ownerDetails.userName? property.property.ownerDetails.userName: "Rushikesh " }<br/>
+														{property.property.ownerDetails.emailId ? property.property.ownerDetails.emailId : "rushikesh.salunkhe101@gmail.com"}<br/>
+														{property.property.ownerDetails.mobileNumber ? property.property.ownerDetails.mobileNumber : "*** **** *** "}
+														
+													</span>
+												</div>
+											:
+											<div className="col-lg-4">
+												<label>Buyer Info</label>
+												<span className="">
+													{property.buyer_Name? property.buyer_Name: "Name **** " }<br/>
+													{property.buyer_email ? property.buyer_email : "****@gmail.com"}<br/>
+													{property.buyer_Mobile ? property.buyer_Mobile : "*** **** *** "}
+													
+												</span>
+											</div>	
+										}
+										
 										<div className="col-lg-3 pull-right fSize13">
 											{
-												this.props.status ==="WIP" ?
+												this.props.status ==="VerifyPending" ?
 												<div>
 													{moment(property.property.createdAt).format('MMMM Do YYYY')} &nbsp;
 													{moment(property.property.createdAt).format('LT')} &nbsp;
 												</div>
 												:
 												<div>
-													{moment(property.property.propertyCreatedAt).format('MMMM Do YYYY')} &nbsp;
-													{moment(property.property.propertyCreatedAt).format('LT')} &nbsp;
+													{moment(property.createdAt).format('MMMM Do YYYY')} &nbsp;
+													{moment(property.createdAt).format('LT')} &nbsp;
 												</div>
 											}
 											<div id="myProgress">
-												<Progressbar data="80" />
+												<Progressbar data="70" />
 											</div>
 										</div>
 										<img src="/images/cancel.png" className="cancelImg"  id={property.property._id} onClick={this.handleDelete.bind(this)}/>
-										<div className="col-lg-6">
+										<div className="col-lg-10">
 										{
 											this.props.status === "New" ?
 												<div className="btn btn-primary propBtn1"  id={property.property._id} data-toggle="modal" data-target={"#modal"} data-value={property.interestedProperties_id} onClick={this.handleMeetingId.bind(this)} >Set Meeting</div>
@@ -495,8 +805,32 @@ var updateMeetingId = "";
 											this.props.status === "Shown" ?
 												<div className="col-lg-5 noPad">
 													<div className=""  id={property.property._id}    >
-														<img src="/images/shortlist.png" className="shortIcon" title="Shortlist the property" data-value={property.interestedProperties_id}  get-Value="Shortlisted" onClick={this.handleShown.bind(this)}/>
-														<img src="/images/trash.png" className="shortIcon" title="Discard the property " data-value={property.interestedProperties_id} get-Value="Discarded" onClick={this.handleShown.bind(this)}/>
+														<img src="/images/shortlist.png" className="shortIcon" title="Shortlist the property " data-value={property.interestedProperties_id}  get-Value="Shortlisted" onClick={this.handleShown.bind(this)}/>
+														<img src="/images/trash.png" className="shortIcon" title="Discard the property ?" data-value={property.interestedProperties_id} get-Value="Discarded" onClick={this.handleShown.bind(this)}/>
+													</div>
+												</div>
+											:
+											this.props.status === "Shortlisted" ?
+												<div className="col-lg-5 noPad">
+													<div className=""  id={property.property._id}    >
+														<img src="/images/Book-Now.png" className="bookNow" title="Book the property " data-value={property.interestedProperties_id} id={property.property._id} onClick={this.handleBookNowId.bind(this)} data-toggle="modal" data-target="#bookNow"/>
+														<img src="/images/trash.png" className="trash1" title="Discard the property ?" data-value={property.interestedProperties_id} get-Value="Discarded" onClick={this.handleShown.bind(this)}/>
+													</div>
+												</div>
+											:
+											this.props.status === "TokenReceived" ?
+												<div className="col-lg-5 noPad">
+													<div className=""  id={property.property._id}    >
+														<img src="/images/contract.png" className="tokenRec" title="Contract the property " data-value={property.interestedProperties_id} id={property.property._id} onClick={this.handleContractId.bind(this)} data-toggle="modal" data-target="#contract"/>
+														<img src="/images/trash.png" className="trash1" title="Discard the property ?" data-value={property.interestedProperties_id} get-Value="Discarded" onClick={this.handleShown.bind(this)}/>
+													</div>
+												</div>
+											:
+											this.props.status === "ContractDue" ?
+												<div className="col-lg-5 noPad">
+													<div className=""  id={property.property._id}    >
+														<img src="/images/contractCom.png" className="contract" title=" Complete the Contract  " data-value={property.interestedProperties_id} id={property.property._id} onClick={this.handleContractCompleted.bind(this)} />
+														<img src="/images/trash.png" className="trash1" title="Discard the property ?" data-value={property.interestedProperties_id} get-Value="Discarded" onClick={this.handleShown.bind(this)}/>
 													</div>
 												</div>
 											:
@@ -594,7 +928,7 @@ var updateMeetingId = "";
 				      <div className="modal-content">
 				        <div className="modal-header">
 				          <button type="button" className="close" data-dismiss="modal">&times;</button>
-				          <h4 className="modal-title"> Update Meeting {this.state.updateMeetingId} </h4>
+				          <h4 className="modal-title"> Update Meeting </h4>
 				        </div>
 				        <div className="">
 					       <div className="col-lg-12">
@@ -633,6 +967,140 @@ var updateMeetingId = "";
 				        <div className="modal-footer">
 				          <button type="button" className="btn btn-primary mt10" data-dismiss="modal">Close</button>
 				          <button type="button" className="btn btn-primary mt10" onClick={this.handleUpdateMeeting.bind(this)}>Submit</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				{/*modal 2 end==============*/}
+			{/*modal 3=============*/}
+				 <div className="modal fade" id="bookNow" role="dialog">
+				    <div className="modal-dialog">
+				      <div className="modal-content">
+				        <div className="modal-header">
+				          <button type="button" className="close" data-dismiss="modal">&times;</button>
+				          <h4 className="modal-title"> Book Property </h4>
+				        </div>
+				        <div className="">
+					       <div className="col-lg-12">
+					       		<div className="col-lg-6 mb10 mt10  ">
+										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 noPad">
+											 <b>Token Amount </b>
+										</div>
+								    	<div className="col-lg-12 noPad">
+											    <div className="input-group inputBox-main " id="">
+											      	<div className="input-group-addon inputIcon">
+									                <i className="fa fa-building iconClr"></i>
+								                    </div>
+											    	<input type="number" className="form-control" ref="tokenAmount"  placeholder=" " />
+											   
+											  	</div>
+										</div>
+								</div>
+								<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb10 mt10">
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 noPad">
+										 <b>Token Date </b>
+									</div>
+				                    <DatePicker
+				                      selected={this.state.startDate}
+				                      onChange={this.handleDate}
+				                      dateFormat="yyyy-MM-dd"
+				                      className="form-control col-lg-12 "
+				                      minDate={(new Date())}
+				                      name="availableFrom"
+				                      ref="availableFrom"
+				                      // value={this.state.availableFrom}
+				                      max="2100-12-31"
+				                      onKeyDown={e=>e.preventDefault()}
+
+				                    />
+					            </div>
+					            <div className="form-group col-lg-12">
+							      <label htmlFor="comment">Token Remark:</label>
+							      <textarea className="form-control" rows="5" id="comment" ref="tokenRemark"></textarea>
+							    </div>
+					       </div> 
+				        </div>
+				        <div className="modal-footer">
+				          <button type="button" className="btn btn-primary mt10" data-dismiss="modal">Close</button>
+				          <button type="button" className="btn btn-primary mt10" onClick={this.handleBookNow.bind(this)}>Submit</button>
+				        </div>
+				      </div>
+				    </div>
+				  </div>
+				{/*modal 3 end==============*/}
+			{/*modal 4=============*/}
+				 <div className="modal fade" id="contract" role="dialog">
+				    <div className="modal-dialog">
+				      <div className="modal-content">
+				        <div className="modal-header">
+				          <button type="button" className="close" data-dismiss="modal">&times;</button>
+				          <h4 className="modal-title"> Contract the Property </h4>
+				        </div>
+				        <div className="">
+					       <div className="col-lg-12">
+								<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb10 mt10">
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 noPad">
+										 <b>Contract Date </b>
+									</div>
+				                    <DatePicker
+				                      selected={this.state.startDate}
+				                      onChange={this.handleDate}
+				                      dateFormat="yyyy-MM-dd"
+				                      className="form-control col-lg-12 "
+				                      minDate={(new Date())}
+				                      name="availableFrom"
+				                      ref="availableFrom"
+				                      // value={this.state.availableFrom}
+				                      max="2100-12-31"
+				                      onKeyDown={e=>e.preventDefault()}
+
+				                    />
+					            </div>
+					            <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb10 mt10">
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 noPad">
+										 <b>Contract End Date </b>
+									</div>
+				                    <DatePicker
+				                      selected={this.state.endDate}
+				                      onChange={this.handleDateEnd}
+				                      dateFormat="yyyy-MM-dd"
+				                      className="form-control col-lg-12 "
+				                      minDate={(new Date())}
+				                      name="availableEnd"
+				                      ref="availableEnd"
+				                      // value={this.state.availableFrom}
+				                      max="2100-12-31"
+				                      onKeyDown={e=>e.preventDefault()}
+
+				                    />
+					            </div>
+					            <div className="col-lg-6 row">
+						            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 ">
+										 <b>Contract Time </b>
+									</div>
+									<div className="col-lg-7 noPad">
+							            <TimePicker
+										    showSecond={false}
+										    className="col-lg-5 "
+										    value={this.state.now}
+										    onChange={this.fromTime.bind(this)}
+										    format={format}
+										    use12Hours
+										    inputReadOnly
+										    
+										  />
+									</div>
+								</div>
+
+					            <div className="form-group col-lg-12">
+							      <label htmlFor="comment">Contract Remark:</label>
+							      <textarea className="form-control" rows="5" id="comment" ref="contractRemark"></textarea>
+							    </div>
+					       </div> 
+				        </div>
+				        <div className="modal-footer">
+				          <button type="button" className="btn btn-primary mt10" data-dismiss="modal">Close</button>
+				          <button type="button" className="btn btn-primary mt10" onClick={this.handleContract.bind(this)}>Submit</button>
 				        </div>
 				      </div>
 				    </div>

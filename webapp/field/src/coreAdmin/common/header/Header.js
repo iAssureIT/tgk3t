@@ -24,18 +24,21 @@ export default class Header extends Component{
      const token = localStorage.getItem("token");
      // console.log("Dashboard Token = ",token);
 
-     $(".dropdown").hover(            
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
-            $(this).toggleClass('open');
-            $('b', this).toggleClass("caret caret-up");                
-        },
-        function() {
-            $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
-            $(this).toggleClass('open');
-            $('b', this).toggleClass("caret caret-up");                
-        });
-     
+     // $(".dropdown").hover(            
+     //    function() {
+     //        $('.dropdown-menu', this).stop( true, true ).fadeIn("fast");
+     //        $(this).toggleClass('open');
+     //        $('b', this).toggleClass("caret caret-up");                
+     //    },
+     //    function() {
+     //        $('.dropdown-menu', this).stop( true, true ).fadeOut("fast");
+     //        $(this).toggleClass('open');
+     //        $('b', this).toggleClass("caret caret-up");                
+     //    });
+      $("#super").click(function(){
+      $("#admin").toggle();
+      });
+    
    
   }
     
@@ -125,11 +128,11 @@ logout(){
 
                      
                      <span className=" topmargin ">
-                        <button className="dropbtn arrowbtn">
+                        <button className="dropbtn arrowbtn" id="super">
                          <span className="hidden-xs angleright"><i className="fa fa-angle-down" aria-hidden="true"></i></span>
                         </button>
                         { this.state.showProfile == true ? 
-                        <div className="dropdown-menu wid260 marTop"  >
+                        <div className="dropdown-menu wid260 marTop" id="admin" >
                             <ul className="paddleft nomargin">
                               <li className="user-header">
                                 <ul className="menu paddleft">
@@ -137,7 +140,7 @@ logout(){
                                     <a className="noneAtag">
                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 padd0 " > 
                                           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-left padd0 marTop ">
-                                            <img src="images/person.png" height="50px" className=" marLeft "/>
+                                            <img src="/images/person.png" height="50px" className=" marLeft "/>
                                           </div>
                                           <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 pull-right padd0 marTop">
                                            <h5 className=" nomargin ">
