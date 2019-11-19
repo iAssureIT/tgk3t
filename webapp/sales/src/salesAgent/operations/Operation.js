@@ -57,7 +57,7 @@ export default class Operation extends Component {
 	      (res)=>{
 	        // console.log("aaaaa.....",res);
 	        const postCount = res.data;
-	        
+	        console.log("postCount===",postCount)
 	        this.setState({
 	          propDataCount : postCount,
 	        },()=>{

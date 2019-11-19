@@ -1,4 +1,5 @@
 import React, { Component }   from 'react';
+import axios                  from 'axios';
 import $ 					  from "jquery";
 import Query                  from './query/Query.js';
 import  Properties 			  from './Properties/Properties.js';
@@ -12,18 +13,47 @@ export default class Operation extends Component {
 		// console.log("1 = ", props);
 		this.state = {
 			propertyStatus :"VerifyPending",
-			userRole 	   : ""
+			userRole 	   : "",
+			propDataCount  : []
 			// propertyStatus :"assignedTo",
 		}
 
 		this.propertyFieldStatus=this.propertyFieldStatus.bind(this);
+		this.getTotalCount = this.getTotalCount.bind(this);
+
 	}
 	componentDidMount() {
+		this.getTotalCount();
+
 		var userRole = localStorage.getItem('userRole')
 		this.setState({
 			userRole : userRole
 		})
-		console.log("userRole===",this.state.userRole)
+		// console.log("userRole===",this.state.userRole)
+		// console.log("propDataCount===",this.state.propDataCount)
+
+		
+	}
+	getTotalCount(){
+		 var userId = localStorage.getItem("user_ID");
+		 var userRole = localStorage.getItem("userRole");
+			
+			axios
+		    .get('/api/fieldagent/get/interestedproperties_totalcount/'+userId)
+		    .then(
+		      (res)=>{
+		        const postCount = res.data;
+		        
+		        this.setState({
+		          propDataCount : postCount,
+		        },()=>{
+		        	
+		        console.log("aaaaa.....",this.state.propDataCount);
+		        });
+		      }
+		    )
+		    .catch();
+
 	}
 
 	propertyStatus(event){
@@ -55,37 +85,37 @@ export default class Operation extends Component {
 						      {/*<a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="assignedTo" onClick={this.propertyFieldStatus.bind(this)}>New*/}
 						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="VerifyPending" onClick={this.propertyFieldStatus.bind(this)}>New SA
 						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.newSACount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin ">
 						      {/*<a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="assignedTo" onClick={this.propertyFieldStatus.bind(this)}>New*/}
 						      <a className="nav-link active textB " data-toggle="pill" href="#propertyStatus" property-status="New" onClick={this.propertyFieldStatus.bind(this)}>New Client
 						      </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.newClientCount}</span>
 						    </li>
 						     <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="meetingSet" onClick={this.propertyFieldStatus.bind(this)}>Meetings </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.meetingCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Shown" onClick={this.propertyFieldStatus.bind(this)}>Shown </a>
-						       <span className="badge badge-secondary label-warning badgeP">6</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.shownCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Shortlisted" onClick={this.propertyFieldStatus.bind(this)}>Shortlisted </a>
-						       <span className="badge badge-secondary label-warning badgeP">3</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.shortlistedCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="TokenReceived" onClick={this.propertyFieldStatus.bind(this)}>Token Recd </a>
-						       <span className="badge badge-secondary label-warning badgeP">9</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.tokenReceivedCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="ContractDue" onClick={this.propertyFieldStatus.bind(this)}>Contract Due </a>
-						       <span className="badge badge-secondary label-warning badgeP">9</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.contractDueCount}</span>
 						    </li>
 						    <li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#propertyStatus" property-status="Discarded" onClick={this.propertyFieldStatus.bind(this)}>Discarded </a>
-						       <span className="badge badge-secondary label-warning badgeP">9</span>
+						       <span className="badge badge-secondary label-warning badgeP">{this.state.propDataCount.discardedCount}</span>
 						    </li>
 						    {/*<li className="nav-item col-lg-2 col-md-2 navPillsMargin">
 						      <a className="nav-link textB" data-toggle="pill" href="#Query">Query </a>

@@ -88,7 +88,13 @@ var updateMeetingId = "";
 
 		console.log("formValues......",formValues)
 		if(role=="admin"){
-			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/all/'+(formValues.status);			
+			if(formValues.status==="VerifyPending"){
+			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/all/'+(formValues.status);
+			}
+			else{
+				var URL = '/api/fieldagent/get/transactionDetails/all/'+(formValues.status);			
+				console.log("interestedProperties")
+			}				
 						
 		}else if(role=="Field Agent"){
 			if(formValues.status==="VerifyPending"){
@@ -172,9 +178,10 @@ var updateMeetingId = "";
 		var Properties_id = event.target.getAttribute('data-target');
 
 		var formValues ={
-			interestedProperties_id  :this.state.interestedProperties_id ,
-			meetingDate 			 :this.state.availableFrom,
+			interestedProperties_id  : this.state.interestedProperties_id ,
+			meetingDate 			 : this.state.availableFrom,
 			meetingStartTime 		 : this.state.fromTime,
+			meetingRemark 		 	 : this.refs.meetingRemark.value,
 			// meetingStatus: "scheduled",
 
 		}
@@ -757,7 +764,7 @@ var updateMeetingId = "";
 											this.props.status === "VerifyPending" ?
 												<div className="col-lg-4">
 													<label>Owner Info</label>
-													<span className="">
+													<span className="col-lg-12 row">
 														{property.property.ownerDetails.userName? property.property.ownerDetails.userName: "Rushikesh " }<br/>
 														{property.property.ownerDetails.emailId ? property.property.ownerDetails.emailId : "rushikesh.salunkhe101@gmail.com"}<br/>
 														{property.property.ownerDetails.mobileNumber ? property.property.ownerDetails.mobileNumber : "*** **** *** "}
@@ -767,7 +774,7 @@ var updateMeetingId = "";
 											:
 											<div className="col-lg-4">
 												<label>Buyer Info</label>
-												<span className="">
+												<span className="col-lg-12 row">
 													{property.buyer_Name? property.buyer_Name: "Name **** " }<br/>
 													{property.buyer_email ? property.buyer_email : "****@gmail.com"}<br/>
 													{property.buyer_Mobile ? property.buyer_Mobile : "*** **** *** "}
@@ -862,14 +869,14 @@ var updateMeetingId = "";
 					       <div className="col-lg-12">
 					       		<div className="col-lg-12 mb10 mt10  ">
 										<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 noPad">
-											 <b>Name of Meeting </b>
+											 <b>Meeting Remark </b>
 										</div>
 								    	<div className="col-lg-12 noPad">
 											    <div className="input-group inputBox-main " id="">
 											      	<div className="input-group-addon inputIcon">
 									                <i className="fa fa-building iconClr"></i>
 								                    </div>
-											    <input type="text" className="form-control" ref="meetingName"  placeholder=" " />
+											    <input type="text" className="form-control" ref="meetingRemark"  placeholder=" " />
 											   
 											  	</div>
 											  	
