@@ -172,3 +172,14 @@ input[type=checkbox]:checked + .check-box::before,
   border:1px solid #ccc0c0 !important;
   border-radius: none !important;
 }
+.emptyProp{
+  border: 1px solid #ccc;
+  height: 150px;
+  text-align: center;
+  margin-top: 175px;
+}
+.emptyText{
+  font-size: 35px;
+  margin-top: 53px;
+  color: #afadad;
+}

@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import $ 					from "jquery";
-import {connect} 			from 'react-redux';
-import { Link } 			from 'react-router-dom';
+import React, { Component } 			from 'react';
+import $ 								from "jquery";
+import {connect} 						from 'react-redux';
+import { Link } 						from 'react-router-dom';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
-import LoginMobNum              from '../../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
-import LoginOtp                 from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
-import WebSignupForm            from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
+import LoginMobNum              		from '../../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+import LoginOtp                 		from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
+import WebSignupForm            		from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
 
 import'./Header.css';
 

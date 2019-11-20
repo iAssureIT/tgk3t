@@ -1,8 +1,6 @@
 import React , { Component }	from 'react';
-
 import Header 					from "../../blocks/common/Header/Header.js";
 import MainFooter  				from '../../blocks/common/MainFooter/MainFooter.js';
-
 import BannerwithModal			from "../../blocks/Banner/BannerwithModal.js";
 import PopularPlace  			from '../../blocks/Profile/PopularPlace.js';
 import InfoSale  			    from '../../blocks/HomePageDescription/InfoSale/InfoSale.js';

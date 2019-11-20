@@ -723,7 +723,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			Cell: row => 
           (
           <div className="actionDiv col-lg-offset-3">
-              <div className="col-lg-6" id={row.index} onClick={() => this.deleteData(row.index)}>
+              <div className="col-lg-6" title="Delete" id={row.index} onClick={() => this.deleteData(row.index)}>
             <i className="fa fa-trash"> </i>
               </div>
              
@@ -901,7 +901,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                                   <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12">Property Image {index+1}</h5>
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                  <div className="" key={index}>
+                                  <div className=" imageContaner"  key={index}>
                                     <label id={index} className="pull-right custFaTimes" title="Delete Image" data-id={data.imgPath} onClick={this.deleteimageWS.bind(this)}>X</label>
                                     <img className="img-responsive imgHeight" src={data.imgPath}/>
                                   </div>

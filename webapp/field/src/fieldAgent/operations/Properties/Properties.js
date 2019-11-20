@@ -852,8 +852,8 @@ var updateMeetingId = "";
 
 					:
 					
-					<div>
-						<h5>Under construction</h5>
+					<div className="emptyProp">
+						<h5 className="emptyText">No Property Found</h5>
 					</div>
 					
 				}

@@ -1,6 +1,6 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
-import {withRouter}    from 'react-router-dom';
+import {withRouter}    			from 'react-router-dom';
 import swal                     from 'sweetalert';
 import { connect } 				from 'react-redux';
 
@@ -68,6 +68,8 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 						    	"userMobile"	: this.refs.mobile.value,
 						    }
 						}
+						localStorage.setItem('userName',formValues.fullName)
+
 						console.log("sendData",sendDataToUser);
 						var sendDataToAdmin = {
 						    "templateName"	: "Admin - New Registration",
@@ -101,10 +103,10 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				                        console.log("error = ",error);
 				                        if(error.message === "Request failed with status code 401")
 				                        {
-				                             swal("Your session is expired! Please login again.","", "error");
-											localStorage.removeItem("uid");
-											localStorage.removeItem("token");
-				                             this.props.history.push("/");
+				       //                       swal("Your session is expired! Please login again.","", "error");
+											// localStorage.removeItem("uid");
+											// localStorage.removeItem("token");
+				       //                       this.props.history.push("/");
 				                        }
 				            });					
 						})
@@ -112,10 +114,10 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				                        console.log("error = ",error);
 				                        if(error.message === "Request failed with status code 401")
 				                        {
-				                             swal("Your session is expired! Please login again.","", "error");
-											localStorage.removeItem("uid");
-											localStorage.removeItem("token");
-				                             this.props.history.push("/");
+				       //                       swal("Your session is expired! Please login again.","", "error");
+											// localStorage.removeItem("uid");
+											// localStorage.removeItem("token");
+				       //                       this.props.history.push("/");
 				                        }
 				                    });
 						

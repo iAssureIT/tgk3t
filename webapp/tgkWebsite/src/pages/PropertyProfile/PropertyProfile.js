@@ -160,6 +160,10 @@ class PropertyProfile extends Component{
 
     ? Math.abs(Number(totalPrice)) / 1.0e+5 + " Lac"
 
+    : Math.abs(Number(totalPrice))
+
+    ? Math.abs(Number(totalPrice)) / 1.0e+3 + " K"
+
     : Math.abs(Number(totalPrice));
   }
 
@@ -451,19 +455,19 @@ class PropertyProfile extends Component{
                                     : 
                                     <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Deposit Amount    </li>
-                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.depositAmount)}</b></span>
                                       </b>
                                     }
 
                                     {this.state.transactionType  ==="Sell" && this.state.transactionType  ==="Sell" ?
                                       <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
-                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.expectedRate)}</b> /{this.state.pricing.measurementUnit}</span>
                                       </b>
                                     : 
                                     <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Monthly Rent    </li> 
-                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.monthlyRent)}</b></span>
                                       </b>
                                     }
                                     {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?
@@ -491,7 +495,7 @@ class PropertyProfile extends Component{
                                     </span>
                                     </div>
                                     }
-                                    <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                    <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.maintenanceCharges)} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                     {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
                                   </ul>
                                 </div>
@@ -511,19 +515,19 @@ class PropertyProfile extends Component{
                                     : 
                                     <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Deposit Amount    </li>
-                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.depositAmount)}</b></span>
                                       </b>
                                     }
 
                                     {this.state.transactionType  ==="Sell" && this.state.transactionType  ==="Sell" ?
                                       <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
-                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.expectedRate)}</b> /{this.state.pricing.measurementUnit}</span>
                                       </b>
                                     : 
                                     <b>
                                         <li className="col-lg-5 col-xs-6 noPad">Monthly Rent    </li> 
-                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.monthlyRent)}</b></span>
                                       </b>
                                     }
                                     {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?

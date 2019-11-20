@@ -139,3 +139,20 @@ input[type=checkbox]:checked + .check-box::before,
  z-index: 2;*/
 margin-bottom: 87px;
 }
+.emptyProp{
+  border: 1px solid #ccc;
+  height: 150px;
+  text-align: center;
+  margin-top: 175px;
+}
+.emptyProp1{
+  border: 1px solid #ccc;
+  height: 150px;
+  text-align: center;
+  margin-top: 75px;
+}
+.emptyText{
+  font-size: 35px;
+  margin-top: 53px;
+  color: #afadad;
+}

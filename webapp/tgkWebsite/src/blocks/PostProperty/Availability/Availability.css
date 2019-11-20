@@ -329,8 +329,8 @@ width: 100%;
 
 .custFaTimes1 {
     position: absolute;
-    margin-left: 86%;
-    margin-top: 23%;
+    margin-left: 89%;
+    margin-top: 11%;
     z-index: 1;
     font-size: 18px;
     cursor: pointer;
@@ -390,4 +390,13 @@ width: 100%;
 }
 .dotColor{
   color: #fff;
+}
+
+.imageContaner{
+      height: 180px;
+    width: 180px;
+}
+.imageContaner img{
+      height: 100%;
+    width: 100%;
 }

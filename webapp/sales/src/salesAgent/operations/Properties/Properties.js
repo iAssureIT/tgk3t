@@ -177,8 +177,6 @@ var nextProps1;
 	}
 	handleFieldAgent(event){
 		event.preventDefault()
-
-
 		var userId =localStorage.getItem('user_ID');
 		
 		for (var i = this.state.userData.length - 1; i >= 0; i--) {
@@ -196,8 +194,12 @@ var nextProps1;
 			      (res)=>{
 			        console.log(res);
 			       if(res.status == 200)
-		        {
-		        swal("Good job!", " Property Listed Successfully!", "success")
+		       		 {
+		       		 		this.setState({
+					          userData       : ""
+					        });
+		        		swal("Good job!", " Property Listed Successfully!", "success")
+
 		   		// window.location.reload();
 		   		axios
 			    .get('/api/properties/list/salesagent/type/'+userId+'/New')
@@ -207,6 +209,7 @@ var nextProps1;
 			        const postsdata = res.data;
 			        this.setState({
 			          propertiesData : postsdata,
+			          userData       : ""
 			        });
 			    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
 			      }
@@ -338,69 +341,84 @@ var nextProps1;
 					null	
 				}
 				{
-					this.state.propertiesData.map((property,index)=>{
-						return(
+					this.state.propertiesData.length>0 ?
+						this.state.propertiesData.map((property,index)=>{
+							return(
 
-							<div className="propertyBox" >
-								{
-									(this.props.status ==="New") || (this.props.status ==="Verified") ?
-										<div className="col-lg-1 check1 inline row" >
-										    <input type="checkbox" id={property._id}  className="check individual  "  value={property._id} onClick={this.handleData.bind(this)}/>
-										    <label htmlFor={property._id} className="check-box"></label> 
-										</div>
-									:
-									null
-								}
-								<div>
-									<div className="col-lg-11 pBoxSize" onClick={this.profileView.bind(this)}  key={index} id={property._id}>
-										<div className="col-lg-4">
-											<span className="">
-												Property ID: 
-										        <Link to="/propertyDetails" > {property.propertyCode}</Link><br/>
-												{property.propertyType ? property.propertyType : "Residential Property"}<br/>
-												<div className="col-lg-10 noPad">{property.propertyDetails && property.propertyDetails.length >0 ?
-													property.propertyDetails.map((data,index)=>{
-													return(
-															<span key="index">{data.bedrooms}&nbsp; BHK </span>
-														);
-													})
-												:
-												"2 BHK"
-												}</div>
-											</span>
-											<span>{property.transactionType}</span>
-										</div>
-										<div className="col-lg-5">
-											<span className="">
-												{property.ownerDetails.userName? property.ownerDetails.userName: "Rushikesh " }<br/>
-												{property.ownerDetails.emailId ? property.ownerDetails.emailId : "rushikesh.salunkhe101@gmail.com"}<br/>
-												{property.ownerDetails.mobileNumber ? property.ownerDetails.mobileNumber : "*** **** *** "}
-											</span>
-										</div>
-										<div className="col-lg-3 pull-right fSize13">
-											{
-												this.props.status ==="WIP" ?
-												<div>
-													{moment(property.createdAt).format('MMMM Do YYYY')} &nbsp;
-													{moment(property.createdAt).format('LT')} &nbsp;
+								<div className="propertyBox" >
+									{
+										(this.props.status ==="New") || (this.props.status ==="Verified") ?
+											<div className="col-lg-1 check1 inline row" >
+											    <input type="checkbox" id={property._id}  className="check individual  "  value={property._id} onClick={this.handleData.bind(this)}/>
+											    <label htmlFor={property._id} className="check-box"></label> 
+											</div>
+										:
+										null
+									}
+									<div>
+										<div className="col-lg-11 pBoxSize" onClick={this.profileView.bind(this)}  key={index} id={property._id}>
+											<div className="col-lg-4">
+												<span className="">
+													Property ID: 
+											        <Link to="/propertyDetails" > {property.propertyCode}</Link><br/>
+													{property.propertyType ? property.propertyType : "Residential Property"}<br/>
+													<div className="col-lg-10 noPad">{property.propertyDetails && property.propertyDetails.length >0 ?
+														property.propertyDetails.map((data,index)=>{
+														return(
+																<span key="index">{data.bedrooms}&nbsp; BHK </span>
+															);
+														})
+													:
+													"2 BHK"
+													}</div>
+												</span>
+												<span>{property.transactionType}</span>
+											</div>
+											<div className="col-lg-5">
+												<span className="">
+													{property.ownerDetails.userName? property.ownerDetails.userName: "Rushikesh " }<br/>
+													{property.ownerDetails.emailId ? property.ownerDetails.emailId : "rushikesh.salunkhe101@gmail.com"}<br/>
+													{property.ownerDetails.mobileNumber ? property.ownerDetails.mobileNumber : "*** **** *** "}
+												</span>
+											</div>
+											<div className="col-lg-3 pull-right fSize13">
+												{
+													this.props.status ==="WIP" ?
+													<div>
+														{moment(property.createdAt).format('MMMM Do YYYY')} &nbsp;
+														{moment(property.createdAt).format('LT')} &nbsp;
+													</div>
+													:
+													<div>
+														{moment(property.propertyCreatedAt).format('MMMM Do YYYY')} &nbsp;
+														{moment(property.propertyCreatedAt).format('LT')} &nbsp;
+													</div>
+												}
+												
+												<div id="myProgress">
+													<Progressbar data="80" />
 												</div>
-												:
-												<div>
-													{moment(property.propertyCreatedAt).format('MMMM Do YYYY')} &nbsp;
-													{moment(property.propertyCreatedAt).format('LT')} &nbsp;
-												</div>
-											}
-											
-											<div id="myProgress">
-												<Progressbar data="80" />
 											</div>
 										</div>
+										<img src="/images/cancel.png" className="cancelImg"  id={property._id} onClick={this.handleDelete.bind(this)}/>
 									</div>
-									<img src="/images/cancel.png" className="cancelImg"  id={property._id} onClick={this.handleDelete.bind(this)}/>
 								</div>
+							);
+						})
+
+					:
+					
+					this.props.status ==="New"||this.props.status === "Verified"?
+
+							<div className="emptyProp1">
+								<h5 className="emptyText">No Property Found</h5>
 							</div>
-						);
-					})
+						:
+						<div className="emptyProp">
+							<h5 className="emptyText">No Property Found</h5>
+						</div>
+					
+					
 				}
 			</div>
 		)

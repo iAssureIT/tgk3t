@@ -5,7 +5,6 @@ import {withRouter}    			from 'react-router-dom';
 import { connect } 				from 'react-redux';
 import axios 					from 'axios';
 
-
 import '../LoginOtp/LoginOtp.css';
 
 class LoginOtp extends Component {
@@ -20,8 +19,6 @@ class LoginOtp extends Component {
 
       console.log("here otp");
   	}
-
-
 
 	removeBackdrop(){
  		$(".modal-backdrop").remove();		
