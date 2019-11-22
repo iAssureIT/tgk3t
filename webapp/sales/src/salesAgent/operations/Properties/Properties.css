@@ -1,5 +1,5 @@
 .pBoxSize{
-	height: 90px;
+	height: 110px;
   border: 2px solid #f4f4f4;
   margin-top: 13px;
   padding-top: 11px;
@@ -62,7 +62,11 @@ input[type=checkbox] {
     opacity: 0;
 }
 .check1{
-	margin-top: 19px
+	margin-top: 19px;
+  cursor: pointer;
+}
+.pointer{
+  cursor: pointer;
 }
 .check-box {
   height: 10px;

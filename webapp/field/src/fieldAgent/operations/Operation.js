@@ -6,7 +6,6 @@ import  Properties 			  from './Properties/Properties.js';
 
 import './Operation.css';
 
-
 export default class Operation extends Component {
 	constructor(props){
 		super(props);
@@ -31,28 +30,46 @@ export default class Operation extends Component {
 		})
 		// console.log("userRole===",this.state.userRole)
 		// console.log("propDataCount===",this.state.propDataCount)
-
-		
 	}
 	getTotalCount(){
 		 var userId = localStorage.getItem("user_ID");
 		 var userRole = localStorage.getItem("userRole");
+		 console.log("userRole====",userRole)
+			if((userRole ==="Field Manager")||(userRole ==="Field Manager")){
+				axios
+				    .get('/api/fieldagent/get/interestedproperties_totalcount/all')
+				    .then(
+				      (res)=>{
+				        const postCount = res.data;
+				        
+				        this.setState({
+				          propDataCount : postCount,
+				        },()=>{
+				        	
+				        console.log("aaaaa.....",this.state.propDataCount);
+				        });
+				      }
+				    )
+				    .catch();
+			}
+			else{
+				axios
+				    .get('/api/fieldagent/get/interestedproperties_totalcount/'+userId)
+				    .then(
+				      (res)=>{
+				        const postCount = res.data;
+				        
+				        this.setState({
+				          propDataCount : postCount,
+				        },()=>{
+				        	
+				        console.log("aaaaa.....",this.state.propDataCount);
+				        });
+				      }
+				    )
+				    .catch();
+					}
 			
-			axios
-		    .get('/api/fieldagent/get/interestedproperties_totalcount/'+userId)
-		    .then(
-		      (res)=>{
-		        const postCount = res.data;
-		        
-		        this.setState({
-		          propDataCount : postCount,
-		        },()=>{
-		        	
-		        console.log("aaaaa.....",this.state.propDataCount);
-		        });
-		      }
-		    )
-		    .catch();
 
 	}
 

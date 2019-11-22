@@ -229,23 +229,28 @@ class CompanyLocation extends Component{
      
       // console.log("this.state.companyLocation",this.state.companyLocation);
       // console.log("pincode area=============",this.refs.pincodeArea.value)
-      var pincodeCover = this.refs.pincodeArea.value.split(",");
+      var pincodeCover = [];
+      pincodeCover = this.refs.pincodeArea.value.split(",");
        if(pincodeCover[1] == undefined)
        {
         pincodeCover = this.refs.pincodeArea.value;
         this.setState({
-          pincodeAreaArray : pincodeCover
+          pincodeAreaArray : [pincodeCover]
+        },()=>{
+
+        console.log("pincodeAreaArray inside if=============",this.state.pincodeAreaArray);
         }) 
         console.log("pincodeCover inside if=============",pincodeCover);
-        console.log("pincodeAreaArray inside if=============",this.state.pincodeAreaArray);
 
        }else{
         console.log("pincodeCover=============",pincodeCover);
         this.setState({
           pincodeAreaArray : pincodeCover
+        },()=>{
+
+        console.log("pincodeAreaArray else=============",this.state.pincodeAreaArray);
         })
         console.log("pincodeCover else=============",pincodeCover);
-        console.log("pincodeAreaArray else=============",this.state.pincodeAreaArray);
 
       }
         // console.log("pincodeAreaArray",this.state.pincodeAreaArray);
@@ -266,7 +271,8 @@ class CompanyLocation extends Component{
       companyCity               : this.state.companyCity,
       companyPincode            : this.state.companyPincode,
       areaName                  : this.state.companyArea,
-      pincodesCovered           : pincodeCover,
+      pincodesCovered           : [pincodeCover],
+      // pincodesCovered           : [this.state.pincodeAreaArray],
       
     
     }//close array
@@ -287,9 +293,7 @@ class CompanyLocation extends Component{
       companyCity               : this.state.companyCity,
       companyPincode            : this.state.companyPincode,
       areaName                  : this.state.companyArea,
-      pincodesCovered           : pincodeCover,
-      
-    
+      pincodesCovered           : [pincodeCover],
     }
 
     console.log("companyLocationFormValue ____________________",companyLocationFormValueupdate);

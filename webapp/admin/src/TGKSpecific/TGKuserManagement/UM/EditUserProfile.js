@@ -19,7 +19,8 @@ class EditUserProfile extends Component{
 			officeId  : "",
 	  		role 	  : "",
 	  		office    : [],
-	  		allPosts   : [],
+	  		allPosts  : [],
+	  		ofcLocName: []
 			}	  	
 			 this.handleChange = this.handleChange.bind(this);
 	  }
@@ -33,7 +34,7 @@ class EditUserProfile extends Component{
 			"lastName" 		: this.refs.lastName.value,
 			"emailId"  		: this.refs.username.value,
 			"mobileNumber"  : this.state.mobNumber,
-			"roles"         :  this.state.role,
+			"roles"         : this.state.role,
           "officeLocation"  : this.state.officeId,
 		}
 		console.log("formvalues",formvalues);
@@ -186,13 +187,38 @@ class EditUserProfile extends Component{
                              this.props.history.push("/login");
                         }
       	 });  
+	// =============================ofc location name from _id =========================================
+		 axios
+	      .get('/api/users/get/userwithlocname/'+userid)
+	      .then(
+	        (res)=>{
+	          console.log('res location------------------', res);
+	          const ofcLocName = res.data;
+	          // console.log('postsdata',postsdata);
+	          this.setState({
+	            ofcLocName : ofcLocName,
+	          })
+	      })
+	          .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             // swal("Your session is expired! Please login again.","", "error");
+                             // this.props.history.push("/login");
+                        }
+      	  }); 
 
+	// ======================================================================
 	}
   	handleOffice(event){
       event.preventDefault();
       this.setState({
         officeId : event.target.value ,
+      },()=>{
+      	
+      console.log("officeId===",this.state.officeId)
       })
+
   }
 
 	render(){      

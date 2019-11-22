@@ -52,7 +52,7 @@ var updateMeetingId = "";
 		var userId =localStorage.getItem('user_ID');
 		var role =localStorage.getItem('userRole');
 
-		if(role=="admin"){
+		if((role=="admin")||(role=="Field Manager")){
 			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/all/'+(formValues.status);
 						
 		}else if(role=="Field Agent"){
@@ -87,7 +87,7 @@ var updateMeetingId = "";
         localStorage.setItem("interested_Status",formValues.status);
 
 		console.log("formValues......",formValues)
-		if(role=="admin"){
+		if((role=="admin")||(role=="Field Manager")){
 			if(formValues.status==="VerifyPending"){
 			var URL = '/api/fieldagent/get/type/allocatedToFieldAgent/all/'+(formValues.status);
 			}
@@ -800,7 +800,7 @@ var updateMeetingId = "";
 												<Progressbar data="70" />
 											</div>
 										</div>
-										<img src="/images/cancel.png" className="cancelImg"  id={property.property._id} onClick={this.handleDelete.bind(this)}/>
+										<img src="/images/cancel.png" className="cancelImg"  id={property.property._id} title="Delete" onClick={this.handleDelete.bind(this)}/>
 										<div className="col-lg-10">
 										{
 											this.props.status === "New" ?
@@ -853,7 +853,7 @@ var updateMeetingId = "";
 					:
 					
 					<div className="emptyProp">
-						<h5 className="emptyText">No Property Found</h5>
+						<h5 className="emptyText">No Properties here</h5>
 					</div>
 					
 				}

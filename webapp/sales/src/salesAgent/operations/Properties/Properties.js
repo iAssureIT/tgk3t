@@ -98,7 +98,7 @@ var nextProps1;
 	        },()=>{
 	        	
 	        });
-	    // console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
+	    console.log("PropertyDetails receive++++++++++++++++++",postsdata); 
 
 	      }
 	    )
@@ -112,7 +112,7 @@ var nextProps1;
 		// console.log("_id",id);
 		this.props.history.push('/profile/'+ id);
 	}
-	handleData(event){
+	handleData(event){	
 		  if(event.target.checked){
 			this.state.userData.push(event.currentTarget.id);
 			// this.setState({userData:Data})
@@ -178,15 +178,16 @@ var nextProps1;
 	handleFieldAgent(event){
 		event.preventDefault()
 		var userId =localStorage.getItem('user_ID');
-		
-		for (var i = this.state.userData.length - 1; i >= 0; i--) {
+		console.log("this.state.userData",this.state.userData);
+
+		if(this.state.userData.length > 0){
+			for (var i = this.state.userData.length - 1; i >= 0; i--) {
 		var formValues ={
 			property_id 	  : this.state.userData[i],
 			remark 			  : ""
 
 		}
 		console.log("formValues",formValues);
-		console.log("this.state.userData",this.state.userData);
 
 			axios
 			    .post('/api/properties/post/allocateTofieldAgent/'+formValues.property_id)
@@ -195,9 +196,7 @@ var nextProps1;
 			        console.log(res);
 			       if(res.status == 200)
 		       		 {
-		       		 		this.setState({
-					          userData       : ""
-					        });
+		       		 		
 		        		swal("Good job!", " Property Listed Successfully!", "success")
 
 		   		// window.location.reload();
@@ -209,7 +208,6 @@ var nextProps1;
 			        const postsdata = res.data;
 			        this.setState({
 			          propertiesData : postsdata,
-			          userData       : ""
 			        });
 			    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
 			      }
@@ -222,107 +220,119 @@ var nextProps1;
 			    )
 			    .catch();
 				}
+		}
+		else{
+			swal("Please select at least one property.")
+		}
+		
+		
 	}
 	handleListed(event){
 		event.preventDefault()
 		var userId =localStorage.getItem('user_ID');
 		// ===============================================================
-		// swal({
-	 //           title: "Are you sure ?",
-	 //           text: "You want to shortlist this property!",
-	 //           icon: "warning",
-	 //          buttons: [
-	 //            'No, cancel it!',
-	 //            'Yes, I am sure!'
-	 //        ],
-	 //        }).then((option)=> {
-	 //          if(option){
-	 //          	for (var i = this.state.userData.length - 1; i >= 0; i--) {
-		// 				var formValues ={
-		// 				property_id 	  : this.state.userData[i],
-		// 				status 			  : "Listed",
-		// 				user_id			  : "",
-		// 				remark 			  : "",
-		// 	            listing           :true,
+		if(this.state.userData.length > 0){
+			swal({
+	           title: "Are you sure ?",
+	           text: "You want to shortlist this property!",
+	           icon: "warning",
+	          buttons: [
+	            'No, cancel it!',
+	            'Yes, I am sure!'
+	        ],
+	        }).then((option)=> {
+	          if(option){
+	          	for (var i = this.state.userData.length - 1; i >= 0; i--) {
+						var formValues ={
+						property_id 	  : this.state.userData[i],
+						status 			  : "Listed",
+						user_id			  : "",
+						remark 			  : "",
+			            listing           :true,
 
-		// 			}
-		// 			console.log("next props===0",nextProps1)
-		// 			console.log("formValues",formValues);
-		// 			axios
-		// 		    .patch('/api/salesagent/patch/approvedlist',formValues)
-		// 		    .then(
-		// 		      (res)=>{
-		// 		        console.log(res);
-		// 		       if(res.status == 200)
-		// 	        {
-		// 	        swal("Good job!", " Property Listed Successfully!", "success")
-		// 	   		// window.location.reload();
-		// 	   		axios
-		// 				    .get('/api/properties/list/salesagent/type/'+userId+'/'+nextProps1)
-		// 				    .then(
-		// 				      (res)=>{
-		// 				        console.log(res);
-		// 				        const postsdata = res.data;
-		// 				        this.setState({
-		// 				          propertiesData : postsdata,
-		// 				        });
-		// 				    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
-		// 				      }
-		// 				    )
-		// 				    .catch();
-
-		// 	         }
-		// 		        this.props.getTotalTabCount();
-		// 		      }
-		// 		    )
-		// 		    .catch();
-		// 		}}
-		// 					else {
-		// 			              swal("Your Property is safe!");
-		// 			            }
-		// 					 });
-// ==========================================================================
-
-		for (var i = this.state.userData.length - 1; i >= 0; i--) {
-				var formValues ={
-				property_id 	  : this.state.userData[i],
-				status 			  : "Listed",
-				user_id			  : "",
-				remark 			  : "",
-	            listing           :true,
-
-			}
-			console.log("next props===0",nextProps1)
-			console.log("formValues",formValues);
-			axios
-		    .patch('/api/salesagent/patch/approvedlist',formValues)
-		    .then(
-		      (res)=>{
-		        console.log(res);
-		       if(res.status == 200)
-	        {
-	        swal("Good job!", " Property Listed Successfully!", "success")
-	   		window.location.reload();
-	   		axios
-				    .get('/api/properties/list/salesagent/type/'+userId+'/'+nextProps1)
+					}
+					console.log("next props===0",nextProps1)
+					console.log("formValues",formValues);
+					axios
+				    .patch('/api/salesagent/patch/approvedlist',formValues)
 				    .then(
 				      (res)=>{
 				        console.log(res);
-				        const postsdata = res.data;
-				        this.setState({
-				          propertiesData : postsdata,
-				        });
-				    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+				       if(res.status == 200)
+			        {
+			        swal("Good job!", " Property Listed Successfully!", "success")
+			   		// window.location.reload();
+			   		axios
+						    .get('/api/properties/list/salesagent/type/'+userId+'/'+nextProps1)
+						    .then(
+						      (res)=>{
+						        console.log(res);
+						        const postsdata = res.data;
+						        this.setState({
+						          propertiesData : postsdata,
+						        });
+						    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+						      }
+						    )
+						    .catch();
+
+			         }
+				        this.props.getTotalTabCount();
 				      }
 				    )
 				    .catch();
-
-	         }
-		        this.props.getTotalTabCount();
-		      }
-		    )
-		    .catch();
+				}}
+							else {
+					              swal("Your Property is safe!");
+					            }
+							 });
 		}
+		else{
+			swal("Please select at least one property.")
+		}
+		
+// ==========================================================================
+
+		// for (var i = this.state.userData.length - 1; i >= 0; i--) {
+		// 		var formValues ={
+		// 		property_id 	  : this.state.userData[i],
+		// 		status 			  : "Listed",
+		// 		user_id			  : "",
+		// 		remark 			  : "",
+	 //            listing           :true,
+
+		// 	}
+		// 	console.log("next props===0",nextProps1)
+		// 	console.log("formValues",formValues);
+		// 	axios
+		//     .patch('/api/salesagent/patch/approvedlist',formValues)
+		//     .then(
+		//       (res)=>{
+		//         console.log(res);
+		//        if(res.status == 200)
+	 //        {
+	 //        swal("Good job!", " Property Listed Successfully!", "success")
+	 //   		window.location.reload();
+	 //   		axios
+		// 		    .get('/api/properties/list/salesagent/type/'+userId+'/'+nextProps1)
+		// 		    .then(
+		// 		      (res)=>{
+		// 		        console.log(res);
+		// 		        const postsdata = res.data;
+		// 		        this.setState({
+		// 		          propertiesData : postsdata,
+		// 		        });
+		// 		    console.log("PropertyDetails++++++++field 1++++++++++",postsdata);   
+		// 		      }
+		// 		    )
+		// 		    .catch();
+
+	 //         }
+		//         this.props.getTotalTabCount();
+		//       }
+		//     )
+		//     .catch();
+		// }
 	
 	}
 		
@@ -331,14 +341,17 @@ var nextProps1;
 		return (
 			<div className="">
 				{/*<h1>{this.props.status}</h1>*/}
-				{
+
+				{this.state.propertiesData.length>0 ?
 					(this.props.status ==="New") || (this.props.status ==="Verified")?
 						<div>
 							<button className="btn btn-primary propBtn1" onClick={this.handleFieldAgent.bind(this)}>Assign To Field Agent</button>
 							<button className="btn btn-primary propBtn2" onClick={this.handleListed.bind(this)}>Verify & List</button>
 						</div>
 					:
-					null	
+					null
+				:
+				null	
 				}
 				{
 					this.state.propertiesData.length>0 ?
@@ -349,7 +362,7 @@ var nextProps1;
 									{
 										(this.props.status ==="New") || (this.props.status ==="Verified") ?
 											<div className="col-lg-1 check1 inline row" >
-											    <input type="checkbox" id={property._id}  className="check individual  "  value={property._id} onClick={this.handleData.bind(this)}/>
+											    <input type="checkbox" id={property._id}  className="check individual pointer "  value={property._id} onClick={this.handleData.bind(this)}/>
 											    <label htmlFor={property._id} className="check-box"></label> 
 											</div>
 										:
@@ -357,11 +370,12 @@ var nextProps1;
 									}
 									<div>
 										<div className="col-lg-11 pBoxSize" onClick={this.profileView.bind(this)}  key={index} id={property._id}>
-											<div className="col-lg-4">
-												<span className="">
+											<div className="col-lg-4 ">
+												<label className="col-lg-12 row">Property Details </label>
+												<span className="col-lg-12 row">
 													Property ID: 
 											        <Link to="/propertyDetails" > {property.propertyCode}</Link><br/>
-													{property.propertyType ? property.propertyType : "Residential Property"}<br/>
+													{property.propertyType ? property.propertyType : "Residential Property"} {property.transactionType}<br/>
 													<div className="col-lg-10 noPad">{property.propertyDetails && property.propertyDetails.length >0 ?
 														property.propertyDetails.map((data,index)=>{
 														return(
@@ -372,10 +386,11 @@ var nextProps1;
 													"2 BHK"
 													}</div>
 												</span>
-												<span>{property.transactionType}</span>
+												
 											</div>
 											<div className="col-lg-5">
-												<span className="">
+												<label>Seller Details</label>
+												<span className="col-lg-12 row">
 													{property.ownerDetails.userName? property.ownerDetails.userName: "Rushikesh " }<br/>
 													{property.ownerDetails.emailId ? property.ownerDetails.emailId : "rushikesh.salunkhe101@gmail.com"}<br/>
 													{property.ownerDetails.mobileNumber ? property.ownerDetails.mobileNumber : "*** **** *** "}
@@ -400,7 +415,7 @@ var nextProps1;
 												</div>
 											</div>
 										</div>
-										<img src="/images/cancel.png" className="cancelImg"  id={property._id} onClick={this.handleDelete.bind(this)}/>
+										<img src="/images/cancel.png" className="cancelImg" title="Delete"  id={property._id} onClick={this.handleDelete.bind(this)}/>
 									</div>
 								</div>
 							);
@@ -411,11 +426,11 @@ var nextProps1;
 					this.props.status ==="New"||this.props.status === "Verified"?
 
 							<div className="emptyProp1">
-								<h5 className="emptyText">No Property Found</h5>
+								<h5 className="emptyText">No Properties here</h5>
 							</div>
 						:
 						<div className="emptyProp">
-							<h5 className="emptyText">No Property Found</h5>
+							<h5 className="emptyText">No Properties here</h5>
 						</div>
 					
 					

@@ -161,12 +161,12 @@ class CreateUser extends Component {
       const formValues = {
           "firstName"       : this.state.firstname,
           "lastName"        : this.state.lastname,
-          "email"         : this.state.signupEmail,
+          "email"           : this.state.signupEmail,
           "countryCode"     : "+91",
           "mobileNumber"    : this.state.mobNumber,
           "pwd"             : "user123",
           
-          "status"          : "Active",
+          "status"          : "Active", 
           "roles"           :  this.state.role,
           "officeLocation"  : this.state.officeId,
         }
@@ -209,8 +209,13 @@ class CreateUser extends Component {
     }
     handleOffice(event){
       event.preventDefault();
+      var officeId = $(event.currentTarget).find('option:selected').attr('data-id');
       this.setState({
-        officeId : event.target.value ,
+        officeId :  officeId,
+      },()=>{
+
+      console.log("officeId===",this.state.officeId)
+      console.log("officeId= var",officeId)
       })
 
      // var that=this;
@@ -361,15 +366,15 @@ class CreateUser extends Component {
                                                           <div className=" col-lg-6 col-md-6 col-xs-12 col-sm-12 inputContent" >
                                                               <label className="formLable col-lg-12 col-md-12 mrgtop6">Office Location <label className="requiredsign"></label></label>
                                                                   <span className="blocking-span col-lg-12 col-md-12 col-xs-12 col-sm-12 emailfixdomain">
-                                                                    <select className="form-control" value={this.state.officeid} onChange={this.handleOffice.bind(this)} id="office" name="office" data-text="office">
+                                                                    <select className="form-control" onChange={this.handleOffice.bind(this)} id="office" name="office" data-text="office">
                                                                         <option hidden> --Select-- </option>
-                                                                        <option Value="Head Office">  Head Office </option>
-                                                                        <option value="Sales Agent Office"> Sales Agent Office </option>
+                                                                        <option data-id="Head Office">  Head Office </option>
+                                                                        <option data-id="Sales Agent Office"> Sales Agent Office </option>
                                                                            {this.state.office && this.state.office.length > 0?
                                                                           this.state.office[0].map( (locData, index)=>{
                                                                             
                                                                            return( 
-                                                                                 <option key={index} value={locData._id}> {locData.officeLocationid ? locData.officeLocationid : null}  </option>
+                                                                                 <option key={index} data-id={locData._id}> {locData.officeLocationid ? locData.officeLocationid : null}  </option>
                                                                                  /*<option key={index} id={locData._id} value={locData.officeLocationid ? locData.officeLocationid : null } > {locData.officeLocationid ? locData.officeLocationid : null}  </option>*/
                                                                               )}
                                                                            )

@@ -625,6 +625,8 @@ import './PropertyDetails.css';
 			const totalfloor = parseInt(this.refs.totalfloor.value);
 			if(floor > totalfloor){
 				swal("Floor should not be greater than Total Floors", "", "warning");
+				this.setState({floor : ""});
+
 			}
 
 			this.setState({totalfloor : totalfloor});
