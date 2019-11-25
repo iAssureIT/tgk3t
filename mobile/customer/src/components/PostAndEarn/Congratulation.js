@@ -61,9 +61,6 @@ export default class Congratulation extends ValidationComponent{
     this._retrieveData();
   }
 
-  componentWillReceiveProps(nextProps){
-    this._retrieveData();
-  }
 
   _retrieveData = async () => {
     try {
@@ -87,7 +84,7 @@ export default class Congratulation extends ValidationComponent{
         {
           axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
           var formvalues = {
-             "index"      : prop_index
+             "index"      : parseInt(prop_index)
           }
 
           // console.log("index",formvalues)
@@ -154,7 +151,8 @@ export default class Congratulation extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                            Alert.alert("Your session is expired!"," Please loginagain.");
+                           Alert.alert("Your session is expired!"," Please login again.");
+AsyncStorage.removeItem('fullName');
                             AsyncStorage.removeItem('token');
                             this.navigateScreen('MobileScreen'); 
                         }
@@ -165,7 +163,8 @@ export default class Congratulation extends ValidationComponent{
                     console.log("error = ",error);
                     if(error.message === "Request failed with status code 401")
                     {
-                        Alert.alert("Your session is expired!"," Please loginagain.");
+                        Alert.alert("Your session is expired!"," Please login again.");
+                        AsyncStorage.removeItem('fullName');
                         AsyncStorage.removeItem('token');
                         this.navigateScreen('MobileScreen'); 
                     }
@@ -176,7 +175,8 @@ export default class Congratulation extends ValidationComponent{
                   console.log("error = ",error);
                   if(error.message === "Request failed with status code 401")
                   {
-                    Alert.alert("Your session is expired!"," Please loginagain.");
+                    Alert.alert("Your session is expired!"," Please login again.");
+                    AsyncStorage.removeItem('fullName');
                     AsyncStorage.removeItem('token');
                     this.navigateScreen('MobileScreen'); 
                   }
@@ -218,7 +218,8 @@ export default class Congratulation extends ValidationComponent{
                 console.log("error = ",error);
                   if(error.message === "Request failed with status code 401")
                   {
-                       Alert.alert("Your session is expired!"," Please loginagain.");
+                      Alert.alert("Your session is expired!"," Please login again.");
+AsyncStorage.removeItem('fullName');
                        AsyncStorage.removeItem('token');
                        this.navigateScreen('MobileScreen'); 
                   }

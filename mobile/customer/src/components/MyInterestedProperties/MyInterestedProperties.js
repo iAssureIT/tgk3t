@@ -52,7 +52,7 @@ export default class MyInterestedProperties extends ValidationComponent{
     };
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
         this._retrieveData();
   }
 
@@ -101,14 +101,14 @@ export default class MyInterestedProperties extends ValidationComponent{
     try {
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
-      const searchData = await AsyncStorage.getItem('searchData');
-      AsyncStorage.setItem('newProp',false);
+      // const searchData = await AsyncStorage.getItem('searchData');
+      // AsyncStorage.setItem('newProp',false);
       
       if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
         this.setState({token:token})
-        this.setState({searchData:searchData})
+        // this.setState({searchData:searchData})
 
         axios
         .get('/api/interestedProperties/list/'+uid)

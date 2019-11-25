@@ -54,10 +54,6 @@ navigateScreen=(route)=>{
     }
   }
 
-   toggleDrawer = () => {
-      this.props.navigation.dispatch(DrawerActions.toggleDrawer());
-  }
-
   homescreen(){
       this.navigateScreen('Home');
   }
@@ -72,7 +68,7 @@ navigateScreen=(route)=>{
 
   render() {
     // const { goBack } = this.props.navigation;
-    console.log("this.state.token=>Header",this.state.token);
+    // console.log("this.state.token=>Header",this.state.token);
     return (
       <Header
         placement="center"
@@ -100,7 +96,7 @@ navigateScreen=(route)=>{
       
         rightComponent={
           // this.state.token ?
-            <TouchableOpacity onPress={this.toggleDrawer}>
+            <TouchableOpacity onPress={()=> this.props.navigation.toggleDrawer()}>
               <Icon size={28} name='menu' type='material-community' color='#fff' />
             </TouchableOpacity>
             // :

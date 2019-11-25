@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 
 import styles                             from '../../PostAndEarn/styles.js';
-import {AsyncStorage}                     from 'react-native';
+import AsyncStorage                       from '@react-native-community/async-storage';
 import { Button,Icon, SearchBar }         from 'react-native-elements';
 import { TextField }                      from 'react-native-material-textfield';
 import HeaderBar                          from '../../../layouts/HeaderBar/HeaderBar.js';
@@ -38,8 +38,6 @@ navigateScreen=(route)=>{
 }
 
 
-
-	
 	constructor(props) {
 		super(props);
 		 this.state={
@@ -57,26 +55,31 @@ navigateScreen=(route)=>{
 	}
 
 
-  
-
   componentDidMount(){
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
     this._retrieveData();
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
+
+ // componentDidUpdate(prevProps,prevState){
+ //    console.log('prevProps,prevState',prevState,this.state)
+ //      if(prevState.mob!==this.state.mob){
+ //        this._retrieveData()
+ //      }
+ //  }
 
   _retrieveData = async () => {
     try {
       const otp = await AsyncStorage.getItem('originalotp');
       // console.log("otp in otpscreen-----------------------------",otp);
       const msg = await AsyncStorage.getItem('message'); 
-      // console.log("message in otpscreen--------------",msg);
+      console.log("message in otpscreen--------------",msg);
       const mob = await AsyncStorage.getItem('mobile'); 
-      // console.log("mobile in otpscreen---------------------",mob);
+      console.log("mobile in otpscreen---------------------",mob);
       const uid = await AsyncStorage.getItem('uid');
       // console.log("uid in otpscreen--------------------",uid);
       const token = await AsyncStorage.getItem('token');
@@ -84,7 +87,7 @@ navigateScreen=(route)=>{
       const originPage = await AsyncStorage.getItem('originPage');
       // console.log("originPage-------------------------------",originPage);
       const fullName = await AsyncStorage.getItem('fullName');
-      // if (uid !== null && token !== null) {
+      if (uid !== null && token !== null && otp !== null && msg !== null) {
        this.setState({
                  msg         : msg,
                  originalOTP : otp,
@@ -94,7 +97,7 @@ navigateScreen=(route)=>{
                  originPage  : originPage,
                  fullName    : fullName,
                });
-      // }
+      }
     } catch (error) {
     }
   }
@@ -166,7 +169,7 @@ navigateScreen=(route)=>{
               </View>
 
               <View style={{marginTop:15,marginBottom:10}}>
-                <Text style={[styles.heading2,styles.marginBottom5]}>Welcome {this.state.fullName}</Text>
+                <Text style={[styles.heading2,styles.marginBottom5]}>Welcome {this.state.fullName ? this.state.fullName : "Guest"}</Text>
                 <Text style={[styles.heading2,styles.marginBottom5,{color:"#49AA3F"}]}>We have sent you an OTP on your mobile for verification, please enter your OTP to continue</Text>
 
               </View>
@@ -249,7 +252,7 @@ navigateScreen=(route)=>{
                         titleStyle      = {styles.buttonText}
                         title           = "OK"
                         buttonStyle     = {[styles.buttonSignUp,{backgroundColor:"#E25E77",width:60,color:"#fff"}]}
-                        containerStyle  = {styles.buttonContainer}
+                        containerStyle  = {[styles.buttonContainer,{alignItems:'center'}]}
                       />
                     </View>
                   </View>

@@ -71,7 +71,13 @@ export default StyleSheet.create({
   },
   sliderCrossIcon:{
     marginLeft:"85%",
-    marginTop:10
+   ...Platform.select({
+      ios:{
+        marginTop:35,
+      },
+      android : {
+        marginTop:10,
+      }
+    })
   }
-})
-
+});

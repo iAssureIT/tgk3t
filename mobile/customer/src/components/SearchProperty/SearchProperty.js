@@ -184,7 +184,7 @@ navigateScreen=(route)=>{
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
       const tempSearchData      = await AsyncStorage.getItem('searchData');
-      AsyncStorage.setItem('newProp',false);
+      // AsyncStorage.setItem('newProp',false);
       if (uid !== null && token !== null || tempSearchData!== null) {
           // We have data!!
           this.setState({uid:uid})
@@ -979,7 +979,7 @@ navigateScreen=(route)=>{
                 titleStyle      = {styles.buttonSubmitText}
                 title           = "Search"
                 buttonStyle     = {styles.buttonSubmit}
-                containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom15]}
+                containerStyle  = {[styles.buttonSubmitContainer,styles.marginBottom45]}
                 iconRight
                 icon = {<Icon
                   name="chevrons-right" 

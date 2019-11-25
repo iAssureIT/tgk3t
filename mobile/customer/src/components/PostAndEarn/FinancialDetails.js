@@ -53,7 +53,7 @@ export default class FinancialDetails extends ValidationComponent{
       totalPrice    : '',
       totalAskIndex : 0,
       availableFromDate : '',
-      description   :'2 BHK beautiful, tastefully decorated and well maintained flat with 2 attached bathrooms located in Sylvania, Magarpatta City, Pune. The society is gated, extremely safe and boasts a number of key amenities like Seasons Mall, Amanora Mall, Gold’s Gym, ABS Gym. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.',
+      description   :"",
       dropdownData:[
       {
         value: 'Month'
@@ -105,7 +105,7 @@ export default class FinancialDetails extends ValidationComponent{
     this._retrieveData();
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -240,7 +240,7 @@ _retrieveData = async () => {
 
            var property_id = propertyId;
            // console.log("property_id in constructor property details",property_id);
-              if(property_id!=null)
+              if(property_id!==null)
               {
                 // console.log("here edit 3rd form");
                   axios
@@ -265,7 +265,21 @@ _retrieveData = async () => {
 
                       },()=>{
                         // console.log("prev charge",this.state.prevCharges);
-
+                        var address = response.data.propertyLocation.society+", "+response.data.propertyLocation.subArea+", "+response.data.propertyLocation.area+", "+response.data.propertyLocation.city;
+                         console.log("response.data.propertyDetails.Amenities=============>",response.data.propertyDetails.Amenities);
+                        if(response.data.propertyDetails.Amenities && response.data.propertyDetails.Amenities.length > 0){
+                         var amenities =  response.data.propertyDetails.Amenities.map((amenities,index)=>{
+                              var space = " ";
+                              var i = index;
+                              if(index > (response.data.propertyDetails.Amenities.length-1) ){
+                                space = "";
+                              }
+                              return ""+space+amenities;
+                            })
+                        }
+                        this.setState({
+                          description : response.data.propertyDetails.bedrooms + ' BHK beautiful, tastefully decorated and well maintained flat with '+response.data.propertyDetails.bathrooms+' attached bathrooms located in '+address+'. The society is gated, extremely safe and boasts a number of key amenities like '+amenities+'. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.'
+                        })
                         var includeCharges = this.state.totalAskItem;
                           // console.log("here includeCharges", includeCharges);
                           var includeChargesList = includeCharges.map((item,index)=>{
@@ -365,7 +379,8 @@ submitFun(){
               console.log("error = ",error);
               if(error.message === "Request failed with status code 401")
               {
-                   // Alert.alert("Your session is expired!"," Please loginagain.");
+                   //Alert.alert("Your session is expired!"," Please login again.");
+AsyncStorage.removeItem('fullName');
                     AsyncStorage.removeItem('token');
                    // this.navigateScreen('MobileScreen');          
                        
@@ -533,7 +548,8 @@ submitFun(){
                   console.log("error = ",error);
                   if(error.message === "Request failed with status code 401")
                   {
-                     //  Alert.alert("Your session is expired!"," Please loginagain.");
+                     // Alert.alert("Your session is expired!"," Please login again.");
+AsyncStorage.removeItem('fullName');
                         AsyncStorage.removeItem('token');
                      // this.navigateScreen('MobileScreen');          
                            
@@ -574,7 +590,7 @@ submitFun(){
 
     return (
       <React.Fragment>
-        <HeaderBar showBackBtn={true} navigation={navigation}/>
+        <HeaderBar showBackBtn={false} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <KeyboardAwareScrollView>  
@@ -646,7 +662,7 @@ submitFun(){
                     <View style={styles.inputImgWrapper}>
                       <Icon name="rupee" type="font-awesome" size={17}  color="#aaa" style={{}}/>
                     </View>
-                    <View style={styles.inputTextWrapper68}>
+                    <View style={styles.inputTextWrapper}>
                      { <TextInput
                         placeholder           = "Enter Total Ask"
                         onChangeText          = {totalPrice => {this.setState({totalPrice},() => { this.validInputField('totalPrice', 'totalPriceError');})}}
@@ -740,7 +756,6 @@ submitFun(){
 
 
             {this.state.propertyType==="Commercial" && this.state.transactionType==="Rent" ?
-
               
               null
               :
@@ -926,12 +941,37 @@ submitFun(){
 
 
             </View>
-             <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
-                  <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
-                     <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
-                     </Text>
-                  </TouchableOpacity>
-              </View>
+            <View style={[{flexDirection:"row"},styles.marginBottom45]}>
+              <Button
+                  onPress={()=> this.props.navigation.dispatch(NavigationActions.back())}
+                  titleStyle      = {styles.buttonText}
+                  title           = "Back"
+                  buttonStyle     = {[styles.button,{ backgroundColor:"#d9534f"}]}
+                  containerStyle  = {[styles.nextBtnhover2,styles.marginBottom15]}
+                  iconLeft
+                  icon = {<Icon
+                  name="chevrons-left" 
+                  type="feather"
+                  size={22}
+                  color="white"
+                  />}
+              />
+
+              <Button
+                  onPress         = {this.submitFun.bind(this)}
+                  titleStyle      = {styles.buttonText}
+                  title           = "Save & Next"
+                  buttonStyle     = {styles.button}
+                  containerStyle  = {[styles.nextBtnhover3,styles.marginBottom15]}
+                  iconRight
+                  icon = {<Icon
+                  name="chevrons-right" 
+                  type="feather"
+                  size={22}
+                  color="white"
+                  />}
+              />
+          </View> 
           </KeyboardAwareScrollView>  
         </ScrollView>
       
@@ -954,7 +994,7 @@ FinancialDetails.defaultProps = {
   },
 
   rules: {
-    numbers        : /^(([0-9]*)|(([0-9]*)\.([0-9]*)))$/,
+    numbers        : /^[0-9\s]*$/,
     required       : /\S+/,
     letters        : /^[a-zA-Z ]+$/,
     lettersOrEmpty : /^[a-zA-Z ]+$|^$/,

@@ -9,7 +9,9 @@ import {
   ImageBackground,
   Image,TextInput,
   Alert,
-  Picker
+  StyleSheet,
+  Platform
+  // Picker
 } from 'react-native';
 import axios                                from 'axios';
 import { Button,Icon, SearchBar }           from 'react-native-elements';
@@ -26,6 +28,9 @@ import { Dropdown }                         from 'react-native-material-dropdown
 import DatePicker                           from "react-native-datepicker";
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
 import Dialog                                 from "react-native-dialog";
+import {Picker}                             from '@react-native-community/picker';
+import RNPickerSelect                       from 'react-native-picker-select';
+
 
 const window = Dimensions.get('window');
  
@@ -87,12 +92,12 @@ constructor(props){
       personalIndex       : -1,
       pantryIndex         : -1,
       furnishpantryIndex  : -1,
-      yearsData : [ {name:"Under Construction", value: 'Under Construction',},
-                    {name:"Newly Built", value: 'New',},
-                    {name:"Less than 4 Years", value: '<4',},
-                    {name:"4-8 Years", value: '4-8',},
-                    {name:"8-12 Years", value: '8-12',},
-                    {name:"Above 12 Years", value: '12',}],
+      yearsData : [ {label:"Under Construction", value: 'Under Construction',},
+                    {label:"Newly Built", value: 'New',},
+                    {label:"Less than 4 Years", value: '<4',},
+                    {label:"4-8 Years", value: '4-8',},
+                    {label:"8-12 Years", value: '8-12',},
+                    {label:"Above 12 Years", value: '12',}],
 
       propertyFacingData : [{name:"East", value: 'East',},
                             {name:"West", value: 'West',},
@@ -176,7 +181,7 @@ constructor(props){
   //   this._retrieveData();
   // }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -357,7 +362,7 @@ constructor(props){
       const transactionType      = await AsyncStorage.getItem('transactionType');
 
       // console.log("token basicinfo",token);
-      console.log("propertyId basicinfo",propertyId);
+      // console.log("propertyId basicinfo",propertyId);
       // if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
@@ -515,9 +520,6 @@ constructor(props){
                                              this.setState({personalIndex:0});
                                           }
 
-                                          
-
-
                                           /*work station*/
                                           if(this.state.workStation === 0 || this.state.workStation === "0"){
                                              this.setState({workStationIndex:0});
@@ -538,9 +540,11 @@ constructor(props){
                                           console.log("error = ",error);
                                           if(error.message === "Request failed with status code 401")
                                           {
-                                                Alert.alert("Your session is expired!"," Please login again.");
-                                                AsyncStorage.removeItem('token');
-                                                this.navigateScreen('MobileScreen');  
+                                              Alert.alert("Your session is expired!"," Please login again.");
+                                              AsyncStorage.removeItem('fullName');
+                                              AsyncStorage.removeItem('fullName');
+                                              AsyncStorage.removeItem('token');
+                                              this.navigateScreen('MobileScreen');  
                                           }
                                       });
                             }
@@ -551,7 +555,9 @@ constructor(props){
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                             Alert.alert("Your session is expired!"," Please login again.");
+                           Alert.alert("Your session is expired!"," Please login again.");
+AsyncStorage.removeItem('fullName');
+AsyncStorage.removeItem('fullName');
                              AsyncStorage.removeItem('token');
                               this.navigateScreen('MobileScreen');  
                         }
@@ -835,7 +841,8 @@ submitFun(){
                                       console.log("error = ",error);
                                       if(error.message === "Request failed with status code 401")
                                       {
-                                           // Alert.alert("Your session is expired!"," Please login again.");
+                                           //Alert.alert("Your session is expired!"," Please loginagain.");
+                                          AsyncStorage.removeItem('fullName');
                                           AsyncStorage.removeItem('token');
                                           // this.props.navigation.navigate('MobileScreen'); 
                                       }
@@ -930,13 +937,15 @@ submitFun(){
                             }
                           })
                           .catch((error)=>{
-                                                console.log("error = ",error);
-                                                if(error.message === "Request failed with status code 401")
-                                                {
-                                           //          Alert.alert("Your session is expired!"," Please login again.");
-                                                  AsyncStorage.removeItem('token');
-                                           // this.props.navigation.navigate('MobileScreen');         
-                                               }
+                                      console.log("error = ",error);
+                                      if(error.message === "Request failed with status code 401")
+                                      {
+                                 //        Alert.alert("Your session is expired!"," Please login again.");
+                                          AsyncStorage.removeItem('fullName');
+                                          AsyncStorage.removeItem('fullName');
+                                          AsyncStorage.removeItem('token');
+                                 // this.props.navigation.navigate('MobileScreen');         
+                                     }
                                });
                             }else{
                                  this.setState({selectAmenity:true})
@@ -978,13 +987,17 @@ submitFun(){
 
   render(){
    
-    axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
-   
+    const placeholderAgeOfProp = {
+      label: 'Years old',
+      value: null,
+      color: '#9EA0A4',
+    };
+
     const { navigation } = this.props;
     let {activeTab} = this.state;
     return (
        <React.Fragment>
-           <HeaderBar showBackBtn={true} navigation={navigation}/>
+           <HeaderBar showBackBtn={false} navigation={navigation}/>
             <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
               <KeyboardAwareScrollView>   
                 <View style={styles.formWrapper}>
@@ -1247,15 +1260,15 @@ submitFun(){
                       selectedIndex = {this.state.furnishedIndex}
                       onSelect = {(index, value) => this.onSelectFurnishStatus(index, value)}
                     >
-                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10,fontSize: 12}} value={'Fully furnished'} >
+                      <RadioButton style={{paddingHorizontal:0,paddingTop:0,marginTop:10}} value={'Fully furnished'} >
                         <Text style={[styles.inputTextSmall,]}>Fully furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,marginLeft:10,fontSize: 12}} value={'Semi furnished'}>
+                      <RadioButton style={{paddingHorizontal:0,marginLeft:10}} value={'Semi furnished'}>
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,marginLeft:0,fontSize: 12}} value={'Unfurnished'}>
+                      <RadioButton style={Platform.os==='android' ? {paddingHorizontal:0,marginLeft:0} : {paddingHorizontal:0,marginLeft:10}} value={'Unfurnished'}>
                         <Text style={styles.inputTextSmall}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
@@ -1390,35 +1403,14 @@ submitFun(){
                                   value               = {this.state.ageofproperty}
                                   onChangeText        = {ageofproperty => {this.setState({ageofproperty});}}
                                 />*/}
-                                <Picker
-                                  selectedValue       ={this.state.ageofproperty}
-                                  style               ={[styles.ddStyle,{height:40}]}
-                                  placeholder         = "Years old"
-                                  containerStyle      = {styles.ddContainer}
-                                  dropdownOffset      = {{top:0, left: 0}}
-                                  itemTextStyle       = {styles.ddItemText}
-                                  inputContainerStyle = {styles.ddInputContainer}
-                                  labelHeight         = {10}
-                                  tintColor           = {colors.button}
-                                  labelFontSize       = {sizes.label}
-                                  fontSize            = {15}
-                                  baseColor           = {'#666'}
-                                  textColor           = {'#333'}
-                                  labelTextStyle      = {styles.ddLabelText}
-                                  onValueChange       = {ageofproperty => {this.setState({ageofproperty});}}
-                                  >
-                                  <Picker.Item value="" label="Years old" color={colors.textLight} />
-                                  {this.state.yearsData ?
-                                    this.state.yearsData.map((data, index)=>{
-                                      return(
-                                               <Picker.Item key={index} value={data.value} label={data.name} />
-                                             );
-                                           })
-                                    :
-                                    null
-                                  }
-                                  
-                                </Picker>
+                                {<RNPickerSelect
+                                onValueChange={value => {this.setState({ageofproperty:value});}}
+                                value                       = {this.state.ageofproperty}
+                                style                       = {pickerSelectStyles}
+                                placeholder                 = {placeholderAgeOfProp}
+                                items                       = {this.state.yearsData.length>0 ? this.state.yearsData : null }
+                                useNativeAndroidPickerStyle = {false}
+                                />}
                               </View>
                             </View>
 
@@ -1876,12 +1868,37 @@ submitFun(){
 
                             {/*end*/}
                       </View>
-                    <View  style={[styles.nextBtnhover1,styles.marginBottom15]}  onPress={this.submitFun.bind(this)}>
-                      <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
-                         <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
-                         </Text>
-                      </TouchableOpacity>
-                    </View>
+                     <View style={[{flexDirection:"row"},styles.marginBottom45]}>
+                        <Button
+                            onPress={()=> this.props.navigation.dispatch(NavigationActions.back())}
+                            titleStyle      = {styles.buttonText}
+                            title           = "Back"
+                            buttonStyle     = {[styles.button,{ backgroundColor:"#d9534f"}]}
+                            containerStyle  = {[styles.nextBtnhover2,styles.marginBottom15]}
+                            iconLeft
+                            icon = {<Icon
+                            name="chevrons-left" 
+                            type="feather"
+                            size={22}
+                            color="white"
+                            />}
+                        />
+
+                        <Button
+                            onPress         = {this.submitFun.bind(this)}
+                            titleStyle      = {styles.buttonText}
+                            title           = "Save & Next"
+                            buttonStyle     = {styles.button}
+                            containerStyle  = {[styles.nextBtnhover3,styles.marginBottom15]}
+                            iconRight
+                            icon = {<Icon
+                            name="chevrons-right" 
+                            type="feather"
+                            size={22}
+                            color="white"
+                            />}
+                        />
+                    </View> 
                   </KeyboardAwareScrollView>
                 </ScrollView>
                  <Dialog.Container visible={this.state.selectAmenity}>
@@ -1901,7 +1918,27 @@ submitFun(){
        
       }
     }
-
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 15,
+    fontFamily:"Roboto-Regular",
+    height:40,
+    flex: 1,  
+    alignItems: 'center',  
+    justifyContent: 'center',  
+    color: '#333',
+    paddingHorizontal:5
+  },
+  inputAndroid: {
+    fontSize: 15,
+    fontFamily:"Roboto-Regular",
+    height:40,
+    flex: 1,  
+    alignItems: 'center',  
+    justifyContent: 'center',  
+    color: '#333',
+  },
+});
 
 PropertyDetails.defaultProps = {
   messages: {

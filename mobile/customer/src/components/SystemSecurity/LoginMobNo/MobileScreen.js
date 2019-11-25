@@ -121,8 +121,13 @@ export default class MobileScreen extends ValidationComponent {
   };
 
 
+
   componentDidMount(){
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
+  }
+
+   UNSAFE_componentWillReceiveProps(nextProps){
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");;
   }
 
 	checkUser(){
@@ -159,7 +164,7 @@ export default class MobileScreen extends ValidationComponent {
 
                 AsyncStorage.setItem("uid",response.data.user_id );
                 AsyncStorage.setItem("token",response.data.token);
-                AsyncStorage.setItem("originalotp",response.data.otp);
+                AsyncStorage.setItem("originalotp",response.data.otp.toString());
                 AsyncStorage.setItem("message",response.data.message);
                 AsyncStorage.setItem("mobile",this.state.mobileNumber);
                 AsyncStorage.setItem("fullName",response.data.fullName);

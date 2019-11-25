@@ -35,7 +35,7 @@ import Video                                  from 'react-native-video';
 import { KeyboardAwareScrollView }            from 'react-native-keyboard-aware-scroll-view';
 import Loading                                from '../../layouts/Loading/Loading.js'
 import Dialog                                 from "react-native-dialog";
-import DateTimePicker                         from '@react-native-community/datetimepicker';
+import DateTimePicker                         from "react-native-modal-datetime-picker";
 var Buffer = require('buffer/').Buffer
 import {
   Table,
@@ -142,6 +142,8 @@ navigateScreen=(route)=>{
       visitSlot : false,
       visitSchedule : false,
       singleVideo:"",
+      isDateTimePickerVisibleFrom: false,
+      isDateTimePickerVisibleTo: false
     };
 
       var property_id = this.props.navigation.getParam('property_id','No property_id');
@@ -153,7 +155,7 @@ navigateScreen=(route)=>{
     this._retrieveData();
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -206,8 +208,14 @@ navigateScreen=(route)=>{
                       
                   },()=>{
                       if(response.data.avalibilityPlanVisit.contactPerson === "Someone"){
+                        var someOnemobile =response.data.avalibilityPlanVisit.contactPersonMobile;
+                        if(someOnemobile.startsWith && someOnemobile.startsWith('+')){
+                              someOnemobile = someOnemobile.substr(3);
+                            }
+                            let x = someOnemobile.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,4})/);
+                            let y = x.input ? (!x[2]&&!x[3]) ? '+91 '+x[1] : (!x[3]?'+91 '+x[1]+'-'+x[2]:'+91 '+x[1]+'-'+x[2]+'-'+x[3]) : '';
                         this.setState({
-                          someOnemobile:response.data.avalibilityPlanVisit.contactPersonMobile,
+                          someOnemobile:y,
                           toggle:true
                         })
                       }else{
@@ -266,54 +274,33 @@ navigateScreen=(route)=>{
   }
 
  
- 
+  showDateTimePickerFrom = () => {
+    this.setState({ isDateTimePickerVisibleFrom: true });
+  };
 
-  setDate = (event, date) => {
-    // console.log("inside show")
+  showDateTimePickerTo = () => {
+    this.setState({ isDateTimePickerVisibleTo: true });
+  };
 
-    date = date || this.state.date;
- 
+  hideDateTimePicker = () => {
     this.setState({
-      show: Platform.OS === 'ios' ? true : false,
-      date,
-    });
-  }
+     isDateTimePickerVisibleFrom: false ,
+     isDateTimePickerVisibleTo: false 
+   });
+  };
 
-  setDate1 = (event, date1) => {
-    // console.log("inside show")
+  handleDatePickedFrom = date => {
+    console.log("A date has been picked: ", date);
+    this.setState({date:date})
+    this.hideDateTimePicker();
+  };
 
-    date1 = date1 || this.state.date1;
- 
-    this.setState({
-      show1: Platform.OS === 'ios' ? true : false,
-      date1,
-    });
-  }
- 
-  show = mode => {
-    this.setState({
-      show: true,
-      mode,
-    },()=>{
-      // console.log("show",this.state.show);
-    });
-  }
-  show1 = mode => {
-    this.setState({
-      show1: true,
-      mode,
-    },()=>{
-      // console.log("show",this.state.show1);
-    });
-  }
- 
-  timepicker = () => {
-    this.show('time');
-  }
+  handleDatePickedTo = date => {
+    console.log("A date has been picked: ", date);
+    this.setState({date1:date})
+    this.hideDateTimePicker();
+  };
 
-  timepicker1 = () => {
-    this.show1('time');
-  }
 
   formatAMPM(date) {
       var hours = date.getHours();
@@ -324,7 +311,7 @@ navigateScreen=(route)=>{
       minutes = minutes < 10 ? '0'+minutes : minutes;
       var strTime = hours + ':' + minutes + ' ' + ampm;
       return strTime;
-}
+  }
 
   validInput = () => {
     const {
@@ -337,17 +324,16 @@ navigateScreen=(route)=>{
       someOnemobile: { 
         required: true, 
         // mobileNo: true,
+        // minlength: 9, 
+        // maxlength: 10 
+      },
+      mobile: { 
+        required: true, 
+        // mobileNo: true,
         // numbers: true, 
         // minlength: 9, 
         // maxlength: 10 
       },
-      // mobile: { 
-      //   required: true, 
-      //   mobileNo: true,
-      //   // numbers: true, 
-      //   minlength: 9, 
-      //   maxlength: 10 
-      // },
     });
 
     if (this.isFieldInError("someOnemobile")) {
@@ -441,7 +427,7 @@ navigateScreen=(route)=>{
            if(this.state.contactPerson === "Myself"){
               mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
             }else{
-              mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+              mobNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
             }    
             
               const formValues = {
@@ -496,7 +482,7 @@ navigateScreen=(route)=>{
            if(this.state.contactPerson === "Myself"){
               mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
             }else{
-              mobNo = mobile.length>0 ? mobile.split(' ')[1].split('-').join('') : null;
+              mobNo = someOnemobile.length>0 ? someOnemobile.split(' ')[1].split('-').join('') : null;
             }          
             const formValues = {
            
@@ -714,10 +700,9 @@ navigateScreen=(route)=>{
             if (response.uri) {
               // console.log("response",response);
               var url = response.path;
-              var filename = url.substring(url.lastIndexOf('/')+1);
               const file = {
                   uri  : response.uri,
-                  name : filename,
+                  name : response.fileName,
                   type : 'image/jpeg',
                 }
                 console.log("file",file);
@@ -842,10 +827,9 @@ navigateScreen=(route)=>{
       },
     ];
 
-    console.log("this.state.isLoading",this.state.isLoading);
     return (
       <React.Fragment>
-        <HeaderBar showBackBtn={true} navigation={navigation}/>
+        <HeaderBar showBackBtn={false} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <KeyboardAwareScrollView>    
@@ -901,7 +885,7 @@ navigateScreen=(route)=>{
                       <View style={styles.inputTextWrapper}>
                         <TextField
                           label                 = "Phone Number"
-                          onChangeText          = {(mobile) => {this.setState({ mobile },()=>{this.validInputField('mobile', 'mobileNumberError');}),this.handleOriginalMobileChange(mobile)}}
+                          onChangeText          = {(mobile) => {this.setState({ mobile },()=>{this.handleOriginalMobileChange(mobile),this.validInputField('mobile', 'mobileNumberError');})}}
                                                    // {mobileNumber => this.handleMobileChange(mobileNumber)}
                           lineWidth             = {1}
                           tintColor             = {colors.button}
@@ -935,7 +919,7 @@ navigateScreen=(route)=>{
                       <View style={styles.inputTextWrapper}>
                         <TextField
                           label                 = "Phone Number"
-                          onChangeText          = {(someOnemobile) => {this.setState({ someOnemobile },()=>{this.validInputField('someOnemobile', 'mobileNumberError');}),this.handleMobileChange(someOnemobile)}}
+                          onChangeText          = {(someOnemobile) => {this.setState({ someOnemobile },()=>{this.handleMobileChange(someOnemobile),this.validInputField('someOnemobile', 'mobileNumberError');})}}
                                                    // {mobileNumber => this.handleMobileChange(mobileNumber)}
                           lineWidth             = {1}
                           tintColor             = {colors.button}
@@ -997,17 +981,17 @@ navigateScreen=(route)=>{
                     </View>
                     <View style={styles.inputTextWrapper3}>
                       <TouchableOpacity
-                          onPress={this.timepicker}
+                          onPress={this.showDateTimePickerFrom}
                           title="Show time picker!"
                         >
                         <Text style={styles.timeSelect}>{this.formatAMPM(this.state.date)}</Text>
                         </TouchableOpacity>
-                         { show && <DateTimePicker value={date}
-                            mode={mode}
-                            is24Hour={false}
-                            display="default"
-                            onChange={this.setDate} />
-                        }
+                         <DateTimePicker
+                            isVisible = {this.state.isDateTimePickerVisibleFrom}
+                            onConfirm = {this.handleDatePickedFrom}
+                            onCancel  = {this.hideDateTimePicker}
+                            mode      = {'time'}
+                          />
                     </View>
                   </View>
                 </View>
@@ -1026,17 +1010,17 @@ navigateScreen=(route)=>{
                     </View>
                     <View style={styles.inputTextWrapper3}>
                       <TouchableOpacity
-                          onPress={this.timepicker1}
+                          onPress={this.showDateTimePickerTo}
                           title="Show time picker!"
                         >
                         <Text style={styles.timeSelect}>{this.formatAMPM(this.state.date1)}</Text>
                         </TouchableOpacity>
-                         { show1 && <DateTimePicker value={date1}
-                            mode={mode}
-                            is24Hour={false}
-                            display="default"
-                            onChange={this.setDate1} />
-                        }
+                         <DateTimePicker
+                            isVisible = {this.state.isDateTimePickerVisibleTo}
+                            onConfirm = {this.handleDatePickedTo}
+                            onCancel  = {this.hideDateTimePicker}
+                            mode      = {'time'}
+                          />
                     </View>
                   </View>
                 </View>
@@ -1182,6 +1166,7 @@ navigateScreen=(route)=>{
                             controls={true}
                             resizeMode={"stretch"}
                             style={{height:150,width:250,marginLeft:20}} 
+                            paused={true} 
                           />
                           <Icon    
                               name    = "times"
@@ -1233,12 +1218,37 @@ navigateScreen=(route)=>{
 
               
             </View>
-              <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
-                  <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
-                     <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
-                     </Text>
-                  </TouchableOpacity>
-              </View>
+              <View style={[{flexDirection:"row"},styles.marginBottom45]}>
+                <Button
+                    onPress={()=> this.props.navigation.dispatch(NavigationActions.back())}
+                    titleStyle      = {styles.buttonText}
+                    title           = "Back"
+                    buttonStyle     = {[styles.button,{ backgroundColor:"#d9534f"}]}
+                    containerStyle  = {[styles.nextBtnhover2,styles.marginBottom15]}
+                    iconLeft
+                    icon = {<Icon
+                    name="chevrons-left" 
+                    type="feather"
+                    size={22}
+                    color="white"
+                    />}
+                />
+
+                <Button
+                    onPress         = {this.submitFun.bind(this)}
+                    titleStyle      = {styles.buttonText}
+                    title           = "Save & Next"
+                    buttonStyle     = {styles.button}
+                    containerStyle  = {[styles.nextBtnhover3,styles.marginBottom15]}
+                    iconRight
+                    icon = {<Icon
+                    name="chevrons-right" 
+                    type="feather"
+                    size={22}
+                    color="white"
+                    />}
+                />
+          </View> 
               
            </KeyboardAwareScrollView>   
         </ScrollView>

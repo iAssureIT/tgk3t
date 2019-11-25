@@ -10,6 +10,7 @@ import {
   Image,TextInput,
   Alert,
   StyleSheet,
+
   // Picker
 } from 'react-native';
 import Hr                                   from "react-native-hr-component";
@@ -25,7 +26,7 @@ import {RadioGroup, RadioButton}            from 'react-native-flexi-radio-butto
 import HeaderBar                            from '../../layouts/HeaderBar/HeaderBar.js';
 import styles                               from './styles.js';
 import {colors,sizes}                       from '../../config/styles.js';
-// import { Dropdown } from 'react-native-material-dropdown';
+// import { Dropdown }                         from 'react-native-material-dropdown';
 import SwitchToggle                         from 'react-native-switch-toggle';
 import RNPickerSelect                       from 'react-native-picker-select';
 
@@ -79,29 +80,6 @@ export default class BasicInfo extends ValidationComponent{
       propertyType    : '',
       propertySubType : '',
       pincode         : '',
-      // stateData       : [
-      //                     {value: 'Maharashtra',},
-      //                     {value: 'Punjab',},
-      //                     {value: 'Delhi',},
-      //                     {value: 'Kerala',}
-      //                   ],
-
-      // cityData        : [
-      //                     {value: 'Pune City',},
-      //                     {value: 'Pashan',},
-      //                     {value: 'Khanapur',}
-      //                   ],
-
-      // areaData        : [
-      //                     {value: 'Hadapsar',},
-      //                     {value: 'Kharadi',}
-      //                   ],
-
-      // subAreaData     : [
-      //                     {value: 'Amanora Township',},
-      //                     {value: 'Bhosale Nagar',},
-      //                     {value: 'Gadital'}
-      //                   ],
       societyName     : '',
       house           : '',
       landmark        : '',
@@ -175,9 +153,10 @@ export default class BasicInfo extends ValidationComponent{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                               Alert.alert("Your session is expired!"," Please loginagain.");
-                                AsyncStorage.removeItem('token');
-                               this.navigateScreen('MobileScreen');                                        
+                              Alert.alert("Your session is expired!"," Please login again.");
+                              AsyncStorage.removeItem('fullName');
+                              AsyncStorage.removeItem('token');
+                              this.navigateScreen('MobileScreen');                                        
                           }
           });
     }
@@ -328,7 +307,7 @@ export default class BasicInfo extends ValidationComponent{
     return error;
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -377,7 +356,7 @@ export default class BasicInfo extends ValidationComponent{
                           stateCode                 : res.data.propertyLocation.state,
                           cityName                  : res.data.propertyLocation.city,
                           areaName                  : res.data.propertyLocation.area,
-                          subAreaName               : res.data.propertyLocation.subArea,
+                          subAreaName               : res.data.propertyLocation.subArea ? res.data.propertyLocation.subArea : null,
                           societyName               : res.data.propertyLocation.society,
                           address                   : res.data.propertyLocation.address,
                           house                     : res.data.propertyLocation.address,
@@ -426,7 +405,8 @@ export default class BasicInfo extends ValidationComponent{
                                       console.log("error = ",error);
                                       if(error.message === "Request failed with status code 401")
                                       {
-                                          Alert.alert("Your session is expired!"," Please loginagain.");
+                                          Alert.alert("Your session is expired!"," Please login again.");
+                                          AsyncStorage.removeItem('fullName');
                                           AsyncStorage.removeItem('token');
                                           this.navigateScreen('MobileScreen');
                                       }
@@ -437,7 +417,8 @@ export default class BasicInfo extends ValidationComponent{
                                     console.log("error = ",error);
                                     if(error.message === "Request failed with status code 401")
                                     {
-                                        Alert.alert("Your session is expired!"," Please loginagain.");
+                                        Alert.alert("Your session is expired!"," Please login again.");
+                                        AsyncStorage.removeItem('fullName');
                                         AsyncStorage.removeItem('token');
                                         this.navigateScreen('MobileScreen');
                                     }
@@ -449,12 +430,13 @@ export default class BasicInfo extends ValidationComponent{
                                   console.log("error = ",error);
                                   if(error.message === "Request failed with status code 401")
                                   {
-                                      Alert.alert("Your session is expired!"," Please loginagain.");
+                                      Alert.alert("Your session is expired!"," Please login again.");
+                                      AsyncStorage.removeItem('fullName');
                                       AsyncStorage.removeItem('token');
                                       this.navigateScreen('MobileScreen');
                                   }
                               }); 
-                        if(this.state.cityName != null &&  this.state.areaName != null && this.state.subAreaName != null && this.state.societyName != null)
+                        if(this.state.cityName !== null &&  this.state.areaName !== null && this.state.subAreaName !== null && this.state.societyName !== null)
                         {
                            var first  = this.state.cityName.toUpperCase().slice(0,2);
                            var second = this.state.areaName.toUpperCase().slice(0,2);
@@ -475,9 +457,10 @@ export default class BasicInfo extends ValidationComponent{
                               console.log("error = ",error);
                               if(error.message === "Request failed with status code 401")
                               {
-                                    Alert.alert("Your session is expired!"," Please loginagain.");
-                                    AsyncStorage.removeItem('token');
-                                    this.navigateScreen('MobileScreen');
+                                  Alert.alert("Your session is expired!"," Please login again.");
+                                  AsyncStorage.removeItem('fullName');
+                                  AsyncStorage.removeItem('token');
+                                  this.navigateScreen('MobileScreen');
               
                               }
                           });
@@ -557,7 +540,7 @@ export default class BasicInfo extends ValidationComponent{
               )
             {
               console.log("same data");
-                  AsyncStorage.setItem("propertyId",ov._id );
+                  AsyncStorage.setItem("propertyId",ov._id);
                   AsyncStorage.setItem("transactionType",this.state.transactionType);
                   AsyncStorage.setItem("propertyType",this.state.propertyType);
                   this.navigateScreen('PropertyDetails');          
@@ -572,7 +555,7 @@ export default class BasicInfo extends ValidationComponent{
                 // console.log("here updated data",res);
                 if(res.status === 200){
                   // console.log("res.data.property_id",res.data.property_id);
-                  AsyncStorage.setItem("propertyId",res.data.property_id);
+                  // AsyncStorage.setItem("propertyId",res.data.property_id);
                   AsyncStorage.setItem("transactionType",this.state.transactionType);
                   AsyncStorage.setItem("propertyType",this.state.propertyType);
                   this.navigateScreen('PropertyDetails');          
@@ -612,7 +595,8 @@ export default class BasicInfo extends ValidationComponent{
                           console.log("error = ",error);
                           if(error.message === "Request failed with status code 401")
                           {
-                                Alert.alert("Your session is expired!"," Please loginagain.");
+                               Alert.alert("Your session is expired!"," Please login again.");
+                                AsyncStorage.removeItem('fullName');
                                 AsyncStorage.removeItem('token');
                                 this.navigateScreen('MobileScreen');             
                                  
@@ -626,7 +610,7 @@ export default class BasicInfo extends ValidationComponent{
 
   }
 
-  handlePincode(pincode){
+ handlePincode(pincode){
     
     var pincode = this.state.pincode;
      this.setState({
@@ -647,7 +631,6 @@ export default class BasicInfo extends ValidationComponent{
             cityName      : response.data[0].cityName,
             areaName      : response.data[0].areaName,
           },()=>{
-            this.validInputField('stateCode', 'stateCodeError');
             //========== Get City List  =====================
             url = 'http://locationapi.iassureit.com/api/cities/get/citiesByState/IN/'+this.state.stateCode;
             axios({
@@ -658,25 +641,23 @@ export default class BasicInfo extends ValidationComponent{
                 this.setState({
                   listofCities : response.data,
                 },()=>{
-                  this.validInputField('cityName', 'cityNameError');
                    var allCityData = this.state.listofCities;
-                    cityname = allCityData.map(a=>a.cityName);
-                    // console.log("cityname========.",cityname)
+                    // cityname = allCityData.map(a=>a.cityName);
                     var cityList=[];
                     for (var i = 0; i < allCityData.length; i++) {
                         var city = {
                           label:allCityData[i].cityName,
-                          // value:allCityData[i].cityName,
-                          value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
+                          value:allCityData[i].cityName,
+                          // value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
                         }
                        cityList.push(city);
                     }
-                    // this.setState({
-                    //   onlyCity : cityList,
-                    // },()=>{
+                    this.setState({
+                      onlyCity : cityList,
+                    },()=>{
                     // console.log("only city name",this.state.onlyCity);
 
-                    // })
+                    })
                 })
 
                
@@ -684,9 +665,10 @@ export default class BasicInfo extends ValidationComponent{
                     console.log("error = ",error);
                     if(error.message === "Request failed with status code 401")
                     {
-                          Alert.alert("Your session is expired!"," Please loginagain.");
-                          AsyncStorage.removeItem('token');
-                          this.navigateScreen('MobileScreen');             
+                        Alert.alert("Your session is expired!"," Please login again.");
+                        AsyncStorage.removeItem('fullName');
+                        AsyncStorage.removeItem('token');
+                        this.navigateScreen('MobileScreen');             
                            
                     }
             });
@@ -702,7 +684,6 @@ export default class BasicInfo extends ValidationComponent{
                 this.setState({
                   listofAreas : response.data
                 },()=>{
-                  this.validInputField('areaName', 'areaNameError');
                    var allAreaData = this.state.listofAreas;
                     // cityname = allCityData.map(a=>a.cityName);
                     var areaList=[];
@@ -713,21 +694,22 @@ export default class BasicInfo extends ValidationComponent{
                         }
                        areaList.push(area);
                     }
-                    // this.setState({
-                    //   onlyArea : areaList,
-                    // },()=>{
-                    // // console.log("onlyArea name",this.state.onlyArea);
+                    this.setState({
+                      onlyArea : areaList,
+                    },()=>{
+                    // console.log("onlyArea name",this.state.onlyArea);
 
-                    // })
+                    })
                 })
             }).catch((error)=>{
                   console.log("error = ",error);
                   if(error.message === "Request failed with status code 401")
                   {
               
-                     Alert.alert("Your session is expired!"," Please loginagain.");
-                      AsyncStorage.removeItem('token');
-                     this.navigateScreen('MobileScreen');                
+                    Alert.alert("Your session is expired!"," Please login again.");
+                    AsyncStorage.removeItem('fullName');
+                    AsyncStorage.removeItem('token');
+                    this.navigateScreen('MobileScreen');                
                  
                   }
             });
@@ -742,7 +724,6 @@ export default class BasicInfo extends ValidationComponent{
               this.setState({
                 subAreaList : response.data
               },()=>{
-                  this.validInputField('subAreaName', 'subAreaNameError');
                    var allSubAreaData= this.state.subAreaList;
 
                     // cityname = allCityData.map(a=>a.cityName);
@@ -765,11 +746,10 @@ export default class BasicInfo extends ValidationComponent{
               console.log("error = ",error);
               if(error.message === "Request failed with status code 401")
               {
-         
-                 Alert.alert("Your session is expired!"," Please loginagain.");
-                 AsyncStorage.removeItem('token');
-                 this.navigateScreen('MobileScreen');               
-             
+                Alert.alert("Your session is expired!"," Please login again.");
+                AsyncStorage.removeItem('fullName');
+                AsyncStorage.removeItem('token');
+                this.navigateScreen('MobileScreen');               
               }
           });
         });
@@ -778,7 +758,8 @@ export default class BasicInfo extends ValidationComponent{
           console.log("error = ",error);
           if(error.message === "Request failed with status code 401")
           {
-            Alert.alert("Your session is expired!"," Please loginagain.");
+            Alert.alert("Your session is expired!"," Please login again.");
+            AsyncStorage.removeItem('fullName');
             AsyncStorage.removeItem('token');
             this.navigateScreen('MobileScreen');              
           }
@@ -798,9 +779,9 @@ export default class BasicInfo extends ValidationComponent{
     });
   }
 
-  selectState(stateCode){
+selectState(stateCode){
     var selectedState = stateCode;
-    console.log("selectedState",selectedState);
+    // console.log("selectedState",selectedState);
     this.setState({
         stateCode : selectedState,
       });
@@ -818,9 +799,9 @@ export default class BasicInfo extends ValidationComponent{
                     var cityList=[];
                     for (var i = 0; i < allCityData.length; i++) {
                         var city = {
-                          // label:allCityData[i].cityName,
-                          // value:allCityData[i].cityName,
-                          value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
+                          label:allCityData[i].cityName,
+                          value:allCityData[i].cityName,
+                          // value:allCityData[i].districtName+'-'+allCityData[i].blockName+'-'+allCityData[i].cityName,
 
                         }
                        cityList.push(city);
@@ -836,14 +817,16 @@ export default class BasicInfo extends ValidationComponent{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
             {
-                  Alert.alert("Your session is expired!"," Please loginagain.");
-                  AsyncStorage.removeItem('token');
-                  this.navigateScreen('MobileScreen');        
+                Alert.alert("Your session is expired!"," Please login again.");
+                AsyncStorage.removeItem('fullName');
+                AsyncStorage.removeItem('token');
+                this.navigateScreen('MobileScreen');        
                    
             }
       });
 
   }
+
 
   selectCity(cityName){
      
@@ -854,9 +837,6 @@ export default class BasicInfo extends ValidationComponent{
       var blockName    = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[1] : "Haveli";
       var cityName   = dist_block_city!=null && dist_block_city.includes("-") ? dist_block_city.split('-')[2] : "Pune City";
 
-      console.log("districtName",districtName);
-      console.log("blockName",blockName);
-      console.log("cityName",cityName);
     var url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+this.state.stateCode+'/'+districtName+'/'+blockName+'/'+cityName+'/' ;
 
       this.setState({
@@ -888,18 +868,20 @@ export default class BasicInfo extends ValidationComponent{
                       onlyArea : areaList,
                     },()=>{
                     // console.log("onlyArea name",this.state.onlyArea);
+
                     })
                 })
       }).catch((error)=>{
               console.log("error = ",error);
               if(error.message === "Request failed with status code 401")
               {
-                    Alert.alert("Your session is expired!"," Please loginagain.");
-                    AsyncStorage.removeItem('token');
-                    this.navigateScreen('MobileScreen');               
-                     
+                  Alert.alert("Your session is expired!"," Please login again.");
+                  AsyncStorage.removeItem('fullName');
+                  AsyncStorage.removeItem('token');
+                  this.navigateScreen('MobileScreen');               
               }
-         });
+      });
+
   }
 
   selectArea(areaName){
@@ -916,7 +898,7 @@ export default class BasicInfo extends ValidationComponent{
     this.setState({
       areaName : areaName,
       pincode : index===-1 ? null: this.state.listofAreas[index].pincode,
-      subAreaName:"",
+      // subAreaName:"",
     })
     
     }
@@ -953,9 +935,10 @@ export default class BasicInfo extends ValidationComponent{
           console.log("error = ",error);
           if(error.message === "Request failed with status code 401")
           {
-              Alert.alert("Your session is expired!"," Please loginagain.");
-              AsyncStorage.removeItem('token');
-              this.navigateScreen('MobileScreen');             
+            Alert.alert("Your session is expired!"," Please login again.");
+            AsyncStorage.removeItem('fullName');
+            AsyncStorage.removeItem('token');
+            this.navigateScreen('MobileScreen');             
           }
     });
 
@@ -997,10 +980,10 @@ export default class BasicInfo extends ValidationComponent{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
             {
-                  Alert.alert("Your session is expired!"," Please loginagain.");
-                  AsyncStorage.removeItem('token');
-                  this.navigateScreen('MobileScreen');            
-                   
+                Alert.alert("Your session is expired!"," Please login again.");
+                AsyncStorage.removeItem('fullName');
+                AsyncStorage.removeItem('token');
+                this.navigateScreen('MobileScreen');            
             }
         });
 
@@ -1019,10 +1002,10 @@ export default class BasicInfo extends ValidationComponent{
                 console.log("error = ",error);
                 if(error.message === "Request failed with status code 401")
                 {
-                      Alert.alert("Your session is expired!"," Please loginagain.");
-                      AsyncStorage.removeItem('token');
-                      this.navigateScreen('MobileScreen');           
-                       
+                    Alert.alert("Your session is expired!"," Please login again.");
+                    AsyncStorage.removeItem('fullName');
+                    AsyncStorage.removeItem('token');
+                    this.navigateScreen('MobileScreen');           
                 }
           });   
       }
@@ -1066,9 +1049,10 @@ export default class BasicInfo extends ValidationComponent{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
             {
-                Alert.alert("Your session is expired!"," Please loginagain.");
-                AsyncStorage.removeItem('token');
-                this.navigateScreen('MobileScreen');             
+              Alert.alert("Your session is expired!"," Please login again.");
+              AsyncStorage.removeItem('fullName');
+              AsyncStorage.removeItem('token');
+              this.navigateScreen('MobileScreen');             
             }
         });
     }
@@ -1081,22 +1065,22 @@ export default class BasicInfo extends ValidationComponent{
     let {propertyHolder} = this.state;
     const placeholderState = {
       label: 'State',
-      value: null,
+      value: "",
       color: '#9EA0A4',
     };
      const placeholderCity = {
       label: 'City',
-      value: null,
+      value: "",
       color: '#9EA0A4',
     };
     const placeholderArea = {
       label: 'Area/Suburb',
-      value: null,
+      value: "",
       color: '#9EA0A4',
     };
      const placeholderSubarea = {
       label: 'Sub-Area',
-      value: null,
+      value: "",
       color: '#9EA0A4',
     };
 
@@ -1117,9 +1101,11 @@ export default class BasicInfo extends ValidationComponent{
          // console.log("index here", this.state.index);
       }
 
+      console.log("subAreaName render",this.state.subAreaName);
+
     return (
       <React.Fragment>
-        <HeaderBar showBackBtn={true} navigation={navigation}/>
+        <HeaderBar showBackBtn={false} navigation={navigation}/>
 
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <KeyboardAwareScrollView>  
@@ -1281,7 +1267,7 @@ export default class BasicInfo extends ValidationComponent{
                     <View style={[{borderColor: colors.black,
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
-                          {<Picker
+                          {/*<Picker
                             selectedValue       ={this.state.stateCode}
                             style               ={[styles.ddStyle,{height:40}]}
                             placeholder         = "State"
@@ -1299,7 +1285,7 @@ export default class BasicInfo extends ValidationComponent{
                             onValueChange={stateCode => {this.setState({stateCode},()=> {this.validInputField('stateCode', 'stateCodeError');this.selectState(stateCode);})}}
                             >
                             <Picker.Item value="" label="Select State" color={colors.textLight}/>
-                            {this.state.listofStates ?
+                            {this.state.listofStates && this.state.listofStates.length > 0 ?
                               this.state.listofStates.map((data, index)=>{
                                 return(
                                          <Picker.Item key={index} value={data.stateCode} label={data.stateName} />
@@ -1309,21 +1295,17 @@ export default class BasicInfo extends ValidationComponent{
                               null
                             }
                             
-                          </Picker>}
+                          </Picker>*/}
 
                           
 
-                           {/* <RNPickerSelect
-                              onValueChange={(stateCode) =>
-                              this.selectState(stateCode)
-                              // {this.selectState(stateCode),this.validInputField('stateCode', 'stateCodeError'); }}
-                              
-                            }
+                           { <RNPickerSelect
+                            onValueChange={stateCode => {this.setState({stateCode},()=> {this.validInputField('stateCode', 'stateCodeError');this.selectState(stateCode);})}}
                             value                  = {this.state.stateCode}
                             style                  = {pickerSelectStyles}
                             placeholder            = {placeholderState}
                             items                  = {this.state.onlyState.length>0 ? this.state.onlyState : defaultOption }
-                            />*/}
+                            />}
                         
                       </View>
                     </View>
@@ -1340,7 +1322,7 @@ export default class BasicInfo extends ValidationComponent{
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
                  
-                         {<Picker
+                         {/*<Picker
                             selectedValue       ={this.state.cityName}
                             style               ={[styles.ddStyle,{height:40}]}
                             placeholder         = "City"
@@ -1369,18 +1351,16 @@ export default class BasicInfo extends ValidationComponent{
                               <Picker.Item label="Select State first" />
                             }
                             
-                          </Picker>}
+                          </Picker>*/}
                           {/*console.log("city name",this.state.cityName)*/}
-                           {/*<RNPickerSelect
-                              onValueChange={(cityName) =>
-                              this.selectCity(cityName)
-                            }
+                           {<RNPickerSelect
+                            onValueChange={cityName => {this.setState({cityName},()=> {this.validInputField('cityName', 'cityNameError');this.selectCity(cityName);})}}
                             value                       = {this.state.cityName}
                             style                       = {pickerSelectStyles}
                             placeholder                 = {placeholderCity}
                             items                       = {this.state.onlyCity.length>0 ? this.state.onlyCity : defaultOption }
                             useNativeAndroidPickerStyle = {false}
-                            />*/}
+                            />}
                            
                       </View>
                     </View>
@@ -1397,8 +1377,8 @@ export default class BasicInfo extends ValidationComponent{
                                    borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
                          
-  {
-                        <Picker
+                      {
+                        /*<Picker
                             selectedValue       ={this.state.areaName}
                             style               ={[styles.ddStyle,{height:40}]}
                             placeholder         = "Area/Suburb"
@@ -1427,19 +1407,17 @@ export default class BasicInfo extends ValidationComponent{
                               
                             }
                             
-                          </Picker>}
+                          </Picker>*/}
                           {/*console.log("this.state.onlyArea in render",this.state.onlyArea)*/}
 
 
-                          {/*<RNPickerSelect
-                              onValueChange={(areaName) =>
-                              this.selectArea(areaName)
-                            }
+                          {<RNPickerSelect
+                            onValueChange={areaName => {this.setState({areaName},()=> {this.validInputField('areaName', 'areaNameError');this.selectArea(areaName);})}}
                             value                  = {this.state.areaName}
                             style                  = {pickerSelectStyles}
                             placeholder            = {placeholderArea}
                             items                  = {this.state.onlyArea.length>0 ? this.state.onlyArea : defaultOption }
-                            />*/}
+                            />}
                       </View>
                     </View>
                     {this.displayValidationError('areaNameError')}
@@ -1451,11 +1429,11 @@ export default class BasicInfo extends ValidationComponent{
 
                   <View style={[{width:'46%'}]}>
                     <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area</Text>
-                    <View style={[{borderColor: colors.black,
-                                   borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
+                    <View style={[{borderColor: colors.black,borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
-                      {/*console.log("onlySubArea in render",this.state.onlySubArea)*/}
-                       { this.state.onlySubArea.length>0  ? 
+                      {console.log("onlySubArea in render",this.state.onlySubArea)}
+                      {console.log("this.state.subAreaName in render",this.state.subAreaName)}
+                       { /*this.state.onlySubArea.length>0  ? 
                       
                          <Picker
                             selectedValue       ={this.state.subAreaName}
@@ -1508,23 +1486,23 @@ export default class BasicInfo extends ValidationComponent{
                                   style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                                   labelTextStyle        = {styles.textLabel}
                                   keyboardType          = "default"
-                              />
+                              />*/
                         }
 
 
-                          { /*this.state.onlySubArea.length>0  ? 
+                          { this.state.onlySubArea.length>0 ? 
                              <RNPickerSelect
-                                onValueChange          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError'); })}}
+                                onValueChange          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError');})}}
                                 onBlur                 = {()=>this.handleSubarea()}
                                 value                  = {this.state.subAreaName}
                                 style                  = {pickerSelectStyles}
                                 placeholder            = {placeholderSubarea}
-                                items                  = {this.state.onlySubArea}
+                                items                  = {this.state.onlySubArea.length>0 ? this.state.onlySubArea : defaultOption}
                               />
                               :
                                <TextInput
                                 placeholder           = "Sub-Area"
-                                onChangeText          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError'); })}}
+                                onChangeText          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError');})}}
                                 onBlur                = {()=>this.handleSubarea()}
                                 lineWidth             = {1}
                                 tintColor             = {colors.button}
@@ -1541,8 +1519,9 @@ export default class BasicInfo extends ValidationComponent{
                                 style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
                                 labelTextStyle        = {styles.textLabel}
                                 keyboardType          = "default"
+
                               />
-                            */}
+                            }
                       </View>
                     </View>
                     {this.displayValidationError('subAreaNameError')}
@@ -1616,7 +1595,7 @@ export default class BasicInfo extends ValidationComponent{
                 <View style={styles.inputImgWrapper}>
                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                 </View>
-                <View style={styles.inputTextWrapper}>
+                <View style={styles.inputTextWrapper68}>
                   <TextInput
                     placeholder           = "Enter landmark"
                     onChangeText          = {landmark => {this.setState({landmark})}}
@@ -1659,12 +1638,43 @@ export default class BasicInfo extends ValidationComponent{
                 />}
               />*/}
             </View>
-              <View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
-                      <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
-                         <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
-                         </Text>
-                      </TouchableOpacity>
-                  </View>
+              {/*<View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
+                  <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
+                     <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
+                     </Text>
+                  </TouchableOpacity>
+              </View>*/}
+              <View style={[{flexDirection:"row"},styles.marginBottom45]}>
+                <Button
+                    onPress={()=> this.props.navigation.dispatch(NavigationActions.back())}
+                    titleStyle      = {styles.buttonText}
+                    title           = "Back"
+                    buttonStyle     = {[styles.button,{ backgroundColor:"#d9534f"}]}
+                    containerStyle  = {[styles.nextBtnhover2,styles.marginBottom15]}
+                    iconLeft
+                    icon = {<Icon
+                    name="chevrons-left" 
+                    type="feather"
+                    size={22}
+                    color="white"
+                    />}
+                />
+
+                <Button
+                    onPress         = {this.submitFun.bind(this)}
+                    titleStyle      = {styles.buttonText}
+                    title           = "Save & Next"
+                    buttonStyle     = {styles.button}
+                    containerStyle  = {[styles.nextBtnhover3,styles.marginBottom15]}
+                    iconRight
+                    icon = {<Icon
+                    name="chevrons-right" 
+                    type="feather"
+                    size={22}
+                    color="white"
+                    />}
+                />
+            </View> 
           </KeyboardAwareScrollView>
         </ScrollView>
      
@@ -1718,18 +1728,22 @@ BasicInfo.defaultProps = {
     minlength(length, value) {
       if (length === void (0)) {
         throw 'ERROR: It is not a valid length, checkout your minlength settings.';
-      } else if (value.length > length) {
-        return true;
-      }
+        } else if(value!==null){
+        if (value.length > length) {
+          return true;
+        }
       return false;
+      } 
     },
     equalLength(length, value) {
       if (length === void (0)) {
         throw 'ERROR: It is not a valid length, checkout your minlength settings.';
-      } else if (value.length === length) {
-        return true;
-      }
+      } else if(value!==null){
+        if (value.length === length) {
+          return true;
+        }
       return false;
+      } 
     },
   },
 }

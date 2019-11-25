@@ -27,7 +27,9 @@ export default StyleSheet.create({
     flexWrap:'wrap',
     width: '100%',
   },
-
+   marginBottom45:{
+    marginBottom: 45
+  },
 
   buttonContainer:{
     width:'31%',

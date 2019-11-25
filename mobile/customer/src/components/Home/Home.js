@@ -55,7 +55,7 @@ navigateScreen=(route)=>{
     this.setState({activeBtn:option});
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
         this.retrieveToken();
   }
 

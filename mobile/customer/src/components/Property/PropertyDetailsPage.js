@@ -25,14 +25,15 @@ import styles                               from './styles.js';
 import {colors,sizes}                       from '../../config/styles.js';
 import CheckBox                             from 'react-native-check-box'
 import Video                                from 'react-native-video';
-import MapView,{PROVIDER_GOOGLE}            from 'react-native-maps';
+import MapView                              from 'react-native-maps';
 import Carousel                             from 'react-native-snap-carousel';
 
 const window = Dimensions.get('window');
+  var mapStyle = []
 
 export default class PropertyDetailsPage extends ValidationComponent{
 
-   
+
 navigateScreen=(route)=>{
     const navigateAction = NavigationActions.navigate({
     routeName: route,
@@ -51,11 +52,11 @@ navigateScreen=(route)=>{
         longitude: 73.9259,
         latitudeDelta: 0.04864195044303443,
         longitudeDelta: 0.040142817690068,
+      },
         propertyProfile: "",
         uid:"",
         token:"",
         property_id : "",
-      },
     };
   }
 
@@ -63,7 +64,7 @@ navigateScreen=(route)=>{
     this._retrieveData();
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -274,7 +275,7 @@ navigateScreen=(route)=>{
     return (
       <React.Fragment>      
         <HeaderBar showBackBtn={true}  navigation={navigation}/>
-        {propertyProfile!=null ?  
+        {propertyProfile ?  
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={{width:'100%'}}>
             <View style={{width:'100%',backgroundColor:'#fff'}}>
@@ -311,7 +312,7 @@ navigateScreen=(route)=>{
                             buttonStyle     = {styles.button4}
                             onPress         = {this.editProp.bind(this)}
                             containerStyle  = {[styles.buttonContainer4]}
-                            style           = {{marginLeft:40}}
+                            style           = {{marginLeft:"10%"}}
                           />
                          :
                          null 
@@ -754,7 +755,7 @@ navigateScreen=(route)=>{
                           />:
                           null
                         }
-                       <Text style={styles.textSmall}>{propertyProfile.financial.depositAmount? propertyProfile.financial.depositAmount:"--"}</Text>
+                       <Text style={styles.textSmall}>{propertyProfile.financial.depositAmount?this.convertNumberToRupees(propertyProfile.financial.depositAmount):"--"}</Text>
                       </View>  
                     </View>
                   </View>
@@ -781,7 +782,7 @@ navigateScreen=(route)=>{
                       />:
                       null
                     }
-                     <Text style={styles.textSmall}>{propertyProfile.financial.maintenanceCharges ? propertyProfile.financial.maintenanceCharges : "--"}/{propertyProfile.financial.maintenancePer ? propertyProfile.financial.maintenancePer : "--"}</Text>
+                     <Text style={styles.textSmall}>{propertyProfile.financial.maintenanceCharges ? this.convertNumberToRupees(propertyProfile.financial.maintenanceCharges) : "--"}/{propertyProfile.financial.maintenancePer ? propertyProfile.financial.maintenancePer : "--"}</Text>
                     </View>  
                   </View>
                 </View>
@@ -849,20 +850,16 @@ navigateScreen=(route)=>{
                 />
               <Text style={styles.textSmallLight}>{propertyProfile.propertyLocation.society+", "+propertyProfile.propertyLocation.subArea+", "+propertyProfile.propertyLocation.area+", "+propertyProfile.propertyLocation.city}</Text>
             </View>
-            <MapView
-              ref={map => this.map = map}
-              provider={PROVIDER_GOOGLE}
-              initialRegion={this.state.region}
+            
+            {<MapView
+              // ref={map => this.map = map}
+              // provider={PROVIDER_GOOGLE}
+              region={this.state.region}
               style={[{width:'100%',height:200},styles.marginBottom15]}
+              customMapStyle={mapStyle}
               // customMapStyle={mapStyle}
             >
-              <MapView.Marker 
-                coordinate={{
-                  latitude: 18.5089,
-                  longitude: 73.9259,
-                }}
-              />
-            </MapView>
+            </MapView>}
 
             {/*<View style={[styles.divider,styles.marginBottom15]}></View>
 

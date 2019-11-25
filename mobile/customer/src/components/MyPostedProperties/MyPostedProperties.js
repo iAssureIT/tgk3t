@@ -9,22 +9,23 @@ import {
   ImageBackground,
   Image,TextInput,
   Alert,
+  // BackAndroid
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
 import axios                      from 'axios';
+
 import ValidationComponent        from "react-native-form-validator";
 import { TextField }              from 'react-native-material-textfield';
-import CheckBox                   from 'react-native-check-box'
-import AsyncStorage               from '@react-native-community/async-storage';
 import { NavigationActions, StackActions }  from 'react-navigation';
 
 import HeaderBar                  from '../../layouts/HeaderBar/HeaderBar.js';
-import Loading                    from '../../layouts/Loading/Loading.js'
-
 import styles                     from './styles.js';
 import {colors,sizes}             from '../../config/styles.js';
-
+import CheckBox                   from 'react-native-check-box'
+import AsyncStorage               from '@react-native-community/async-storage';
+import Loading                    from '../../layouts/Loading/Loading.js'
+import Dialog                     from "react-native-dialog";
 const window = Dimensions.get('window');
 
 export default class MyPostedProperties extends ValidationComponent{
@@ -43,20 +44,19 @@ export default class MyPostedProperties extends ValidationComponent{
       searchText: '',
       activeBtn: 'buy',
       includeNearby: false,
-      activePropType: 'flat',
-      activeRoomIndex: 0,
-      searchResults:[],
+      // activePropType: 'flat',
+      // activeRoomIndex: 0,
+      postedProps:[],
       uid:"",
       token:"",
-      searchData:"",
+      // searchData:"",
       isLoading :true,
     };
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
-
 
   componentDidMount(){
     this._retrieveData();
@@ -74,13 +74,13 @@ export default class MyPostedProperties extends ValidationComponent{
     this.setState({includeNearby: !this.state.includeNearby});
   }
 
-  setActive = (name)=>{
-    this.setState({activePropType:name});
-  }
+  // setActive = (name)=>{
+  //   this.setState({activePropType:name});
+  // }
 
-  setActiveRoom = (index)=>{
-    this.setState({activeRoomIndex:index});
-  }
+  // setActiveRoom = (index)=>{
+  //   this.setState({activeRoomIndex:index});
+  // }
 
   convertNumberToRupees(totalPrice){
       return Math.abs(Number(totalPrice)) >= 1.0e+7
@@ -102,24 +102,24 @@ export default class MyPostedProperties extends ValidationComponent{
     try {
       const uid        = await AsyncStorage.getItem('uid');
       const token      = await AsyncStorage.getItem('token');
-      const searchData = await AsyncStorage.getItem('searchData');
-      AsyncStorage.setItem('newProp',false);
+      // const searchData = await AsyncStorage.getItem('searchData');
+      // AsyncStorage.setItem('newProp',false);
       
       if (uid !== null && token !== null) {
         // We have data!!
         this.setState({uid:uid})
         this.setState({token:token})
-        this.setState({searchData:searchData})
+        // this.setState({searchData:searchData})
 
         axios
         .get('/api/properties/mypropertylist/'+uid)
         .then(
-          (searchResults)=>{
-            // console.log(searchResults);
-            const postsdata = searchResults.data;
+          (postedProps)=>{
+            // console.log(postedProps);
+            const postsdata = postedProps.data;
             // console.log("postsdata",postsdata);
             this.setState({
-              searchResults : postsdata,
+              postedProps : postsdata,
               isLoading     : false
               // propertyCity :city,
             });
@@ -133,7 +133,7 @@ export default class MyPostedProperties extends ValidationComponent{
               {
                   AsyncStorage.setItem("originPage","myPostedProp");
                   Alert.alert("Your session is expired!","Please login again.")
-                  this.props.navigation.navigate("MobileScreen");
+                  this.navigateScreen("MobileScreen");
               }
           })
       }
@@ -162,8 +162,8 @@ export default class MyPostedProperties extends ValidationComponent{
           <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
             <View style={styles.formWrapper}>
               <Text style={styles.textCenter}>My Posted Properties</Text>
-              {this.state.searchResults && this.state.searchResults.length>0 ? 
-                this.state.searchResults.map((prop,i)=>(
+              {this.state.postedProps && this.state.postedProps.length>0 ? 
+                this.state.postedProps.map((prop,i)=>(
                 <TouchableOpacity key={i} onPress={()=>this.propertyProfile(prop._id)}>
                   <View style={[styles.propertyWrap,styles.marginBottom20]}>
                     {

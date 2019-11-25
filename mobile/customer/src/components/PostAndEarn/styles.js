@@ -45,7 +45,7 @@ export default StyleSheet.create({
     color:colors.grey,
     ...Platform.select({
       ios:{
-        fontSize: 11,
+        fontSize: 12,
       },
     })
 
@@ -226,6 +226,9 @@ export default StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
   },
+  marginBottom45:{
+    marginBottom: 45
+  },
   marginBottom25:{
     marginBottom: 25
   },
@@ -355,6 +358,38 @@ export default StyleSheet.create({
     shadowOpacity: 0.8,
     shadowRadius: 2,
     width:"80%",
+    marginLeft:40,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    },
+  },
+
+  nextBtnhover2:{
+    backgroundColor:"#d9534f",
+    borderColor: "#d9534f",
+    color:"#fff",
+    borderRadius:5,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    width:"35%",
+    marginLeft:40,
+    shadowOffset: {
+      height: 1,
+      width: 1
+    },
+  },
+
+  nextBtnhover3:{
+    backgroundColor:"#337ab7",
+    borderColor: "#204d74",
+    color:"#fff",
+    borderRadius:5,
+    shadowColor: "#000000",
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    width:"35%",
     marginLeft:40,
     shadowOffset: {
       height: 1,

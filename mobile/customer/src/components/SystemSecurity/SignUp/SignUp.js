@@ -11,7 +11,7 @@ import {
   Alert
 } from 'react-native';
 import axios                                from 'axios';
-import {AsyncStorage}                       from 'react-native';
+import AsyncStorage                         from '@react-native-community/async-storage';
 import { Button,Icon, SearchBar }           from 'react-native-elements';
 
 import ValidationComponent                  from "react-native-form-validator";
@@ -180,15 +180,16 @@ export default class SignUp extends ValidationComponent{
     this._retrieveData();
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
+
 
   _retrieveData = async () => {
     try {
       
       const mob = await AsyncStorage.getItem('mobile'); 
-      // console.log("mobile in signup---------------------",mob);
+      console.log("mobile in signup---------------------",mob);
        const uid = await AsyncStorage.getItem('uid');
       // console.log("uid in otpscreen--------------------",uid);
        const token = await AsyncStorage.getItem('token');
@@ -379,7 +380,7 @@ export default class SignUp extends ValidationComponent{
                { <View style={{marginTop:10}}>
                   <Text style={{fontSize:13,fontWeight:'bold'}}>To complete Sign Up, Please enter following Data:</Text>
                 </View>}
-                <View style={[styles.marginTop5]}>
+                <View style={[styles.marginTop15]}>
                   <View style={[styles.inputWrapper]}>
                     <View style={styles.inputImgWrapper}>
                       <Icon name="user-o" type="font-awesome" size={16}  color="#aaa" style={{}}/>
@@ -499,7 +500,7 @@ export default class SignUp extends ValidationComponent{
               onPress         = {this.signupUser.bind(this)}
               // onPress         = {()=>this.props.navigation.navigate('PropertyDetails1')}
               titleStyle      = {styles.buttonText}
-              title           = "Post & Earn"
+              title           = "Next"
               buttonStyle     = {styles.button}
               containerStyle  = {[styles.buttonContainer,styles.marginTop25]}
               iconRight

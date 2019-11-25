@@ -9,6 +9,7 @@ import {
   ImageBackground,
   Image,TextInput,
   Alert,
+  // BackAndroid
 } from 'react-native';
 
 import { Button,Icon, SearchBar } from 'react-native-elements';
@@ -24,6 +25,7 @@ import {colors,sizes}             from '../../config/styles.js';
 import CheckBox                   from 'react-native-check-box'
 import AsyncStorage               from '@react-native-community/async-storage';
 import Loading                    from '../../layouts/Loading/Loading.js'
+import Dialog                     from "react-native-dialog";
 
 const window = Dimensions.get('window');
 
@@ -50,16 +52,17 @@ navigateScreen=(route)=>{
       token:"",
       searchData:"",
       isLoading :true,
+      dialogVisible:false,
     };
   }
 
 
   componentDidMount(){
-    
+    // BackAndroid.addEventListener('hardwareBackPress', () => {return true});
   this._retrieveData();
   }
 
-  componentWillReceiveProps(nextProps){
+  UNSAFE_componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -150,12 +153,14 @@ navigateScreen=(route)=>{
      axios
       .post('/api/interestedProperties/',formValues)
       .then(res=>{
-        console.log("First work");
+        // console.log("First work");
          //After Express Interest, again get all properties
+          this.setState({dialogVisible:true})
           axios
             .post('/api/search/properties/',this.state.searchData)
             .then(resultData =>{
-              console.log("second work");
+
+              // console.log("second work");
               // this.setState({
               //   searchResults:resultData.data,
               // })
@@ -163,27 +168,27 @@ navigateScreen=(route)=>{
               axios
                 .get('/api/properties/'+property_id)
                 .then((propertyData) =>{
-                   console.log("third work");
+                   // console.log("third work");
 
                   axios
                     .get('/api/users/get/one/'+this.state.uid)
                     .then((userData) =>{
-                      console.log("fourth work");
+                      // console.log("fourth work");
 
                           var sendDataToUser = {
-                          "templateName"  : "User - Express Interest",
-                          "toUserId"      : userData.data._id,
-                          "variables"           : {
-                              "userName"          : userData.data.profile.fullName,
-                              "propertyType"      : propertyData.data.propertyType,
-                              "transactionType"   : propertyData.data.transactionType,
-                              "propertyID"        : propertyData.data.propertyCode,
-                              "address"           : propertyData.data.propertyLocation.address,
-                              "society"           : propertyData.data.propertyLocation.society,
-                              "subArea"           : propertyData.data.propertyLocation.subArea,
-                              "area"              : propertyData.data.propertyLocation.area,
-                              "city"              : propertyData.data.propertyLocation.city,
-                              "state"             : propertyData.data.propertyLocation.state,
+                            "templateName"        : "User - Express Interest",
+                            "toUserId"            : userData.data._id,
+                            "variables"           : {
+                                "userName"          : userData.data.profile.fullName,
+                                "propertyType"      : propertyData.data.propertyType,
+                                "transactionType"   : propertyData.data.transactionType,
+                                "propertyID"        : propertyData.data.propertyCode,
+                                "address"           : propertyData.data.propertyLocation.address,
+                                "society"           : propertyData.data.propertyLocation.society,
+                                "subArea"           : propertyData.data.propertyLocation.subArea,
+                                "area"              : propertyData.data.propertyLocation.area,
+                                "city"              : propertyData.data.propertyLocation.city,
+                                "state"             : propertyData.data.propertyLocation.state,
                           }
                       }
                       var sendDataToAdmin = {
@@ -208,12 +213,12 @@ navigateScreen=(route)=>{
                       axios
                       .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
                       .then((result) =>{
-                      console.log("fifth work");
+                      // console.log("fifth work");
 
                         axios
                         .post('/api/masternotifications/post/sendNotification',sendDataToUser)
                         .then((res) =>{
-                          console.log("sixth work");
+                          // console.log("sixth work");
 
                         })
                        .catch((error)=>{
@@ -293,6 +298,12 @@ navigateScreen=(route)=>{
     this.navigateScreen('SearchProperty')
     // this.setState({searchResults:""})
   }
+
+  handleCancel = () => {
+    this.setState({
+     dialogVisible  : false ,
+   });
+  };
 
   render(){
     
@@ -661,6 +672,13 @@ navigateScreen=(route)=>{
         :
          <Loading /> 
        }
+       <Dialog.Container visible={this.state.dialogVisible}>
+          <Dialog.Title>Thanks for your interest.</Dialog.Title>
+          <Dialog.Description>
+            Your interest has been sent to our Field Agent and someone will be in touch with you shortly.
+          </Dialog.Description>
+          <Dialog.Button label="Ok" onPress={this.handleCancel} />
+        </Dialog.Container>
       </React.Fragment>
     );
     

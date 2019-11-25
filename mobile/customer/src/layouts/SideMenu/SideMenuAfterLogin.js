@@ -8,7 +8,8 @@ import {
   Alert,
   ImageBackground,
   // AsyncStorage,
-  Image
+  Image,
+  Platform
 } from 'react-native';
 
 import { 
@@ -45,10 +46,12 @@ export default class SideMenuAfterLogin extends React.Component {
     };
   }	
 
-  componentWillReceiveProps(nextProps){
-        this._retrieveData();
-  }
+  
   componentDidMount(){
+       this._retrieveData();
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
         this._retrieveData();
   }
 
@@ -71,13 +74,18 @@ export default class SideMenuAfterLogin extends React.Component {
       await AsyncStorage.removeItem('uid');
       await AsyncStorage.removeItem('token');
       await AsyncStorage.removeItem('fullName');
+      await AsyncStorage.removeItem('originalotp');
+      await AsyncStorage.removeItem('message');
+      await AsyncStorage.removeItem('mobile');
+      await AsyncStorage.removeItem('fullName');
+
       this.props.navigation.closeDrawer();
       this.navigateScreen('Home');
   }
 
   home(){
   	this.navigateScreen('Home');
-    this.props.navigation.dispatch(DrawerActions.closeDrawer());
+    this.props.navigation.closeDrawer();
   }
 
 
@@ -103,20 +111,20 @@ export default class SideMenuAfterLogin extends React.Component {
 		          resizeMode="cover"
 		        >
 			        <Icon 
-			          onPress={()=>this.props.navigation.dispatch(DrawerActions.closeDrawer())}
+			          onPress={()=>this.props.navigation.closeDrawer()}
 		              size={25} 
 		              name='close' 
 		              type='font-awesome' 
 		              color={colors.white} 
 		              containerStyle={styles.sliderCrossIcon}
 		            />
-			    	<View style={{width:"100%",marginTop:80}}>
+			    	<View style={Platform.os === 'android' ? {width:"100%",marginTop:80} : {width:"100%",marginTop:55}}>
 				        <Image
 				            style={[styles.logoImage]}
 				            source={require("../../images/logo.png")}
 				            resizeMode="contain"
 				         />
-					    {this.state.fullName ?
+					    
 					    <View style={{width:"100%",flexDirection:'row',marginTop:45}}>     
 					        <Icon 
 				              size={15} 
@@ -125,11 +133,8 @@ export default class SideMenuAfterLogin extends React.Component {
 				              color={colors.white} 
 				              containerStyle={styles.iconContainer1}
 				            />
-					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 14,paddingTop:7}}>{"Welcome "+this.state.fullName}</Text>
+					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 14,paddingTop:10}}>Welcome {this.state.fullName ? this.state.fullName : "Guest"}</Text>
 				        </View>
-				        :
-				        null
-				     }
 				    </View>    
 		        </ImageBackground>
 
