@@ -267,7 +267,6 @@ export default class BasicInfo extends ValidationComponent{
   };
   
   validInputField = (stateName, stateErr) => {
-    console.log("Inside");
     const {
       pincode,
       societyName,
@@ -307,7 +306,7 @@ export default class BasicInfo extends ValidationComponent{
     return error;
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps){
+  componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -387,7 +386,6 @@ export default class BasicInfo extends ValidationComponent{
                               this.setState({
                                 listofAreas : response2.data
                               })
-                              console.log("listofAreas=======>",response2.data)
 
                             //==================================================================
                             //      Get SubAreas
@@ -580,7 +578,7 @@ export default class BasicInfo extends ValidationComponent{
              axios
             .post('/api/properties',formValues)
             .then( (res) =>{
-              // console.log("here 1st form result",res.data);
+              console.log("here 1st form result",res.data);
               if(res.status === 200){
                   AsyncStorage.setItem("propertyId",res.data.property_id);
                   AsyncStorage.setItem("transactionType",this.state.transactionType);
@@ -1431,8 +1429,6 @@ selectState(stateCode){
                     <Text style={[styles.heading2,styles.marginBottom5]}>Sub-Area</Text>
                     <View style={[{borderColor: colors.black,borderWidth:1,flexDirection:'row',borderRadius: 3,width:'100%'}]}>
                       <View style={styles.inputTextWrapperFull}>
-                      {console.log("onlySubArea in render",this.state.onlySubArea)}
-                      {console.log("this.state.subAreaName in render",this.state.subAreaName)}
                        { /*this.state.onlySubArea.length>0  ? 
                       
                          <Picker

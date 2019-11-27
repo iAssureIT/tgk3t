@@ -168,7 +168,7 @@ constructor(props){
       // propertyId:"",
       // propertyType:"",
       // transactionType:"",
-      // updateOperation: false,
+      updateOperation: false,
 
     };
 
@@ -177,11 +177,9 @@ constructor(props){
   componentDidMount(){
     this._retrieveData();
   }
-  // componentDidUpdate(){
-  //   this._retrieveData();
-  // }
 
-  UNSAFE_componentWillReceiveProps(nextProps){
+
+  componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -390,7 +388,7 @@ constructor(props){
               this.setState({
                 allAmenities : postsdata,
               },()=>{
-                     if(property_id!=null)
+                     if(property_id!==null)
                               {
                                 // console.log("here edit 2nd form");
 
@@ -411,7 +409,7 @@ constructor(props){
                                           bathrooms       : response.data.propertyDetails.bathrooms,
                                           ageofproperty   : response.data.propertyDetails.ageofProperty,
                                           facing          : response.data.propertyDetails.facing,
-                                          superArea       : response.data.propertyDetails.superArea.toString(),
+                                          superArea       : response.data.propertyDetails.superArea,
                                           builtupArea     : response.data.propertyDetails.builtupArea,
                                           updateOperation : true,
                                           // amenity
@@ -671,7 +669,7 @@ submitFun(){
   var ov = this.state.originalValues;
 
   // console.log("this.state.furnishpantryIndex",this.state.furnishpantryIndex)
-  // console.log("here state value",this.state.furnishpantry);
+  console.log("here state value============",this.state.furnishpantry);
   // console.log("here ov furnishPantry value",ov.furnishPantry);
   if (this.validInput()) {
     if(this.state.builtupArea.value!=="" &&
@@ -689,15 +687,20 @@ submitFun(){
               }
             })
             var eqAmenity ="";
-              if(allAmenitiesDataList.length != ov.Amenities.length )
+            console.log("allAmenitiesDataList.length",allAmenitiesDataList.length);
+            console.log("ov.Amenities.length",ov);
+
+              if(allAmenitiesDataList.length !== ov.Amenities.length )
               {
                 eqAmenity = false;
-                 // console.log("equal eqAmenity not",eqAmenity);
+                 console.log("equal eqAmenity not",eqAmenity);
               }else{
                 
                 for (var i = 0; i < allAmenitiesDataList.length; i++)
                 { 
-                        if (allAmenitiesDataList[i] != ov.Amenities[i]){
+                 console.log("all amenities",eqAmenity);
+
+                      if (allAmenitiesDataList[i] !== ov.Amenities[i]){
                     eqAmenity = false;
                         }else{
                     eqAmenity = true;  
@@ -722,7 +725,7 @@ submitFun(){
                   if(furnishedOptionsDataList.length !== this.state.furnishedOptions.length )
                   {
                     eq = true;
-                     // console.log("equal not",eq);
+                     console.log("equal not",eq);
                   }else{
                    
                     for (var i = 0; i < furnishedOptionsDataList.length; i++)
@@ -733,9 +736,9 @@ submitFun(){
                         eq = true; 
                             }
                     }
-                    // console.log("equal yes but same",eq);
+                    console.log("equal yes but same",eq);
                   }
-                  // console.log("outside eq",eq);
+                  console.log("outside eq",eqAmenity);
               if(this.state.bedrooms === ov.bedrooms && this.state.balconies === ov.balconies && this.state.washrooms === ov.washrooms &&
                   this.state.furnishedStatus === ov.furnishedStatus && this.state.personal === ov.personal && this.state.pantry === ov.pantry &&
                    this.state.bathrooms === ov.bathrooms && this.state.ageofproperty === ov.ageofProperty && this.state.facing === ov.facing
@@ -743,13 +746,13 @@ submitFun(){
                     eqAmenity === true && eq === true && this.state.floor === ov.floor && this.state.totalFloor === ov.totalFloor && this.state.superAreaUnit === ov.superAreaUnit && this.state.builtupAreaUnit === ov.builtupAreaUnit && this.state.workStation === ov.workStation 
                    && this.state.furnishpantry === ov.furnishPantry )
                 {
-                    // console.log("same data");
+                    console.log("same data======================");
                    // this.navigateScreen('Amenities');
                     this.navigateScreen('FinancialDetails');
 
                    
                 }else{
-                    // console.log("diff data");
+                    console.log("diff data=======================");
                     // console.log("allAmenities in result",this.state.allAmenities);
                     var allAmenitiesData = this.state.allAmenities;
                       var allAmenitiesDataList =[];     
@@ -760,71 +763,37 @@ submitFun(){
                             }
                           })
 
-                    var formValues ={}
 
-                    if(furnishedOptionsDataList.length>0)
+                        const formValues = {
+                           "bedrooms"          : this.state.bedrooms,
+                            "balconies"         : this.state.balconies,
+                            "washrooms"         : this.state.washrooms,
+                            "furnishedStatus"   : this.state.furnishedStatus,
+                            "personal"          : this.state.personal,
+                            "pantry"            : this.state.pantry,
+                            "workStation"       : this.state.workStation,
 
-                    {
-                         var formValues = {
-                         
-                          "bedrooms"          : this.state.bedrooms,
-                          "balconies"         : this.state.balconies,
-                          "washrooms"         : this.state.washrooms,
-                          "furnishedStatus"   : this.state.furnishedStatus,
-                          "personal"          : this.state.personal,
-                          "pantry"            : this.state.pantry,
-                          "workStation"       : this.state.workStation,
+                            "bathrooms"         : this.state.bathrooms,
+                            "ageofProperty"     : this.state.ageofproperty,
+                            "facing"            : this.state.facing,
+                            "superArea"         : this.state.superArea,
+                            "builtupArea"       : this.state.builtupArea,
+                            "property_id"       : this.state.propertyId,
+                            "uid"               : this.state.uid,
 
-                          "bathrooms"         : this.state.bathrooms,
-                          "ageofProperty"     : this.state.ageofproperty,
-                          "facing"            : this.state.facing,
-                          "superArea"         : parseInt(this.state.superArea),
-                          "builtupArea"       : this.state.builtupArea,
-                          "property_id"       : this.state.propertyId,
-                          "uid"               : this.state.uid,
-
-                          "Amenities"         : allAmenitiesDataList,
-                          "floor"             : this.state.floor,
-                          "totalFloor"        : this.state.totalFloor,
-                          "superAreaUnit"     : this.state.superAreaUnit,
-                          "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                          "furnishPantry"     : this.state.furnishpantry,
-                          "furnishedOptions"  : furnishedOptionsDataList ,
-                        };
-                    }else{
-
-                        var formValues = {                    
-                          "bedrooms"          : this.state.bedrooms,
-                          "balconies"         : this.state.balconies,
-                          "washrooms"         : this.state.washrooms,
-                          "furnishedStatus"   : this.state.furnishedStatus,
-                          "personal"          : this.state.personal,
-                          "pantry"            : this.state.pantry,
-                          "workStation"       : this.state.workStation,
-
-                          "bathrooms"         : this.state.bathrooms,
-                          "ageofProperty"     : this.state.ageofproperty,
-                          "facing"            : this.state.facing,
-                          "superArea"         : parseInt(this.state.superArea),
-                          "builtupArea"       : this.state.builtupArea,
-                          "property_id"       : this.state.propertyId,
-                          "uid"               : this.state.uid,
-
-                          "Amenities"         : allAmenitiesDataList,
-                          "floor"             : this.state.floor,
-                          "totalFloor"        : this.state.totalFloor,
-                          "superAreaUnit"     : this.state.superAreaUnit,
-                          "builtupAreaUnit"   : this.state.builtupAreaUnit,
-                          "furnishPantry"     : this.state.furnishpantry,
-                          "furnishedOptions"  : furnishedOptionsDataList ,
-                        };
-                    }
-                  console.log("formValues",formValues);
+                            "Amenities"         : allAmenitiesDataList,
+                            "floor"             : this.state.floor,
+                            "totalFloor"        : this.state.totalFloor,
+                            "superAreaUnit"     : this.state.superAreaUnit,
+                            "builtupAreaUnit"   : this.state.builtupAreaUnit,
+                            "furnishPantry"       : this.state.furnishpantry,
+                            "furnishedOptions"    : furnishedOptionsDataList,
+                        }
 
                   if( this.state.furnishedIndex!=="" &&  this.state.builtupArea.value!=="" &&
                       this.state.floor!=="" &&  this.state.totalFloor!=="" ){
-                    // console.log("allAmenitiesDataList==================+++>>>>>>>>>>>>>.",allAmenitiesDataList);
                     if(allAmenitiesDataList && allAmenitiesDataList.length >0){
+                    console.log("formValues==================+++>>>>>>>>>>>>>.",formValues);
                             axios
                             .patch('/api/properties/patch/propertyDetails',formValues)
                             .then( (res) =>{
@@ -906,7 +875,7 @@ submitFun(){
                         "bathrooms"         : this.state.bathrooms,
                         "ageofProperty"     : this.state.ageofproperty,
                         "facing"            : this.state.facing,
-                        "superArea"         : parseInt(this.state.superArea),
+                        "superArea"         : this.state.superArea,
                         "builtupArea"       : this.state.builtupArea,
                         "property_id"       : this.state.propertyId,
                         "uid"               : this.state.uid,
@@ -919,9 +888,9 @@ submitFun(){
                         "furnishPantry"       : this.state.furnishpantry,
                         "furnishedOptions"    : furnishedOptionsDataList,
                       };
-                      console.log("formValues",formValues);
+                      console.log("formValues====>",formValues);
 
-                        if( this.state.furnishedStatus!="" && this.state.furnishedStatus!==undefined &&  this.state.builtupArea.value!="" &&
+                        if( this.state.furnishedStatus!=="" && this.state.furnishedStatus!==undefined &&  this.state.builtupArea.value!=="" &&
                           this.state.floor!=="" &&  this.state.totalFloor!=="" ){
                           if(allAmenitiesDataList && allAmenitiesDataList.length >0){
                            axios
@@ -961,8 +930,6 @@ submitFun(){
   totalFloor(){
       const floorValue      = parseInt(this.state.floor);
       const totalfloorValue = parseInt(this.state.totalFloor);
-      console.log("floorValue",floorValue)
-      console.log("totalfloorValue",totalfloorValue)
       if(floorValue > totalfloorValue){
         this.setState({
           floor : "",
@@ -1267,7 +1234,7 @@ submitFun(){
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={Platform.os==='ios' ? {paddingHorizontal:0,marginLeft:10} : {paddingHorizontal:0,marginLeft:0}} value={'Unfurnished'}>
+                      <RadioButton style={Platform.OS==='ios' ? {paddingHorizontal:0,marginLeft:10} : {paddingHorizontal:0,marginLeft:0}} value={'Unfurnished'}>
                         <Text style={styles.inputTextSmall}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
@@ -1553,7 +1520,7 @@ submitFun(){
                                    { this.state.allAmenities && this.state.allAmenities.length >0 
                                     ?
                                     this.state.allAmenities.map((data,index)=>(
-                                    <React.Fragment key={index} style={styles.marginBottom25}>
+                                    <View key={index} >
                                      
                                     {data.amenity==="AC" ?
 
@@ -1857,7 +1824,7 @@ submitFun(){
 
                                     }
 
-                                   </React.Fragment> 
+                                   </View> 
 
                                   ))
                                     :

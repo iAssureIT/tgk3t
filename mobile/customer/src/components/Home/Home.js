@@ -342,12 +342,12 @@ navigateScreen=(route)=>{
                     <View style={styles.block}>
                       <Text style={[styles.heading3,{fontSize:25,width:75,transform: [{ rotate: "270deg" }]}]}>EARN</Text>
                     </View>
-                    <View style={{flexDirection:'row',marginLeft:-20}}>
+                    <View style={{flexDirection:'row',marginLeft:-18}}>
                       <View style={{marginLeft:0}}>
                         <Text style={[styles.heading3]}>Upto</Text>
                         <Text style={[styles.heading3,{fontSize:45}]}>50%</Text>
                       </View>  
-                      <View style={{paddingLeft:10}}>
+                      <View style={{paddingLeft:5}}>
                         <Text style={[styles.heading3,{fontSize:25}]}>BROKERAGE FOR</Text>
                         <Text style={[styles.heading3,{fontSize:25,marginTop:10}]}>LISTING WITH US</Text>
                       </View> 

@@ -91,6 +91,8 @@ export default class FinancialDetails extends ValidationComponent{
       maintenanceChargesError   : "",
       monthlyRent               :"",
       maintenanceCharges        : "0",
+      updateOperation           : false,
+
     };
 
   }
@@ -105,7 +107,7 @@ export default class FinancialDetails extends ValidationComponent{
     this._retrieveData();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps){
+ componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -257,16 +259,16 @@ _retrieveData = async () => {
                        prevCharges        : response.data.financial.includeCharges,
                        updateOperation    : true,
                        // startDate          : availableFrom,
-                       description        : response.data.financial.description ? response.data.financial.description : this.state.description,
+                       description        : response.data.financial.description ? response.data.financial.description :"",
                        maintenanceCharges : response.data.financial.maintenanceCharges ? response.data.financial.maintenanceCharges.toString() : "0" ,
                        maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
                        measurementUnit    : response.data.financial.measurementUnit ? response.data.financial.measurementUnit : this.state.measurementUnit,
-                       availableFrom      : response.data.financial.availableFrom.split('/').join('-'),
+                       availableFrom      : response.data.financial.availableFrom? response.data.financial.availableFrom.split('/').join('-'): "",
 
                       },()=>{
                         // console.log("prev charge",this.state.prevCharges);
                         var address = response.data.propertyLocation.society+", "+response.data.propertyLocation.subArea+", "+response.data.propertyLocation.area+", "+response.data.propertyLocation.city;
-                         console.log("response.data.propertyDetails.Amenities=============>",response.data.propertyDetails.Amenities);
+                         console.log("response.data.propertyDetails.Amenities=============>",response.data.financial.description);
                         if(response.data.propertyDetails.Amenities && response.data.propertyDetails.Amenities.length > 0){
                          var amenities =  response.data.propertyDetails.Amenities.map((amenities,index)=>{
                               var space = " ";
@@ -277,9 +279,12 @@ _retrieveData = async () => {
                               return ""+space+amenities;
                             })
                         }
-                        this.setState({
-                          description : response.data.propertyDetails.bedrooms + ' BHK beautiful, tastefully decorated and well maintained flat with '+response.data.propertyDetails.bathrooms+' attached bathrooms located in '+address+'. The society is gated, extremely safe and boasts a number of key amenities like '+amenities+'. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.'
-                        })
+                        if(this.state.description === ""){
+                          this.setState({
+                            description : response.data.propertyDetails.bedrooms + ' BHK beautiful, tastefully decorated and well maintained flat with '+response.data.propertyDetails.bathrooms+' attached bathrooms located in '+address+'. The society is gated, extremely safe and boasts a number of key amenities like '+amenities+'. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.'
+                          })
+                        }
+                          
                         var includeCharges = this.state.totalAskItem;
                           // console.log("here includeCharges", includeCharges);
                           var includeChargesList = includeCharges.map((item,index)=>{
@@ -437,20 +442,15 @@ submitFun(){
           var monthlyRentValue = this.state.monthlyRent.length>0 ? parseInt(this.state.monthlyRent) : null;
           var depositAmountValue = this.state.depositAmount.length>0 ? parseInt(this.state.depositAmount) : null;
           var maintenanceChargesValue = this.state.maintenanceCharges.length>0 ? parseInt(this.state.maintenanceCharges) : null;
-
-          console.log("expectedRateValue=========================",expectedRateValue);
-          console.log("totalPriceValue===========================",totalPriceValue);
-          console.log("monthlyRentValue===========================",monthlyRentValue);
-          console.log("depositAmountValue===========================",depositAmountValue);
-          console.log("maintenanceChargesValue===========================",maintenanceChargesValue);
+          var availableFrom = this.state.availableFrom.length>0 ? this.state.availableFrom.split('/').join('-') : null;
 
           console.log("ov==============>",ov);
            if(eq === true && expectedRateValue === ov.expectedRate && totalPriceValue === ov.totalPrice &&
-           this.state.availableFrom === ov.availableFrom && monthlyRentValue === ov.monthlyRent && depositAmountValue === ov.depositAmount&& this.state.description === ov.description &&
+           availableFrom === ov.availableFrom && monthlyRentValue === ov.monthlyRent && depositAmountValue === ov.depositAmount&& this.state.description === ov.description &&
              maintenanceChargesValue === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer &&
              this.state.measurementUnit === ov.measurementUnit)
             {
-            console.log("same data");
+            console.log("same data1");
               this.navigateScreen('Availability');
             }else{
               console.log("diff data");
@@ -523,7 +523,7 @@ submitFun(){
                 "totalPrice"          : parseInt(totalPrice),
                 "monthlyRent"         : parseInt(monthlyRent),
                 "depositAmount"       : parseInt(depositAmount),
-                "availableFrom"       : this.state.availableFrom.split('/').join('-'),
+                "availableFrom"       : availableFrom,
                 "description"         : this.state.description,
                 "includeCharges"      : totalAskItemDataList,
                 "maintenanceCharges"  : parseInt(maintenanceCharges),

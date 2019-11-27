@@ -155,7 +155,7 @@ navigateScreen=(route)=>{
     this._retrieveData();
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps){
+ componentWillReceiveProps(nextProps){
     this._retrieveData();
   }
 
@@ -608,6 +608,7 @@ navigateScreen=(route)=>{
           console.log('The permission is granted');
           ImagePicker.launchImageLibrary(options, response => {
             console.log("response",response);
+            
           if (response.uri) {
             const file = {
               uri  : response.uri,
@@ -700,16 +701,20 @@ navigateScreen=(route)=>{
             if (response.uri) {
               // console.log("response",response);
               var url = response.path;
-              var filename = url.substring(url.lastIndexOf('/')+1);
+              if(Platform.OS==='ios'){
+                var filename = response.fileName;
+              }else{
+                var filename = url.substring(url.lastIndexOf('/')+1);
+              }
               const file = {
                   uri  : response.uri,
-                  name : Platform.os === "ios" ? response.fileName : filename,
+                  name : filename,
                   type : 'image/jpeg',
                 }
                 console.log("file",file);
                 if (file) {
                   var fileName = file.name; 
-                  var ext = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2); ; 
+                  var ext = fileName.slice((fileName.lastIndexOf(".") - 1 >>> 0) + 2);
                   console.log("ext",ext)
                   if(ext=="mp4" || ext=="avi" || ext=="ogv"){ 
                     if (file) {
