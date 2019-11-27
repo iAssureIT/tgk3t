@@ -44,7 +44,7 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Roboto-Medium',
     color:colors.white,
-    textAlign: 'center'
+    fontWeight:'bold'
   },
   heading2View:{
     paddingHorizontal:'4%',
@@ -53,14 +53,17 @@ export default StyleSheet.create({
   },
   optionsWrapper:{
     flexDirection: 'row',
-    justifyContent:'space-between',
+    // justifyContent:'space-between',
     paddingHorizontal: '5%',
-    marginBottom:5,
+    // marginBottom:5,
     flexWrap:'wrap',
     width: '100%',
   },
   buttonContainer:{
-    width:'31%',
+    width:'18%',
+  },
+  buttonContainer1:{
+    width:'35%',
   },
   buttonContainer2:{
     width:'90%',
@@ -76,10 +79,13 @@ export default StyleSheet.create({
   button:{
     width:'100%',
     backgroundColor: colors.black,
-    height: 45,
+    height: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius:4
+    borderRadius:0,
+    borderWidth:0.5,
+    borderColor:"#ccc",
+    borderBottomWidth:0,
   },
   button2:{
     backgroundColor: colors.button,
@@ -93,7 +99,8 @@ export default StyleSheet.create({
            marginLeft:"15%"
       },
       android : {
-        width:150
+        width:150,
+        marginLeft:"12%"
       }
     })
 
@@ -101,32 +108,39 @@ export default StyleSheet.create({
   activeButton:{
     width:'100%',
     backgroundColor: colors.white,
-    height: 45,
+    height: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius:4
+    borderRadius:0,
+    borderWidth:0.5,
+    borderBottomWidth:0,
+    borderColor:"#ccc",
+    fontWeight:'900'
   },
   buttonText:{
     color: colors.white,
     fontSize: 15,
     fontFamily:"Roboto-Regular",
+    fontWeight:'bold'
   },
   buttonText2:{
     color: colors.white,
     fontSize: 16,
     fontFamily:"Roboto-Regular",
     alignItems: 'center',
-    
+    fontWeight:'bold'
   },
   activeButtonText:{
     color: colors.black,
     fontSize: 15,
     fontFamily:"Roboto-Regular",
+    fontWeight:'bold'
   },
   inputWrapper:{
     width:'90%',
     flexDirection:'row',
-    borderRadius: 4,
+    height:40
+    // borderRadius: 4,
   },
   inputIconWrapper:{
     width:'12%',
@@ -139,9 +153,9 @@ export default StyleSheet.create({
     justifyContent:'center',
     alignItems:'center',
     backgroundColor:'#000',
-    height: 45,
-    borderTopRightRadius:4,
-    borderBottomRightRadius:4
+    height: 40,
+    borderTopRightRadius:0,
+    borderBottomRightRadius:0
   },
   inputTextWrapper:{
     width:'83%',
@@ -157,20 +171,21 @@ export default StyleSheet.create({
     borderRightWidth:0,
     borderBottomWidth:0,
     padding:0,
-    borderTopLeftRadius:4,
-    borderBottomLeftRadius:4
+    borderRadius:0,
   },
   searchInput:{
     backgroundColor:colors.white,
     fontSize: 13,
-    fontFamily: 'Roboto-Regular'
+    fontFamily: 'Roboto-Regular',
   },
   searchInputContainer:{
     width:'100%',
-    backgroundColor: colors.white
+    backgroundColor: colors.white,
+    borderRadius:0,
+    borderWidth:0,
   },
   alignCenter:{
-    alignItems:'center',
+    // alignItems:'center',
     justifyContent:'center',
   },
   marginBottom30:{
@@ -210,5 +225,15 @@ export default StyleSheet.create({
   },
   marginTop20:{
     marginTop:20
+  },
+  block:{
+     ...Platform.select({
+      ios:{
+           marginTop:"3%"
+      },
+      android : {
+        marginTop:"5.5%"
+      }
+    })
   }
 });

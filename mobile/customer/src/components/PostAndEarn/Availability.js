@@ -700,9 +700,10 @@ navigateScreen=(route)=>{
             if (response.uri) {
               // console.log("response",response);
               var url = response.path;
+              var filename = url.substring(url.lastIndexOf('/')+1);
               const file = {
                   uri  : response.uri,
-                  name : response.fileName,
+                  name : Platform.os === "ios" ? response.fileName : filename,
                   type : 'image/jpeg',
                 }
                 console.log("file",file);

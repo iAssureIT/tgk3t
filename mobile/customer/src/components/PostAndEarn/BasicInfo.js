@@ -31,7 +31,7 @@ import SwitchToggle                         from 'react-native-switch-toggle';
 import RNPickerSelect                       from 'react-native-picker-select';
 
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
-import {Picker}                             from '@react-native-community/picker';
+// import {Picker}                             from '@react-native-community/picker';
 const window = Dimensions.get('window');
 
 const defaultOption = [

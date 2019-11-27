@@ -601,6 +601,11 @@ export default StyleSheet.create({
 
  congratsContainer: {
     flex: 1,
+    zIndex:0,
+    marginTop:10,
+    width:300,
+    marginTop:10,
+    marginLeft:"5%",
   },
   textInput: {
     borderBottomWidth: 0.3,

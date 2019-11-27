@@ -261,7 +261,7 @@ _retrieveData = async () => {
                        maintenanceCharges : response.data.financial.maintenanceCharges ? response.data.financial.maintenanceCharges.toString() : "0" ,
                        maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
                        measurementUnit    : response.data.financial.measurementUnit ? response.data.financial.measurementUnit : this.state.measurementUnit,
-                       availableFrom      : response.data.financial.availableFrom,
+                       availableFrom      : response.data.financial.availableFrom.split('/').join('-'),
 
                       },()=>{
                         // console.log("prev charge",this.state.prevCharges);
@@ -358,7 +358,7 @@ submitFun(){
           "depositAmount"       : parseInt(this.state.depositAmount),
           "includeCharges"      : totalAskItemDataList,
           "description"         : this.state.description,
-          "availableFrom"       : this.state.availableFrom,
+          "availableFrom"       : this.state.availableFrom.split('/').join('-'),
           "maintenanceCharges"  : parseInt(this.state.maintenanceCharges),
           "maintenancePer"      : this.state.maintenancePer,
           "measurementUnit"     : this.state.measurementUnit,  
@@ -380,7 +380,7 @@ submitFun(){
               if(error.message === "Request failed with status code 401")
               {
                    //Alert.alert("Your session is expired!"," Please login again.");
-AsyncStorage.removeItem('fullName');
+                    AsyncStorage.removeItem('fullName');
                     AsyncStorage.removeItem('token');
                    // this.navigateScreen('MobileScreen');          
                        
@@ -523,7 +523,7 @@ AsyncStorage.removeItem('fullName');
                 "totalPrice"          : parseInt(totalPrice),
                 "monthlyRent"         : parseInt(monthlyRent),
                 "depositAmount"       : parseInt(depositAmount),
-                "availableFrom"       : this.state.availableFrom,
+                "availableFrom"       : this.state.availableFrom.split('/').join('-'),
                 "description"         : this.state.description,
                 "includeCharges"      : totalAskItemDataList,
                 "maintenanceCharges"  : parseInt(maintenanceCharges),
@@ -549,7 +549,7 @@ AsyncStorage.removeItem('fullName');
                   if(error.message === "Request failed with status code 401")
                   {
                      // Alert.alert("Your session is expired!"," Please login again.");
-AsyncStorage.removeItem('fullName');
+                      AsyncStorage.removeItem('fullName');
                         AsyncStorage.removeItem('token');
                      // this.navigateScreen('MobileScreen');          
                            
@@ -914,7 +914,7 @@ AsyncStorage.removeItem('fullName');
                     containerStyle        = {styles.textContainer}
                     inputContainerStyle   = {styles.textInputContainer}
                     titleTextStyle        = {styles.textTitle}
-                    style                 = {styles.textStyle}
+                    style                 = {[styles.textStyle,{height:200}]}
                     labelTextStyle        = {styles.textLabel}
                     keyboardType          = "default"
                     multiline             ={true}

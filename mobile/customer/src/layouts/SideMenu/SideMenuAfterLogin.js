@@ -125,7 +125,7 @@ export default class SideMenuAfterLogin extends React.Component {
 				            resizeMode="contain"
 				         />
 					    
-					    <View style={{width:"100%",flexDirection:'row',marginTop:45}}>     
+					    <View style={{width:"100%",flexDirection:'row',marginTop:"25%"}}>     
 					        <Icon 
 				              size={15} 
 				              name='user' 
@@ -133,7 +133,7 @@ export default class SideMenuAfterLogin extends React.Component {
 				              color={colors.white} 
 				              containerStyle={styles.iconContainer1}
 				            />
-					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 14,paddingTop:10}}>Welcome {this.state.fullName ? this.state.fullName : "Guest"}</Text>
+					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 14,paddingTop:"2%"}}>Welcome {this.state.fullName ? this.state.fullName : "Guest"}</Text>
 				        </View>
 				    </View>    
 		        </ImageBackground>

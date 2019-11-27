@@ -10,8 +10,8 @@ import {
   ImageBackground,
   Image,TextInput,
   TouchableWithoutFeedback,
-  // AsyncStorage,
-  Alert
+  Alert,
+  Platform
 } from 'react-native';
 
 // import { NavigationActions } from 'react-navigation'
@@ -184,7 +184,8 @@ navigateScreen=(route)=>{
     }else{
        this.navigateScreen("BasicInfo");
     }
-       // this.navigateScreen("PropertyDetails");
+
+       // this.navigateScreen("Congratulation");
   }
  
   render(){
@@ -221,16 +222,15 @@ navigateScreen=(route)=>{
                   <React.Fragment>
                     <Button
                       titleStyle      = {styles.activeButtonText}
-                      title           = "Buy"
+                      title           = "BUY"
                       buttonStyle     = {styles.activeButton}
                     />
-                    <View style={styles.triangle}></View>
                   </React.Fragment>
                 :
                   <Button
                     onPress         = {()=>this.handleOption('Residential-Sell')}
                     titleStyle      = {styles.buttonText}
-                    title           = "Buy"
+                    title           = "BUY"
                     buttonStyle     = {styles.button}
                     // containerStyle  = {[{width:'100%',backgroundColor:'#f0f'}]}
                   />
@@ -243,39 +243,37 @@ navigateScreen=(route)=>{
                 <React.Fragment>
                   <Button
                     titleStyle      = {styles.activeButtonText}
-                    title           = "Rent"
+                    title           = "RENT"
                     buttonStyle     = {styles.activeButton}
 
                   />
-                  <View style={styles.triangle}></View>
                 </React.Fragment>
               :
                 <Button
                   onPress         = {()=>this.handleOption('Residential-Rent')}
                   titleStyle      = {styles.buttonText}
-                  title           = "Rent"
+                  title           = "RENT"
                   buttonStyle     = {styles.button}
                 />
               }
               </View>
 
-              <View style={styles.buttonContainer}>
+              <View style={styles.buttonContainer1}>
               {activeBtn=='Commercial-Sell' || activeBtn=='Commercial-Rent'
               ?
                 <React.Fragment>
                   <Button
                     titleStyle      = {styles.activeButtonText}
-                    title           = "Commercial"
+                    title           = "COMMERCIAL"
                     buttonStyle     = {styles.activeButton}
 
                   />
-                  <View style={styles.triangle}></View>
                 </React.Fragment>
               :
                 <Button
                   onPress         = {()=>this.handleOption('Commercial-Sell')}
                   titleStyle      = {styles.buttonText}
-                  title           = "Commercial"
+                  title           = "COMMERCIAL"
                   buttonStyle     = {styles.button}
                 />
               }
@@ -319,15 +317,46 @@ navigateScreen=(route)=>{
                     renderItem={this._renderList}
                   />
               </View>
-              <View style={[styles.alignCenter,styles.marginBottom30,styles.marginTop20]}>
-                <Text style={styles.heading2}>For our Buyers / Tenants</Text>
-                <Text style={styles.heading3}>Upto 50% Discount</Text>
-                <Text style={styles.heading3}>On Brokerage</Text>
-                <Text style={styles.heading3}>for Renting/Buying with us!</Text>
+              {/*<View style={[styles.marginBottom30,styles.marginTop20]}>
+                <Text style={[styles.heading3,{fontSize:20,textAlign:'center',fontWeight:"900"}]}>Welcome Owners</Text>
+                  <View style={{flexDirection:'row'}}>
+                    <View style={{backgroundColor:"#f00",height:40,width:90,transform: [{ rotate: "270deg" }]}}>
+                      <Text style={[styles.heading3,{fontSize:30}]}>EARN</Text>
+                    </View>
+                    <View style={{flexDirection:'row',backgroundColor:"#f00"}}>
+                      <View style={{marginLeft:0}}>
+                        <Text style={[styles.heading3]}>Upto</Text>
+                        <Text style={[styles.heading3,{fontSize:45}]}>50%</Text>
+                      </View>  
+                      <View style={{marginLeft:5}}>
+                        <Text style={[styles.heading3,{fontSize:25}]}>BROKERAGE FOR</Text>
+                        <Text style={[styles.heading3,{fontSize:25,marginTop:10}]}>LISTING WITH US</Text>
+                      </View> 
+                    </View>  
+                  </View>  
+              </View>*/}
+
+              <View style={[styles.marginBottom30,styles.marginTop20]}>
+                <Text style={[styles.heading3,{fontSize:20,textAlign:'center',fontWeight:"900",marginBottom:30}]}>Welcome Owners</Text>
+                  <View style={{flexDirection:'row',paddingRight:25}}>
+                    <View style={styles.block}>
+                      <Text style={[styles.heading3,{fontSize:25,width:75,transform: [{ rotate: "270deg" }]}]}>EARN</Text>
+                    </View>
+                    <View style={{flexDirection:'row',marginLeft:-20}}>
+                      <View style={{marginLeft:0}}>
+                        <Text style={[styles.heading3]}>Upto</Text>
+                        <Text style={[styles.heading3,{fontSize:45}]}>50%</Text>
+                      </View>  
+                      <View style={{paddingLeft:10}}>
+                        <Text style={[styles.heading3,{fontSize:25}]}>BROKERAGE FOR</Text>
+                        <Text style={[styles.heading3,{fontSize:25,marginTop:10}]}>LISTING WITH US</Text>
+                      </View> 
+                    </View>  
+                  </View>  
               </View>
 
+
               <View style={[styles.alignCenter]}>
-                <Text style={[styles.heading2,{marginBottom:10}]}>Welcome Owners</Text>
                   <Button
                     // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
                     // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
@@ -346,8 +375,8 @@ navigateScreen=(route)=>{
 
                   /> 
                 
-                <Text style={styles.heading2}>Earn upto 50% Brokerage for</Text>
-                <Text style={[styles.heading2,styles.marginBottom15]}>Listing With Us!</Text>
+                <Text style={styles.heading2}>Upto 50% Discount On</Text>
+                <Text style={[styles.heading2,styles.marginBottom15]}>Brokerage For Tenants/Buyers</Text>
               </View>
             </View>
 {/*              <View style={[styles.alignCenter,styles.marginBottom30,styles]}>

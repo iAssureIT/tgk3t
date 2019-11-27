@@ -51,6 +51,7 @@ export default class Congratulation extends ValidationComponent{
       propertyId : "",
       allData : "",
       value: 0,
+      per :0 
     };
   }
 
@@ -151,8 +152,8 @@ export default class Congratulation extends ValidationComponent{
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                           Alert.alert("Your session is expired!"," Please login again.");
-AsyncStorage.removeItem('fullName');
+                            Alert.alert("Your session is expired!"," Please login again.");
+                            AsyncStorage.removeItem('fullName');
                             AsyncStorage.removeItem('token');
                             this.navigateScreen('MobileScreen'); 
                         }
@@ -186,31 +187,13 @@ AsyncStorage.removeItem('fullName');
                 percentage : cash_per
               },()=>{
                 var data =  this.state.percentage;
-                var per = 0;
-                if(data <=10 && data >= 0)
-                {
-                  per = 30;
-                }
-                if(data <=20 && data > 10)
-                {
-                  per = 60;
-                }
-                if(data <=30 && data > 20)
-                {
-                  per = 90;
-                }
-                if(data <=40 && data >30)
-                {
-                  per = 120;
-                }
-                if(data <=50 && data >40)
-                {
-                  per = 150;
-                }
-
+                var per = data * 2;
                 console.log("data",data);
                 console.log("per",per);
-                this.setState({value:data})
+                this.setState({
+                  value:data,
+                  per  : per
+                })
               });
               
             })
@@ -219,9 +202,9 @@ AsyncStorage.removeItem('fullName');
                   if(error.message === "Request failed with status code 401")
                   {
                       Alert.alert("Your session is expired!"," Please login again.");
-AsyncStorage.removeItem('fullName');
-                       AsyncStorage.removeItem('token');
-                       this.navigateScreen('MobileScreen'); 
+                      AsyncStorage.removeItem('fullName');
+                      AsyncStorage.removeItem('token');
+                      this.navigateScreen('MobileScreen'); 
                   }
               });
           }
@@ -265,24 +248,43 @@ AsyncStorage.removeItem('fullName');
                     brokerage to be paid by us on successful deal through us
                   </Text>
                 </View>
-
                 <SafeAreaView style={styles.congratsContainer}>
                  {/* <TextInput placeholder="Speedometer Value" style={styles.textInput} onChangeText={this.onChange} />*/}
+                 <Text style={{ transform: [{ rotate: "-90deg" }], width: 40 ,position:"absolute", marginTop:"28%",marginLeft:25,zIndex:1}}>
+                    0
+                  </Text>
+                 <Text style={{ transform: [{ rotate: "-55deg" }], width: 40 ,position:"absolute", marginTop:"14%",marginLeft:40,zIndex:1}}>
+                    10
+                  </Text>
+                  <Text style={{ transform: [{ rotate: "-20deg" }], width: 40 , position:"absolute", marginTop:"1%",marginLeft:100,zIndex:1}}>
+                    20
+                  </Text>
+                  <Text style={{ transform: [{ rotate: "20deg" }], width: 40 , position:"absolute", marginTop:"4%",marginLeft:185,zIndex:1}}>
+                    30
+                  </Text>
+                  <Text style={{ transform: [{ rotate: "58deg" }], width: 40 ,position:"absolute", marginTop:"22%",marginLeft:245,zIndex:1}}>
+                    40
+                  </Text>
+                  <Text style={{ transform: [{ rotate: "90deg" }], width: 40 ,position:"absolute",marginTop:"48%",marginLeft:265,zIndex:1}}>
+                    50
+                  </Text>
                   <RNSpeedometer 
                     value={this.state.value} 
                     size={250}
                     defaultValue= {0}
+                    maxValue ={50}
                     easeDuration= {2000}
+                    wrapperStyle= {{marginTop:20}}
                     labels={[
                       {
                         name: 'Good',
                         labelColor: '#00ff59',
-                        activeBarColor: '#00ff59',
+                        activeBarColor: '#5DC953',
                       },
                       {
                         name: 'Very Good',
                         labelColor: '#00ff77',
-                        activeBarColor: '#00ff77',
+                        activeBarColor: '#68DD39',
                       },
                       {
                         name: 'Hot',
@@ -300,9 +302,9 @@ AsyncStorage.removeItem('fullName');
                         activeBarColor: '#ff0000',
                       },
                     ]}
+
                     />
                 </SafeAreaView>
-
                 <View style={[styles.alignCenter,{paddingHorizontal:15,marginTop:70}, styles.marginTopSOM,styles.marginBottom15]}>
                   <Text style={[styles.heading4,{textAlign:'center'}]}>
                     Your property 

@@ -28,7 +28,7 @@ import { Dropdown }                         from 'react-native-material-dropdown
 import DatePicker                           from "react-native-datepicker";
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
 import Dialog                                 from "react-native-dialog";
-import {Picker}                             from '@react-native-community/picker';
+// import {Picker}                             from '@react-native-community/picker';
 import RNPickerSelect                       from 'react-native-picker-select';
 
 
@@ -555,11 +555,11 @@ constructor(props){
                         console.log("error = ",error);
                         if(error.message === "Request failed with status code 401")
                         {
-                           Alert.alert("Your session is expired!"," Please login again.");
-AsyncStorage.removeItem('fullName');
-AsyncStorage.removeItem('fullName');
-                             AsyncStorage.removeItem('token');
-                              this.navigateScreen('MobileScreen');  
+                            Alert.alert("Your session is expired!"," Please login again.");
+                            AsyncStorage.removeItem('fullName');
+                            AsyncStorage.removeItem('fullName');
+                            AsyncStorage.removeItem('token');
+                            this.navigateScreen('MobileScreen');  
                         }
                     });
 
@@ -965,8 +965,8 @@ submitFun(){
       console.log("totalfloorValue",totalfloorValue)
       if(floorValue > totalfloorValue){
         this.setState({
+          floor : "",
           checkFloor : true,
-          totalFloor : "",
         })
       }
   }
@@ -976,7 +976,6 @@ submitFun(){
     var superAreaValue=parseInt(this.state.superArea);
     // console.log("builtArea",builtAreaValue);
     // console.log("superArea",superAreaValue);
-
     if(builtAreaValue >= superAreaValue){
       this.setState({
         builtupArea : "",
@@ -1034,7 +1033,7 @@ submitFun(){
                           data                = {this.state.floorData}
                           value               = {this.state.floor}
                           onChangeText        = {floor => {this.setState({floor},() => { this.validInputField('floor', 'floorError'); })}}
-                          onBlur              = {()=>this.totalFloor()}
+                          onBlur              = {this.totalFloor()}
                         />
                         </View>
                       </View>
@@ -1268,7 +1267,7 @@ submitFun(){
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={Platform.os==='android' ? {paddingHorizontal:0,marginLeft:0} : {paddingHorizontal:0,marginLeft:10}} value={'Unfurnished'}>
+                      <RadioButton style={Platform.os==='ios' ? {paddingHorizontal:0,marginLeft:10} : {paddingHorizontal:0,marginLeft:0}} value={'Unfurnished'}>
                         <Text style={styles.inputTextSmall}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
@@ -1696,24 +1695,24 @@ submitFun(){
                                            :
                                            data.amenity==="Shopping Center" ?
                                              <CheckBox
-                                                    key={index}
-                                                    style={{marginBottom:10}}
-                                                    onClick={() => this.handleOnClickInternal(index)}
-                                                    isChecked={data.checked}
-                                                    rightTextStyle={{marginLeft:0}}
-                                                    checkBoxColor= {colors.grey}
-                                                    rightTextView = {
-                                                      <View style={{flexDirection:'row',flex:1}}>
-                                                       
-                                                         <Image 
-                                                          source={require('../../images/shopping.png') }
-                                                          style={{width: 25, height:25, marginRight:7}}
-                                                        />
-                                                        <Text style={styles.inputText}>{data.amenity}</Text>
-                                                      </View>
-
-                                                    }
+                                                key={index}
+                                                style={{marginBottom:10}}
+                                                onClick={() => this.handleOnClickInternal(index)}
+                                                isChecked={data.checked}
+                                                rightTextStyle={{marginLeft:0}}
+                                                checkBoxColor= {colors.grey}
+                                                rightTextView = {
+                                                  <View style={{flexDirection:'row',flex:1}}>
+                                                   
+                                                     <Image 
+                                                      source={require('../../images/shopping.png') }
+                                                      style={{width: 25, height:25, marginRight:7}}
                                                     />
+                                                    <Text style={styles.inputText}>{data.amenity}</Text>
+                                                  </View>
+
+                                                }
+                                                />
 
 
                                           :
