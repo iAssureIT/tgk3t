@@ -104,12 +104,19 @@ export default class FinancialDetails extends ValidationComponent{
   }
 
   componentDidMount(){
-    this._retrieveData();
+     this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
   }
 
- componentWillReceiveProps(nextProps){
-    this._retrieveData();
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this._retrieveData()
+  }
+
 
   validInput = () => {
     const {

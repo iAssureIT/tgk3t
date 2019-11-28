@@ -100,7 +100,6 @@ export default StyleSheet.create({
       },
       android : {
         width:150,
-        marginLeft:"12%"
       }
     })
 
@@ -235,5 +234,11 @@ export default StyleSheet.create({
         marginTop:"5.5%"
       }
     })
-  }
+  },
+    lineStyle:{
+        borderWidth: 0.5,
+        borderColor:'white',
+        margin:10,
+        width:"90%"
+   }
 });

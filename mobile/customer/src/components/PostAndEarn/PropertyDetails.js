@@ -27,7 +27,7 @@ import {colors,sizes}                       from '../../config/styles.js';
 import { Dropdown }                         from 'react-native-material-dropdown';
 import DatePicker                           from "react-native-datepicker";
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
-import Dialog                                 from "react-native-dialog";
+import Dialog                               from "react-native-dialog";
 // import {Picker}                             from '@react-native-community/picker';
 import RNPickerSelect                       from 'react-native-picker-select';
 
@@ -175,12 +175,23 @@ constructor(props){
   }
 
   componentDidMount(){
-    this._retrieveData();
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
+  }
+  componentWillUnmount () {
+    this.focusListener.remove()
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this._retrieveData()
   }
 
 
-  componentWillReceiveProps(nextProps){
-    this._retrieveData();
+  goBack() {
+    const { navigation } = this.props;
+    navigation.goBack();
+    navigation.state.params.onSelect({ selected: true });
   }
 
   validInput = () => {

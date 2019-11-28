@@ -421,7 +421,16 @@ export default StyleSheet.create({
   },
   tabView:{
     flexDirection: 'row',
-    width:'33.33%',
+    width:'23%',
+    paddingVertical: 10,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: colors.button,
+  },
+
+  tabView1:{
+    flexDirection: 'row',
+    width:'28%',
     paddingVertical: 10,
     alignItems:'center',
     justifyContent:'center',
@@ -429,7 +438,16 @@ export default StyleSheet.create({
   },
   activeTabView:{
     flexDirection: 'row',
-    width:'33.33%',
+    width:'23%',
+    paddingVertical: 10,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor: colors.primary,
+    elevation: 6,
+  },
+  activeTabView1:{
+    flexDirection: 'row',
+    width:'28%',
     paddingVertical: 10,
     alignItems:'center',
     justifyContent:'center',

@@ -177,11 +177,17 @@ export default class SignUp extends ValidationComponent{
   
   componentDidMount(){
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
-    this._retrieveData();
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
+  }
+
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps){
-    this._retrieveData();
+    this._retrieveData()
   }
 
 
@@ -265,11 +271,11 @@ export default class SignUp extends ValidationComponent{
                   }
                   // console.log("sendData",sendDataToAdmin);
                   axios
-                  .post('http://qatgk3tapi.iassureit.com/api/masternotifications/post/sendNotification',sendDataToAdmin)
+                  .post('/api/masternotifications/post/sendNotification',sendDataToAdmin)
                   .then((result) =>{
                     // console.log("SendEmailNotificationToAdmin",result);
                     axios
-                    .post('http://qatgk3tapi.iassureit.com/api/masternotifications/post/sendNotification',sendDataToUser)
+                    .post('/api/masternotifications/post/sendNotification',sendDataToUser)
                     .then((res) =>{
                       // console.log("SendEmailNotificationToUser",res);           
                     })

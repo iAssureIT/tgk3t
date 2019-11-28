@@ -57,12 +57,19 @@ navigateScreen=(route)=>{
 
   componentDidMount(){
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem("token");
-    this._retrieveData();
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
+  }
+
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps){
-    this._retrieveData();
+    this._retrieveData()
   }
+
 
 
  // componentDidUpdate(prevProps,prevState){

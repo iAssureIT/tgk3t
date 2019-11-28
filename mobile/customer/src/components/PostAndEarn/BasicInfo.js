@@ -98,11 +98,9 @@ export default class BasicInfo extends ValidationComponent{
       societyList     : "",
       blockName       : "",
       cityName        : "",
-      // stateCode       : "State",
       token           : "",
       uid             : "",
       mobile          : '',
-      // areaName        : 'Hadapsar',
       originalValues          : "",
       originalValuesLocation  : "",
       pincodeError    : [],
@@ -118,14 +116,16 @@ export default class BasicInfo extends ValidationComponent{
       subAreaNameError:"",
       areaNameError   :"",
       fullPropertyTypeError:"",
-      fullPropertyType:""
+      fullPropertyType:"",
     }; 
   }
 
     componentDidMount(){
       // console.log("here token in form 1",this.state.token);
       // AsyncStorage.removeItem('propertyId');
-      this._retrieveData();
+       this.focusListener = this.props.navigation.addListener('didFocus', () => {
+        this._retrieveData()
+      })
        axios({
         method: 'get',
         url: 'http://locationapi.iassureit.com/api/states/get/list/IN',
@@ -160,6 +160,15 @@ export default class BasicInfo extends ValidationComponent{
                           }
           });
     }
+
+
+    componentWillUnmount () {
+      this.focusListener.remove()
+    }
+
+  UNSAFE_comƒonentWillReceiveProps(nextProps){
+    this._retrieveData()
+  }
 
 
   validInput = () => {
@@ -306,9 +315,7 @@ export default class BasicInfo extends ValidationComponent{
     return error;
   }
 
-  componentWillReceiveProps(nextProps){
-    this._retrieveData();
-  }
+
 
 
  _retrieveData = async () => {
@@ -516,11 +523,8 @@ export default class BasicInfo extends ValidationComponent{
         "landmark"        : this.state.landmark,
         "index"           : this.state.index,
         "uid"             : uid,
-        // "fullAddress"     : this.state.fullAddress,
         "property_id"     : this.state.propertyId,
       };
-      // console.log("formValues",formValues);
-      // console.log("subAreaName",this.state.subAreaName);
       if (this.validInput()) {
       if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
         this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!==""  && this.state.subAreaName!== undefined && this.state.societyName!==""  ){
@@ -550,10 +554,7 @@ export default class BasicInfo extends ValidationComponent{
               axios
               .patch('/api/properties/patch/properties',formValues)
               .then( (res) =>{
-                // console.log("here updated data",res);
                 if(res.status === 200){
-                  // console.log("res.data.property_id",res.data.property_id);
-                  // AsyncStorage.setItem("propertyId",res.data.property_id);
                   AsyncStorage.setItem("transactionType",this.state.transactionType);
                   AsyncStorage.setItem("propertyType",this.state.propertyType);
                   this.navigateScreen('PropertyDetails');          
@@ -564,8 +565,10 @@ export default class BasicInfo extends ValidationComponent{
                             console.log("error = ",error);
                             if(error.message === "Request failed with status code 401")
                             {
-                                 // swal("Your session is expired! Please login again.","", "error");
-                                 // this.props.history.push("/");
+                                Alert.alert("Your session is expired!"," Please login again.");
+                                AsyncStorage.removeItem('fullName');
+                                AsyncStorage.removeItem('token');
+                                this.navigateScreen('MobileScreen')
                             }
                         });
 
@@ -1104,7 +1107,6 @@ selectState(stateCode){
     return (
       <React.Fragment>
         <HeaderBar showBackBtn={false} navigation={navigation}/>
-
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <KeyboardAwareScrollView>  
             <View style={styles.formWrapper}>
@@ -1138,7 +1140,7 @@ selectState(stateCode){
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress = {()=>this.setActive('Care Taker')}
-                  style={[(propertyHolder=="Care Taker"?styles.activeTabView:styles.tabView),styles.tabBorder]}
+                  style={[(propertyHolder=="Care Taker"?styles.activeTabView1:styles.tabView1),styles.tabBorder]}
                 >
                   <Icon
                     name="home-account"
@@ -1150,7 +1152,7 @@ selectState(stateCode){
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress = {()=>this.setActive('Builder')}
-                  style={[(propertyHolder=="Builder"?styles.activeTabView:styles.tabView),styles.borderRadiusRight]}
+                  style={[(propertyHolder=="Builder"?styles.activeTabView:styles.tabView),styles.tabBorder]}
                 >
                   <Icon
                     name="home-city"
@@ -1159,6 +1161,18 @@ selectState(stateCode){
                     color="white"
                   />
                   <Text style={styles.tabText}>Builder</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress = {()=>this.setActive('Flatmate')}
+                  style={[(propertyHolder=="Flatmate"?styles.activeTabView1:styles.tabView1),styles.borderRadiusRight]}
+                >
+                  <Icon
+                    name="home-city"
+                    type="material-community"
+                    size={16}
+                    color="white"
+                  />
+                  <Text style={styles.tabText}>Flatmate</Text>
                 </TouchableOpacity>
               </View>
 

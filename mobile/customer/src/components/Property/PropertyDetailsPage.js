@@ -61,12 +61,18 @@ navigateScreen=(route)=>{
   }
 
   componentDidMount(){
-    this._retrieveData();
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
+  }
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps){
-    this._retrieveData();
+    this._retrieveData()
   }
+
 
   _retrieveData = async () => {
     try {

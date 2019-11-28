@@ -167,18 +167,24 @@ navigateScreen=(route)=>{
         {value:"31",  option:"After a month", checked:false},
       ],
     },()=>{
-      this._retrieveData();
+       this.focusListener = this.props.navigation.addListener('didFocus', () => {
+        this._retrieveData()
+      })
     })
    // var searchResults = this.props.navigation.getParam('searchResults','No Result');
    // console.log("searchResults",searchResults)
    
   }
 
-  componentWillReceiveProps(nextProps){
-    this._retrieveData();
+
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
 
-
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this._retrieveData()
+  }
+  
    _retrieveData = async () => {
     try {
       const uid        = await AsyncStorage.getItem('uid');

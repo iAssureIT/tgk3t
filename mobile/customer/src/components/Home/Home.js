@@ -55,22 +55,25 @@ navigateScreen=(route)=>{
     this.setState({activeBtn:option});
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps){
-        this.retrieveToken();
+  componentDidMount(){
+      this.focusListener = this.props.navigation.addListener('didFocus', () => {
+        this.retrieveToken()
+      })
   }
 
-  componentDidMount(){
-    // console.log("navigateScreen",this.navigateScreen);
-        // var uid = this.props.navigation.getParam('uid','No uid');
-        // var token = this.props.navigation.getParam('token','No token');
-      this.retrieveToken();
-      // console.log("token home componentDidMount",AsyncStorage.getItem('token'));
-      axios.defaults.headers.common['Authorization'] = 'Bearer '+ AsyncStorage.getItem('token');
+  componentWillUnmount () {
+      this.focusListener.remove()
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this.retrieveToken()
   }
 
   retrieveToken = async()=>{
     var token = await AsyncStorage.getItem('token')
     var uid = await AsyncStorage.getItem('uid')
+    axios.defaults.headers.common['Authorization'] = 'Bearer '+ token;
+
     this.setState({
       token:token,
       uid  :uid
@@ -91,6 +94,7 @@ navigateScreen=(route)=>{
             url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
           })        
         .then((searchResults) => {
+          console.log("searchresults",searchResults.data)
           if(searchResults.data.length>0){
             var cities = searchResults.data.map(a=>a.cityName);
             cities = [...new Set(cities)];
@@ -336,7 +340,7 @@ navigateScreen=(route)=>{
                   </View>  
               </View>*/}
 
-              <View style={[styles.marginBottom30,styles.marginTop20]}>
+              <View style={[styles.marginTop20]}>
                 <Text style={[styles.heading3,{fontSize:20,textAlign:'center',fontWeight:"900",marginBottom:30}]}>Welcome Owners</Text>
                   <View style={{flexDirection:'row',paddingRight:25}}>
                     <View style={styles.block}>
@@ -354,8 +358,10 @@ navigateScreen=(route)=>{
                     </View>  
                   </View>  
               </View>
-
-
+              <View style = {styles.lineStyle} />
+              <View style={styles.marginBottom30}>
+                <Text style={[styles.heading2,{fontSize:14,fontWeight:'bold'}]}>Upto 50% Discount On Brokerage For Tenants/Buyers</Text>
+              </View> 
               <View style={[styles.alignCenter]}>
                   <Button
                     // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
@@ -375,8 +381,6 @@ navigateScreen=(route)=>{
 
                   /> 
                 
-                <Text style={styles.heading2}>Upto 50% Discount On</Text>
-                <Text style={[styles.heading2,styles.marginBottom15]}>Brokerage For Tenants/Buyers</Text>
               </View>
             </View>
 {/*              <View style={[styles.alignCenter,styles.marginBottom30,styles]}>

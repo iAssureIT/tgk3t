@@ -52,13 +52,17 @@ export default class MyInterestedProperties extends ValidationComponent{
     };
   }
 
-  UNSAFE_componentWillReceiveProps(nextProps){
-        this._retrieveData();
+  componentDidMount(){
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
+  }
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
 
-
-  componentDidMount(){
-    this._retrieveData();
+   UNSAFE_componentWillReceiveProps(nextProps){
+    this._retrieveData()
   }
 
   searchUpdated=(searchText)=>{

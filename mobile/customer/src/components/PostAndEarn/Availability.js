@@ -14,7 +14,7 @@ import {
 
 import { Button,Icon, SearchBar }             from 'react-native-elements';
 import axios                                  from 'axios';
-import { NavigationActions, StackActions }    from 'react-navigation';
+import { NavigationActions, StackActions,NavigationEvents }    from 'react-navigation';
 import AsyncStorage                           from '@react-native-community/async-storage';
 import ValidationComponent                    from "react-native-form-validator";
 import { TextField }                          from 'react-native-material-textfield';
@@ -152,13 +152,18 @@ navigateScreen=(route)=>{
   }
 
   componentDidMount(){
-    this._retrieveData();
+     this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
   }
 
- componentWillReceiveProps(nextProps){
-    this._retrieveData();
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this._retrieveData()
+  }
 
   _retrieveData = async () => {
     try {
@@ -1226,7 +1231,7 @@ navigateScreen=(route)=>{
             </View>
               <View style={[{flexDirection:"row"},styles.marginBottom45]}>
                 <Button
-                    onPress={()=> this.props.navigation.dispatch(NavigationActions.back())}
+                    onPress         ={()=> this.props.navigation.dispatch(NavigationActions.back())}
                     titleStyle      = {styles.buttonText}
                     title           = "Back"
                     buttonStyle     = {[styles.button,{ backgroundColor:"#d9534f"}]}

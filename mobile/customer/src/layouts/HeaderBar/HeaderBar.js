@@ -41,10 +41,14 @@ navigateScreen=(route)=>{
     }
   }
 
-  componentDidMount(){
-    this.retrieveToken();
+   componentDidMount(){
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this.retrieveToken()
+    })
   }
-
+  componentWillUnmount () {
+    this.focusListener.remove()
+  }
 
   retrieveToken = async()=>{
     var token = await AsyncStorage.getItem('token')

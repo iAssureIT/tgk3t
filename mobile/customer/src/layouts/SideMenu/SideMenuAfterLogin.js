@@ -48,11 +48,16 @@ export default class SideMenuAfterLogin extends React.Component {
 
   
   componentDidMount(){
-       this._retrieveData();
+    this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
+  }
+  componentWillUnmount () {
+    this.focusListener.remove()
   }
 
   UNSAFE_componentWillReceiveProps(nextProps){
-        this._retrieveData();
+    this._retrieveData()
   }
 
   _retrieveData = async () => {
@@ -118,14 +123,14 @@ export default class SideMenuAfterLogin extends React.Component {
 		              color={colors.white} 
 		              containerStyle={styles.sliderCrossIcon}
 		            />
-			    	<View style={Platform.os === 'android' ? {width:"100%",marginTop:80} : {width:"100%",marginTop:55}}>
+			    	<View style={Platform.OS === 'android' ? {width:"100%",marginTop:70} : {width:"100%",marginTop:50}}>
 				        <Image
 				            style={[styles.logoImage]}
 				            source={require("../../images/logo.png")}
 				            resizeMode="contain"
 				         />
 					    
-					    <View style={{width:"100%",flexDirection:'row',marginTop:"25%"}}>     
+					    <View style={{width:"100%",flexDirection:'row',marginTop:"20%"}}>     
 					        <Icon 
 				              size={15} 
 				              name='user' 
@@ -133,7 +138,7 @@ export default class SideMenuAfterLogin extends React.Component {
 				              color={colors.white} 
 				              containerStyle={styles.iconContainer1}
 				            />
-					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 14,paddingTop:"2%"}}>Welcome {this.state.fullName ? this.state.fullName : "Guest"}</Text>
+					        <Text style={{color:'#fff',fontFamily: 'Roboto-Regular',fontSize: 14,paddingTop:"3%"}}>Welcome {this.state.fullName ? this.state.fullName : "Guest"}</Text>
 				        </View>
 				    </View>    
 		        </ImageBackground>

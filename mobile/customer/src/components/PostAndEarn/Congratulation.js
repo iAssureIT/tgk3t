@@ -59,7 +59,17 @@ export default class Congratulation extends ValidationComponent{
 
 
   componentDidMount(){
-    this._retrieveData();
+     this.focusListener = this.props.navigation.addListener('didFocus', () => {
+      this._retrieveData()
+    })
+  }
+
+  componentWillUnmount () {
+    this.focusListener.remove()
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps){
+    this._retrieveData()
   }
 
 
