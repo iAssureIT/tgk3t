@@ -226,7 +226,8 @@ class BannerwithModal extends Component {
 	  						<li className="active col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}><b>BUY</b></a></li>
 							<li className="bannerTab col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}><b>RENT</b></a></li>
 							<li className="col-xs-3 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}><b>COMMERCIAL</b></a></li>
-							<button className="col-xs-3 borderTab noPad btn bannerBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>
+							<li className="col-xs-4 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></a></li>
+							{/*<button className="col-xs-3 borderTab noPad btn bannerBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>*/}
 							{/*<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
 						</ul>
 						{/*resp*/}
@@ -234,8 +235,10 @@ class BannerwithModal extends Component {
 	  						<li className="active col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}><b>BUY</b></a></li>
 							<li className="bannerTab col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}><b>RENT</b></a></li>
 							<li className="col-xs-3 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}><b>COMMERCIAL</b></a></li>
-							<button className="col-xs-3 borderTab noPad btn bannerBtn1" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>
-							{/*<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
+							<li className="col-xs-4 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></a></li>
+							
+							{/*<button className="col-xs-3 borderTab noPad btn bannerBtn1" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>
+							<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
 						</ul>
 						{/*end*/}
 

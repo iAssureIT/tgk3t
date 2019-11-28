@@ -663,7 +663,7 @@ return (
               return (
                     <div className="col-lg-6 marTopBtm" key={index}>
                       
-                      <label htmlFor="userCheckbox" className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
+                      <label  className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
                       <input type="checkbox"
                           value={data.name}
                           id={index}

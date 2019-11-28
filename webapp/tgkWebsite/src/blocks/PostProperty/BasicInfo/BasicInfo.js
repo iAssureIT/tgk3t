@@ -329,7 +329,7 @@ class BasicInfo extends Component{
 			var lattitude = "";
     		var longitude = "";	
 
-    		// var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
+    		var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
       // 	console.log("fullAddress=====",fullAddress)
       // 	Geocode.fromAddress(fullAddress).then(
       //   response => {

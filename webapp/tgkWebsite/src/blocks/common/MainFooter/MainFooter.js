@@ -218,7 +218,7 @@ class MainFooter extends Component{
                           </div>
                         </div>
                       </div>
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb10" >
                         <div className="row">
                           <button className="col-lg-3  col-md-12 col-sm-12 col-xs-12 sendButton btn  pull-right" onClick={this.sendNotification.bind(this)}>SEND</button>
                         </div>
@@ -236,11 +236,11 @@ class MainFooter extends Component{
                         <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 7776 040 040</span>
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
-                         <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad"> : info@lyvo.com</span>
+                         <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad"> : customercare@lyvo.in</span>
                          
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails1 mt10">
-                        <span className="col-lg-3 noPad"><i className="fa fa-globe globe col-lg-1" aria-hidden="true"></i>&nbsp;  Website</span><span className="col-lg-9 noPad">  : www.lyvo.com</span>
+                        <span className="col-lg-3 noPad"><i className="fa fa-globe globe col-lg-1" aria-hidden="true"></i>&nbsp;  Website</span><span className="col-lg-9 noPad">  : www.lyvo.in</span>
                       </div>
                         <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 footerContactDetails" >
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">

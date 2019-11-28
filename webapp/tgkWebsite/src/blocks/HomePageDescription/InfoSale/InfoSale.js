@@ -105,7 +105,7 @@ export default class InfoSale extends Component {
 				</div>
 				{/*=========================resp=======================*/}
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 divContainer1 hidden-lg hidden-md">
-					<div className="col-xs-6">
+					<div className="col-xs-6 noPad">
 						<img src="/images/Icons/1.png" alt="Avatar" className="saleImg2" onClick={this.handleShow1.bind(this)}/>
 						<div className="col-lg-12 col-md-12 saleText2">
 					      	<b>We LOVE Property Owners</b>
@@ -113,19 +113,19 @@ export default class InfoSale extends Component {
 					     
 
 					</div>	
-					<div className="col-xs-6">
+					<div className="col-xs-6 noPad">
 						<img src="/images/Icons/2.png" alt="Avatar" className="saleImg2 "onClick={this.handleShow2.bind(this)}/>
 						<div className="col-lg-12 col-md-12 saleText2">
 					      	<b>For our Buyers & Tenant</b>
 					    </div>
 					</div>	
-					<div className="col-xs-6 mt10">
+					<div className="col-xs-6 noPad mt10">
 						<img src="/images/Icons/3.png" alt="Avatar" className="saleImg21" onClick={this.handleShow3.bind(this)}/>
 						<div className="col-lg-12 col-md-12 saleText2">
 					      	<b>What we do?</b>
 					    </div>
 					</div>	
-					<div className="col-xs-6 mt10">
+					<div className="col-xs-6 noPad mt10">
 						<img src="/images/Icons/4.png" alt="Avatar" className="saleImg2" onClick={this.handleShow4.bind(this)}/>
 						<div className="col-lg-12 col-md-12 saleText2">
 					      	<b>Why we are the best?</b>

@@ -291,12 +291,12 @@ class SearchProperty extends Component {
 								</div>
 							</div>
 						
-							<div className="col-lg-4 col-md-4 col-xs-2 col-sm-2 noPad">
+							<div className="col-lg-4 col-md-4 col-xs-2 col-sm-2 noPad locPlace">
 								<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch col-xs-12 noPad" onChange={this.handleLocation.bind(this)} />								
 							</div>
 						</div>
 						:
-						<div className="col-lg-6 col-md-6 col-xs-4 col-sm-4 noPad">
+						<div className="col-lg-6 col-md-6 col-xs-4 col-sm-4 noPad locPlace">
 							<input type="text" list="locationSearches" placeholder="Enter Location..." ref="location" value={this.state.location} className="col-lg-12 hSearch col-xs-10" onChange={this.handleLocation.bind(this)} />
 						</div>
 						}
@@ -356,7 +356,7 @@ class SearchProperty extends Component {
 							{/*resp*/}
 							<div className="col-lg-3 col-md-3 col-xs-4 col-sm-4 propertyType1 noPad property hidden-lg hidden-md">
 							  	<div className="dropdown" id="dropdown">
-								    <button className="dropdown-toggle btn divWhite col-lg-12" type="button" data-toggle="dropdown">Property Type
+								    <button className="dropdown-toggle btn divWhite1 col-lg-12" type="button" data-toggle="dropdown">Property Type
 								    <span className="caret caretMl"></span></button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad  noPad">
 								    	<div className="mt39 hidden-xs hidden-sm"></div>
@@ -431,7 +431,7 @@ class SearchProperty extends Component {
 							{/*resp*/}
 							<div className="col-lg-2 col-md-2 col-xs-3 col-sm-3 noPad property hidden-lg hidden-md">
 							  	<div className="dropdown">
-							  	 	<button className="btn dropdown-toggle divWhite col-lg-12 col-md-12 col-xs-12 col-sm-12" type="button" data-toggle="dropdown">Budget
+							  	 	<button className="btn dropdown-toggle divWhite1 col-lg-12 col-md-12 col-xs-12 col-sm-12" type="button" data-toggle="dropdown">Budget
 								   		<span className="caret"></span>
 								   	</button>
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad mt39 scrollable-menu1">

@@ -87,8 +87,8 @@ class PopularPlaces extends Component{
                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 imgContainer pune Sm">
                     <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[0]?this.state.subAreaList[0]._id:null} onClick={this.getSubAreaName.bind(this)}>                     
-                        <span>{this.state.subAreaList[0]?this.state.subAreaList[0]._id:null}</span>
-                        <span>{this.state.subAreaList[0]?this.state.subAreaList[0].count:null} Properties</span>
+                        <h4>{this.state.subAreaList[0]?this.state.subAreaList[0]._id:null}</h4>
+                        <h4>&nbsp; &nbsp;{this.state.subAreaList[0]?this.state.subAreaList[0].count:null} Properties</h4>
                       </div>
                     </div>
                   </div>
@@ -105,7 +105,7 @@ class PopularPlaces extends Component{
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai1  pull-right Bg">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
                         <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
-                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} Properties</h4>
+                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} 0 Properties</h4>
                       </div>
                     </div>
                  </div> 
@@ -115,7 +115,7 @@ class PopularPlaces extends Component{
                    <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[2] ? this.state.subAreaList[2]._id:null} onClick={this.getSubAreaName.bind(this)}>
                         <h4>{this.state.subAreaList[2] ? this.state.subAreaList[2]._id:null}</h4>
-                        <h4>{this.state.subAreaList[2] ? this.state.subAreaList[2].count:null} Properties</h4>
+                        <h4>{this.state.subAreaList[2] ? this.state.subAreaList[2].count:null} 0 Properties</h4>
                       </div>
                     </div> 
                   </div>
@@ -126,7 +126,7 @@ class PopularPlaces extends Component{
                         <div className="">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
                             <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3]._id : null}</h4>
-                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} Properties</h4>
+                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} 0 Properties</h4>
                           </div>
                         </div> 
                       </div>
@@ -139,7 +139,7 @@ class PopularPlaces extends Component{
                         <div className="">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
                             <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3]._id : null}</h4>
-                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} Properties</h4>
+                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} 0 Properties</h4>
                           </div>
                         </div> 
                       </div>

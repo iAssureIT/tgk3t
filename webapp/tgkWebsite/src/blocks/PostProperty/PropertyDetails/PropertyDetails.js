@@ -148,11 +148,11 @@ import './PropertyDetails.css';
 									})
 									.catch((error)=>{
 								                        console.log("error = ",error);
-								                        if(error.message === "Request failed with status code 401")
-								                        {
-								                             swal("Your session is expired! Please login again.","", "error");
-								                             this.props.history.push("/");
-								                        }
+								                        // if(error.message === "Request failed with status code 401")
+								                        // {
+								                        //      swal("Your session is expired! Please login again.","", "error");
+								                        //      this.props.history.push("/");
+								                        // }
 								    });
 
 								    // 2nd axios done
@@ -654,7 +654,7 @@ import './PropertyDetails.css';
 			this.setState({
 				allAmenities : allAmenities,
 			},()=>{
-				// console.log("here allAmenities in function check ", this.state.allAmenities);
+				console.log("here allAmenities in function check ", this.state.allAmenities);
 			});
 
 			  // this.state.Amenities.push(e.target.getAttribute('value'));
@@ -947,7 +947,7 @@ import './PropertyDetails.css';
 			              return (
 			                    <div className="col-lg-4 marTopBtm" key={index}>
 			                      {console.log("data in furnishedOptions",data)}
-			                      <label htmlFor="userCheckbox" className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
+			                      <label  className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
 			                      <input type="checkbox"
 			                          value={data.name}
 			                          id={index}
@@ -1157,7 +1157,7 @@ import './PropertyDetails.css';
 		  	 				return(
 		  	 						<div className="col-lg-4 FF4I1 " key={index}>
 		  	 							
-										<label htmlFor="userCheckbox" className="container2">
+										<label  className="container2">
 											  <input type="checkbox"
 											  		 value={data.amenity} 
 										      		 id={index}

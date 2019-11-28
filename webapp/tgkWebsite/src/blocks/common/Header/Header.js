@@ -86,7 +86,7 @@ class Header extends Component {
 				<div className="col-lg-2 col-md-2 col-sm-7 col-xs-4 row   ">
 					<a href="/"><img alt=""  src="/images/new/logo.png" className="hImg pull-right" title="Go to Home Page"/></a>
 				</div>
-				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-8 pull-right headerMenu ">
+				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-8 pull-right headerMenu hidden-xs hidden-sm">
 					<nav className="navbar  col-lg-12 col-xs-12">
 					    <ul className="nav navbar-nav customNav col-lg-12 col-sm-12">
 						<button className="col-lg-4 col-lg-offset-5 col-xs-6 col-xs-offset-3 btn postAndEarnBtn" data-toggle="modal" data-target="#loginModal" onClick={this.postLogin.bind(this)}>Post & Earn</button>
@@ -122,6 +122,44 @@ class Header extends Component {
 					    </ul>
 					</nav>
 				</div>
+				{/*=======================resp===============*/}
+					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-8 pull-right headerMenu hidden-lg hidden-md ">
+					<div className="  col-lg-12 col-xs-12">
+					    <ul className="customNav col-lg-12 col-sm-12">
+						<button className="col-lg-4 col-lg-offset-5 col-xs-7 btn postAndEarnBtn" data-toggle="modal" data-target="#loginModal" onClick={this.postLogin.bind(this)}>Post & Earn</button>
+					    	{/*<span className="headerName col-md-6">{localStorage.getItem("token") ? "Hello " +localStorage.getItem('userName') : "Hello Guest" }</span>	 */}
+					    		 
+					      {localStorage.getItem("token") ? (
+					      	<li className="dropdown col-lg-2 col-xs-3 pull-right">
+					      		<div className="nav-icon dropdown-toggle col-lg-12" data-toggle="" >
+								  <div></div>
+								</div>
+						        <ul className="dropdown-menu ">
+					    			<li className="" style={{"paddingLeft":"30px"}}>{ "Hello " +localStorage.getItem('userName')} </li>	 
+						          	<li><Link to="/MyPostedProperties">My Listings</Link></li>
+						          	<li><Link to="/MyInterestedProperties">My Interests</Link></li>
+						          	<li><Link to="/AboutUs">About Us</Link></li>
+						          	<li><Link onClick={this.logout.bind(this)} to="/">Logout</Link></li>
+						        </ul>
+					      	</li>
+							) : 
+					      	(
+					      	<li className="dropdown col-lg-2 col-xs-3 pull-right">
+					      		<div className="nav-icon dropdown-toggle col-lg-12" data-toggle="" >
+								  <div></div>
+								</div>
+						        <ul className="dropdown-menu ">
+					    			<li className="" style={{"paddingLeft":"30px"}}>Hello Guest</li>	 
+						          	<li><a className="" data-toggle="dropdown" href="#Profile"  data-toggle="modal" data-target="#loginModal" onClick={this.login.bind(this)}>Login</a></li>
+						          	<li><Link to="/AboutUs">About Us</Link></li>
+						        </ul>
+					      	</li>
+					      	)
+					  	}
+					    </ul>
+					</div>
+				</div>
+				{/*=====================end==============================*/}
 
 				{/*=== Modal starts here ===*/}
 				<div>

@@ -102,4 +102,11 @@
 .divWhite{
     background-color: #fff;
 }
+.divWhite1{
+    background-color: #fff;
+    font-size: 10px;
+}
+.locPlace:placeholder{
+    font-size: 10px;
+}
 
