@@ -110,3 +110,9 @@
     font-size: 10px;
 }
 
+#locationSearches{
+    height:50px !important;
+    max-height:80px !important;
+    overflow-y:scroll;
+    /*display:block !important;*/
+}
