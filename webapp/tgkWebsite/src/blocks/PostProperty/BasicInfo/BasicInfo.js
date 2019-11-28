@@ -5,7 +5,6 @@ import swal                   from 'sweetalert';
 import { connect } 			  from 'react-redux';
 import { withRouter}  		  from 'react-router-dom';
 import Geocode                from "react-geocode";
-
 import './BasicInfo.css';
 
 
@@ -64,7 +63,7 @@ class BasicInfo extends Component{
       			type 					:true,
       			fullAddress             : "",
       			country             : "India",
-
+      			googleDataKey 		: ""
 
 			};
 			this.handleChange = this.handleChange.bind(this);
@@ -216,6 +215,9 @@ class BasicInfo extends Component{
 						if(res.data.propertyHolder === "Broker"){
 							$('.sellerType3').addClass('highlight').siblings().removeClass('highlight'); 	
 						}
+						if(res.data.propertyHolder === "Flatmate"){
+							$('.sellerType4').addClass('highlight').siblings().removeClass('highlight'); 	
+						}
 
 						
 					})
@@ -237,8 +239,23 @@ class BasicInfo extends Component{
 		}
 
 		componentDidMount(){	
-		// console.log("here basic info");		
- 
+		// console.log("here basic info");	
+			axios
+				    .get('/api/projectSettings/get/one/GOOGLE')
+				    .then(
+				      (res)=>{
+				        const postCount = res.data;
+				        
+				        this.setState({
+				          googleDataKey : postCount,
+				        },()=>{
+				        	
+				        console.log("aaaaa.....",this.state.googleDataKey);
+				        });
+				      }
+				    )
+				    .catch();
+
       		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
         	var message	= localStorage.getItem("message");
@@ -247,18 +264,18 @@ class BasicInfo extends Component{
 				swal("Welcome!","You are now logged in!","success");
 			}			
 
-			$('#radio-example1 ').click(function(){				    	
-		        $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
-		    });
-		    $('#radio-example2').click(function(){
-		        $('.sellerType2').addClass('highlight').siblings().removeClass('highlight');       
-		    });
-		    $('#radio-example3').click(function(){
-		        $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
-		    });
-		    $('#radio-example4').click(function(){
-		        $('.sellerType4').addClass('highlight').siblings().removeClass('highlight');       
-		    });
+			// $('#radio-example1 ').click(function(){				    	
+		 //        $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
+		 //    });
+		 //    $('#radio-example2').click(function(){
+		 //        $('.sellerType2').addClass('highlight').siblings().removeClass('highlight');       
+		 //    });
+		 //    $('#radio-example3').click(function(){
+		 //        $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
+		 //    });
+		 //    $('#radio-example4').click(function(){
+		 //        $('.sellerType4').addClass('highlight').siblings().removeClass('highlight');       
+		 //    });
 		    
 		    axios({
 	    	method: 'get',
@@ -312,13 +329,14 @@ class BasicInfo extends Component{
 			var lattitude = "";
     		var longitude = "";	
 
-    		var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
-      /*Geocode.fromAddress(fullAddress).then(
-        response => {
-          console.log("google map API keay result--->",response.data);             
-          const { lat, lng } = response.results[0].geometry.location;
-          lattitude = lat;
-          longitude = lng;	*/
+    		// var fullAddress = this.state.landmark + '+' + this.state.areaName + '+' + this.state.cityName + '+' + this.state.stateCode + '+' + this.state.country + '+' + this.state.pincode ;
+      // 	console.log("fullAddress=====",fullAddress)
+      // 	Geocode.fromAddress(fullAddress).then(
+      //   response => {
+      //     console.log("google map API keay result--->",response.data);             
+      //     const { lat, lng } = response.results[0].geometry.location;
+          // lattitude = lat;
+          // longitude = lng;
 
 			var formValues = {
 				"propertyHolder" 	: this.state.propertyHolder,
@@ -393,7 +411,7 @@ class BasicInfo extends Component{
 			if(this.state.propertyHolder!=="" && this.state.transactionType!=="" && this.state.propertyType!=="" && this.state.propertySubType!=="" && 
 				this.state.pincode!=="" && this.state.stateCode!=="" && this.state.cityName!=="" && this.state.areaName!=="" && this.state.subAreaName!=="" && this.state.societyName!==""  ){
 				if(this.state.updateOperation === true){
-					console.log("update fun");
+					// console.log("update fun");
 					var ovLoc = this.state.originalValuesLocation;
 					var ov = this.state.originalValues;
 					if(this.state.propertyHolder === ov.propertyHolder && this.state.transactionType === ov.transactionType
@@ -403,8 +421,8 @@ class BasicInfo extends Component{
 						this.state.address === ovLoc.address &&  this.state.landmark === ovLoc.landmark &&  this.state.fullAddress === ovLoc.fullAddress
 						)
 					{
-						console.log("same data");
-						console.log("same data22",this.state.type);
+						// console.log("same data");
+						// console.log("same data22",this.state.type);
 						
 					localStorage.setItem('propertyId',this.props.property_id);
 					localStorage.setItem("index",this.state.index);
@@ -487,12 +505,12 @@ class BasicInfo extends Component{
 				swal("Please enter mandatory fields", "", "warning");
                 console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
 			}
-		/*},
-			error => {
-            swal("Oops...!", "google map key has problem. Please contact to admin", "warning");
-            console.error("map key error = ",error);
-          }
-        );  */
+		// },
+		// 	error => {
+  //           swal("Oops...!", "google map key has problem. Please contact to admin", "warning");
+  //           console.error("map key error = ",error);
+  //         }
+  //       );  
        
 			    
 		}
@@ -520,23 +538,27 @@ class BasicInfo extends Component{
 		    }   
 		}
 	   radioChange(event) {
+	   	event.preventDefault()
 	    	this.setState({
 	      	"propertyHolder": event.currentTarget.value,
-			    });
-			
-				    $('#radio-example1 ').click(function(){
-				        $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
-				    });
-				    $('#radio-example2').click(function(){
-				        $('.sellerType2').addClass('highlight').siblings().removeClass('highlight');       
-				    });
-				    $('#radio-example3').click(function(){
-				        $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
-				    });
-				    $('#radio-example4').click(function(){
-				        $('.sellerType4').addClass('highlight').siblings().removeClass('highlight');       
-				    });
-
+		    },()=>{
+		    	// console.log('propertyHolder s++++++',this.state.propertyHolder)			    
+			    // $('#radio-example1 ').click(function(){
+			    //     $('.sellerType1').addClass('highlight').siblings().removeClass('highlight');       
+			    // });
+			    // $('#radio-example2').click(function(){
+			    //     $('.sellerType2').addClass('highlight').siblings().removeClass('highlight');       
+			    // });
+			    // $('#radio-example3').click(function(){
+			    //     $('.sellerType3').addClass('highlight').siblings().removeClass('highlight');       
+			    // });
+			    // $('#radio-example4').click(function(){
+			    //     $('.sellerType4').addClass('highlight').siblings().removeClass('highlight');       
+			    // });
+		    });
+			$(event.currentTarget).parent().parent().addClass('highlight');       
+			$(event.currentTarget).parent().parent().siblings().removeClass('highlight');       
+			console.log("propertyHolder====",event.currentTarget.value)
 		 }
 	selectProp(event){
 
@@ -903,8 +925,8 @@ class BasicInfo extends Component{
 	render() {
 		// console.log("transactionType=>",this.state.transactionType);
 		// console.log("type=>",this.state.type);
-		// console.log("fullAddress",this.state.fullAddress);
-		// console.log("CongratsPage",this.props.congratsPage)
+		console.log("fullAddress",this.state.fullAddress);
+		console.log("subAreaList",this.state.subAreaList)
 		var cityName = this.state.cityName;
 	    var areaName = this.state.areaName;
 	    var subareaName = this.state.subAreaName;
@@ -926,14 +948,15 @@ class BasicInfo extends Component{
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  mt30">	
 				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-				  	 	<label>I am</label>
+				  	 	<label htmlFor="iAm">I am</label>
 						<span className="astrick">*</span>
 				  	 </div>
 				  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 crc_mrg_btm noPad"   >
 				    	<div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 sellerType1"  >
-						    <label className="radio-inline ">
+						    <label htmlFor="" className="radio-inline ">
 						      <input type="radio" 
-						      		 value="Owner" 
+						      		 value="Owner"
+						      		 name="owner" 
 						      		 className="FrRadio" 
 						      		 id="radio-example1"
 						      		 checked={this.state.propertyHolder === "Owner"}
@@ -942,10 +965,11 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-2 sellerType2"  >
-						    <label className="radio-inline ">
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType2"  >
+						    <label htmlFor="" className="radio-inline ">
 						      <input type="radio" 
-						      		 value="Care Taker" 
+						      		 value="Care Taker"
+						      		 name="caretaker" 
 						      		 className="FrRadio" 
 						      		 id="radio-example2"
 						      		 checked={this.state.propertyHolder === "Care Taker"}
@@ -955,10 +979,11 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					    <div className="col-lg-1 col-lg-offset-3 col-sm-1 col-xs-1 col-xs-offset-2 sellerType3"   >
-						    <label className="radio-inline ">
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType3"   >
+						    <label htmlFor="" className="radio-inline ">
 						      <input type="radio"
-						      		 value="Broker" 
+						      		 value="Broker"
+						      		 name="broker" 
 						      		 className="FrRadio" 
 						      		 id="radio-example3"
 						      		 checked={this.state.propertyHolder === "Broker"}
@@ -968,8 +993,8 @@ class BasicInfo extends Component{
 						    </label>
 					    </div>
 
-					      {/*<div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType4"   >
-						    <label className="radio-inline ">
+					    <div className="col-lg-1 col-lg-offset-2 col-sm-1 col-xs-1 col-xs-offset-1 sellerType4"   >
+						    <label htmlFor="" className="radio-inline ">
 						      <input type="radio"
 						      		 value="Flatmate" 
 						      		 className="FrRadio" 
@@ -979,22 +1004,21 @@ class BasicInfo extends Component{
 						      		 />
 					  			<i className=" logo1"><img src="/images/broker.png" alt="" /></i>
 						    </label>
-					    </div>*/}
+					    </div>
 
 
 					</div>
-					  	<div className="col-lg-12 col-md-12 col-sm-9 col-xs-12 mb-30 noPad">
-					  			<span className="col-lg-4 col-xs-4 ownerLeft "> Owner</span>
-					  			<span className="col-lg-4 col-xs-4 noPad"> Caretaker</span>
+					  	<div className="col-lg-12 col-md-12 col-sm-9 col-xs-12 mb-30 noPad" name="iAm">
+					  			<span className="col-lg-3 col-xs-3 ownerLeft "> Owner</span>
+					  			<span className="col-lg-3 col-xs-3 noPad"> Caretaker</span>
 					  			<span className="col-lg-3 col-xs-3 noPad">&nbsp; Broker</span>
-					  			{/*<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>*/}
-
+					  			<span className="col-lg-3 col-xs-3 noPad"> Flatmate</span>
 					  	</div>
          		
          			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
          				<div className="mb-30 hidden-sm hidden-xs"></div>
          					<div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 noPad">
-					   			<label>I would like to</label>
+					   			<label htmlFor="iLike">I would like to</label>
 								<span className="astrick">*</span>
 						        {this.state.type===true ?
 
@@ -1217,7 +1241,7 @@ class BasicInfo extends Component{
 					</div>
 			  	</div>
 				  
-				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 boxLayout">
+				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 boxLayout hidden-xs hidden-sm">
 					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						<img alt=""  src="/images/2.png" className=""/>
 					</div>
@@ -1225,7 +1249,7 @@ class BasicInfo extends Component{
 
 			  </div>
 				  
-		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
+		  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad hidden-xs hidden-sm">
 					 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad" >
 				  		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
 						  	<div className="form-group"  id="" >
@@ -1295,6 +1319,78 @@ class BasicInfo extends Component{
 		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-12 col-xs-12" onClick={this.insertProperty.bind(this)} >Save & Next &rArr;</button>
 		  	</div>
 		  </div>
+		  {/*========================resp 3 div=============================*/}
+		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-lg hidden-md ">
+					 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad" >
+				  		<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+						  	<div className="form-group"  id="" >
+							   
+								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 row">
+						   			 <b>Society</b>
+									<span className="astrick">*</span>
+						   		</div>
+							    <div className="input-group  " id="">
+							      	<div className="input-group-addon inputIcon">
+					                 <i className="fa fa-building iconClr"></i>
+				                    </div>
+								    <input type="text" list="societyList" className="form-control" ref="society" value={this.state.societyName} onChange={this.handleChange.bind(this)} onBlur={this.handleSociety.bind(this)} name="societyName" placeholder="Enter Society" />
+								 
+								    <datalist id="societyList">
+								    	{this.state.societyList.length>0 ? 
+								    		this.state.societyList.map( (society,index)=>{
+									    		return(<option value={society.societyName} key={index} />)
+								    		})
+								    		: ""
+								    	}
+								    </datalist>
+							  	</div>
+					        </div>
+						</div>
+						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							  <div className="form-group"  id="" >
+								  
+									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 row">
+							   			 <b>House/Building Number</b>
+										
+							   		</div>
+							    <div className="input-group  " id="">
+							      	<div className="input-group-addon inputIcon">
+					                <i className="fa fa-building iconClr"></i>
+				                    </div>
+							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
+							    <input type="text" className="form-control" ref="housebuilding" name="address" value={this.state.address}  onChange={this.handleChange.bind(this)} placeholder="Enter House Address"/>
+							  
+							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+							  	</div>
+							  </div>
+						</div>
+						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+							  <div className="form-group"  id="" >
+								 
+								    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb5 row">
+							   			 <b>Landmark</b>
+										
+							   		</div>
+							    <div className="input-group  " id="">
+							      	<div className="input-group-addon inputIcon">
+					                <i className="fa fa-building iconClr"></i>
+				                    </div>
+							    {/*<span for="">Per</span><span className="asterisk">*</span>*/}
+							    <input type="text" className="form-control" name="landmark" value={this.state.landmark}  onChange={this.handleChange.bind(this)}ref="landmark"  placeholder="Landmark "/>
+							
+							    {/*<div className="errorMsg">{this.state.errors.builtArea}</div>*/}
+							  	</div>
+							  </div>
+						</div>
+					</div>
+
+		  {/**/}
+		  	
+		  	<div className="form-group col-lg-3	col-md-2 col-sm-12 col-xs-12` pull-right mt20">
+		       <button type="submit " className="btn nxt_btn col-lg-12 col-md-2 col-sm-12 col-xs-12" onClick={this.insertProperty.bind(this)} >Save & Next &rArr;</button>
+		  	</div>
+		  </div>
+		  {/*========================end 3 div==============================*/}
 		  
 		</form>
 		);

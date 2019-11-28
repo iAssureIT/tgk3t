@@ -294,8 +294,8 @@ class HomePageProperties extends Component {
 
 		return (
       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">      
-        <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad mt75">
-            
+        <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12 noPad ">
+                <div className="mt75 hidden-xs hidden-sm"></div>
       				  <h3 className="textC"> <b>
                 {
                   this.state.propertiesData && this.state.propertiesData.length > 0 ?

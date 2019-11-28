@@ -1,7 +1,7 @@
 import React , { Component }	from 'react';
 import axios 					from 'axios';
 import $ 						from "jquery";
-import {withRouter, Link} 		    from 'react-router-dom';
+import {withRouter, Link} 		from 'react-router-dom';
 import { connect } 				from 'react-redux';
 import swal                     from 'sweetalert';
 

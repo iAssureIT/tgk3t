@@ -656,14 +656,14 @@ return (
 
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm">
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-             <label>My Total Ask includes</label>
+             <label htmlFor="">My Total Ask includes</label>
             </div>
           {this.state.includeCharges && this.state.includeCharges.length > 0 ?
             this.state.includeCharges.map((data,index)=>{
               return (
                     <div className="col-lg-6 marTopBtm" key={index}>
                       
-                      <label className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
+                      <label htmlFor="userCheckbox" className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
                       <input type="checkbox"
                           value={data.name}
                           id={index}
@@ -748,7 +748,7 @@ return (
             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                 <div className="form-group" id="">
-                  <label htmlFor="exampleFormControlInput1">Description</label>
+                  <label htmlFor="description">Description</label>
                   <textarea className="form-control" rows="3" cols="5" ref="description" name="description" value={this.state.description} onChange={this.handleChange.bind(this)}  id="" />
                 </div>
             </div>

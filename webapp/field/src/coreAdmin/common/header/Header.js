@@ -97,15 +97,6 @@ logout(){
             <nav className="pageHeader">
               <div className="col-lg-12 padd0">
                 <div className="col-lg-6 col-md-4 col-sm-4 col-xs-4 padd0">
-                 {/* <div className="col-lg-2 col-md-2 col-sm-2 col-xs-2">
-                    <div id="sidebarLogo"> 
-                      <div className="sidebar-header">
-                        <h4 className=" zeromargin"><img className="imgLogo " src="images/Logo.png"  alt="TGK" width="80px" height="45px" /></h4>
-                        <strong className="clspadding">  <img src="images/Keylogo.png"  alt="TGK" height="28px"/></strong>
-                      </div>
-                    </div>
-                    </div>*/}
-
                   <div className="">
                     <div id="sidebarCollapse" className="col-lg-1 col-md-1 col-sm-1 col-xs-1 hover smallmar ">
                     <i className="fa fa-bars headicon barbtn"></i>

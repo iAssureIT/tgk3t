@@ -52,6 +52,7 @@ class LoginMobNum extends Component {
         				axios.defaults.headers.common['Authorization'] = 'Bearer '+response.data.token;
 						localStorage.setItem('token',response.data.token)
 						localStorage.setItem('userName',response.data.fullName)
+						localStorage.setItem('uid',response.data.uid)
 
         				if(axios.defaults.headers.common.Authorization)
         				{
@@ -130,6 +131,7 @@ class LoginMobNum extends Component {
 				<form className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " id="xyz">
 						  	<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 ">
 						  		<div className="mt-150 hidden-xs hidden-sm"></div>	
+						  		<div className="mt-26 hidden-lg hidden-md"></div>	
 							  <div className="form-group">
 							    <label htmlFor="">Please enter your Mobile No</label>
 							    <div className="input-group inputBox-main " id="">
@@ -154,7 +156,7 @@ class LoginMobNum extends Component {
 				                        )}
 							  </div>
 						    </div>
-						 <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 boxLayout1">
+						 <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 boxLayout1 hidden-xs hidden-sm">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 									<img alt=""  src="images/1.png" className="build_img2"/>
 								</div>
@@ -162,9 +164,14 @@ class LoginMobNum extends Component {
 									We charge tenants/buyers brokerage & share upto 50% with the property owners.
 								</span>
 						 </div>
-						  	<div className=" col-lg-2 pull-right btnNext">
+						  	<div className=" col-lg-2 pull-right btnNext hidden-xs hidden-sm">
 							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
 						  	</div>
+						  	{/*resp*/}
+						  		<div className=" col-lg-2 pull-right  hidden-lg hidden-md">
+								    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
+							  	</div>
+						  	{/*end*/}
 				</form>
 		);
 	}

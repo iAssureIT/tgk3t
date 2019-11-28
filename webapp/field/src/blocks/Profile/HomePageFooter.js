@@ -64,7 +64,7 @@ class HomePageFooter extends Component{
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  " >
                       <div className="row">
                         <div className="col-lg-2 col-md-10 col-sm-10 col-xs-10 footerImgContainer" >
-                          <img alt=""  src="/images/Logo.png" />
+                          <img alt=""  src="/images/lyvo.png" />
                         </div>
                           <div className="col-lg-12 col-md-10 col-sm-10 col-xs-10 contactDetails mt40" >
                             <i class="fa fa-mobile fontMobile" aria-hidden="true"></i>&nbsp;   Phone 1 : +91 9999778745

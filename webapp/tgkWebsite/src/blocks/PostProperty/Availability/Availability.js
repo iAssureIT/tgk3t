@@ -30,7 +30,6 @@ const formValid = formerrors=>{
   }
 const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
-
  class Availability extends Component{
 
 		constructor(props){
@@ -73,7 +72,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
    			// console.log("this.props.updateStatus",this.props.updateStatus);
 			// console.log("this.props.property_id",this.props.property_id);
 			if(this.props.updateStatus === true){
-
 	        	axios
 					.get('/api/properties/'+this.props.property_id)
 					.then( (response) =>{
@@ -97,7 +95,6 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						},()=>{
 							// console.log("here available in comp did mount",this.state.contactPerson);
 							});
-
 					})
 					.catch((error)=>{
                         console.log("error = ",error);
@@ -109,13 +106,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                              this.props.history.push("/");
                         }
                     });
-
         	}
-
 		}
-
 		componentDidMount(){	
-
       		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 			// console.log("user id in availability",this.props.uid);
 					axios
@@ -738,7 +731,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		  	  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">	
 				  <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 				  	<div className="form-group" id="">
-			  	 		<label className="">Who will show?</label>
+			  	 		<label htmlFor="" className="">Who will show?</label>
 					 	{/*<div className="can-toggle1 genderbtn demo-rebrand-2" onChange={this.selectType.bind(this)}>
 				              <input id="d" type="checkbox"/>
 				              <label className="formLable" htmlFor="d">
@@ -752,9 +745,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 						         <div className="switch1" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"  checked />
-						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
+						            <label htmlFor="week" className="switch1-label switch1-label-off">Someone Else</label>
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month"  />
-						            <label for="month" className="switch1-label switch1-label-on">Myself</label>
+						            <label htmlFor="month" className="switch1-label switch1-label-on">Myself</label>
 						            <span className="switch1-selection"></span>
 						          </div>
 
@@ -762,9 +755,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 						           <div className="switch1" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="week"   />
-						            <label for="week" className="switch1-label switch1-label-off">Someone Else</label>
+						            <label htmlFor="week" className="switch1-label switch1-label-off">Someone Else</label>
 						            <input type="radio" className="switch1-input" name="view" value={this.state.contactPerson} id="month" checked  />
-						            <label for="month" className="switch1-label switch1-label-on">Myself</label>
+						            <label htmlFor="month" className="switch1-label switch1-label-on">Myself</label>
 						            <span className="switch1-selection" ></span>
 						          </div>
 						       
@@ -778,7 +771,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				  {this.state.contactPerson === "Someone" ? 
 				  	 <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >
-			  	 		<label className="">Phone Number</label>
+			  	 		<label htmlFor="contactPersonMobile" className="">Phone Number</label>
 						  <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-mobile iconClr"></i>
@@ -793,7 +786,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				  :
 				   <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">
 					  <div className="form-group"  id="" >
-			  	 		<label className="">Phone Number</label>
+			  	 		<label htmlFor="contactPersonMobile" className="">Phone Number</label>
 						  <div className="input-group inputBox-main " id="">
 					      	<div className="input-group-addon inputIcon">
 		                     	<i className="fa fa-mobile iconClr"></i>
@@ -807,7 +800,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		 	 </div>
 			  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">
 			  	 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-			  	 	<label>Visit Schedule (Add as many as You Like)</label>
+			  	 	<label htmlFor="">Visit Schedule (Add as many as You Like)</label>
 			  	 </div>
 			  </div>
 		  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margBtm_5">	
@@ -852,7 +845,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				</div>
 
 				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 row">
-	    			<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> To Time <span className="astrick">*</span></label>
+	    			<label htmlFor="toTime" className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> To Time <span className="astrick">*</span></label>
 
 					<div className="col-lg-7 col-md-8 col-sm-7 col-xs-7"  id="" >
 					    <div className="input-group inputBox-main ">
@@ -866,12 +859,13 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 							    use12Hours
 							    inputReadOnly
 							    className="timePicHeight"
+							    name="toTime"
 							  />
 					  	</div>
 					</div>
 			  	</div>
 			  	<div className="col-lg-1 col-md-2 col-sm-12 col-xs-12 ">
-			    	<label className="col-lg-12 col-md-12 col-sm-12 col-xs-12 dotColor">.</label>				  
+			    	<label htmlFor="" className="col-lg-12 col-md-12 col-sm-12 col-xs-12 dotColor">.</label>				  
 					<button className="btn btn-primary" onClick={this.handleAvailability.bind(this)}>Add Slot +</button>					  	
 				</div> 
 		  	</div>
@@ -902,8 +896,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                                 </div> 
                                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
                                   <div className=" imageContaner"  key={index}>
-                                    <label id={index} className="pull-right custFaTimes" title="Delete Image" data-id={data.imgPath} onClick={this.deleteimageWS.bind(this)}>X</label>
-                                    <img className="img-responsive imgHeight" src={data.imgPath}/>
+                                    <label htmlFor="img" id={index} className="pull-right custFaTimes" title="Delete Image" data-id={data.imgPath} onClick={this.deleteimageWS.bind(this)}>X</label>
+                                    <img className="img-responsive imgHeight" name="img" src={data.imgPath}/>
                                   </div>
                                 </div>
                               </div>
@@ -1008,7 +1002,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                         <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12 row">Please Upload Video:</h5>
                       </div>
                       <div className="containerC">
-                        <label id="logoImage" className="pull-right custFaTimes1" title="Delete Video" onClick={this.deleteSingleVideoDirect.bind(this)}>X</label>
+                        <label htmlFor="" id="logoImage" className="pull-right custFaTimes1" title="Delete Video" onClick={this.deleteSingleVideoDirect.bind(this)}>X</label>
                        {	console.log("this.state.singleVideo -----------------",this.state.singleVideo) }
 
 	                   {   

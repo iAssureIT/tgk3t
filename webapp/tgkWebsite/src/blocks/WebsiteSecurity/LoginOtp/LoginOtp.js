@@ -102,7 +102,7 @@ class LoginOtp extends Component {
 								  	</div>
 								</div>
 						    </div>
-						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1">
+						 <div className="col-lg-4 col-md-8 col-sm-12 col-xs-12 boxLayout1 hidden-xs hidden-sm">
 								<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
 									<img alt=""  src="/images/1.png" className="build_img3"/>
 								</div>
@@ -111,9 +111,14 @@ class LoginOtp extends Component {
 								</span>
 						 </div>
 						</div>
-						  	<div className=" col-lg-2 pull-right btnNext">
+						  	<div className=" col-lg-2 pull-right btnNext hidden-xs hidden-sm">
 							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
 						  	</div>
+						  	{/*resp*/}
+						  		<div className=" col-lg-2 pull-right btnNext1 hidden-lg hidden-md">
+								    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
+							  	</div>
+						  	{/*end*/}
 					</form>
 				</div>
 			</div>

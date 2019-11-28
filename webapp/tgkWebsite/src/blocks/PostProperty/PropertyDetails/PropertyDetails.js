@@ -793,10 +793,10 @@ import './PropertyDetails.css';
 							</div>
 						</div>
 						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						    <span htmlFor="" className="mb7 col-lg-12 row">Personal Washroom</span>
-							<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+						    <span  className="mb7 col-lg-12 row">Personal Washroom</span>
+							<label htmlFor="washroom" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
-						             name=""  
+						             name="washroom"  
 						             value="Yes"
 						      		 checked={this.state.personal === "Yes"}
 				   					 onChange={this.radioChange1}    
@@ -805,9 +805,9 @@ import './PropertyDetails.css';
 						        <span className="mb5">Yes</span> 
 
 						    </label>
-						    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+						    <label htmlFor="washroom1" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
-						             name=""  
+						             name="washroom1"  
 						             value="No"
 						             checked={this.state.personal === "No"}
 				   					 onChange={this.radioChange1}  
@@ -817,10 +817,10 @@ import './PropertyDetails.css';
 						    </label>
 						</div>
 						<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-						    <span htmlFor="" className="mb7 col-lg-12 row">Pantry</span>
-							<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+						    <span  className="mb7 col-lg-12 row">Pantry</span>
+							<label htmlFor="pantry" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
-						             name=""  
+						             name="pantry"  
 						             value="Yes" 
 						      		 checked={this.state.pantry === "Yes"}
 				   					 onChange={this.radioChange2}
@@ -828,9 +828,9 @@ import './PropertyDetails.css';
 						        <span className="mb5">Yes</span> 
 
 						    </label>
-						    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+						    <label htmlFor="pantry1" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 						        <input type="radio"
-						             name=""  
+						             name="pantry1"  
 						             value="No" 
 						      		 checked={this.state.pantry === "No"}
 				   					 onChange={this.radioChange2}
@@ -906,9 +906,9 @@ import './PropertyDetails.css';
 				    </div>
 					<div className="col-lg-12 col-md-12 col-sm-10 col-xs-12 pl29">	
 							 
-						<label className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12 ">
+						<label htmlFor="optradio1" className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12 ">
 					        <input type="radio"
-					             name="optradio"  
+					             name="optradio1"  
 					             value="Fully furnished" 
 					      		 id="radio-example1"
 					      		 checked={this.state.furnishedstatus === "Fully furnished"}
@@ -916,9 +916,9 @@ import './PropertyDetails.css';
 					      <span className="mb5">Fully furnished</span> 
 
 					    </label>
-					    <label className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12">
+					    <label htmlFor="optradio2" className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12">
 					      	<input type="radio" 
-					      		 name="optradio" 
+					      		 name="optradio2" 
 					      		 value="Semi furnished" 
 					      		 id="radio-example2"
 					      		 checked={this.state.furnishedstatus === "Semi furnished"}
@@ -926,9 +926,9 @@ import './PropertyDetails.css';
 					  	 	<span className="mb5">Semi furnished</span>  
 
 					    </label>
-					    <label className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12">
+					    <label htmlFor="optradio3" className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12">
 					      	<input type="radio"
-					      		 name="optradio" 
+					      		 name="optradio3" 
 					      		 value="Unfurnished" 
 					      		 id="radio-example3"
 					      		 checked={this.state.furnishedstatus === "Unfurnished"}
@@ -947,7 +947,7 @@ import './PropertyDetails.css';
 			              return (
 			                    <div className="col-lg-4 marTopBtm" key={index}>
 			                      {console.log("data in furnishedOptions",data)}
-			                      <label className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
+			                      <label htmlFor="userCheckbox" className="container1 checkbox-inline"><span className="fs1">{data.name}</span>
 			                      <input type="checkbox"
 			                          value={data.name}
 			                          id={index}
@@ -966,10 +966,10 @@ import './PropertyDetails.css';
 			            null
 			          }
 			          <div className="col-lg-12 col-md-4 col-sm-12 col-xs-12 mt-10">
-								    <span htmlFor="" className="mb7 col-lg-12 row">Work Stations</span>
-									<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								    <span  className="mb7 col-lg-12 row">Work Stations</span>
+									<label htmlFor="ws1" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"
-								             name=""  
+								             name="ws1"  
 								             value="0" 
 								      		 checked={this.state.workStation === "0"}
 						   					 onChange={this.radioChange3}
@@ -977,9 +977,9 @@ import './PropertyDetails.css';
 								        <span className="mb5">0</span> 
 
 								    </label>
-								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								    <label htmlFor="ws2" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"
-								             name=""  
+								             name="ws2"  
 								             value="1" 
 								      		 checked={this.state.workStation === "1"}
 						   					 onChange={this.radioChange3}
@@ -988,9 +988,9 @@ import './PropertyDetails.css';
 
 								    </label>
 
-								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								    <label htmlFor="ws3" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"
-								             name=""  
+								             name="ws3"  
 								             value="2" 
 								      		 checked={this.state.workStation === "2"}
 						   					 onChange={this.radioChange3}
@@ -1001,10 +1001,10 @@ import './PropertyDetails.css';
 								</div>
 
 								<div className="col-lg-12 col-md-4 col-sm-12 col-xs-12 mt-10">
-								    <span htmlFor="" className="mb7 col-lg-12 row">Pantry</span>
-									<label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								    <span  className="mb7 col-lg-12 row">Pantry</span>
+									<label htmlFor="pt1" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"
-								             name=""  
+								             name="pt1"  
 								             value="Dry" 
 								      		 checked={this.state.furnishPantry === "Dry"}
 						   					 onChange={this.radioChange4}
@@ -1012,9 +1012,9 @@ import './PropertyDetails.css';
 								        <span className="mb5">Dry</span> 
 
 								    </label>
-								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								    <label htmlFor="pt2" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"
-								             name=""  
+								             name="pt2"  
 								             value="Wet" 
 								      		 checked={this.state.furnishPantry === "Wet"}
 						   					 onChange={this.radioChange4}
@@ -1023,9 +1023,9 @@ import './PropertyDetails.css';
 
 								    </label>
 
-								    <label className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
+								    <label htmlFor="pt3" className="radio-inline col-lg-3  col-md-3 col-sm-3 col-xs-3 ">
 								        <input type="radio"
-								             name=""  
+								             name="pt3"  
 								             value="Not Available" 
 								      		 checked={this.state.furnishPantry === "Not Available"}
 						   					 onChange={this.radioChange4}
@@ -1157,7 +1157,7 @@ import './PropertyDetails.css';
 		  	 				return(
 		  	 						<div className="col-lg-4 FF4I1 " key={index}>
 		  	 							
-										<label className="container2">
+										<label htmlFor="userCheckbox" className="container2">
 											  <input type="checkbox"
 											  		 value={data.amenity} 
 										      		 id={index}

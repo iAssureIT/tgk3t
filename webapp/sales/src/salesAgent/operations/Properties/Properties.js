@@ -182,13 +182,12 @@ var nextProps1;
 
 		if(this.state.userData.length > 0){
 			for (var i = this.state.userData.length - 1; i >= 0; i--) {
-		var formValues ={
-			property_id 	  : this.state.userData[i],
-			remark 			  : ""
+				var formValues ={
+					property_id 	  : this.state.userData[i],
+					remark 			  : ""
 
-		}
-		console.log("formValues",formValues);
-
+				}
+			console.log("formValues",formValues);
 			axios
 			    .post('/api/properties/post/allocateTofieldAgent/'+formValues.property_id)
 			    .then(
@@ -196,10 +195,8 @@ var nextProps1;
 			        console.log(res);
 			       if(res.status == 200)
 		       		 {
-		       		 		
-		        		swal("Good job!", " Property Listed Successfully!", "success")
-
-		   		// window.location.reload();
+		        		swal("Good job!", " Property Assigned to Field Agent Successfully!", "success")
+		   				// window.location.reload();
 		   		axios
 			    .get('/api/properties/list/salesagent/type/'+userId+'/New')
 			    .then(
@@ -234,7 +231,7 @@ var nextProps1;
 		if(this.state.userData.length > 0){
 			swal({
 	           title: "Are you sure ?",
-	           text: "You want to shortlist this property!",
+	           text: "You want to List this property?",
 	           icon: "warning",
 	          buttons: [
 	            'No, cancel it!',
@@ -423,17 +420,9 @@ var nextProps1;
 
 					:
 					
-					this.props.status ==="New"||this.props.status === "Verified"?
-
-							<div className="emptyProp1">
-								<h5 className="emptyText">No Properties here</h5>
-							</div>
-						:
 						<div className="emptyProp">
 							<h5 className="emptyText">No Properties here</h5>
 						</div>
-					
-					
 				}
 			</div>
 		)

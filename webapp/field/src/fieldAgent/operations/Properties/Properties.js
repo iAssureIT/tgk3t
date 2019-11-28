@@ -183,7 +183,6 @@ var updateMeetingId = "";
 			meetingStartTime 		 : this.state.fromTime,
 			meetingRemark 		 	 : this.refs.meetingRemark.value,
 			// meetingStatus: "scheduled",
-
 		}
 		console.log("formValues========",formValues)
 		if((this.state.availableFrom !=="") && (this.state.fromTime !=="")){
@@ -226,18 +225,10 @@ var updateMeetingId = "";
 			      }
 			    )
 			    .catch();
-
-			    
 				}
 		else{
 	        swal(" Please select meeting Date and Time.","", "error");
 		}
-
-		
-			
-		    	
-
-
 	}
 	handleUpdateMeeting(event){
 		event.preventDefault();
@@ -284,7 +275,6 @@ var updateMeetingId = "";
 				    .catch();
 
 		         }
-		         
 			        // this.props.getTotalTabCount();
 			      }
 			    )
@@ -293,9 +283,7 @@ var updateMeetingId = "";
 	        swal(" Please select meeting Status.","", "error");
 
 		}
-		
 		    console.log("setUpMeetingId"+formValues.interestedProperties_id);
-	
 	}
 
 	profileView(event){
@@ -515,7 +503,6 @@ var updateMeetingId = "";
 			            }
 					 });
 		}
-
 
 	 }
 	 handleBookNowId(event){

@@ -38,6 +38,7 @@ class BannerwithModal extends Component {
 	login(){
 		const originPage = "post" ;
 		const uid = localStorage.getItem("uid");
+		console.log("uid=====",uid)
 		if(uid){
 			this.props.already_loggedIn(originPage,uid);
 		}else{
@@ -48,12 +49,9 @@ class BannerwithModal extends Component {
 	removeBackdrop(){
  		$(".modal-backdrop").remove();
    		window.location.reload();
-
-
 	}
 
 	componentDidMount() {
-
 
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
 
@@ -199,13 +197,19 @@ class BannerwithModal extends Component {
 
 		   
 		return (
-			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb30 banner">
-				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mb20 banner">
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-sm hidden-xs">
 					<h2 className="hText">EVERY DREAM HAS A KEY</h2>
 					<h4 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h4>
 				</div>
+				{/*resp*/}
+				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-lg hidden-md ">
+					<h3 className="hText">EVERY DREAM HAS A KEY</h3>
+					<h5 className="hText1">India's Only Property Portal sharing Brokerage with both Owners and Tenants!</h5>
+				</div>
+				{/*end*/}
 				<div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3">
-					<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad banner">
+					<div className="col-lg-8 col-md-12 col-sm-12 col-xs-12 noPad banner ml-1">
 					  {/*<ul className="nav nav-pills textC" role="tablist">
 					    <li className="nav-item col-lg-4 col-md-4 col-sm-4 col-xs-3 active">
 					      <a className="nav-link active btn-bg" property-type="Residential" transaction-type="Sell" data-toggle="pill" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a>
@@ -218,39 +222,88 @@ class BannerwithModal extends Component {
 					    </li>	    
 					  </ul>*/}
 
-					  <ul className="nav nav-tabs col-xs-12 textC noPad">
-  						<li className="active col-xs-3 noPad"><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}>Buy</a></li>
-						<li className="bannerTab col-xs-3 noPad"><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}>Rent</a></li>
-						<li className="col-xs-3 noPad"><a style={{paddingLeft:"0px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}>Commercial</a></li>
-						<button className="col-xs-3 noPad btn bannerBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}>Post & Earn</button>
-						{/*<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
-					</ul>
-
+						<ul className="nav nav-tabs col-xs-12 textC noPad hidden-xs hidden-sm">
+	  						<li className="active col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}><b>BUY</b></a></li>
+							<li className="bannerTab col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}><b>RENT</b></a></li>
+							<li className="col-xs-3 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}><b>COMMERCIAL</b></a></li>
+							<button className="col-xs-3 borderTab noPad btn bannerBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>
+							{/*<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
+						</ul>
+						{/*resp*/}
+							<ul className="nav nav-tabs col-xs-12 textC1 noPad hidden-lg hidden-md">
+	  						<li className="active col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}><b>BUY</b></a></li>
+							<li className="bannerTab col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}><b>RENT</b></a></li>
+							<li className="col-xs-3 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}><b>COMMERCIAL</b></a></li>
+							<button className="col-xs-3 borderTab noPad btn bannerBtn1" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>
+							{/*<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
+						</ul>
+						{/*end*/}
 
 				 	</div>
 				</div>
-				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 mb-64">
+				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 mb-30">
 					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType} inputData={this.inputData.bind(this)}/>
 				</div>
-				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 ">
-					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 br2">
-						<span className="col-lg-12 col-md-12 col-sm-12 col-xs-12 postDetails">Welcome Owners</span>
-						<br/>
-						<button className="postBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><span> Post & Earn</span></button>
-						<br/>
-						<span className="col-lg-12 col-md-12 col-sm-12 col-xs-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
-						</span>
+				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 hidden-xs hidden-sm">
+					{/*<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 br2">
+											<span className="col-lg-12 col-md-12 col-sm-12 col-xs-12 postDetails">Welcome Owners</span>
+											<br/>
+											<button className="postBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><span> Post & Earn</span></button>
+											<br/>
+											<span className="col-lg-12 col-md-12 col-sm-12 col-xs-12"><b> Earn upto 50% Brokerage for <br/>Listing With Us!</b>
+											</span>
+										</div>
+										<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 prText">
+											<span className="postDetails ">For our Buyers / Tenants</span><br/>
+											<p className="postDetails1"><b>Upto 50% Discount</b>
+											<br/><b>On Brokerage <br/>for Renting/Buying with us!</b>
+					
+											</p>
+											
+										</div>*/}
+					<div className="col-lg-6 col-lg-offset-3 welcomeText">Welcome Owners</div>
+					
+					<div className="col-lg-10 col-lg-offset-1">
+						<div className="col-lg-2 earn">
+							EARN 
+						</div>
+						<div className="col-lg-3 ownerBox noPad">
+							<div className="col-lg-12 noPad">
+								<h1 className="discount col-lg-12 row"><h5 className="smallText">Upto</h5>50%</h1>
+							</div>
+							
+						</div>
+						<div className="col-lg-7 ">
+							<h1 className="hText2">BROKERAGE FOR</h1>
+							<h1 className="hText21">LISTING WITH US</h1>
+						</div>
 					</div>
-					<div className="col-lg-6 col-md-6 col-sm-6 col-xs-6 prText">
-						<span className="postDetails ">For our Buyers / Tenants</span><br/>
-						<p className="postDetails1"><b>Upto 50% Discount</b>
-						<br/><b>On Brokerage <br/>for Renting/Buying with us!</b>
-
-						</p>
+					<hr className="col-lg-8 col-lg-offset-2 hrLine"/>
+					<div className="col-lg-12 hText3">Upto 50% Discount On Brokerage For Tenants/Buyers</div>
+				</div>	
+				{/*resp*/}
+					<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 hidden-lg hidden-md ">
+						<div className="col-lg-6 col-lg-offset-3 col-xs-12 welcomeText1">Welcome Owners</div>
 						
-					</div>
-				</div>
-
+						<div className="col-lg-10 col-lg-offset-1">
+							<div className="col-lg-2 col-xs-3 earn1">
+								EARN 
+							</div>
+							<div className="col-lg-3 col-xs-3 ownerBox1 noPad">
+								<div className="col-lg-12 noPad">
+									<h1 className="discount1 col-lg-12 row"><h5 className="smallText">Upto</h5>50%</h1>
+								</div>
+								
+							</div>
+							<div className="col-lg-7 col-xs-8 ">
+								<h1 className="hText2R">BROKERAGE FOR</h1>
+								<h1 className="hText21R">LISTING WITH US</h1>
+							</div>
+						</div>
+						<hr className="col-lg-8 col-lg-offset-2 col-xs-10 col-xs-offset-1 "/>
+						<div className="col-lg-12 hText3R col-xs-12">Upto 50% Discount On Brokerage For Tenants/Buyers</div>
+					</div>	
+				{/*end*/}
 
 				{/*=== Modal starts here ===*/}
 				<div>

@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-
+import React, { Component } 	from 'react';
 import Header 					from "../../blocks/common/Header/Header.js";
 import MainFooter  				from '../../blocks/common/MainFooter/MainFooter.js';
 import AboutUsInfo  			from './AboutUsInfo.js';

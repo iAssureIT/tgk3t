@@ -230,10 +230,10 @@ class MainFooter extends Component{
                         <img alt=""  src="/images/new/logo.png" />
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails mt40">
-                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 1 </span><span className="col-lg-9 noPad">: +91 99221 34567</span>
+                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 1 </span><span className="col-lg-9 noPad">: +91 9552 040 040</span>
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
-                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 99221 34568</span>
+                        <span className="col-lg-3 noPad"><i className="fa fa-mobile fa-2x col-lg-1" aria-hidden="true"></i>&nbsp; Phone 2 </span><span className="col-lg-9 noPad">: +91 7776 040 040</span>
                       </div>
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails">
                          <span className="col-lg-3 noPad"><i className="fa fa-envelope col-lg-1"></i>&nbsp; Email</span><span className="col-lg-9 noPad"> : info@lyvo.com</span>
