@@ -7,9 +7,9 @@ import './lib/router.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
+// axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
 
-
-axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+axios.defaults.baseURL = 'http://prodapi.lyvo.in/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
