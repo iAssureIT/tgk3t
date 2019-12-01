@@ -389,7 +389,7 @@ import './PropertyDetails.css';
 					
 
 				if( this.state.furnishedstatus!=="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!=="" && 
-				this.state.floor!=="" &&  this.state.totalfloor!=="" ){
+				this.state.floor!==""){
 					if(allAmenitiesDataList!=""){
 
 						axios
@@ -503,7 +503,7 @@ import './PropertyDetails.css';
 				// console.log("total in submit",this.state.totalfloor);
 				console.log("PropertyDetails req = ",formValues);
 				if( this.state.furnishedstatus!="" && this.state.furnishedstatus!==undefined &&  this.refs.builtupArea.value!="" &&
-				this.state.floor!=="" &&  this.state.totalfloor!=="" ){
+				this.state.floor!==""){
 					if(allAmenitiesDataList!=""){
 
 						axios
@@ -620,12 +620,13 @@ import './PropertyDetails.css';
 		    }
 		  }
 
-	totalFloor(){
-			const floor      = parseInt(this.refs.floor.value);
-			const totalfloor = parseInt(this.refs.totalfloor.value);
+	totalFloor(event){
+			var floor      = parseInt(this.refs.floor.value);
+			var totalfloor = parseInt(this.refs.totalfloor.value);
 			if(floor > totalfloor){
+				this.setState({floor : "",totalfloor : ""});
+				this.refs.totalfloor.value = "";
 				swal("Floor should not be greater than Total Floors", "", "warning");
-				this.setState({floor : ""});
 
 			}
 

@@ -1,12 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import axios 						   from 'axios';
-import 'font-awesome/css/font-awesome.min.css';
-import 'bootstrap/js/modal.js';
 import swal                     	   from 'sweetalert';
 import Add_data 					   from './add_data.js';
+import $ 							   from "jquery";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
+import 'bootstrap/js/modal.js';
+import './masterData.css';
 /*import Add_dataTable 				   from './add_dataTable.js';*/
-import $ from "jquery";
 
 class masterData extends Component {
     
@@ -237,7 +238,7 @@ class masterData extends Component {
                                     <div className=" col-lg-11 col-md-11 col-xs-11 col-sm-11 box-header with-border">
                                          <h4 className="weighttitle">List of Amenities</h4>
                                     </div>
-									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addRolesInWrap">
+									<div className="col-lg-8 col-lg-offset-2 col-md-12 col-sm-12 col-xs-12 addRolesInWrap">
 											<Add_data selectedData={this.selectedData.bind(this)}/>
 										<div className="table-responsive col-lg-12 col-md-12 col-sm-12 col-xs-12">
 											<table className="table iAssureITtable-bordered table-striped table-hover">
@@ -252,7 +253,7 @@ class masterData extends Component {
 													// console.log('roleData',roleData);
 												   return( 
 													<tr className="ReverseData">
-														<td className="textAlignLeft">{roleData.amenity}</td>		
+														<td className="textCenter">{roleData.amenity}</td>		
 														<td className="roleTextCenter pointerCls">
 															{roleData.amenity=="Swimming Pool" || roleData.amenity=="AC" || roleData.amenity=="Gas Pipeline" || roleData.amenity=="24*7 Water" || roleData.amenity=="Lift"  || roleData.amenity=="Power Backup" || roleData.amenity=="Shopping Center" || roleData.amenity=="Children's Play Area" || roleData.amenity=="Internal Gym" || roleData.amenity=="Park"  ?
 															null
