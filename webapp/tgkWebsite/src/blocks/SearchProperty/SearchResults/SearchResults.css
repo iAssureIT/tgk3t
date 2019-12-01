@@ -9,7 +9,10 @@
 	margin-top:60px;
 	color: #999;
 }
-
+.intText1{
+  position: absolute;
+  width: 143px;
+}
 .boxmsg p {
 	font-size: 22px;
 	color:#666;

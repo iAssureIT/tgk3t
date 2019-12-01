@@ -48,6 +48,10 @@ ul ul a {
 .customNav>li>a:focus, .customNav>li>a:hover{
  background-color: #8f90ce !important;
 }
+.customNav1>li>a:focus  {
+ background-color: #8f90ce !important;
+}
+
 .navbar-nav .open .dropdown-menu{
     background-color: #fff !important;
 }
@@ -63,6 +67,10 @@ ul ul a {
 }
 
 .nav-icon {
+  /*margin: 1em;*/
+  width: 60px;
+}
+.nav-icon1 {
   /*margin: 1em;*/
   width: 60px;
 }
@@ -89,4 +97,79 @@ ul ul a {
 
 .nav-icon:hover div {
   transform: scale(0);
+}
+/*=============resp css toggle============*/
+
+.showClass{
+  display: none;
+  position: absolute;
+  color: #0e0e0e;
+  top: 40px;
+  background-color: #fff;
+  z-index: 1;
+
+}
+ul<li{
+  list-style: none;
+}
+
+.hideClass {
+  display: block !important;
+}
+/* Icon 1 */
+
+#nav-icon1 {
+     width: 35px;
+    height: 17px;
+    position: relative;
+    /* margin: 50px auto; */
+    left: 177px;
+    top: -9px;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+#nav-icon1 span {
+  display: block;
+  position: absolute;
+  height: 9px;
+  width: 100%;
+  background: #fff;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+}
+
+#nav-icon1 span:nth-child(1) {
+  top: 0px;
+}
+
+#nav-icon1 span:nth-child(2) {
+  top: 18px;
+}
+
+#nav-icon1 span:nth-child(3) {
+  top: 36px;
+}
+
+#nav-icon1.open span:nth-child(1) {
+  top: 18px;
+  transform: rotate(135deg);
+}
+
+#nav-icon1.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+#nav-icon1.open span:nth-child(3) {
+  top: 18px;
+  transform: rotate(-135deg);
+}
+.hrLine1{
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
 }

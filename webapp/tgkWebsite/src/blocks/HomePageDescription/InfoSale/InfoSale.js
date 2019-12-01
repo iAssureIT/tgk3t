@@ -32,7 +32,7 @@ export default class InfoSale extends Component {
 					  	<div className="flip-card-inner">
 						    <div className="flip-card-front">
 						      <img src="/images/Icons/1.png" alt="Avatar" className="saleImg1"/>
-						      <div className="col-lg-12 col-md-12 saleText1">
+						      <div className="col-lg-12 col-md-12 saleText1 noPad">
 						      	<b>We LOVE Property Owners</b>
 						      </div>
 						    </div>

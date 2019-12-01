@@ -80,23 +80,25 @@ class PopularPlaces extends Component{
       this.state.subAreaList.length > 0 ?
       <div className="container-fluid noPad">
           <div className="col-lg-10 col-lg-offset-1 col-md-12 col-sm-12 col-xs-12" >
-              <div className="headText col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm ">Properties In Most Popular Places</div>
+              <div className="headText col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-xs hidden-sm">Properties In Most Popular Places</div>
               {/*responsive*/}
-              <div className="headText1 col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-lg hidden-md ">Properties In Most Popular Places</div>
+              <div className="headText1 col-lg-12 col-md-12 col-sm-12 col-xs-12 hidden-lg hidden-md">Properties In Most Popular Places</div>
                {/*end*/}
                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 imgContainer pune Sm">
-                    <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[0]?this.state.subAreaList[0]._id:null} onClick={this.getSubAreaName.bind(this)}>                     
-                        <h4>{this.state.subAreaList[0]?this.state.subAreaList[0]._id:null}</h4>
-                        <h4>&nbsp; &nbsp;{this.state.subAreaList[0]?this.state.subAreaList[0].count:null} Properties</h4>
                       </div>
-                    </div>
+                      <div className="transText">
+                          <h4>{this.state.subAreaList[0]?this.state.subAreaList[0]._id:null}</h4>
+                          <h4>{this.state.subAreaList[0]?this.state.subAreaList[0].count:0} Properties</h4>
+                      </div>
                   </div>
                   <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 hidden-xs hidden-sm">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai  pull-right Bg">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
-                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
-                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} Properties</h4>
+                      </div>
+                      <div className="transText pl150">
+                          <h4>{this.state.subAreaList[1]?this.state.subAreaList[1]._id:null}</h4>
+                          <h4>{this.state.subAreaList[1]?this.state.subAreaList[1].count:0} Properties</h4>
                       </div>
                     </div>
                  </div>
@@ -104,46 +106,56 @@ class PopularPlaces extends Component{
                   <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad hidden-lg hidden-md " id="place1">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer mumbai1  pull-right Bg">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[1] ? this.state.subAreaList[1]._id : null} onClick={this.getSubAreaName.bind(this)}>
-                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1]._id:null}</h4>
-                        <h4>{this.state.subAreaList[1] ? this.state.subAreaList[1].count:null} 0 Properties</h4>
+                      </div>
+                      <div className="transText">
+                          <h4>{this.state.subAreaList[1]?this.state.subAreaList[1]._id:null}</h4>
+                          <h4>{this.state.subAreaList[1]?this.state.subAreaList[1].count:0} Properties</h4>
                       </div>
                     </div>
                  </div> 
                 {/*end*/}
-                <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad mT30">
+                <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad mT30 hidden-sm hidden-xs">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  imgContainer aurangabad Bg">
-                   <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[2] ? this.state.subAreaList[2]._id:null} onClick={this.getSubAreaName.bind(this)}>
-                        <h4>{this.state.subAreaList[2] ? this.state.subAreaList[2]._id:null}</h4>
-                        <h4>{this.state.subAreaList[2] ? this.state.subAreaList[2].count:null} 0 Properties</h4>
                       </div>
-                    </div> 
+                      <div className="transText pl184">
+                          <h4>{this.state.subAreaList[2]?this.state.subAreaList[2]._id:null}</h4>
+                          <h4>{this.state.subAreaList[2]?this.state.subAreaList[2].count:0} Properties</h4>
+                      </div>
                   </div>
                 </div>
-                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mT30 hidden-xs hidden-sm">
-                    <div className="">
-                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik  pull-right Sm">
-                        <div className="">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
-                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3]._id : null}</h4>
-                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} 0 Properties</h4>
-                          </div>
-                        </div> 
+                {/*resp img 3*/}
+                  <div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 noPad mT30 hidden-lg hidden-md">
+                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  imgContainer aurangabad Bg">
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[2] ? this.state.subAreaList[2]._id:null} onClick={this.getSubAreaName.bind(this)}>
                       </div>
-                    </div>           
+                      <div className="transText">
+                          <h4>{this.state.subAreaList[2]?this.state.subAreaList[2]._id:null}</h4>
+                          <h4>{this.state.subAreaList[2]?this.state.subAreaList[2].count:0} Properties</h4>
+                      </div>
+                  </div>
+                </div>
+                {/*end*/}
+                  <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mT30 hidden-xs hidden-sm">
+                      <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik  pull-right Sm">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
+                          </div>
+                          <div className="transText">
+                              <h4>{this.state.subAreaList[3]?this.state.subAreaList[3]._id:null}</h4>
+                              <h4>{this.state.subAreaList[3]?this.state.subAreaList[3].count:0} Properties</h4>
+                          </div>
+                      </div>
                   </div>
                 {/*responsive img 4*/}
                   <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 mT30 noPad hidden-lg hidden-md">
-                    <div className="">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imgContainer nashik  pull-right Sm">
-                        <div className="">
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 transDiv" subAreaName={this.state.subAreaList[3] ? this.state.subAreaList[3]._id:null} onClick={this.getSubAreaName.bind(this)}>
-                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3]._id : null}</h4>
-                            <h4>{this.state.subAreaList[3] ? this.state.subAreaList[3].count :null} 0 Properties</h4>
                           </div>
-                        </div> 
+                          <div className="transText">
+                              <h4>{this.state.subAreaList[3]?this.state.subAreaList[3]._id:null}</h4>
+                              <h4>{this.state.subAreaList[3]?this.state.subAreaList[3].count:0} Properties</h4>
+                          </div>
                       </div>
-                    </div>           
                   </div>
                 {/*end*/}
               </div>

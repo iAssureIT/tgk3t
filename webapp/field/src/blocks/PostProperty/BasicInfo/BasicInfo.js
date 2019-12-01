@@ -123,7 +123,8 @@ class BasicInfo extends Component{
 
 											    axios({
 											      	method: 'get',
-											      	url: 'http://prodlocationapi.lyvo.in/api/cities/get/citiesByState/IN/'+res.data.propertyLocation.state,
+
+											      	url: 'http://locationapi.iassureit.com/api/cities/get/citiesByState/IN/'+res.data.propertyLocation.state,
 											    }).then((response1)=> {
 											        this.setState({
 											         	listofCities : response1.data,
@@ -133,7 +134,8 @@ class BasicInfo extends Component{
 										        // 			Get Areas
 										        //==================================================================
 
-												var url = 'http://prodlocationapi.lyvo.in/api/areas/get/list/IN/'+res.data.propertyLocation.state+'/'+res.data.propertyLocation.district+'/'+res.data.propertyLocation.block+'/'+res.data.propertyLocation.city+'/' ;
+
+												var url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+res.data.propertyLocation.state+'/'+res.data.propertyLocation.district+'/'+res.data.propertyLocation.block+'/'+res.data.propertyLocation.city+'/' ;
 											    axios({
 											      method: 'get',
 											      url: url,
@@ -145,7 +147,8 @@ class BasicInfo extends Component{
 										        //==================================================================
 										        // 			Get SubAreas
 										        //==================================================================
-												var url = 'http://prodlocationapi.lyvo.in/api/subareas/get/list/IN/'+res.data.propertyLocation.state+'/'+res.data.propertyLocation.district+'/'+res.data.propertyLocation.block+'/'+res.data.propertyLocation.city+'/'+res.data.propertyLocation.area+'/' ;
+
+												var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+res.data.propertyLocation.state+'/'+res.data.propertyLocation.district+'/'+res.data.propertyLocation.block+'/'+res.data.propertyLocation.city+'/'+res.data.propertyLocation.area+'/' ;
 
 												axios({
 												  method: 'get',
@@ -263,7 +266,8 @@ class BasicInfo extends Component{
 		    
 		    axios({
 	    	method: 'get',
-	    	url: 'http://prodlocationapi.lyvo.in/api/states/get/list/IN',
+
+	    	url: 'http://locationapi.iassureit.com/api/states/get/list/IN',
 		    }).then((response)=> {
 		        this.setState({
 		        	listofStates : response.data
@@ -565,7 +569,8 @@ class BasicInfo extends Component{
 			    societyName		: this.state.societyName,
 			};
 
-			url = 'http://prodlocationapi.lyvo.in/api/societies/post';
+
+			url = 'http://locationapi.iassureit.com/api/societies/post';
 
 		    axios
 			    .post(url, formValues)
@@ -593,7 +598,8 @@ class BasicInfo extends Component{
 
 	    axios({
 	      	method: 'get',
-	      	url: 'http://prodlocationapi.lyvo.in/api/cities/get/citiesByState/IN/'+selectedState,
+
+	      	url: 'http://locationapi.iassureit.com/api/cities/get/citiesByState/IN/'+selectedState,
 	    }).then((response)=> {
 	        this.setState({
 	         	listofCities : response.data,
@@ -619,7 +625,8 @@ class BasicInfo extends Component{
 	    var blockName 	 = dist_block_city.split('-')[1];
 	    var cityName 	 = dist_block_city.split('-')[2];
 
-		var url = 'http://prodlocationapi.lyvo.in/api/areas/get/list/IN/'+this.state.stateCode+'/'+districtName+'/'+blockName+'/'+cityName+'/' ;
+
+		var url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+this.state.stateCode+'/'+districtName+'/'+blockName+'/'+cityName+'/' ;
 
 	    this.setState({
 	      districtName 	: districtName,
@@ -671,7 +678,8 @@ class BasicInfo extends Component{
 
 
 
-		var url = 'http://prodlocationapi.lyvo.in/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+areaName+'/' ;
+
+		var url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+areaName+'/' ;
 
 		axios({
 		  method: 'get',
@@ -719,7 +727,8 @@ class BasicInfo extends Component{
 			    subareaName		: valSubAreaName,
 			};
 
-			url = 'http://prodlocationapi.lyvo.in/api/subareas/post';
+
+			url = 'http://locationapi.iassureit.com/api/subareas/post';
 
 		    axios
 			    .post(url, formValues)
@@ -737,7 +746,8 @@ class BasicInfo extends Component{
                     });
 
 		}else{
-			url = 'http://prodlocationapi.lyvo.in/api/societies/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/'+valSubAreaName+'/' ;
+
+			url = 'http://locationapi.iassureit.com/api/societies/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/'+valSubAreaName+'/' ;
 		    console.log("societies URL = ", url);
 		    axios({
 		      method: 'get',
@@ -770,7 +780,8 @@ class BasicInfo extends Component{
 		});
 
 		// console.log("pincode",pincode);
-		var url = 'http://prodlocationapi.lyvo.in/api/areas/get/list/'+pincode;
+
+		var url = 'http://locationapi.iassureit.com/api/areas/get/list/'+pincode;
 
 		axios({
 		  method: 'get',
@@ -786,7 +797,8 @@ class BasicInfo extends Component{
 			    	areaName 		: response.data[0].areaName,
 			    },()=>{
 			    	//========== Get City List  =====================
-			    	url = 'http://prodlocationapi.lyvo.in/api/cities/get/citiesByState/IN/'+this.state.stateCode;
+
+			    	url = 'http://locationapi.iassureit.com/api/cities/get/citiesByState/IN/'+this.state.stateCode;
 				    axios({
 				      	method: 'get',
 				      	url: url,
@@ -807,7 +819,8 @@ class BasicInfo extends Component{
 
 
 			    	//========== Get Area List  =====================
-					url = 'http://prodlocationapi.lyvo.in/api/areas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/' ;
+
+					url = 'http://locationapi.iassureit.com/api/areas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/' ;
 				    axios({
 				      method: 'get',
 				      url: url,
@@ -827,7 +840,8 @@ class BasicInfo extends Component{
 				         });
 
 			    	//========== Get SubArea List  =====================
-					url = 'http://prodlocationapi.lyvo.in/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/' ;
+
+					url = 'http://locationapi.iassureit.com/api/subareas/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/' ;
 					axios({
 						method: 'get',
 						url: url,

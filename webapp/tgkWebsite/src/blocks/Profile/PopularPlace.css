@@ -53,15 +53,32 @@
 }
 .transDiv{
 	font-family: 'Roboto', sans-serif;
-	height: 300px;
+	/*height: 300px;
 	text-align: center;
 	color:#fff;
 	padding-top: 122px;
 	cursor: pointer;
-	width: 100%;
+	width: 100%;*/
+	/*background-color: #eceef157;*/
+    position: absolute;
+    height: 300px;
+    cursor: pointer;
+    z-index: 2;
+    left: 0px;
 }
-.transDiv h4{
-	    font-family: 'Roboto', sans-serif;
+.transText{
+	position: absolute;
+    z-index: 1;
+    left: 119px;
+    top: 122px;
+	font-family: 'Roboto', sans-serif;
+    font-size: 15px !important;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+}
+.transText h4{
+	font-family: 'Roboto', sans-serif;
     font-size: 15px !important;
     margin: 0 !important;
     font-weight: bold;
@@ -82,4 +99,10 @@
 .mlDotp{
 	    margin-left: 498px;
 
+}
+.pl150{
+	padding-left: 150px;
+}
+.pl184{
+	padding-left: 184px;
 }

@@ -1,6 +1,7 @@
 .tgkImg{
 	padding:0px 0px 0px 0px !important;
 	border-size:0px !important;
+    margin-top: -2px;
 }
 
 .hSearch{
@@ -44,7 +45,18 @@
     background-color: #000;
     border-radius:0px 0px 0px 0px;
 }
-
+.sImg1{
+    height: 32px !important;
+    position: relative;
+    background-size: 100%,100%;
+    background-repeat: no-repeat;
+    background-color: #000;
+    border-radius: 0px 0px 0px 0px;
+    padding: 7px;
+    /* margin-top: 5px; */
+    top: 4px;
+    left: 9px;
+}
 .budget{
 	height: 40px;
 }
@@ -110,9 +122,3 @@
     font-size: 10px;
 }
 
-#locationSearches{
-    height:50px !important;
-    max-height:80px !important;
-    overflow-y:scroll;
-    /*display:block !important;*/
-}

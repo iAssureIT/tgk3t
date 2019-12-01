@@ -242,7 +242,48 @@ class MainFooter extends Component{
                       <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 contactDetails1 mt10">
                         <span className="col-lg-3 noPad"><i className="fa fa-globe globe col-lg-1" aria-hidden="true"></i>&nbsp;  Website</span><span className="col-lg-9 noPad">  : www.lyvo.in</span>
                       </div>
-                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 footerContactDetails" >
+
+                        <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 footerContactDetails hidden-xs hidden-sm" >
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mr13">
+                              <div className="row">
+                                <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
+                                  <a href="https://www.facebook.com/">  <i className="fa fa-facebook-f"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mr13">
+                             <div className="row">
+                                <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
+                                  <a href="https://twitter.com/login?lang=en"><i className="fa fa-twitter" aria-hidden="true"></i></a>
+                                </div>
+                              </div>
+                            </div> 
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1  mr13">
+                              <div className="row">
+                                <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
+                                  <a href="https://www.linkedin.com/uas/login"><i className="fa fa-linkedin"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1  mr13 ">
+                              <div className="row">
+                                <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
+                                  <a href="https://www.instagram.com/?hl=en"><i className="fa fa-instagram"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                            <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1  ">
+                              <div className="row">
+                                <div className="col-lg-9 col-md-12 col-sm-12 col-xs-12 footerScocial  ">
+                                  <a href="https://www.youtube.com/"><i className="fa fa-youtube"></i></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {/*=============resp==========*/}
+                          <div className="col-lg-12 col-md-10 col-sm-10 col-xs-12 footerContactDetails hidden-lg hidden-md" >
                           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
                             <div className="col-lg-1 col-md-1 col-sm-1 col-xs-1 mr13">
                               <div className="row">
@@ -281,6 +322,7 @@ class MainFooter extends Component{
                             </div>
                           </div>
                         </div>
+                        {/*=================end==================*/}
                   </div>
                 </div>  
             </div>

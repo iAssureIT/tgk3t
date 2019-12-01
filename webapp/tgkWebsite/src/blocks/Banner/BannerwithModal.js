@@ -226,7 +226,7 @@ class BannerwithModal extends Component {
 	  						<li className="active col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}><b>BUY</b></a></li>
 							<li className="bannerTab col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}><b>RENT</b></a></li>
 							<li className="col-xs-3 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}><b>COMMERCIAL</b></a></li>
-							<li className="col-xs-4 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></a></li>
+							<li className="col-xs-4 noPad borderTab pointer"><a style={{paddingLeft:"5px"}} data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></a></li>
 							{/*<button className="col-xs-3 borderTab noPad btn bannerBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>*/}
 							{/*<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
 						</ul>
@@ -235,7 +235,7 @@ class BannerwithModal extends Component {
 	  						<li className="active col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Sell" href="#Buy" onClick={this.getPropertyDetails.bind(this)}><b>BUY</b></a></li>
 							<li className="bannerTab col-xs-2 noPad borderTab "><a data-toggle="tab" property-type="Residential" transaction-type="Rent" href="#Rent" onClick={this.getPropertyDetails.bind(this)}><b>RENT</b></a></li>
 							<li className="col-xs-3 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="tab" property-type="Commercial" transaction-type="Sell"  href="#Commercial" onClick={this.getPropertyDetails.bind(this)}><b>COMMERCIAL</b></a></li>
-							<li className="col-xs-4 noPad borderTab "><a style={{paddingLeft:"5px"}} data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></a></li>
+							<li className="col-xs-4 noPad borderTab pointer "><a style={{paddingLeft:"5px"}} data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></a></li>
 							
 							{/*<button className="col-xs-3 borderTab noPad btn bannerBtn1" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}><b>POST & EARN</b></button>
 							<li className="col-xs-3"><a data-toggle="tab" href="#menu2">Post & Earn</a></li>*/}
@@ -244,7 +244,7 @@ class BannerwithModal extends Component {
 
 				 	</div>
 				</div>
-				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 mb-30">
+				<div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 mb-30 mt-1">
 					<SearchProperty propertyType={this.state.propertyType} transactionType={this.state.transactionType} inputData={this.inputData.bind(this)}/>
 				</div>
 				<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 hidden-xs hidden-sm">
@@ -281,7 +281,7 @@ class BannerwithModal extends Component {
 							<h1 className="hText21">LISTING WITH US</h1>
 						</div>
 					</div>
-					<hr className="col-lg-8 col-lg-offset-2 hrLine"/>
+					<hr className="col-lg-8 col-lg-offset-2 hrLineOwner"/>
 					<div className="col-lg-12 hText3">Upto 50% Discount On Brokerage For Tenants/Buyers</div>
 				</div>	
 				{/*resp*/}

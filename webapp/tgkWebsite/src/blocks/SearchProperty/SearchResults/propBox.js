@@ -8,6 +8,7 @@ import LoginMobNum              from '../../WebsiteSecurity/LoginMobNum/LoginMob
 import LoginOtp                 from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
 import WebSignupForm            from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
 
+
 class propBox extends React.Component {
 	
 	constructor(props) {
@@ -274,18 +275,21 @@ class propBox extends React.Component {
 	                          ? 
 	                            <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 resInterestShown"  id={result._id} onClick={this.interestBtn.bind(this)}>
 	                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
-	                              <span className="intText"> Interest Shown </span>
+	                              <span className="intText hidden-xs hidden-sm"> Interest Shown </span>
+	                              <span className="intText1 hidden-lg hidden-md"> Interest Shown </span>
 	                            </div>
 	                            
 	                          :
 	                            <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 resInterestExpress" id={result._id} onClick={this.interestBtn.bind(this)}>
 	                              <i className="fa fa-heart-o "  aria-hidden="true" ></i>
-	                              <span className="intText"> Express Interest </span>
+	                              <span className="hidden-xs hidden-sm"> Express Interest </span>
+	                              <span className="intText1 hidden-lg hidden-md"> Express Interest </span>
 	                            </div>                                        
 	                        :
 	                          <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 resInterestExpress" id={result._id} onClick={this.login.bind(this)} data-toggle="modal" data-target="#loginModal" >
 	                            <i className="fa fa-heart-o "  aria-hidden="true" ></i>
-	                            <span className="intText"> Express Interest </span>
+	                            <span className="hidden-xs hidden-sm"> Express Interest </span>
+	                            <span className="intText1 hidden-lg hidden-md"> Express Interest </span>
 	                          </div>
 	                      }
 						<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
