@@ -10,7 +10,8 @@ import './App.css';
 
 
 
-axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+// axios.defaults.baseURL = 'http://qatgk3tapi.iassureit.com/';
+axios.defaults.baseURL = 'http://uatapi.lyvo.in/';
 axios.defaults.headers.post['Content-Type'] = 'application/json';
 
 
