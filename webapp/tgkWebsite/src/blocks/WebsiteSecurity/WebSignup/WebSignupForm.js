@@ -257,7 +257,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 						       		:
 						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
 					  			:
-				  				<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30">
+				  				<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" title="Loading...">
 									<div className="col-lg-12 text-center" style={{paddingTop:3}}>
 										<Loader
 									         type="Oval"
