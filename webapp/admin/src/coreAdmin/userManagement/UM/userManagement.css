@@ -1344,10 +1344,11 @@ ul {
 
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 72px;
-  height: 25px;
+    position: relative;
+    height: 26px;
+    width: 120px;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.3), 0 1px hsla(0,0%,100%,.1);
 }
 
 .switch input {display:none;}
@@ -3225,11 +3226,13 @@ background-size:16px 16px;
 
 
 .switch {
-  position: relative;
-  display: inline-block;
-  width: 72px;
-  height: 25px;
+    position: relative;
+    height: 26px;
+    width: 120px;
+    border-radius: 10px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,.3), 0 1px hsla(0,0%,100%,.1);
 }
+
 
 .switch input {display:none;}
 
@@ -3794,17 +3797,13 @@ right: 15px;
   border-radius: 5px;
   background: #ffffff;
   /*border-top: 2px solid #e60004;*/
+  margin-top: 20px;
   margin-bottom: 20px;
   width: 100%;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  height: auto
 }
-.box {
-  margin-bottom: 5px;
-}
-.box{
-  padding-bottom: 5%;
-  padding: 0;
-}
+
 .box.box-solid > .box-header .btn:hover,
 .box.box-solid > .box-header a:hover {
   background: rgba(0, 0, 0, 0.1);

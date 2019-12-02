@@ -1,0 +1,63 @@
+.backColor{
+	background-color: #efefef;
+}
+.textCenter{
+	text-align: center;
+}
+.imageContainer{
+	height:245px;
+}
+.profileImage{
+	background-color: #fff;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	border-radius: 3px;
+	background-image: url("/images/user.jpg");
+	background-size: 100% 100%;
+	background-repeat: no-repeat;
+
+}.socialIconRequest{
+	height: 37px;
+	border-radius: 2px;
+ 	padding: 0 !important;
+    padding-top: 7px !important;	
+    border: 1px solid #aaa;
+    text-align: center;
+	font-size: 14px;
+	color: #aaa;
+	margin-bottom: 20px;
+}
+.mr4{
+    margin-right: 4px;
+}
+.bottomBorder{
+	border-bottom: 1px solid #999;
+	height: 22px;
+	padding-bottom: 10px;
+
+}
+.ml20{
+	margin-left: 20px;
+}
+.mr13{
+	margin-right: 13px;
+}
+.noHoverRequest:hover{
+  border:none !important;
+  border: 1px solid #979797 !important;
+}
+.inputBoxRequest{
+  font-family:'Montserrat',sans-serif;
+  height: 40px !important;
+  border: 1px solid #979797 !important;
+    font-size: 12px !important;
+}
+.boarderR textarea{
+	border-radius: 3px !important;
+}
+.sendButton{
+	background-color: #00f;
+	margin-top: 20px;
+	border-radius: 3px;
+	color: #fff;
+}

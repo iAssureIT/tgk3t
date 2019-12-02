@@ -118,7 +118,7 @@ logout(){
                                     <a className="noneAtag">
                                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 padd0 " > 
                                           <div className="col-lg-4 col-md-6 col-sm-12 col-xs-12 pull-left padd0 marTop ">
-                                            <img src="images/person.png" height="50px" className=" marLeft "/>
+                                            <img src="/images/person.png" height="50px" className=" marLeft "/>
                                           </div>
                                           <div className="col-lg-8 col-md-6 col-sm-12 col-xs-12 pull-right padd0 marTop">
                                            <h5 className=" nomargin ">

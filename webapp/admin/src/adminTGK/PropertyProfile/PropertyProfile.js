@@ -1,15 +1,33 @@
 import React, { Component }   from 'react';
 import axios                  from 'axios';
+import HomePageFooter         from '../../blocks/Profile/HomePageFooter.js';
+// import RequestForm            from '../../blocks/RequestForm/RequestForm.js';
+import { connect }            from 'react-redux';
 import $                      from "jquery";
-import swal                            from 'sweetalert';
-import Loadable               from 'react-loadable';
+import {withRouter}           from 'react-router-dom';
 
+import LoginMobNum            from '../../blocks/WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+import LoginOtp               from '../../blocks/WebsiteSecurity/LoginOtp/LoginOtp.js';
+import WebSignupForm          from '../../blocks/WebsiteSecurity/WebSignup/WebSignupForm.js';
+
+import BasicInfo              from '../../blocks/PostProperty/BasicInfo/BasicInfo.js';
+import Location               from '../../blocks/PostProperty/Location/Location.js';
+import PropertyDetails        from '../../blocks/PostProperty/PropertyDetails/PropertyDetails.js';
+import Amenities              from '../../blocks/PostProperty/Amenities/Amenities.js';
+import Financials             from '../../blocks/PostProperty/Financials/Financials.js';
+import Availability           from '../../blocks/PostProperty/Availability/Availability.js';
+import CongratsPage           from '../../blocks/PostProperty/CongratsPage/CongratsPage.js';
+import ImageUpload            from '../../blocks/PostProperty/ImageUpload/ImageUpload.js';
+import Loadable               from 'react-loadable';
+import Header                 from "../../blocks/common/Header/Header.js";
+import swal                   from 'sweetalert';
+import GoogleMapReact         from 'google-map-react';
 import "./PropertyProfile.css";
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel/dist/assets/owl.theme.default.css';
 
 
-
+var itemCount = 2; 
 
 const OwlCarousel = Loadable({
    
@@ -21,9 +39,16 @@ const OwlCarousel = Loadable({
 
 // axios.defaults.baseURL = 'http://apitgk3t.iassureit.com/';
 // axios.defaults.headers.post['Content-Type'] = 'application/json';
-
+const Property = ({ text }) => <div><img src="../images/Location.png" style={{width:'47px',height:'47px'}} className="img-responsive " alt="loading"/></div>
 
 class PropertyProfile extends Component{
+    static defaultProps = {
+      center: {
+        lat: 18.5204,
+        lng: 73.8567
+      },
+      zoom: 12
+    };
   constructor(props){
     super(props);
      var profileId = this.props.match.params.id;
@@ -46,7 +71,13 @@ class PropertyProfile extends Component{
       "prop_id"           : "",
       "floor"             : "",
       "totalFloor"        : "",
-      convertTotalPrice   : "",
+      "convertTotalPrice" : "",
+      "ownerId"           : "",
+      "countno"           : 2,
+      "callfun"           : 0,
+      "location"          :{latitude: 18.5184,longitude: 73.9343},
+      "showMap"           : false,
+      "status"            : ""
     }
   }
 
@@ -54,16 +85,17 @@ class PropertyProfile extends Component{
     const originPage = "post" ;
     const uid = localStorage.getItem("uid");
     const prop_id  = this.state.prop_id;
+    console.log("prop_id",prop_id);
     console.log("property id here",this.state.prop_id);
-    if(uid && prop_id){
-      this.props.already_loggedIn(originPage,uid,prop_id);
-    }else{
-      this.props.login_mobileNum(originPage);
-    }
+ 
+    this.props.already_loggedIn(originPage,uid,prop_id);
+   
   }
 
   removeBackdrop(){
-    $(".modal-backdrop").remove();    
+    $(".modal-backdrop").remove();
+    window.location.reload();
+
   }
 
   componentWillReceiveProps(nextProps){
@@ -72,26 +104,28 @@ class PropertyProfile extends Component{
   componentDidMount() {
 
       axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
-  
+
   axios
     .get('/api/properties/'+this.state.profileId)
     .then(
       (res)=>{
-        console.log(res);
+        console.log("resposnse",res);
         const postsdata = res.data;
         this.setState({
           prop_id             : postsdata._id,
           propertyFeatures    : postsdata.propertyDetails,
-          amenities           : postsdata.Amenities,
+          amenities           : postsdata.propertyDetails.Amenities,
           propertyImages      : postsdata.gallery.Images,
           propertyVideo       : postsdata.gallery.video,
           pricing             : postsdata.financial,
           propertyLocation    : postsdata.propertyLocation,
           transactionType     : postsdata.transactionType,
           propertyType        : postsdata.propertyType,  
-          floor               : postsdata.floor,         
+          floor               : postsdata.floor, 
+          ownerId             : postsdata.owner_id,        
           totalFloor          : postsdata.totalFloor ,
-          propertySubType     : postsdata.propertySubType         
+          propertySubType     : postsdata.propertySubType ,       
+          status              : postsdata.status         
         },()=>{
 
         });
@@ -99,16 +133,19 @@ class PropertyProfile extends Component{
       }
     )
     .catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/login");
-                        }
-                    });    
+                                console.log("error = ",error);
+                                if(error.message === "Request failed with status code 401")
+                                {
+                                     swal("Your session is expired! Please login again.","", "error");
+                                    localStorage.removeItem("uid");
+                                    localStorage.removeItem("token");
+                                     this.props.history.push("/");
+                                }
+                            });
 
-     $(this).find('input[type="checkbox"]').is(':checked');
-    
+    $(this).find('input[type="checkbox"]').is(':checked');
+
+    $(".headerMenu").addClass("headerColor");
 
   }
 
@@ -126,83 +163,130 @@ class PropertyProfile extends Component{
     : Math.abs(Number(totalPrice));
   }
 
+   counter(event) {
+    event.preventDefault();
+   var element   = event.target;         // DOM element, in this example .owl-carousel
+    var items     = event.item.count;     // Number of items
+
+    if(itemCount < items){
+      var item1 = itemCount+1; 
+      itemCount = item1;
+    }else{
+      var item1=1;
+      itemCount = item1;
+    }
+    
+      $('#counter').html("Media "+item1+" of "+items)
+}
+  handleMap(){
+    this.setState({
+      showMap : true
+    })
+
+  }
 
   render() {
+
+    let header;
+      if (this.props.BasicInfo) {
+        header = "Let's Provide details of your property for sell";
+      }else if(this.props.Location){
+        header = "Let's Provide Details of Your Property Location"; 
+      }else if(this.props.PropertyDetails){
+        header = "Please provide property details of your property to SELL"; 
+      }else if(this.props.Amenities){
+        header = "My Apartment has following Amenities"; 
+      }else if(this.props.Financials){
+        header = "Financial Details For My Apartment"; 
+      }else if(this.props.Availability){
+        header = "Please tell us your availability to plan visit"; 
+      }else if(this.props.ImageUpload){
+        header = "Please Upload Images and a Video of your Property"; 
+      }
+      else if(this.props.LoginMobNum){
+        header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+      }else if(this.props.LoginOtp){
+        header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+      }else if(this.props.WebSignupForm){
+        header = "Owners earn upto 50% brokerage by selling/renting with us so let’s get started." 
+      }
+
       return (
         <div className="container-fluid ">
-          <div className="row"> 
-          </div>  
           <div className="">
             <div className="formWrapper row">   
-             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"  >
                 <div className="row">
-                <div className="col-lg-12 labalDiv"> 
+                <div className="col-lg-12  col-md-12 col-xs-12 col-sm-12 labalDiv"> 
                     <label>Property Profile</label>
                   </div>     
                 </div>
-               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName"> 
+               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 propertyName noPad"> 
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 nameOfProperty noPad" >
-                    <div className="row">
-                      <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+                    <div className="col-lg-12 col-xs-12 mb20 noPad">
+                      <div className="col-lg-1 col-md-1 col-sm-2 col-xs-2 noPad">
                         <div className="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12 col-xs-12 backButton">
-                          <img src="/images/back.png"/>
+                          <img src="/images/profilePic.png"/>
                         </div>
                       </div>
-                      <div className="col-lg-7 col-md-7 col-sm-7 col-xs-7 row" >
+                      <div className="col-lg-7 col-md-7 col-sm-10 col-xs-10 row" >
                         <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 addressOfProperty" >
                            {/* <label className="pull-left"> 
                             {this.state.propertyLocation && this.state.propertyLocation.address ? this.state.propertyLocation.address:"-"}
                             </label> */}
-                            <div className="col-lg-2 col-md-2 col-sm-3 col-xs-3 text-center forSaleButton">
+                            <div className="col-lg-3 col-md-2 col-sm-5 col-xs-5 text-center forSaleButton">
                               FOR {this.state.transactionType && this.state.transactionType==="Sell" ? "SALE" : "RENT"}
                             </div> 
+                            {/*<span>{this.state.status}</span>*/}
                             <br/>
-                            <div className="col-lg-12"> 
-                              <div className="row">
+                            <div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad"> 
+                              <div className="row col-xs-12 ">
                                 <i className="fa fa-map-marker" aria-hidden="true"></i> &nbsp;
                                 {this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.subArea+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.pincode : "-"}
                               </div>
                             </div>
                         </div>
                       </div>
-                      {/*<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
+
+                     
+                      <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 addressOfProperty" >
                         <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}> Edit Property </button> 
-                      </div>*/}
+                      </div>
+                      
                     </div>
                   </div>
                 </div>
                 <div className="row">
                   {
-                    this.state.propertyImages && this.state.propertyImages.length < 2 ?
+                    this.state.propertyImages && this.state.propertyImages.length <= 2 ?
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  noPad">
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
-                      {console.log("this.state.propertyVideo",this.state.propertyVideo)}
                           {
                             this.state.propertyVideo ?
-                            <video width="100%" height="100%" className="video" controls>
+                            <video width="100%" height="100%" controls>
                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
                             </video>
                             :
-                            <img src="/images/videoDummy.jpg" className="col-lg-12 noPad"/>
+                            <img src="/images/videoDummy.jpg" className="col-lg-12 col-xs-12 noPad"/>
                           }
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty" >
                           {this.state.propertyImages[0] ?
-                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[0].imgPath} />
+                            <img className="noPad propertyImageDiv col-lg-12 col-xs-12 noPad" src={this.state.propertyImages[0].imgPath} />
                             :
-                            <img src="/images/loading_img.jpg" className="col-lg-12 noPad"/>
+                            <img src="/images/loading_img.jpg" className="col-lg-12 col-xs-12 noPad"/>
                           }
                       </div>
                       <div className="col-lg-4 col-md-4 col-sm-4 col-xs-4 noPad imagesOfProperty">
                             {this.state.propertyImages[1] ?
-                            <img className="noPad propertyImageDiv col-lg-12 noPad" src={this.state.propertyImages[1].imgPath} />
+                            <img className="noPad propertyImageDiv col-lg-12 col-xs-12 noPad" src={this.state.propertyImages[1].imgPath} />
                             :
-                            <img src="/images/loading_img.jpg" className="col-lg-12 noPad" />
+                            <img src="/images/loading_img.jpg" className="col-lg-12 col-xs-12 noPad" />
                           }
                       </div>
                     </div>
                     :
-                    (this.state.propertyImages && this.state.propertyImages.length >=2) || (this.state.propertyVideo && this.state.propertyVideo.length === 0) ?
+                    (this.state.propertyImages && this.state.propertyImages.length >2) || (this.state.propertyVideo && this.state.propertyVideo.length === 0) ?
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 imagesOfProperty noPad" >
                       <OwlCarousel
                           className=" owl-theme "
@@ -218,6 +302,8 @@ class PropertyProfile extends Component{
                           // }
                           autoplay={true}
                           autoplayHoverPause={true}
+                          onInitialized  = {this.counter.bind(this)} 
+                          onTranslated = {this.counter.bind(this)}
                           >
                           {
                             this.state.propertyImages ? 
@@ -225,6 +311,7 @@ class PropertyProfile extends Component{
                             return(
 
                                   <div key={index}  >
+                                      <div className="waterMark">Lyvo</div>
                                       <img className="item" src={propertyImages.imgPath} />
                                   </div>                    
                               )
@@ -240,83 +327,73 @@ class PropertyProfile extends Component{
                                 <source src={this.state.propertyVideo} type="video/mp4" className="col-lg-12 noPad"/>
                             </video>
                             :
-                            <img src="/images/videoDummy.jpg" className="col-lg-12 noPad"/>
+                            null
                           }
-                      </OwlCarousel>  
+                      </OwlCarousel>
+                          <div id="counter" className="counter"></div> 
+
                     </div>
                     :
                     null
                   } 
                 </div>
              </div>
-             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
-                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div className="row">
-                        <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
-                          <div className="row"> 
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                              <label className="row">Property Description</label>
-                            </div>
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 descriptionWrap">
-                              <div className="row"> 
-                                {this.state.pricing && this.state.pricing.description ? this.state.pricing.description : "-"}                             
-                              </div>
-                            </div>
+             <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div className="mt40 hidden-xs hidden-sm"></div>
+                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 pl3">
+                    <div className="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+                          <label className="">Property Description</label>
+                        </div>
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 descriptionWrap noPad">
+                          <div className=""> 
+                            {this.state.pricing && this.state.pricing.description ? this.state.pricing.description : "-"}                             
                           </div>
                         </div>
-                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <label className="row">Key Features</label>
-                              </div>
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <ul className="col-lg-7 col-md-7 col-sm-12 col-xs-12 bolder">   
-                                  <li className="col-lg-5 noPad">Property Type</li> <span className="col-lg-7 noPad"> : {this.state.propertySubType && this.state.propertySubType ? <b>{this.state.propertySubType} </b> : "-"}</span>
-                                  <li className="col-lg-5 noPad">Furnished Status</li> <span className="col-lg-7 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> : "-"}</span>
-                                  {this.state.propertyType === "Commercial" ?
-                                      <b>
-                                        <li className="col-lg-5 noPad">Washrooms    </li> 
-                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.washrooms : "-"}</b></span>
-                                        <li className="col-lg-5 noPad">Personal WC </li> 
-                                        <span className="col-lg-7 noPad"> : <b>{ this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.personal : "-"}</b></span>
-                                        <li className="col-lg-5 noPad">Pantry  </li> 
-                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.pantry ? this.state.propertyFeatures.pantry : "-"}</b></span>
-                                      </b>
-                                    : 
-                                    <b>
-                                        <li className="col-lg-5 noPad">Bedrooms    </li> 
-                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bedrooms ? this.state.propertyFeatures.bedrooms : "-"}</b></span>
-                                        <li className="col-lg-5 noPad">Bathrooms    </li> 
-                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bathrooms ? this.state.propertyFeatures.bathrooms : "-"}</b></span>
-                                        <li className="col-lg-5 noPad">Balconies    </li> 
-                                        <span className="col-lg-7 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.balconies ? this.state.propertyFeatures.balconies : "-"}</b></span>
-                                      </b>
-                                  }
-                                  <li className="col-lg-5 noPad">Available From  </li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.availableFrom   ? <b>{this.state.pricing.availableFrom}   </b> : "-"}</span>
-                                </ul>
-                                <ul className="col-lg-5 col-md-5 col-sm-12 col-xs-12 bolder">   
-                                  <li className="col-lg-6 noPad">Facing          </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Super Area      </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>Sqft</b></span>
-                                  <li className="col-lg-6 noPad">Built up Area   </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>Sqft</b></span>
-                                  <li className="col-lg-6 noPad">Floor           </li> <span className="col-lg-6 noPad"> : {this.state.floor ? <b>{this.state.floor}</b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Total Floors     </li> <span className="col-lg-6 noPad"> : {this.state.totalFloor ? <b>{this.state.totalFloor}</b> : "-"}</span>
-                                  <li className="col-lg-6 noPad">Age of Property </li> <span className="col-lg-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty === "New" ? "0-1" : this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
-                                </ul>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
                     </div>
-                  </div>
+                    <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
+                            <label className="">Key Features</label>
+                          </div>
+                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <ul className="col-lg-7 col-md-7 col-sm-12 col-xs-12 bolder">   
+                              <li className="col-lg-5 col-xs-6 noPad">Property Type</li> <span className="col-lg-7 col-xs-5 noPad"> : {this.state.propertySubType && this.state.propertySubType ? <b>{this.state.propertySubType} </b> : "-"}</span>
+                              <li className="col-lg-5 col-xs-6 noPad">Furnished Status</li> <span className="col-lg-7  col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.furnishedStatus ? <b>{this.state.propertyFeatures.furnishedStatus} </b> : "-"}</span>
+                              {this.state.propertyType === "Commercial" ?
+                                  <b>
+                                    <li className="col-lg-5 col-xs-6 noPad">Washrooms    </li> 
+                                    <span className="col-lg-7 col-xs-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.washrooms : "-"}</b></span>
+                                    <li className="col-lg-5 col-xs-6 noPad">Personal WC </li> 
+                                    <span className="col-lg-7 col-xs-6 noPad"> : <b>{ this.state.propertyFeatures && this.state.propertyFeatures ? this.state.propertyFeatures.personal : "-"}</b></span>
+                                    <li className="col-lg-5 col-xs-6 noPad">Pantry  </li> 
+                                    <span className="col-lg-7 col-xs-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.pantry ? this.state.propertyFeatures.pantry : "-"}</b></span>
+                                  </b>
+                                : 
+                                <b>
+                                    <li className="col-lg-5 col-xs-6 noPad">Bedrooms    </li> 
+                                    <span className="col-lg-7 col-xs-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bedrooms ? this.state.propertyFeatures.bedrooms : "-"}</b></span>
+                                    <li className="col-lg-5 col-xs-6 noPad">Bathrooms    </li> 
+                                    <span className="col-lg-7 col-xs-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.bathrooms ? this.state.propertyFeatures.bathrooms : "-"}</b></span>
+                                    <li className="col-lg-5 col-xs-6 noPad">Balconies    </li> 
+                                    <span className="col-lg-7 col-xs-6 noPad"> : <b>{this.state.propertyFeatures && this.state.propertyFeatures.balconies ? this.state.propertyFeatures.balconies : "-"}</b></span>
+                                  </b>
+                              }
+                              <li className="col-lg-5 col-xs-6 noPad">Available From  </li> <span className="col-lg-7 col-xs-6 noPad"> : {this.state.pricing && this.state.pricing.availableFrom   ? <b>{this.state.pricing.availableFrom}   </b> : "-"}</span>
+                            </ul>
+                            <ul className="col-lg-5 col-md-5 col-sm-12 col-xs-12 bolder">   
+                              <li className="col-lg-6 col-xs-6 noPad">Facing          </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
+                              <li className="col-lg-6 col-xs-6 noPad">Super Area      </li> <span className="col-lg-6  col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>{this.state.propertyFeatures && this.state.propertyFeatures.superAreaUnit       ? <b>{this.state.propertyFeatures.superAreaUnit}       </b> : "-"}</b></span>
+                              <li className="col-lg-6 col-xs-6 noPad">Built up Area   </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>{this.state.propertyFeatures && this.state.propertyFeatures.builtupAreaUnit       ? <b>{this.state.propertyFeatures.builtupAreaUnit}       </b> : "-"}</b></span>
+                              <li className="col-lg-6 col-xs-6 noPad">Floor           </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures.floor ? <b>{this.state.propertyFeatures.floor}</b> : "-"}</span>
+                              <li className="col-lg-6 col-xs-6 noPad">Total Floors     </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures.totalFloor ? <b>{this.state.propertyFeatures.totalFloor}</b> : "-"}</span>
+                              <li className="col-lg-6 col-xs-6 noPad">Age of Property </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty === "New" ? "0-1" : this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
+                            </ul>
+                          </div>
+                    </div>
                 </div>
-              </div>
              </div>
-              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt40">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                <div className="mt40 hidden-xs hidden-sm"></div>
                 <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -353,72 +430,127 @@ class PropertyProfile extends Component{
                             </div>
                           </div>
                         </div>
-                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad">
-                          <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
-                            <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12"> 
-                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                <label className="row">Financials</label>
-                              </div>
-                              <div className="row"> 
-                                <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                                  <div className="row"> 
-                                    <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
-                                     <div className="row">
-                                       <ul  className="bolder">
-                                          <li className="col-lg-4 noPad">Include Charges</li> 
-                                          <span className="col-lg-8 noPad"> : 
-                                          {this.state.pricing && this.state.pricing.includeCharges     ? 
-                                            <b>{
-                                            this.state.pricing.includeCharges.map((includeCharges,index)=>{
-                                              console.log("index = ",index);
-                                                var comma = ", ";
-                                                var i = index;
-                                                if(index >= (this.state.pricing.includeCharges.length-1) ){
-                                                  comma = "";
-                                                }
 
-                                              console.log("comma = ",comma);
-                                                return(
-                                                    <b key={i++}>
-                                                        {" "+includeCharges+comma}
-                                                    </b>                  
-                                                  )
-                                                })
-                                          }  </b> : "-"}
-                                          </span>
-                                          {this.state.pricing && this.state.pricing.expectedRate ?
-                                            <b>
-                                              <li className="col-lg-4 noPad">Expected Rate    </li> 
-                                              <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /Sq. ft.</span>
-                                            </b>
-                                          : 
-                                          <b>
-                                              <li className="col-lg-4 noPad">Monthly Rent    </li> 
-                                              <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
-                                            </b>
-                                          }
-                                          {this.state.pricing && this.state.pricing.totalPrice ?
-                                            <b>
-                                              <li className="col-lg-4 noPad">Total Price    </li> 
-                                              <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
-                                            </b>
-                                          : 
-                                          <b>
-                                              <li className="col-lg-4 noPad">Deposit Amount    </li>
-                                              <span className="col-lg-8 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
-                                            </b>
-                                          }
-                                          <li className="col-lg-4 noPad">Maintainance Charges</li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : "-"}</span>
-                                          <li className="col-lg-4 noPad">Maintainance Per    </li> <span className="col-lg-8 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
-                                        </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                </div>
+                        <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad hidden-xs hidden-sm">
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <label className="">Financials</label>
                               </div>
-                            </div>
-                          </div>
+                              <div>
+                                 <ul  className="bolder">
+                                    {this.state.transactionType  ==="Sell" && this.state.transactionType ==="Sell"?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Total Ask    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Deposit Amount    </li>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+                                      </b>
+                                    }
+
+                                    {this.state.transactionType  ==="Sell" && this.state.transactionType ==="Sell"?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Monthly Rent    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+                                      </b>
+                                    }
+                                    {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?
+                                    null
+                                    :
+                                      <div>
+                                    <li className="col-lg-5 col-xs-12 noPad">Charges Included in Total Ask </li> 
+                                    <span className="col-lg-7 col-xs-12 noPad"> : 
+                                    {this.state.pricing && this.state.pricing.includeCharges     ? 
+                                      <b>{
+                                      this.state.pricing.includeCharges.map((includeCharges,index)=>{
+                                        console.log("index = ",index);
+                                          var comma = ", ";
+                                          var i = index;
+                                          if(index >= (this.state.pricing.includeCharges.length-1) ){
+                                            comma = "";
+                                          }
+                                          return(
+                                              <b key={i++}>
+                                                  {" "+includeCharges+comma}
+                                              </b>                  
+                                            )
+                                          })
+                                    }  </b> : "-"}
+                                    </span>
+                                    </div>
+                                    }
+                                    <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                    {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
+                                  </ul>
+                                </div>
                         </div>
+                      {/*resp*/}
+                      <div className="col-lg-7 col-md-7 col-sm-12 col-xs-12 noPad hidden-lg hidden-md">
+                              <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad">
+                                <label className="">Financials</label>
+                              </div>
+                              <div>
+                                 <ul  className="bolder col-xs-12 ">
+                                    {this.state.pricing && this.state.pricing.totalPrice ?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Total Ask    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.totalPrice)}</b></span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Deposit Amount    </li>
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.depositAmount}</b></span>
+                                      </b>
+                                    }
+
+                                    {this.state.pricing && this.state.pricing.expectedRate ?
+                                      <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Expected Rate    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.expectedRate}</b> /{this.state.pricing.measurementUnit}</span>
+                                      </b>
+                                    : 
+                                    <b>
+                                        <li className="col-lg-5 col-xs-6 noPad">Monthly Rent    </li> 
+                                        <span className="col-lg-7 col-xs-6 noPad"> : <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.monthlyRent}</b></span>
+                                      </b>
+                                    }
+                                    {this.state.transactionType == "Rent" && this.state.propertyType =="Commercial" ?
+                                    null
+                                    :
+                                      <div>
+                                    <li className="col-lg-5 col-xs-12 noPad">Charges Included in Total Ask </li> 
+                                    <span className="col-lg-7 col-xs-12 noPad"> : 
+                                    {this.state.pricing && this.state.pricing.includeCharges     ? 
+                                      <b>{
+                                      this.state.pricing.includeCharges.map((includeCharges,index)=>{
+                                        console.log("index = ",index);
+                                          var comma = ", ";
+                                          var i = index;
+                                          if(index >= (this.state.pricing.includeCharges.length-1) ){
+                                            comma = "";
+                                          }
+                                          return(
+                                              <b key={i++}>
+                                                  {" "+includeCharges+comma}
+                                              </b>                  
+                                            )
+                                          })
+                                    }  </b> : "-"}
+                                    </span>
+                                    </div>
+                                    }
+                                    <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.state.pricing.maintenanceCharges} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                    {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
+                                  </ul>
+                                </div>
+                        </div>
+                    {/*end*/}
                       </div>
                     </div>
                   </div>
@@ -436,8 +568,28 @@ class PropertyProfile extends Component{
                     { this.state.propertyLocation ? this.state.propertyLocation.society+", "+this.state.propertyLocation.subArea+", "+this.state.propertyLocation.area+", "+this.state.propertyLocation.city+", "+this.state.propertyLocation.state+", "+this.state.propertyLocation.country+", "+this.state.propertyLocation.pincode : "-"}
                     <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 " >
                       <div className="row">
-                        <div className="mapouter"><div className="gmap_canvas"><iframe width="100%" height="500" id="gmap_canvas" src="https://maps.google.com/maps?q=Magarpatta&t=&z=13&ie=UTF8&iwloc=&output=embed" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0"></iframe></div></div>                           
-                      </div>
+                      {
+                        this.state.showMap === true ? 
+                          <div style={{ height: '500px', width: '100%',paddingTop:'15px' }}>
+                              <GoogleMapReact
+                                bootstrapURLKeys={{ key:"" }}
+                                defaultCenter={this.props.center}
+                                defaultZoom={this.props.zoom}
+                              >
+                                <Property
+                                  lat={this.state.location.latitude}
+                                  lng={this.state.location.longitude}
+                                />
+                              </GoogleMapReact>
+                          </div>
+                        :
+                        <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad" style={{paddingTop:'15px'}}>
+                          <img src="/images/hadapsarMap.png" className="mapImg" />
+                          <div className="divAboveMap"></div> 
+                          <button className="mapButton btn btn-primary" onClick={this.handleMap.bind(this)}>Show Map</button>
+                        </div>
+                      }
+                   </div>
                     </div>              
                     </div>
                   </div>
@@ -445,10 +597,72 @@ class PropertyProfile extends Component{
                </div>
             </div>              
           </div>
+
+
+          {/*=== Modal starts here ===*/}
+          <div>
+            <div id="postPropertyModal" className="modal fade" role="dialog">
+              <div className="modal-dialog modal-lg">
+                <div className="modal-content "style={{marginTop:"52px"}}>
+                  <div className="modal-header">
+                    <button type="button" className="close" data-dismiss="modal" onClick={this.removeBackdrop.bind(this)}>X</button>
+                    <h4 className="modal-title">
+                      <b style={{paddingLeft:"28px"}}> {header} </b>
+                    </h4>
+                  </div>
+                  <div className="modal-body col-lg-12">
+                      { this.props.LoginMobNum    ? <LoginMobNum />     : null }
+                      { this.props.LoginOtp       ? <LoginOtp />        : null }
+                      { this.props.WebSignupForm  ? <WebSignupForm />   : null }
+                      { this.props.BasicInfo      ? <BasicInfo />       : null }
+                      { this.props.PropertyDetails? <PropertyDetails /> : null }
+                      { this.props.Financials     ? <Financials />      : null }
+                      { this.props.Amenities      ? <Amenities />       : null }
+                      { this.props.Availability   ? <Availability />    : null }
+                      { this.props.Location       ? <Location />        : null }
+                      { this.props.CongratsPage   ? <CongratsPage />    : null }
+                      { this.props.ImageUpload    ? <ImageUpload />     : null }
+                  </div>
+                  <div className="modal-footer">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
   }
 
+const mapStateToProps = (state)=>{
+  // console.log("state",state)
+  return {
+    LoginMobNum     : state.LoginMobNum,
+    LoginOtp        : state.LoginOtp,
+    WebSignupForm   : state.WebSignupForm,
+    BasicInfo       : state.BasicInfo,
+    PropertyDetails : state.PropertyDetails,
+    Financials      : state.Financials,
+    Amenities       : state.Amenities,
+    Availability    : state.Availability,
+    Location        : state.Location,
+    ImageUpload     : state.ImageUpload,
+    CongratsPage    : state.CongratsPage,
+    formTitle       : state.formTitle
+  }
+};
 
-export default PropertyProfile;
+
+const mapDispatchToProps = (dispatch)=>{
+  return {
+    setFormTitle  : (formTitle)=> dispatch({
+                          type      : "SET_FORM_TITLE",
+                          formTitle : formTitle,
+                        }),
+    login_mobileNum  : (originPage)=>dispatch({type: "LOGIN_MOB_NUM", originPage: originPage}),
+    already_loggedIn : (originPage,uid,property_id)=>dispatch({type: "ALREADY_LOGGEDIN", originPage: originPage, uid:uid, property_id:property_id}),
+
+  }
+};
+
+export default connect(mapStateToProps,mapDispatchToProps)(withRouter(PropertyProfile));

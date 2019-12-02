@@ -1,0 +1,74 @@
+.footerDiv{
+    height: auto;
+    background-color: #2A3B93;
+    border-top: 20px solid #3969fa;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.header{
+	font-size: 20px;
+}
+
+
+.footerContactDetails{
+	margin-top: 25px;
+    padding-left: 24px;
+}
+
+
+.inputBoxRequest {
+    font-family: 'Montserrat',sans-serif;
+    height: 40px !important;
+    border: 1px solid #979797 !important;
+    font-size: 14px !important;
+}
+
+.contactDetails{
+	margin-top: 4px;
+	letter-spacing: 1px;
+
+}
+.contactDetails1{
+    letter-spacing: 1px;
+
+}
+
+.sendButton{
+	background-color: #3969FA;
+	color: #fff !important;
+}
+
+.boarderR{
+    border-radius: 5px;
+}
+.textColor{
+    color: #555;
+}
+
+
+.footerScocial
+{ 
+    height: 30px;
+    cursor: pointer;
+    border-radius: 100%;
+    padding: 0 !important;
+    background-color: #fff;
+    padding-top: 2px !important;
+    border: 1px solid #aaa;
+    text-align: center;
+    font-size: 17px;
+    color: #2a3b93;
+    margin-bottom: 20px;
+}
+
+.fa-globe:before {
+    content: "\f0ac";
+    font-size: 18px;
+}
+.policy{
+    color: #fff;
+}
+.policy:hover{
+    color: #fff;
+}

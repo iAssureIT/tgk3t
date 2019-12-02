@@ -34,8 +34,8 @@ componentDidMount(){
             <div className="wrapper">
             <nav id="sidebar">
                 <div className="sidebar-header">
-                    <h4 className=" zeromargin"><img className="imgLogo " src="/images/logo.png"  alt="TGK" width="100%" height="45px" /></h4>
-                    <strong className="clspadding">  <img src="/images/logo1.png"  alt="TGK" height="28px"/></strong>
+                    <h4 className=" zeromargin"><img className="imgLogo " src="/images/lyvo.png"  alt="TGK" width="56%" height="45px" /></h4>
+                    <strong className="clspadding">  <img src="/images/lyvo.png"  alt="TGK" height="28px"/></strong>
                 </div>
 
                 <ul className="list-unstyled components">

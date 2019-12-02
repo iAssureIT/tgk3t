@@ -1,0 +1,318 @@
+/*add this class next to form-control*/
+.inputBox{
+  font-family:'Montserrat',sans-serif;
+  height: 30px !important;
+  border: none !important;
+  border-left: 1px solid #979797 !important;
+  font-size: 12px !important;
+}
+.valid_box{
+  height: 60px;
+}
+.inputBox:hover{
+  border-left:1px solid #039BE5 !important;
+  box-shadow: none !important;
+}
+.back_btn:hover{
+  color: #666;
+}
+/**********************/
+/*input icon*/
+/*input icon*/
+/*.inputIcon{
+  height: 30px !important;
+  font-size: 18px !important;
+  color: #979797 !important;
+  background-color: #ffffff !important;
+  border: none !important;
+}*/
+.inputIcon{
+	background: #fff;
+}
+.icon_Clr{
+  color: #F4B400;
+}
+/*************************************/
+/*Add this class next to input-group*/
+/*.inputBox-main{
+  border: 1px solid #979797 !important;
+  border-radius: 3px !important;
+  height: 30px !important;
+  font-size: 12px !important;
+}*/
+
+.ModalPd{
+  padding: 0px !important;
+}
+.Amenities_mrg{
+  padding-top:10px;
+}
+.mgbt{
+  margin-bottom: 0px !important;
+  padding-bottom: 4px;
+}
+
+.title_pd{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/*.hr_border1{
+  margin-bottom: 30px !important;
+}*/
+.padd0{
+  padding: 0px;
+}
+.borderClass{
+  border:1px solid #666;
+}
+.upperbox{
+   font-size: 16px;
+   padding: 3px;
+}
+.sideBorder{
+  border-left: 1px solid #666;
+  border-right: 1px solid #666;
+}
+.borderBtm{
+  border-bottom: 1px solid #666;
+}
+.FF4I{
+  
+  border-right: 1px solid #000;
+  border-left: 1px solid #000;
+  border-top: 1px solid #000;
+  text-align: center;
+  font-size: 18px;
+  padding: 5px;
+}
+.FF4I1{
+ /* border: 1px solid #000;*/
+  /*text-align: center;*/
+  font-size: 16px;
+ /* height: 320px;*/
+}
+.left{
+  padding-left: 5px;
+}
+.mb20{
+  margin-bottom: 20px;
+}
+.pt20{
+  padding-top: 20px
+}
+.pl31{
+  padding-left: 31px;
+}
+.pl24{
+  padding-left: 24px;
+}
+.pl15{
+  padding-left: 15px;
+}
+.pl10{
+  padding-left: 10px;
+}
+.pl11{
+  padding-left: 11px;
+}
+.pl3{
+  padding-left: 3px;
+}
+.pl8{
+  padding-left: 8px;
+}
+.pl2{
+  padding-left: 2px;
+}
+.pl87{
+  padding-left: 87px;
+}
+.pl25{
+  padding-left: 25px;
+}
+.pl61{
+  padding-left: 61px;
+}
+.pl14{
+  padding-left: 14px;
+}
+.pl18{
+  padding-left: 18px;
+}
+.pl0{
+  padding-left: 0px;
+}
+.pl33{
+  padding-left: 33px;
+}
+.pl21{
+  padding-left: 21px;
+}
+.pl38{
+  padding-left: 38px;
+}
+
+.pl64{
+  padding-left: 64px;
+}
+.pl18{
+  padding-left: 18px;
+}
+.pr65{
+  padding-right: 65px;
+}
+.pr22{
+  padding-right: 22px;
+}
+.pr44{
+  padding-right: 44px;
+}
+/* The container2 */
+.container2 {
+  display: block;
+  position: relative;
+  /*padding-left: 35px;*/
+  /*margin-bottom: 12px;*/
+  cursor: pointer;
+  font-size: 17px;
+  user-select: none;
+  margin-top: 17px;
+  margin-bottom: 15px;
+}
+
+/* Hide the browser's default checkbox */
+.container2 input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 3px;
+  /*left: 66px;*/
+  height: 22px;
+  width: 22px;
+  /*background-color: #ccc;*/
+  border: 1px solid #ccc;
+}
+
+/* On mouse-over, add a grey background color */
+.container2:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.container2 input:checked ~ .checkmark {
+  background-color: #1267ecd4;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.container2 input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.container2 .checkmark:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+} 
+
+.Ameni1{
+    position: relative;
+    left: 38px;
+}
+.AmeniName{
+    position: relative;
+    left: 50px;
+    font-weight: 100;
+    font-size: 16px;
+}
+.AmeniCenter{
+  text-align: center;
+  font-size: 21px;
+}
+.Ameni2{
+    position: relative;
+    left: 26px;
+}
+.Ameni3{
+    position: relative;
+    right: 8px;
+}
+.Ameni4{
+    position: relative;
+    left: 14px;
+}
+.Ameni5{
+    position: relative;
+    right: 8px;
+}
+.Ameni6{
+    position: relative;
+    left: 11px;
+}
+.Ameni7{
+    position: relative;
+    left: 3px;
+}
+.Ameni8{
+    position: relative;
+    right: 9px;
+}
+.Ameni9{
+    position: relative;
+    left: 29px;
+}
+.Ameni10{
+    position: relative;
+    left: 38px;
+}
+.Ameni11{
+    position: relative;
+    left: 9px;
+}
+.Ameni12{
+    position: relative;
+    left: 25px;
+}
+.Ameni13{
+    position: relative;
+    left: 0px;
+}
+.Ameni14{
+    position: relative;
+    right   :  7px;
+}
+.ameniSpan10{
+  position: relative;
+  left: 46px;
+}
+.ameniSpan11{
+  position: relative;
+  left: 17px;
+}
+.ameniSpan12{
+  position: relative;
+  left: 31px;
+}
+.ameniSpan13{
+  position: relative;
+  left: 8px;
+}
