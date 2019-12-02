@@ -8,6 +8,8 @@ export const colors = {
 
   primary : '#283593',
   button : '#376bff',
+  searchPrimary : '#D4F1F4',
+  searchButton: '#ffffff',
   golden: '#f5ad3e',
   black: '#000',
   grey: '#666666', 

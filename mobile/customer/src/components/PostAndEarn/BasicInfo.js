@@ -10,7 +10,8 @@ import {
   Image,TextInput,
   Alert,
   StyleSheet,
-
+  FlatList,
+  TouchableWithoutFeedback
   // Picker
 } from 'react-native';
 import Hr                                   from "react-native-hr-component";
@@ -32,6 +33,7 @@ import RNPickerSelect                       from 'react-native-picker-select';
 
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
 // import {Picker}                             from '@react-native-community/picker';
+  
 const window = Dimensions.get('window');
 
 const defaultOption = [
@@ -150,14 +152,14 @@ export default class BasicInfo extends ValidationComponent{
                     })
             })
         }).catch((error)=>{
-                          console.log("error = ",error);
-                          if(error.message === "Request failed with status code 401")
-                          {
-                              Alert.alert("Your session is expired!"," Please login again.");
-                              AsyncStorage.removeItem('fullName');
-                              AsyncStorage.removeItem('token');
-                              this.navigateScreen('MobileScreen');                                        
-                          }
+                    console.log("error = ",error);
+                    if(error.message === "Request failed with status code 401")
+                    {
+                        Alert.alert("Your session is expired!"," Please login again.");
+                        AsyncStorage.removeItem('fullName');
+                        AsyncStorage.removeItem('token');
+                        this.navigateScreen('MobileScreen');                                        
+                    }
           });
     }
 
@@ -894,7 +896,7 @@ selectState(stateCode){
     if(this.state.listofAreas && this.state.listofAreas.length > 0){
       // console.log("all area data",this.state.listofAreas);
       var index = this.state.listofAreas.findIndex( x => x.areaName === areaName);
-      console.log("here index",index);
+      // console.log("here index",index);
 
     this.setState({
       areaName : areaName,
@@ -916,7 +918,6 @@ selectState(stateCode){
           subAreaList : response.data
         },()=>{
            var allSubAreaData= this.state.subAreaList;
-           console.log("subareaList=>>>>>>>>>>",response.data)
             // cityname = allCityData.map(a=>a.cityName);
             var subareaList=[];
             for (var i = 0; i < allSubAreaData.length; i++) {
@@ -947,20 +948,22 @@ selectState(stateCode){
 
 
   handleSubarea(subAreaName){
+    console.log("inside subAreaName")
     var valSubAreaName = this.state.subAreaName;
     if(valSubAreaName == ""){
       return;
     }
+
     
-    this.setState({subareaName : valSubAreaName});
+    this.setState({subAreaName : valSubAreaName});
     var index = -1;
 
     if(this.state.subAreaList.length > 0){
       index = this.state.subAreaList.findIndex( x => x.subareaName === valSubAreaName);
     }
     var url = "";
-    // console.log("index = ",index);
-
+    console.log("inside subAreaName index",index)
+    this.setState({societyList:""})
     if(index < 0){
       const formValues ={
           countryCode   : "IN",
@@ -988,16 +991,21 @@ selectState(stateCode){
             }
         });
 
-      }else{
+      }
+      else{
         url = 'http://locationapi.iassureit.com/api/societies/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/'+valSubAreaName+'/' ;
           // console.log("societies URL = ", url);
           axios({
             method: 'get',
             url: url,
           }).then((response)=> {
-            // console.log("societies = ", response.data);
+            console.log("societies = ", response.data);
+              var society = response.data.map(a=>a.societyName);
+              society = [...new Set(society)];
               this.setState({
-                societyList : response.data,
+                societyList : society,
+              },()=>{
+                console.log("societyList",society);
               })
           }).catch((error)=>{
                 console.log("error = ",error);
@@ -1012,7 +1020,40 @@ selectState(stateCode){
       }
   }
 
-  handleSociety(){
+
+  // getSocieties(value){
+  //   console.log("value==========>",value.length);
+  //   if(value && value.length===0){
+  //       this.setState({societyList:""})
+  //   }else{
+  //     var url = 'http://locationapi.iassureit.com/api/societies/get/list/IN/'+this.state.stateCode+'/'+this.state.districtName+'/'+this.state.blockName+'/'+this.state.cityName+'/'+this.state.areaName+'/'+this.state.subAreaName+'/';
+  //           // console.log("societies URL = ", url);
+            
+  //           axios({
+  //             method: 'get',
+  //             url: url,
+  //           }).then((response)=> {
+  //             console.log("societies = ", response.data);
+  //               var society = response.data.map(a=>a.societyName);
+  //               society = [...new Set(society)];
+  //               this.setState({
+  //                 societyList : society,
+  //               },()=>{
+  //               })
+  //           }).catch((error)=>{
+  //                 console.log("error = ",error);
+  //                 if(error.message === "Request failed with status code 401")
+  //                 {
+  //                     Alert.alert("Your session is expired!"," Please login again.");
+  //                     AsyncStorage.removeItem('fullName');
+  //                     AsyncStorage.removeItem('token');
+  //                     this.navigateScreen('MobileScreen');           
+  //                 }
+  //           }); 
+  //       }
+  // }
+
+  handleSociety(societyName){
     var valSocietyName = this.state.societyName;
     if(valSocietyName == ""){
       return;
@@ -1036,16 +1077,18 @@ selectState(stateCode){
           blockName     : this.state.blockName,
           cityName    : this.state.cityName,
           areaName    : this.state.areaName,
-          subareaName   : this.state.subareaName,
+          subareaName   : this.state.subAreaName,
           societyName   : this.state.societyName,
       };
+
+      console.log("formValues",formValues);
 
       url = 'http://locationapi.iassureit.com/api/societies/post';
 
         axios
           .post(url, formValues)
           .then((response)=> {
-            // console.log("societies submitted = ",response);
+            console.log("societies submitted = ",response);
           }).catch((error)=>{
             console.log("error = ",error);
             if(error.message === "Request failed with status code 401")
@@ -1058,6 +1101,24 @@ selectState(stateCode){
         });
     }
   }
+
+
+  _selectedItem(item){
+    // console.log("item",item);
+    this.setState({'societyName':item,location : item,})
+    this.setState({societyList:""})
+  }
+
+   _renderList = ({ item }) => {
+    // console.log("item",item)
+    return (
+     <TouchableWithoutFeedback onPress={()=>this._selectedItem(item)}>
+       <View>
+            <Text style={styles.item}>{item}</Text>
+        </View>
+     </TouchableWithoutFeedback>
+    );
+}
 
   render(){
     axios.defaults.headers.common['Authorization'] = 'Bearer '+ this.state.token;
@@ -1102,7 +1163,6 @@ selectState(stateCode){
          // console.log("index here", this.state.index);
       }
 
-      console.log("subAreaName render",this.state.subAreaName);
 
     return (
       <React.Fragment>
@@ -1502,8 +1562,8 @@ selectState(stateCode){
 
                           { this.state.onlySubArea.length>0 ? 
                              <RNPickerSelect
-                                onValueChange          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError');})}}
-                                onBlur                 = {()=>this.handleSubarea()}
+                                onValueChange          = {subAreaName => {this.setState({subAreaName},() => { this.validInputField('subAreaName', 'subAreaNameError');this.handleSubarea();})}}
+                                // onBlur                 = {()=>this.handleSubarea()}
                                 value                  = {this.state.subAreaName}
                                 style                  = {pickerSelectStyles}
                                 placeholder            = {placeholderSubarea}
@@ -1568,6 +1628,16 @@ selectState(stateCode){
                     />
                   </View>
                 </View>
+                {/*this.state.societyList?
+                  <View style={styles.flatList}>
+                    <FlatList
+                      data={this.state.societyList.slice(0,5)}
+                      renderItem={this._renderList}
+                    />
+                </View>
+                :
+                null
+                */}
                 {this.displayValidationError('societyError')}
               </View>
 

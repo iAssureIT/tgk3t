@@ -80,7 +80,56 @@ navigateScreen=(route)=>{
     })
   }
 
+
   handleLocation(value){
+
+  /*
+    https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+
+    Array.prototype.contains = function(v) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] === v) return true;
+      }
+      return false;
+    };
+
+    Array.prototype.unique = function() {
+      var arr = [];
+      for (var i = 0; i < this.length; i++) {
+        if (!arr.contains(this[i])) {
+          arr.push(this[i]);
+        }
+      }
+      return arr;
+    }
+
+    var duplicates = [1, 3, 4, 2, 1, 2, 3, 8];
+    var uniques = duplicates.unique(); // result = [1,3,4,2,8]
+
+    console.log(uniques);
+
+  */
+
+
+    Array.prototype.contains = function(v) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] === v) return true;
+      }
+      return false;
+    };
+
+    Array.prototype.unique = function() {
+      var arr = [];
+      for (var i = 0; i < this.length; i++) {
+        if (!arr.contains(this[i])) {
+          arr.push(this[i]);
+        }
+      }
+      return arr;
+    }
+
+
+
     var location =value;
     console.log("location",location);
     this.setState({
@@ -91,10 +140,11 @@ navigateScreen=(route)=>{
       {
       axios({
             method: 'get',
-            url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
+            url: 'http://locationapi.iassureit.com/api/societies/get/searchresults/' + this.state.location,
+            // url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
           })        
         .then((searchResults) => {
-          console.log("searchresults",searchResults.data)
+          console.log("searchResults",searchResults);
           if(searchResults.data.length>0){
             var cities = searchResults.data.map(a=>a.cityName);
             cities = [...new Set(cities)];
@@ -105,39 +155,67 @@ navigateScreen=(route)=>{
             var subareaName = searchResults.data.map(a=>a.subareaName);
             subareaName = [...new Set(subareaName)];
 
+            var societyName = searchResults.data.map(a=>a.societyName);
+            societyName = [...new Set(societyName)];
+            console.log("1  societyName  = ",societyName);
+
             for(let i=0; i<cities.length; i++) {
               for(let j=0; j<areas.length; j++) {
                 areas[j] = areas[j] + ', ' + cities[i];
               }
-            }
+            }         
+            console.log("areas = ",areas);
 
-            for(let i=0; i<cities.length; i++) {
-              for(let j=0; j<subareaName.length; j++) {
-                subareaName[j] = subareaName[j] + ', ' + cities[i];
-              }
+            for(let i=0; i<searchResults.data.length; i++) {
+              subareaName[i] = searchResults.data[i].subareaName + ', ' + 
+                       searchResults.data[i].areaName + ', ' + 
+                       searchResults.data[i].cityName;
+            } 
+            var uniqueSubareaName = subareaName.unique();
+
+            console.log("uniqueSubareaName = ",uniqueSubareaName);
+
+
+            for(let i=0; i<searchResults.data.length; i++) {
+              societyName[i] = searchResults.data[i].societyName + ', ' + 
+                       searchResults.data[i].subareaName + ', ' + 
+                       searchResults.data[i].areaName + ', ' + 
+                       searchResults.data[i].cityName;
             }
+            var uniqueSocietyName = societyName.unique();
+            console.log("uniqueSocietyName = ",uniqueSocietyName);
+
+
 
             var citiesAreas = cities.concat(areas);
-            var citiesAreassubAreas = citiesAreas.concat(subareaName);
-            console.log("citiesAreassubAreas",citiesAreassubAreas);
+            var citiesAreasSubAreas = citiesAreas.concat(uniqueSubareaName);
+            var citiesAreasSubAreasSocieties = citiesAreasSubAreas.concat(uniqueSocietyName);
+
 
             this.setState({
-              locSearchResults : citiesAreassubAreas,
+              locSearchResults : citiesAreasSubAreasSocieties,
             });         
 
           }
         })
-            .catch((error) =>{
-              console.log("error = ", error);
-            }); 
+        .catch((error)=>{
+              console.log("error = ",error);
+              if(error.message === "Request failed with status code 401")
+              {
+                  swal("Your session is expired! Please login again.","", "error");
+                  localStorage.removeItem("uid");
+                  localStorage.removeItem("token");
+                  this.props.history.push("/");
+              }
+        });
       }
     })
   }
 
   _selectedItem(item){
-    this.setState({locSearchResults:""})
     // console.log("item",item);
     this.setState({'searchText':item,location : item,})
+    this.setState({locSearchResults:""})
   }
 
    _renderList = ({ item }) => {
@@ -317,7 +395,7 @@ navigateScreen=(route)=>{
               </View>
               <View style={styles.flatList}>
                   <FlatList
-                    data={this.state.locSearchResults}
+                    data={this.state.locSearchResults.slice(0,15)}
                     renderItem={this._renderList}
                   />
               </View>

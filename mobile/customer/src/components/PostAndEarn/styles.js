@@ -645,7 +645,24 @@ marginTopSOM:{
 }, 
 pickerSelectStyles:{
     color:"#f00",
-} 
+},
+item: {
+    backgroundColor:"#fff", 
+    padding: 6,
+    fontSize: 18,
+    // height: 44,
+    width:'100%',
+    // marginLeft:20,
+  },
+   flatList: {
+    marginTop:75,
+    position: 'absolute', 
+    zIndex: 2,
+    borderWidth:1,
+    borderColor:"#000",
+    backgroundColor:"#fff",
+    marginLeft:"12%"
+  }, 
  
 
 });

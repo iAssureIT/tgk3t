@@ -497,7 +497,57 @@ navigateScreen=(route)=>{
     );
 }
 
- handleLocation(value){
+
+
+    handleLocation(value){
+
+  /*
+    https://stackoverflow.com/questions/11246758/how-to-get-unique-values-in-an-array
+
+    Array.prototype.contains = function(v) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] === v) return true;
+      }
+      return false;
+    };
+
+    Array.prototype.unique = function() {
+      var arr = [];
+      for (var i = 0; i < this.length; i++) {
+        if (!arr.contains(this[i])) {
+          arr.push(this[i]);
+        }
+      }
+      return arr;
+    }
+
+    var duplicates = [1, 3, 4, 2, 1, 2, 3, 8];
+    var uniques = duplicates.unique(); // result = [1,3,4,2,8]
+
+    console.log(uniques);
+
+  */
+
+
+    Array.prototype.contains = function(v) {
+      for (var i = 0; i < this.length; i++) {
+        if (this[i] === v) return true;
+      }
+      return false;
+    };
+
+    Array.prototype.unique = function() {
+      var arr = [];
+      for (var i = 0; i < this.length; i++) {
+        if (!arr.contains(this[i])) {
+          arr.push(this[i]);
+        }
+      }
+      return arr;
+    }
+
+
+
     var location =value;
     console.log("location",location);
     this.setState({
@@ -508,9 +558,11 @@ navigateScreen=(route)=>{
       {
       axios({
             method: 'get',
-            url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
+            url: 'http://locationapi.iassureit.com/api/societies/get/searchresults/' + this.state.location,
+            // url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
           })        
         .then((searchResults) => {
+          console.log("searchResults",searchResults);
           if(searchResults.data.length>0){
             var cities = searchResults.data.map(a=>a.cityName);
             cities = [...new Set(cities)];
@@ -521,31 +573,59 @@ navigateScreen=(route)=>{
             var subareaName = searchResults.data.map(a=>a.subareaName);
             subareaName = [...new Set(subareaName)];
 
+            var societyName = searchResults.data.map(a=>a.societyName);
+            societyName = [...new Set(societyName)];
+            console.log("1  societyName  = ",societyName);
+
             for(let i=0; i<cities.length; i++) {
               for(let j=0; j<areas.length; j++) {
                 areas[j] = areas[j] + ', ' + cities[i];
               }
-            }
+            }         
+            console.log("areas = ",areas);
 
-            for(let i=0; i<cities.length; i++) {
-              for(let j=0; j<subareaName.length; j++) {
-                subareaName[j] = subareaName[j] + ', ' + cities[i];
-              }
+            for(let i=0; i<searchResults.data.length; i++) {
+              subareaName[i] = searchResults.data[i].subareaName + ', ' + 
+                       searchResults.data[i].areaName + ', ' + 
+                       searchResults.data[i].cityName;
+            } 
+            var uniqueSubareaName = subareaName.unique();
+
+            console.log("uniqueSubareaName = ",uniqueSubareaName);
+
+
+            for(let i=0; i<searchResults.data.length; i++) {
+              societyName[i] = searchResults.data[i].societyName + ', ' + 
+                       searchResults.data[i].subareaName + ', ' + 
+                       searchResults.data[i].areaName + ', ' + 
+                       searchResults.data[i].cityName;
             }
+            var uniqueSocietyName = societyName.unique();
+            console.log("uniqueSocietyName = ",uniqueSocietyName);
+
+
 
             var citiesAreas = cities.concat(areas);
-            var citiesAreassubAreas = citiesAreas.concat(subareaName);
-            console.log("citiesAreassubAreas",citiesAreassubAreas);
+            var citiesAreasSubAreas = citiesAreas.concat(uniqueSubareaName);
+            var citiesAreasSubAreasSocieties = citiesAreasSubAreas.concat(uniqueSocietyName);
+
 
             this.setState({
-              locSearchResults : citiesAreassubAreas,
+              locSearchResults : citiesAreasSubAreasSocieties,
             });         
 
           }
         })
-            .catch((error) =>{
-              console.log("error = ", error);
-            }); 
+        .catch((error)=>{
+              console.log("error = ",error);
+              if(error.message === "Request failed with status code 401")
+              {
+                  swal("Your session is expired! Please login again.","", "error");
+                  localStorage.removeItem("uid");
+                  localStorage.removeItem("token");
+                  this.props.history.push("/");
+              }
+        });
       }
     })
   }
@@ -637,7 +717,7 @@ navigateScreen=(route)=>{
                   name="sync" 
                   type="rotate-ccw"
                   size={22}
-                  color="white"
+                  color="black"
                 />}
             />*/}
               <View style={styles.resetBtn} >
@@ -790,11 +870,10 @@ navigateScreen=(route)=>{
                       />
                   </View>*/}
               </View>
-              {
-                Platform.OS === 'android' ?
-                  <View style={[styles.flatList,{marginTop:50,marginLeft:'10%'}]}>
+              { Platform.OS === 'android' && this.state.locSearchResults && this.state.locSearchResults.length>0 ?
+                  <View style={[styles.flatList,{marginTop:50}]}>
                     <FlatList
-                      data={this.state.locSearchResults}
+                      data={this.state.locSearchResults.slice(0,15)}
                       renderItem={this._renderList}
                     />
                   </View>
@@ -803,10 +882,10 @@ navigateScreen=(route)=>{
                 }
               </View>
               {
-                Platform.OS === 'ios' ?
-                <View style={[styles.flatList,{marginTop:50,marginLeft:'10%'}]}>
+                Platform.OS === 'ios' && this.state.locSearchResults && this.state.locSearchResults.length>0 ?
+                <View style={activeBtn === "Commercial-Sell" || activeBtn === "Commercial-Rent"? [styles.flatList,{marginTop:180,marginLeft:20}] :[styles.flatList,{marginTop:90,marginLeft:20}]}>
                   <FlatList
-                    data={this.state.locSearchResults}
+                    data={this.state.locSearchResults.slice(0,15)}
                     renderItem={this._renderList}
                   />
                 </View>
@@ -831,7 +910,7 @@ navigateScreen=(route)=>{
                       name={data.iconName} 
                       type={data.type}
                       size={data.size}
-                      color="white"
+                      color="black"
                       style={[{paddingLeft:10}]}
 
                     />
@@ -927,7 +1006,7 @@ navigateScreen=(route)=>{
                     name="building-o" 
                     type="font-awesome"
                     size={12}
-                    color="white"
+                    color="black"
                   />
                   <Text style={styles.tabText}>{data.value}</Text>
               </TouchableOpacity>

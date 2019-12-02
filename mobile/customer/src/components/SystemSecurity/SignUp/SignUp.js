@@ -297,13 +297,7 @@ export default class SignUp extends ValidationComponent{
                         // }
                     });
                   // console.log("BasicInfo res = ",res);
-                  if(this.props.originPage === "header")
-                  {
-                    this.props.history.push("/");
-                    window.location.reload();
-                  }else{
-                    this.props.redirectToBasicInfo(res.data.user_id);
-                  }
+                  
                 }
 
         })

@@ -211,9 +211,9 @@ export default StyleSheet.create({
   },
    item: {
     backgroundColor:"#fff", 
-    padding: 10,
-    fontSize: 18,
-    height: 44,
+    padding: 6,
+    fontSize: 11,
+    // height: 44,
     width:'100%',
     // marginLeft:20,
   },
@@ -221,6 +221,9 @@ export default StyleSheet.create({
     marginTop:45,
     position: 'absolute', 
     zIndex: 2,
+    borderWidth:0.5,
+    borderColor:"#eee",
+    backgroundColor:"#fff",
   },
   marginTop20:{
     marginTop:20

@@ -27,6 +27,7 @@ import CheckBox                             from 'react-native-check-box'
 import Video                                from 'react-native-video';
 import MapView                              from 'react-native-maps';
 import Carousel                             from 'react-native-snap-carousel';
+import Loading                    from '../../layouts/Loading/Loading.js'
 
 const window = Dimensions.get('window');
   var mapStyle = []
@@ -57,6 +58,7 @@ navigateScreen=(route)=>{
         uid:"",
         token:"",
         property_id : "",
+        isLoading :false,
     };
   }
 
@@ -86,12 +88,14 @@ navigateScreen=(route)=>{
         this.setState({uid:uid})
         this.setState({token:token})
         this.setState({property_id:propertyId})
+        this.setState({isLoading:true})
           axios
           .get('/api/properties/'+propertyId)
           .then( (res) =>{
               console.log("get propertydea=============== = ",res.data);
               this.setState({
                 propertyProfile : res.data,
+                isLoading : false,
               },()=>{
                  AsyncStorage.removeItem('propertyId');
 
@@ -281,7 +285,7 @@ navigateScreen=(route)=>{
     return (
       <React.Fragment>      
         <HeaderBar showBackBtn={true}  navigation={navigation}/>
-        {propertyProfile ?  
+        {this.state.isLoading === false && propertyProfile?
         <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
           <View style={{width:'100%'}}>
             <View style={{width:'100%',backgroundColor:'#fff'}}>
@@ -910,7 +914,7 @@ navigateScreen=(route)=>{
           </View>
         </ScrollView>
         :
-        null
+        <Loading /> 
       }
 
       

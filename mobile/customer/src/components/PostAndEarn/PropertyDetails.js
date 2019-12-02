@@ -1241,11 +1241,11 @@ submitFun(){
                         <Text style={[styles.inputTextSmall,]}>Fully furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={{paddingHorizontal:0,marginLeft:10}} value={'Semi furnished'}>
+                      <RadioButton style={Platform.OS==='ios' ? {paddingHorizontal:0,marginLeft:5}:{paddingHorizontal:0,marginLeft:10}} value={'Semi furnished'}>
                         <Text style={styles.inputTextSmall}>Semi furnished</Text>
                       </RadioButton>
 
-                      <RadioButton style={Platform.OS==='ios' ? {paddingHorizontal:0,marginLeft:10} : {paddingHorizontal:0,marginLeft:0}} value={'Unfurnished'}>
+                      <RadioButton style={Platform.OS==='ios' ? {paddingHorizontal:0,marginLeft:5} : {paddingHorizontal:0,marginLeft:0}} value={'Unfurnished'}>
                         <Text style={styles.inputTextSmall}>Unfurnished</Text>
                       </RadioButton>
                     </RadioGroup>
