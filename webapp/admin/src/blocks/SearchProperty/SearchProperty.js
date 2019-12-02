@@ -219,60 +219,81 @@ class SearchProperty extends Component {
 		this.setState({
 			location :location
 		},()=>{
-			if(this.state.location.length>=3)
-			{
-			axios({
-			      method: 'get',
-			      url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
-			    })				
-				.then((searchResults) => {
-					if(searchResults.data.length>0){
-						var cities = searchResults.data.map(a=>a.cityName);
-						cities = [...new Set(cities)];
+			if(this.state.location.length>=3){
+		      axios({
+		            method: 'get',
+		            url: 'http://locationapi.iassureit.com/api/societies/get/searchresults/' + this.state.location,
+		            // url: 'http://locationapi.iassureit.com/api/subareas/get/searchresults/' + this.state.location,
+		          })        
+		        .then((searchResults) => {
+		          console.log("searchResults",searchResults);
+		          if(searchResults.data.length>0){
+		            var cities = searchResults.data.map(a=>a.cityName);
+		            cities = [...new Set(cities)];
 
-						var areas = searchResults.data.map(a=>a.areaName);
-						areas = [...new Set(areas)];
+		            var areas = searchResults.data.map(a=>a.areaName);
+		            areas = [...new Set(areas)];
 
-						var subareaName = searchResults.data.map(a=>a.subareaName);
-						subareaName = [...new Set(subareaName)];
+		            var subareaName = searchResults.data.map(a=>a.subareaName);
+		            subareaName = [...new Set(subareaName)];
 
-						for(let i=0; i<cities.length; i++) {
-							for(let j=0; j<areas.length; j++) {
-								areas[j] = areas[j] + ', ' + cities[i];
-							}
-						}
+		            var societyName = searchResults.data.map(a=>a.societyName);
+		            societyName = [...new Set(societyName)];
+		            console.log("1  societyName  = ",societyName);
 
-						for(let i=0; i<cities.length; i++) {
-							for(let j=0; j<subareaName.length; j++) {
-								subareaName[j] = subareaName[j] + ', ' + cities[i];
-							}
-						}
+		            for(let i=0; i<cities.length; i++) {
+		              for(let j=0; j<areas.length; j++) {
+		                areas[j] = areas[j] + ', ' + cities[i];
+		              }
+		            }         
+		            console.log("areas = ",areas);
 
-						var citiesAreas = cities.concat(areas);
-						var citiesAreassubAreas = citiesAreas.concat(subareaName);
+		            for(let i=0; i<searchResults.data.length; i++) {
+		              subareaName[i] = searchResults.data[i].subareaName + ', ' + 
+		                       searchResults.data[i].areaName + ', ' + 
+		                       searchResults.data[i].cityName;
+		            } 
+		            var uniqueSubareaName = subareaName.unique();
+
+		            console.log("uniqueSubareaName = ",uniqueSubareaName);
 
 
-						this.setState({
-							locSearchResults : citiesAreassubAreas,
-						});					
+		            for(let i=0; i<searchResults.data.length; i++) {
+		              societyName[i] = searchResults.data[i].societyName + ', ' + 
+		                       searchResults.data[i].subareaName + ', ' + 
+		                       searchResults.data[i].areaName + ', ' + 
+		                       searchResults.data[i].cityName;
+		            }
+		            var uniqueSocietyName = societyName.unique();
+		            console.log("uniqueSocietyName = ",uniqueSocietyName);
 
-					}
-				})
+
+
+		            var citiesAreas = cities.concat(areas);
+		            var citiesAreasSubAreas = citiesAreas.concat(uniqueSubareaName);
+		            var citiesAreasSubAreasSocieties = citiesAreasSubAreas.concat(uniqueSocietyName);
+
+
+		            this.setState({
+		              locSearchResults : citiesAreasSubAreasSocieties,
+		            });         
+
+		          }
+		        })
 		        .catch((error)=>{
-				                        console.log("error = ",error);
-				                        if(error.message === "Request failed with status code 401")
-				                        {
-				                             swal("Your session is expired! Please login again.","", "error");
-											localStorage.removeItem("uid");
-											localStorage.removeItem("token");
-				                             this.props.history.push("/");
-				                        }
-				                });
-			}
+		              console.log("error = ",error);
+		              if(error.message === "Request failed with status code 401")
+		              {
+		                  swal("Your session is expired! Please login again.","", "error");
+		                  localStorage.removeItem("uid");
+		                  localStorage.removeItem("token");
+		                  this.props.history.push("/");
+		              }
+		        });
+		      }
 		})
-		
-
 	}
+	
 	render() {
 		return (
 			<div className="col-lg-12 col-md-12 col-xs-12 col-sm-12 noPad">
