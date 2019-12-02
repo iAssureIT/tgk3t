@@ -3,6 +3,7 @@ import axios 					from 'axios';
 import {withRouter}    			from 'react-router-dom';
 import swal                     from 'sweetalert';
 import { connect } 				from 'react-redux';
+import Loader 					from 'react-loader-spinner'
 
 const formValid = formerrors=>{
   console.log("formerrors",formerrors);
@@ -25,6 +26,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				 name : "",
 				 email : "",
 				 city : "",
+				 isLoading:false,
 				formerrors :{
 					clientName : " ",
 					clientEmail : " ",
@@ -50,7 +52,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			"status"     	: 'Active',
 			"roles"       	: 'Client',
 		};
-
+		this.setState({isLoading:true})
 	
 		console.log("WebSignupForm==",formValues);
 		if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){
@@ -65,7 +67,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 						    "toUserId"		: formValues.userID,
 						    "variables"		: {
 						    	"userName"		: this.state.name,
-						    	"userMobile"	: this.refs.mobile.value,
+						    	"userMobile"	: formValues.mobileNumber,
 						    }
 						}
 						localStorage.setItem('userName',formValues.fullName)
@@ -76,7 +78,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 						    "toUserId"		: "admin",
 						    "variables"		: {
 						    	"userName"		: this.state.name,
-						    	"userMobile"	: this.refs.mobile.value,
+						    	"userMobile"	: formValues.mobileNumber,
 						    	"userEmail" 	: this.state.email,
 								"userCity"		: this.state.city,
 						    }
@@ -95,35 +97,24 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 									{
 										this.props.history.push("/");
 										window.location.reload();
+										this.setState({isLoading:false})
 									}else{
 										this.props.redirectToBasicInfo(res.data.user_id);
+										this.setState({isLoading:false})
 									}					
 							})
 							.catch((error)=>{
 				                        console.log("error = ",error);
 				                        if(error.message === "Request failed with status code 401")
 				                        {
-				       //                       swal("Your session is expired! Please login again.","", "error");
-											// localStorage.removeItem("uid");
-											// localStorage.removeItem("token");
-				       //                       this.props.history.push("/");
+				                             swal("Your session is expired! Please login again.","", "error");
+											localStorage.removeItem("uid");
+											localStorage.removeItem("token");
+				                             this.props.history.push("/");
 				                        }
 				            });					
 						})
 						.catch((error)=>{
-				                        console.log("error = ",error);
-				                        if(error.message === "Request failed with status code 401")
-				                        {
-				       //                       swal("Your session is expired! Please login again.","", "error");
-											// localStorage.removeItem("uid");
-											// localStorage.removeItem("token");
-				       //                       this.props.history.push("/");
-				                        }
-				                    });
-						
-					}
-				})
-				.catch((error)=>{
 				                        console.log("error = ",error);
 				                        if(error.message === "Request failed with status code 401")
 				                        {
@@ -133,6 +124,19 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				                             this.props.history.push("/");
 				                        }
 				                    });
+						
+					}
+				})
+				.catch((error)=>{
+	                        console.log("error = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+								localStorage.removeItem("uid");
+								localStorage.removeItem("token");
+	                            this.props.history.push("/");
+	                        }
+	                    });
 			}
 		}else{
 			swal("Please enter mandatory fields", "", "warning");
@@ -171,7 +175,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 		}
 	render() {
    	 const {formerrors} = this.state;
-				
+				console.log("this.state.isLoading",this.state.isLoading);
 		return (
 			<div >
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12  ">
@@ -246,26 +250,53 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				 		</div>
 						<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margTop hidden-xs hidden-sm">
 						  	<div className="form-group col-lg-12">
-						       {this.props.originPage === "header" ?
-						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn" onClick={this.submit.bind(this)}> Save &rArr;</button>
+						       {
+						       	 this.state.isLoading === false ?
+						       	 	this.props.originPage === "header" ?
+						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}> Save &rArr;</button>
 						       		:
-						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
+						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
+					  			:
+				  				<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30">
+									<div className="col-lg-12 text-center" style={{paddingTop:3}}>
+										<Loader
+									         type="Oval"
+									         color="#ffffff"
+									         height="15"
+									         width="15"
+									      />
+									 </div>
+				  				</button>
 					  			}
 					  		</div>
 						</div>
 						{/*resp*/}
 							<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 margTop hidden-lg hidden-md">
 						  	<div className="form-group col-lg-12">
-						       {this.props.originPage === "header" ?
+						       {
+						       	 this.state.isLoading === false ?
+						       	 	this.props.originPage === "header" ?
 						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}> Save &rArr;</button>
 						       		:
 						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
+					  			:
+				  				<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" title="Loading...">
+									<div className="col-lg-12 text-center" style={{paddingTop:3}}>
+										<Loader
+									         type="Oval"
+									         color="#ffffff"
+									         height="15"
+									         width="15"
+									      />
+									 </div>
+				  				</button>
 					  			}
 					  		</div>
 						</div>
 						{/*end*/}
 				</form>
 			</div>
+			
 		</div>	
 		);
 	}
