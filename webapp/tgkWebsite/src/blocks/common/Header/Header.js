@@ -75,8 +75,8 @@ class Header extends Component {
 	}
 	openMenu1(event){
 		
-	 console.log("Inopen")
-		$(".showClass1").toggleClass('hideClass');
+	 console.log("Inopen1")
+		$(".showClass1").toggleClass('hideClass1');
 
 	}
 	handleContact(event){
@@ -118,10 +118,10 @@ class Header extends Component {
 					<a href="/"><img alt=""  src="/images/new/logo.png" className="hImg pull-right" title="Go to Home Page"/></a>
 				</div>
 				<div className="col-lg-4 col-md-4 col-sm-12 col-xs-8 pull-right headerMenu hidden-xs hidden-sm">
-					{/*<nav className="navbar  col-lg-12 col-xs-12">
+					<nav className="navbar  col-lg-12 col-xs-12">
 										    <ul className="nav navbar-nav customNav col-lg-12 col-sm-12">
 											<button className="col-lg-4 col-lg-offset-5 col-xs-6 col-xs-offset-3 btn postAndEarnBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postLogin.bind(this)}>Post & Earn</button>
-										    	<span className="headerName col-md-6">{localStorage.getItem("token") ? "Hello " +localStorage.getItem('userName') : "Hello Guest" }</span>	 
+										    	{/*<span className="headerName col-md-6">{localStorage.getItem("token") ? "Hello " +localStorage.getItem('userName') : "Hello Guest" }</span>	 */}
 										    		 
 										      {localStorage.getItem("token") ? (
 										      	<li className="dropdown col-lg-2 col-xs-3 pull-right ">
@@ -155,44 +155,43 @@ class Header extends Component {
 										      	)
 										  	}
 										    </ul>
-										</nav>*/}
-					<ul className=" col-lg-12 col-sm-12 ">
-							<button className="col-lg-4 col-lg-offset-5 col-xs-7 btn postAndEarnBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postLogin.bind(this)}>Post & Earn</button>
-						    		 
-						      {localStorage.getItem("token") ? (
-						      	<li className=" col-lg-6 col-xs-10 noPad showClass1">
-							        <ul className="loginList col-xs-11 col-lg-10">
-						    			<li className="" style={{"paddingLeft":"30px","listStyle":"none","color":"#337ab7"}}>{ "Hello " +localStorage.getItem('userName')} </li>	 
-							          	<hr className="hrLine1 col-xs-11"/>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/MyPostedProperties">My Listings</Link></li>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/MyInterestedProperties">My Interests</Link></li>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/AboutUs">About Us</Link></li>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.logout.bind(this)} to="/">Logout</Link></li>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.handleContact1.bind(this)} >Contact Us</Link></li>
-							        	{/*<li onClick={this.handleContact.bind(this)} style={{"paddingLeft":"30px","fontSize":"12px","cursor":"pointer"}}>Contact Us</li>*/}
-							        </ul>
-						      	</li>
-								) 
-						      : 
-						      	(
-						      	<li className=" col-lg-2 col-xs-10 noPad showClass">
-							        <ul className=" col-xs-11">
-						    			<li className="" style={{"paddingLeft":"30px","listStyle":"none","color":"#337ab7"}}>Hello Guest</li>	 
-							          	<hr className="hrLine1 col-xs-11"/>
-							          	<li style={{"listStyle":"none"}}><a className="" data-toggle="dropdown" href="#Profile"  data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}>Login</a></li>
-							          	<li style={{"listStyle":"none"}}><Link to="/AboutUs">About Us</Link></li>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.handleContact1.bind(this)} >Contact Us</Link></li>
-							        	
-							        </ul>
-						      	</li>
-						      	)
-						  	}
-						</ul>
-						<div id="nav-icon2" onClick={this.openMenu1.bind(this)}>
-						  <span></span>
-						  <span></span>
-						  <span></span>
-						</div>	
+										</nav>
+					{/*<ul className=" col-lg-12 col-sm-12 ">
+												<button className="col-lg-4 col-lg-offset-5 col-xs-7 btn postAndEarnBtn" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postLogin.bind(this)}>Post & Earn</button>
+											    		 
+											      {localStorage.getItem("token") ? (
+											      	<li className=" col-lg-6 col-xs-10 noPad showClass1">
+												        <ul className="loginList col-xs-11 col-lg-10">
+											    			<li className="" style={{"paddingLeft":"30px","listStyle":"none","color":"#337ab7"}}>{ "Hello " +localStorage.getItem('userName')} </li>	 
+												          	<hr className="hrLine1 col-xs-11"/>
+												          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/MyPostedProperties">My Listings</Link></li>
+												          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/MyInterestedProperties">My Interests</Link></li>
+												          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/AboutUs">About Us</Link></li>
+												          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.logout.bind(this)} to="/">Logout</Link></li>
+												          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.handleContact1.bind(this)} >Contact Us</Link></li>
+												        </ul>
+											      	</li>
+													) 
+											      : 
+											      	(
+											      	<li className=" col-lg-2 col-xs-10 noPad showClass1">
+												        <ul className=" col-xs-11">
+											    			<li className="" style={{"paddingLeft":"30px","listStyle":"none","color":"#337ab7"}}>Hello Guest</li>	 
+												          	<hr className="hrLine1 col-xs-11"/>
+												          	<li style={{"listStyle":"none"}}><a className="" data-toggle="dropdown" href="#Profile"  data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}>Login</a></li>
+												          	<li style={{"listStyle":"none"}}><Link to="/AboutUs">About Us</Link></li>
+												          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.handleContact1.bind(this)} >Contact Us</Link></li>
+												        	
+												        </ul>
+											      	</li>
+											      	)
+											  	}
+											</ul>
+											<div id="nav-icon2" onClick={this.openMenu1.bind(this)}>
+											  <span></span>
+											  <span></span>
+											  <span></span>
+											</div>	*/}
 				</div>
 				{/*=======================resp===============*/}
 					<div className="col-lg-4 col-md-4 col-sm-12 col-xs-8 pull-right headerMenu hidden-lg hidden-md ">
