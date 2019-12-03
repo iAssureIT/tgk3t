@@ -134,6 +134,60 @@ import './MyInterestedProperties.css';
 			this.props.login_mobileNum(originPage);
 		}
     }
+    interestBtn(event){
+    	event.preventDefault()
+    	var deleteValues = {
+          "property_id": event.currentTarget.id,
+          "buyer_id": localStorage.getItem('uid')
+        }
+      console.log("deleteValues",deleteValues);
+
+      axios
+        .delete('/api/interestedProperties/'+localStorage.getItem('uid')+"/"+event.currentTarget.id)
+        .then(
+          (res)=>{
+              console.log("deleted ",res); 
+              // var rangeValues = {
+              //   propertyType    : this.state.propertyType,
+              //   transactionType : this.state.transactionType,
+              //   startRange      : 0,
+              //   limitRange      : 6,
+              //   listing         :true,
+              //   uid : localStorage.getItem("uid")
+              // }
+
+              // console.log("rangeValues = ", rangeValues);
+              axios
+			    .get('/api/interestedProperties/list/'+this.state.uid)
+			    .then(
+			      (res)=>{
+			        console.log(res);
+			        const postsdata = res.data;
+			        console.log("postsdata",res);
+		      			// var city = postsdata[2].propertyLocation.city.split('|')[0];
+
+			        this.setState({
+			          myProperties : postsdata,
+			          // propertyCity :city,
+			        });
+	   		 console.log("PropertyDetails",postsdata); 
+
+	      }
+	    )
+          }
+        )
+       .catch((error)=>{
+                        console.log("error = ",error);
+                        if(error.message === "Request failed with status code 401")
+                        {
+                             swal("Your session is expired! Please login again.","", "error");
+                            localStorage.removeItem("uid");
+                            localStorage.removeItem("token");
+                             this.props.history.push("/");
+                        }
+        });
+
+    }
 
 	render() {
 		let header;
@@ -157,9 +211,9 @@ import './MyInterestedProperties.css';
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPostProp noPad">
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 newPost">
-				 	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
-                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postNewProperty.bind(this)}> Post New Property </button> 
-                	</div>
+				 	{/*<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
+				 	                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postNewProperty.bind(this)}> Post New Property </button> 
+				 	                	</div>*/}
                 </div>	
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					<h3 className="text-center propertyHaedText">My Interested Properties</h3>
@@ -178,7 +232,12 @@ import './MyInterestedProperties.css';
 											:
 											<img alt=""  className="propertyImgDiv" src="/images/loading_img.jpg" />
 										}
+										<div className="col-lg-6 col-md-6 col-sm-5 col-xs-5 noPad interestShown1"  id={myProperty._id} onClick={this.interestBtn.bind(this)}>
+	                                      <i className="fa fa-thumbs-up pr8"  aria-hidden="true" ></i>
+	                                      <span className="intText"> Interest Shown </span>	
+	                                    </div>
 									</div>
+									
 								<div className="col-lg-9 col-md-9 col-sm-12 col-xs-12 noPad">				
 									<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPropertiesInternal">				
 										<div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 propertySubText1">				

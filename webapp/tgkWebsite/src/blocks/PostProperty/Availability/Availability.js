@@ -117,6 +117,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 						console.log("response of user in availability userMobile= ",response);
 						this.setState({
 							userMobile : response.data.mobileNumber,
+						},()=>{
+							console.log("this.state.userMobile=====",this.state.userMobile)
 						});
 
 					})
@@ -198,7 +200,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					mobNo = this.state.contactPersonMobile;
 				}
 			
-				// console.log("mob no",mobNo);
+				console.log("mob no if",mobNo);
 
 					// console.log("diff data");
 					var formValues = {
@@ -289,7 +291,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 				}else{
 					mobNo = this.state.contactPersonMobile;
 				}
-				// console.log("mob no",mobNo);
+				console.log("mob no else",mobNo);
 				
 
 				const formValues = {
@@ -376,6 +378,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
 	}
 	handleAvailability(event){
+		console.log("fromTime==",this.state.fromTime)
+		console.log("toTime==",this.state.toTime)
+
 		event.preventDefault();
 		const availability = this.state.available;
 
@@ -1003,13 +1008,14 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                       </div>
                       <div className="containerC">
                         <label htmlFor="" id="logoImage" className="pull-right custFaTimes1" title="Delete Video" onClick={this.deleteSingleVideoDirect.bind(this)}>X</label>
-                       {	console.log("this.state.singleVideo -----------------",this.state.singleVideo) }
+                       {	/*console.log("this.state.singleVideo -----------------",this.state.singleVideo) */}
 
-	                   {   
-	                       	<video width="100%" height="100%" controls>
-	                       			{console.log("here video link of map",this.state.singleVideo)}
-	                                <source src={this.state.singleVideo} type="video/mp4" className="col-lg-12 noPad"/>
-	                        </video>
+	                   {   <div className="videoBox">
+		                       	<video width="100%" height="100%" controls>
+		                       			{/*console.log("here video link of map",this.state.singleVideo)*/}
+		                                <source src={this.state.singleVideo} type="video/mp4" className="col-lg-12 noPad"/>
+		                        </video>
+                    		</div>
                     	}
                         <div className="middleC">
                         </div>

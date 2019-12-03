@@ -83,8 +83,8 @@ import './PropertyDetails.css';
 												floor 			: response.data.propertyDetails.floor,
 												totalfloor 		: response.data.propertyDetails.totalFloor,
 												prevAmenities 	: response.data.propertyDetails.Amenities,
-												superAreaUnit 	: response.data.propertyDetails.superAreaUnit,
-												builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit,
+												superAreaUnit 	: response.data.propertyDetails.superAreaUnit ? response.data.propertyDetails.superAreaUnit : "Sq Ft",
+												builtupAreaUnit : response.data.propertyDetails.builtupAreaUnit ? response.data.propertyDetails.builtupAreaUnit : "Sq Ft",
 												prevCharges 	: response.data.propertyDetails.furnishedOptions,
 												workStation 	: response.data.propertyDetails.workStation,
 												furnishPantry	: response.data.propertyDetails.furnishPantry,
@@ -190,26 +190,26 @@ import './PropertyDetails.css';
 
 		    // console.log("update status in did mount",this.props.updateStatus);
 		// if(this.props.updateStatus === false){
-			axios
-			.get('/api/masteramenities/list')
-			.then(
-				(res)=>{
-					// console.log('res postdata', res);
-					const postsdata = res.data;
-					// console.log('postsdata of amenities',postsdata);
-					this.setState({
-						allAmenities : postsdata,
-					});
-				}
-			)
-			.catch((error)=>{
-                        console.log("error = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             swal("Your session is expired! Please login again.","", "error");
-                             this.props.history.push("/");
-                        }
-            });
+			// axios
+			// .get('/api/masteramenities/list')
+			// .then(
+			// 	(res)=>{
+			// 		// console.log('res postdata', res);
+			// 		const postsdata = res.data;
+			// 		// console.log('postsdata of amenities',postsdata);
+			// 		this.setState({
+			// 			allAmenities : postsdata,
+			// 		});
+			// 	}
+			// )
+			// .catch((error)=>{
+   //                      console.log("error = ",error);
+   //                      if(error.message === "Request failed with status code 401")
+   //                      {
+   //                           swal("Your session is expired! Please login again.","", "error");
+   //                           this.props.history.push("/");
+   //                      }
+   //          });
 			// console.log("this.props.updateStatus",this.props.updateStatus);
 			// console.log("this.props.property_id",this.props.property_id);
 			// console.log("all amenities for admin",this.state.allAmenities);

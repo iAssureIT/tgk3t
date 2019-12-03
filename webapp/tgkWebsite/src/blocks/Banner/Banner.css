@@ -314,14 +314,14 @@ color: #fff;
   color: #fff;
   font-weight: bold;
   position: relative;
-  top: -18px;
+  top: -9px;
 }
 .discount1{
   font-size: 61px;
   color: #fff;
   font-weight: bold;
   position: relative;
-  top: -25px;
+  top: -22px;
   left: -24px;
 }
 
@@ -330,6 +330,14 @@ color: #fff;
   color: #fff;
   position: relative;
   top: 11px;
+  margin-bottom: 15px;
+}
+.smallText1{
+  font-size: 15px;
+  color: #fff;
+  position: relative;
+  top: 18px;
+  margin-bottom: 21px;
 }
 
 .rightBlock{

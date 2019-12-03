@@ -945,7 +945,7 @@ class SearchResults extends Component {
 								    <ul className="dropdown-menu col-lg-12 col-md-12 col-xs-12 col-sm-12 pad mt36">
 							      	{
 										<div className="col-lg-12 noPad">
-										  	<div className="col-lg-12">
+										  	<div className="col-lg-12 noPad">
 												<h5>{this.state.propertyType}</h5>
 												{
 													this.state.propertySubTypeList.map((data,index)=>{
@@ -1106,7 +1106,7 @@ class SearchResults extends Component {
 								    </ul>
 								</div>
 							</div>
-							  	<button className="btn bgWhite col-lg-1 col-xs-6" title="Reset" onClick={this.reset.bind(this)}><span className="glyphicon glyphicon-repeat"></span></button>
+							  	<button className="btn bgWhite col-lg-1 col-xs-6" title="Reset Filters" onClick={this.reset.bind(this)}><span className="glyphicon glyphicon-repeat"></span></button>
 						</div>
 					</div>
 				</form>

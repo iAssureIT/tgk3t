@@ -326,10 +326,13 @@ width: 100%;
 .containerC:hover .middleC {
   opacity: 1;
 }
+.videoBox{
+  width: 218px;
+}
 
 .custFaTimes1 {
     position: absolute;
-    margin-left: 89%;
+    margin-left: 15%;
     margin-top: 11%;
     z-index: 1;
     font-size: 18px;
@@ -399,4 +402,7 @@ width: 100%;
 .imageContaner img{
       height: 100%;
     width: 100%;
+}
+.rc-time-picker-clear{
+  top: 7px !important;
 }

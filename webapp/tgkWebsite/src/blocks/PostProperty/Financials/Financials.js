@@ -68,7 +68,7 @@ class Financials extends Component{
                description        : response.data.financial.description,
                maintenanceCharges : response.data.financial.maintenanceCharges,
                maintenancePer     : response.data.financial.maintenancePer ? response.data.financial.maintenancePer : "Month",
-               measurementUnit    : response.data.financial.measurementUnit ,
+               measurementUnit    : response.data.financial.measurementUnit ? response.data.financial.measurementUnit: "Sq Ft",
                availableFrom      : response.data.financial.availableFrom,
            },()=>{
                     });
@@ -453,7 +453,7 @@ totalInclude(event){
       this.setState({
         includeCharges : includeCharges,
       },()=>{
-        console.log("here includeCharges in function check ", this.state.includeCharges);
+        // console.log("here includeCharges in function check ", this.state.includeCharges);
       });
 
         
@@ -471,7 +471,7 @@ totalInclude(event){
         this.setState({
           includeCharges : includeCharges,
         },()=>{
-          console.log("here includeCharges in function uncheck ", this.state.includeCharges);
+          // console.log("here includeCharges in function uncheck ", this.state.includeCharges);
 
         });
 

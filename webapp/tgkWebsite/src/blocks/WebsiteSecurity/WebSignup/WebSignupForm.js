@@ -59,7 +59,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			if(formValid(this.state.formerrors)){
 			axios
 				.patch('/api/usersotp/signup',formValues)
-				.then( (res) =>{
+				.then( (res) =>{/*
 					console.log("res",res)
 					if(res.data.message === "USER-UPDATED"){
 						var sendDataToUser = {
@@ -126,7 +126,21 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				                    });
 						
 					}
-				})
+				*/
+				/*========================temp code========*/
+				localStorage.setItem('userName',formValues.fullName)
+
+				if(this.props.originPage === "header")
+					{
+						this.props.history.push("/");
+						window.location.reload();
+						this.setState({isLoading:false})
+					}else{
+						this.props.redirectToBasicInfo(res.data.user_id);
+						this.setState({isLoading:false})
+					}	
+					/*===================end======================*/	
+			})
 				.catch((error)=>{
 	                        console.log("error = ",error);
 	                        if(error.message === "Request failed with status code 401")
@@ -158,7 +172,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 		       break;
 
 		    case 'clientEmail' : 
-		    	formerrors.clientEmail = emailRegex.test(value)? '' : "Please enter valid mail address";
+		    	formerrors.clientEmail = emailRegex.test(value)? '' : "Please enter a valid email address";
 		     	break;
 
 		    case 'clientCity' : 
@@ -174,6 +188,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			} );
 		}
 	render() {
+		axios.defaults.headers.common['Authorization'] = 'Bearer '+ localStorage.getItem("token");
    	 const {formerrors} = this.state;
 				console.log("this.state.isLoading",this.state.isLoading);
 		return (
@@ -192,7 +207,6 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 										      	<div className="input-group-addon inputIcon">
 										      		<select ref="countryCode">
 										      			<option value="+91">+91</option>
-								    					<option value="+93">+93</option>
 										      		</select>
 							                    </div>
 										    	<input type="tel" className="form-control" ref="mobile" id="" placeholder="Mobile" value={this.props.mobile} disabled />
@@ -205,7 +219,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 								      	<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-user iconClr" aria-hidden="true"></i>
 					                    </div>
-								    	<input type="text" className="form-control" ref="name" name="name"  value={this.state.name} onChange={this.handleChange.bind(this)} id="" placeholder="Name" data-text="clientName"/>
+								    	<input type="text" className="form-control" ref="name" name="name"  value={this.state.name} onChange={this.handleChange.bind(this)} id="" placeholder="Name*" data-text="clientName"/>
 								  	</div>
 								  	{this.state.formerrors.clientName &&(
 				                          <span className="text-danger">{formerrors.clientName}</span> 
@@ -218,7 +232,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 								      	<div className="input-group-addon inputIcon">
 					                     	<i className="fa fa-envelope iconClr"></i>
 					                    </div>
-								    	<input type="email" className="form-control" ref="email" name="email" value={this.state.email} onChange={this.handleChange.bind(this)}  id="" placeholder="Email" data-text="clientEmail"/>
+								    	<input type="email" className="form-control" ref="email" name="email" value={this.state.email} onChange={this.handleChange.bind(this)}  id="" placeholder="Email*" data-text="clientEmail"/>
 								  	</div>
 								  	{this.state.formerrors.clientEmail &&(
 				                          <span className="text-danger">{formerrors.clientEmail}</span> 
@@ -231,7 +245,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 									      	<div className="input-group-addon inputIcon">
 						                     	<i className="fa fa-map-marker iconClr"></i>
 						                    </div>
-									    	<input type="text" className="form-control" ref="city" name="city" value={this.state.city} onChange={this.handleChange.bind(this)}  id="" placeholder="City" data-text="clientCity" />
+									    	<input type="text" className="form-control" ref="city" name="city" value={this.state.city} onChange={this.handleChange.bind(this)}  id="" placeholder="City*" data-text="clientCity" />
 									  	</div>
 									  	{this.state.formerrors.clientCity &&(
 				                          <span className="text-danger">{formerrors.clientCity}</span> 
@@ -253,7 +267,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 						       {
 						       	 this.state.isLoading === false ?
 						       	 	this.props.originPage === "header" ?
-						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}> Save &rArr;</button>
+						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}> Sign Up &rArr;</button>
 						       		:
 						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
 					  			:
@@ -276,7 +290,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 						       {
 						       	 this.state.isLoading === false ?
 						       	 	this.props.originPage === "header" ?
-						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}> Save &rArr;</button>
+						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}> Sign Up &rArr;</button>
 						       		:
 						       		<button type="Submit" className="btn bg-primary pull-right nxt_btn mr30" onClick={this.submit.bind(this)}>Post & Earn &rArr;</button>
 					  			:

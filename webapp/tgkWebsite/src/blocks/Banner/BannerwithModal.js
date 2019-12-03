@@ -272,7 +272,7 @@ class BannerwithModal extends Component {
 						</div>
 						<div className="col-lg-3 ownerBox noPad">
 							<div className="col-lg-12 noPad">
-								<h1 className="discount col-lg-12 row"><h5 className="smallText">Upto</h5>50%</h1>
+								<h1 className="discount col-lg-12 row"><div className="smallText">Upto</div>50%</h1>
 							</div>
 							
 						</div>
@@ -294,7 +294,7 @@ class BannerwithModal extends Component {
 							</div>
 							<div className="col-lg-3 col-xs-3 ownerBox1 noPad">
 								<div className="col-lg-12 noPad">
-									<h1 className="discount1 col-lg-12 row"><h5 className="smallText">Upto</h5>50%</h1>
+									<h1 className="discount1 col-lg-12 row"><div className="smallText1">Upto</div>50%</h1>
 								</div>
 								
 							</div>

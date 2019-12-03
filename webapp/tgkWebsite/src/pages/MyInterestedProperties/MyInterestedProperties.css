@@ -2,5 +2,18 @@
 	background-color: #044890 !important;
 	height: 100px;
 }
-
+.interestShown1{
+	z-index: 2;
+    position: absolute;
+    top: 102px;
+    left: 46%;
+    height: 36px;
+    /* width: 40%; */
+    background-color: #ffa51f;
+    border-radius: 4px;
+    text-align: center;
+    color: #3944BC;
+    padding-top: 9px;
+    cursor: pointer;
+}
 

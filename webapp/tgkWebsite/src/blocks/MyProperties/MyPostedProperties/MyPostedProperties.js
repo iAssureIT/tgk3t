@@ -178,7 +178,7 @@ import './MyPostedProperties.css';
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 myPostProp noPad">
 				<div className="col-lg-12 col-md-12 col-sm-9 col-xs-9 newPost">
 				 	<div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 pull-right">
-                      <button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postNewProperty.bind(this)}> Post New Property </button> 
+                      {/*<button className="col-lg-6 pull-right btn btn-primary" data-toggle="modal" data-target="#postPropertyModal" onClick={this.postNewProperty.bind(this)}> Post New Property </button> */}
                 	</div>
                 </div>	
 				<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12">

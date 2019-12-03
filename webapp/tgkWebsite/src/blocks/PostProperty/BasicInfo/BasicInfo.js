@@ -251,7 +251,7 @@ class BasicInfo extends Component{
 				          googleDataKey : postCount,
 				        },()=>{
 				        	
-				        console.log("aaaaa.....",this.state.googleDataKey);
+				        // console.log("aaaaa.....",this.state.googleDataKey);
 				        });
 				      }
 				    )
@@ -828,10 +828,12 @@ class BasicInfo extends Component{
 		event.preventDefault();
 		var pincode =event.currentTarget.value;
 		this.setState({
-			pincode : pincode,
+			pincode    : pincode,
+			subAreaName: "",
+			societyName: ""
 		});
 
-		// console.log("pincode",pincode);
+		console.log("pincode 1",pincode);
 		var url = this.state.location_baseURL+'/api/areas/get/list/'+pincode;
 
 		axios({
@@ -927,7 +929,7 @@ class BasicInfo extends Component{
 		// console.log("transactionType=>",this.state.transactionType);
 		// console.log("type=>",this.state.type);
 		// console.log("fullAddress",this.state.fullAddress);
-		console.log("subAreaList",this.state.subAreaList)
+		// console.log("subAreaList",this.state.subAreaList)
 		var cityName = this.state.cityName;
 	    var areaName = this.state.areaName;
 	    var subareaName = this.state.subAreaName;
@@ -1024,7 +1026,7 @@ class BasicInfo extends Component{
 						        {this.state.type===true ?
 
 						         <div className="switch" onClick={this.handleToggle.bind(this)} >
-						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  checked />
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  defaultChecked />
 						            <label htmlFor="week" className="switch-label switch-label-off">SELL</label>
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month"  />
 						            <label htmlFor="month" className="switch-label switch-label-on">RENT</label>
@@ -1036,7 +1038,7 @@ class BasicInfo extends Component{
 						           <div className="switch" onClick={this.handleToggle.bind(this)} >
 						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"   />
 						            <label htmlFor="week" className="switch-label switch-label-off">SELL</label>
-						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" checked  />
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" defaultChecked  />
 						            <label htmlFor="month" className="switch-label switch-label-on">RENT</label>
 						            <span className="switch-selection" ></span>
 						          </div>

@@ -182,7 +182,7 @@ class MainFooter extends Component{
   render() {
     const {formerrors} = this.state;
     return (
-      <div className="container-fluid">
+      <div id="footer" className="container-fluid">
         <div className="row">
           <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerDiv noPad footerContent" >
               <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 footerContactUs" >

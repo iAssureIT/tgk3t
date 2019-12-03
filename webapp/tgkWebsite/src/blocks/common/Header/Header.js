@@ -125,7 +125,7 @@ class Header extends Component {
 										    		 
 										      {localStorage.getItem("token") ? (
 										      	<li className="dropdown col-lg-2 col-xs-3 pull-right ">
-										      		<div className="nav-icon dropdown-toggle col-lg-12" data-toggle="dropdown" >
+										      		<div className="nav-icon dropdown-toggle col-lg-12" data-toggle="dropdown" title="Click for Menu" style={{"cursor":"pointer"}} >
 													  <div></div>
 													</div>
 											        <ul className="dropdown-menu ">
@@ -207,7 +207,7 @@ class Header extends Component {
 							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/MyInterestedProperties">My Interests</Link></li>
 							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link to="/AboutUs">About Us</Link></li>
 							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.logout.bind(this)} to="/">Logout</Link></li>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.handleContact1.bind(this)} >Contact Us</Link></li>
+							          	<li className="col-xs-12" style={{"listStyle":"none"}}><a href="#footer">Contact Us</a></li>
 							        	{/*<li onClick={this.handleContact.bind(this)} style={{"paddingLeft":"30px","fontSize":"12px","cursor":"pointer"}}>Contact Us</li>*/}
 							        </ul>
 						      	</li>
@@ -220,7 +220,7 @@ class Header extends Component {
 							          	<hr className="hrLine1 col-xs-11"/>
 							          	<li style={{"listStyle":"none"}}><a className="" data-toggle="dropdown" href="#Profile"  data-toggle="modal" data-target="#postPropertyModal" onClick={this.login.bind(this)}>Login</a></li>
 							          	<li style={{"listStyle":"none"}}><Link to="/AboutUs">About Us</Link></li>
-							          	<li className="col-xs-12" style={{"listStyle":"none"}}><Link onClick={this.handleContact1.bind(this)} >Contact Us</Link></li>
+							          	<li className="col-xs-12" style={{"listStyle":"none"}}><a href="#footer">Contact Us</a></li>
 							        	
 							        </ul>
 						      	</li>

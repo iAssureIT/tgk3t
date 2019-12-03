@@ -86,11 +86,11 @@ class LoginOtp extends Component {
 						  		{this.props.fullName && this.props.fullName!==null &&this.props.fullName!=="" ?
 						  			<span>Welcome Back {this.props.fullName}</span>
 						  		:
-						  		   "Welcome"
+						  		   "Welcome Guest"
 						  		}
 						  		</div>	
 							  	<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 mt-10 headline">
-									We have sent you an OTP for verification, please enter your OTP to continue
+									We have sent you an OTP on your mobile for verification, please enter your OTP to continue
 								</div>
 								<div className="form-group mt-150">
 								    <label htmlFor="">Kindly Enter Your Verification Code </label>

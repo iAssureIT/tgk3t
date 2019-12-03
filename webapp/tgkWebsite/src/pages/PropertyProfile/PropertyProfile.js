@@ -20,6 +20,7 @@ import CongratsPage           from '../../blocks/PostProperty/CongratsPage/Congr
 import ImageUpload            from '../../blocks/PostProperty/ImageUpload/ImageUpload.js';
 import Loadable               from 'react-loadable';
 import Header                 from "../../blocks/common/Header/Header.js";
+import MainFooter             from '../../blocks/common/MainFooter/MainFooter.js';
 import swal                   from 'sweetalert';
 import GoogleMapReact         from 'google-map-react';
 import "./PropertyProfile.css";
@@ -391,9 +392,9 @@ class PropertyProfile extends Component{
                               <li className="col-lg-5 col-xs-6 noPad">Available From  </li> <span className="col-lg-7 col-xs-6 noPad"> : {this.state.pricing && this.state.pricing.availableFrom   ? <b>{this.state.pricing.availableFrom}   </b> : "-"}</span>
                             </ul>
                             <ul className="col-lg-5 col-md-5 col-sm-12 col-xs-12 bolder">   
-                              <li className="col-lg-6 col-xs-6 noPad">Facing          </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}          </b> : "-"}</span>
-                              <li className="col-lg-6 col-xs-6 noPad">Super Area      </li> <span className="col-lg-6  col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}       </b> : "-"}<b>{this.state.propertyFeatures && this.state.propertyFeatures.superAreaUnit       ? <b>{this.state.propertyFeatures.superAreaUnit}       </b> : "-"}</b></span>
-                              <li className="col-lg-6 col-xs-6 noPad">Built up Area   </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}     </b> : "-"}<b>{this.state.propertyFeatures && this.state.propertyFeatures.builtupAreaUnit       ? <b>{this.state.propertyFeatures.builtupAreaUnit}       </b> : "-"}</b></span>
+                              <li className="col-lg-6 col-xs-6 noPad">Facing          </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.facing          ? <b>{this.state.propertyFeatures.facing}</b> : "-"}</span>
+                              <li className="col-lg-6 col-xs-6 noPad">Super Area      </li> <span className="col-lg-6  col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.superArea       ? <b>{this.state.propertyFeatures.superArea}</b> : "-"} &nbsp;<b>{this.state.propertyFeatures && this.state.propertyFeatures.superAreaUnit ? <b>{this.state.propertyFeatures.superAreaUnit}</b> : "-"}</b></span>
+                              <li className="col-lg-6 col-xs-6 noPad">Built up Area   </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.builtupArea     ? <b>{this.state.propertyFeatures.builtupArea}</b> : "-"} &nbsp;<b>{this.state.propertyFeatures && this.state.propertyFeatures.builtupAreaUnit ? <b>{this.state.propertyFeatures.builtupAreaUnit}</b> : "-"}</b></span>
                               <li className="col-lg-6 col-xs-6 noPad">Floor           </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures.floor ? <b>{this.state.propertyFeatures.floor}</b> : "-"}</span>
                               <li className="col-lg-6 col-xs-6 noPad">Total Floors     </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures.totalFloor ? <b>{this.state.propertyFeatures.totalFloor}</b> : "-"}</span>
                               <li className="col-lg-6 col-xs-6 noPad">Age of Property </li> <span className="col-lg-6 col-xs-6 noPad"> : {this.state.propertyFeatures && this.state.propertyFeatures.ageofProperty   ? <b>{this.state.propertyFeatures.ageofProperty === "New" ? "0-1" : this.state.propertyFeatures.ageofProperty} Years  </b> : "-"}</span>
@@ -495,7 +496,7 @@ class PropertyProfile extends Component{
                                     </span>
                                     </div>
                                     }
-                                    <li className="col-lg-5 noPad">Maintainance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.maintenanceCharges)} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
+                                    <li className="col-lg-5 noPad">Maintenance Charges</li> <span className="col-lg-7 noPad"> : {this.state.pricing && this.state.pricing.maintenanceCharges ? <b><i className="fa fa-inr pr8" aria-hidden="true"></i>{this.convertNumberToRupees(this.state.pricing.maintenanceCharges)} </b> : <b>0</b>}/{this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>
                                     {/*<li className="col-lg-3 noPad">Maintainance Per    </li> <span className="col-lg-9 noPad"> : {this.state.pricing && this.state.pricing.maintenancePer     ? <b>{this.state.pricing.maintenancePer}     </b> : "-"}</span>*/}
                                   </ul>
                                 </div>
@@ -605,6 +606,7 @@ class PropertyProfile extends Component{
                   </div>
                 </div>
                </div>
+               <MainFooter />
             </div>              
           </div>
 
