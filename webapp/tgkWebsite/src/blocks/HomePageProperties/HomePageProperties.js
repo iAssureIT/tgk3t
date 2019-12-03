@@ -335,7 +335,7 @@ class HomePageProperties extends Component {
                                           property.isInterested
                                           ? 
                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
-                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <i className="fa fa-thumbs-up pr8"  aria-hidden="true" ></i>
                                               <span className="intText"> Interest Shown </span>
                                             </div>
                                           :
@@ -437,7 +437,7 @@ class HomePageProperties extends Component {
                                           property.isInterested
                                           ? 
                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
-                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <i className="fa fa-thumbs-up pr8"  aria-hidden="true" ></i>
                                               <span className="intText"> Interest Shown </span>
                                             </div>
                                           :
@@ -535,7 +535,7 @@ class HomePageProperties extends Component {
                                           property.isInterested
                                           ? 
                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
-                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <i className="fa fa-thumbs-up pr8"  aria-hidden="true" ></i>
                                               <span className="intText"> Interest Shown </span>
                                             </div>
                                           :
@@ -631,7 +631,7 @@ class HomePageProperties extends Component {
                                           property.isInterested
                                           ? 
                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
-                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <i className="fa fa-thumbs-up pr8"  aria-hidden="true" ></i>
                                               <span className="intText"> Interest Shown </span>
                                             </div>
                                           :
@@ -729,7 +729,7 @@ class HomePageProperties extends Component {
                                           property.isInterested
                                           ? 
                                             <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12 noPad interestShown"  id={property._id} onClick={this.interestBtn.bind(this)}>
-                                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+                                              <i className="fa fa-thumbs-up pr8"  aria-hidden="true" ></i>
                                               <span className="intText"> Interest Shown </span>
                                             </div>
                                           :

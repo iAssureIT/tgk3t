@@ -274,7 +274,7 @@ class propBox extends React.Component {
 	                          result.isInterested
 	                          ? 
 	                            <div className="col-lg-2 col-md-2 col-sm-12 col-xs-12 resInterestShown"  id={result._id} onClick={this.interestBtn.bind(this)}>
-	                              <i className="fa fa-heart pr8"  aria-hidden="true" ></i>
+	                              <i className="fa fa-thumbs-up pr8"  aria-hidden="true" ></i>
 	                              <span className="intText hidden-xs hidden-sm"> Interest Shown </span>
 	                              <span className="intText1 hidden-lg hidden-md"> Interest Shown </span>
 	                            </div>

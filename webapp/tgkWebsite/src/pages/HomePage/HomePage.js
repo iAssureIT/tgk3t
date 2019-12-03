@@ -32,6 +32,8 @@ import './HomePage.css';
 		
     $("#place1").addClass("mT30");
     $(".modal-backdrop").remove();
+	// window.scrollTo(0,0);
+
 
 	}
 	render() {
@@ -41,8 +43,6 @@ import './HomePage.css';
 				<Header />
 
 				<BannerwithModal inputData={this.inputData.bind(this)}/>
-
-					
 
 				<div className="tab-content">
 

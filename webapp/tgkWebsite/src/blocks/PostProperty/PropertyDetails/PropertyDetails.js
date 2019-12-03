@@ -25,8 +25,8 @@ import './PropertyDetails.css';
 				floor 			  : "",
 				totalfloor 		  : "",
 				Amenities     	  : [],
-				allAmenities  	  : "",
-				prevAmenities 	  : "",
+				allAmenities  	  : [],
+				prevAmenities 	  : [],
 				superAreaUnit 	  : "Sq Ft",
 				builtupAreaUnit   : "Sq Ft",
 				furnishedOptions    : [
@@ -141,7 +141,7 @@ import './PropertyDetails.css';
 						                    this.setState({
 						                      furnishedOptions : furnishedOptionsList,
 						                    },()=>{
-						                      console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
+						                      // console.log("here furnishedOptions in didmount after match result",this.state.furnishedOptions);
 
 						                    });
 						                    //close
@@ -188,15 +188,15 @@ import './PropertyDetails.css';
 		    }
 
 
-		    console.log("update status in did mount",this.props.updateStatus);
+		    // console.log("update status in did mount",this.props.updateStatus);
 		// if(this.props.updateStatus === false){
 			axios
 			.get('/api/masteramenities/list')
 			.then(
 				(res)=>{
-					console.log('res postdata', res);
+					// console.log('res postdata', res);
 					const postsdata = res.data;
-					console.log('postsdata of amenities',postsdata);
+					// console.log('postsdata of amenities',postsdata);
 					this.setState({
 						allAmenities : postsdata,
 					});
@@ -213,6 +213,8 @@ import './PropertyDetails.css';
 			// console.log("this.props.updateStatus",this.props.updateStatus);
 			// console.log("this.props.property_id",this.props.property_id);
 			// console.log("all amenities for admin",this.state.allAmenities);
+		  	// console.log("builtupAreaUnit===",this.state.builtupAreaUnit)
+		  	// console.log("superAreaUnit===",this.state.superAreaUnit)
 		  }
 		updateUser(event){
 			event.preventDefault();
@@ -229,14 +231,14 @@ import './PropertyDetails.css';
 								allAmenitiesDataList.push(item.amenity);
 							}
 						})
-						// console.log("this.state.allAmenities",this.state.allAmenities);
+						console.log("this.state.allAmenities",this.state.allAmenities);
 						// console.log("allAmenitiesDataList true",allAmenitiesDataList);
 						// console.log("here result amenity",ov.Amenities);
 			
 				var eq ="";
 				if(allAmenitiesDataList.length != ov.Amenities.length )
 				{eq = false;
-				 // console.log("equal not",eq);
+				 console.log("equal not",eq);
 				 
 				}else{
 					for (var i = 0; i < allAmenitiesDataList.length; i++)
@@ -246,9 +248,9 @@ import './PropertyDetails.css';
 							eq = true;	
 			            }
 			       	}
-			        // console.log("equal yes but same",eq);
+			        console.log("equal yes but same",eq);
 				}
-				// console.log("outside eq",eq);
+				console.log("outside eq",eq);
 
 
 				//----------------------------------------------------------------
@@ -628,9 +630,11 @@ import './PropertyDetails.css';
 				this.refs.totalfloor.value = "";
 				swal("Floor should not be greater than Total Floors", "", "warning");
 
+			}else{
+				this.setState({totalfloor : totalfloor});
 			}
 
-			this.setState({totalfloor : totalfloor});
+			
 
 	}
 

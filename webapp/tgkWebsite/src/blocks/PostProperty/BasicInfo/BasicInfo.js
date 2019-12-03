@@ -926,7 +926,7 @@ class BasicInfo extends Component{
 		// console.log("transactionType=>",this.state.transactionType);
 		// console.log("type=>",this.state.type);
 		// console.log("fullAddress",this.state.fullAddress);
-		// console.log("subAreaList",this.state.subAreaList)
+		console.log("subAreaList",this.state.subAreaList)
 		var cityName = this.state.cityName;
 	    var areaName = this.state.areaName;
 	    var subareaName = this.state.subAreaName;

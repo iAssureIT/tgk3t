@@ -129,7 +129,7 @@ class PropertyProfile extends Component{
         },()=>{
 
         });
-        // console.log("postsdata.propertyDetails",res.data);
+        console.log("postsdata.propertyDetails",res.data);
       }
     )
     .catch((error)=>{

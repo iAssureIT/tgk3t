@@ -3,6 +3,9 @@ import Header 					from "../../blocks/common/Header/Header.js";
 import MainFooter  				from '../../blocks/common/MainFooter/MainFooter.js';
 import "./PrivacyPolicy.css";
 export default class PrivacyPolicy extends Component {
+	componentDidMount() {
+		window.scrollTo(0, 0);
+	}
 	render() {
 		return (
 			<div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 noPad BoxSize1">

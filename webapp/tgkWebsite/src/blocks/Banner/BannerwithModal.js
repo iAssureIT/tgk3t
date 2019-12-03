@@ -264,7 +264,7 @@ class BannerwithModal extends Component {
 											</p>
 											
 										</div>*/}
-					<div className="col-lg-6 col-lg-offset-3 welcomeText">Welcome Owners</div>
+					{/*<div className="col-lg-6 col-lg-offset-3 welcomeText">Welcome Owners</div>*/}
 					
 					<div className="col-lg-10 col-lg-offset-1">
 						<div className="col-lg-2 earn">
@@ -286,7 +286,7 @@ class BannerwithModal extends Component {
 				</div>	
 				{/*resp*/}
 					<div className="col-lg-8 col-md-8 col-sm-12 col-xs-12 col-lg-offset-2 hidden-lg hidden-md ">
-						<div className="col-lg-6 col-lg-offset-3 col-xs-12 welcomeText1">Welcome Owners</div>
+						{/*<div className="col-lg-6 col-lg-offset-3 col-xs-12 welcomeText1">Welcome Owners</div>*/}
 						
 						<div className="col-lg-10 col-lg-offset-1">
 							<div className="col-lg-2 col-xs-3 earn1">

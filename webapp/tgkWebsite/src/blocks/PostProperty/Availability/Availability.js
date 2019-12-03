@@ -114,7 +114,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 					axios
 					.get('/api/users/get/one/'+this.props.uid)
 					.then( (response) =>{
-						console.log("response of user in availability= ",response);
+						console.log("response of user in availability userMobile= ",response);
 						this.setState({
 							userMobile : response.data.mobileNumber,
 						});
@@ -808,9 +808,9 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 		    		<label className=""> Availability <span className="astrick">*</span></label>
 					  <select className="custom-select form-control " ref="availability" placeholder="select" name="availableDay" >
 				    	<option value="">-- Select --</option>
-				    	<option value="Everyday"> Everyday (Mon-Sun)</option>
-				    	<option value="Weekdays"> Weekdays (Mon-Fri)</option>
-				    	<option value="Weekends"> Weekends (Sat-Sun)</option>
+				    	<option value="Everyday (Mon-Sun)"> Everyday (Mon-Sun)</option>
+				    	<option value="Weekdays (Mon-Fri)"> Weekdays (Mon-Fri)</option>
+				    	<option value="Weekends (Sat-Sun)"> Weekends (Sat-Sun)</option>
 				    	<option value="Monday">   Monday 	</option>
 				    	<option value="Tuesday">  Tuesday 	</option>
 				    	<option value="Wednesday">Wednesday </option>

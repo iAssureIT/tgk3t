@@ -74,6 +74,10 @@ ul ul a {
   /*margin: 1em;*/
   width: 60px;
 }
+.nav-icon2 {
+  /*margin: 1em;*/
+  width: 60px;
+}
 
 .nav-icon:after, 
 .nav-icon:before, 
@@ -172,4 +176,72 @@ ul<li{
 .hrLine1{
   margin-top: 0px !important;
   margin-bottom: 0px !important;
+}
+/*===============lg toggle css========================================*/
+.showClass1{
+  display: none;
+  position: absolute;
+  color: #0e0e0e;
+  top: 48px;
+  background-color: #fff;
+  z-index: 1;
+  left: 170px;
+
+}
+ul<li{
+  list-style: none;
+}
+
+.hideClass {
+  display: block !important;
+}
+/* Icon 1 */
+
+#nav-icon2 {
+    width: 36px;
+    position: relative;
+    left: 347px;
+    transform: rotate(0deg);
+    transition: .5s ease-in-out;
+    cursor: pointer;
+}
+
+#nav-icon2 span {
+  display: block;
+  position: absolute;
+  height: 9px;
+  width: 100%;
+  background: #fff;
+  border-radius: 9px;
+  opacity: 1;
+  left: 0;
+  transform: rotate(0deg);
+  transition: .25s ease-in-out;
+}
+
+#nav-icon2 span:nth-child(1) {
+  top: 0px;
+}
+
+#nav-icon2 span:nth-child(2) {
+  top: 18px;
+}
+
+#nav-icon2 span:nth-child(3) {
+  top: 36px;
+}
+
+#nav-icon2.open span:nth-child(1) {
+  top: 18px;
+  transform: rotate(135deg);
+}
+
+#nav-icon2.open span:nth-child(2) {
+  opacity: 0;
+  left: -60px;
+}
+
+#nav-icon2.open span:nth-child(3) {
+  top: 18px;
+  transform: rotate(-135deg);
 }

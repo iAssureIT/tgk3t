@@ -4,7 +4,6 @@ import HomePage                                  from '../pages/HomePage/HomePag
 import PropertyProfile                           from '../pages/PropertyProfile/PropertyProfile.js';
 import MyPostedProperties                        from '../pages/MyPostedProperties/MyPostedProperties.js';
 import MyInterestedProperties                    from '../pages/MyInterestedProperties/MyInterestedProperties.js';
-import RentDetails                               from '../blocks/PostProperty/ResidentialRent/RentDetails/RentDetails.js';
 import CommercialSell                            from '../blocks/PostProperty/Commercial/CommercialSell/CommercialSell.js';
 import CommercialRent                            from '../blocks/PostProperty/Commercial/CommercialRent/CommercialRent.js';
 import SearchResultPage                          from '../pages/SearchResultPage/SearchResultPage.js';
@@ -25,7 +24,6 @@ import 'font-awesome/css/font-awesome.min.css';
               <Route path="/PropertyProfile/:id"          exact strict component={PropertyProfile}  />
               <Route path="/MyPostedProperties"           exact strict component={MyPostedProperties}  />
               <Route path="/MyInterestedProperties"       exact strict component={MyInterestedProperties}  />
-              <Route path="/RentDetails"                  exact strict component={RentDetails}  />
               <Route path="/CommercialSell"               exact strict component={CommercialSell}  />
               <Route path="/CommercialRent"               exact strict component={CommercialRent}  />
               <Route path="/SearchResults"                exact strict component={SearchResultPage}  />
