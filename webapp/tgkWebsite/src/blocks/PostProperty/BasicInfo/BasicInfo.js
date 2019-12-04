@@ -461,14 +461,10 @@ class BasicInfo extends Component{
 	                             this.props.history.push("/");
 	                        }
 	                    });
-
 					}
-					
 
 				}else{
 					console.log("submit data");
-
-
 
 					axios
 					.post('/api/properties',formValues)
@@ -512,7 +508,6 @@ class BasicInfo extends Component{
   //           console.error("map key error = ",error);
   //         }
   //       );  
-       
 			    
 		}
 		
@@ -583,22 +578,6 @@ class BasicInfo extends Component{
  			propertySubType : propertySubType,
  		});
 	}
-	/*totalFloor(){
-		const floor      = parseInt(this.refs.floor.value);
-		const totalfloor = parseInt(this.refs.totalfloor.value);
-		if(floor > totalfloor){
-			swal("Floor should not be greater than Total Floors", "", "warning");
-		}
-
-		this.setState({totalfloor : totalfloor});
-
-	}*/
-
-	/*floorChange(event){
-		var floor = event.currentTarget.value;
-		this.setState({floor : floor});
-	}*/
-
 
 	handleSociety(event){
 		var valSocietyName = event.currentTarget.value;
@@ -1026,9 +1005,9 @@ class BasicInfo extends Component{
 						        {this.state.type===true ?
 
 						         <div className="switch" onClick={this.handleToggle.bind(this)} >
-						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  defaultChecked />
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  checked />
 						            <label htmlFor="week" className="switch-label switch-label-off">SELL</label>
-						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month"  />
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" />
 						            <label htmlFor="month" className="switch-label switch-label-on">RENT</label>
 						            <span className="switch-selection"></span>
 						          </div>
@@ -1036,9 +1015,9 @@ class BasicInfo extends Component{
 						          :
 
 						           <div className="switch" onClick={this.handleToggle.bind(this)} >
-						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"   />
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="week"  />
 						            <label htmlFor="week" className="switch-label switch-label-off">SELL</label>
-						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" defaultChecked  />
+						            <input type="radio" className="switch-input" name="view" value={this.state.transactionType} id="month" checked  />
 						            <label htmlFor="month" className="switch-label switch-label-on">RENT</label>
 						            <span className="switch-selection" ></span>
 						          </div>
@@ -1267,7 +1246,7 @@ class BasicInfo extends Component{
 				                    </div>
 								    <input type="text" list="societyList" className="form-control" ref="society" value={this.state.societyName} onChange={this.handleChange.bind(this)} onBlur={this.handleSociety.bind(this)} name="societyName" placeholder="Enter Society" />
 								 
-								    <datalist id="societyList">
+								    <datalist id="societyList" className="datalistHeight">
 								    	{this.state.societyList.length>0 ? 
 								    		this.state.societyList.map( (society,index)=>{
 									    		return(<option value={society.societyName} key={index} />)

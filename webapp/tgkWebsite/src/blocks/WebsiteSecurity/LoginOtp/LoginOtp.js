@@ -49,7 +49,7 @@ class LoginOtp extends Component {
 					}
 				}
 			}else{
-				swal("","Sorry, Your OTP is not Matching! Please try again!!","error");
+				swal("Sorry, Your OTP is not Matching!","Please try again!","error");
 			}
 		}else{
 			swal("Please enter OTP", "", "warning");
@@ -111,14 +111,29 @@ class LoginOtp extends Component {
 								</span>
 						 </div>
 						</div>
-						  	<div className=" col-lg-2 pull-right btnNext hidden-xs hidden-sm">
-							    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
-						  	</div>
-						  	{/*resp*/}
-						  		<div className=" col-lg-2 pull-right btnNext1 hidden-lg hidden-md">
+						{this.props.message === "NEW-USER-CREATED" ?
+						  	<div>
+							  	<div className=" col-lg-2 pull-right btnNext hidden-xs hidden-sm">
 								    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
 							  	</div>
-						  	{/*end*/}
+							  	{/*resp*/}
+							  		<div className=" col-lg-2 pull-right btnNext1 hidden-lg hidden-md">
+									    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Next &nbsp; &rArr; </button>
+								  	</div>
+							  	{/*end*/}
+							</div>  	
+						  	:
+						  	<div>
+							  	<div className=" col-lg-2 pull-right btnNext hidden-xs hidden-sm">
+								    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Login &nbsp; &rArr; </button>
+							  	</div>
+							  	{/*resp*/}
+							  		<div className=" col-lg-2 pull-right btnNext1 hidden-lg hidden-md">
+									    <button type="Submit" className="btn bg-primary pull-right col-lg-11 " onClick={(this.handleNumber.bind(this))} >Login &nbsp; &rArr; </button>
+								  	</div>
+							  	{/*end*/}
+							 </div> 	
+						 }	
 					</form>
 				</div>
 			</div>

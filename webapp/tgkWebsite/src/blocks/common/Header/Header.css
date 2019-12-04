@@ -245,3 +245,8 @@ ul<li{
   top: 18px;
   transform: rotate(-135deg);
 }
+/*======================================================*/
+.dropdown-menu li{
+  padding-bottom: 5px;
+
+}

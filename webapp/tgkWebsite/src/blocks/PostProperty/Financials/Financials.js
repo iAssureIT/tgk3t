@@ -32,8 +32,7 @@ class Financials extends Component{
       maintenancePer  : "Month",
       maintenanceCharges : "0",
       availableFrom: "",
-      // startDate : new Date(),
-      startDate : "",
+      startDate : new Date(),
       measurementUnit : "Sq Ft",
       };
 
@@ -44,24 +43,22 @@ class Financials extends Component{
            axios
           .get('/api/properties/'+this.props.property_id)
           .then( (response) =>{
-           // console.log("response.data.financial.maintenancePer ",response.data.financial.expectedRate);
+           console.log("response.data.financial ",response.data.financial);
 
             var availableFrom = new Date();
-            if(response.data.financial.availableFrom!=="" & response.data.financial.availableFrom!==null && response.data.financial.availableFrom!==undefined){
               var date = response.data.financial.availableFrom.split("-")
               // console.log('date',date);
                 availableFrom = new Date(date[2], date[1] - 1, date[0])
-            }
 
             
 
 
            this.setState({
                originalValues     : response.data.financial,
-               expectedRate       : response.data.financial.expectedRate,
-               totalPrice         : response.data.financial.totalPrice,
-               monthlyRent        : response.data.financial.monthlyRent,
-               depositAmount      : response.data.financial.depositAmount,
+               expectedRate       : response.data.financial.expectedRate ? response.data.financial.expectedRate:"",
+               totalPrice         : response.data.financial.totalPrice ? response.data.financial.totalPrice:"",
+               monthlyRent        : response.data.financial.monthlyRent ? response.data.financial.monthlyRent :"",
+               depositAmount      : response.data.financial.depositAmount ? response.data.financial.depositAmount:"",
                prevCharges        : response.data.financial.includeCharges,
                updateOperation    : true,
                startDate          : availableFrom,
@@ -209,13 +206,21 @@ updateUser(event){
             // console.log("this.state.availableFrom",this.state.availableFrom);
 
             // console.log("maintenanceCharges",this.state.maintenanceCharges);
-
+        var expectedRate=this.state.expectedRate.replace(/,/g, '');
+        var totalPrice=this.state.totalPrice.replace(/,/g, '');
+        var monthlyRent=this.state.monthlyRent.replace(/,/g, '');
+        var depositAmount=this.state.depositAmount.replace(/,/g, '');
+         var newDate = new Date(this.state.startDate),
+          mnth = ("0" + (newDate.getMonth() + 1)).slice(-2),
+          day = ("0" + newDate.getDate()).slice(-2);
+          var availableFrom = [day, mnth, newDate.getFullYear()].join("-");
+         
         var formValues = {
-        "expectedRate"        : this.state.expectedRate.replace(/,/g, ''),
-        "totalPrice"          : this.state.totalPrice.replace(/,/g, ''),
-        "monthlyRent"         : this.state.monthlyRent.replace(/,/g, ''),
-        "depositAmount"       : this.state.depositAmount.replace(/,/g, ''),
-        "availableFrom"       : this.state.availableFrom,
+        "expectedRate"        : expectedRate,
+        "totalPrice"          : totalPrice,
+        "monthlyRent"         : monthlyRent,
+        "depositAmount"       : depositAmount,
+        "availableFrom"       : availableFrom,
         "description"         : this.state.description,
         "includeCharges"      : includeChargesDataList,
         "maintenanceCharges"  : this.state.maintenanceCharges.replace(/,/g, ''),
@@ -225,6 +230,7 @@ updateUser(event){
         "uid"                 : localStorage.getItem("uid"),
 
         };
+        console.log("formValues financial= >>>>",formValues);
         /*=================Count==========================*/
           var count = 0;
             var Tcount = 0;
@@ -313,18 +319,21 @@ updateUser(event){
                  }
                   // console.log("equal yes but same",eq); 
             }
-
+            var newDate = new Date(this.state.startDate),
+                mnth = ("0" + (newDate.getMonth() + 1)).slice(-2),
+                day = ("0" + newDate.getDate()).slice(-2);
+                var availableFrom = [day, mnth, newDate.getFullYear()].join("-");
             // console.log("outside eq",eq);
             if(eq === true && this.state.expectedRate === ov.expectedRate && this.state.totalPrice === ov.totalPrice &&
               this.state.monthlyRent === ov.monthlyRent && this.state.depositAmount === ov.depositAmount && 
-              this.state.availableFrom === ov.availableFrom && this.state.description === ov.description &&
+              availableFrom === ov.availableFrom && this.state.description === ov.description &&
                this.state.maintenanceCharges === ov.maintenanceCharges &&  this.state.maintenancePer === ov.maintenancePer)
             {
-              // console.log("same data");
+              console.log("same data");
               this.props.redirectToAvailability(this.props.uid,this.props.property_id);
 
             }else{
-                // console.log("diff data");
+                console.log("diff data");
                 // console.log("this.state.expectedRate",this.state.expectedRate);
                 // console.log("this.state.expectedRate",this.state.expectedRate);
                 var expectedRate        = "";
@@ -389,13 +398,14 @@ updateUser(event){
                    maintenanceCharges = this.state.maintenanceCharges;
                 }
 
+                 
                 // ---------------------------------
                 const updateFormValues = {
-                "expectedRate"        : expectedRate ,
+                "expectedRate"        : expectedRate,
                 "totalPrice"          : totalPrice,
                 "monthlyRent"         : monthlyRent ,
                 "depositAmount"       : depositAmount ,
-                "availableFrom"       : this.state.availableFrom,
+                "availableFrom"       : availableFrom,
                 "description"         : this.state.description,
                 "includeCharges"      : includeChargesDataList,
                 "maintenanceCharges"  : maintenanceCharges,
@@ -514,14 +524,7 @@ totalInclude(event){
     }
 
     handleDate = date => {
-      var newDate = new Date(date),
-      mnth = ("0" + (newDate.getMonth() + 1)).slice(-2),
-      day = ("0" + newDate.getDate()).slice(-2);
-      var availableFrom = [day, mnth, newDate.getFullYear()].join("-");
-      this.setState({
-        availableFrom: availableFrom,
-        startDate    : date
-      });
+     
     };
 
 
@@ -569,7 +572,7 @@ totalInclude(event){
 
 
 render() {
-
+console.log("this.state.startDate",this.state.startDate);
 return (
   // console.log("this.props.transactionType",this.props.transactionType),
     // console.log("this.props.propertyType",this.props.propertyType),
@@ -730,7 +733,7 @@ return (
                     {/*<input type="date" className="form-control" name="availableFrom" ref="availableFrom" value={this.state.availableFrom} onChange={this.handleChange.bind(this)} id="" min="1900-01-01" max="2100-12-31"/>*/}
                    <DatePicker
                       selected={this.state.startDate}
-                      onChange={this.handleDate}
+                      onChange={startDate => {this.setState({startDate})}}
                       dateFormat="dd-MM-yyyy"
                       className="form-control col-lg-12 "
                       minDate={(new Date())}

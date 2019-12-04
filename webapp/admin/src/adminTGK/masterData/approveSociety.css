@@ -1,0 +1,10 @@
+.societyTable td ,th{
+	padding: 5px;
+	border: 1px solid #000;
+	text-align: center;
+}
+.societyTable {
+	padding: 5px;
+	border: 1px solid #000;
+	text-align: center;
+}

@@ -59,7 +59,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 			if(formValid(this.state.formerrors)){
 			axios
 				.patch('/api/usersotp/signup',formValues)
-				.then( (res) =>{/*
+				.then( (res) =>{
 					console.log("res",res)
 					if(res.data.message === "USER-UPDATED"){
 						var sendDataToUser = {
@@ -126,19 +126,19 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				                    });
 						
 					}
-				*/
+				
 				/*========================temp code========*/
-				localStorage.setItem('userName',formValues.fullName)
+				// localStorage.setItem('userName',formValues.fullName)
 
-				if(this.props.originPage === "header")
-					{
-						this.props.history.push("/");
-						window.location.reload();
-						this.setState({isLoading:false})
-					}else{
-						this.props.redirectToBasicInfo(res.data.user_id);
-						this.setState({isLoading:false})
-					}	
+				// if(this.props.originPage === "header")
+				// 	{
+				// 		this.props.history.push("/");
+				// 		window.location.reload();
+				// 		this.setState({isLoading:false})
+				// 	}else{
+				// 		this.props.redirectToBasicInfo(res.data.user_id);
+				// 		this.setState({isLoading:false})
+				// 	}	
 					/*===================end======================*/	
 			})
 				.catch((error)=>{

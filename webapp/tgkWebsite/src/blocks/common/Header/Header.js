@@ -128,7 +128,7 @@ class Header extends Component {
 										      		<div className="nav-icon dropdown-toggle col-lg-12" data-toggle="dropdown" title="Click for Menu" style={{"cursor":"pointer"}} >
 													  <div></div>
 													</div>
-											        <ul className="dropdown-menu ">
+											        <ul className="dropdown-menu">
 										    			<li className="" style={{"paddingLeft":"30px"}}>{ "Hello " +localStorage.getItem('userName')} </li>	 
 											          	<hr className="hrLine1 col-lg-9"/>
 											          	<li><Link to="/MyPostedProperties">My Listings</Link></li>

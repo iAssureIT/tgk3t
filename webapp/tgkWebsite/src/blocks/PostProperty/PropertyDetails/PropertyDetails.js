@@ -632,6 +632,7 @@ import './PropertyDetails.css';
 
 			}else{
 				this.setState({totalfloor : totalfloor});
+				this.setState({floor : floor});
 			}
 
 			
@@ -750,7 +751,7 @@ import './PropertyDetails.css';
 			      	<div className="input-group-addon inputIcon">
                      	<i className=" iconClr"><img src="/images/floor.png" alt="" /></i>
                     </div>
-			  		<select className="custom-select form-control Fl60"  ref="floor" id='select' value={this.state.floor} onChange={this.floorChange.bind(this)}>  </select> 
+			  		<select className="custom-select form-control Fl60"  ref="floor" id='select' value={this.state.floor} onChange={this.totalFloor.bind(this)}>  </select> 
 				</div>
 			  </div>
 			</div>
@@ -911,7 +912,7 @@ import './PropertyDetails.css';
 				    </div>
 					<div className="col-lg-12 col-md-12 col-sm-10 col-xs-12 pl29">	
 							 
-						<label htmlFor="optradio1" className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12 ">
+						<label htmlFor="radio-example1" className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12 ">
 					        <input type="radio"
 					             name="optradio1"  
 					             value="Fully furnished" 
@@ -921,7 +922,7 @@ import './PropertyDetails.css';
 					      <span className="mb5">Fully furnished</span> 
 
 					    </label>
-					    <label htmlFor="optradio2" className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12">
+					    <label htmlFor="radio-example2" className="radio-inline col-lg-4  col-md-4 col-sm-12 col-xs-12">
 					      	<input type="radio" 
 					      		 name="optradio2" 
 					      		 value="Semi furnished" 
@@ -931,7 +932,7 @@ import './PropertyDetails.css';
 					  	 	<span className="mb5">Semi furnished</span>  
 
 					    </label>
-					    <label htmlFor="optradio3" className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12">
+					    <label htmlFor="radio-example3" className="radio-inline col-lg-3  col-md-3 col-sm-12 col-xs-12">
 					      	<input type="radio"
 					      		 name="optradio3" 
 					      		 value="Unfurnished" 

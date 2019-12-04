@@ -465,54 +465,58 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
    console.log("file",file);
       if (file) {
       var fileName = file.name; 
+      var fileSize = file.size;
+      var size = 4000000;
       console.log("fileName--------------->",fileName);
       console.log("config--------------->",this.state.config);
         var ext = fileName.split('.').pop(); 
         if(ext=="jpg" || ext=="png" || ext=="jpeg" || ext=="JPG" || ext=="PNG" || ext=="JPEG"){  
-          if (file) {
-            S3FileUpload
-              .uploadFile(file,this.state.config)
-              .then((Data)=>{
-                console.log("Data = ",Data);
-                  var obj1={
-                    imgPath : Data.location,
-                  }
-                  var imgArrayWSaws = this.state.imgArrayWSaws;
-                  imgArrayWSaws.push(obj1);
-                  this.setState({
-                    // workspaceImages : imgArrayWSaws
-                    imgArrayWSaws : imgArrayWSaws
-                  })
-              })
-              .catch((error)=>{
-                        console.log("error here--------------------- = ",error);
-                        if(error.message === "Request failed with status code 401")
-                        {
-                             swal("Your session is expired! Please login again.","", "error");
-							localStorage.removeItem("uid");
-							localStorage.removeItem("token");
-                             this.props.history.push("/");
-                        }
-                });
+          	if(fileSize <= size){        
+	            S3FileUpload
+	              .uploadFile(file,this.state.config)
+	              .then((Data)=>{
+	                console.log("Data = ",Data);
+	                  var obj1={
+	                    imgPath : Data.location,
+	                  }
+	                  var imgArrayWSaws = this.state.imgArrayWSaws;
+	                  imgArrayWSaws.push(obj1);
+	                  this.setState({
+	                    // workspaceImages : imgArrayWSaws
+	                    imgArrayWSaws : imgArrayWSaws
+	                  })
+	              })
+	              .catch((error)=>{
+	                        console.log("error here--------------------- = ",error);
+	                        if(error.message === "Request failed with status code 401")
+	                        {
+	                             swal("Your session is expired! Please login again.","", "error");
+								localStorage.removeItem("uid");
+								localStorage.removeItem("token");
+	                             this.props.history.push("/");
+	                        }
+	                });
 
-            var objTitle={   
-            	
-              fileInfo :file
-            }
-            // var imgTitleArrayWS = [];
-            imgTitleArrayWS.push(objTitle);
-            this.setState({
-              imageTitleArrayWS : imgTitleArrayWS
-            })
-             // console.log('imgArrayWS = ',imgTitleArrayWS);
-
-
-          }else{          
-            swal("File not uploaded","Something went wrong","error");  
-          }
+	            var objTitle={   
+	            	
+	              fileInfo :file
+	            }
+	            // var imgTitleArrayWS = [];
+	            imgTitleArrayWS.push(objTitle);
+	            this.setState({
+	              imageTitleArrayWS : imgTitleArrayWS
+	            })
+	             // console.log('imgArrayWS = ',imgTitleArrayWS)
+	          
+	        }else{          
+		        swal("File size exceeded","Document size should not exceed file size limit 4MB.","error");  
+		    }
         }else{
           swal("Please upload file","Only Upload  images format (jpg,png,jpeg)","warning");   
         }
+      }
+      else{          
+        swal("File not uploaded","Something went wrong","error");  
       }
     }
   }
@@ -562,6 +566,8 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
     let self = this;
     if (event.currentTarget.files && event.currentTarget.files[0]) {
       var file = event.currentTarget.files[0];
+      var fileSize = file.size;
+      var size = 20000000;
       // console.log("file",file);
       if (file) {
       var fileName = file.name; 
@@ -569,7 +575,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
       console.log("config--------------->",this.state.config);
         var ext = fileName.split('.').pop(); 
         if(ext=="mp4" || ext=="avi" || ext=="ogv"){  
-          if (file) {
+          if (fileSize <= size) {
             if(this.state.singleVideo==""){
               S3FileUpload
                 .uploadFile(file,this.state.config)
@@ -635,12 +641,14 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
                   });
             }          
           }else{          
-            swal("File not uploaded","Something went wrong","error");  
+            swal("File size exceeded","Video size should not exceed file size limit 20MB","error");  
           }     
         }else{ 
           this.setState({tempLoader:false})
           swal("Format is incorrect","Only Upload video format (mp4,avi,ogv)","warning");   
         }
+      }else{          
+        swal("File not uploaded","Something went wrong","error");  
       }
     }
   }
@@ -720,7 +728,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 			accessor: 'id',
 			Cell: row => 
           (
-          <div className="actionDiv col-lg-offset-3">
+          <div className="actionDiv col-lg-offset-4">
               <div className="col-lg-6" title="Delete" id={row.index} onClick={() => this.deleteData(row.index)}>
             <i className="fa fa-trash"> </i>
               </div>
@@ -1004,7 +1012,7 @@ const clientmobileRegex = RegExp(/^[0-9][0-9]{9}$/);
 
                     <div className="col-lg-4 col-md-4 col-sm-12 col-xs-12 padTopC">
                       <div className="col-lg-12 col-md-12 col-sm-12 col-xs-12 row">
-                        <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12 row">Please Upload Video:</h5>
+                        <h5 className="h5Title col-lg-12 col-md-12 col-sm-12 col-xs-12 row">Property Video:</h5>
                       </div>
                       <div className="containerC">
                         <label htmlFor="" id="logoImage" className="pull-right custFaTimes1" title="Delete Video" onClick={this.deleteSingleVideoDirect.bind(this)}>X</label>

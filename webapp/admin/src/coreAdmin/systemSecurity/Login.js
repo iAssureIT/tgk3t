@@ -124,7 +124,7 @@ class Login extends Component {
           <div className="divLoginInWrap">
 
             <div className="col-lg-4 col-lg-offset-4 marbtm10 ">
-              <img src="/images/logo.png" height="70px"/>
+              <img src="/images/lyvo.png" height="70px"/>
               </div>
 
             <form id="login" onSubmit={this.userlogin.bind(this)}>
