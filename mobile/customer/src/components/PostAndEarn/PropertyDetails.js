@@ -420,7 +420,7 @@ constructor(props){
                                           bathrooms       : response.data.propertyDetails.bathrooms,
                                           ageofproperty   : response.data.propertyDetails.ageofProperty,
                                           facing          : response.data.propertyDetails.facing,
-                                          superArea       : response.data.propertyDetails.superArea,
+                                          superArea       : response.data.propertyDetails.superArea.toString(),
                                           builtupArea     : response.data.propertyDetails.builtupArea,
                                           updateOperation : true,
                                           // amenity
@@ -970,6 +970,8 @@ submitFun(){
       color: '#9EA0A4',
     };
 
+    console.log("this.state.superArea",this.state.superArea);
+
     const { navigation } = this.props;
     let {activeTab} = this.state;
     return (
@@ -1418,14 +1420,15 @@ submitFun(){
                             </View>
 
                              <View style={[styles.marginBottom25]}>
-                              <Text style={[styles.heading2,styles.marginBottom5]}>Super Area (optional)</Text>
+                              <Text style={[styles.heading2,styles.marginBottom5]}>Super Area {this.state.superArea}(optional)</Text>
                               <View style={[styles.inputWrapper]}>
                                 <View style={styles.inputImgWrapper}>
                                   <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                                 </View>
-                                <View style={[styles.inputTextWrapper68,{}]}>
+                                <View style={styles.inputTextWrapper68}>
                                   <TextInput
                                     placeholder           = "Enter Super Area"
+                                    onChangeText          = {superArea => {this.setState({superArea},() => { this.validInputField('superArea', 'superAreaError'); })}}
                                     onBlur                = {() => this.builtArea()}
                                     lineWidth             = {1}
                                     tintColor             = {colors.button}
@@ -1443,8 +1446,6 @@ submitFun(){
                                     labelTextStyle        = {styles.textLabel}
                                     keyboardType          = "numeric"
                                     maxLength             = {10}
-                                    onChangeText          = {superArea => {this.setState({superArea},() => { this.validInputField('superArea', 'superAreaError'); })}}
-
                                   />
                                 </View>
                                 <View style={[styles.inputRightWrapper1,{height:35}]}>

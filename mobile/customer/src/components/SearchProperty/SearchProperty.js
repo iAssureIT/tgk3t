@@ -32,6 +32,7 @@ import { Dropdown }                       from 'react-native-material-dropdown';
 import AsyncStorage                       from '@react-native-community/async-storage';
 import { NavigationActions, StackActions } from 'react-navigation';
 import Loading                    from '../../layouts/Loading/Loading.js'
+import Autocomplete from 'react-native-autocomplete-input';
 
 const window = Dimensions.get('window');
 
@@ -69,7 +70,7 @@ navigateScreen=(route)=>{
       uid                   : "",
       token                 : "",
       // btnLoading            : false,
-      locSearchResults      : "",
+      locSearchResults      : [],
       budgetList            : [],
       budgetList1           : [],
       budgetList2           : [],
@@ -479,7 +480,7 @@ navigateScreen=(route)=>{
   }
 
    _selectedItem(item){
-    this.setState({locSearchResults:""})
+    this.setState({locSearchResults:[]})
     // console.log("item",item);
     this.setState({'searchText':item,location : item,})
   }
@@ -626,6 +627,10 @@ navigateScreen=(route)=>{
                   this.props.history.push("/");
               }
         });
+      }else{
+        this.setState({
+            locSearchResults : [],
+          });  
       }
     })
   }
@@ -686,6 +691,9 @@ navigateScreen=(route)=>{
     });
   }
 
+   clearInputData(){
+    this.setState({location:"",searchText:"",locSearchResults:[]})
+  }
 
   render(){
 
@@ -847,51 +855,42 @@ navigateScreen=(route)=>{
                 null
               }
 
-              <View style={[styles.searchInputWrapper,styles.marginBottom25]}>
-                <View style={styles.inputTextWrapper}>
-                  <SearchBar
-                  searchIcon={
-                    <View>
-                      <Icon name="map-marker-radius" type="material-community" size={24}  color={colors.black} style={{}}/>
-                    </View>
-                  }
-                  containerStyle={[styles.searchContainer]}
-                  inputContainerStyle={styles.searchInputContainer}
-                  inputStyle={styles.searchInput}
-                  placeholder='Enter Society, Location or Address'
-                  onChangeText = {(searchText) => this.handleLocation(searchText)}
-                  value={this.state.searchText}
-                  />
-               {/*   <View style={styles.flatList}>
-                      <FlatList
-                        data={this.state.locSearchResults}
-                        renderItem={this._renderList}
-                        // renderItem={({item}) => <Text style={styles.item}>{item}</Text>}
-                      />
-                  </View>*/}
+              <View style={[styles.searchInputWrapper,styles.marginBottom25,{flexDirection:"row"}]}>
+                <View style={[styles.inputTextWrapper,Platform.OS==="android" ? this.state.searchText.length > 0 ? {width:"92%"}: {width:"100%"} : null]}>
+                 <Autocomplete
+                  data                      = {this.state.locSearchResults}
+                  clearButtonMode           = {'always'} 
+                  listStyle                 = {{maxHeight:490,zIndex: 20, position: 'absolute'}} 
+                  tintColor                 = {colors.button}
+                  inputContainerPadding     = {0}
+                  labelHeight               = {15}
+                  titleFontSize             = {10}
+                  baseColor                 = {'#666'}
+                  inputContainerStyle       = {this.state.searchText.length > 0 ? {borderRightRadius:3,borderRightWidth:0}: {borderRightRadius:3}}
+                  textColor                 = {'#666'}
+                  value                     = {this.state.searchText}
+                  placeholder               = "Enter Society, Location or Address..."
+                  onChangeText              = {(searchText) => this.handleLocation(searchText)}
+                  style = {[{height: 40,fontSize:14,fontFamily:"Roboto-Regular",paddingHorizontal: 5,backgroundColor:"#fff",borderRedius:5}]}
+                  renderItem={({ item, i }) => (
+                    <TouchableOpacity keyboardShouldPersistTaps='always'  onPress={() => this.setState({ searchText: item,location:item,locSearchResults:[] })}>
+                      <Text style={styles.item}>{item}</Text>
+                    </TouchableOpacity>
+                  )}
+                />
               </View>
-              { Platform.OS === 'android' && this.state.locSearchResults && this.state.locSearchResults.length>0 ?
-                  <View style={[styles.flatList,{marginTop:50}]}>
-                    <FlatList
-                      data={this.state.locSearchResults.slice(0,15)}
-                      renderItem={this._renderList}
-                    />
-                  </View>
+              {Platform.OS === "android" ?
+                  this.state.searchText.length > 0 ? 
+                    <View style={{backgroundColor:"#fff",width:"8%",height:42,borderWidth:0.8,borderLeftWidth:0,borderColor:"#999"}} onPress={() => this.clearInputData()}> 
+                      <Text style={{paddingTop:6,fontSize:18,paddingLeft:6,fontWight:"bold"}} onPress={() => this.clearInputData()}>X</Text>
+                    </View>
+                    :
+                    null
                   :
                   null
-                }
-              </View>
-              {
-                Platform.OS === 'ios' && this.state.locSearchResults && this.state.locSearchResults.length>0 ?
-                <View style={activeBtn === "Commercial-Sell" || activeBtn === "Commercial-Rent"? [styles.flatList,{marginTop:180,marginLeft:20}] :[styles.flatList,{marginTop:90,marginLeft:20}]}>
-                  <FlatList
-                    data={this.state.locSearchResults.slice(0,15)}
-                    renderItem={this._renderList}
-                  />
-                </View>
-                :
-                null
-              }
+                }  
+            </View>
+           <View style={{zIndex:-20}}>   
             <Text style={[styles.heading,styles.marginBottom5]}>Property Type : {this.state.activeBtn === "Residential-Rent" ||  this.state.activeBtn === "Residential-Sell" ? "Residential" : "Commercial"}</Text>
             <View style={[styles.tabWrap,styles.marginBottom25]}>
               <ScrollView horizontal={true} showsHorizontalScrollIndicator = { false }>
@@ -985,7 +984,7 @@ navigateScreen=(route)=>{
               <TouchableOpacity 
                 onPress={()=>this.selectBudget(data.value)}
                 key={index} 
-                style={[(data.checked===true?styles.activeTabViewAge:styles.tabViewAge),(index<6)?styles.tabBorder:null]}
+                style={[(data.checked===true?styles.activeTabViewAge:styles.tabViewAge),(index<14)?styles.tabBorder:null]}
               >
                 <Text style={styles.tabText}>{data.option}</Text>
               </TouchableOpacity>
@@ -1074,6 +1073,7 @@ navigateScreen=(route)=>{
                 />}
               />              
             
+          </View>
           </View>
         </ScrollView>
         :

@@ -53,6 +53,8 @@ componentDidMount(){
                         <ul className="collapse list-unstyled" id="homeSubmenu">
                             <li><a href="/masterdata">Amenities</a></li>
                             <li><a href="/approveSociety">Society and Subarea</a></li>
+                            <li><a href="/manageLocation">Manage Location</a></li>
+
                             {/*<li><a href="#">Data 2</a></li>
                             <li><a href="#">Data 3</a></li>*/}
                         </ul>

@@ -318,6 +318,7 @@ class SearchProperty extends Component {
 		            var citiesAreas = cities.concat(areas);
 		            var citiesAreasSubAreas = citiesAreas.concat(uniqueSubareaName);
 		            var citiesAreasSubAreasSocieties = citiesAreasSubAreas.concat(uniqueSocietyName);
+            		console.log("citiesAreasSubAreasSocieties",citiesAreasSubAreasSocieties)
 
 
 		            this.setState({

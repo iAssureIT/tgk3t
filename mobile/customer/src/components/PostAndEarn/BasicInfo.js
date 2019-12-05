@@ -33,7 +33,8 @@ import RNPickerSelect                       from 'react-native-picker-select';
 
 import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
 // import {Picker}                             from '@react-native-community/picker';
-  
+import Autocomplete from 'react-native-autocomplete-input';
+
 const window = Dimensions.get('window');
 
 const defaultOption = [
@@ -106,7 +107,6 @@ export default class BasicInfo extends ValidationComponent{
       originalValues          : "",
       originalValuesLocation  : "",
       pincodeError    : [],
-      societyError    : "", 
       fullAddress     : "",
       subAreaName     : "",
       stateCode       : "",
@@ -116,6 +116,7 @@ export default class BasicInfo extends ValidationComponent{
       cityNameError   :"",
       propertyTypeError:"",
       subAreaNameError:"",
+      societyNameError:"",
       areaNameError   :"",
       fullPropertyTypeError:"",
       fullPropertyType:"",
@@ -227,12 +228,13 @@ export default class BasicInfo extends ValidationComponent{
       this.setState({ pincodeError: "" });
     }
     if(this.isFieldInError("societyName")) {
-      this.setState({ societyError: this.getErrorsInField("societyName") });
+      this.setState({ societyNameError: this.getErrorsInField("societyName") });
       valid = false;
-    }else {
-      this.setState({ societyError: "" });
+    }else{
+      this.setState({ societyNameError: "" });
     }
-     if(this.isFieldInError("transactionType")) {
+   
+    if(this.isFieldInError("transactionType")) {
       this.setState({ transactionTypeError: this.getErrorsInField("transactionType") });
       valid = false;
     }else {
@@ -244,7 +246,7 @@ export default class BasicInfo extends ValidationComponent{
     }else {
       this.setState({ propertyTypeError: "" });
     }
-     if(this.isFieldInError("stateCode")) {
+    if(this.isFieldInError("stateCode")) {
       this.setState({ stateCodeError: this.getErrorsInField("stateCode") });
       valid = false;
     }else {
@@ -310,7 +312,7 @@ export default class BasicInfo extends ValidationComponent{
   displayValidationError = (errorField) => {
     let error = null;
     if(this.state[errorField]) {
-      error = <View style={styles.errorWrapper}>
+      error = <View style={[styles.errorWrapper]}>
         <Text style={styles.errorText}>{this.state[errorField][0]}</Text>
       </View>;
     }
@@ -967,12 +969,12 @@ selectState(stateCode){
     if(index < 0){
       const formValues ={
           countryCode   : "IN",
-          stateCode     : this.state.stateCode,
-          districtName  : this.state.districtName,
-          blockName     : this.state.blockName,
-          cityName      : this.state.cityName,
-          areaName      : this.state.areaName,
-          subareaName   : valSubAreaName,
+          stateCode     : this.state.stateCode.trim(),
+          districtName  : this.state.districtName.trim(),
+          blockName     : this.state.blockName.trim(),
+          cityName      : this.state.cityName.trim(),
+          areaName      : this.state.areaName.trim(),
+          subareaName   : valSubAreaName.trim(),
       };
 
       url = 'http://locationapi.iassureit.com/api/subareas/post';
@@ -1071,17 +1073,16 @@ selectState(stateCode){
     // console.log("index = ",index);
     if(index < 0){
       const formValues ={
-        countryCode   : "IN",
-        stateCode     : this.state.stateCode,
-          districtName  : this.state.districtName,
-          blockName     : this.state.blockName,
-          cityName    : this.state.cityName,
-          areaName    : this.state.areaName,
-          subareaName   : this.state.subAreaName,
-          societyName   : this.state.societyName,
+          countryCode     : "IN",
+          stateCode       : this.state.stateCode.trim(),
+          districtName    : this.state.districtName.trim(),
+          blockName       : this.state.blockName.trim(),
+          cityName        : this.state.cityName.trim(),
+          areaName        : this.state.areaName.trim(),
+          subareaName     : this.state.subAreaName.trim(),
+          societyName     : this.state.societyName.trim(),
       };
 
-      console.log("formValues",formValues);
 
       url = 'http://locationapi.iassureit.com/api/societies/post';
 
@@ -1601,15 +1602,51 @@ selectState(stateCode){
                {/*remaining items*/}
                <View style={styles.marginBottom15}>
                 <Text style={[styles.heading2,styles.marginBottom5]}>Society</Text>
-                <View style={[styles.inputWrapper]}>
+                <View style={[styles.autocompleteContainer]}>
+                  {/*<View style={styles.inputImgWrapper}>
+                    <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                  </View>*/}
+                  <View style={styles.inputTextWrapper,{width:"100%"}}>
+                     <Autocomplete
+                      data                      = {this.state.societyList}
+                      clearButtonMode           = {'always'} 
+                      listStyle                 = {{maxHeight:110}} 
+                      placeholder               = "Enter Society"
+                      value                     = {this.state.societyName}
+                      style                     = {[{height: 40,fontSize:14,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                      inputContainerStyle       = {{borderColor:"#000",borderRadius:3}}
+                      clearButtonMode           = {'always'} 
+                      listStyle                 = {{maxHeight:200,zIndex: 20, position: 'absolute'}} 
+                      tintColor                 = {colors.button}
+                      inputContainerPadding     = {0}
+                      labelHeight               = {15}
+                      titleFontSize             = {10}
+                      baseColor                 = {'#666'}
+                      textColor                 = {'#666'}
+                      labelTextStyle            = {styles.textLabel}
+                      onChangeText              = {societyName => {this.setState({societyName},() => { this.validInputField('societyName', 'societyNameError'); })}}
+                      renderItem={({ item, i }) => (
+                        <TouchableOpacity
+                          onPress={() => {this.setState({ societyName: item, societyList:[] }); } }
+                          >
+                          <Text style={styles.item}>{item}</Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  </View>
+                </View>
+                {this.displayValidationError('societyNameError')}
+              </View>
+              <View style={{zIndex:-20}}>
+                <Text style={[styles.heading2,styles.marginBottom5]}>House/Building Number (Optional)</Text>
+                <View style={[styles.inputWrapper,styles.marginBottom15]}>
                   <View style={styles.inputImgWrapper}>
                     <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
                   </View>
                   <View style={styles.inputTextWrapper}>
                     <TextInput
-                      placeholder           = "Enter Society"
-                      onBlur                = {()=>this.handleSociety()}
-                      onChangeText          = {societyName => {this.setState({societyName},() => { this.validInputField('society', 'societyError'); })}}
+                      placeholder           = "Enter House Address"
+                      onChangeText          = {house => {this.setState({house})}}
                       lineWidth             = {1}
                       tintColor             = {colors.button}
                       inputContainerPadding = {0}
@@ -1618,7 +1655,7 @@ selectState(stateCode){
                       titleFontSize         = {10}
                       baseColor             = {'#666'}
                       textColor             = {'#666'}
-                      value                 = {this.state.societyName}
+                      value                 = {this.state.house}
                       containerStyle        = {styles.textContainer}
                       inputContainerStyle   = {styles.textInputContainer}
                       titleTextStyle        = {styles.textTitle}
@@ -1628,103 +1665,39 @@ selectState(stateCode){
                     />
                   </View>
                 </View>
-                {/*this.state.societyList?
-                  <View style={styles.flatList}>
-                    <FlatList
-                      data={this.state.societyList.slice(0,5)}
-                      renderItem={this._renderList}
+
+
+                 <Text style={[styles.heading2,styles.marginBottom5]}>Landmark (Optional)</Text>
+                <View style={[styles.inputWrapper,styles.marginBottom15]}>
+                  <View style={styles.inputImgWrapper}>
+                    <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
+                  </View>
+                  <View style={styles.inputTextWrapper68}>
+                    <TextInput
+                      placeholder           = "Enter landmark"
+                      onChangeText          = {landmark => {this.setState({landmark})}}
+                      lineWidth             = {1}
+                      tintColor             = {colors.button}
+                      inputContainerPadding = {0}
+                      labelHeight           = {15}
+                      labelFontSize         = {sizes.label}
+                      titleFontSize         = {10}
+                      baseColor             = {'#666'}
+                      textColor             = {'#666'}
+                      value                 = {this.state.landmark}
+                      containerStyle        = {styles.textContainer}
+                      inputContainerStyle   = {styles.textInputContainer}
+                      titleTextStyle        = {styles.textTitle}
+                      style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
+                      labelTextStyle        = {styles.textLabel}
+                      keyboardType          = "default"
                     />
+                  </View>
                 </View>
-                :
-                null
-                */}
-                {this.displayValidationError('societyError')}
-              </View>
-
-              <Text style={[styles.heading2,styles.marginBottom5]}>House/Building Number (Optional)</Text>
-              <View style={[styles.inputWrapper,styles.marginBottom15]}>
-                <View style={styles.inputImgWrapper}>
-                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper}>
-                  <TextInput
-                    placeholder           = "Enter House Address"
-                    onChangeText          = {house => {this.setState({house})}}
-                    lineWidth             = {1}
-                    tintColor             = {colors.button}
-                    inputContainerPadding = {0}
-                    labelHeight           = {15}
-                    labelFontSize         = {sizes.label}
-                    titleFontSize         = {10}
-                    baseColor             = {'#666'}
-                    textColor             = {'#666'}
-                    value                 = {this.state.house}
-                    containerStyle        = {styles.textContainer}
-                    inputContainerStyle   = {styles.textInputContainer}
-                    titleTextStyle        = {styles.textTitle}
-                    style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                    labelTextStyle        = {styles.textLabel}
-                    keyboardType          = "default"
-                  />
-                </View>
-              </View>
-
-
-               <Text style={[styles.heading2,styles.marginBottom5]}>Landmark (Optional)</Text>
-              <View style={[styles.inputWrapper,styles.marginBottom15]}>
-                <View style={styles.inputImgWrapper}>
-                  <Icon name="building" type="font-awesome" size={16}  color="#aaa" style={{}}/>
-                </View>
-                <View style={styles.inputTextWrapper68}>
-                  <TextInput
-                    placeholder           = "Enter landmark"
-                    onChangeText          = {landmark => {this.setState({landmark})}}
-                    lineWidth             = {1}
-                    tintColor             = {colors.button}
-                    inputContainerPadding = {0}
-                    labelHeight           = {15}
-                    labelFontSize         = {sizes.label}
-                    titleFontSize         = {10}
-                    baseColor             = {'#666'}
-                    textColor             = {'#666'}
-                    value                 = {this.state.landmark}
-                    containerStyle        = {styles.textContainer}
-                    inputContainerStyle   = {styles.textInputContainer}
-                    titleTextStyle        = {styles.textTitle}
-                    style                 = {[{height: 40,fontSize:16,fontFamily:"Roboto-Regular",paddingHorizontal: 5}]}
-                    labelTextStyle        = {styles.textLabel}
-                    keyboardType          = "default"
-                  />
-                </View>
-              </View>
-
-            
-
-
-              {/*<Button
-              
-                onPress         = {this.submitFun.bind(this)}
-                // onPress         = {()=>this.props.navigation.navigate('PropertyDetails2')}
-                titleStyle      = {styles.buttonText}
-                title           = "Save & Next"
-                buttonStyle     = {styles.button}
-                containerStyle  = {[styles.buttonContainer,styles.marginBottom15]}
-                iconRight
-                icon = {<Icon
-                  name="chevrons-right"
-                  type="feather"
-                  size={22}
-                  color="white"
-                />}
-              />*/}
+              </View>  
             </View>
-              {/*<View  style={[styles.marginBottom15,styles.nextBtnhover1]}  onPress={this.submitFun.bind(this)}>
-                  <TouchableOpacity onPress={this.submitFun.bind(this)} style={[{width:'100%'}]}>
-                     <Text style={[styles.buttonContainerNextBTN,{color:"#fff"}]}>Save & Next
-                     </Text>
-                  </TouchableOpacity>
-              </View>*/}
-              <View style={[{flexDirection:"row"},styles.marginBottom45]}>
+
+              <View style={[{flexDirection:"row",zIndex:-20},styles.marginBottom45]}>
                 <Button
                     onPress={()=> this.props.navigation.dispatch(NavigationActions.back())}
                     titleStyle      = {styles.buttonText}

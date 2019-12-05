@@ -38,8 +38,9 @@ import ViewTemplates from '../NotificationManagement/ViewTemplates.jsx';
 
 // section- admin operation
 
-import MasterData from '../../adminTGK/masterData/masterData.js';
 import approveSociety from '../../adminTGK/masterData/approveSociety.js';
+import MasterData from '../../adminTGK/masterData/amenities/masterData.js';
+import ManageLocation from '../../adminTGK/masterData/manageLocation/ManageLocations.js';
 import SellOMeter from '../../adminTGK/sell-o-meter/sellOMeter.js';
 import ClassRating from '../../adminTGK/sell-o-meter/classRating.js';
 import PropertyList from '../../adminTGK/PropertyList/PropertyList.js';
@@ -163,6 +164,7 @@ componentDidMount(){
 
                                 <Route path="/masterdata" component={MasterData} exact />
                                 <Route path="/approveSociety" component={approveSociety} exact />
+                                <Route path="/manageLocation" component={ManageLocation} exact />
                                 <Route path="/sellometer" component={SellOMeter} exact />
                                 <Route path="/classrating" component={ClassRating} exact />
                                 <Route path="/propertyList" component={PropertyList} exact />

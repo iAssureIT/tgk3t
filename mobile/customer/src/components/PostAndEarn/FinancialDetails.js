@@ -288,7 +288,7 @@ _retrieveData = async () => {
                         }
                         if(this.state.description === ""){
                           this.setState({
-                            description : response.data.propertyDetails.bedrooms + ' BHK beautiful, tastefully decorated and well maintained flat with '+response.data.propertyDetails.bathrooms+' attached bathrooms located in '+address+'. The society is gated, extremely safe and boasts a number of key amenities like '+amenities+'. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.'
+                            placeHolderDescription : response.data.propertyDetails.bedrooms + ' BHK beautiful, tastefully decorated and well maintained flat with '+response.data.propertyDetails.bathrooms+' attached bathrooms located in '+address+'. The society is gated, extremely safe and boasts a number of key amenities like '+amenities+'. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply.'
                           })
                         }
                           
@@ -907,7 +907,7 @@ submitFun(){
                   excellent security.
                 </Text>*/}
                  <TextInput
-                    label                 = "Description"
+                    placeholder           = {"e.g. 2 BHK beautiful, tastefully decorated and well maintained flat with 2 attached bathrooms located in Sylvania, Magarpatta City, Pune. The society is gated, extremely safe and boasts a number of key amenities like Seasons Mall, Amanora Mall, Gold’s Gym, ABS Gym. Well connected to main city areas such as Koregaon Park, Kalyani Nagar by road.This society gets uninterrupted electricity, water and piped gas supply."}
                     onChangeText          = {description => {this.setState({description})}}
                     lineWidth             = {1}
                     tintColor             = {colors.button}

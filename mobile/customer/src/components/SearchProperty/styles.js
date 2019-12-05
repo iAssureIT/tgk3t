@@ -9,7 +9,6 @@ export default StyleSheet.create({
     backgroundColor: colors.white,
     //minHeight:'83%',
     width: window.width,
-    zIndex:-10,
     // position:"absolute"
   },
 
@@ -346,31 +345,25 @@ export default StyleSheet.create({
     paddingLeft:6,
     paddingRight:6,
   },
- item: {
-    backgroundColor:"#fff", 
-    padding: 6,
-    fontSize: 11,
-    // height: 35,
+   item: {
     width:'100%',
-    // marginLeft:20,
-
-  },
-   flatList: {
-    position: 'absolute', 
-    borderWidth:0.5,
-    borderColor:"#eee",
-    backgroundColor:"#fff",
-    width:'100%',
-    zIndex: 3,
-      ...Platform.select({
+    maxHeight:300,
+    ...Platform.select({
       ios:{
-          top:75, 
+        fontSize: 15,
+        padding: 6,
+      },
+      android : {
+        fontSize: 13,
+        padding: 6,
       }
     })
   },
+   
   marginTop20:{
     marginTop:20
-  }
+  },
+
 });
 
 

@@ -450,7 +450,7 @@ navigateScreen=(route)=>{
                 />
                 <View>
                   <Text style={styles.textSmallLight}>Built-up Area</Text>
-                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.builtupArea} {propertyProfile.propertyDetails.builtupAreaUnit}</Text>
+                  <Text style={styles.textSmall}>{propertyProfile.propertyDetails.builtupArea ? propertyProfile.propertyDetails.builtupArea+" "+propertyProfile.propertyDetails.builtupAreaUnit : "--"}</Text>
                 </View>
               </View>
             

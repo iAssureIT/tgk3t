@@ -55,7 +55,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 		this.setState({isLoading:true})
 	
 		console.log("WebSignupForm==",formValues);
-		if(this.state.name!=="" && this.state.email!=="" && this.state.city!==""  ){
+		if(this.state.name!=="" || this.state.email!=="" || this.state.city!==""  ){
 			if(formValid(this.state.formerrors)){
 			axios
 				.patch('/api/usersotp/signup',formValues)
@@ -126,20 +126,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 				                    });
 						
 					}
-				
-				/*========================temp code========*/
-				// localStorage.setItem('userName',formValues.fullName)
 
-				// if(this.props.originPage === "header")
-				// 	{
-				// 		this.props.history.push("/");
-				// 		window.location.reload();
-				// 		this.setState({isLoading:false})
-				// 	}else{
-				// 		this.props.redirectToBasicInfo(res.data.user_id);
-				// 		this.setState({isLoading:false})
-				// 	}	
-					/*===================end======================*/	
 			})
 				.catch((error)=>{
 	                        console.log("error = ",error);
@@ -158,6 +145,7 @@ const cityRegex = RegExp(/^[A-za-z']+( [A-Za-z']+)*$/);
 		}
 			
 	}
+	
 	handleChange(event){
 			event.preventDefault();
 			const datatype = event.target.getAttribute('data-text');

@@ -452,7 +452,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                                   color={colors.black}
                                   containerStyle={{marginRight:5}}
                                 />
-                                <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.totalPrice)}</Text>
+                                <Text style={styles.textLarge}>{prop.financial.totalPrice ? this.convertNumberToRupees(prop.financial.totalPrice) : "--"}</Text>
                               </View>
                             :
                               <View style={{flexDirection:'row',alignItems:'center'}}>
@@ -464,7 +464,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                                   color={colors.black}
                                   containerStyle={{marginRight:5}}
                                 />
-                                <Text style={styles.textLarge}>{this.convertNumberToRupees(prop.financial.monthlyRent)}</Text>
+                                <Text style={styles.textLarge}>{prop.financial.monthlyRent ? this.convertNumberToRupees(prop.financial.monthlyRent) : "--"}</Text>
                               </View>
                           }
                           
@@ -482,7 +482,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                                 size={20}
                                 color={colors.grey}
                               />
-                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms}</Text>
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.bedrooms ? prop.propertyDetails.bedrooms : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Bedrooms</Text>
                         </View>
@@ -495,7 +495,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                                 size={20}
                                 color={colors.grey}
                               />
-                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms}</Text>
+                              <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.washrooms ? prop.propertyDetails.washrooms : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Washrooms</Text>
                         </View>
@@ -510,7 +510,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.balconies ? prop.propertyDetails.balconies : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Baths</Text>
                         </View>
@@ -523,7 +523,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.Pantry ? prop.propertyDetails.Pantry : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Pantry</Text>
                         </View>
@@ -536,7 +536,7 @@ export default class MyInterestedProperties extends ValidationComponent{
                               size={20}
                               color={colors.grey}
                             />
-                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor}</Text>
+                            <Text style={[styles.textLarge,{marginLeft:5}]}>{prop.propertyDetails.floor ? prop.propertyDetails.floor : "--"}</Text>
                           </View>
                           <Text style={styles.textSmallLight}>Floor</Text>
                         </View>

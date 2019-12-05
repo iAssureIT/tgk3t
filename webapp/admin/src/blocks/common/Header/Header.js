@@ -3,9 +3,9 @@ import $ 								from "jquery";
 import {connect} 						from 'react-redux';
 import { Link } 						from 'react-router-dom';
 import { Route , Redirect, withRouter}  from 'react-router-dom';
-import LoginMobNum              		from '../../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
-import LoginOtp                 		from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
-import WebSignupForm            		from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
+// import LoginMobNum              		from '../../WebsiteSecurity/LoginMobNum/LoginMobNum.js';
+// import LoginOtp                 		from '../../WebsiteSecurity/LoginOtp/LoginOtp.js';
+// import WebSignupForm            		from '../../WebsiteSecurity/WebSignup/WebSignupForm.js';
 import BasicInfo                        from '../../PostProperty/BasicInfo/BasicInfo.js';
 import PropertyDetails                  from '../../PostProperty/PropertyDetails/PropertyDetails.js';
 import Financials                       from '../../PostProperty/Financials/Financials.js';
@@ -15,7 +15,7 @@ import Location                 		from '../../PostProperty/Location/Location.js'
 
 import CongratsPage             		from '../../PostProperty/CongratsPage/CongratsPage.js';
 import ImageUpload              		from '../../PostProperty/ImageUpload/ImageUpload.js';
-import SearchProperty           		from '../../SearchProperty/SearchProperty.js';
+// import SearchProperty           		from '../../SearchProperty/SearchProperty.js';
 
 import'./Header.css';
 
@@ -227,9 +227,6 @@ class Header extends Component {
 						        </h4>
 						      </div>
 						      <div className="modal-body col-lg-12">
-								{ this.props.LoginMobNum 	? <LoginMobNum /> 	  : null }
-								{ this.props.LoginOtp 		? <LoginOtp /> 		  : null }
-								{ this.props.WebSignupForm 	? <WebSignupForm />   : null }
 						      	{ this.props.BasicInfo 		? <BasicInfo /> 	  : null }
 								{ this.props.PropertyDetails? <PropertyDetails /> : null }
 								{ this.props.Financials 	? <Financials /> 	  : null }

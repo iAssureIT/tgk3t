@@ -6,9 +6,7 @@ import { connect }            from 'react-redux';
 import $                      from "jquery";
 import {withRouter}           from 'react-router-dom';
 
-import LoginMobNum            from '../../blocks/WebsiteSecurity/LoginMobNum/LoginMobNum.js';
-import LoginOtp               from '../../blocks/WebsiteSecurity/LoginOtp/LoginOtp.js';
-import WebSignupForm          from '../../blocks/WebsiteSecurity/WebSignup/WebSignupForm.js';
+
 
 import BasicInfo              from '../../blocks/PostProperty/BasicInfo/BasicInfo.js';
 import Location               from '../../blocks/PostProperty/Location/Location.js';
@@ -611,9 +609,7 @@ class PropertyProfile extends Component{
                     </h4>
                   </div>
                   <div className="modal-body col-lg-12">
-                      { this.props.LoginMobNum    ? <LoginMobNum />     : null }
-                      { this.props.LoginOtp       ? <LoginOtp />        : null }
-                      { this.props.WebSignupForm  ? <WebSignupForm />   : null }
+                      
                       { this.props.BasicInfo      ? <BasicInfo />       : null }
                       { this.props.PropertyDetails? <PropertyDetails /> : null }
                       { this.props.Financials     ? <Financials />      : null }

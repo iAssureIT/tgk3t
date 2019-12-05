@@ -9,7 +9,9 @@ export default StyleSheet.create({
     backgroundColor: colors.white,
     //minHeight:'83%',
     width: window.width, 
-    zIndex:-10
+    zIndex:0,
+    minHeight:window.height-0,
+
   }, 
   bgImage: {
     width:window.width,
@@ -29,7 +31,7 @@ export default StyleSheet.create({
          marginTop: 120,
       },
       android : {
-         marginTop: 40,
+         marginTop: 120,
       }
     }),
     marginBottom: 10
@@ -49,7 +51,7 @@ export default StyleSheet.create({
   heading2View:{
     paddingHorizontal:'4%',
     alignItems:'center',
-    marginBottom:30
+    marginBottom:50
   },
   optionsWrapper:{
     flexDirection: 'row',
@@ -90,17 +92,12 @@ export default StyleSheet.create({
   button2:{
     backgroundColor: colors.button,
     height: 55,
-    alignItems: 'center',
-    justifyContent: 'center',
     borderRadius:4,
+    width:"40%",
     ...Platform.select({
       ios:{
-          width:'70%',
-           marginLeft:"15%"
+        marginLeft:"30%"
       },
-      android : {
-        width:150,
-      }
     })
 
   },
@@ -184,8 +181,9 @@ export default StyleSheet.create({
     borderWidth:0,
   },
   alignCenter:{
-    // alignItems:'center',
+    alignItems:'center',
     justifyContent:'center',
+    width:"100%",
   },
   marginBottom30:{
     marginBottom:30
@@ -209,22 +207,22 @@ export default StyleSheet.create({
     ],
     marginLeft:10
   },
+
    item: {
-    backgroundColor:"#fff", 
-    padding: 6,
-    fontSize: 11,
-    // height: 44,
     width:'100%',
-    // marginLeft:20,
+    maxHeight:300,
+    ...Platform.select({
+      ios:{
+        fontSize: 15,
+        padding: 6,
+      },
+      android : {
+        fontSize: 13,
+        padding: 4,
+      }
+    })
   },
-   flatList: {
-    marginTop:45,
-    position: 'absolute', 
-    zIndex: 2,
-    borderWidth:0.5,
-    borderColor:"#eee",
-    backgroundColor:"#fff",
-  },
+   
   marginTop20:{
     marginTop:20
   },
@@ -238,10 +236,18 @@ export default StyleSheet.create({
       }
     })
   },
-    lineStyle:{
-        borderWidth: 0.5,
-        borderColor:'white',
-        margin:10,
-        width:"90%"
-   }
+  lineStyle:{
+      borderWidth: 0.5,
+      borderColor:'white',
+      margin:10,
+      width:"95%"
+ },
+ autocompleteContainer: {
+    flex: 1,
+    left: 0,
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    zIndex: 1
+  }
 });

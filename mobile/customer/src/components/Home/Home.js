@@ -23,6 +23,8 @@ import styles                     from './styles.js';
 import {colors}                   from '../../config/styles.js';
 import AsyncStorage               from '@react-native-community/async-storage';
 import { NavigationActions, StackActions } from 'react-navigation';
+import Autocomplete               from 'react-native-autocomplete-input';
+import { KeyboardAwareScrollView }          from 'react-native-keyboard-aware-scroll-view';
 
 const window = Dimensions.get('window');
 
@@ -188,9 +190,9 @@ navigateScreen=(route)=>{
 
 
             var citiesAreas = cities.concat(areas);
-            var citiesAreasSubAreas = citiesAreas.concat(uniqueSubareaName);
+            var citiesAreasSubAreas = cities.concat(uniqueSubareaName);
             var citiesAreasSubAreasSocieties = citiesAreasSubAreas.concat(uniqueSocietyName);
-
+            console.log("citiesAreasSubAreasSocieties",citiesAreasSubAreasSocieties)
 
             this.setState({
               locSearchResults : citiesAreasSubAreasSocieties,
@@ -208,13 +210,17 @@ navigateScreen=(route)=>{
                   this.props.history.push("/");
               }
         });
+      }else{
+        this.setState({
+            locSearchResults : [],
+          });  
       }
     })
   }
 
   _selectedItem(item){
     // console.log("item",item);
-    this.setState({'searchText':item,location : item,})
+    this.setState({'searchText':item,location : item,locSearchResults:""})
     this.setState({locSearchResults:""})
   }
 
@@ -233,7 +239,7 @@ navigateScreen=(route)=>{
     var property      = this.state.activeBtn.split("-");
     var propertyType  = property[0];
     var transactionType = property[1];
-
+    this.setState({locSearchResults:[]})
     const formValues = {
       transactionType : transactionType,
       propertyType    : propertyType,
@@ -253,14 +259,16 @@ navigateScreen=(route)=>{
     this.navigateScreen('PropertyList')
   }
 
-
+  // hideDropDown(event){
+  //   event.preventDefault();
+  // }
 
   login(){
     AsyncStorage.setItem("originPage","post");
     // console.log("token in home screen",this.state.token);
     AsyncStorage.removeItem('propertyId');
 
-
+    this.setState({location:"",searchText:"",locSearchResults:[]})
     if(this.state.token == null || this.state.token == ""|| this.state.token=="No token"){
        this.navigateScreen("MobileScreen");
     }else{
@@ -268,6 +276,10 @@ navigateScreen=(route)=>{
     }
 
        // this.navigateScreen("Congratulation");
+  }
+
+  clearInputData(){
+    this.setState({location:"",searchText:"",locSearchResults:[]})
   }
  
   render(){
@@ -278,7 +290,7 @@ navigateScreen=(route)=>{
       <React.Fragment>
         <HeaderBar navigation={navigation}/>
 
-        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled" >
+        <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps='always' keyboardShouldPersistTaps="handled" >
           <ImageBackground
             source={require('../../images/lvyobg.png')}
             style={styles.bgImage}
@@ -296,6 +308,39 @@ navigateScreen=(route)=>{
                 India's Only Property Portal sharing Brokerage with both Owners and Tenants!
               </Text>
             </View>
+
+            <View style={{zIndex:0,marginTop:330,position:"absolute",marginLeft:"3%"}}>
+              <View style={styles.marginTop20}>
+                  <View style={{flexDirection:'row',paddingRight:25,marginTop:20}}>
+                    <View style={styles.block}>
+                      <Text style={[styles.heading3,{fontSize:25,width:75,transform: [{ rotate: "270deg" }]}]}>EARN</Text>
+                    </View>
+                    <View style={{flexDirection:'row',marginLeft:-18}}>
+                      <View style={{marginLeft:0}}>
+                        <Text style={[styles.heading3,]}>Upto</Text>
+                        <Text style={[styles.heading3,{fontSize:45,}]}>50%</Text>
+                      </View>  
+                      <View style={{paddingLeft:5}}>
+                        <Text style={[styles.heading3,{fontSize:25,}]}>BROKERAGE FOR</Text>
+                        <Text style={[styles.heading3,{fontSize:25,marginTop:10,}]}>LISTING WITH US</Text>
+                      </View> 
+                    </View>  
+                  </View>  
+              </View>
+              <View style = {styles.lineStyle}></View>
+              <View style={[styles.marginBottom30]}>
+                <Text style={[styles.heading2,{fontSize:14,fontWeight:'bold'}]}>Upto 50% Discount On Brokerage For Tenants/Buyers</Text>
+              </View> 
+              <View style={[styles.alignCenter]}>
+                  <Button
+                    onPress         = {this.login.bind(this)}
+                    titleStyle      = {styles.buttonText2}
+                    title           = "Post & Earn"
+                    buttonStyle     = {styles.button2}
+                    containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
+                  /> 
+              </View>
+            </View> 
 
             <View style={styles.optionsWrapper}>
               <View style={styles.buttonContainer}>
@@ -362,134 +407,59 @@ navigateScreen=(route)=>{
               </View>
             </View>
 
+
+
             <View style={styles.formInputView}>
               <View style={[styles.inputWrapper]}>
-                <View style={styles.inputTextWrapper}>
-                  <SearchBar
-                    searchIcon={
-                      <View>
-                        <Icon name="map-marker-radius" type="material-community" size={24}  color={colors.black} style={{}}/>
-                      </View>
-                    }
-                    containerStyle={styles.searchContainer}
-                    inputContainerStyle={styles.searchInputContainer}
-                    inputStyle={styles.searchInput}
-                    placeholder='Enter Society, Location or Address'
-                    onChangeText = {(searchText) => this.handleLocation(searchText)}
-                    value={this.state.searchText}
-                  />
+                <View style={[styles.inputTextWrapper,Platform.OS==="android" ? this.state.searchText.length > 0 ? {width:"78%"}: {width:"83%"} : null]}>
+                  <Autocomplete
+                    data                      = {this.state.locSearchResults}
+                    style                     = {[{height: 40,fontSize:14,fontFamily:"Roboto-Regular",paddingHorizontal: 5,backgroundColor:"#fff"}]}
+                    clearButtonMode           = {'always'} 
+                    listStyle                 = {Platform.OS === "android" ? {maxHeight:390,zIndex: 20, position: 'absolute'} : {maxHeight:300,zIndex: 20, position: 'absolute'}} 
+                    tintColor                 = {colors.button}
+                    inputContainerPadding     = {0}
+                    labelHeight               = {15}
+                    titleFontSize             = {10}
+                    inputContainerStyle       = {{borderColor:"#fff",borderWidth:0}}
+                    baseColor                 = {'#666'}
+                    textColor                 = {'#666'}
+                    placeholder               = "Enter Society, Location or Address..."
+                    value                     = {this.state.searchText}
+                    onChangeText              = {(searchText) => this.handleLocation(searchText)}
+                    keyboardShouldPersistTaps ='always'
+                    ontentContainerStyle      = {{flex:1}}
+                    renderItem={({ item, i }) => (
+                        <TouchableOpacity keyboardShouldPersistTaps='always'  onPress={() => this.setState({ searchText: item,location:item,locSearchResults:[] })}>
+                          <Text style={styles.item}>{item}</Text>
+                        </TouchableOpacity>
+                    )}
+                  >
+                  </Autocomplete>
                 </View>
+                {Platform.OS === "android" ?
+                  this.state.searchText.length > 0 ? 
+                    <View style={{backgroundColor:"#fff",width:"5%",height:40}} onPress={() => this.clearInputData()}> 
+                      <Text style={{paddingTop:6,fontSize:18,fontWight:"bold"}} onPress={() => this.clearInputData()}>X</Text>
+                    </View>
+                    :
+                    null
+                  :
+                  null
+                }  
                 <TouchableOpacity 
                   onPress = {this.handleSearch.bind(this)}
                   style={styles.searchBtnWrapper}
                 >
-                  <View >
                     <Image 
                       source={require('../../images/search.jpg') }
                       style={styles.searchBtnWrapper}
                       style={{ width: 20 }}
                       resizeMode="contain"
                     />
-                  </View>
                 </TouchableOpacity>
               </View>
-              <View style={styles.flatList}>
-                  <FlatList
-                    data={this.state.locSearchResults.slice(0,15)}
-                    renderItem={this._renderList}
-                  />
-              </View>
-              {/*<View style={[styles.marginBottom30,styles.marginTop20]}>
-                <Text style={[styles.heading3,{fontSize:20,textAlign:'center',fontWeight:"900"}]}>Welcome Owners</Text>
-                  <View style={{flexDirection:'row'}}>
-                    <View style={{backgroundColor:"#f00",height:40,width:90,transform: [{ rotate: "270deg" }]}}>
-                      <Text style={[styles.heading3,{fontSize:30}]}>EARN</Text>
-                    </View>
-                    <View style={{flexDirection:'row',backgroundColor:"#f00"}}>
-                      <View style={{marginLeft:0}}>
-                        <Text style={[styles.heading3]}>Upto</Text>
-                        <Text style={[styles.heading3,{fontSize:45}]}>50%</Text>
-                      </View>  
-                      <View style={{marginLeft:5}}>
-                        <Text style={[styles.heading3,{fontSize:25}]}>BROKERAGE FOR</Text>
-                        <Text style={[styles.heading3,{fontSize:25,marginTop:10}]}>LISTING WITH US</Text>
-                      </View> 
-                    </View>  
-                  </View>  
-              </View>*/}
-
-              <View style={[styles.marginTop20]}>
-                <Text style={[styles.heading3,{fontSize:20,textAlign:'center',fontWeight:"900",marginBottom:30}]}>Welcome Owners</Text>
-                  <View style={{flexDirection:'row',paddingRight:25}}>
-                    <View style={styles.block}>
-                      <Text style={[styles.heading3,{fontSize:25,width:75,transform: [{ rotate: "270deg" }]}]}>EARN</Text>
-                    </View>
-                    <View style={{flexDirection:'row',marginLeft:-18}}>
-                      <View style={{marginLeft:0}}>
-                        <Text style={[styles.heading3]}>Upto</Text>
-                        <Text style={[styles.heading3,{fontSize:45}]}>50%</Text>
-                      </View>  
-                      <View style={{paddingLeft:5}}>
-                        <Text style={[styles.heading3,{fontSize:25}]}>BROKERAGE FOR</Text>
-                        <Text style={[styles.heading3,{fontSize:25,marginTop:10}]}>LISTING WITH US</Text>
-                      </View> 
-                    </View>  
-                  </View>  
-              </View>
-              <View style = {styles.lineStyle} />
-              <View style={styles.marginBottom30}>
-                <Text style={[styles.heading2,{fontSize:14,fontWeight:'bold'}]}>Upto 50% Discount On Brokerage For Tenants/Buyers</Text>
-              </View> 
-              <View style={[styles.alignCenter]}>
-                  <Button
-                    // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
-                    // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
-                    onPress         = {this.login.bind(this)}
-                    titleStyle      = {styles.buttonText2}
-                    title           = "Post & Earn"
-                    buttonStyle     = {styles.button2}
-                    containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
-                    iconRight
-                    // icon = {<Icon
-                    //   name="chevrons-right" 
-                    //   type="feather"
-                    //   size={22}
-                    //   color="white"
-                    // />}
-
-                  /> 
-                
-              </View>
             </View>
-{/*              <View style={[styles.alignCenter,styles.marginBottom30,styles]}>
-                <Text style={styles.heading2}>For our Buyers / Tenants</Text>
-                <Text style={styles.heading3}>Upto 50% Discount</Text>
-                <Text style={styles.heading3}>On Brokerage</Text>
-                <Text style={styles.heading3}>for Renting/Buying with us!</Text>
-              </View>
-
-              <View style={[styles.alignCenter]}>
-                <Text style={[styles.heading2,{marginBottom:10}]}>Welcome Owners</Text>
-                  <Button
-                    // onPress         = {()=>this.props.navigation.navigate('MobileScreen')}
-                    // onPress         = {()=>this.props.navigation.navigate('PropertyDetails6')}
-                    onPress         = {this.login.bind(this)}
-                    titleStyle      = {styles.buttonText2}
-                    title           = "Post & Earn"
-                    buttonStyle     = {styles.button2}
-                    containerStyle  = {[styles.buttonContainer2,styles.marginBottom15]}
-                    iconRight
-                    icon = {<Icon
-                      name="chevrons-right" 
-                      type="feather"
-                      size={22}
-                      color="white"
-                    />}
-                  /> 
-                
-                <Text style={styles.heading2}>Earn upto 50% Brokerage for</Text>
-                <Text style={[styles.heading2,styles.marginBottom15]}>Listing With Us!</Text>
-              </View>*/}
           </ImageBackground>
         </ScrollView>
       

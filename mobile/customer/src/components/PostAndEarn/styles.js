@@ -11,7 +11,6 @@ export default StyleSheet.create({
     backgroundColor: '#fff',
     minHeight:'90%',
     width: window.width,
-    // justifyContent: 'center',
     alignItems: 'center',
   },
   formWrapper: {
@@ -633,7 +632,7 @@ export default StyleSheet.create({
     marginVertical: 50,
     marginHorizontal: 20,
   },
-marginTopSOM:{
+  marginTopSOM:{
     ...Platform.select({
       ios:{
         marginTop: 80,
@@ -642,27 +641,23 @@ marginTopSOM:{
         marginTop:80,
       }
     })
-}, 
-pickerSelectStyles:{
-    color:"#f00",
-},
-item: {
-    backgroundColor:"#fff", 
-    padding: 6,
-    fontSize: 18,
-    // height: 44,
-    width:'100%',
-    // marginLeft:20,
-  },
-   flatList: {
-    marginTop:75,
-    position: 'absolute', 
-    zIndex: 2,
-    borderWidth:1,
-    borderColor:"#000",
-    backgroundColor:"#fff",
-    marginLeft:"12%"
   }, 
+  pickerSelectStyles:{
+    color:"#f00",
+  },
+  item: {
+    padding: 6,
+    fontSize: 15,
+    width:'100%',
+    maxHeight:300,
+  },
+    autocompleteContainer: {
+    flexDirection: 'row',
+    width:"100%",
+    borderRadius: 3,
+  }
+   
+
  
 
 });
