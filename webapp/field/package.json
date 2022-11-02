@@ -13,7 +13,7 @@
     "html2canvas": "^1.0.0-rc.3",
     "jquery": "^3.4.1",
     "jquery-validation": "^1.19.1",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.5.1",
     "owl.carousel": "^2.3.4",
     "rc-time-picker": "^3.7.2",
     "react": "^16.8.6",
